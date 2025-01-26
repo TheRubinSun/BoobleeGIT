@@ -1,0 +1,56 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+
+public class ItemsList : MonoBehaviour
+{
+    public static ItemsList Instance { get; private set; }
+    public List<Item> items = new List<Item>();
+    [SerializeField] List<Sprite> spriteList = new List<Sprite>();
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
+    private void Start()
+    {
+        if (spriteList.Count == 0)
+        {
+            Debug.LogError("Список spriteList пуст! Добавьте спрайты через инспектор.");
+            return;
+        }
+        InitializeItems();
+    }
+    private void InitializeItems()
+    {
+        if (items.Count == 0) items.Add(new Item(0, "None", 0, spriteList[0]));
+        items.Add(new Sword(1, "Gods Slayer", 1, spriteList[1], false, 2, damageT.Cutting, 3, 10));
+        items.Add(new Gun(2, "Makarov", 1, spriteList[2], false, 2, damageT.Cutting, 3, 10, 10));
+        items.Add(new Item(3, "Meat", 100, spriteList[3]));
+
+        DisplayItemList.Instance.DisplayItems(items);
+        //PrintItemList();
+    }
+    public Item GetNoneItem()
+    {
+        if(items.Count == 0)
+        {
+            items.Add(new Item(0, "None", 1, spriteList[0]));
+        }
+        return items[0];
+    }
+    private void PrintItemList()
+    {
+        foreach (var item in items)
+        {
+            Debug.Log($"ID: {item.Id}, Name: {item.Name}");
+        }
+    }
+}
+
+
+
