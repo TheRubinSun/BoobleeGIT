@@ -60,22 +60,46 @@ public class Inventory:MonoBehaviour
     {
         foreach(Slot slot in slots)
         {
-            if(slot.Item.Id == itemAdd.Id && slot.Count + count <= itemAdd.MaxCount)
+
+            if (slot.Item.Id == itemAdd.Id)
             {
-                slot.Count += count;
-                UpdateSlotUI(slot);
-                return true;
+                int freeSpace = itemAdd.MaxCount - slot.Count; //Свободного места в ячейке с предметом
+                if (freeSpace >= count)
+                {
+                    //Полностью размещаем
+                    slot.Count += count;
+                    UpdateSlotUI(slot);
+                    return true;
+                }
+                else
+                {
+                    //Частично добавляем, но оставляем остаток для дальнейшей обработки
+                    slot.Count = itemAdd.MaxCount;
+                    UpdateSlotUI(slot);
+                    count -= freeSpace;
+                }
             }
+
         }
         foreach(Slot slot in slots)
         {
             if(slot.Item.Id == ItemsList.Instance.GetNoneItem().Id)
             {
                 slot.Item = itemAdd;
-                slot.Count = count;
-                //slot.MaxCount = itemAdd.MaxCount;
-                UpdateSlotUI(slot);
-                return true;
+                if (itemAdd.MaxCount >= count)
+                {
+                    //Полностью размещаем
+                    slot.Count = count;
+                    UpdateSlotUI(slot);
+                    return true;
+                }
+                else
+                {
+                    //Частично добавляем, но оставляем остаток для дальнейшей обработки
+                    slot.Count = itemAdd.MaxCount;
+                    UpdateSlotUI(slot);
+                    count -= itemAdd.MaxCount;
+                }
             }
         }
         Debug.LogWarning("Инвентарь полон!");
@@ -141,6 +165,12 @@ public class Inventory:MonoBehaviour
         Inventory.Instance.UpdateSlotUI(newSlot);
 
         //PrintSlots();
+    }
+    public void SetNone(Slot slot)
+    {
+        slot.Item = ItemsList.Instance.GetItemForId(0);
+        slot.Count = 0;
+        UpdateSlotUI(slot);
     }
     public Slot GetSlot(int numbSlot)
     {

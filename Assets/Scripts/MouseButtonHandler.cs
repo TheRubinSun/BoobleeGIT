@@ -12,13 +12,22 @@ public class MouseButtonHandler : MonoBehaviour, IPointerClickHandler
         if (eventData.button == PointerEventData.InputButton.Left) // Левая кнопка
         {
             DragAndDrop.Instance.Drag(GetNumbSlot());
+
             Debug.Log("Left click on item: ");
         }
         else if (eventData.button == PointerEventData.InputButton.Right) // Правая кнопка
         {
+            DragAndDrop.Instance.DragHalfOrPutOne(GetNumbSlot());
             Debug.Log("Right click on item: ");
-            // Ваш код для правой кнопки
         }
+    }
+    public void OnPointerClickBG(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Left) // Левая кнопка
+        {
+            //Выкинуть из инвенторя
+        }
+
     }
     int GetNumbSlot()
     {

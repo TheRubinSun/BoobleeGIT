@@ -355,8 +355,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a8fe5d8186eb6e468561a4d8f4e1624, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dragObj: {fileID: 0}
+  parentInventory: {fileID: 2136192256}
+  tempSlotPrefab: {fileID: 7487299649868933320, guid: 04803b264d068cd428ba539f918fee4b, type: 3}
   dragItem: 0
+  tempItemOnCursor: 0
 --- !u!114 &65463737
 MonoBehaviour:
   m_ObjectHideFlags: 0

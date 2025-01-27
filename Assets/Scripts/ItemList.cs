@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -34,6 +35,22 @@ public class ItemsList : MonoBehaviour
 
         DisplayItemList.Instance.DisplayItems(items);
         //PrintItemList();
+    }
+    public Item GetItemForName(string name)
+    {
+        foreach (Item item in items)
+        {
+            if(item.Name == name) return item;
+        }
+        return items[0];
+    }
+    public Item GetItemForId(int id)
+    {
+        foreach (Item item in items)
+        {
+            if (item.Id == id) return item;
+        }
+        return items[0];
     }
     public Item GetNoneItem()
     {
