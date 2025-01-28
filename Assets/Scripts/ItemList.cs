@@ -28,19 +28,19 @@ public class ItemsList : MonoBehaviour
     }
     private void InitializeItems()
     {
-        if (items.Count == 0) items.Add(new Item(0, "None", 0, spriteList[0]));
-        items.Add(new Sword(1, "Gods Slayer", 1, spriteList[1], false, 2, damageT.Cutting, 3, 10));
-        items.Add(new Gun(2, "Makarov", 1, spriteList[2], false, 2, damageT.Cutting, 3, 10, 10));
-        items.Add(new Item(3, "Meat", 100, spriteList[3]));
+        if (items.Count == 0) items.Add(new Item(0, "item_none", 0, spriteList[0]));
+        items.Add(new Sword(1, "sword_gods_slayer", 1, spriteList[1], false, 2, damageT.Cutting, 3, 10));
+        items.Add(new Gun(2, "gun_makarov", 1, spriteList[2], false, 2, damageT.Cutting, 3, 10, 10));
+        items.Add(new Item(3, "item_meat", 100, spriteList[3]));
 
         DisplayItemList.Instance.DisplayItems(items);
         //PrintItemList();
     }
-    public Item GetItemForName(string name)
+    public Item GetItemForName(string nameKey)
     {
         foreach (Item item in items)
         {
-            if(item.Name == name) return item;
+            if(item.NameKey == nameKey) return item;
         }
         return items[0];
     }
@@ -64,7 +64,7 @@ public class ItemsList : MonoBehaviour
     {
         foreach (var item in items)
         {
-            Debug.Log($"ID: {item.Id}, Name: {item.Name}");
+            Debug.Log($"ID: {item.Id}, Name: {item.NameKey}");
         }
     }
 }

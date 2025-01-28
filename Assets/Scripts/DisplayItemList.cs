@@ -59,8 +59,8 @@ public class DisplayItemList:MonoBehaviour
         if (Inventory.Instance != null)
         {
             // Добавляем один экземпляр предмета в инвентарь
-            Inventory.Instance.AddItem(item, 100);
-            Debug.Log($"Добавлен предмет: {item.Name} в количестве 1");
+            Inventory.Instance.AddItem(item, item.MaxCount);
+            Debug.Log($"Добавлен предмет: {item.NameKey} в количестве 1");
         }
         else
         {

@@ -28,6 +28,10 @@ public class UIControl:MonoBehaviour
         {
             OpenListItems();
         }
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            DragAndDrop.Instance.PickUp();
+        }
     }
     public void OpenInventory()
     {

@@ -1,4 +1,6 @@
+using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR;
@@ -15,9 +17,12 @@ public class DragAndDrop:MonoBehaviour
     Slot tempSlot; // Перетаскиваемый слот
     public GameObject tempSlotPrefab;     // префаб нового итема
 
+    [SerializeField] Transform ItemsOnMapLevel;
+    [SerializeField] Transform player;
+    [SerializeField] GameObject ItemDropPref;
+    private float RadiusPickUp { get; set; }
     //public int dragCountItem;
     public bool dragItem;     // Флаг перетаскивания
-    public bool tempItemOnCursor; //Есть отдельный предмет на курсоре
 
     private Slot oldSlot;     // Исходный слот
     private Slot newSlot;     // Новый слот
@@ -39,11 +44,12 @@ public class DragAndDrop:MonoBehaviour
     private void Start()
     {
         dragItem = false;
+        RadiusPickUp = 1f;
         mouseOffset = new Vector2(0.4f, -0.4f);
     }
     public void Drag(int numbSlot)
     {
-        if (!dragItem && !tempItemOnCursor) //Если нужно взять предмет
+        if (!dragItem) //Если нужно взять предмет
         {
             oldSlot = Inventory.Instance.GetSlot(numbSlot); //Сохранем значения слота 
             if (oldSlot.Item.Id == 0) return; //Если выделяемый слот пуст (id = 0 пустой), то незачем его брать курсором
@@ -54,14 +60,13 @@ public class DragAndDrop:MonoBehaviour
 
             dragItem = true; //Взяли предмет + в Update тащем за курсором
         }
-        else if(dragItem && !tempItemOnCursor) //Если предмет взят
+        else if(dragItem) //Если предмет взят
         {
             newSlot = Inventory.Instance.GetSlot(numbSlot); //Сохранем значения еще одного слота
             if (oldSlot.SlotObj != newSlot.SlotObj) //Сравниваем не тот ли же самый слот
             {
                 if (tempSlot.Item.Id == newSlot.Item.Id && newSlot.Count < newSlot.Item.MaxCount)
                 {
-                    Debug.Log("Действие: tempSlot.Item");
                     if (newSlot.Count + tempSlot.Count <= newSlot.Item.MaxCount)
                     {
                         //Если слоты по количеству объединяются (оставляем предмет в один слот)
@@ -72,7 +77,7 @@ public class DragAndDrop:MonoBehaviour
                         //Inventory.Instance.UpdateSlotUI(tempSlot);  //Обновляем картинку в UI
                         Inventory.Instance.UpdateSlotUI(newSlot);  //Обновляем картинку в UI
                         Destroy(tempSlot.SlotObj);
-                        Debug.Log("Действие: 1");
+                        //Debug.Log("Действие: 1");
                         return;
                     }
                     else
@@ -82,7 +87,7 @@ public class DragAndDrop:MonoBehaviour
                         newSlot.Count = newSlot.Item.MaxCount;
                         Inventory.Instance.UpdateSlotUI(tempSlot);  //Обновляем картинку в UI
                         Inventory.Instance.UpdateSlotUI(newSlot);  //Обновляем картинку в UI
-                        Debug.Log("Действие: 2");
+                        //Debug.Log("Действие: 2");
                         return;
                     }
                 }
@@ -93,12 +98,12 @@ public class DragAndDrop:MonoBehaviour
                         //Если слоты просто разные, то меняем их местами
                         Inventory.Instance.SwapSlots(oldSlot, tempSlot); //Меняем местами слоты
                         Inventory.Instance.SwapSlots(newSlot, oldSlot); //Меняем местами слоты
-                        Debug.Log("Действие: 3");
+                        //Debug.Log("Действие: 3");
                     }
                     else
                     {
                         Inventory.Instance.SwapSlots(newSlot, tempSlot); //Меняем местами слоты
-                        Debug.Log("Действие: 3");
+                        //Debug.Log("Действие: 3");
                     }
 
 
@@ -109,7 +114,7 @@ public class DragAndDrop:MonoBehaviour
             {
                 //Если один и тот же слот, возвращаем предмет обратно
                 Inventory.Instance.SwapSlots(oldSlot, tempSlot); //Меняем местами слоты
-                Debug.Log("Действие: 4");
+                //Debug.Log("Действие: 4");
             }
             Destroy(tempSlot.SlotObj);
             dragItem = false; //Отпускаем предмет
@@ -151,11 +156,58 @@ public class DragAndDrop:MonoBehaviour
             if (tempSlot.Count < 1)
             {
                 Destroy(tempSlot.SlotObj);
-                tempItemOnCursor = false;
                 dragItem = false;
             }
             Inventory.Instance.UpdateSlotUI(tempSlot);  //Обновляем картинку в UI
             Inventory.Instance.UpdateSlotUI(newSlot);  //Обновляем картинку в UI
+        }
+    }
+    public void DropItem()
+    {
+        GameObject gameObject = Instantiate(ItemDropPref, ItemsOnMapLevel);
+        gameObject.transform.position = player.position;
+        ItemDrop ItemD = gameObject.GetComponent<ItemDrop>();
+        ItemD.sprite = tempSlot.Item.Sprite;
+        ItemD.item = tempSlot.Item;
+        ItemD.count = tempSlot.Count;
+        gameObject.name = $"{tempSlot.Item.NameKey} ({tempSlot.Count})" ;
+        if (ItemD.sprite != null)
+        {
+            gameObject.GetComponent<SpriteRenderer>().sprite = ItemD.sprite;
+            gameObject.GetComponentInChildren<TextMeshPro>().text = $"{ItemD.item.GetLocalizationName()} ({ItemD.count})";
+        }
+        Destroy(tempSlot.SlotObj);
+        dragItem = false;
+    }
+    public LayerMask targetLayer; // Слой, по которому фильтруются объекты
+    public void PickUp()
+    {
+        foreach(Transform child in ItemsOnMapLevel)
+        {
+            float distance = Vector2.Distance(player.position, child.transform.position);
+            if (distance <= RadiusPickUp)
+            {
+                Debug.Log($"Объект в радиусе: {child.gameObject.name}");
+                ItemDrop ItemD = child.GetComponent<ItemDrop>();
+                int remains = Inventory.Instance.AddItem(ItemD.item, ItemD.count);
+                if(remains > 0)
+                {
+                    ItemD.count = remains;
+                    TextMeshPro textMeshPro = gameObject.GetComponentInChildren<TextMeshPro>();
+                    if (textMeshPro != null)
+                    {
+                        textMeshPro.text = $"{ItemD.item.GetLocalizationName()} ({ItemD.count})";
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Инвентарь полон!");
+                    }
+                }
+                else
+                {
+                    Destroy(child.gameObject);
+                }
+            }
         }
     }
 

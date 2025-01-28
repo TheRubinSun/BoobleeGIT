@@ -20,7 +20,6 @@ public class Player : MonoBehaviour
     //Компоненты игрока
     private Rigidbody2D rb;
     private RoleClass classPlayer;
-    AllClasses allClasses = new AllClasses();
 
     //Напрвеления и радиусы
     [SerializeField] private Vector2 inputDirection;
@@ -31,8 +30,8 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        allClasses.Start();
-        Speed = allClasses.roleClasses["Shooter"].BonusSpeedMove;
+        RoleClass rc = Classes.Instance.GetRoleClass("Shooter");
+        Speed = rc.BonusSpeedMove;
         rb = GetComponent<Rigidbody2D>();
     } 
     private void Update()

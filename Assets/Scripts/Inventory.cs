@@ -43,7 +43,15 @@ public class Inventory:MonoBehaviour
         {
             GameObject slotObj = Instantiate(slotPrefab, slotsParent.transform);
             slotObj.name = $"Slot ({i})";
-            slots.Add(new Slot(ItemsList.Instance.GetNoneItem(), slotObj));
+
+            //Slot slot = slotObj.AddComponent<Slot>(); // Добавляем компонент Slot динамически
+            //slot.Item = ItemsList.Instance.GetNoneItem(); // Инициализируем предмет
+            //slot.Count = 0; // Устанавливаем начальное количество
+            //slot.SlotObj = slotObj; // Привязываем GameObject к Slot
+            slots.Add(new Slot(ItemsList.Instance.GetNoneItem(), slotObj)); //Альтернатива, которая Юнити не любит
+
+            //slots.Add(slot);
+
 
         }
     }
@@ -56,7 +64,7 @@ public class Inventory:MonoBehaviour
         }
         return 0;
     }
-    public bool AddItem(Item itemAdd, int count)
+    public int AddItem(Item itemAdd, int count)
     {
         foreach(Slot slot in slots)
         {
@@ -69,7 +77,7 @@ public class Inventory:MonoBehaviour
                     //Полностью размещаем
                     slot.Count += count;
                     UpdateSlotUI(slot);
-                    return true;
+                    return 0;
                 }
                 else
                 {
@@ -91,7 +99,7 @@ public class Inventory:MonoBehaviour
                     //Полностью размещаем
                     slot.Count = count;
                     UpdateSlotUI(slot);
-                    return true;
+                    return 0;
                 }
                 else
                 {
@@ -103,8 +111,15 @@ public class Inventory:MonoBehaviour
             }
         }
         Debug.LogWarning("Инвентарь полон!");
-        return false;
+        return count;
     }
+    //public int HaveFreeSlot(Item item, int count)
+    //{
+    //    foreach (Slot slot in slots)
+    //    {
+
+    //    }
+    //}
     public void RemoveItem(Slot slot, int count)
     {
         if (slot.Count <= count)
@@ -153,14 +168,18 @@ public class Inventory:MonoBehaviour
     }
     public void SwapSlots(Slot oldSlot, Slot newSlot)
     {
-        Slot tempSlot = new Slot(oldSlot.Item, oldSlot.Count);
+        //Slot tempSlot = new Slot(oldSlot.Item, oldSlot.Count);
+
+        Item tempItem = oldSlot.Item;
+        int tempCount = oldSlot.Count;
+
         oldSlot.Item = newSlot.Item;
         oldSlot.Count = newSlot.Count;
 
-        newSlot.Item = tempSlot.Item;
-        newSlot.Count = tempSlot.Count;
+        newSlot.Item = tempItem;
+        newSlot.Count = tempCount;
 
-        Destroy(tempSlot);
+        //Destroy(tempSlot);
         Inventory.Instance.UpdateSlotUI(oldSlot);
         Inventory.Instance.UpdateSlotUI(newSlot);
 
@@ -182,7 +201,7 @@ public class Inventory:MonoBehaviour
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < sizeInventory; i++)
         {
-            string format = string.Format("|{0,17}|", slots[i].Item.Name+ "/" + slots[i].Count.ToString());
+            string format = string.Format("|{0,17}|", slots[i].Item.NameKey + "/" + slots[i].Count.ToString());
             sb.Append(format);
             if ((i+1)%5==0)
             {

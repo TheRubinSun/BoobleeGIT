@@ -9,30 +9,33 @@ public class MouseButtonHandler : MonoBehaviour, IPointerClickHandler
     //Transform dragObj;
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Left) // Левая кнопка
+        if(gameObject.tag == "Slot")
         {
-            DragAndDrop.Instance.Drag(GetNumbSlot());
+            if (eventData.button == PointerEventData.InputButton.Left) // Левая кнопка
+            {
+                DragAndDrop.Instance.Drag(GetNumbSlot());
 
-            Debug.Log("Left click on item: ");
+                //Debug.Log("Left click on item: ");
+            }
+            else if (eventData.button == PointerEventData.InputButton.Right) // Правая кнопка
+            {
+                DragAndDrop.Instance.DragHalfOrPutOne(GetNumbSlot());
+                //Debug.Log("Right click on item: ");
+            }
         }
-        else if (eventData.button == PointerEventData.InputButton.Right) // Правая кнопка
+        else if(gameObject.tag == "DropZone" && DragAndDrop.Instance.dragItem)
         {
-            DragAndDrop.Instance.DragHalfOrPutOne(GetNumbSlot());
-            Debug.Log("Right click on item: ");
+            if (eventData.button == PointerEventData.InputButton.Left) // Левая кнопка
+            {
+                DragAndDrop.Instance.DropItem();
+                //Debug.Log("Left click item on DropZone: ");
+            }
         }
     }
-    public void OnPointerClickBG(PointerEventData eventData)
-    {
-        if (eventData.button == PointerEventData.InputButton.Left) // Левая кнопка
-        {
-            //Выкинуть из инвенторя
-        }
 
-    }
     int GetNumbSlot()
     {
         string nameSlot = name;
-        Debug.Log("Name: "+nameSlot);
         int startIndex = nameSlot.IndexOf('(') + 1;
         int endIndex = nameSlot.IndexOf(')');
         int numberSlot = int.Parse(nameSlot.Substring(startIndex, endIndex - startIndex));
