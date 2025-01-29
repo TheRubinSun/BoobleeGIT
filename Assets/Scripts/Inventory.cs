@@ -213,7 +213,7 @@ public class Inventory:MonoBehaviour
     }
 
 }
-public class Slot : MonoBehaviour
+public class Slot 
 {
     public Item Item { get; set; }
     public int Count { get; set; }
