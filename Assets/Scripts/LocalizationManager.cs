@@ -48,7 +48,7 @@ public class LocalizationManager:MonoBehaviour
             }
             else
             {
-                Debug.LogWarning($"язык {language} не найден, используетс€ английский.");
+                //Debug.LogWarning($"язык {language} не найден, используетс€ английский.");
                 localizedText = allLanguages["en"];
             }
         }

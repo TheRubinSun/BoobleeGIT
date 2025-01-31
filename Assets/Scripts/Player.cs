@@ -15,7 +15,9 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] Transform cameraObj;
     [SerializeField] GameObject hand;
-    
+    [SerializeField] Transform centerLegs;
+    [SerializeField] Transform[] legsLines;
+    [SerializeField] Transform[] legsCenter;
 
     //Компоненты игрока
     private Rigidbody2D rb;
@@ -27,6 +29,7 @@ public class Player : MonoBehaviour
     Vector2 mousePos;
     Vector2 direction;
     [SerializeField] private float radiusHand = 0.4f;                // Радиус области
+    [SerializeField] private float radiusCenterLegs = 0.4f;                // Радиус области
 
     void Start()
     {
@@ -46,6 +49,32 @@ public class Player : MonoBehaviour
     {
         movement = inputDirection.normalized * Speed * Time.fixedDeltaTime;
         rb.MovePosition(rb.position + movement);
+
+        foreach(Transform legsLine in legsLines)
+        {
+            legsLine.GetComponent<LineControle>().AnimMove();
+        }
+        foreach (Transform legCenter in legsCenter)
+        {
+            legCenter.GetComponent<LegControl>().CheckPos();
+        }
+        MoveCenterLegs(inputDirection);
+    }
+    void MoveCenterLegs(Vector2 inputDirection)
+    {
+        // Рассчитываем смещение для центра ног
+        Vector2 currentPos = centerLegs.localPosition;
+        Vector2 newPos = currentPos + inputDirection.normalized * 10f * Time.deltaTime;
+
+
+        if (newPos.magnitude > radiusCenterLegs)
+        {
+            centerLegs.localPosition = newPos.normalized * radiusCenterLegs;
+        }
+        else
+        {
+            centerLegs.localPosition = newPos;
+        }
     }
     public void MoveHand()
     {
