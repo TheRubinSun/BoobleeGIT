@@ -15,13 +15,15 @@ public class Item
     public string NameKey { get; set; }
     public int MaxCount { get; set; }
     public Sprite Sprite { get; set; }
-    public Item(int id, string name, int maxCount, Sprite sprite)
+    public string Description { get; set; }
+    public Item(int id, string name, int maxCount, Sprite sprite, string description)
     {
         Id = id;
         TypeItem = TypeItem.Other;
         NameKey = name;
         MaxCount = maxCount;
         Sprite = sprite;
+        Description = description;
     }
     
     public string GetLocalizationName()

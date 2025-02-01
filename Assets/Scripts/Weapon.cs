@@ -20,7 +20,7 @@ public abstract class Weapon : Item
     public int damage { get; protected set; }
     public int attackSpeed { get; protected set; }
 
-    public Weapon(int id, string name, int maxCount, Sprite sprite, bool rangeType, float range, damageT typeDamage, int damage, int attackSpeed):base(id, name, maxCount, sprite)
+    public Weapon(int id, string name, int maxCount, Sprite sprite, string decription, bool rangeType, float range, damageT typeDamage, int damage, int attackSpeed):base(id, name, maxCount, sprite, decription)
     {
         this.rangeType = rangeType;
         this.range = range;
@@ -35,7 +35,7 @@ public abstract class Weapon : Item
 public class Gun : Weapon
 {
     public int projectileSpeed { get; private set; }
-    public Gun(int id, string name, int maxCount, Sprite sprite, bool rangeType, float range, damageT typeDamage, int damage, int attackSpeed, int projectileSpeed): base(id, name, maxCount, sprite, rangeType, range, typeDamage, damage, attackSpeed)
+    public Gun(int id, string name, int maxCount, Sprite sprite, string decription, bool rangeType, float range, damageT typeDamage, int damage, int attackSpeed, int projectileSpeed): base(id, name, maxCount, sprite, decription, rangeType, range, typeDamage, damage, attackSpeed)
     {
         this.projectileSpeed = projectileSpeed;
         this.TypeItem = TypeItem.Gun;
@@ -47,7 +47,7 @@ public class Gun : Weapon
 }
 public class Sword: Weapon
 {
-    public Sword(int id, string name, int maxCount, Sprite sprite, bool rangeType, float range, damageT typeDamage, int damage, int attackSpeed) : base(id, name, maxCount, sprite, rangeType, range, typeDamage, damage, attackSpeed)
+    public Sword(int id, string name, int maxCount, Sprite sprite, string decription, bool rangeType, float range, damageT typeDamage, int damage, int attackSpeed) : base(id, name, maxCount, sprite, decription, rangeType, range, typeDamage, damage, attackSpeed)
     {
         this.TypeItem = TypeItem.Weapon;
     }

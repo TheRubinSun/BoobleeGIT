@@ -9,6 +9,7 @@ public class LegControl:MonoBehaviour
     [SerializeField] float range = 0.6f;
     [SerializeField] float delayTime = 0.07f;  // Задержка (можно регулировать)
     [SerializeField] Transform line;
+    
     public void CheckPos()
     {
         if (range < Vector2.Distance(leg.position, transform.position))
@@ -18,8 +19,6 @@ public class LegControl:MonoBehaviour
     }
     private void MoveLeg()
     {
-        float speedFoot = 10f;
-
         StartCoroutine(MoveLegSmoothly(leg.position, transform.position, 0.07f)); // Двигаем за 0.5 секунды
     }
     private IEnumerator MoveLegSmoothly(Vector2 start, Vector2 end, float duration)

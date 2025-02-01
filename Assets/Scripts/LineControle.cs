@@ -5,8 +5,6 @@ using UnityEngine.U2D;
 public class LineControle: MonoBehaviour
 {
     LineRenderer lineRenderer;
-
-
     [SerializeField] private Texture[] textures;
     private int animStep;
 
@@ -19,10 +17,6 @@ public class LineControle: MonoBehaviour
     private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
-
-    }
-    private void Update()
-    {
 
     }
     public void AnimMove()

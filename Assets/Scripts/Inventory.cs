@@ -14,6 +14,7 @@ using static UnityEditor.Progress;
 public class Inventory:MonoBehaviour
 {
     public static Inventory Instance { get; private set; }
+    public Transform InfoPanel;
     public int sizeInventory = 25;
 
     public List<Slot> slots = new List<Slot>();
@@ -43,16 +44,7 @@ public class Inventory:MonoBehaviour
         {
             GameObject slotObj = Instantiate(slotPrefab, slotsParent.transform);
             slotObj.name = $"Slot ({i})";
-
-            //Slot slot = slotObj.AddComponent<Slot>(); // Добавляем компонент Slot динамически
-            //slot.Item = ItemsList.Instance.GetNoneItem(); // Инициализируем предмет
-            //slot.Count = 0; // Устанавливаем начальное количество
-            //slot.SlotObj = slotObj; // Привязываем GameObject к Slot
             slots.Add(new Slot(ItemsList.Instance.GetNoneItem(), slotObj)); //Альтернатива, которая Юнити не любит
-
-            //slots.Add(slot);
-
-
         }
     }
 
@@ -113,13 +105,7 @@ public class Inventory:MonoBehaviour
         Debug.LogWarning("Инвентарь полон!");
         return count;
     }
-    //public int HaveFreeSlot(Item item, int count)
-    //{
-    //    foreach (Slot slot in slots)
-    //    {
 
-    //    }
-    //}
     public void RemoveItem(Slot slot, int count)
     {
         if (slot.Count <= count)
@@ -211,7 +197,11 @@ public class Inventory:MonoBehaviour
 
         }
     }
+    //public void DisplayInfoItem(int numbSlot)
+    //{
+    //    Item slot = GetSlot(numbSlot).Item;
 
+    //}
 }
 public class Slot 
 {

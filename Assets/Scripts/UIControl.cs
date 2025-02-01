@@ -44,6 +44,7 @@ public class UIControl:MonoBehaviour
         else
         {
             inventoryWindow.SetActive(false);
+            Inventory.Instance.InfoPanel.gameObject.SetActive(false);
         }
     }
     public void OpenListItems()
