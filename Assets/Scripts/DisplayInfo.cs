@@ -36,7 +36,10 @@ public class DisplayInfo: MonoBehaviour
         if (item == null || item.Id == 0) return;
 
         iconItem.sprite = item.Sprite;
-        nameItem.text = item.GetLocalizationName();
+        
+        string colorName = "#" + ColorUtility.ToHtmlStringRGBA(item.GetColor());
+        nameItem.text =  $"<size=8>{item.GetLocalizationName()}</size>\n<size=7><color={colorName}>{item.quality}</color></size>";
+
         string info = item.TypeItem.ToString();
         if(item is Weapon weapon)
         {
@@ -45,11 +48,13 @@ public class DisplayInfo: MonoBehaviour
             info += "\nУрон: " + weapon.damage;
             info += "\nСкорость атаки: " + weapon.attackSpeed;
             info += "\nДальность: " + weapon.range;
+            
         }
         if(item.TypeItem == TypeItem.Food)
         {
             info += "\nEда";
         }
+        info += "\nОписание: " + item.Description;
         infoItem.text = info;
     }
     public void ClearInfo()

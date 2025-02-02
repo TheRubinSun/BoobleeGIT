@@ -124,7 +124,9 @@ public class Inventory:MonoBehaviour
     {
         Transform dAdTemp = slot.SlotObj.transform.GetChild(0);
         Image image = dAdTemp.GetChild(0).GetComponent<Image>();
-        TextMeshProUGUI text = dAdTemp.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
+        Image item_frame = dAdTemp.GetChild(1).GetComponentInChildren<Image>();
+        TextMeshProUGUI text = dAdTemp.GetChild(2).GetComponentInChildren<TextMeshProUGUI>();
+
 
         if (image != null)
         {
@@ -138,7 +140,18 @@ public class Inventory:MonoBehaviour
                 image.color = new Color32(255, 255, 255, 255);
             }
         }
-
+        if (item_frame != null)
+        {
+            if (slot.Item.Sprite == null)
+            {
+                image.color = new Color32(0, 0, 0, 0);
+            }
+            else
+            {
+                image.color = new Color32(255, 255, 255, 255);
+            }
+            item_frame.color = slot.Item.GetColor();
+        }
         if (text != null)
         {
             if(slot.Count>0)
