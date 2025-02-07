@@ -7,6 +7,8 @@ TagManager:
   - DropZone
   - Slot
   - Drop
+  - Enemy
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -18,8 +20,8 @@ TagManager:
   - 
   - DropItem
   - Button
-  - 
-  - 
+  - Obstacles
+  - Wall
   - Text
   - 
   - 

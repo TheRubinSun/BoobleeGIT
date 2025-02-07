@@ -17,7 +17,7 @@ public class LineControle: MonoBehaviour
     private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
-
+        AnimMove();
     }
     public void AnimMove()
     {

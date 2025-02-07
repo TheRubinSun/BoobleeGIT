@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     [SerializeField] Transform[] legsCenter;
 
     //Компоненты игрока
-    private Rigidbody2D rb;
+    //private Rigidbody2D rb;
     private RoleClass classPlayer;
 
     //Напрвеления и радиусы
@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
     {
         RoleClass rc = Classes.Instance.GetRoleClass("Shooter");
         Speed = rc.BonusSpeedMove;
-        rb = GetComponent<Rigidbody2D>();
+        //rb = GetComponent<Rigidbody2D>();
     } 
     private void Update()
     {
@@ -47,10 +47,11 @@ public class Player : MonoBehaviour
     }
     public void Move()
     {
-        movement = inputDirection.normalized * Speed * Time.fixedDeltaTime;
-        rb.MovePosition(rb.position + movement);
+        //movement = inputDirection.normalized * Speed * Time.fixedDeltaTime;
+        transform.position += (Vector3)inputDirection.normalized * Speed * Time.deltaTime;
+        //rb.MovePosition(rb.position + movement);
 
-        foreach(Transform legsLine in legsLines)
+        foreach (Transform legsLine in legsLines)
         {
             legsLine.GetComponent<LineControle>().AnimMove();
         }
