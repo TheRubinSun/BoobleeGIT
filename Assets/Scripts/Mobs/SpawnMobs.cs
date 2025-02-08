@@ -39,6 +39,7 @@ public class SpawnMobs : MonoBehaviour
                 Instantiate(rainger_prefab, parent);
                 break;
             default:
+                Debug.LogWarning("Необходимо добавить префаб нового моба в SpawnMobs");
                 break;
         }
     }
