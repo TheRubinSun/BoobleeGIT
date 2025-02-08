@@ -1,14 +1,82 @@
 {
   "en": {
-    "item_none": "None",
-    "sword_gods_slayer": "Gods Slayer",
-    "gun_makarov": "Makarov pistol",
-    "item_meat": "Meat"
+    "items": {
+      "item_none": {
+        "Name": "None",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": ""
+      },
+      "sword_gods_slayer": {
+        "Name": "Gods Slayer",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Good sword"
+      },
+      "gun_makarov": {
+        "Name": "Makarov pistol",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Just simple pistol"
+      },
+      "item_meat": {
+        "Name": "Meat",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Testy meat"
+      }
+    },
+    "mobs": {
+      "daizen_enem": {
+        "Name": "Daizen",
+        "TypeMob": "",
+        "Description": "Just melee mob"
+      },
+      "rainger_enem": {
+        "Name": "Rainger",
+        "TypeMob": "",
+        "Description": "Just ranger mob"
+      }
+    }
   },
   "ru": {
-    "item_none": "Ничего",
-    "sword_gods_slayer": "Убийца Богов",
-    "gun_makarov": "Пистолет Макаров",
-    "item_meat": "Мясо"
+    "items": {
+      "item_none": {
+        "Name": "Ничего",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": ""
+      },
+      "sword_gods_slayer": {
+        "Name": "Убийца Богов",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Хороший меч"
+      },
+      "gun_makarov": {
+        "Name": "Пистолет Макаров",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Обычный пистолет"
+      },
+      "item_meat": {
+        "Name": "Мясо",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Вкусное мяско"
+      }
+    },
+    "mobs": {
+      "daizen_enem": {
+        "Name": "Дайзер",
+        "TypeMob": "",
+        "Description": "Простой моб с ближней аттакой"
+      },
+      "rainger_enem": {
+        "Name": "Райнгер",
+        "TypeMob": "",
+        "Description": "Простой моб с дальной аттакой"
+      }
+    }
   }
 }

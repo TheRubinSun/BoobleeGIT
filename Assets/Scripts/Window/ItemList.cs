@@ -29,12 +29,19 @@ public class ItemsList : MonoBehaviour
     private void InitializeItems()
     {
         if (items.Count == 0) items.Add(new Item(0, "item_none", 0, spriteList[0], Quality.None, ""));
-        items.Add(new Sword(1, "sword_gods_slayer", 1, spriteList[1], Quality.Legendary, "Good sword", false, 2, damageT.Cutting, 3, 10));
-        items.Add(new Gun(2, "gun_makarov", 1, spriteList[2], Quality.Rare, "Just simple pistol", false, 2, damageT.Cutting, 3, 10, 10));
-        items.Add(new Item(3, "item_meat", 100, spriteList[3], Quality.Common, "Testy meat"));
-
+        items.Add(new Sword(1, "sword_gods_slayer", 1, spriteList[1], Quality.Legendary, "___", false, 2, damageT.Cutting, 3, 10));
+        items.Add(new Gun(2, "gun_makarov", 1, spriteList[2], Quality.Rare, "___", false, 2, damageT.Cutting, 3, 10, 10));
+        items.Add(new Item(3, "item_meat", 100, spriteList[3], Quality.Common, "___"));
+        //LocalizaitedItems();
         DisplayItemList.Instance.DisplayItems(items);
         //PrintItemList();
+    }
+    public void LocalizaitedItems()
+    {
+        foreach (var item in items)
+        {
+            item.LocalizationItem();
+        }
     }
     public Item GetItemForName(string nameKey)
     {

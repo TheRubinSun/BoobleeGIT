@@ -38,9 +38,9 @@ public class DisplayInfo: MonoBehaviour
         iconItem.sprite = item.Sprite;
         
         string colorName = "#" + ColorUtility.ToHtmlStringRGBA(item.GetColor());
-        nameItem.text =  $"<size=8>{item.GetLocalizationName()}</size>\n<size=7><color={colorName}>{item.quality}</color></size>";
+        nameItem.text =  $"<size=8>{item.Name}</size>\n<size=7><color={colorName}>{item.quality}</color></size>";
 
-        string info = item.TypeItem.ToString();
+        string info = "Тип: " + item.TypeItem.ToString();
         if(item is Weapon weapon)
         {
             info += "\nОружие";

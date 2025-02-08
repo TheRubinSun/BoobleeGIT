@@ -10,7 +10,7 @@ public class EnemyControl: MonoBehaviour
     private Collider2D selfCollider;
     private EnemySetting enemySetting;
 
-    [SerializeField] Transform player;
+    public Transform player;
     [SerializeField] private LayerMask obstacleLayer; // Слой для препятствий (стены и игрок)
 
     private void Start()
@@ -18,6 +18,7 @@ public class EnemyControl: MonoBehaviour
         selfCollider = GetComponent<Collider2D>();
         enemySetting = GetComponent<EnemySetting>();
 
+        //player = GameObject.FindGameObjectWithTag("Player").transform;
         moveDirection = (player.position - transform.position).normalized;
     }
     void Update()
@@ -61,7 +62,7 @@ public class EnemyControl: MonoBehaviour
         {
             moveDirection = Vector2.Perpendicular(toPlayer).normalized;
             RotateTowardsMovementDirection(moveDirection);
-            Debug.Log("Rotate");
+            //Debug.Log("Rotate");
         }
         else
         {

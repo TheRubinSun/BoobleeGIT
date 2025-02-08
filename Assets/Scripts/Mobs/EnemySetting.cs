@@ -21,7 +21,7 @@ public class EnemySetting : MonoBehaviour
     void LoadParametrs()
     {
         mob = EnemyList.Instance.mobs[IdMobs];
-        name = mob.Name;
+        name = mob.NameKey;
         hp = mob.Hp;
         attackRange = mob.rangeAttack;
         speed = mob.speed;

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum TypeItem
@@ -23,6 +24,7 @@ public class Item
     public int Id { get; set; }
     public TypeItem TypeItem { get; set; }
     public string NameKey { get; set; }
+    public string Name { get; set; }
     public int MaxCount { get; set; }
     public Sprite Sprite { get; set; }
     public Quality quality { get; set; }
@@ -75,25 +77,45 @@ public class Item
                 }
         }
     }
-    public string GetLocalizationName()
+    //public string GetLocalizationName()
+    //{
+    //    if (LocalizationManager.Instance != null)
+    //    {
+    //        string localizedName = LocalizationManager.Instance.GetLocalizedValue("items",NameKey);
+    //        if (!string.IsNullOrEmpty(localizedName))
+    //        {
+    //            return localizedName;
+    //        }
+    //        else
+    //        {
+    //            Debug.LogWarning($"Локализация для ключа {NameKey} не найдена.");
+    //            return NameKey; // Возвращаем ключ, если локализация отсутствует
+    //        }
+    //    }
+    //    else
+    //    {
+    //        Debug.LogWarning("LocalizationManager нет на сцене.");
+    //        return NameKey; // Возвращаем ключ, если LocalizationManager не найден
+    //    }
+    //}
+    public void LocalizationItem()
     {
         if (LocalizationManager.Instance != null)
         {
-            string localizedName = LocalizationManager.Instance.GetLocalizedValue(NameKey);
-            if (!string.IsNullOrEmpty(localizedName))
+            Dictionary<string, string> localized = LocalizationManager.Instance.GetLocalizedValue("items", NameKey);
+            if (localized!=null)
             {
-                return localizedName;
+                Name = localized["Name"];
+                Description = localized["Description"];
             }
             else
             {
                 Debug.LogWarning($"Локализация для ключа {NameKey} не найдена.");
-                return NameKey; // Возвращаем ключ, если локализация отсутствует
             }
         }
         else
         {
             Debug.LogWarning("LocalizationManager нет на сцене.");
-            return NameKey; // Возвращаем ключ, если LocalizationManager не найден
         }
     }
 }

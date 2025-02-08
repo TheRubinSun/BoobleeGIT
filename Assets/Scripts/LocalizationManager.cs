@@ -5,11 +5,12 @@ using UnityEditor.Localization.Editor;
 using UnityEditor.U2D.Sprites;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
+using UnityEngine.Rendering;
 
 public class LocalizationManager:MonoBehaviour
 {
     public static LocalizationManager Instance;
-    private Dictionary<string, string> localizedText;
+    private Dictionary<string, Dictionary<string, Dictionary<string, string>>> localizedText;
     private string currentLanguage;
     private void Awake()
     {
@@ -39,30 +40,60 @@ public class LocalizationManager:MonoBehaviour
         if(File.Exists(filePath))
         {
             string dataAsJson = File.ReadAllText(filePath, System.Text.Encoding.UTF8);
-            Debug.Log(dataAsJson);
-            Dictionary<string, Dictionary<string,string>> allLanguages = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string,string>>>(dataAsJson);
+            //Debug.Log(dataAsJson);
 
-            if(allLanguages.ContainsKey(language))
+            Dictionary<string, Dictionary<string, Dictionary<string, Dictionary<string, string>>>> allLanguages = 
+                JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, Dictionary<string, Dictionary<string, string>>>>>(dataAsJson);
+
+            if (allLanguages.ContainsKey(language))
             {
                 localizedText = allLanguages[language];
             }
             else
             {
-                //Debug.LogWarning($"Язык {language} не найден, используется английский.");
+                Debug.LogWarning($"Язык {language} не найден, используется английский.");
                 localizedText = allLanguages["en"];
             }
+            UIControl.Instance.LocalizationTranslate();
         }
         else
         {
             Debug.LogError("Файл локализации не найден.");
         }
     }
-    public string GetLocalizedValue(string key)
+    private void SwitchLanguage()
     {
-        if(localizedText != null && localizedText.ContainsKey(key))
+        //Если язые изменился, то менять словарь текстовый
+        string selectedLanguage = LocalizationSettings.SelectedLocale.Identifier.Code;
+        if (selectedLanguage != currentLanguage) LoadLocalization(selectedLanguage);
+    }
+    public Dictionary<string, string> GetLocalizedValue(string type_value, string key)
+    {
+        SwitchLanguage(); //Проверка на смену языка
+        if (localizedText != null)
         {
-            return localizedText[key];
+            if(localizedText.ContainsKey(type_value))
+            {
+                if(localizedText[type_value].ContainsKey(key))
+                {
+                    return localizedText[type_value][key];
+                }
+                else
+                {
+                    Debug.LogWarningFormat("Ошибка локализации 102 {0}", key);
+                }
+            }
+            else
+            {
+                Debug.LogWarningFormat("Ошибка локализации 101 {0}", type_value);
+            }
         }
-        return $"[Missing: {key}]";
+        else
+        {
+            Debug.LogWarningFormat("Ошибка локализации 100");
+        }
+
+       
+        return null;
     }
 }

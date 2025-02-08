@@ -174,7 +174,7 @@ public class DragAndDrop:MonoBehaviour
         if (ItemD.sprite != null)
         {
             gameObject.GetComponent<SpriteRenderer>().sprite = ItemD.sprite;
-            gameObject.GetComponentInChildren<TextMeshPro>().text = $"{ItemD.item.GetLocalizationName()} ({ItemD.count})";
+            gameObject.GetComponentInChildren<TextMeshPro>().text = $"{ItemD.item.Name} ({ItemD.count})";
         }
         Destroy(tempSlot.SlotObj);
         dragItem = false;
@@ -196,7 +196,7 @@ public class DragAndDrop:MonoBehaviour
                     TextMeshPro textMeshPro = gameObject.GetComponentInChildren<TextMeshPro>();
                     if (textMeshPro != null)
                     {
-                        textMeshPro.text = $"{ItemD.item.GetLocalizationName()} ({ItemD.count})";
+                        textMeshPro.text = $"{ItemD.item.Name} ({ItemD.count})";
                     }
                     else
                     {
