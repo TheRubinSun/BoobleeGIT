@@ -17,7 +17,10 @@ public class Classes : MonoBehaviour
         }
         Instance = this;
 
-        roleClasses.Add("Shooter", new RoleClass(10, 0, 10, 10, 3, 10, 1));
+        if (!roleClasses.ContainsKey(name))
+        {
+            roleClasses.Add("Shooter", new RoleClass(10, 0, 10, 10, 3, 10, 1));
+        }
         roleClasses.Add("Mage", new RoleClass(10, 0, 10, 10, 10, 3, 1));
         roleClasses.Add("Warrior", new RoleClass(10, 0, 10, 10, 3, 10, 1));
     }
@@ -38,11 +41,9 @@ public class Classes : MonoBehaviour
 public class RoleClass
 {
     public float BonusRange { get; set; }
-
     public int BonusDamage { get; set; }
     public int BonusAttackSpeed { get; set; }
     public int BonusProjectileSpeed { get; set; }
-
     public int BonusSpeedMove { get; set; }
     public int BonusHp { get; set; }
     public int BonusDeffence { get; set; }

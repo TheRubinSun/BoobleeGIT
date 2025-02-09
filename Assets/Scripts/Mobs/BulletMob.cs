@@ -4,6 +4,7 @@ public class BulletMob : MonoBehaviour
 {
     // ¬рем€, через которое пул€ исчезнет (в секундах)
     public float destroyTime = 3f;
+    public int damage {  get; set; }
     private void Start()
     {
         // ”ничтожаем пулю через 'destroyTime' секунд
@@ -15,6 +16,7 @@ public class BulletMob : MonoBehaviour
     {
         if (collider.CompareTag("Player") || collider.CompareTag("Wall"))
         {
+            Player.Instance.TakeDamage(damage);
             Destroy(gameObject);
         }
     }

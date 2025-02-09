@@ -29,8 +29,8 @@ public class EnemyList: MonoBehaviour
         mobs.Clear();
         if (mobs.Count < 1)
         {
-            mobs.Add(new MeleMob("daizen_enem", 10, 0.5f, false, 3, 60, 1.5f));
-            mobs.Add(new RangeMob("rainger_enem", 5, 4f, true, 1, 30, 1f, bullet_Rainger, 10f));
+            mobs.Add(new MeleMob("daizen_enem", 10, 0.75f, false, 2, 45, 1.5f));
+            mobs.Add(new RangeMob("rainger_enem", 5, 4f, true, 1, 30, 1f, bullet_Rainger, 8f));
 
             DisplayMobsList.Instance.DisplayLinesMobs(mobs);
         }

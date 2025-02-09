@@ -20,6 +20,8 @@ public class DragAndDrop:MonoBehaviour
     [SerializeField] Transform ItemsOnMapLevel;
     [SerializeField] Transform player;
     [SerializeField] GameObject ItemDropPref;
+    [SerializeField] GameObject DragZone;
+
     private float RadiusPickUp { get; set; }
     //public int dragCountItem;
     public bool dragItem;     // Флаг перетаскивания
@@ -46,11 +48,13 @@ public class DragAndDrop:MonoBehaviour
         dragItem = false;
         RadiusPickUp = 1f;
         mouseOffset = new Vector2(0.4f, -0.4f);
+        
     }
     public void Drag(int numbSlot)
     {
         if (!dragItem) //Если нужно взять предмет
         {
+            
             oldSlot = Inventory.Instance.GetSlot(numbSlot); //Сохранем значения слота 
             if (oldSlot.Item.Id == 0) return; //Если выделяемый слот пуст (id = 0 пустой), то незачем его брать курсором
             tempSlot = new Slot(oldSlot.Item, oldSlot.Count); //Копируем данные клетки
@@ -59,6 +63,7 @@ public class DragAndDrop:MonoBehaviour
             Inventory.Instance.SetNone(oldSlot); //Очищаем клетку 
 
             dragItem = true; //Взяли предмет + в Update тащем за курсором
+            DragZone.SetActive(dragItem); //Включить возможность выбросить
         }
         else if(dragItem) //Если предмет взят
         {
@@ -74,10 +79,11 @@ public class DragAndDrop:MonoBehaviour
                         
                         tempSlot.Count = 0;
                         dragItem = false; //Отпускаем предмет
-                        //Inventory.Instance.UpdateSlotUI(tempSlot);  //Обновляем картинку в UI
+                        DragZone.SetActive(dragItem);  //Выкл возможность выбросить
+
                         Inventory.Instance.UpdateSlotUI(newSlot);  //Обновляем картинку в UI
                         Destroy(tempSlot.SlotObj);
-                        //Debug.Log("Действие: 1");
+
                         return;
                     }
                     else
@@ -118,6 +124,7 @@ public class DragAndDrop:MonoBehaviour
             }
             Destroy(tempSlot.SlotObj);
             dragItem = false; //Отпускаем предмет
+            DragZone.SetActive(dragItem);  //Выключить возможность выбросить
         }
     }
     public void DragHalfOrPutOne(int numbSlot)
@@ -137,6 +144,7 @@ public class DragAndDrop:MonoBehaviour
             Inventory.Instance.UpdateSlotUI(oldSlot);  //Обновляем картинку в UI
 
             dragItem = true;
+            DragZone.SetActive(dragItem);  //Включить возможность выбросить
         }
         else if (dragItem)
         {
@@ -157,6 +165,7 @@ public class DragAndDrop:MonoBehaviour
             {
                 Destroy(tempSlot.SlotObj);
                 dragItem = false;
+                DragZone.SetActive(dragItem);  //Выкл возможность выбросить
             }
             Inventory.Instance.UpdateSlotUI(tempSlot);  //Обновляем картинку в UI
             Inventory.Instance.UpdateSlotUI(newSlot);  //Обновляем картинку в UI
@@ -178,8 +187,8 @@ public class DragAndDrop:MonoBehaviour
         }
         Destroy(tempSlot.SlotObj);
         dragItem = false;
+        DragZone.SetActive(dragItem);
     }
-    public LayerMask targetLayer; // Слой, по которому фильтруются объекты
     public void PickUp()
     {
         foreach(Transform child in ItemsOnMapLevel)

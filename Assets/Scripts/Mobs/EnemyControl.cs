@@ -12,11 +12,21 @@ public class EnemyControl: MonoBehaviour
 
     public Transform player;
     [SerializeField] private LayerMask obstacleLayer; // Слой для препятствий (стены и игрок)
-
+    SpriteRenderer spriteRenderer;
+    SpriteRenderer spriteRendererChild;
+    Animator animatorChild;
     private void Start()
     {
         selfCollider = GetComponent<Collider2D>();
         enemySetting = GetComponent<EnemySetting>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        
+        if (this.transform.childCount > 0)
+        {
+            spriteRendererChild = this.transform.GetChild(0).GetComponent<SpriteRenderer>();
+            animatorChild = this.transform.GetChild(0).GetComponent<Animator>();
+        }
+        
 
         //player = GameObject.FindGameObjectWithTag("Player").transform;
         moveDirection = (player.position - transform.position).normalized;
@@ -29,6 +39,7 @@ public class EnemyControl: MonoBehaviour
     }
     private void SelfMove()
     {
+        Flipface();
         transform.position += (Vector3)moveDirection * enemySetting.speed * Time.deltaTime;
     }
     private void DetectDirection()
@@ -56,17 +67,30 @@ public class EnemyControl: MonoBehaviour
         }
         AvoidWall(wallDetected, toPlayer, distanceToPlayer);
     }
+    private void Flipface()
+    {
+        if (player == null) return; // Проверка на null
+
+        bool shouldFaceLeft = player.position.x < transform.position.x; // Игрок слева?
+
+        if (spriteRenderer.flipX != shouldFaceLeft) // Если нужно сменить направление
+        {
+            spriteRenderer.flipX = shouldFaceLeft;
+            if (spriteRendererChild != null)
+                spriteRendererChild.flipX = shouldFaceLeft;
+        }
+    }
     private void AvoidWall(bool wallDetected, Vector2 toPlayer, float distanceToPlayer)
     {
         if (wallDetected)
         {
             moveDirection = Vector2.Perpendicular(toPlayer).normalized;
-            RotateTowardsMovementDirection(moveDirection);
+            //RotateTowardsMovementDirection(moveDirection);
             //Debug.Log("Rotate");
         }
         else
         {
-            RotateTowardsMovementDirection(toPlayer);
+            //RotateTowardsMovementDirection(toPlayer);
             //if (enemySetting.isRanged)
             //{
             //    if (distanceToPlayer < enemySetting.attackRange)
@@ -110,29 +134,40 @@ public class EnemyControl: MonoBehaviour
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
     private float lastAttackTime = 0f; // Время последней атаки
-    private void Shoot()
-    {
-        GameObject bullet = Instantiate(enemySetting.bulletPrefab, this.transform);
-        bullet.transform.SetParent(transform.parent);
-        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-        if(rb != null)
-        {
-            rb.linearVelocity = transform.right * enemySetting.speedProjectile;
-        }
-
-
-    }
     void Attack()
     {
         // Проверяем, прошло ли достаточно времени для следующей атаки
         if (Time.time - lastAttackTime >= enemySetting.attackInterval)
         {
             // Выполняем атаку (выстрел)
+            if(animatorChild != null)
+            {
+                animatorChild.SetTrigger("Attack");
+            }
+
             if(enemySetting.isRanged) Shoot();
+            else MeleeAttack();
 
 
             // Обновляем время последней атаки
             lastAttackTime = Time.time;
         }
+    }
+    private void Shoot()
+    {
+        GameObject bullet = Instantiate(enemySetting.bulletPrefab, this.transform);
+        bullet.transform.SetParent(transform.parent);
+        bullet.GetComponent<BulletMob>().damage = enemySetting.damage;
+        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.linearVelocity = transform.right * enemySetting.speedProjectile;
+        }
+
+
+    }
+    private void MeleeAttack()
+    {
+        Player.Instance.TakeDamage(enemySetting.damage);
     }
 }

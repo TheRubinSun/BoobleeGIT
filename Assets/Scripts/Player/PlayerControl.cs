@@ -1,45 +1,33 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerControl : MonoBehaviour 
 {
-    //Характеристики
-    [SerializeField] private int Speed { get; set; }
-    [SerializeField] public float Range { get; set; }
-    [SerializeField] public int Damage { get; set; }
-    [SerializeField] public int AttackSpeed { get; set; }
-    [SerializeField] public int ProjectileSpeed { get; set; }
-    [SerializeField] public int SpeedMove { get; set; }
-    [SerializeField] public int Deffence { get; set; }
-
+    Player player;
     //Объекты игрока
-    [SerializeField] GameObject player;
+    [SerializeField] GameObject playerObj;
     [SerializeField] Transform cameraObj;
     [SerializeField] GameObject hand;
     [SerializeField] Transform centerLegs;
     [SerializeField] Transform[] legsLines;
     [SerializeField] Transform[] legsCenter;
 
-    //Компоненты игрока
-    //private Rigidbody2D rb;
-    private RoleClass classPlayer;
+    [SerializeField] private float radiusHand = 0.4f;                // Радиус области
+    [SerializeField] private float radiusCenterLegs = 0.4f;                // Радиус области
 
     //Напрвеления и радиусы
     [SerializeField] private Vector2 inputDirection;
     Vector2 movement;
     Vector2 mousePos;
     Vector2 direction;
-    [SerializeField] private float radiusHand = 0.4f;                // Радиус области
-    [SerializeField] private float radiusCenterLegs = 0.4f;                // Радиус области
-
     void Start()
     {
-        RoleClass rc = Classes.Instance.GetRoleClass("Shooter");
-        Speed = rc.BonusSpeedMove;
+        player = GetComponentInParent<Player>();
+
         //rb = GetComponent<Rigidbody2D>();
-    } 
+    }
     private void Update()
     {
-        cameraObj.position = new Vector3(transform.position.x,transform.position.y, -10f);
+        cameraObj.position = new Vector3(transform.position.x, transform.position.y, -10f);
         inputDirection.x = Input.GetAxisRaw("Horizontal");
         inputDirection.y = Input.GetAxisRaw("Vertical");
         if (inputDirection.x != 0 || inputDirection.y != 0) Move();
@@ -48,7 +36,7 @@ public class Player : MonoBehaviour
     public void Move()
     {
         //movement = inputDirection.normalized * Speed * Time.fixedDeltaTime;
-        transform.position += (Vector3)inputDirection.normalized * Speed * Time.deltaTime;
+        transform.position += (Vector3)inputDirection.normalized * player.Mov_Speed * Time.deltaTime;
         //rb.MovePosition(rb.position + movement);
 
         foreach (Transform legsLine in legsLines)

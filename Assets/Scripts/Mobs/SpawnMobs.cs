@@ -25,8 +25,16 @@ public class SpawnMobs : MonoBehaviour
     }
     private void Start()
     {
-        daizen_prefab.GetComponent<EnemyControl>().player = player;
-        rainger_prefab.GetComponent<EnemyControl>().player = player;
+        if(player != null)
+        {
+            daizen_prefab.GetComponent<EnemyControl>().player = player;
+            rainger_prefab.GetComponent<EnemyControl>().player = player;
+        }
+        else
+        {
+            player = GameObject.FindGameObjectWithTag("Player").transform;
+            Start();
+        }
     }
     public void SpawnMobsBut(int id)
     {
