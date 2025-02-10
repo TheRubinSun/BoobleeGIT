@@ -17,7 +17,7 @@ public class PlayerControl : MonoBehaviour
     //Напрвеления и радиусы
     [SerializeField] private Vector2 inputDirection;
     Vector2 movement;
-    Vector2 mousePos;
+    //Vector2 mousePos;
     Vector2 direction;
     void Start()
     {
@@ -31,7 +31,7 @@ public class PlayerControl : MonoBehaviour
         inputDirection.x = Input.GetAxisRaw("Horizontal");
         inputDirection.y = Input.GetAxisRaw("Vertical");
         if (inputDirection.x != 0 || inputDirection.y != 0) Move();
-        MoveHand();
+        //MoveHand();
     }
     public void Move()
     {
@@ -65,15 +65,15 @@ public class PlayerControl : MonoBehaviour
             centerLegs.localPosition = newPos;
         }
     }
-    public void MoveHand()
-    {
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        // Вычисляем направление и ограничиваем позицию радиусом
-        direction = mousePos - (Vector2)transform.position;
-        if (direction.magnitude > radiusHand)
-        {
-            mousePos = (Vector2)transform.position + direction.normalized * radiusHand;
-        }
-        hand.transform.position = Vector3.MoveTowards(hand.transform.position, mousePos, 1f);
-    }
+    //public void MoveHand()
+    //{
+    //    mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    //    // Вычисляем направление и ограничиваем позицию радиусом
+    //    direction = mousePos - (Vector2)transform.position;
+    //    if (direction.magnitude > radiusHand)
+    //    {
+    //        mousePos = (Vector2)transform.position + direction.normalized * radiusHand;
+    //    }
+    //    hand.transform.position = Vector3.MoveTowards(hand.transform.position, mousePos, 1f);
+    //}
 }

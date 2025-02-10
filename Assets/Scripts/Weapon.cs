@@ -27,7 +27,7 @@ public abstract class Weapon : Item
         this.typeDamage = typeDamage;
         this.damage = damage;
         this.attackSpeed = attackSpeed;
-        
+        this.TypeItem = TypeItem.Weapon;
     }
 
     public abstract void Attack();
@@ -38,7 +38,6 @@ public class Gun : Weapon
     public Gun(int id, string name, int maxCount, Sprite sprite, Quality quality, string decription, bool rangeType, float range, damageT typeDamage, int damage, int attackSpeed, int projectileSpeed): base(id, name, maxCount, sprite, quality, decription, rangeType, range, typeDamage, damage, attackSpeed)
     {
         this.projectileSpeed = projectileSpeed;
-        this.TypeItem = TypeItem.Gun;
     }
     public override void Attack()
     {
@@ -49,7 +48,7 @@ public class Sword: Weapon
 {
     public Sword(int id, string name, int maxCount, Sprite sprite, Quality quality, string decription, bool rangeType, float range, damageT typeDamage, int damage, int attackSpeed) : base(id, name, maxCount, sprite, quality, decription, rangeType, range, typeDamage, damage, attackSpeed)
     {
-        this.TypeItem = TypeItem.Weapon;
+
     }
     public override void Attack()
     {

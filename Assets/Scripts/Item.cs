@@ -5,8 +5,10 @@ public enum TypeItem
 {
     None,
     Weapon,
-    Gun,
+    Arrmor,
     Food,
+    Potion,
+    Material,
     Other
 }
 public enum Quality
@@ -77,27 +79,6 @@ public class Item
                 }
         }
     }
-    //public string GetLocalizationName()
-    //{
-    //    if (LocalizationManager.Instance != null)
-    //    {
-    //        string localizedName = LocalizationManager.Instance.GetLocalizedValue("items",NameKey);
-    //        if (!string.IsNullOrEmpty(localizedName))
-    //        {
-    //            return localizedName;
-    //        }
-    //        else
-    //        {
-    //            Debug.LogWarning($"Локализация для ключа {NameKey} не найдена.");
-    //            return NameKey; // Возвращаем ключ, если локализация отсутствует
-    //        }
-    //    }
-    //    else
-    //    {
-    //        Debug.LogWarning("LocalizationManager нет на сцене.");
-    //        return NameKey; // Возвращаем ключ, если LocalizationManager не найден
-    //    }
-    //}
     public void LocalizationItem()
     {
         if (LocalizationManager.Instance != null)

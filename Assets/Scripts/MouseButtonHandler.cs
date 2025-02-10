@@ -13,13 +13,13 @@ public class MouseButtonHandler : MonoBehaviour, IPointerClickHandler
         {
             if (eventData.button == PointerEventData.InputButton.Left) // Левая кнопка
             {
-                DragAndDrop.Instance.Drag(GetNumbSlot());
+                DragAndDrop.Instance.Drag(GetNumbSlot(), "Inventory");
 
                 //Debug.Log("Left click on item: ");
             }
             else if (eventData.button == PointerEventData.InputButton.Right) // Правая кнопка
             {
-                DragAndDrop.Instance.DragHalfOrPutOne(GetNumbSlot());
+                DragAndDrop.Instance.DragHalfOrPutOne(GetNumbSlot(), "Inventory");
                 //Debug.Log("Right click on item: ");
             }
         }
@@ -29,6 +29,20 @@ public class MouseButtonHandler : MonoBehaviour, IPointerClickHandler
             {
                 DragAndDrop.Instance.DropItem();
                 //Debug.Log("Left click item on DropZone: ");
+            }
+        }
+        else if (gameObject.tag == "SlotEquip")
+        {
+            if (eventData.button == PointerEventData.InputButton.Left) // Левая кнопка
+            {
+                DragAndDrop.Instance.Drag(GetNumbSlot(), "Equip");
+
+                //Debug.Log("Left click on item: ");
+            }
+            else if (eventData.button == PointerEventData.InputButton.Right) // Правая кнопка
+            {
+                DragAndDrop.Instance.DragHalfOrPutOne(GetNumbSlot(), "Equip");
+                //Debug.Log("Right click on item: ");
             }
         }
     }

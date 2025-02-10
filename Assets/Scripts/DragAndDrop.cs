@@ -50,12 +50,13 @@ public class DragAndDrop:MonoBehaviour
         mouseOffset = new Vector2(0.4f, -0.4f);
         
     }
-    public void Drag(int numbSlot)
+    public void Drag(int numbSlot, string typeSlot)
     {
         if (!dragItem) //Если нужно взять предмет
         {
-            
-            oldSlot = Inventory.Instance.GetSlot(numbSlot); //Сохранем значения слота 
+            if(typeSlot == "Inventory") oldSlot = Inventory.Instance.GetSlot(numbSlot); //Сохранем значения слота 
+            else if(typeSlot == "Equip") oldSlot = EqupmentPlayer.Instance.GetSlot(numbSlot); //Сохранем значения слота 
+
             if (oldSlot.Item.Id == 0) return; //Если выделяемый слот пуст (id = 0 пустой), то незачем его брать курсором
             tempSlot = new Slot(oldSlot.Item, oldSlot.Count); //Копируем данные клетки
             tempSlot.SlotObj = Instantiate(tempSlotPrefab, parentInventory); //Определяем картинку и текст в объекте
@@ -67,9 +68,17 @@ public class DragAndDrop:MonoBehaviour
         }
         else if(dragItem) //Если предмет взят
         {
-            newSlot = Inventory.Instance.GetSlot(numbSlot); //Сохранем значения еще одного слота
+
+            if (typeSlot == "Inventory") newSlot = Inventory.Instance.GetSlot(numbSlot); //Сохранем значения слота 
+            else if (typeSlot == "Equip")
+            {
+                newSlot = EqupmentPlayer.Instance.GetSlot(numbSlot); //Сохранем значения слота 
+                if (newSlot.itemFilter != tempSlot.Item.TypeItem) return;
+            }
+
             if (oldSlot.SlotObj != newSlot.SlotObj) //Сравниваем не тот ли же самый слот
             {
+                //Если временный слот имеет такой же предмет и есть место, то можно доложить (даже не полностью)
                 if (tempSlot.Item.Id == newSlot.Item.Id && newSlot.Count < newSlot.Item.MaxCount)
                 {
                     if (newSlot.Count + tempSlot.Count <= newSlot.Item.MaxCount)
@@ -127,12 +136,14 @@ public class DragAndDrop:MonoBehaviour
             DragZone.SetActive(dragItem);  //Выключить возможность выбросить
         }
     }
-    public void DragHalfOrPutOne(int numbSlot)
+    public void DragHalfOrPutOne(int numbSlot, string typeSlot)
     {
         if (!dragItem)
         {
             //Тут делим предмет на 2 части и (создаем одну из половин на курсоре)
-            oldSlot = Inventory.Instance.GetSlot(numbSlot); //Сохранем значения слота 
+            if (typeSlot == "Inventory") oldSlot = Inventory.Instance.GetSlot(numbSlot); //Сохранем значения слота 
+            else if (typeSlot == "Equip") oldSlot = EqupmentPlayer.Instance.GetSlot(numbSlot); //Сохранем значения слота 
+
             if (oldSlot.Item.Id == 0) return; //Если выделяемый слот пуст (id = 0 пустой), то незачем его брать курсором
             if (oldSlot.Count < 2) return; //Если значение один или меньше, его не нужно делить
 
@@ -149,7 +160,13 @@ public class DragAndDrop:MonoBehaviour
         else if (dragItem)
         {
             //Кладём в пустую ячейку по одному или в ячейку того же тима предмета с свободным слотом
-            newSlot = Inventory.Instance.GetSlot(numbSlot); //Сохранем значения еще одного слота
+            if (typeSlot == "Inventory") newSlot = Inventory.Instance.GetSlot(numbSlot); //Сохранем значения еще одного слота
+            else if (typeSlot == "Equip")
+            {
+                newSlot = EqupmentPlayer.Instance.GetSlot(numbSlot); //Сохранем значения слота 
+                if (newSlot.itemFilter != tempSlot.Item.TypeItem) return;
+            }
+
             if (newSlot.Item.Id == 0)
             {
                 newSlot.Item = tempSlot.Item;

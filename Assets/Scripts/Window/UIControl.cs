@@ -9,9 +9,11 @@ public class UIControl:MonoBehaviour
     [SerializeField] GameObject inventoryWindow;
     [SerializeField] GameObject allItemsWindow;
     [SerializeField] GameObject allMobsWindow;
+    [SerializeField] GameObject infoPlayerWindow;
     bool invIsOpened;
     bool itemsIsOpened;
     bool mobsIsOpened;
+    bool infoPlayerIsOpened;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -35,6 +37,10 @@ public class UIControl:MonoBehaviour
         {
             OpenListMobs();
         }
+        else if (Input.GetKeyDown(KeyCode.P))
+        {
+            OpenInfoPlayer();
+        }
         else if(Input.GetKeyDown(KeyCode.Z))
         {
             LocalizationTranslate();
@@ -43,6 +49,7 @@ public class UIControl:MonoBehaviour
         {
             DragAndDrop.Instance.PickUp();
         }
+
 
     }
     public void OpenInventory()
@@ -84,6 +91,19 @@ public class UIControl:MonoBehaviour
         else
         {
             allMobsWindow.SetActive(false);
+        }
+    }
+    public void OpenInfoPlayer()
+    {
+        mobsIsOpened = !mobsIsOpened;
+        if (mobsIsOpened)
+        {
+
+            infoPlayerWindow.SetActive(true);
+        }
+        else
+        {
+            infoPlayerWindow.SetActive(false);
         }
     }
     public void LocalizationTranslate()

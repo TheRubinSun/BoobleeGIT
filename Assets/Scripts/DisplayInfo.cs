@@ -27,11 +27,26 @@ public class DisplayInfo: MonoBehaviour
     }
     public void SetActive(bool turn)
     {
-        this.SetActive(turn);
+        gameObject.SetActive(turn);
     }
-    public void UpdateInfo(int numbSlot)
+    public void UpdateInfo(int numbSlot, string TypeSlot)
     {
-        Item item = Inventory.Instance.GetSlot(numbSlot).Item;
+        Item item;
+        if (TypeSlot == "Inventroy")
+        {
+            item = Inventory.Instance.GetSlot(numbSlot).Item;
+        }
+        else if(TypeSlot == "Equip")
+        {
+            item = EqupmentPlayer.Instance.GetSlot(numbSlot).Item;
+        }
+        else
+        {
+            //Чтобы не ругался, по сути безполезный (Нужно условие указать)
+            item = Inventory.Instance.GetSlot(numbSlot).Item;
+        }
+        
+                
 
         if (item == null || item.Id == 0) return;
 

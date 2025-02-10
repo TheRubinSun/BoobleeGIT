@@ -9,6 +9,7 @@ TagManager:
   - Drop
   - Enemy
   - Wall
+  - SlotEquip
   layers:
   - Default
   - TransparentFX
@@ -23,8 +24,8 @@ TagManager:
   - Obstacles
   - Wall
   - Text
-  - 
-  - 
+  - Projectile
+  - Enemy
   - 
   - 
   - 

@@ -7,11 +7,23 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerEnter(PointerEventData eventData)
     {
         //Debug.Log("Мышь наведена на кнопку!");
-        if(Inventory.Instance.GetSlot(GetNumbSlot()).Item.Id != 0)
+        if(CompareTag("Slot"))
         {
-            Inventory.Instance.InfoPanel.gameObject.SetActive(true);
-            DisplayInfo.Instance.UpdateInfo(GetNumbSlot());
+            if (Inventory.Instance.GetSlot(GetNumbSlot()).Item.Id != 0)
+            {
+                Inventory.Instance.InfoPanel.gameObject.SetActive(true);
+                DisplayInfo.Instance.UpdateInfo(GetNumbSlot(), "Inventory");
+            }
         }
+        else if(CompareTag("SlotEquip"))
+        {
+            if (EqupmentPlayer.Instance.GetSlot(GetNumbSlot()).Item.Id != 0)
+            {
+                Inventory.Instance.InfoPanel.gameObject.SetActive(true);
+                DisplayInfo.Instance.UpdateInfo(GetNumbSlot(), "Equip");
+            }
+        }
+
 
     }
 
@@ -19,9 +31,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         //Debug.Log("Мышь ушла с кнопки!");
         //DisplayInfo.Instance.ClearInfo();
-
         Inventory.Instance.InfoPanel.gameObject.SetActive(false);
-        
     }
     int GetNumbSlot()
     {

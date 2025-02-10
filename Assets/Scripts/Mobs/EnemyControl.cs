@@ -11,10 +11,13 @@ public class EnemyControl: MonoBehaviour
     private EnemySetting enemySetting;
 
     public Transform player;
+    [SerializeField] Transform ShootPoint;
+
     [SerializeField] private LayerMask obstacleLayer; // Слой для препятствий (стены и игрок)
     SpriteRenderer spriteRenderer;
     SpriteRenderer spriteRendererChild;
-    Animator animatorChild;
+    Animator animator;
+
     private void Start()
     {
         selfCollider = GetComponent<Collider2D>();
@@ -24,7 +27,7 @@ public class EnemyControl: MonoBehaviour
         if (this.transform.childCount > 0)
         {
             spriteRendererChild = this.transform.GetChild(0).GetComponent<SpriteRenderer>();
-            animatorChild = this.transform.GetChild(0).GetComponent<Animator>();
+            animator = GetComponent<Animator>();
         }
         
 
@@ -140,34 +143,58 @@ public class EnemyControl: MonoBehaviour
         if (Time.time - lastAttackTime >= enemySetting.attackInterval)
         {
             // Выполняем атаку (выстрел)
-            if(animatorChild != null)
+            if (animator != null)
             {
-                animatorChild.SetTrigger("Attack");
+                animator.SetTrigger("Attack");
             }
 
-            if(enemySetting.isRanged) Shoot();
-            else MeleeAttack();
-
+            //if (enemySetting.isRanged); //Shoot();
+            //else MeleeAttack();
 
             // Обновляем время последней атаки
             lastAttackTime = Time.time;
         }
     }
-    private void Shoot()
+
+    public void ShootArrowOne()
     {
-        GameObject bullet = Instantiate(enemySetting.bulletPrefab, this.transform);
+        GameObject bullet;
+        Vector2 direction;
+
+        //Стреляет из определенной точки или из центра моба
+        if (ShootPoint != null)
+        {
+            bullet = Instantiate(enemySetting.bulletPrefab, ShootPoint);
+            direction = (player.position - ShootPoint.position).normalized;
+        }
+        else
+        {
+            bullet = Instantiate(enemySetting.bulletPrefab, this.transform);
+            direction = (player.position - transform.position).normalized;
+        }
+
+        //Подять в иерархии объекта пули/стрелы
         bullet.transform.SetParent(transform.parent);
+
+        //Устанавливаем урон снаряду
         bullet.GetComponent<BulletMob>().damage = enemySetting.damage;
+
+        // Получаем направление к игроку
+        
+        // Устанавливаем поворот стрелы в сторону игрока
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        bullet.transform.rotation = Quaternion.Euler(0,0,angle);
+
+        //Запускаем снаряд
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
-            rb.linearVelocity = transform.right * enemySetting.speedProjectile;
+            rb.linearVelocity = direction * enemySetting.speedProjectile;
         }
-
-
     }
-    private void MeleeAttack()
+    private void MeleeAttackOne()
     {
+
         Player.Instance.TakeDamage(enemySetting.damage);
     }
 }

@@ -222,7 +222,7 @@ public class Slot
     public int Count { get; set; }
     //public int MaxCount { get; set; }
     public GameObject SlotObj { get; set; }
-
+    public TypeItem itemFilter { get; set; }
     public Slot(Item item, GameObject slotObject)
     {
         Item = item;
@@ -234,5 +234,11 @@ public class Slot
     {
         Item = item;
         Count = count;
+    }
+    public Slot(Item item, GameObject slotObject, TypeItem _itemFilter)
+    {
+        Item = item;
+        SlotObj = slotObject;
+        itemFilter = _itemFilter;
     }
 }
