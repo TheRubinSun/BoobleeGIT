@@ -5,7 +5,7 @@ public enum TypeItem
 {
     None,
     Weapon,
-    Arrmor,
+    Armor,
     Food,
     Potion,
     Material,
@@ -31,10 +31,10 @@ public class Item
     public Sprite Sprite { get; set; }
     public Quality quality { get; set; }
     public string Description { get; set; }
-    public Item(int id, string name, int maxCount, Sprite sprite,Quality quality, string description)
+    public Item(int id, string name, int maxCount, Sprite sprite,Quality quality, string description, TypeItem typeItem = TypeItem.Other)
     {
         Id = id;
-        TypeItem = TypeItem.Other;
+        TypeItem = typeItem;
         NameKey = name;
         MaxCount = maxCount;
         Sprite = sprite;

@@ -34,10 +34,13 @@ public abstract class Weapon : Item
 }
 public class Gun : Weapon
 {
-    public int projectileSpeed { get; private set; }
-    public Gun(int id, string name, int maxCount, Sprite sprite, Quality quality, string decription, bool rangeType, float range, damageT typeDamage, int damage, int attackSpeed, int projectileSpeed): base(id, name, maxCount, sprite, quality, decription, rangeType, range, typeDamage, damage, attackSpeed)
+    public float projectileSpeed { get; private set; }
+    public int idBulletPref {  get; private set; }
+    public Gun(int id, string name, int maxCount, Sprite sprite, Quality quality, string decription, bool rangeType, float range, damageT typeDamage, int damage, int attackSpeed, float _projectileSpeed, int _idBulletPref) : base(id, name, maxCount, sprite, quality, decription, rangeType, range, typeDamage, damage, attackSpeed)
     {
-        this.projectileSpeed = projectileSpeed;
+        projectileSpeed = _projectileSpeed;
+        idBulletPref = _idBulletPref;
+        
     }
     public override void Attack()
     {

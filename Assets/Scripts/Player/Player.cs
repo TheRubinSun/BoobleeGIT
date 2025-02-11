@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -17,13 +18,15 @@ public class Player : MonoBehaviour
 
     public float Att_Range;
     public int Att_Damage;
-    public int Att_Spaeed;
+    public int Att_Speed;
     public int Proj_Speed;
 
+
+    private Dictionary<int, WeaponControl> WeaponsObj = new Dictionary<int, WeaponControl>();
     //Компоненты игрока
     private RoleClass classPlayer;
     [SerializeField] GameObject PlayerModel;
-
+    
     //UI
     [SerializeField] Transform hp_bar;
     Image cur_hp_image;
@@ -46,15 +49,25 @@ public class Player : MonoBehaviour
         hpRect = hp_bar.GetComponent<RectTransform>();
         player_sprite = PlayerModel.GetComponent<SpriteRenderer>();
 
+
         RoleClass rc = Classes.Instance.GetRoleClass("Shooter");
         Mov_Speed = rc.BonusSpeedMove;
         Max_Hp = rc.BonusHp;
 
+        Att_Speed = rc.BonusAttackSpeed;
 
 
         Cur_Hp = Max_Hp;
         UpdateHpBar();
         UpdateSizeHpBar();
+    }
+    public Dictionary<int, WeaponControl> GetDictWeaponAndArms()
+    {
+        return WeaponsObj;
+    }
+    public void SetWeaponsObj(int i, WeaponControl weaponObj)
+    {
+        WeaponsObj[i] = weaponObj;
     }
     public void UpdateHpBar()
     {

@@ -22,6 +22,7 @@ public class UIControl:MonoBehaviour
             return;
         }
         Instance = this;
+        WeaponDatabase.LoadWeapons();
     }
     private void Update()
     {
@@ -118,5 +119,13 @@ public class UIControl:MonoBehaviour
             Debug.LogWarning("Нечего переводить");
         }
 
+    }
+    public void LoadData()
+    {
+        WeaponDatabase.LoadWeapons();
+        GameObject gameObject1 = WeaponDatabase.GetWeaponPrefab(0);
+        GameObject gameObject2 = WeaponDatabase.GetWeaponPrefab(1);
+        Debug.Log($"Объект 1: {gameObject1.name}");
+        Debug.Log($"Объект 2: {gameObject2.name}");
     }
 }

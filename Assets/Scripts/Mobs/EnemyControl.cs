@@ -63,7 +63,7 @@ public class EnemyControl: MonoBehaviour
                 wallDetected = true;
             }
             // Если луч попал в игрока, игнорируем
-            else if (hit.transform.CompareTag("Player"))
+            else if (hit.transform.CompareTag("Player") || hit.transform.CompareTag("Enemy"))
             {
                 wallDetected = false;
             }
@@ -116,7 +116,12 @@ public class EnemyControl: MonoBehaviour
 
             if (distanceToPlayer < enemySetting.attackRange && finalCheck.collider != null && finalCheck.transform.CompareTag("Player"))
             {
-                moveDirection = -toPlayer.normalized;
+                moveDirection = Vector2.zero;
+                if (distanceToPlayer < enemySetting.attackRange * 0.6f)
+                {
+                    moveDirection = -toPlayer.normalized;
+                }
+                
                 Attack();
             }
             else

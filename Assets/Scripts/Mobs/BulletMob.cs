@@ -10,11 +10,11 @@ public class BulletMob : MonoBehaviour
     private void Awake()
     {
         // Игнорируем столкновения между пулями и врагами (глобально)
-        if (!collisionIgnored)
-        {
-            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Projectile"), LayerMask.NameToLayer("Enemy"));
-            collisionIgnored = true;
-        }
+        //if (!collisionIgnored)
+        //{
+        //    Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Projectile"), LayerMask.NameToLayer("Projectile"));
+        //    collisionIgnored = true;
+        //}
     }
     private void Start()
     {

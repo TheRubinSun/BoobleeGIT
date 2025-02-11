@@ -12,7 +12,7 @@ public class DragAndDrop:MonoBehaviour
 
     
 
-    public Transform parentInventory;
+    public Transform parentUI;
 
     Slot tempSlot; // Перетаскиваемый слот
     public GameObject tempSlotPrefab;     // префаб нового итема
@@ -59,7 +59,7 @@ public class DragAndDrop:MonoBehaviour
 
             if (oldSlot.Item.Id == 0) return; //Если выделяемый слот пуст (id = 0 пустой), то незачем его брать курсором
             tempSlot = new Slot(oldSlot.Item, oldSlot.Count); //Копируем данные клетки
-            tempSlot.SlotObj = Instantiate(tempSlotPrefab, parentInventory); //Определяем картинку и текст в объекте
+            tempSlot.SlotObj = Instantiate(tempSlotPrefab, parentUI); //Определяем картинку и текст в объекте
             Inventory.Instance.UpdateSlotUI(tempSlot);  //Обновляем картинку в UI
             Inventory.Instance.SetNone(oldSlot); //Очищаем клетку 
 
@@ -75,7 +75,7 @@ public class DragAndDrop:MonoBehaviour
                 newSlot = EqupmentPlayer.Instance.GetSlot(numbSlot); //Сохранем значения слота 
                 if (newSlot.itemFilter != tempSlot.Item.TypeItem) return;
             }
-
+           
             if (oldSlot.SlotObj != newSlot.SlotObj) //Сравниваем не тот ли же самый слот
             {
                 //Если временный слот имеет такой же предмет и есть место, то можно доложить (даже не полностью)
@@ -135,6 +135,7 @@ public class DragAndDrop:MonoBehaviour
             dragItem = false; //Отпускаем предмет
             DragZone.SetActive(dragItem);  //Выключить возможность выбросить
         }
+        if (typeSlot == "Equip") EqupmentPlayer.Instance.PutOnEquip();
     }
     public void DragHalfOrPutOne(int numbSlot, string typeSlot)
     {
@@ -150,7 +151,7 @@ public class DragAndDrop:MonoBehaviour
             int dragCountItem = oldSlot.Count >> 1;              //Берем одну половину
             tempSlot = new Slot(oldSlot.Item, oldSlot.Count - dragCountItem); //Копируем данные клетки
             oldSlot.Count = dragCountItem;   //Оставляем вторую половину на старом слоте
-            tempSlot.SlotObj = Instantiate(tempSlotPrefab, parentInventory); //Определяем картинку и текст в объекте
+            tempSlot.SlotObj = Instantiate(tempSlotPrefab, parentUI); //Определяем картинку и текст в объекте
             Inventory.Instance.UpdateSlotUI(tempSlot);  //Обновляем картинку в UI
             Inventory.Instance.UpdateSlotUI(oldSlot);  //Обновляем картинку в UI
 
@@ -187,6 +188,7 @@ public class DragAndDrop:MonoBehaviour
             Inventory.Instance.UpdateSlotUI(tempSlot);  //Обновляем картинку в UI
             Inventory.Instance.UpdateSlotUI(newSlot);  //Обновляем картинку в UI
         }
+        if (typeSlot == "Equip") EqupmentPlayer.Instance.PutOnEquip();
     }
     public void DropItem()
     {

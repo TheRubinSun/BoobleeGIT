@@ -19,10 +19,11 @@ public class Classes : MonoBehaviour
 
         if (!roleClasses.ContainsKey(name))
         {
-            roleClasses.Add("Shooter", new RoleClass(10, 0, 10, 10, 3, 10, 1));
+            //Range damage at_speed proj_speed, move, hp, deff
+            roleClasses.Add("Shooter", new RoleClass(10, 0, 60, 10, 3, 10, 1));
         }
         roleClasses.Add("Mage", new RoleClass(10, 0, 10, 10, 10, 3, 1));
-        roleClasses.Add("Warrior", new RoleClass(10, 0, 10, 10, 3, 10, 1));
+        roleClasses.Add("Warrior", new RoleClass(10, 0, 60, 10, 3, 10, 1));
     }
 
     void Start()
@@ -33,7 +34,7 @@ public class Classes : MonoBehaviour
     {
         if (!roleClasses.ContainsKey(name))
         {
-            roleClasses.Add("Shooter", new RoleClass(10, 0, 10, 10, 3, 10, 1));
+            roleClasses.Add("Shooter", new RoleClass(10, 0, 30, 10, 3, 10, 1));
         }
         return roleClasses[name];
     }

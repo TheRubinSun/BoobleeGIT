@@ -29,8 +29,9 @@ public class EnemyList: MonoBehaviour
         mobs.Clear();
         if (mobs.Count < 1)
         {
-            mobs.Add(new MeleMob("daizen_enem", 10, 0.75f, false, 2, 45, 1.5f));
-            mobs.Add(new RangeMob("rainger_enem", 5, 4f, true, 1, 30, 1f, bullet_Rainger, 8f));
+            //             name hp range isRange damage attackSpeed speed
+            mobs.Add(new MeleMob("daizen_enem", 12, 0.75f, false, 2, 45, 1.5f));
+            mobs.Add(new RangeMob("rainger_enem", 8, 4f, true, 1, 30, 1f, bullet_Rainger, 8f));
 
             DisplayMobsList.Instance.DisplayLinesMobs(mobs);
         }
