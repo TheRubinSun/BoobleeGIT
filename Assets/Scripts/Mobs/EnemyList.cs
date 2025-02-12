@@ -30,8 +30,8 @@ public class EnemyList: MonoBehaviour
         if (mobs.Count < 1)
         {
             //             name hp range isRange damage attackSpeed speed
-            mobs.Add(new MeleMob("daizen_enem", 12, 0.75f, false, 2, 45, 1.5f));
-            mobs.Add(new RangeMob("rainger_enem", 8, 4f, true, 1, 30, 1f, bullet_Rainger, 8f));
+            mobs.Add(new MeleMob("daizen_enem", 10, 0.75f, false, 2, 45, 1.5f, 2));
+            mobs.Add(new RangeMob("rainger_enem", 6, 4f, true, 1, 30, 1f, bullet_Rainger, 8f, 3));
 
             DisplayMobsList.Instance.DisplayLinesMobs(mobs);
         }
@@ -78,8 +78,9 @@ public class Mob
     public int attackSpeed { get; set; }
     public float speed { get; set; }
     public string Description { get; set; }
+    public int GiveExp { get; set; }
 
-    public Mob(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed)
+    public Mob(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed, int giveExp)
     {
         NameKey = _name;
         Hp = _hp;
@@ -88,6 +89,7 @@ public class Mob
         damage = _damage;
         attackSpeed = _attackspeed;
         speed = _speed;
+        GiveExp = giveExp;
     }
     public virtual void Attack()
     {
@@ -141,7 +143,7 @@ public class RangeMob : Mob
     public GameObject PrefabBullet;
     public float SpeedProjectile { get; set; }
 
-    public RangeMob(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed, GameObject prefabBullet, float speedProjectile) : base(_name, _hp, _rangeAt, _isranged, _damage, _attackspeed, _speed)
+    public RangeMob(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed, GameObject prefabBullet, float speedProjectile, int giveExp) : base(_name, _hp, _rangeAt, _isranged, _damage, _attackspeed, _speed, giveExp)
     {
         this.PrefabBullet = prefabBullet;
         this.SpeedProjectile = speedProjectile;
@@ -153,7 +155,7 @@ public class RangeMob : Mob
 }
 public class MeleMob : Mob
 {
-    public MeleMob(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed) : base(_name, _hp, _rangeAt, _isranged, _damage, _attackspeed, _speed)
+    public MeleMob(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed, int giveExp) : base(_name, _hp, _rangeAt, _isranged, _damage, _attackspeed, _speed, giveExp)
     {
 
     }

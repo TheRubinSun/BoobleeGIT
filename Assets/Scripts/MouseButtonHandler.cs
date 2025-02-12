@@ -5,8 +5,6 @@ using UnityEngine.EventSystems;
 public class MouseButtonHandler : MonoBehaviour, IPointerClickHandler
 {
     // Этот метод вызывается при клике на объект с этим скриптом
-    //bool Drag = false;
-    //Transform dragObj;
     public void OnPointerClick(PointerEventData eventData)
     {
         if(gameObject.tag == "Slot")

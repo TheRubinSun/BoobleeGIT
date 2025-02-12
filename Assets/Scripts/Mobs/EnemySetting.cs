@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class EnemySetting : MonoBehaviour
 {
+    public static event Action<EnemySetting> OnEnemyDeath;
+
     public int IdMobs;
     private Mob mob;
     public string Name;
@@ -17,10 +20,12 @@ public class EnemySetting : MonoBehaviour
     public float attackInterval;
 
     public float speed;
+    public int GiveExp;
     public GameObject bulletPrefab { get; set; }
     public float speedProjectile;
 
     SpriteRenderer sr;
+    private bool IsDead;
     private void Start()
     {
         LoadParametrs();
@@ -29,7 +34,7 @@ public class EnemySetting : MonoBehaviour
     void LoadParametrs()
     {
         mob = EnemyList.Instance.mobs[IdMobs];
-        name = mob.NameKey;
+        Name = mob.NameKey;
         max_Hp = mob.Hp;
         cur_Hp = max_Hp;
         attackRange = mob.rangeAttack;
@@ -39,7 +44,8 @@ public class EnemySetting : MonoBehaviour
         attackSpeed = mob.attackSpeed;
         attackInterval  = 60f / attackSpeed;
         speed = mob.speed;
-        if(isRanged && mob is RangeMob rangeMob)
+        GiveExp = mob.GiveExp;
+        if (isRanged && mob is RangeMob rangeMob)
         {
             bulletPrefab = rangeMob.PrefabBullet;
             speedProjectile = rangeMob.SpeedProjectile;
@@ -73,7 +79,10 @@ public class EnemySetting : MonoBehaviour
     }
     private void Death()
     {
+        if (IsDead) return;
+        IsDead = true;
 
+        OnEnemyDeath?.Invoke(this);
         Destroy(gameObject);
 
     }

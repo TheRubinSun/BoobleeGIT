@@ -30,7 +30,7 @@ public class ItemsList : MonoBehaviour
     {
         if (items.Count == 0) items.Add(new Item(0, "item_none", 0, spriteList[0], Quality.None, ""));
         items.Add(new Sword(1, "sword_gods_slayer", 1, spriteList[1], Quality.Legendary, "___", false, 2, damageT.Cutting, 3, 10));
-        items.Add(new Gun(2, "gun_makarov", 1, spriteList[2], Quality.Rare, "___", true, 10f, damageT.Cutting, 1,1, 6f, 0));
+        items.Add(new Gun(2, "gun_makarov", 1, spriteList[2], Quality.Rare, "___", true, 10f, damageT.Cutting, 2,1, 6f, 0));
         items.Add(new Item(3, "item_meat", 20, spriteList[3], Quality.Common, "___"));
         items.Add(new Item(4, "item_potion_hp", 10, spriteList[4], Quality.Uncommon, "___", TypeItem.Potion));
         items.Add(new Item(5, "armor_armor", 1, spriteList[5], Quality.Common, "___", TypeItem.Armor));

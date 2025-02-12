@@ -21,17 +21,35 @@ public class Player : MonoBehaviour
     public int Att_Speed;
     public int Proj_Speed;
 
+    public int level;
+    private int freeSkillPoints;
+    private int cur_exp;
+    private int nextLvl_exp;
+
 
     private Dictionary<int, WeaponControl> WeaponsObj = new Dictionary<int, WeaponControl>();
     //Компоненты игрока
     private RoleClass classPlayer;
-    [SerializeField] GameObject PlayerModel;
+    [SerializeField] 
+    private GameObject PlayerModel;
     
     //UI
-    [SerializeField] Transform hp_bar;
-    Image cur_hp_image;
-    TextMeshProUGUI hp_text;
-    RectTransform hpRect;
+    [SerializeField] 
+    private Transform hp_bar;
+    private Image cur_hp_image;
+    private TextMeshProUGUI hp_text;
+    private RectTransform hpRect;
+
+    [SerializeField] 
+    private Transform exp_bar;
+    private Image cur_exp_image;
+    private TextMeshProUGUI exp_text;
+    private RectTransform expRect;
+
+    [SerializeField]
+    private Transform player_info_panel;
+    private TextMeshProUGUI text_player_info;
+
     SpriteRenderer player_sprite;
     private void Awake()
     {
@@ -44,9 +62,20 @@ public class Player : MonoBehaviour
     }
     private void Start()
     {
+        nextLvl_exp = 10;
+        level = 0;
+
+
         cur_hp_image = hp_bar.GetChild(1).GetComponent<Image>();
         hp_text = hp_bar.GetChild(2).GetComponent<TextMeshProUGUI>();
         hpRect = hp_bar.GetComponent<RectTransform>();
+
+        cur_exp_image = exp_bar.GetChild(1).GetComponent<Image>();
+        exp_text = exp_bar.GetChild(2).GetComponent<TextMeshProUGUI>();
+        expRect = exp_bar.GetComponent<RectTransform>();
+
+        text_player_info = player_info_panel.GetChild(0).GetComponent<TextMeshProUGUI>();
+
         player_sprite = PlayerModel.GetComponent<SpriteRenderer>();
 
 
@@ -60,6 +89,8 @@ public class Player : MonoBehaviour
         Cur_Hp = Max_Hp;
         UpdateHpBar();
         UpdateSizeHpBar();
+
+        UpdateExpBar();
     }
     public Dictionary<int, WeaponControl> GetDictWeaponAndArms()
     {
@@ -73,6 +104,11 @@ public class Player : MonoBehaviour
     {
         cur_hp_image.fillAmount = (float)Cur_Hp / Max_Hp;
         hp_text.text = $"{Cur_Hp} / {Max_Hp}";
+    }
+    public void UpdateExpBar()
+    {
+        cur_exp_image.fillAmount = (float)cur_exp / nextLvl_exp;
+        exp_text.text = $"{cur_exp} / {nextLvl_exp}";
     }
     public void TakeDamage(int damage)
     {
@@ -93,14 +129,17 @@ public class Player : MonoBehaviour
     public void AddMaxHP(int addMaxHp)
     {
         Max_Hp += addMaxHp;
+        Cur_Hp += addMaxHp;
+        UpdateHpBar();
         UpdateSizeHpBar();
     }
     public void UpdateSizeHpBar()
     {
-        if (Max_Hp < 1000)
+        if (Max_Hp <= 1000)
         {
             hpRect.sizeDelta = new Vector2(30f + Max_Hp / 3, 20f);
-            hpRect.anchoredPosition = new Vector2(30f + Max_Hp / 6, -20f);
+            hpRect.anchoredPosition = new Vector2(25.5f + Max_Hp / 6, -40f);
+            return;
         }
     }
     private void IsDeath()
@@ -111,5 +150,29 @@ public class Player : MonoBehaviour
             PlayerModel.SetActive(false);
         }
     }
+    public void AddExp(int add_exp)
+    {
+        cur_exp += add_exp;
+        if (isNewLevel())
+            LvlUp();
 
+        UpdateExpBar();
+    }
+    private bool isNewLevel()
+    {
+        if(cur_exp >= nextLvl_exp)
+        {
+            cur_exp -= nextLvl_exp;
+            nextLvl_exp = (int)((nextLvl_exp + 10) * 1.4f);
+            return true;
+        }
+        return false;
+    }
+    private void LvlUp()
+    {
+        level++;
+        freeSkillPoints++;
+        text_player_info.text = $"{level} lvl";
+        AddMaxHP(2);
+    }
 }
