@@ -18,9 +18,9 @@ public abstract class Weapon : Item
 
     public damageT typeDamage;
     public int damage { get; protected set; }
-    public int attackSpeed { get; protected set; }
+    public float attackSpeed { get; protected set; }
 
-    public Weapon(int id, string name, int maxCount, Sprite sprite, Quality quality, string decription, bool rangeType, float range, damageT typeDamage, int damage, int attackSpeed):base(id, name, maxCount, sprite, quality, decription)
+    public Weapon(int id, string name, int maxCount, Sprite sprite, Quality quality, string decription, bool rangeType, float range, damageT typeDamage, int damage, float attackSpeed):base(id, name, maxCount, sprite, quality, decription)
     {
         this.rangeType = rangeType;
         this.range = range;
@@ -36,7 +36,7 @@ public class Gun : Weapon
 {
     public float projectileSpeed { get; private set; }
     public int idBulletPref {  get; private set; }
-    public Gun(int id, string name, int maxCount, Sprite sprite, Quality quality, string decription, bool rangeType, float range, damageT typeDamage, int damage, int attackSpeed, float _projectileSpeed, int _idBulletPref) : base(id, name, maxCount, sprite, quality, decription, rangeType, range, typeDamage, damage, attackSpeed)
+    public Gun(int id, string name, int maxCount, Sprite sprite, Quality quality, string decription, bool rangeType, float range, damageT typeDamage, int damage, float attackSpeed, float _projectileSpeed, int _idBulletPref) : base(id, name, maxCount, sprite, quality, decription, rangeType, range, typeDamage, damage, attackSpeed)
     {
         projectileSpeed = _projectileSpeed;
         idBulletPref = _idBulletPref;
@@ -49,7 +49,7 @@ public class Gun : Weapon
 }
 public class Sword: Weapon
 {
-    public Sword(int id, string name, int maxCount, Sprite sprite, Quality quality, string decription, bool rangeType, float range, damageT typeDamage, int damage, int attackSpeed) : base(id, name, maxCount, sprite, quality, decription, rangeType, range, typeDamage, damage, attackSpeed)
+    public Sword(int id, string name, int maxCount, Sprite sprite, Quality quality, string decription, bool rangeType, float range, damageT typeDamage, int damage, float attackSpeed) : base(id, name, maxCount, sprite, quality, decription, rangeType, range, typeDamage, damage, attackSpeed)
     {
 
     }

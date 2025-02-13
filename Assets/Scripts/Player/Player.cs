@@ -28,6 +28,8 @@ public class Player : MonoBehaviour
 
 
     private Dictionary<int, WeaponControl> WeaponsObj = new Dictionary<int, WeaponControl>();
+    private bool[] DirectionOrVectorWeapon = new bool[4];
+    [SerializeField] public Toggle[] TooglesWeapon = new Toggle[4];
     //Компоненты игрока
     private RoleClass classPlayer;
     [SerializeField] 
@@ -65,6 +67,13 @@ public class Player : MonoBehaviour
         nextLvl_exp = 10;
         level = 0;
 
+        //LoadSave Потом
+        for (int i = 0; i < DirectionOrVectorWeapon.Length; i++)
+        {
+            DirectionOrVectorWeapon[i] = false;
+            TooglesWeapon[i].isOn = DirectionOrVectorWeapon[i];
+        }
+        ChangeToggleWeapon();
 
         cur_hp_image = hp_bar.GetChild(1).GetComponent<Image>();
         hp_text = hp_bar.GetChild(2).GetComponent<TextMeshProUGUI>();
@@ -174,5 +183,16 @@ public class Player : MonoBehaviour
         freeSkillPoints++;
         text_player_info.text = $"{level} lvl";
         AddMaxHP(2);
+    }
+    public void ChangeToggleWeapon()
+    {
+        for (int i = 0; i < DirectionOrVectorWeapon.Length; i++)
+        {
+            if(WeaponsObj.ContainsKey(i))
+            {
+                WeaponsObj[i].AttackDirectionOrVector = TooglesWeapon[i].isOn;
+            }
+            
+        }
     }
 }

@@ -14,6 +14,8 @@ public class UIControl:MonoBehaviour
     bool itemsIsOpened;
     bool mobsIsOpened;
     bool infoPlayerIsOpened;
+
+    private bool isPaused = false;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -58,7 +60,6 @@ public class UIControl:MonoBehaviour
         invIsOpened = !invIsOpened;
         if (invIsOpened)
         {
-
             inventoryWindow.SetActive(true);
         }
         else
@@ -66,6 +67,7 @@ public class UIControl:MonoBehaviour
             inventoryWindow.SetActive(false);
             Inventory.Instance.InfoPanel.gameObject.SetActive(false);
         }
+
     }
     public void OpenListItems()
     {
@@ -106,6 +108,7 @@ public class UIControl:MonoBehaviour
         {
             infoPlayerWindow.SetActive(false);
         }
+        TogglePause();
     }
     public void LocalizationTranslate()
     {
@@ -127,5 +130,11 @@ public class UIControl:MonoBehaviour
         GameObject gameObject2 = WeaponDatabase.GetWeaponPrefab(1);
         Debug.Log($"Объект 1: {gameObject1.name}");
         Debug.Log($"Объект 2: {gameObject2.name}");
+    }
+    public void TogglePause()
+    {
+        isPaused = !isPaused;
+        Time.timeScale = isPaused ? 0 : 1;  // 0 - пауза, 1 - нормальное время
+        AudioListener.pause = isPaused;     // Останавливаем все звуки
     }
 }

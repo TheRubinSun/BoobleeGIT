@@ -12,10 +12,10 @@ public class EqupmentPlayer : MonoBehaviour
     public Slot slotArrmorOne { get; set; }
     public Slot[] slotsEqup {  get; set; }
 
-    [SerializeField] GameObject [] slotsObjEquip;
-    [SerializeField] Transform [] EquipSlotPrefab;
+    [SerializeField] GameObject [] slotsObjEquip; //Массив слотов
+    [SerializeField] Transform [] EquipSlotPrefab; //Префабы рук как родителя
 
-    Dictionary<int, GameObject> slots_Weapon = new Dictionary<int, GameObject>();
+    Dictionary<int, GameObject> slots_Weapon = new Dictionary<int, GameObject>(); //В ячейки рук по порядку префабы оружия 
     private void Awake()
     {
         // Проверка на существование другого экземпляра
@@ -50,40 +50,80 @@ public class EqupmentPlayer : MonoBehaviour
         //Debug.Log($"Слот: {numbSlot} {slotsEqup.Length}");
         return slotsEqup[numbSlot];
     }
-    public void PutOnEquip()
+    public void PutOnEquip(Slot slot)
     {
 
         for (int i = 0; i < slotsEqup.Length; i++)
         {
-            if(slotsEqup[i] != null && slotsEqup[i].Item.NameKey != "item_none" && EquipSlotPrefab[i].childCount < 1)
+            if(slot.SlotObj.CompareTag("SlotEquip"))
             {
-                int idPref = ItemsList.Instance.GetIdWeaponForNum(slotsEqup[i].Item);
-                // Проверяем, существует ли Prefab перед инстанциированием
-                if (WeaponDatabase.GetWeaponPrefab(idPref) != null)
+                if (slotsEqup[i] == slot)
                 {
-                    GameObject weaponObj = Instantiate(WeaponDatabase.GetWeaponPrefab(idPref), EquipSlotPrefab[i]);
-                    LoadParametersWeapon(weaponObj, slotsEqup[i]);
+                    DeleteEquipOnSlot(i, EquipSlotPrefab[i]);
 
-                    if(i < 4) //До 4, так как 0 1 2 3 это слоты для оружия
+                    if(slot.Item.NameKey != "item_none")
                     {
-                        Player.Instance.SetWeaponsObj(i, weaponObj.GetComponent<WeaponControl>());
+                        AddEquipOnSlot(i);
                     }
                     
-                    slots_Weapon[i] = weaponObj;
-                }
-                else
-                {
-                    Debug.LogWarning("Ошибка 400");
                 }
             }
-            else if(slotsEqup[i].Item.NameKey == "item_none" && EquipSlotPrefab[i] != null)
-            {
-                foreach (Transform child in EquipSlotPrefab[i])
-                {
-                    if(slots_Weapon.ContainsKey(i)) slots_Weapon.Remove(i);
-                    Destroy(child.gameObject);  // Удаляем дочерний объект
-                }
-            }
+
+
+
+            //if (slotsEqup[i] != null && slotsEqup[i].Item.NameKey != "item_none" && EquipSlotPrefab[i].childCount < 1)
+            //{
+            //    int idPref = ItemsList.Instance.GetIdWeaponForNum(slotsEqup[i].Item);
+            //    // Проверяем, существует ли Prefab перед инстанциированием
+            //    if (WeaponDatabase.GetWeaponPrefab(idPref) != null)
+            //    {
+            //        GameObject weaponObj = Instantiate(WeaponDatabase.GetWeaponPrefab(idPref), EquipSlotPrefab[i]);
+            //        LoadParametersWeapon(weaponObj, slotsEqup[i]);
+
+            //        if(i < 4) //До 4, так как 0 1 2 3 это слоты для оружия
+            //        {
+            //            Player.Instance.SetWeaponsObj(i, weaponObj.GetComponent<WeaponControl>());
+            //        }
+                    
+            //        slots_Weapon[i] = weaponObj;
+            //    }
+            //    else
+            //    {
+            //        Debug.LogWarning("Ошибка 400");
+            //    }
+            //}
+            //else if(slotsEqup[i].Item.NameKey == "item_none" && EquipSlotPrefab[i] != null)
+            //{
+            //    foreach (Transform child in EquipSlotPrefab[i])
+            //    {
+            //        if(slots_Weapon.ContainsKey(i)) slots_Weapon.Remove(i);
+            //        Destroy(child.gameObject);  // Удаляем дочерний объект
+            //    }
+            //}
+        }
+    }
+    private void DeleteEquipOnSlot(int id,Transform deleteAllChild)
+    {
+        foreach (Transform child in deleteAllChild)
+        {
+            if (slots_Weapon.ContainsKey(id)) slots_Weapon.Remove(id);
+            Destroy(child.gameObject);  // Удаляем дочерний объект
+        }
+    }
+    private void AddEquipOnSlot(int id)
+    {
+        int idPref = ItemsList.Instance.GetIdWeaponForNum(slotsEqup[id].Item);  //Получаем номер оружия из списка всех предметов (нужен порядковый номер оржия чтобы создать подходящий префаб)
+        
+        if (WeaponDatabase.GetWeaponPrefab(idPref) != null && id < 4) // Проверяем, существует ли Prefab перед инстанциированием и id до 4, так как 0 1 2 3 это слоты для оружия
+        {
+            GameObject weaponObj = Instantiate(WeaponDatabase.GetWeaponPrefab(idPref), EquipSlotPrefab[id]);  //Создаем оружие в слот 
+            LoadParametersWeapon(weaponObj, slotsEqup[id]); //Загружаем параметры с слолта в оружие
+            Player.Instance.SetWeaponsObj(id, weaponObj.GetComponent<WeaponControl>()); //Передаем в словарь у игрока в список оружия
+            slots_Weapon[id] = weaponObj; //Словарь в этом классе, пока не используется 
+        }
+        else
+        {
+            Debug.LogWarning("Ошибка 400");
         }
     }
     private void LoadParametersWeapon(GameObject weaponObj, Slot slot)

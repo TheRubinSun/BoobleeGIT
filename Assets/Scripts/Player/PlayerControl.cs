@@ -52,7 +52,11 @@ public class PlayerControl : MonoBehaviour
         Dictionary<int, WeaponControl> weaponsAndArms = Player.Instance.GetDictWeaponAndArms();
         foreach (WeaponControl child in weaponsAndArms.Values)
         {
-            child.Attack();
+            if (child != null) //ѕроверка, если вдруг оружие было удаленно
+            {
+                child.Attack();
+            }
+            
         }
     }
     void RotateWeaponSlots()

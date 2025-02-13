@@ -1,16 +1,19 @@
 using Unity.VisualScripting;
+using UnityEditor.Build.Pipeline;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class WeaponControl : MonoBehaviour
 {
     public int attack_damage {  get; private set; }
-    public int attack_Speed { get; private set; }
+    public float attack_Speed { get; private set; }
     public float attack_Speed_Projectile { get; private set; }
     public bool isRange {  get;  set; }
     public float attack_range {  get; private set; }
     public damageT damageType {  get; private set; } 
     public GameObject Projectile_pref {  get; private set; }
+
+    public bool AttackDirectionOrVector;
 
     private float attackInterval { get; set; }
 
@@ -25,7 +28,7 @@ public class WeaponControl : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
     }
-    public void GetStatsWeapon(int damage, int at_speed, float att_sp_pr, bool isRang, float attack_ran, damageT _damT, GameObject _Projectile_pref = null)
+    public void GetStatsWeapon(int damage, float at_speed, float att_sp_pr, bool isRang, float attack_ran, damageT _damT, GameObject _Projectile_pref = null)
     {
         attack_damage = damage;
         attack_Speed = at_speed;
@@ -44,35 +47,84 @@ public class WeaponControl : MonoBehaviour
     {
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        // Вычисляем расстояние до курсора
-        float distance;
-        Vector2 direction;
-        if (ShootPos != null)
-        {
-            //Замеряем от дула (от дочерней точки)
-            distance = Vector2.Distance(ShootPos.position, mousePos);
-            direction = (Vector2)ShootPos.position - mousePos;
 
-            if (direction.x > 0)
-                sr.flipY = false;
-            else
-                sr.flipY = true;
+        Vector2 direction;
+
+        if (AttackDirectionOrVector)
+        {
+            direction = GetDirection(transform.position, transform.parent.position);
+            transform.localRotation = Quaternion.identity;
+            if(isRange) FlipWeapon(direction.y);
         }
         else
         {
-            //Замеряем от центра себя 
-            distance = Vector2.Distance(transform.position, mousePos);
-            direction = (Vector2)transform.position - mousePos;
-        }
-        if (distance < minDistance)
-        {
-            return;
-        }
-        // Если курсор слишком близко, не меняем угол
+            // Вычисляем расстояние до курсора
+            float distance;
+            if (ShootPos != null)
+            {
+                //Замеряем от дула (от дочерней точки)
+                distance = GetDistance(ShootPos.position, mousePos);
+                direction = GetDirection(ShootPos.position, mousePos).normalized;
 
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        gameObject.transform.rotation = Quaternion.Euler(0, 0, offset + angle);
+            }
+            else
+            {
+                //Замеряем от центра себя 
+                distance = GetDistance(transform.position, mousePos);
+                direction = GetDirection(transform.position, mousePos).normalized;
+            }
+            if (isRange) FlipWeapon(direction.x);
+            if (distance < minDistance)
+            {
+                return;
+            }
+            // Если курсор слишком близко, не меняем угол
+
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            gameObject.transform.rotation = Quaternion.Euler(0, 0, angle);
+        }
+
+
+        //if (ShootPos != null)
+        //{
+        //    if (AttackDirectionOrVector)
+        //    {
+        //        direction = (transform.position - ShootPos.position).normalized;
+        //    }
+        //    else
+        //    {
+        //        direction = (mousePos - (Vector2)ShootPos.position).normalized;
+        //    }
+        //    //Замеряем от дула (от дочерней точки)
+        //    distance = Vector2.Distance(ShootPos.position, mousePos);
+        //    direction = (Vector2)ShootPos.position - mousePos;
+
+        //    if (direction.x > 0)
+        //        sr.flipY = false;
+        //    else
+        //        sr.flipY = true;
+        //}
+        //else
+        //{
+        //    //Замеряем от центра себя 
+        //    distance = Vector2.Distance(transform.position, mousePos);
+        //    direction = (Vector2)transform.position - mousePos;
+        //    if (direction.x > 0)
+        //        sr.flipY = false;
+        //    else
+        //        sr.flipY = true;
+        //}
+
     }
+    private void FlipWeapon(float dirX)
+    {
+        if (dirX > 0)
+            sr.flipY = false;
+        else
+            sr.flipY = true;
+    }
+    private float GetDistance(Vector2 pos_one, Vector2 pos_two) => Vector2.Distance(pos_one, pos_two);
+    private Vector2 GetDirection(Vector2 pos_one, Vector2 pos_two) => pos_one - pos_two;
 
     private float lastAttackTime = 0f; // Время последней атаки
     public void Attack()
@@ -95,7 +147,18 @@ public class WeaponControl : MonoBehaviour
                 //Подять в иерархии объекта пули/стрелы
                 projectile.transform.SetParent(transform.root);
 
-                Vector2 direction = (mousePos - (Vector2)ShootPos.position).normalized;
+                Vector2 direction;
+                if (AttackDirectionOrVector)
+                {
+                    direction = GetDirection(ShootPos.position, transform.position).normalized;
+                    //direction = (ShootPos.position - transform.position).normalized;
+                }
+                else
+                {
+                    direction = GetDirection(mousePos , (Vector2)ShootPos.position).normalized;
+                    //direction = (mousePos - (Vector2)ShootPos.position).normalized;
+                }
+                
 
                 // Устанавливаем поворот стрелы в сторону игрока
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;

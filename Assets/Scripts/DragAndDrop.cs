@@ -63,18 +63,26 @@ public class DragAndDrop:MonoBehaviour
             Inventory.Instance.UpdateSlotUI(tempSlot);  //Обновляем картинку в UI
             Inventory.Instance.SetNone(oldSlot); //Очищаем клетку 
 
+            //newSlot = null;
             dragItem = true; //Взяли предмет + в Update тащем за курсором
             DragZone.SetActive(dragItem); //Включить возможность выбросить
         }
         else if(dragItem) //Если предмет взят
         {
-
-            if (typeSlot == "Inventory") newSlot = Inventory.Instance.GetSlot(numbSlot); //Сохранем значения слота 
+            if(typeSlot == "Inventory")
+            {
+                newSlot = Inventory.Instance.GetSlot(numbSlot); //Сохранем значения слота 
+                if (newSlot.Item.NameKey != "item_none" && oldSlot.SlotObj.CompareTag("SlotEquip"))
+                {
+                    if(oldSlot.Item.TypeItem != newSlot.itemFilter) return;
+                }
+            }
             else if (typeSlot == "Equip")
             {
                 newSlot = EqupmentPlayer.Instance.GetSlot(numbSlot); //Сохранем значения слота 
-                if (newSlot.itemFilter != tempSlot.Item.TypeItem) return;
+                if (newSlot.itemFilter != tempSlot.Item.TypeItem ) return;
             }
+            if (oldSlot.Count > 0 && newSlot.Item != oldSlot.Item && newSlot.Item.NameKey != "item_none") return;
            
             if (oldSlot.SlotObj != newSlot.SlotObj) //Сравниваем не тот ли же самый слот
             {
@@ -127,15 +135,25 @@ public class DragAndDrop:MonoBehaviour
             }
             else
             {
+                if(oldSlot.Count == 0)
+                {
+                    Inventory.Instance.SwapSlots(oldSlot, tempSlot); //Меняем местами слоты
+                }
+                else
+                {
+                    oldSlot.Count += tempSlot.Count;
+                    Inventory.Instance.UpdateSlotUI(oldSlot);
+                }
                 //Если один и тот же слот, возвращаем предмет обратно
-                Inventory.Instance.SwapSlots(oldSlot, tempSlot); //Меняем местами слоты
+
                 //Debug.Log("Действие: 4");
             }
             Destroy(tempSlot.SlotObj);
             dragItem = false; //Отпускаем предмет
             DragZone.SetActive(dragItem);  //Выключить возможность выбросить
         }
-        if (typeSlot == "Equip") EqupmentPlayer.Instance.PutOnEquip();
+        if (newSlot != null && newSlot.SlotObj.CompareTag("SlotEquip")) EqupmentPlayer.Instance.PutOnEquip(newSlot);
+        if (oldSlot != null && oldSlot.SlotObj.CompareTag("SlotEquip")) EqupmentPlayer.Instance.PutOnEquip(oldSlot);
     }
     public void DragHalfOrPutOne(int numbSlot, string typeSlot)
     {
@@ -155,6 +173,7 @@ public class DragAndDrop:MonoBehaviour
             Inventory.Instance.UpdateSlotUI(tempSlot);  //Обновляем картинку в UI
             Inventory.Instance.UpdateSlotUI(oldSlot);  //Обновляем картинку в UI
 
+            //newSlot = null;
             dragItem = true;
             DragZone.SetActive(dragItem);  //Включить возможность выбросить
         }
@@ -188,7 +207,8 @@ public class DragAndDrop:MonoBehaviour
             Inventory.Instance.UpdateSlotUI(tempSlot);  //Обновляем картинку в UI
             Inventory.Instance.UpdateSlotUI(newSlot);  //Обновляем картинку в UI
         }
-        if (typeSlot == "Equip") EqupmentPlayer.Instance.PutOnEquip();
+        if (newSlot != null && newSlot.SlotObj.CompareTag("SlotEquip")) EqupmentPlayer.Instance.PutOnEquip(newSlot);
+        if (oldSlot != null && oldSlot.SlotObj.CompareTag("SlotEquip")) EqupmentPlayer.Instance.PutOnEquip(oldSlot);
     }
     public void DropItem()
     {
