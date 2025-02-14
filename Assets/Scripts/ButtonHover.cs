@@ -12,7 +12,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             if (Inventory.Instance.GetSlot(GetNumbSlot()).Item.Id != 0)
             {
                 Inventory.Instance.InfoPanel.gameObject.SetActive(true);
-                DisplayInfo.Instance.UpdateInfo(GetNumbSlot(), "Inventory");
+                DisplayInfo.Instance.UpdateInfoItem(GetNumbSlot(), "Inventory");
             }
         }
         else if(CompareTag("SlotEquip"))
@@ -20,7 +20,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             if (EqupmentPlayer.Instance.GetSlot(GetNumbSlot()).Item.Id != 0)
             {
                 Inventory.Instance.InfoPanel.gameObject.SetActive(true);
-                DisplayInfo.Instance.UpdateInfo(GetNumbSlot(), "Equip");
+                DisplayInfo.Instance.UpdateInfoItem(GetNumbSlot(), "Equip");
             }
         }
 

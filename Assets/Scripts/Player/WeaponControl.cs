@@ -15,7 +15,7 @@ public class WeaponControl : MonoBehaviour
 
     public bool AttackDirectionOrVector;
 
-    private float attackInterval { get; set; }
+    public float attackInterval { get; set; }
 
     [SerializeField] float minDistance = 0.3f; // Минимальный радиус, в котором оружие НЕ должно крутиться
     [SerializeField] int offset; // Минимальный радиус, в котором оружие НЕ должно крутиться

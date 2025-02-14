@@ -49,6 +49,33 @@
         "TypeMob": "",
         "Description": "Just ranger mob"
       }
+    },
+    "ui_text": {
+      "player_stats_name": {
+        "words_status_info": "Status info",
+        "words_Cur_Hp": "Current HP",
+        "words_Max_Hp": "Maximum HP",
+        "words_Armor_Hp": "Armor",
+        "words_Mov_Speed": "Move speed",
+        "words_Att_Range": "Bonus attack range",
+        "words_Att_Damage": "Bonus damage",
+        "words_Att_Speed": "Bonus attack speed",
+        "words_Proj_Speed": "Bonus projectile speed",
+        "words_level": "Level",
+        "words_freeSkillPoints": "Free skill points",
+        "words_cur_exp": "Current exp",
+        "words_nextLvl_exp": "To the next level",
+        "words_classPlayer": "Class player"
+      },
+      "slots_name": {
+        "words_typeItem": "Item type",
+        "words_damageType": "Damage type",
+        "words_damage": "Damage per attack",
+        "words_attacks_speed": "Attack speed",
+        "words_attacks_intervals": "Attacks per second",
+        "words_range": "Range",
+        "words_description": "Description"
+      }
     }
   },
   "ru": {
@@ -100,6 +127,33 @@
         "Name": "Райнгер",
         "TypeMob": "",
         "Description": "Простой моб с дальной аттакой"
+      }
+    },
+    "ui_text": {
+      "player_stats_name": {
+        "words_status_info": "Статус",
+        "words_Cur_Hp": "Текущее HP",
+        "words_Max_Hp": "Масимум HP",
+        "words_Armor_Hp": "Броня",
+        "words_Mov_Speed": "Скорость передвижения",
+        "words_Att_Range": "Бонус к дальности атакаи",
+        "words_Att_Damage": "Бонусный урон",
+        "words_Att_Speed": "Бонусная скорость атаки",
+        "words_Proj_Speed": "Бонусная скорость снарядов",
+        "words_level": "Уровенть",
+        "words_freeSkillPoints": "Свободные очки обучения",
+        "words_cur_exp": "Текущий опыт",
+        "words_nextLvl_exp": "до следующего уровня",
+        "words_classPlayer": "Класс игрока"
+      },
+      "slots_name": {
+        "words_typeItem": "Тип предмета",
+        "words_damageType": "Тип урона",
+        "words_damage": "Урона за атаку",
+        "words_attacks_speed": "Скорость атаки",
+        "words_attacks_intervals": "Атак в секунду",
+        "words_range": "Дальность",
+        "words_description": "Описание"
       }
     }
   }

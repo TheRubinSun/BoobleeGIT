@@ -13,7 +13,6 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] Transform[] legsCenter;
     [SerializeField] Transform WeaponSlots;
 
-    [SerializeField] private float radiusHand = 0.4f;                // Радиус области
     [SerializeField] private float radiusCenterLegs = 0.4f;                // Радиус области
     
     
@@ -98,15 +97,4 @@ public class PlayerControl : MonoBehaviour
             centerLegs.localPosition = newPos;
         }
     }
-    //public void MoveHand()
-    //{
-    //    mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    //    // Вычисляем направление и ограничиваем позицию радиусом
-    //    direction = mousePos - (Vector2)transform.position;
-    //    if (direction.magnitude > radiusHand)
-    //    {
-    //        mousePos = (Vector2)transform.position + direction.normalized * radiusHand;
-    //    }
-    //    hand.transform.position = Vector3.MoveTowards(hand.transform.position, mousePos, 1f);
-    //}
 }

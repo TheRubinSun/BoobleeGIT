@@ -87,7 +87,6 @@ public class UIControl:MonoBehaviour
         mobsIsOpened = !mobsIsOpened;
         if (mobsIsOpened)
         {
-
             allMobsWindow.SetActive(true);
             DisplayMobsList.Instance.DisplayLinesMobs(EnemyList.Instance.mobs);
         }
@@ -98,11 +97,11 @@ public class UIControl:MonoBehaviour
     }
     public void OpenInfoPlayer()
     {
-        mobsIsOpened = !mobsIsOpened;
-        if (mobsIsOpened)
+        infoPlayerIsOpened = !infoPlayerIsOpened;
+        if (infoPlayerIsOpened)
         {
-
             infoPlayerWindow.SetActive(true);
+            DisplayInfo.Instance.UpdateInfoStatus();
         }
         else
         {
@@ -112,10 +111,11 @@ public class UIControl:MonoBehaviour
     }
     public void LocalizationTranslate()
     {
-        if(ItemsList.Instance.items != null && EnemyList.Instance.mobs != null)
+        if(ItemsList.Instance.items != null && EnemyList.Instance.mobs != null && DisplayInfo.Instance != null)
         {
             ItemsList.Instance.LocalizaitedItems();
             EnemyList.Instance.LocalizaitedMobs();
+            DisplayInfo.Instance.LocalizationText();
         }
         else
         {

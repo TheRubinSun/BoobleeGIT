@@ -6,15 +6,8 @@ public class BulletMob : MonoBehaviour
     public float destroyTime = 3f;
     public int damage {  get; set; }
 
-    private static bool collisionIgnored = false; // Флаг, чтобы игнорировать коллизию только один раз
     private void Awake()
     {
-        // Игнорируем столкновения между пулями и врагами (глобально)
-        //if (!collisionIgnored)
-        //{
-        //    Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Projectile"), LayerMask.NameToLayer("Projectile"));
-        //    collisionIgnored = true;
-        //}
     }
     private void Start()
     {

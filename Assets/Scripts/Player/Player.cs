@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
     public int Proj_Speed;
 
     public int level;
-    private int freeSkillPoints;
+    public int freeSkillPoints;
     private int cur_exp;
     private int nextLvl_exp;
 
