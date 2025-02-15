@@ -1,39 +1,64 @@
+using Newtonsoft.Json;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
+
 using UnityEngine;
 
 public class SaveSystem
 {
-    private string savePath;
+    private static string savePath = Application.persistentDataPath;
 
-    public SaveSystem()
+    public static async Task SaveDataAsync <T>(T data, string fileName)
     {
-        savePath = Path.Combine(Application.persistentDataPath, "weapon_save.json");
-    }
-    public void SaveWeapon(List<int> weaponIds)
-    {
-        List<WeaponSaveData> saveDataList = new List<WeaponSaveData>();
-
-        // Преобразуем все ID оружия в объекты WeaponSaveData
-        foreach (int id in weaponIds)
+        string fullPath = Path.Combine(savePath, fileName);
+        try
         {
-            saveDataList.Add(new WeaponSaveData { weaponId = id });
-        }
-        string json = JsonUtility.ToJson(new WeaponSaveList { weapons = saveDataList}, true);
+            // Добавляем TypeNameHandling для сохранения информации о типах
+            var settings = new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All,
+                Formatting = Formatting.Indented
+            };
 
-        File.WriteAllText(savePath, json);
-        Debug.Log("Сохранено: " + json);
+            string json = JsonConvert.SerializeObject(data, settings);
+            await File.WriteAllTextAsync(fullPath, json);
+            Debug.Log($"Данные сохранены: {fileName}");
+        }
+        catch(Exception e)
+        {
+            Debug.LogError($"Ошибка сохранения {fileName}: {e.Message}");
+        }
     }
-}
-[System.Serializable]
-public class WeaponSaveData
-{
-    public int weaponId;
-}
-// Для сериализации списка
-[System.Serializable]
-public class WeaponSaveList
-{
-    public List<WeaponSaveData> weapons;
+    public static async Task <T> LoadDataAsync<T>(string fileName) where T : new()
+    {
+        string fullPath = Path.Combine(savePath,fileName);
+        if(File.Exists(fullPath))
+        {
+            try
+            {
+                string json = await File.ReadAllTextAsync(fullPath);
+                // Добавляем TypeNameHandling для восстановления информации о типах
+                var settings = new JsonSerializerSettings
+                {
+                    TypeNameHandling = TypeNameHandling.All
+                };
+                
+                return JsonConvert.DeserializeObject<T>(json, settings);
+            }
+            catch(Exception e)
+            {
+                Debug.LogError($"Ошибка загрузки {fileName}: {e.Message}");
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"Файл {fileName} отсутствует. Создаём новый.");
+        }
+        return new T();  // Если файла нет, возвращаем новый объект
+    }
+
+
 }

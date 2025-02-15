@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
@@ -17,28 +18,35 @@ public class Classes : MonoBehaviour
         }
         Instance = this;
 
-        if (!roleClasses.ContainsKey(name))
-        {
-            //Range damage at_speed proj_speed, move, hp, deff
-            roleClasses.Add("Shooter", new RoleClass(10, 0, 60, 10, 3, 10, 1));
-        }
-        roleClasses.Add("Mage", new RoleClass(10, 0, 10, 10, 10, 3, 1));
-        roleClasses.Add("Warrior", new RoleClass(10, 0, 60, 10, 3, 10, 1));
-    }
 
+    }
+    public void LoadOrCreateClasses(Dictionary<string, RoleClass> classes)
+    {
+        if(classes!=null && classes.Count > 0)
+        {
+            roleClasses = classes;
+        }
+        else
+        {
+            roleClasses.Add("Shooter", new RoleClass(10, 0, 60, 10, 3, 10, 1));
+            roleClasses.Add("Mage", new RoleClass(10, 0, 10, 10, 10, 3, 1));
+            roleClasses.Add("Warrior", new RoleClass(10, 0, 60, 10, 3, 10, 1));
+        }
+    }
     void Start()
     {
 
     }
     public RoleClass GetRoleClass(string name)
     {
-        if (!roleClasses.ContainsKey(name))
-        {
-            roleClasses.Add("Shooter", new RoleClass(10, 0, 30, 10, 3, 10, 1));
-        }
         return roleClasses[name];
     }
+    public Dictionary<string, RoleClass> GetClasses()
+    {
+        return roleClasses;
+    }
 }
+[Serializable]
 public class RoleClass
 {
     public float BonusRange { get; set; }

@@ -125,11 +125,11 @@ public class UIControl:MonoBehaviour
     }
     public void LoadData()
     {
-        WeaponDatabase.LoadWeapons();
-        GameObject gameObject1 = WeaponDatabase.GetWeaponPrefab(0);
-        GameObject gameObject2 = WeaponDatabase.GetWeaponPrefab(1);
-        Debug.Log($"Объект 1: {gameObject1.name}");
-        Debug.Log($"Объект 2: {gameObject2.name}");
+        GameManager.Instance.LoadDataGame();
+    }
+    public void SaveData()
+    {
+        GameManager.Instance.SaveDataGame();
     }
     public void TogglePause()
     {

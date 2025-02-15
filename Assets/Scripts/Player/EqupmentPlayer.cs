@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class EqupmentPlayer : MonoBehaviour
@@ -43,12 +44,43 @@ public class EqupmentPlayer : MonoBehaviour
             Inventory.Instance.UpdateSlotUI(slotsEqup[i]);
         }
         //Загрузить сохранение если есть
-        LoadSave();
     }
+    public void LoadOrCreateEquipment(List<SlotTypeSave> equipment_items)
+    {
+        if (IsLoadEquipment(equipment_items))
+        {
+            UpdateAllSlots();
+        }
+    }
+    private bool IsLoadEquipment(List<SlotTypeSave> equipment_items)
+    {
+        if (equipment_items != null)
+        {
+            for(int i = 0; i < equipment_items.Count; i++)
+            {
+                slotsEqup[i].Item = ItemsList.Instance.GetItemForNameKey(equipment_items[i].NameKey);
+                slotsEqup[i].Count = equipment_items[i].count;
+                Inventory.Instance.UpdateSlotUI(slotsEqup[i]);
+            }
+            return true;
+        }
+        return false;
+    }
+
+
+
     public Slot GetSlot(int numbSlot)
     {
         //Debug.Log($"Слот: {numbSlot} {slotsEqup.Length}");
         return slotsEqup[numbSlot];
+    }
+
+    public void UpdateAllSlots()
+    {
+        foreach(Slot slot in slotsEqup)
+        {
+            PutOnEquip(slot);
+        }
     }
     public void PutOnEquip(Slot slot)
     {
@@ -68,38 +100,6 @@ public class EqupmentPlayer : MonoBehaviour
                     
                 }
             }
-
-
-
-            //if (slotsEqup[i] != null && slotsEqup[i].Item.NameKey != "item_none" && EquipSlotPrefab[i].childCount < 1)
-            //{
-            //    int idPref = ItemsList.Instance.GetIdWeaponForNum(slotsEqup[i].Item);
-            //    // Проверяем, существует ли Prefab перед инстанциированием
-            //    if (WeaponDatabase.GetWeaponPrefab(idPref) != null)
-            //    {
-            //        GameObject weaponObj = Instantiate(WeaponDatabase.GetWeaponPrefab(idPref), EquipSlotPrefab[i]);
-            //        LoadParametersWeapon(weaponObj, slotsEqup[i]);
-
-            //        if(i < 4) //До 4, так как 0 1 2 3 это слоты для оружия
-            //        {
-            //            Player.Instance.SetWeaponsObj(i, weaponObj.GetComponent<WeaponControl>());
-            //        }
-                    
-            //        slots_Weapon[i] = weaponObj;
-            //    }
-            //    else
-            //    {
-            //        Debug.LogWarning("Ошибка 400");
-            //    }
-            //}
-            //else if(slotsEqup[i].Item.NameKey == "item_none" && EquipSlotPrefab[i] != null)
-            //{
-            //    foreach (Transform child in EquipSlotPrefab[i])
-            //    {
-            //        if(slots_Weapon.ContainsKey(i)) slots_Weapon.Remove(i);
-            //        Destroy(child.gameObject);  // Удаляем дочерний объект
-            //    }
-            //}
         }
     }
     private void DeleteEquipOnSlot(int id,Transform deleteAllChild)
@@ -123,7 +123,7 @@ public class EqupmentPlayer : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Ошибка 400");
+            Debug.LogWarning($"Ошибка 400 {id}");
         }
     }
     private void LoadParametersWeapon(GameObject weaponObj, Slot slot)
@@ -132,6 +132,7 @@ public class EqupmentPlayer : MonoBehaviour
 
         if (slot.Item is Gun gun)
         {
+            //Debug.Log($"Gun: {gun.NameKey}: {gun.projectileSpeed}");
             weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(gun.damage, gun.attackSpeed, gun.projectileSpeed, gun.rangeType, gun.range, gun.typeDamage, WeaponDatabase.GetProjectilesPrefab(gun.idBulletPref));
         }
         else if (slot.Item is Sword sword)
@@ -146,8 +147,5 @@ public class EqupmentPlayer : MonoBehaviour
 
         
     }
-    private void LoadSave()
-    {
 
-    }
 }

@@ -47,7 +47,7 @@ public class EnemySetting : MonoBehaviour
         GiveExp = mob.GiveExp;
         if (isRanged && mob is RangeMob rangeMob)
         {
-            bulletPrefab = rangeMob.PrefabBullet;
+            bulletPrefab = WeaponDatabase.GetProjectilesPrefab(1);
             speedProjectile = rangeMob.SpeedProjectile;
         }
 

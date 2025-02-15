@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,6 +23,8 @@ public enum Quality
     Legendary,
     Interverse
 }
+
+[Serializable]
 public class Item
 {
     public int Id { get; set; }
@@ -28,18 +32,31 @@ public class Item
     public string NameKey { get; set; }
     public string Name { get; set; }
     public int MaxCount { get; set; }
-    public Sprite Sprite { get; set; }
+    public int SpriteID { get; set; }
     public Quality quality { get; set; }
     public string Description { get; set; }
-    public Item(int id, string name, int maxCount, Sprite sprite,Quality quality, string description, TypeItem typeItem = TypeItem.Other)
+
+    [JsonIgnore] public Sprite Sprite { get; set; }
+    public Item(int id, string name, int maxCount, int spriteID, Quality quality, string description, TypeItem typeItem = TypeItem.Other)
     {
         Id = id;
         TypeItem = typeItem;
         NameKey = name;
         MaxCount = maxCount;
-        Sprite = sprite;
+        SpriteID = spriteID;
         this.quality = quality;
         Description = description;
+    }
+    public void SetSprite(Sprite sprite)
+    {
+        if (sprite != null)
+        {
+            Sprite = sprite;
+        }
+        else
+        {
+            Debug.LogWarning($"Не удалось загрузить спрайт для предмета {NameKey}");
+        }
     }
     public Color32 GetColor()
     {

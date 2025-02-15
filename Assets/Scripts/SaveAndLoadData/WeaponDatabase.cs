@@ -10,7 +10,8 @@ public class WeaponDatabase : MonoBehaviour
         weapons[0] = Resources.Load<GameObject>("Weapons/Sword_God_Pref");
         weapons[1] = Resources.Load<GameObject>("Weapons/Pistol_Mark_Pref");
 
-        projectiles[0] = Resources.Load<GameObject>("Projectiles/Bullet"); 
+        projectiles[0] = Resources.Load<GameObject>("Projectiles/Bullet");
+        projectiles[1] = Resources.Load<GameObject>("Projectiles/BulletMobOne");
 
         if (weapons[0] == null)
             Debug.LogError("Не удалось загрузить префаб Sword_God_Pref!");

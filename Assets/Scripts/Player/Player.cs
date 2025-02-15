@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -7,7 +8,7 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    public static Player Instance { get; private set; }
+    public static Player Instance { get; set; }
 
     //Характеристики
     public int Cur_Hp;
@@ -23,18 +24,22 @@ public class Player : MonoBehaviour
 
     public int level;
     public int freeSkillPoints;
-    private int cur_exp;
-    private int nextLvl_exp;
+    public int cur_exp;
+    public int nextLvl_exp;
 
+    public bool[] DirectionOrVectorWeapon = new bool[4];
 
+    public RoleClass classPlayer;
+
+    //GameObjects
     private Dictionary<int, WeaponControl> WeaponsObj = new Dictionary<int, WeaponControl>();
-    private bool[] DirectionOrVectorWeapon = new bool[4];
-    [SerializeField] public Toggle[] TooglesWeapon = new Toggle[4];
-    //Компоненты игрока
-    private RoleClass classPlayer;
+
     [SerializeField] 
     private GameObject PlayerModel;
-    
+
+    [SerializeField] 
+    public Toggle[] TooglesWeapon = new Toggle[4];
+
     //UI
     [SerializeField] 
     private Transform hp_bar;
@@ -61,44 +66,72 @@ public class Player : MonoBehaviour
             return;
         }
         Instance = this;
+
+        cur_hp_image = hp_bar.GetChild(1).GetComponent<Image>();
+        hp_text = hp_bar.GetChild(2).GetComponent<TextMeshProUGUI>();
+        hpRect = hp_bar.GetComponent<RectTransform>();
+        cur_exp_image = exp_bar.GetChild(1).GetComponent<Image>();
+        exp_text = exp_bar.GetChild(2).GetComponent<TextMeshProUGUI>();
+        expRect = exp_bar.GetComponent<RectTransform>();
+        text_player_info = player_info_panel.GetChild(0).GetComponent<TextMeshProUGUI>();
+        player_sprite = PlayerModel.GetComponent<SpriteRenderer>();
     }
     private void Start()
     {
-        nextLvl_exp = 10;
-        level = 0;
 
-        //LoadSave Потом
+    }
+    public void LoadOrCreateNew(PlayerSaveData playerSaveData)
+    {
+        if(playerSaveData != null && playerSaveData.Max_Hp > 0)
+        {
+            LoadDataPlayer(playerSaveData);
+        }
+        else
+        {
+            RoleClass rc = Classes.Instance.GetRoleClass("Shooter");
+            Mov_Speed = rc.BonusSpeedMove;
+            Max_Hp = rc.BonusHp;
+            Att_Speed = rc.BonusAttackSpeed;
+            nextLvl_exp = 10;
+            level = 0;
+            Cur_Hp = Max_Hp;
+        }
+
+        UpdateAllInfo();
+        ResetWeaponToggles();
+        ChangeToggleWeapon();
+    }
+    public void LoadDataPlayer(PlayerSaveData playerSaveData)
+    {
+        Cur_Hp = playerSaveData.Cur_Hp;
+        Max_Hp = playerSaveData.Max_Hp;
+        Armor_Hp = playerSaveData.Armor_Hp;
+
+        Mov_Speed = playerSaveData.Mov_Speed;
+
+        Att_Range = playerSaveData.Att_Range;
+        Att_Damage = playerSaveData.Att_Damage;
+        Att_Speed = playerSaveData.Att_Speed;
+        Proj_Speed = playerSaveData.Proj_Speed;
+
+        level = playerSaveData.level;
+        freeSkillPoints = playerSaveData.freeSkillPoints;
+        cur_exp = playerSaveData.cur_exp;
+        nextLvl_exp = playerSaveData.nextLvl_exp;
+    }
+    private void ResetWeaponToggles()
+    {
+
         for (int i = 0; i < DirectionOrVectorWeapon.Length; i++)
         {
             DirectionOrVectorWeapon[i] = false;
             TooglesWeapon[i].isOn = DirectionOrVectorWeapon[i];
         }
-        ChangeToggleWeapon();
-
-        cur_hp_image = hp_bar.GetChild(1).GetComponent<Image>();
-        hp_text = hp_bar.GetChild(2).GetComponent<TextMeshProUGUI>();
-        hpRect = hp_bar.GetComponent<RectTransform>();
-
-        cur_exp_image = exp_bar.GetChild(1).GetComponent<Image>();
-        exp_text = exp_bar.GetChild(2).GetComponent<TextMeshProUGUI>();
-        expRect = exp_bar.GetComponent<RectTransform>();
-
-        text_player_info = player_info_panel.GetChild(0).GetComponent<TextMeshProUGUI>();
-
-        player_sprite = PlayerModel.GetComponent<SpriteRenderer>();
-
-
-        RoleClass rc = Classes.Instance.GetRoleClass("Shooter");
-        Mov_Speed = rc.BonusSpeedMove;
-        Max_Hp = rc.BonusHp;
-
-        Att_Speed = rc.BonusAttackSpeed;
-
-
-        Cur_Hp = Max_Hp;
+    }
+    public void UpdateAllInfo()
+    {
         UpdateHpBar();
         UpdateSizeHpBar();
-
         UpdateExpBar();
     }
     public Dictionary<int, WeaponControl> GetDictWeaponAndArms()

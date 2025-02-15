@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using Unity.VisualScripting;
@@ -22,7 +23,18 @@ public class EnemyList: MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject); // Обеспечивает сохранение объекта между сценами
         }
-        CreateMobs();
+        
+    }
+    public void LoadOrCreateMobsList(List<Mob> mobslist)
+    {
+        if (mobslist != null && mobslist.Count > 0)
+        {
+            mobs = mobslist;
+        }
+        else
+        {
+            CreateMobs();
+        }
     }
     public void CreateMobs()
     {
@@ -31,7 +43,7 @@ public class EnemyList: MonoBehaviour
         {
             //             name hp range isRange damage attackSpeed speed
             mobs.Add(new MeleMob("daizen_enem", 10, 0.75f, false, 2, 45, 1.5f, 2));
-            mobs.Add(new RangeMob("rainger_enem", 6, 4f, true, 1, 30, 1f, bullet_Rainger, 8f, 3));
+            mobs.Add(new RangeMob("rainger_enem", 6, 4f, true, 1, 30, 1f, 8f, 3));
 
             DisplayMobsList.Instance.DisplayLinesMobs(mobs);
         }
@@ -67,6 +79,7 @@ public class EnemyList: MonoBehaviour
         return 0;
     }
 }
+[Serializable]
 public class Mob
 {
     public string NameKey { get; set; }
@@ -138,14 +151,13 @@ public class Mob
         }
     }
 }
+[Serializable]
 public class RangeMob : Mob
 {
-    public GameObject PrefabBullet;
     public float SpeedProjectile { get; set; }
 
-    public RangeMob(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed, GameObject prefabBullet, float speedProjectile, int giveExp) : base(_name, _hp, _rangeAt, _isranged, _damage, _attackspeed, _speed, giveExp)
+    public RangeMob(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed, float speedProjectile, int giveExp) : base(_name, _hp, _rangeAt, _isranged, _damage, _attackspeed, _speed, giveExp)
     {
-        this.PrefabBullet = prefabBullet;
         this.SpeedProjectile = speedProjectile;
     }
     public override void Attack()
@@ -153,6 +165,7 @@ public class RangeMob : Mob
         //Debug.Log("Shoot");
     }
 }
+[Serializable]
 public class MeleMob : Mob
 {
     public MeleMob(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed, int giveExp) : base(_name, _hp, _rangeAt, _isranged, _damage, _attackspeed, _speed, giveExp)

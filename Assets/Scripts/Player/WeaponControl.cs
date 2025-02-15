@@ -129,7 +129,7 @@ public class WeaponControl : MonoBehaviour
     private float lastAttackTime = 0f; // ¬рем€ последней атаки
     public void Attack()
     {
-
+        //Debug.Log($"Attack: at_sp: {attack_Speed / attackInterval} proj_speed: {attack_Speed_Projectile}");
         // ѕровер€ем, прошло ли достаточно времени дл€ следующей атаки
         if (Time.time - lastAttackTime >= attackInterval)
         {

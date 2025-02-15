@@ -1,5 +1,7 @@
+using NUnit.Framework;
 using TMPro;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class GameManager: MonoBehaviour 
 {
@@ -13,7 +15,14 @@ public class GameManager: MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         Instance = this;
+        LoadDataGame();
     }
     private void OnEnable()
     {
@@ -34,9 +43,48 @@ public class GameManager: MonoBehaviour
             InfoReaminingEnemy.text = $"Убито врагов {KillsEnemy} из {enemisRemaining}";
         }
     }
+    public async void SaveDataGame()
+    {
+        
+        List<SlotTypeSave> inventory_slots_list = new List<SlotTypeSave>();
+        List<SlotTypeSave> equipment_item_list = new List<SlotTypeSave>();
 
+        foreach (Slot slot in Inventory.Instance.slots)
+        {
+            inventory_slots_list.Add(new SlotTypeSave(slot.Item.NameKey, slot.Count));
+        }
 
+        foreach (Slot slot in EqupmentPlayer.Instance.slotsEqup)
+        {
+            equipment_item_list.Add(new SlotTypeSave(slot.Item.NameKey, slot.Count));
+        }
 
+        ItemsData items_Data = new ItemsData(ItemsList.Instance.items);
+        await SaveSystem.SaveDataAsync(items_Data, "items.json");
+
+        PlayerData player_Data = new PlayerData(Classes.Instance.GetClasses(), Player.Instance , inventory_slots_list, equipment_item_list);
+        await SaveSystem.SaveDataAsync(player_Data, "player.json");
+
+        EnemyData enemy_Data = new EnemyData(EnemyList.Instance.mobs);
+        await SaveSystem.SaveDataAsync(enemy_Data, "enemies.json");
+    }
+    public async void LoadDataGame()
+    {
+        // Загрузка предметов
+        ItemsData itemsData = await SaveSystem.LoadDataAsync<ItemsData>("items.json");
+        ItemsList.Instance.LoadOrCreateItemList(itemsData.item_List_data);
+
+        PlayerData playerData = await SaveSystem.LoadDataAsync<PlayerData>("player.json");
+        Classes.Instance.LoadOrCreateClasses(playerData.role_Classes_data);
+        Player.Instance.LoadOrCreateNew(playerData.player_data);
+        Inventory.Instance.LoadOrCreateInventory(playerData.inventory_items_data);
+        EqupmentPlayer.Instance.LoadOrCreateEquipment(playerData.equip_item_data);
+
+        EnemyData enemy = await SaveSystem.LoadDataAsync<EnemyData>("enemies.json");
+        EnemyList.Instance.LoadOrCreateMobsList(enemy.mob_list_data);
+
+        Debug.Log("Игра загружена.");
+    }
 
 
     public void SpawnMobs()
@@ -44,3 +92,4 @@ public class GameManager: MonoBehaviour
 
     }
 }
+

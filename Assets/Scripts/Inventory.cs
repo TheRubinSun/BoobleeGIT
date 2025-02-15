@@ -1,4 +1,6 @@
+using Newtonsoft.Json;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using TMPro;
@@ -36,7 +38,56 @@ public class Inventory:MonoBehaviour
     }
     private void Start()
     {
-        InitializeSlots();
+        //InitializeSlots();
+    }
+    public void LoadOrCreateInventory(List<SlotTypeSave> invntory_items)
+    {
+        Debug.Log("Загрузка инвентаря...");
+        if (slots.Count == 0 && invntory_items != null && invntory_items.Count > 1)// Если слотов нет, но есть сохранение, то создать по сохранению
+        {
+            Debug.Log("Загрузка инвентаря первым условием");
+            RecreateInventory(invntory_items);
+        }
+        else if (invntory_items == null || invntory_items.Count < 1 && slots.Count == 0)// Если сохранения нет и слотов нет
+        {
+            Debug.Log("Загрузка инвентаря вторым условием");
+            InitializeSlots();
+        }
+        else//В остальных случаях просто все чистим, создаем пустые значения и зполняем
+        {
+            Debug.Log("Загрузка инвентаря третим условием");
+            IsLoadInventory(invntory_items);
+        }
+        UpdateWholeSlots();//Обновляем целиком инвентарь
+    }
+    private bool IsLoadInventory(List<SlotTypeSave> invntory_items)//Просто обновляем знаечния в клетках на новые из сохранения
+    {
+        if(invntory_items != null)
+        {
+            for(int i = 0; i<slots.Count;i++)
+            {
+                slots[i].Item = ItemsList.Instance.GetItemForName(invntory_items[i].NameKey);
+                slots[i].Count = invntory_items[i].count;
+            }
+            return true;
+        }
+        return false;
+    }
+    private bool RecreateInventory(List<SlotTypeSave> invntory_items) //Создать с объектами (префабами ячеек в юнити) инвентарь
+    {
+        if (invntory_items != null)
+        {
+            int i = 0;
+            foreach (SlotTypeSave slotTypeSave in invntory_items)
+            {
+                GameObject slotObj = Instantiate(slotPrefab, slotsParent.transform);
+                slotObj.name = $"Slot ({i})";
+                slots.Add(new Slot(ItemsList.Instance.GetItemForName(slotTypeSave.NameKey), slotObj, slotTypeSave.count));
+                i++;
+            }
+            return true;
+        }
+        return false;
     }
     private void InitializeSlots()
     {
@@ -47,7 +98,13 @@ public class Inventory:MonoBehaviour
             slots.Add(new Slot(ItemsList.Instance.GetNoneItem(), slotObj)); //Альтернатива, которая Юнити не любит
         }
     }
-
+    private void RemoveAllSlotInventory()
+    {
+        foreach(Slot slot in slots)
+        {
+            Destroy(slot.SlotObj);
+        }
+    }
     public int AddItemForID(int id, int count)
     {
         foreach(Item item in ItemsList.Instance.items)
@@ -165,6 +222,13 @@ public class Inventory:MonoBehaviour
         } 
             
     }
+    private void UpdateWholeSlots()
+    {
+        foreach(Slot slot in slots)
+        {
+            UpdateSlotUI(slot);
+        }
+    }
     public void SwapSlots(Slot oldSlot, Slot newSlot)
     {
         //Slot tempSlot = new Slot(oldSlot.Item, oldSlot.Count);
@@ -216,12 +280,13 @@ public class Inventory:MonoBehaviour
 
     //}
 }
+[Serializable]
 public class Slot 
 {
     public Item Item { get; set; }
     public int Count { get; set; }
     //public int MaxCount { get; set; }
-    public GameObject SlotObj { get; set; }
+    [JsonIgnore]public GameObject SlotObj { get; set; }
     public TypeItem itemFilter { get; set; }
     public Slot(Item item, GameObject slotObject)
     {
@@ -240,5 +305,17 @@ public class Slot
         Item = item;
         SlotObj = slotObject;
         itemFilter = _itemFilter;
+    }
+    public Slot(Item item, GameObject slotObject, int _count)
+    {
+        Item = item;
+        SlotObj = slotObject;
+        Count = _count;
+    }
+    public Slot(Item item, GameObject slotObject, int _count, TypeItem _itemFilter)
+    {
+        Item = item;
+        SlotObj = slotObject;
+        Count = _count;
     }
 }
