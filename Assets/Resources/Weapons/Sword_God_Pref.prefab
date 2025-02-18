@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6605310741985116714}
   - component: {fileID: 1215674252710585427}
   - component: {fileID: 3925060932897899496}
-  - component: {fileID: 330867680541184794}
+  - component: {fileID: 4740884294997987002}
   m_Layer: 0
   m_Name: Sword_God_Pref
   m_TagString: Untagged
@@ -102,32 +102,67 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6f686e5499fbd148bb3812ba9bedaf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TypeAttack: 3
   AttackDirectionOrVector: 0
-  minDistance: 0.3
+  minDistance: 0.8
   offset: 135
   ShootPos: {fileID: 877510644002656660}
---- !u!95 &330867680541184794
-Animator:
-  serializedVersion: 7
+  PlayerModel: {fileID: 0}
+--- !u!60 &4740884294997987002
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1189786356956331463}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: fa0ad35c9dc8f2e4e9eb0e5af591d8df, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.26, y: 0.26}
+    oldSize: {x: 0.32, y: 0.32}
+    newSize: {x: 0.32, y: 0.32}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.07942595, y: 0.22986597}
+      - {x: -0.071667, y: 0.1056288}
+      - {x: -0.058891945, y: -0.029112061}
+      - {x: -0.008160911, y: -0.07166709}
+      - {x: 0.12439414, y: -0.05378202}
+      - {x: 0.20629631, y: 0.023670228}
+      - {x: 0.24548706, y: 0.13359933}
+      - {x: 0.25110808, y: 0.20840386}
+  m_UseDelaunayMesh: 0
 --- !u!1 &8370641025233230599
 GameObject:
   m_ObjectHideFlags: 0

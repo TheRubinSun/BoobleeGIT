@@ -18,10 +18,14 @@ public class PlayerSaveData
     public int freeSkillPoints;
     public int cur_exp;
     public int nextLvl_exp;
+    
 
     public bool[] DirectionOrVectorWeapon = new bool[4];
 
     public RoleClass classPlayer;
+
+    //Attacks
+    public int count_Projectile;
 
     // Конструктор для преобразования Player в PlayerSaveData
     public PlayerSaveData(Player player)
@@ -41,6 +45,7 @@ public class PlayerSaveData
         freeSkillPoints = player.freeSkillPoints;
         cur_exp = player.cur_exp;
         nextLvl_exp = player.nextLvl_exp;
+        count_Projectile = player.count_Projectile;
     }
 
     // Пустой конструктор для десериализации

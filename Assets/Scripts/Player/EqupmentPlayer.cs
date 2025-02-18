@@ -15,6 +15,7 @@ public class EqupmentPlayer : MonoBehaviour
 
     [SerializeField] GameObject [] slotsObjEquip; //Массив слотов
     [SerializeField] Transform [] EquipSlotPrefab; //Префабы рук как родителя
+    [SerializeField] Transform PlayerModel;
 
     Dictionary<int, GameObject> slots_Weapon = new Dictionary<int, GameObject>(); //В ячейки рук по порядку префабы оружия 
     private void Awake()
@@ -133,15 +134,16 @@ public class EqupmentPlayer : MonoBehaviour
         if (slot.Item is Gun gun)
         {
             //Debug.Log($"Gun: {gun.NameKey}: {gun.projectileSpeed}");
-            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(gun.damage, gun.attackSpeed, gun.projectileSpeed, gun.rangeType, gun.range, gun.typeDamage, WeaponDatabase.GetProjectilesPrefab(gun.idBulletPref));
+            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(gun.damage, gun.attackSpeed, gun.projectileSpeed, gun.rangeType, gun.range, gun.conut_Projectiles, gun.typeDamage, PlayerModel,
+                WeaponDatabase.GetProjectilesPrefab(gun.idBulletPref), gun.projectileSpeedCoof);
         }
         else if (slot.Item is Sword sword)
         {
-            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(sword.damage, sword.attackSpeed, 0, sword.rangeType, sword.range, sword.typeDamage);
+            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(sword.damage, sword.attackSpeed, 0, sword.rangeType, sword.range, sword.conut_Projectiles, sword.typeDamage, PlayerModel, null,0);
         }
         else if (slot.Item is Weapon weapon)
         {
-            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(weapon.damage, weapon.attackSpeed, 0, weapon.rangeType, weapon.range, weapon.typeDamage);
+            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(weapon.damage, weapon.attackSpeed, 0, weapon.rangeType, weapon.range, weapon.conut_Projectiles, weapon.typeDamage, PlayerModel, null,0);
         }
 
 

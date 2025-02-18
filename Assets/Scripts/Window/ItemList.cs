@@ -43,8 +43,8 @@ public class ItemsList : MonoBehaviour
     private void InitializeItems()
     {
         if (items.Count == 0) items.Add(new Item(0, "item_none", 0, items.Count, Quality.None, ""));
-        items.Add(new Sword(1, "sword_gods_slayer", 1, items.Count, Quality.Legendary, "___", false, 2, damageT.Cutting, 3, 1.5f));
-        items.Add(new Gun(2, "gun_makarov", 1, items.Count, Quality.Rare, "___", true, 10f, damageT.Cutting, 2, 2f, 6f, 0));
+        items.Add(new Sword(1, "sword_gods_slayer", 1, items.Count, Quality.Legendary, "___", false, 1f, damageT.Cutting, 3, 0.7f, 1));
+        items.Add(new Gun(2, "gun_makarov", 1, items.Count, Quality.Rare,              "___", true, 4f, damageT.Crushing, 2, 2f, 1, 8f, 0.5f, 0));
         items.Add(new Item(3, "item_meat", 20, items.Count, Quality.Common, "___"));
         items.Add(new Item(4, "item_potion_hp", 10, items.Count, Quality.Uncommon, "___", TypeItem.Potion));
         items.Add(new Item(5, "armor_armor", 1, items.Count, Quality.Common, "___", TypeItem.Armor));

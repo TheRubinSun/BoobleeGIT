@@ -42,8 +42,8 @@ public class EnemyList: MonoBehaviour
         if (mobs.Count < 1)
         {
             //             name hp range isRange damage attackSpeed speed
-            mobs.Add(new MeleMob("daizen_enem", 10, 0.75f, false, 2, 45, 1.5f, 2));
-            mobs.Add(new RangeMob("rainger_enem", 6, 4f, true, 1, 30, 1f, 8f, 3));
+            mobs.Add(new MeleMob("daizen_enem", 15, 1.2f, false, 2, 45, 2f, 2));
+            mobs.Add(new RangeMob("rainger_enem", 10, 6f, true, 1, 30, 1.2f, 10f, 3));
 
             DisplayMobsList.Instance.DisplayLinesMobs(mobs);
         }
@@ -108,28 +108,6 @@ public class Mob
     {
         //Debug.Log("This mob attack");
     }
-
-    //public string GetLocalizationName()
-    //{
-    //    if (LocalizationManager.Instance != null)
-    //    {
-    //        Dictionary<string, string> localizedName = LocalizationManager.Instance.GetLocalizedValue("mobs", NameKey);
-    //        if (!string.IsNullOrEmpty(localizedName))
-    //        {
-    //            return localizedName;
-    //        }
-    //        else
-    //        {
-    //            Debug.LogWarning($"Локализация для ключа {NameKey} не найдена.");
-    //            return NameKey; // Возвращаем ключ, если локализация отсутствует
-    //        }
-    //    }
-    //    else
-    //    {
-    //        Debug.LogWarning("LocalizationManager нет на сцене.");
-    //        return NameKey; // Возвращаем ключ, если LocalizationManager не найден
-    //    }
-    //}
     public void LocalizationMobs()
     {
         if (LocalizationManager.Instance != null)

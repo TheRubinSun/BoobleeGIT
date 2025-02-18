@@ -31,6 +31,9 @@ public class Player : MonoBehaviour
 
     public RoleClass classPlayer;
 
+    //Mod Attack
+    public int count_Projectile;
+
     //GameObjects
     private Dictionary<int, WeaponControl> WeaponsObj = new Dictionary<int, WeaponControl>();
 
@@ -92,9 +95,12 @@ public class Player : MonoBehaviour
             Mov_Speed = rc.BonusSpeedMove;
             Max_Hp = rc.BonusHp;
             Att_Speed = rc.BonusAttackSpeed;
+            Att_Range = rc.BonusRange;
             nextLvl_exp = 10;
             level = 0;
             Cur_Hp = Max_Hp;
+            count_Projectile = 0;
+            
         }
 
         UpdateAllInfo();

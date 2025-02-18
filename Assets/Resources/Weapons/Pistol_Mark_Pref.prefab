@@ -132,6 +132,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6f686e5499fbd148bb3812ba9bedaf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TypeAttack: 2
+  AttackDirectionOrVector: 0
   minDistance: 0.3
   offset: 0
   ShootPos: {fileID: 2770646334030511382}

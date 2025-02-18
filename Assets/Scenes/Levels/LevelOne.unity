@@ -243,7 +243,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 10
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.4433962, g: 0.4433962, b: 0.4433962, a: 1}
+  m_Color: {r: 0.5471698, g: 0.3742435, b: 0.3742435, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -328,6 +328,7 @@ MonoBehaviour:
   cur_exp: 0
   nextLvl_exp: 0
   DirectionOrVectorWeapon: 00000000
+  count_Projectile: 0
   PlayerModel: {fileID: 403271159}
   TooglesWeapon:
   - {fileID: 1475039875}
@@ -653,6 +654,7 @@ MonoBehaviour:
   - {fileID: 1304914768}
   - {fileID: 702660130}
   - {fileID: 1795926025}
+  PlayerModel: {fileID: 403271163}
 --- !u!114 &65463741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20241,7 +20243,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 10
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.4433962, g: 0.4433962, b: 0.4433962, a: 1}
+  m_Color: {r: 0.5471698, g: 0.3742435, b: 0.3742435, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -20918,7 +20920,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 10
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.4433962, g: 0.4433962, b: 0.4433962, a: 1}
+  m_Color: {r: 0.5471698, g: 0.3742435, b: 0.3742435, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
