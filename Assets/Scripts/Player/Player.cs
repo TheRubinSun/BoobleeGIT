@@ -31,6 +31,11 @@ public class Player : MonoBehaviour
 
     public RoleClass classPlayer;
 
+    //Knowlange
+    public int MagicPoints;
+    public int TechniquePoints;
+    public int AdjacentPoints;
+
     //Mod Attack
     public int count_Projectile;
 
@@ -100,7 +105,9 @@ public class Player : MonoBehaviour
             level = 0;
             Cur_Hp = Max_Hp;
             count_Projectile = 0;
-            
+            MagicPoints = 1;
+            TechniquePoints = 1;
+            AdjacentPoints = 0;
         }
 
         UpdateAllInfo();
@@ -124,6 +131,11 @@ public class Player : MonoBehaviour
         freeSkillPoints = playerSaveData.freeSkillPoints;
         cur_exp = playerSaveData.cur_exp;
         nextLvl_exp = playerSaveData.nextLvl_exp;
+
+        count_Projectile = playerSaveData.count_Projectile;
+        MagicPoints = playerSaveData.MagicPoints;
+        TechniquePoints = playerSaveData.MagicPoints;
+        AdjacentPoints = playerSaveData.AdjacentPoints;
     }
     private void ResetWeaponToggles()
     {

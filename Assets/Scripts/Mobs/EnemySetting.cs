@@ -77,6 +77,7 @@ public class EnemySetting : MonoBehaviour
             sr.color = new Color32(255, 255, 255, 255);
         }
     }
+
     private void Death()
     {
         if (IsDead) return;

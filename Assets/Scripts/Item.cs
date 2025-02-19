@@ -11,6 +11,7 @@ public enum TypeItem
     Food,
     Potion,
     Material,
+    Minion,
     Other
 }
 public enum Quality
@@ -34,10 +35,11 @@ public class Item
     public int MaxCount { get; set; }
     public int SpriteID { get; set; }
     public Quality quality { get; set; }
+    public int Cost { get; set; }
     public string Description { get; set; }
-
+    
     [JsonIgnore] public Sprite Sprite { get; set; }
-    public Item(int id, string name, int maxCount, int spriteID, Quality quality, string description, TypeItem typeItem = TypeItem.Other)
+    public Item(int id, string name, int maxCount, int spriteID, Quality quality,int cost, string description, TypeItem typeItem = TypeItem.Other)
     {
         Id = id;
         TypeItem = typeItem;
@@ -45,6 +47,7 @@ public class Item
         MaxCount = maxCount;
         SpriteID = spriteID;
         this.quality = quality;
+        Cost = cost;
         Description = description;
     }
     public void SetSprite(Sprite sprite)

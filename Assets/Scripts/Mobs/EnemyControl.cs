@@ -12,7 +12,6 @@ public class EnemyControl: MonoBehaviour
 
     public Transform player;
     [SerializeField] Transform ShootPoint;
-
     [SerializeField] private LayerMask obstacleLayer; // Слой для препятствий (стены и игрок)
     SpriteRenderer spriteRenderer;
     SpriteRenderer spriteRendererChild;
@@ -201,5 +200,13 @@ public class EnemyControl: MonoBehaviour
     {
 
         Player.Instance.TakeDamage(enemySetting.damage);
+    }
+    public Animator GetAnimator()
+    {
+        if (animator != null)
+        {
+            return animator;
+        }
+        else return null;
     }
 }

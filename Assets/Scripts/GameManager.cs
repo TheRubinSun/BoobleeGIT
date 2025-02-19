@@ -2,11 +2,13 @@ using NUnit.Framework;
 using TMPro;
 using UnityEngine;
 using System.Collections.Generic;
+using System;
+using Unity.Mathematics;
 
 public class GameManager: MonoBehaviour 
 {
     public static GameManager Instance;
-
+    [SerializeField] GameObject CorpsePref; 
     bool BuildingMode;
 
     public int KillsEnemy = 0;
@@ -38,10 +40,28 @@ public class GameManager: MonoBehaviour
         enemisRemaining--;
         Debug.Log($"Убит {enemy.Name} {enemy.max_Hp}");
         Player.Instance.AddExp(enemy.GiveExp);
+
+        int chanceSpawnCorpse = UnityEngine.Random.Range(1, 10);
+        if(chanceSpawnCorpse < 4) SpawnCorpse(enemy.gameObject.transform);
+
+
+
         if (InfoReaminingEnemy != null)
         {
             InfoReaminingEnemy.text = $"Убито врагов {KillsEnemy} из {enemisRemaining}";
         }
+    }
+    public void SpawnCorpse(Transform enemy)
+    {
+        GameObject corpseEnemy = Instantiate(CorpsePref, enemy.parent); //Создаем труп
+        corpseEnemy.transform.position = enemy.transform.position;      //Назначаем позицию
+
+        corpseEnemy.GetComponent<CorpseSetting>().NameKey = enemy.GetComponent<EnemySetting>().Name;
+        corpseEnemy.GetComponent<SpriteRenderer>().flipX = enemy.GetComponent<SpriteRenderer>().flipX;
+        Animator corpseAnim = corpseEnemy.GetComponent<Animator>();    //Коприруем аниматор
+        Animator enemyAnim = enemy.gameObject.GetComponent<EnemyControl>().GetAnimator(); //Коприруем аниматор
+        corpseAnim.runtimeAnimatorController = enemyAnim.runtimeAnimatorController;        //Коприруем аниматор
+        corpseAnim.SetTrigger("Death");
     }
     public async void SaveDataGame()
     {
@@ -67,6 +87,9 @@ public class GameManager: MonoBehaviour
 
         EnemyData enemy_Data = new EnemyData(EnemyList.Instance.mobs);
         await SaveSystem.SaveDataAsync(enemy_Data, "enemies.json");
+
+        ItemsDropOnEnemy item_drop = new ItemsDropOnEnemy(ItemDropEnemy.enemyAndHisDrop);
+        await SaveSystem.SaveDataAsync(item_drop, "item_drop.json");
     }
     public async void LoadDataGame()
     {
@@ -82,6 +105,9 @@ public class GameManager: MonoBehaviour
 
         EnemyData enemy = await SaveSystem.LoadDataAsync<EnemyData>("enemies.json");
         EnemyList.Instance.LoadOrCreateMobsList(enemy.mob_list_data);
+
+        ItemsDropOnEnemy item_drop = await SaveSystem.LoadDataAsync<ItemsDropOnEnemy>("item_drop.json");
+        ItemDropEnemy.LoadOrCreate(item_drop.namesKeys);
 
         Debug.Log("Игра загружена.");
     }

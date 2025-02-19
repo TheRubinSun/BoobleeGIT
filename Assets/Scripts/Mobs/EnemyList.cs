@@ -4,8 +4,16 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using Unity.VisualScripting;
 using UnityEditor;
+using UnityEditor.Build.Player;
 using UnityEngine;
 
+public enum TypeMob
+{
+    None,
+    Magic,
+    Technology,
+    Adjacent
+}
 public class EnemyList: MonoBehaviour 
 {
     public static EnemyList Instance {  get; private set; }
@@ -42,8 +50,8 @@ public class EnemyList: MonoBehaviour
         if (mobs.Count < 1)
         {
             //             name hp range isRange damage attackSpeed speed
-            mobs.Add(new MeleMob("daizen_enem", 15, 1.2f, false, 2, 45, 2f, 2));
-            mobs.Add(new RangeMob("rainger_enem", 10, 6f, true, 1, 30, 1.2f, 10f, 3));
+            mobs.Add(new MeleMob("daizen_enem", 15, 1.2f, false, 2, 45, 2f, 2, TypeMob.Technology));
+            mobs.Add(new RangeMob("rainger_enem", 10, 6f, true, 1, 30, 1.2f, 10f, 3, TypeMob.Technology));
 
             DisplayMobsList.Instance.DisplayLinesMobs(mobs);
         }
@@ -54,6 +62,15 @@ public class EnemyList: MonoBehaviour
         {
             mob.LocalizationMobs();
         }
+    }
+    public TypeMob GetTypeMob(string NameKey)
+    {
+        foreach(Mob mob in mobs)
+        {
+            if (mob.NameKey == NameKey) return mob.TypeMob;
+        }
+        Debug.LogError($"Ошибка! Не найден моб с ключом {NameKey}");
+        return TypeMob.None;
     }
     public void GetMobs(int id)
     {
@@ -93,7 +110,8 @@ public class Mob
     public string Description { get; set; }
     public int GiveExp { get; set; }
 
-    public Mob(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed, int giveExp)
+    public TypeMob  TypeMob{get;set;}
+    public Mob(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed, int giveExp, TypeMob typeMob)
     {
         NameKey = _name;
         Hp = _hp;
@@ -103,6 +121,7 @@ public class Mob
         attackSpeed = _attackspeed;
         speed = _speed;
         GiveExp = giveExp;
+        TypeMob = typeMob;
     }
     public virtual void Attack()
     {
@@ -134,7 +153,7 @@ public class RangeMob : Mob
 {
     public float SpeedProjectile { get; set; }
 
-    public RangeMob(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed, float speedProjectile, int giveExp) : base(_name, _hp, _rangeAt, _isranged, _damage, _attackspeed, _speed, giveExp)
+    public RangeMob(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed, float speedProjectile, int giveExp, TypeMob typeMob) : base(_name, _hp, _rangeAt, _isranged, _damage, _attackspeed, _speed, giveExp, typeMob)
     {
         this.SpeedProjectile = speedProjectile;
     }
@@ -146,7 +165,7 @@ public class RangeMob : Mob
 [Serializable]
 public class MeleMob : Mob
 {
-    public MeleMob(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed, int giveExp) : base(_name, _hp, _rangeAt, _isranged, _damage, _attackspeed, _speed, giveExp)
+    public MeleMob(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed, int giveExp, TypeMob typeMob) : base(_name, _hp, _rangeAt, _isranged, _damage, _attackspeed, _speed, giveExp, typeMob)
     {
 
     }

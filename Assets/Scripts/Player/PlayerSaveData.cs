@@ -24,6 +24,13 @@ public class PlayerSaveData
 
     public RoleClass classPlayer;
 
+
+    //Knowlange
+    public int MagicPoints;
+    public int TechniquePoints;
+    public int AdjacentPoints;
+
+
     //Attacks
     public int count_Projectile;
 
@@ -46,6 +53,10 @@ public class PlayerSaveData
         cur_exp = player.cur_exp;
         nextLvl_exp = player.nextLvl_exp;
         count_Projectile = player.count_Projectile;
+
+        MagicPoints = player.MagicPoints;
+        TechniquePoints = player.TechniquePoints;
+        AdjacentPoints = player.AdjacentPoints;
     }
 
     // Пустой конструктор для десериализации

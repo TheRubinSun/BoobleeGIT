@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 
 public class GameData
@@ -52,6 +53,15 @@ public class SlotTypeSave
     {
         NameKey = _name;
         count = _count;
+    }
+}
+public class ItemsDropOnEnemy
+{
+    public Dictionary<string, string[]> namesKeys;
+    public ItemsDropOnEnemy() { }
+    public ItemsDropOnEnemy(Dictionary<string, string[]> _NameKeys)
+    {
+        namesKeys = _NameKeys;
     }
 }
 

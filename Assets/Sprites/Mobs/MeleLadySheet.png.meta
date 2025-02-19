@@ -121,10 +121,10 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 16
-        width: 48
+        width: 50
         height: 52
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -141,12 +141,12 @@ TextureImporter:
       name: MeleLadySheet_1
       rect:
         serializedVersion: 2
-        x: 48
+        x: 50
         y: 16
-        width: 48
+        width: 50
         height: 52
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -155,6 +155,28 @@ TextureImporter:
       bones: []
       spriteID: 0adcbe135ecde1e48b53d74e6855d206
       internalID: 1647812323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MeleLadySheet_2
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 16
+        width: 50
+        height: 52
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f700368c2f72d844a89533eddef09ea
+      internalID: 884062175
       vertices: []
       indices: 
       edges: []
@@ -175,6 +197,7 @@ TextureImporter:
     nameFileIdTable:
       MeleLadySheet_0: 667323559
       MeleLadySheet_1: 1647812323
+      MeleLadySheet_2: 884062175
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
