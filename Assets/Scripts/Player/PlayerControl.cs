@@ -21,6 +21,7 @@ public class PlayerControl : MonoBehaviour
     //Напрвеления и радиусы
     [SerializeField] private Vector2 inputDirection;
 
+
     private Vector2 mousePos;
     private Vector2 movement;
     //Vector2 mousePos;
@@ -29,6 +30,12 @@ public class PlayerControl : MonoBehaviour
     private Dictionary<int, WeaponControl> weaponsAndArms;
     private Dictionary<int, MinionControl> minionSlots;
     private float rangeMinion;
+
+    //Звуки
+    AudioSource audioSource_Move;
+
+    [SerializeField] AudioClip audioClips;
+
     void Start()
     {
         player = GetComponentInParent<Player>();

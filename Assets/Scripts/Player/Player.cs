@@ -135,7 +135,7 @@ public class Player : MonoBehaviour
 
         count_Projectile = playerSaveData.count_Projectile;
         MagicPoints = playerSaveData.MagicPoints;
-        TechniquePoints = playerSaveData.MagicPoints;
+        TechniquePoints = playerSaveData.TechniquePoints;
         AdjacentPoints = playerSaveData.AdjacentPoints;
     }
     private void ResetWeaponToggles()

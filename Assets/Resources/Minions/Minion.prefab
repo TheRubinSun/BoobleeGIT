@@ -471,6 +471,10 @@ MonoBehaviour:
   Body_Obj: {fileID: 397049028878963008}
   Hand_Obj: {fileID: 1125266123132453485}
   Indicator_Obj: {fileID: 6316606306376807765}
+  audioClips:
+  - {fileID: 8300000, guid: ebf1feb6cf8e6d9499c09ae1dcc6fd8e, type: 3}
+  - {fileID: 8300000, guid: 821ca826f1d03b741a52efd63a86d801, type: 3}
+  - {fileID: 8300000, guid: 7a361d178d0d0e74a932563c52f4a260, type: 3}
 --- !u!120 &-359069369305256782
 LineRenderer:
   serializedVersion: 2

@@ -17,8 +17,14 @@ public class EnemyControl: MonoBehaviour
     SpriteRenderer spriteRendererChild;
     Animator animator;
 
+    //Звуки
+    AudioSource audioSource_Shot;
+    [SerializeField] AudioClip[] audioClips;
     private void Start()
     {
+        audioSource_Shot = GetComponent<AudioSource>();
+        audioSource_Shot.volume = 0.1f;
+
         selfCollider = GetComponent<Collider2D>();
         enemySetting = GetComponent<EnemySetting>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -165,6 +171,9 @@ public class EnemyControl: MonoBehaviour
         GameObject bullet;
         Vector2 direction;
 
+        audioSource_Shot.Stop();
+        audioSource_Shot.PlayOneShot(audioClips[0]); //Звук выстрела
+
         //Стреляет из определенной точки или из центра моба
         if (ShootPoint != null)
         {
@@ -198,6 +207,8 @@ public class EnemyControl: MonoBehaviour
     }
     private void MeleeAttackOne()
     {
+        audioSource_Shot.Stop();
+        audioSource_Shot.PlayOneShot(audioClips[0]); //Звук выстрела
 
         Player.Instance.TakeDamage(enemySetting.damage);
     }

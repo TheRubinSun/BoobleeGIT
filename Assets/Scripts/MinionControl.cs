@@ -24,16 +24,26 @@ public class MinionControl : MonoBehaviour
     private List<Slot> dropItems = new List<Slot>();
     GameObject[] itemsFly;
 
+
+    //Объект для захвата предмета
     [SerializeField] Transform slotHand;
+
+    //Объекты для анимации
     [SerializeField] Transform Rotate_Obj;
     [SerializeField] Transform Body_Obj;
     [SerializeField] Transform Hand_Obj;
     [SerializeField] Transform Indicator_Obj;
 
+    //Компоненты анимаций
     Animator rotate_anim;
     Animator body_anim;
     Animator hand_anim;
     Animator indicator_anim;
+
+    //Звуки
+    AudioSource audioSource_Move;
+    AudioSource audioSource_Work;
+    [SerializeField] AudioClip[] audioClips; 
 
     private void Start()
     {
@@ -52,6 +62,11 @@ public class MinionControl : MonoBehaviour
         body_anim = Body_Obj.GetComponent<Animator>();
         hand_anim = Hand_Obj.GetComponent<Animator>();
         indicator_anim = Indicator_Obj.GetComponent<Animator>();
+
+        audioSource_Move = gameObject.AddComponent<AudioSource>();
+        audioSource_Work = gameObject.AddComponent<AudioSource>();
+        audioSource_Work.volume = 0.05f; // Громкость 5%
+        audioSource_Move.volume = 0.05f; // Громкость 5%
     }
     public void GetStatsMinion(float _radiusVision, float _timeResourceGat, float _speed)
     {
@@ -255,6 +270,10 @@ public class MinionControl : MonoBehaviour
         indicator_anim.SetBool("Work", false);
         rotate_anim.SetBool("Move", false);
         body_anim.SetBool("Move", false);
+
+        Debug.Log("Попытка остановки звука");
+        audioSource_Move.Stop();
+        audioSource_Work.Stop();
     }
     private void AnimHandMove(bool MoveOn)
     {
@@ -264,10 +283,42 @@ public class MinionControl : MonoBehaviour
     {
         hand_anim.SetBool("Work", WorkOn);
         indicator_anim.SetBool("Work", WorkOn);
+        if (WorkOn)
+        {
+            if (!audioSource_Work.isPlaying)
+            {
+                int numbSound = Random.Range(1, 3);
+                Debug.Log($"Sound: {numbSound}");
+                audioSource_Work.clip = audioClips[numbSound];
+                audioSource_Work.loop = true;
+                audioSource_Work.Play();
+            }
+            
+
+        }
+        else
+        {
+            audioSource_Work.Stop();
+        }
     }
     private void AnimOnRotation(bool active)
     {
         rotate_anim.SetBool("Move", active);
+        if(active)
+        {
+            if (!audioSource_Move.isPlaying)
+            {
+                audioSource_Move.clip = audioClips[0];
+                audioSource_Move.loop = true;
+                audioSource_Move.Play();
+            }
+
+        }
+        else
+        {
+            Debug.Log("Попытка остановки звука");
+            audioSource_Move.Stop();
+        }
     }
     private void AnimMoveBody(bool active)
     {

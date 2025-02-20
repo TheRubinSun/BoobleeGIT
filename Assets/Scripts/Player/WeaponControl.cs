@@ -28,8 +28,16 @@ public class WeaponControl : MonoBehaviour
     SpriteRenderer sr;
     Vector2 mousePos;
     Animator animator;
+
+    //Звуки
+    AudioSource audioSource_Shot;
+    [SerializeField] AudioClip[] audioClips;
     private void Start()
     {
+        audioSource_Shot = GetComponent<AudioSource>();
+        audioSource_Shot.volume = 0.1f;
+
+
         sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
     }
@@ -121,6 +129,7 @@ public class WeaponControl : MonoBehaviour
         {
             //напишем сдивг для снарядов, если их больше одного
             float offset = (CountProjectiles > 1) ? CountProjectiles / 2 * -0.1f : 0;
+            Debug.Log($"offset: {offset}");
             for (int i = 0; i < CountProjectiles; i++)
             {
                 ShootAttack(offset);
@@ -162,6 +171,8 @@ public class WeaponControl : MonoBehaviour
         proj_set.damage = attack_damage;//Назначем урон
         proj_set.maxDistance = attack_range;
 
+
+        audioSource_Shot.PlayOneShot(audioClips[0]); //Звук выстрела
         //Подять в иерархии объекта пули/стрелы
         projectile.transform.SetParent(transform.root);
 
@@ -184,10 +195,13 @@ public class WeaponControl : MonoBehaviour
     private void ArrowAttack(float offsetProj)
     {
         GameObject projectile = Instantiate(Projectile_pref, ShootPos);    //Создаем снаряд по префабу
+        projectile.transform.position += new Vector3(0, offsetProj);
         PlayerProjectile proj_set = projectile.GetComponent<PlayerProjectile>();
         proj_set.damage = attack_damage;//Назначем урон
         proj_set.maxDistance = attack_range;
 
+        audioSource_Shot.Stop();
+        audioSource_Shot.PlayOneShot(audioClips[0]); //Звук выстрела
         //Подять в иерархии объекта пули/стрелы
         projectile.transform.SetParent(transform.root);
 
@@ -226,6 +240,9 @@ public class WeaponControl : MonoBehaviour
     {
         // Запускаем анимацию меча с изменением угла в пределах заданной скорости
         IsAttack=true;
+
+        int num_rand = Random.Range(0, 4);
+        audioSource_Shot.PlayOneShot(audioClips[num_rand]); //Звук Меча
         StartCoroutine(SwordAttackCoroutine());
     }
 
