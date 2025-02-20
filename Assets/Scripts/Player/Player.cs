@@ -41,6 +41,7 @@ public class Player : MonoBehaviour
 
     //GameObjects
     private Dictionary<int, WeaponControl> WeaponsObj = new Dictionary<int, WeaponControl>();
+    private Dictionary<int, MinionControl> MinionsObj = new Dictionary<int, MinionControl>();
 
     [SerializeField] 
     private GameObject PlayerModel;
@@ -156,9 +157,23 @@ public class Player : MonoBehaviour
     {
         return WeaponsObj;
     }
+    public Dictionary<int, MinionControl> GetDictMinions()
+    {
+        return MinionsObj;
+    }
+    private void UpdateSlotsInPlayerControl()
+    {
+        transform.GetChild(0).GetComponent<PlayerControl>().UpdateSlots(WeaponsObj, MinionsObj);
+    }
     public void SetWeaponsObj(int i, WeaponControl weaponObj)
     {
         WeaponsObj[i] = weaponObj;
+        UpdateSlotsInPlayerControl();
+    }
+    public void SetMinionsObj(int i, MinionControl minionObj)
+    {
+        MinionsObj[i] = minionObj;
+        UpdateSlotsInPlayerControl();
     }
     public void UpdateHpBar()
     {

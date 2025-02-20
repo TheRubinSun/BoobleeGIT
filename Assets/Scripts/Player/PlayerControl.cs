@@ -12,25 +12,32 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] Transform[] legsLines;
     [SerializeField] Transform[] legsCenter;
     [SerializeField] Transform WeaponSlots;
+    [SerializeField] Transform MinionsSlots;
 
     [SerializeField] private float radiusCenterLegs = 0.4f;                // Радиус области
-    
-    
+
+    private LineRenderer lineRenderer;
+
     //Напрвеления и радиусы
     [SerializeField] private Vector2 inputDirection;
-    
-    Vector2 mousePos;
-    Vector2 movement;
+
+    private Vector2 mousePos;
+    private Vector2 movement;
     //Vector2 mousePos;
-    Vector2 direction;
+    private Vector2 direction;
+
+    private Dictionary<int, WeaponControl> weaponsAndArms;
+    private Dictionary<int, MinionControl> minionSlots;
+    private float rangeMinion;
     void Start()
     {
         player = GetComponentInParent<Player>();
-
+        //lineRenderer = MinionsSlots.GetComponent<LineRenderer>();
         //rb = GetComponent<Rigidbody2D>();
     }
     private void Update()
     {
+        
         cameraObj.position = new Vector3(transform.position.x, transform.position.y, -10f);
         inputDirection.x = Input.GetAxisRaw("Horizontal");
         inputDirection.y = Input.GetAxisRaw("Vertical");
@@ -41,14 +48,21 @@ public class PlayerControl : MonoBehaviour
         {
             Attack();
         }
-        
+        else if (Input.GetKeyDown(KeyCode.E))
+        {
+            UseMinions();
+        }
 
-        //MoveHand();
+
     }
-
+    public void UpdateSlots(Dictionary<int, WeaponControl> weaponObj, Dictionary<int, MinionControl> minionObj)
+    {
+        weaponsAndArms = weaponObj;
+        minionSlots = minionObj;
+    }
     void Attack()
     {
-        Dictionary<int, WeaponControl> weaponsAndArms = Player.Instance.GetDictWeaponAndArms();
+        if (weaponsAndArms == null) return;
         foreach (WeaponControl child in weaponsAndArms.Values)
         {
             if (child != null) //Проверка, если вдруг оружие было удаленно
@@ -56,6 +70,17 @@ public class PlayerControl : MonoBehaviour
                 child.Attack();
             }
             
+        }
+    }
+    void UseMinions()
+    {
+        if (minionSlots == null) return;
+        foreach(MinionControl minion in minionSlots.Values)
+        {
+            if (minion != null)
+            {
+                minion.UseMinion();
+            }
         }
     }
     void RotateWeaponSlots()
@@ -97,4 +122,33 @@ public class PlayerControl : MonoBehaviour
             centerLegs.localPosition = newPos;
         }
     }
+    //public void DrawRange(bool action, float range)
+    //{
+    //    if (action)
+    //    {
+    //        DrawCircle(range);
+    //        lineRenderer.enabled = true;
+    //    }
+    //    else
+    //    {
+    //        lineRenderer.enabled = false;
+    //    }
+    //}
+    //void DrawCircle(float range)
+    //{
+    //    int segments = 50; // Количество точек круга
+    //    Vector2 center = MinionsSlots.position;
+    //    float angleStep = 360f / segments;
+    //    for (int i = 0; i <= segments; i++)
+    //    {
+    //        float angle = Mathf.Deg2Rad * i * angleStep;
+    //        float x = center.x + Mathf.Cos(angle) * range;
+    //        float y = center.y + Mathf.Sin(angle) * range;
+    //        lineRenderer.SetPosition(i, new Vector3(x, y, 0));
+    //    }
+    //}
+    //void GetFirstMinion()
+    //{
+
+    //}
 }

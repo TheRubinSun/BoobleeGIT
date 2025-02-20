@@ -11,6 +11,10 @@ public class EqupmentPlayer : MonoBehaviour
     public Slot slotWeaponThree { get; set; }
     public Slot slotWeaponFour { get; set; }
     public Slot slotArrmorOne { get; set; }
+    public Slot slotMinionOne { get; set; }
+    public Slot slotMinionTwo { get; set; }
+    public Slot slotMinionThree { get; set; }
+    public Slot slotMinionFour { get; set; }
     public Slot[] slotsEqup {  get; set; }
 
     [SerializeField] GameObject [] slotsObjEquip; //Массив слотов
@@ -39,7 +43,11 @@ public class EqupmentPlayer : MonoBehaviour
         slotWeaponThree = new Slot(item, slotsObjEquip[2], TypeItem.Weapon);
         slotWeaponFour = new Slot(item, slotsObjEquip[3], TypeItem.Weapon);
         slotArrmorOne = new Slot(item, slotsObjEquip[4], TypeItem.Armor);
-        slotsEqup = new Slot[] { slotWeaponOne, slotWeaponTwo, slotWeaponThree, slotWeaponFour, slotArrmorOne };
+        slotMinionOne = new Slot(item, slotsObjEquip[5], TypeItem.Minion);
+        slotMinionTwo = new Slot(item, slotsObjEquip[6], TypeItem.Minion);
+        slotMinionThree = new Slot(item, slotsObjEquip[7], TypeItem.Minion);
+        slotMinionFour = new Slot(item, slotsObjEquip[8], TypeItem.Minion);
+        slotsEqup = new Slot[] { slotWeaponOne, slotWeaponTwo, slotWeaponThree, slotWeaponFour, slotArrmorOne, slotMinionOne, slotMinionTwo, slotMinionThree, slotMinionFour };
         for (int i = 0; i < slotsEqup.Length; i++)
         {
             Inventory.Instance.UpdateSlotUI(slotsEqup[i]);
@@ -113,14 +121,36 @@ public class EqupmentPlayer : MonoBehaviour
     }
     private void AddEquipOnSlot(int id)
     {
-        int idPref = ItemsList.Instance.GetIdWeaponForNum(slotsEqup[id].Item);  //Получаем номер оружия из списка всех предметов (нужен порядковый номер оржия чтобы создать подходящий префаб)
         
-        if (WeaponDatabase.GetWeaponPrefab(idPref) != null && id < 4) // Проверяем, существует ли Prefab перед инстанциированием и id до 4, так как 0 1 2 3 это слоты для оружия
+        
+        if (id < 4) // Проверяем, существует ли Prefab перед инстанциированием и id до 4, так как 0 1 2 3 это слоты для оружия
         {
-            GameObject weaponObj = Instantiate(WeaponDatabase.GetWeaponPrefab(idPref), EquipSlotPrefab[id]);  //Создаем оружие в слот 
-            LoadParametersWeapon(weaponObj, slotsEqup[id]); //Загружаем параметры с слолта в оружие
-            Player.Instance.SetWeaponsObj(id, weaponObj.GetComponent<WeaponControl>()); //Передаем в словарь у игрока в список оружия
-            slots_Weapon[id] = weaponObj; //Словарь в этом классе, пока не используется 
+            int idPref = ItemsList.Instance.GetIdWeaponForNum(slotsEqup[id].Item);  //Получаем номер оружия из списка всех предметов (нужен порядковый номер оржия чтобы создать подходящий префаб)
+            if(WeaponDatabase.GetWeaponPrefab(idPref) != null)
+            {
+                GameObject weaponObj = Instantiate(WeaponDatabase.GetWeaponPrefab(idPref), EquipSlotPrefab[id]);  //Создаем оружие в слот 
+                LoadParametersWeapon(weaponObj, slotsEqup[id]); //Загружаем параметры с слолта в оружие
+                Player.Instance.SetWeaponsObj(id, weaponObj.GetComponent<WeaponControl>()); //Передаем в словарь у игрока в список оружия
+                slots_Weapon[id] = weaponObj; //Словарь в этом классе, пока не используется 
+            }
+            else
+            {
+                Debug.LogWarning($"Ошибка 401, префаба нет {id}");
+            }
+        }
+        else if(id > 4 && id < 9) //Для слотов миньон
+        {
+            int idPref = ItemsList.Instance.GetIdMinoinForNum(slotsEqup[id].Item);  //Получаем номер миньона из списка всех предметов (нужен порядковый номер миньоена чтобы создать подходящий префаб)
+            if (WeaponDatabase.GetMinionPrefab(idPref) != null)
+            {
+                GameObject minionObj = Instantiate(WeaponDatabase.GetMinionPrefab(idPref), EquipSlotPrefab[id]);
+                LoadParametersMinion(minionObj, slotsEqup[id]);
+                Player.Instance.SetMinionsObj(id, minionObj.GetComponent<MinionControl>());
+            }
+            else
+            {
+                Debug.LogWarning($"Ошибка 401, префаба нет {id}");
+            }
         }
         else
         {
@@ -129,8 +159,6 @@ public class EqupmentPlayer : MonoBehaviour
     }
     private void LoadParametersWeapon(GameObject weaponObj, Slot slot)
     {
-
-
         if (slot.Item is Gun gun)
         {
             //Debug.Log($"Gun: {gun.NameKey}: {gun.projectileSpeed}");
@@ -145,9 +173,12 @@ public class EqupmentPlayer : MonoBehaviour
         {
             weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(weapon.damage, weapon.attackSpeed, 0, weapon.rangeType, weapon.range, weapon.conut_Projectiles, weapon.typeDamage, PlayerModel, null,0);
         }
-
-
-        
     }
-
+    private void LoadParametersMinion(GameObject minionObj, Slot slot)
+    {
+        if(slot.Item is Minion minion)
+        {
+            minionObj.GetComponent<MinionControl>().GetStatsMinion(minion.radius_search, minion.time_red, minion.move_speed);
+        }
+    }
 }

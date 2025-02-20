@@ -5,6 +5,7 @@ public class WeaponDatabase : MonoBehaviour
 {
     public static Dictionary<int, GameObject> weapons = new Dictionary<int, GameObject>();
     public static Dictionary<int, GameObject> projectiles = new Dictionary<int, GameObject>();
+    public static Dictionary<int, GameObject> minions = new Dictionary<int, GameObject>();
     public static void LoadWeapons()
     {
         weapons[0] = Resources.Load<GameObject>("Weapons/Sword_God_Pref");
@@ -13,6 +14,7 @@ public class WeaponDatabase : MonoBehaviour
         projectiles[0] = Resources.Load<GameObject>("Projectiles/Bullet");
         projectiles[1] = Resources.Load<GameObject>("Projectiles/BulletMobOne");
 
+        minions[0] = Resources.Load<GameObject>("Minions/Minion");
         if (weapons[0] == null)
             Debug.LogError("Не удалось загрузить префаб Sword_God_Pref!");
         if (weapons[1] == null)
@@ -26,5 +28,9 @@ public class WeaponDatabase : MonoBehaviour
     public static GameObject GetProjectilesPrefab(int id)
     {
         return projectiles.ContainsKey(id) ? projectiles[id] : null;
+    }
+    public static GameObject GetMinionPrefab(int id)
+    {
+        return minions.ContainsKey(id) ? minions[id] : null;
     }
 }

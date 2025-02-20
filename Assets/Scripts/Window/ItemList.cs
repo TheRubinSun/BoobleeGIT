@@ -48,9 +48,9 @@ public class ItemsList : MonoBehaviour
         items.Add(new Item(3, "item_meat", 20, items.Count, Quality.Common, 1, "___"));
         items.Add(new Item(4, "item_potion_hp", 10, items.Count, Quality.Uncommon,10, "___", TypeItem.Potion));
         items.Add(new Item(5, "armor_armor", 1, items.Count, Quality.Common,300, "___", TypeItem.Armor));
-        items.Add(new Minion(6, "minion_robot_es", 1, items.Count, Quality.Rare,500, "___", TypeItem.Minion, 10f));
-        items.Add(new Item(7, "material_chip_one", 20, items.Count, Quality.Common,15, "___", TypeItem.Material));
-        items.Add(new Item(8, "material_gear_one", 20, items.Count, Quality.Uncommon,5, "___", TypeItem.Material));
+        items.Add(new Minion(6, "minion_robot_es", 1, items.Count, Quality.Rare,500, "___", TypeItem.Minion, 5f, 6f, 2f));
+        items.Add(new Item(7, "material_chip_one", 20, items.Count, Quality.Uncommon, 15, "___", TypeItem.Material));
+        items.Add(new Item(8, "material_gear_one", 20, items.Count, Quality.Common, 5, "___", TypeItem.Material));
         items.Add(new Item(9, "material_dif_parts_one", 20, items.Count, Quality.Rare, 50, "___", TypeItem.Material));
         items.Add(new Item(10, "sword_parts_one", 20, items.Count, Quality.Mystical, 200, "___", TypeItem.Material));
         items.Add(new Item(11, "bow_parts_one", 20, items.Count, Quality.Mystical, 200, "___", TypeItem.Material));
@@ -133,6 +133,28 @@ public class ItemsList : MonoBehaviour
             if (item is Weapon weapon)
             {
                 if (weapon.Id == itemT.Id) return select;
+                select++;
+            }
+
+        }
+
+        Debug.LogWarning($"Ошибка №200 - {select}/{items.Count}/{itemT.NameKey}");
+        return -1;
+    }
+    public int GetIdMinoinForNum(Item itemT)
+    {
+        int select = 0;
+
+        if (!(itemT is Minion))
+        {
+            Debug.LogWarning($"Ошибка: {itemT.NameKey} не является миньоном. {itemT.GetType()}");
+            return -1;
+        }
+        foreach (Item item in items)
+        {
+            if (item is Minion minion)
+            {
+                if (minion.Id == itemT.Id) return select;
                 select++;
             }
 

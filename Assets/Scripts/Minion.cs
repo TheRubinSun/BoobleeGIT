@@ -2,9 +2,14 @@ using UnityEngine;
 
 public class Minion : Item
 {
-    public float range_search;
-    public Minion(int id, string name, int maxCount, int spriteID, Quality quality,int cost, string decription, TypeItem typeItem, float range) : base(id, name, maxCount, spriteID, quality, cost, decription, typeItem)
+    public float radius_search;
+    public float time_red;
+    public float move_speed;
+    public Minion(int id, string name, int maxCount, int spriteID, Quality quality,int cost, string decription, TypeItem typeItem, float radius,float timeRed , float speed) : base(id, name, maxCount, spriteID, quality, cost, decription, typeItem)
     {
-        range_search = range;
+        radius_search = radius;
+        time_red = timeRed;
+        move_speed = speed;
+
     }
 }
