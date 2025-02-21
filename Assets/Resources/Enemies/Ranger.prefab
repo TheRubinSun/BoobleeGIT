@@ -166,6 +166,7 @@ MonoBehaviour:
   speed: 2
   GiveExp: 0
   speedProjectile: 0
+  childObj: {fileID: 360160097893760237}
 --- !u!95 &9164619150430420287
 Animator:
   serializedVersion: 7
@@ -365,7 +366,7 @@ GameObject:
   - component: {fileID: 4239282424010776049}
   - component: {fileID: 6001120730720510026}
   m_Layer: 14
-  m_Name: RangerSheet_0
+  m_Name: Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

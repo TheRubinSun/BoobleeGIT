@@ -24,12 +24,18 @@ public class EnemySetting : MonoBehaviour
     public GameObject bulletPrefab { get; set; }
     public float speedProjectile;
 
-    SpriteRenderer sr;
+
     private bool IsDead;
+    [SerializeField] private Transform childObj;
+    private Color32 originalColor;
+
+    private SpriteRenderer sr;
+    private SpriteRenderer sr_child;
     private void Start()
     {
         LoadParametrs();
         sr = GetComponent<SpriteRenderer>();
+        if (childObj != null) sr_child = childObj.GetComponent<SpriteRenderer>();
     }
     void LoadParametrs()
     {
@@ -73,8 +79,13 @@ public class EnemySetting : MonoBehaviour
         if (sr != null)
         {
             sr.color = color;
+            if (sr_child != null) sr_child.color = color;
+
+
             yield return new WaitForSeconds(time);
+
             sr.color = new Color32(255, 255, 255, 255);
+            if (sr_child != null) sr_child.color = new Color32(255, 255, 255, 255);
         }
     }
 

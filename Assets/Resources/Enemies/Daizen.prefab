@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7325878779231251070}
   - component: {fileID: 689068543011641609}
   m_Layer: 14
-  m_Name: MeleLadySheet_0
+  m_Name: Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -293,6 +293,7 @@ MonoBehaviour:
   speed: 0
   GiveExp: 0
   speedProjectile: 0
+  childObj: {fileID: 963642846896233289}
 --- !u!114 &-4456080085666932035
 MonoBehaviour:
   m_ObjectHideFlags: 0

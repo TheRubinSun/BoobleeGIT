@@ -443,7 +443,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 16
   m_Sprite: {fileID: 0}
-  m_Color: {r: 0.5, g: 0.3183962, b: 0.3183962, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -473,8 +473,8 @@ MonoBehaviour:
   Indicator_Obj: {fileID: 6316606306376807765}
   audioClips:
   - {fileID: 8300000, guid: ebf1feb6cf8e6d9499c09ae1dcc6fd8e, type: 3}
-  - {fileID: 8300000, guid: 821ca826f1d03b741a52efd63a86d801, type: 3}
-  - {fileID: 8300000, guid: 7a361d178d0d0e74a932563c52f4a260, type: 3}
+  - {fileID: 8300000, guid: 61d5ee2ff4f7ed1469f015a90cc53e49, type: 3}
+  - {fileID: 8300000, guid: 3d4608e2f89aeba4f89e13505482c733, type: 3}
 --- !u!120 &-359069369305256782
 LineRenderer:
   serializedVersion: 2
