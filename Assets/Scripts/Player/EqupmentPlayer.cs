@@ -22,6 +22,7 @@ public class EqupmentPlayer : MonoBehaviour
     [SerializeField] Transform PlayerModel;
 
     Dictionary<int, GameObject> slots_Weapon = new Dictionary<int, GameObject>(); //В ячейки рук по порядку префабы оружия 
+    Dictionary<int, GameObject> slots_minions= new Dictionary<int, GameObject>(); //В ячейки рук по порядку префабы миньонс 
     private void Awake()
     {
         // Проверка на существование другого экземпляра
@@ -116,6 +117,7 @@ public class EqupmentPlayer : MonoBehaviour
         foreach (Transform child in deleteAllChild)
         {
             if (slots_Weapon.ContainsKey(id)) slots_Weapon.Remove(id);
+            else if (slots_minions.ContainsKey(id)) slots_minions.Remove(id);
             Destroy(child.gameObject);  // Удаляем дочерний объект
         }
     }
@@ -146,6 +148,7 @@ public class EqupmentPlayer : MonoBehaviour
                 GameObject minionObj = Instantiate(WeaponDatabase.GetMinionPrefab(idPref), EquipSlotPrefab[id]);
                 LoadParametersMinion(minionObj, slotsEqup[id]);
                 Player.Instance.SetMinionsObj(id, minionObj.GetComponent<MinionControl>());
+                slots_minions[id] = minionObj; //Словарь в этом классе, пока не используется 
             }
             else
             {
@@ -155,6 +158,20 @@ public class EqupmentPlayer : MonoBehaviour
         else
         {
             Debug.LogWarning($"Ошибка 400 {id}");
+        }
+    }
+    public void UpdateAllWeaponsStats()
+    {
+        foreach(KeyValuePair<int, GameObject> slotsWeapon in slots_Weapon)
+        {
+            LoadParametersWeapon(slotsWeapon.Value, slotsEqup[slotsWeapon.Key]); //Загружаем параметры с слолта в оружие
+        }
+    }
+    public void UpdateAllMinionsStats()
+    {
+        foreach (KeyValuePair<int, GameObject> slotsMinions in slots_minions)
+        {
+            LoadParametersMinion(slotsMinions.Value, slotsEqup[slotsMinions.Key]); //Загружаем параметры с слота в миньона
         }
     }
     private void LoadParametersWeapon(GameObject weaponObj, Slot slot)

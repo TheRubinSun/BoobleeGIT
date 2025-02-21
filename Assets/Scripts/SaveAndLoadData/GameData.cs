@@ -47,13 +47,22 @@ public class EnemyData
 }
 public class SlotTypeSave
 {
+    public int IdSlot;
     public string NameKey;
     public int count;
+
+    public SlotTypeSave(int idSlot, string _name, int _count)
+    {
+        IdSlot = idSlot;
+        NameKey = _name;
+        count = _count;
+    }
     public SlotTypeSave(string _name, int _count)
     {
         NameKey = _name;
         count = _count;
     }
+    public SlotTypeSave() { }
 }
 public class ItemsDropOnEnemy
 {

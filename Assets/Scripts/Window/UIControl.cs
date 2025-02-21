@@ -109,6 +109,10 @@ public class UIControl:MonoBehaviour
         }
         TogglePause();
     }
+    public void UpdateWeaponStats()
+    {
+        EqupmentPlayer.Instance.UpdateAllWeaponsStats();
+    }
     public void LocalizationTranslate()
     {
         if(ItemsList.Instance.items != null && EnemyList.Instance.mobs != null && DisplayInfo.Instance != null)

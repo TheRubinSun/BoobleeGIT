@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor.Build.Pipeline;
 using UnityEngine;
@@ -57,6 +58,7 @@ public class WeaponControl : MonoBehaviour
         CountProjectiles = Player.Instance.count_Projectile + count_proj;
         PlayerModel = pl_mod;
     }
+
     private void Update()
     {
         if(!IsAttack) RotateWeaponOnCursor();

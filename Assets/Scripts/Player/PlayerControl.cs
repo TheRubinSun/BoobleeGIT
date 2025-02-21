@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerControl : MonoBehaviour 
 {
@@ -42,6 +43,11 @@ public class PlayerControl : MonoBehaviour
         //lineRenderer = MinionsSlots.GetComponent<LineRenderer>();
         //rb = GetComponent<Rigidbody2D>();
     }
+    // Функция для проверки, находится ли указатель мыши над UI
+    private bool IsPointerOverUI()
+    {
+        return EventSystem.current.IsPointerOverGameObject();
+    }
     private void Update()
     {
         
@@ -51,7 +57,7 @@ public class PlayerControl : MonoBehaviour
         if (inputDirection.x != 0 || inputDirection.y != 0) Move();
         RotateWeaponSlots();
 
-        if(Input.GetMouseButton(0))
+        if(!IsPointerOverUI() && Input.GetMouseButton(0))
         {
             Attack();
         }

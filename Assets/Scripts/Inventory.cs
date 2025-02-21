@@ -20,9 +20,12 @@ public class Inventory:MonoBehaviour
     public int sizeInventory = 25;
 
     public List<Slot> slots = new List<Slot>();
-
+    private List<Slot> inventoryBarSlots = new List<Slot>();
+    private int countSlotsInBar { get; set; }//Количество слотов в InventoryBar
+    private int startIdInventoryBar { get; set; }//Начало ID inventoryBar
     [SerializeField] private Transform slotsParent;
     [SerializeField] private GameObject slotPrefab;
+    [SerializeField] private Transform InventoryBarParent;
     private void Awake()
     {
         // Проверка на существование другого экземпляра
@@ -42,23 +45,25 @@ public class Inventory:MonoBehaviour
     }
     public void LoadOrCreateInventory(List<SlotTypeSave> invntory_items)
     {
-        Debug.Log("Загрузка инвентаря...");
+        //Debug.Log("Загрузка инвентаря...");
         if (slots.Count == 0 && invntory_items != null && invntory_items.Count > 1)// Если слотов нет, но есть сохранение, то создать по сохранению
         {
-            Debug.Log("Загрузка инвентаря первым условием");
+            //Debug.Log("Загрузка инвентаря первым условием");
             RecreateInventory(invntory_items);
         }
         else if (invntory_items == null || invntory_items.Count < 1 && slots.Count == 0)// Если сохранения нет и слотов нет
         {
-            Debug.Log("Загрузка инвентаря вторым условием");
+            //Debug.Log("Загрузка инвентаря вторым условием");
             InitializeSlots();
         }
         else//В остальных случаях просто все чистим, создаем пустые значения и зполняем
         {
-            Debug.Log("Загрузка инвентаря третим условием");
+            //Debug.Log("Загрузка инвентаря третим условием");
             IsLoadInventory(invntory_items);
         }
+        SetSlotsInventoryBar();
         UpdateWholeSlots();//Обновляем целиком инвентарь
+
     }
     private bool IsLoadInventory(List<SlotTypeSave> invntory_items)//Просто обновляем знаечния в клетках на новые из сохранения
     {
@@ -66,6 +71,7 @@ public class Inventory:MonoBehaviour
         {
             for(int i = 0; i<slots.Count;i++)
             {
+                slots[i].IdSlotInv = i;
                 slots[i].Item = ItemsList.Instance.GetItemForName(invntory_items[i].NameKey);
                 slots[i].Count = invntory_items[i].count;
             }
@@ -82,7 +88,7 @@ public class Inventory:MonoBehaviour
             {
                 GameObject slotObj = Instantiate(slotPrefab, slotsParent.transform);
                 slotObj.name = $"Slot ({i})";
-                slots.Add(new Slot(ItemsList.Instance.GetItemForName(slotTypeSave.NameKey), slotObj, slotTypeSave.count));
+                slots.Add(new Slot(i, ItemsList.Instance.GetItemForName(slotTypeSave.NameKey), slotObj, slotTypeSave.count));
                 i++;
             }
             return true;
@@ -95,7 +101,7 @@ public class Inventory:MonoBehaviour
         {
             GameObject slotObj = Instantiate(slotPrefab, slotsParent.transform);
             slotObj.name = $"Slot ({i})";
-            slots.Add(new Slot(ItemsList.Instance.GetNoneItem(), slotObj)); //Альтернатива, которая Юнити не любит
+            slots.Add(new Slot(i, ItemsList.Instance.GetNoneItem(), slotObj)); //Альтернатива, которая Юнити не любит
         }
     }
     private void RemoveAllSlotInventory()
@@ -179,6 +185,19 @@ public class Inventory:MonoBehaviour
     }
     public void UpdateSlotUI(Slot slot)
     {
+        if(slot.IdSlotInv >= startIdInventoryBar)
+        {
+            int id = slot.IdSlotInv - startIdInventoryBar;
+
+            inventoryBarSlots[id].Item = slot.Item;
+            inventoryBarSlots[id].Count = slot.Count;
+
+            UpdateSlotUIWhole(inventoryBarSlots[id]);
+        }
+        UpdateSlotUIWhole(slot);   
+    }
+    public void UpdateSlotUIWhole(Slot slot)
+    {
         Transform dAdTemp = slot.SlotObj.transform.GetChild(0);
         Image image = dAdTemp.GetChild(0).GetComponent<Image>();
         Image item_frame = dAdTemp.GetChild(1).GetComponentInChildren<Image>();
@@ -211,7 +230,7 @@ public class Inventory:MonoBehaviour
         }
         if (text != null)
         {
-            if(slot.Count>0)
+            if (slot.Count > 0)
             {
                 text.text = $"{slot.Count.ToString()}";
             }
@@ -219,8 +238,7 @@ public class Inventory:MonoBehaviour
             {
                 text.text = "";
             }
-        } 
-            
+        }
     }
     private void UpdateWholeSlots()
     {
@@ -244,10 +262,24 @@ public class Inventory:MonoBehaviour
 
         //Destroy(tempSlot);
         Inventory.Instance.UpdateSlotUI(oldSlot);
-        Inventory.Instance.UpdateSlotUI(newSlot);
-
+        Inventory.Instance.UpdateSlotUI(newSlot);;
         //PrintSlots();
     }
+
+    private void SetSlotsInventoryBar()
+    {
+        inventoryBarSlots.Clear();
+        countSlotsInBar = InventoryBarParent.childCount;
+        startIdInventoryBar = slots.Count - countSlotsInBar;
+
+        int i = startIdInventoryBar;
+        foreach (Transform child in InventoryBarParent)
+        {
+            inventoryBarSlots.Add(new Slot(slots[i].Item, child.gameObject, slots[i].Count));
+            i++;
+        }
+    }
+
     public void SetNone(Slot slot)
     {
         slot.Item = ItemsList.Instance.GetItemForId(0);
@@ -258,6 +290,7 @@ public class Inventory:MonoBehaviour
     {
         return slots[numbSlot];
     }
+    
 
     void PrintSlots()
     {
@@ -274,6 +307,7 @@ public class Inventory:MonoBehaviour
 
         }
     }
+
     //public void DisplayInfoItem(int numbSlot)
     //{
     //    Item slot = GetSlot(numbSlot).Item;
@@ -283,6 +317,7 @@ public class Inventory:MonoBehaviour
 [Serializable]
 public class Slot 
 {
+    public int IdSlotInv = -1;
     public Item Item { get; set; }
     public int Count { get; set; }
     //public int MaxCount { get; set; }
@@ -293,6 +328,13 @@ public class Slot
         Item = item;
         Count = 0;
         //MaxCount = item.MaxCount;
+        SlotObj = slotObject;
+    }
+    public Slot(int _IdSlotInv,Item item, GameObject slotObject)
+    {
+        IdSlotInv = _IdSlotInv;
+        Item = item;
+        Count = 0;
         SlotObj = slotObject;
     }
     public Slot(Item item, int count)
@@ -308,6 +350,13 @@ public class Slot
     }
     public Slot(Item item, GameObject slotObject, int _count)
     {
+        Item = item;
+        SlotObj = slotObject;
+        Count = _count;
+    }
+    public Slot(int _IdSlotInv, Item item, GameObject slotObject, int _count)
+    {
+        IdSlotInv = _IdSlotInv;
         Item = item;
         SlotObj = slotObject;
         Count = _count;

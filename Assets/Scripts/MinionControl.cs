@@ -66,7 +66,7 @@ public class MinionControl : MonoBehaviour
         audioSource_Move = gameObject.AddComponent<AudioSource>();
         audioSource_Work = gameObject.AddComponent<AudioSource>();
         audioSource_Work.volume = 0.05f; // Громкость 5%
-        audioSource_Move.volume = 0.05f; // Громкость 5%
+        audioSource_Move.volume = 0.1f; // Громкость 10%
     }
     public void GetStatsMinion(float _radiusVision, float _timeResourceGat, float _speed)
     {

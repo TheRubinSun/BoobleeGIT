@@ -37,9 +37,9 @@ public class Item
     public Quality quality { get; set; }
     public int Cost { get; set; }
     public string Description { get; set; }
-    
+    public bool IsUse {  get; set; }
     [JsonIgnore] public Sprite Sprite { get; set; }
-    public Item(int id, string name, int maxCount, int spriteID, Quality quality,int cost, string description, TypeItem typeItem = TypeItem.Other)
+    public Item(int id, string name, int maxCount, int spriteID, Quality quality,int cost, string description, TypeItem typeItem = TypeItem.Other, bool isUse = false)
     {
         Id = id;
         TypeItem = typeItem;
@@ -49,6 +49,7 @@ public class Item
         this.quality = quality;
         Cost = cost;
         Description = description;
+        IsUse = isUse;
     }
     public void SetSprite(Sprite sprite)
     {

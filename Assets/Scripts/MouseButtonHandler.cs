@@ -43,6 +43,10 @@ public class MouseButtonHandler : MonoBehaviour, IPointerClickHandler
                 //Debug.Log("Right click on item: ");
             }
         }
+        else if(gameObject.tag == "SlotBar")
+        {
+
+        }
     }
 
     int GetNumbSlot()
