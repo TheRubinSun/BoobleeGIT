@@ -153,6 +153,25 @@ public class Player : MonoBehaviour
         UpdateSizeHpBar();
         UpdateExpBar();
     }
+    public bool PlayerHeal(int count_heal)
+    {
+        if(Cur_Hp < Max_Hp)
+        {
+            if (Cur_Hp + count_heal >= Max_Hp)
+            {
+                Cur_Hp = Max_Hp;
+            }
+            else Cur_Hp += count_heal;
+
+            UpdateHpBar();
+            return true;
+        }
+        else
+        {
+            UpdateHpBar();
+            return false;
+        }
+    }
     public Dictionary<int, WeaponControl> GetDictWeaponAndArms()
     {
         return WeaponsObj;

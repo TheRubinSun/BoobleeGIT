@@ -1,21 +1,27 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor.ShaderGraph;
 using UnityEngine;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 public class UIControl:MonoBehaviour
 {
     public static UIControl Instance { get; private set; }
+    private Dictionary<KeyCode, System.Action> keyActions;
 
     [SerializeField] GameObject inventoryWindow;
     [SerializeField] GameObject allItemsWindow;
     [SerializeField] GameObject allMobsWindow;
     [SerializeField] GameObject infoPlayerWindow;
+    [SerializeField] Transform inventoryBar;
     bool invIsOpened;
     bool itemsIsOpened;
     bool mobsIsOpened;
     bool infoPlayerIsOpened;
 
     private bool isPaused = false;
+
+    private List<ButInventoryBar> buttonsInventoryHud = new List<ButInventoryBar>();
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -26,34 +32,45 @@ public class UIControl:MonoBehaviour
         Instance = this;
         WeaponDatabase.LoadWeapons();
     }
+    private void Start()
+    {
+        InitializeKeyActions();
+        LoadButtonsHud();
+    }
+    private void InitializeKeyActions()
+    {
+        keyActions = new Dictionary<KeyCode, System.Action>()
+        {
+            {KeyCode.I, OpenInventory},
+            {KeyCode.L, OpenListItems},
+            {KeyCode.M, OpenListMobs},
+            {KeyCode.P, OpenInfoPlayer},
+            {KeyCode.T, LocalizationTranslate},
+            {KeyCode.E, DragAndDrop.Instance.PickUp},
+        };
+        for (int i = 0; i < 10; i++)
+        {
+            KeyCode keyCode = (KeyCode)((int)KeyCode.Alpha1 + i);
+            int index = i;
+            keyActions[keyCode] = () => ButtonsInventoryBar(index);
+        }
+        // Отдельно добавляем Alpha0 (индекс 10)
+        keyActions[KeyCode.Alpha0] = () => ButtonsInventoryBar(9);
+    }
+    private void LoadButtonsHud()
+    {
+        buttonsInventoryHud = inventoryBar.GetComponentsInChildren<ButInventoryBar>().ToList();
+    }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I))
+        foreach(KeyValuePair<KeyCode, System.Action> keyAction in keyActions)
         {
-            OpenInventory();
+            if(Input.GetKeyDown(keyAction.Key))
+            {
+                keyAction.Value.Invoke();
+                break;
+            }
         }
-        else if (Input.GetKeyDown(KeyCode.L))
-        {
-            OpenListItems();
-        }
-        else if (Input.GetKeyDown(KeyCode.M))
-        {
-            OpenListMobs();
-        }
-        else if (Input.GetKeyDown(KeyCode.P))
-        {
-            OpenInfoPlayer();
-        }
-        else if(Input.GetKeyDown(KeyCode.Z))
-        {
-            LocalizationTranslate();
-        }
-        else if (Input.GetKeyDown(KeyCode.E))
-        {
-            DragAndDrop.Instance.PickUp();
-        }
-
-
     }
     public void OpenInventory()
     {
@@ -127,6 +144,12 @@ public class UIControl:MonoBehaviour
         }
 
     }
+    public void ButtonsInventoryBar(int index)
+    {
+        if (buttonsInventoryHud.Count > index)
+            buttonsInventoryHud[index].UseItem();
+    }
+
     public void LoadData()
     {
         GameManager.Instance.LoadDataGame();

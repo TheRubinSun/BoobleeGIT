@@ -19,7 +19,7 @@ public class BulletMob : MonoBehaviour
     // Если используется триггер, то используйте OnTriggerEnter2D
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        Debug.Log("Пуля столкнулась с: " + collider.name);
+        //Debug.Log("Пуля столкнулась с: " + collider.name);
         if (collider.CompareTag("Player"))
         {
             Player.Instance.TakeDamage(damage);

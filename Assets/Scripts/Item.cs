@@ -24,6 +24,10 @@ public enum Quality
     Legendary,
     Interverse
 }
+public interface IUsable
+{
+    public bool Use();
+}
 
 [Serializable]
 public class Item
@@ -68,7 +72,7 @@ public class Item
         {
             case Quality.None:
                 {
-                    return new Color32(255, 255, 255, 255);
+                    return new Color32(255, 255, 255, 155);
                 }
             case Quality.Common:
                 {

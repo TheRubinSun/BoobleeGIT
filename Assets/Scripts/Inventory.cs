@@ -26,6 +26,7 @@ public class Inventory:MonoBehaviour
     [SerializeField] private Transform slotsParent;
     [SerializeField] private GameObject slotPrefab;
     [SerializeField] private Transform InventoryBarParent;
+    [SerializeField] private Sprite sprite_inventory_bar;
     private void Awake()
     {
         // Проверка на существование другого экземпляра
@@ -273,13 +274,21 @@ public class Inventory:MonoBehaviour
         startIdInventoryBar = slots.Count - countSlotsInBar;
 
         int i = startIdInventoryBar;
+        int numb = 1;
         foreach (Transform child in InventoryBarParent)
         {
-            inventoryBarSlots.Add(new Slot(slots[i].Item, child.gameObject, slots[i].Count));
+            Slot newSlot = new Slot(slots[i].Item, child.gameObject, slots[i].Count);
+            inventoryBarSlots.Add(newSlot);
+            child.GetComponent<ButInventoryBar>().setNumbBut(slots[i]);
+            child.GetComponent<ButInventoryBar>().UpdateText_numb(numb);
+            if(sprite_inventory_bar != null)
+            {
+                slots[i].SlotObj.GetComponent<Image>().sprite = sprite_inventory_bar;
+            }
             i++;
+            numb++;
         }
     }
-
     public void SetNone(Slot slot)
     {
         slot.Item = ItemsList.Instance.GetItemForId(0);

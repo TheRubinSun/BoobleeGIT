@@ -131,7 +131,7 @@ public class WeaponControl : MonoBehaviour
         {
             //напишем сдивг дл€ снар€дов, если их больше одного
             float offset = (CountProjectiles > 1) ? CountProjectiles / 2 * -0.1f : 0;
-            Debug.Log($"offset: {offset}");
+            //Debug.Log($"offset: {offset}");
             for (int i = 0; i < CountProjectiles; i++)
             {
                 ShootAttack(offset);
