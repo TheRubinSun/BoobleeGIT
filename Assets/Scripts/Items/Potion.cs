@@ -13,7 +13,7 @@ public class Potion : Item, IUsable
 }
 public class HealPotion : Potion
 {
-    int countHeal;
+    public int countHeal;
     public HealPotion(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description,int _countHeal) : base(id, name, maxCount, spriteID, quality, cost, description)
     {
         countHeal = _countHeal;

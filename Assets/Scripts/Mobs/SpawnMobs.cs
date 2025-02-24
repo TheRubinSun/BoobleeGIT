@@ -27,8 +27,8 @@ public class SpawnMobs : MonoBehaviour
     {
         if(player != null)
         {
-            daizen_prefab.GetComponent<EnemyControl>().player = player;
-            rainger_prefab.GetComponent<EnemyControl>().player = player;
+            daizen_prefab.GetComponent<BaseEnemyLogic>().player = player;
+            rainger_prefab.GetComponent<BaseEnemyLogic>().player = player;
         }
         else
         {

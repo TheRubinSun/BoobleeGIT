@@ -12,6 +12,7 @@ public enum TypeItem
     Potion,
     Material,
     Minion,
+    Trap,
     Other
 }
 public enum Quality

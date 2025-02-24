@@ -30,6 +30,7 @@ public class PlayerControl : MonoBehaviour
 
     private Dictionary<int, WeaponControl> weaponsAndArms;
     private Dictionary<int, MinionControl> minionSlots;
+    private Rigidbody2D rb;
     private float rangeMinion;
 
     //Звуки
@@ -41,7 +42,7 @@ public class PlayerControl : MonoBehaviour
     {
         player = GetComponentInParent<Player>();
         //lineRenderer = MinionsSlots.GetComponent<LineRenderer>();
-        //rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
     }
     // Функция для проверки, находится ли указатель мыши над UI
     private bool IsPointerOverUI()
@@ -50,23 +51,30 @@ public class PlayerControl : MonoBehaviour
     }
     private void Update()
     {
-        
-        cameraObj.position = new Vector3(transform.position.x, transform.position.y, -10f);
-        inputDirection.x = Input.GetAxisRaw("Horizontal");
-        inputDirection.y = Input.GetAxisRaw("Vertical");
-        if (inputDirection.x != 0 || inputDirection.y != 0) Move();
+        //Ввод движения
+        inputDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        if(inputDirection.sqrMagnitude > 0 )
+        {
+            Move();
+        }
+
         RotateWeaponSlots();
 
-        if(!IsPointerOverUI() && Input.GetMouseButton(0))
+        if(!IsPointerOverUI())
         {
+            if(Input.GetMouseButton(0))
             Attack();
         }
-        else if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             UseMinions();
         }
 
 
+    }
+    private void LateUpdate()
+    {
+        cameraObj.position = new Vector3(transform.position.x, transform.position.y, -10f);
     }
     public void UpdateSlots(Dictionary<int, WeaponControl> weaponObj, Dictionary<int, MinionControl> minionObj)
     {
@@ -105,9 +113,11 @@ public class PlayerControl : MonoBehaviour
     }
     public void Move()
     {
-        //movement = inputDirection.normalized * Speed * Time.fixedDeltaTime;
-        transform.position += (Vector3)inputDirection.normalized * player.Mov_Speed * Time.deltaTime;
-        //rb.MovePosition(rb.position + movement);
+        movement = inputDirection.normalized * player.Mov_Speed * Time.fixedDeltaTime;
+        rb.MovePosition(rb.position + movement);
+
+        //transform.position += (Vector3)inputDirection.normalized * player.Mov_Speed * Time.deltaTime;
+
 
         foreach (Transform legsLine in legsLines)
         {

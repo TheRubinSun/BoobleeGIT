@@ -333,7 +333,7 @@ public class WeaponControl : MonoBehaviour
         if (IsAttack && collision.CompareTag("Enemy"))
         {
             // Применяем урон
-            collision.GetComponent<EnemySetting>().TakeDamage(attack_damage);  // Передайте нужную логику урона
+            collision.GetComponent<BaseEnemyLogic>().TakeDamage(attack_damage);  // Передайте нужную логику урона
         }
     }
 }

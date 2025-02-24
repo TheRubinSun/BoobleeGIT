@@ -40,7 +40,7 @@ public class PlayerProjectile : MonoBehaviour
         //Debug.Log("Пуля столкнулась с: " + collider.name);
         if (collider.CompareTag("Enemy"))
         {
-            collider.GetComponent<EnemySetting>().TakeDamage(damage);
+            collider.GetComponent<BaseEnemyLogic>().TakeDamage(damage);
             Destroy(gameObject);
         }
         else if (collider.CompareTag("Wall"))

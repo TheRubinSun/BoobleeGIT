@@ -50,8 +50,8 @@ public class EnemyList: MonoBehaviour
         if (mobs.Count < 1)
         {
             //             name hp range isRange damage attackSpeed speed
-            mobs.Add(new MeleMob("daizen_enem", 15, 1.2f, false, 2, 45, 2f, 2, TypeMob.Technology));
-            mobs.Add(new RangeMob("rainger_enem", 10, 6f, true, 1, 30, 1.2f, 10f, 3, TypeMob.Technology));
+            mobs.Add(new DaizenMob("daizen_enem", 15, 1.2f, false, 2, 45, 2f, 2, TypeMob.Technology));
+            mobs.Add(new RangerMob("rainger_enem", 10, 6f, true, 1, 30, 1.2f, 10f, 3, TypeMob.Technology));
 
             DisplayMobsList.Instance.DisplayLinesMobs(mobs);
         }
@@ -149,11 +149,11 @@ public class Mob
     }
 }
 [Serializable]
-public class RangeMob : Mob
+public class RangerMob : Mob
 {
     public float SpeedProjectile { get; set; }
 
-    public RangeMob(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed, float speedProjectile, int giveExp, TypeMob typeMob) : base(_name, _hp, _rangeAt, _isranged, _damage, _attackspeed, _speed, giveExp, typeMob)
+    public RangerMob(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed, float speedProjectile, int giveExp, TypeMob typeMob) : base(_name, _hp, _rangeAt, _isranged, _damage, _attackspeed, _speed, giveExp, typeMob)
     {
         this.SpeedProjectile = speedProjectile;
     }
@@ -163,9 +163,9 @@ public class RangeMob : Mob
     }
 }
 [Serializable]
-public class MeleMob : Mob
+public class DaizenMob : Mob
 {
-    public MeleMob(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed, int giveExp, TypeMob typeMob) : base(_name, _hp, _rangeAt, _isranged, _damage, _attackspeed, _speed, giveExp, typeMob)
+    public DaizenMob(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed, int giveExp, TypeMob typeMob) : base(_name, _hp, _rangeAt, _isranged, _damage, _attackspeed, _speed, giveExp, typeMob)
     {
 
     }
@@ -174,4 +174,3 @@ public class MeleMob : Mob
         //Debug.Log("Hit");
     }
 }
-

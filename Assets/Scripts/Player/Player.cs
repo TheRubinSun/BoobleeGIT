@@ -155,19 +155,27 @@ public class Player : MonoBehaviour
     }
     public bool PlayerHeal(int count_heal)
     {
+        Debug.Log("В методе");
         if(Cur_Hp < Max_Hp)
         {
+            Debug.Log("Условие Да");
             if (Cur_Hp + count_heal >= Max_Hp)
             {
                 Cur_Hp = Max_Hp;
+                Debug.Log("Условие Да ДА");
             }
-            else Cur_Hp += count_heal;
+            else
+            {
+                Cur_Hp += count_heal;
+                Debug.Log("Условие Да Нет: "+ count_heal);
+            }
 
             UpdateHpBar();
             return true;
         }
         else
         {
+            Debug.Log("Условие Нет");
             UpdateHpBar();
             return false;
         }
@@ -279,5 +287,11 @@ public class Player : MonoBehaviour
             }
             
         }
+    }
+    public GameObject CreateTrap(GameObject trap)
+    {
+        GameObject trapObj = Instantiate(trap, null);
+        trapObj.transform.position = PlayerModel.transform.position;
+        return trapObj;
     }
 }

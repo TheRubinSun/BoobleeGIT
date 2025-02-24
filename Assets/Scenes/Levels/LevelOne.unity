@@ -753,6 +753,7 @@ MonoBehaviour:
   - {fileID: 1020014593, guid: 1eb9b0402b9617a4b819dba8c8c334ec, type: 3}
   - {fileID: 25308195, guid: 1eb9b0402b9617a4b819dba8c8c334ec, type: 3}
   - {fileID: 1811987714, guid: 1eb9b0402b9617a4b819dba8c8c334ec, type: 3}
+  - {fileID: 1003357866, guid: 1eb9b0402b9617a4b819dba8c8c334ec, type: 3}
 --- !u!224 &65463735
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2905,7 +2906,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &403271168
 MonoBehaviour:
   m_ObjectHideFlags: 0

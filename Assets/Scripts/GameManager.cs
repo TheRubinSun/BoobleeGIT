@@ -28,13 +28,13 @@ public class GameManager: MonoBehaviour
     }
     private void OnEnable()
     {
-        EnemySetting.OnEnemyDeath += HandleEnemyDeath;
+        BaseEnemyLogic.OnEnemyDeath += HandleEnemyDeath;
     }
     private void OnDisable()
     {
-        EnemySetting.OnEnemyDeath -= HandleEnemyDeath;
+        BaseEnemyLogic.OnEnemyDeath -= HandleEnemyDeath;
     }
-    private void HandleEnemyDeath(EnemySetting enemy)
+    private void HandleEnemyDeath(BaseEnemyLogic enemy)
     {
         KillsEnemy++;
         enemisRemaining--;
@@ -56,10 +56,10 @@ public class GameManager: MonoBehaviour
         GameObject corpseEnemy = Instantiate(CorpsePref, enemy.parent); //Создаем труп
         corpseEnemy.transform.position = enemy.transform.position;      //Назначаем позицию
 
-        corpseEnemy.GetComponent<CorpseSetting>().NameKey = enemy.GetComponent<EnemySetting>().Name;
+        corpseEnemy.GetComponent<CorpseSetting>().NameKey = enemy.GetComponent<BaseEnemyLogic>().Name;
         corpseEnemy.GetComponent<SpriteRenderer>().flipX = enemy.GetComponent<SpriteRenderer>().flipX;
         Animator corpseAnim = corpseEnemy.GetComponent<Animator>();    //Коприруем аниматор
-        Animator enemyAnim = enemy.gameObject.GetComponent<EnemyControl>().GetAnimator(); //Коприруем аниматор
+        Animator enemyAnim = enemy.gameObject.GetComponent<BaseEnemyLogic>().GetAnimator(); //Коприруем аниматор
         corpseAnim.runtimeAnimatorController = enemyAnim.runtimeAnimatorController;        //Коприруем аниматор
         corpseAnim.SetTrigger("Death");
     }

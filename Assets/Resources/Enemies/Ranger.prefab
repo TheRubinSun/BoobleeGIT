@@ -11,11 +11,10 @@ GameObject:
   - component: {fileID: 8901851181632295457}
   - component: {fileID: 4448910905896449690}
   - component: {fileID: 6416408511061963094}
-  - component: {fileID: 1150654769308674720}
-  - component: {fileID: 793492402141635477}
   - component: {fileID: 9164619150430420287}
   - component: {fileID: 2415301041528426637}
   - component: {fileID: -5091150108598142020}
+  - component: {fileID: 6900467622223913232}
   m_Layer: 14
   m_Name: Ranger
   m_TagString: Enemy
@@ -122,51 +121,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &1150654769308674720
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 606919127538129739}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 379cf53b01d36fa469b07b3c9e9c4aba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  ShootPoint: {fileID: 948129353408204618}
-  obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 1024
-  audioClips:
-  - {fileID: 8300000, guid: e90e4abc85207414a9da380f3ee90c57, type: 3}
---- !u!114 &793492402141635477
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 606919127538129739}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c57b027b22da62439f962070d472354, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IdMobs: 1
-  Name: 
-  cur_Hp: 0
-  max_Hp: 0
-  armor_Hp: 0
-  attackRange: 2
-  isRanged: 0
-  damage: 0
-  attackSpeed: 0
-  attackInterval: 0
-  speed: 2
-  GiveExp: 0
-  speedProjectile: 0
-  childObj: {fileID: 360160097893760237}
 --- !u!95 &9164619150430420287
 Animator:
   serializedVersion: 7
@@ -323,6 +277,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6900467622223913232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606919127538129739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e679b76dbc09184a9809e7762ed5a61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IdMobs: 1
+  player: {fileID: 0}
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  audioSource_Attack: {fileID: -5091150108598142020}
+  audioClips:
+  - {fileID: 8300000, guid: e90e4abc85207414a9da380f3ee90c57, type: 3}
+  child_Obj: {fileID: 360160097893760237}
+  Shoot_point: {fileID: 948129353408204618}
 --- !u!1 &3158182691329252234
 GameObject:
   m_ObjectHideFlags: 0
