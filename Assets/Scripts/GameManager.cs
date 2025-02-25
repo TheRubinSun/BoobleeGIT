@@ -82,7 +82,7 @@ public class GameManager: MonoBehaviour
         ItemsData items_Data = new ItemsData(ItemsList.Instance.items);
         await SaveSystem.SaveDataAsync(items_Data, "items.json");
 
-        PlayerData player_Data = new PlayerData(Classes.Instance.GetClasses(), Player.Instance , inventory_slots_list, equipment_item_list);
+        PlayerData player_Data = new PlayerData(Classes.Instance.GetClasses(), Player.Instance.GetPlayerStats() , inventory_slots_list, equipment_item_list);
         await SaveSystem.SaveDataAsync(player_Data, "player.json");
 
         EnemyData enemy_Data = new EnemyData(EnemyList.Instance.mobs);

@@ -46,16 +46,16 @@ public class WeaponControl : MonoBehaviour
     {
         attack_damage = damage;
         attack_Speed = at_speed;
-        attack_Speed_Projectile = (att_sp_pr + Player.Instance.Proj_Speed) * att_sp_pr_coof;
+        attack_Speed_Projectile = (att_sp_pr + Player.Instance.GetPlayerStats().Proj_Speed) * att_sp_pr_coof;
         isRange = isRang;
 
-        if(isRang) attack_range = attack_ran + Player.Instance.Att_Range;
-        else attack_range = attack_ran + (Player.Instance.Att_Range/2);
+        if(isRang) attack_range = attack_ran + Player.Instance.GetPlayerStats().Att_Range;
+        else attack_range = attack_ran + (Player.Instance.GetPlayerStats().Att_Range/2);
 
         damageType = _damT;
         Projectile_pref = _Projectile_pref;
-        attackInterval = 60f / (attack_Speed * Player.Instance.Att_Speed);
-        CountProjectiles = Player.Instance.count_Projectile + count_proj;
+        attackInterval = 60f / (attack_Speed * Player.Instance.GetPlayerStats().Att_Speed);
+        CountProjectiles = Player.Instance.GetPlayerStats().count_Projectile + count_proj;
         PlayerModel = pl_mod;
     }
 

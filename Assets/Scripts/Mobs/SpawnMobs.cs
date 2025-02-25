@@ -7,8 +7,8 @@ public class SpawnMobs : MonoBehaviour
     [SerializeField] Transform spawnpoint;
     [SerializeField] Transform parent;
     [SerializeField] Transform player;
-    [SerializeField] GameObject daizen_prefab;
-    [SerializeField] GameObject rainger_prefab;
+    [SerializeField] GameObject[] mobs_prefab;
+
 
     private void Awake()
     {
@@ -27,8 +27,12 @@ public class SpawnMobs : MonoBehaviour
     {
         if(player != null)
         {
-            daizen_prefab.GetComponent<BaseEnemyLogic>().player = player;
-            rainger_prefab.GetComponent<BaseEnemyLogic>().player = player;
+            foreach(GameObject mob_pref in mobs_prefab)
+            {
+                mob_pref.GetComponent<BaseEnemyLogic>().player = player;
+                mob_pref.GetComponent<BaseEnemyLogic>().player = player;
+            }
+
         }
         else
         {
@@ -38,17 +42,13 @@ public class SpawnMobs : MonoBehaviour
     }
     public void SpawnMobsBut(int id)
     {
-        switch (id)
+        if (mobs_prefab[id] != null)
         {
-            case 0:
-                Instantiate(daizen_prefab, parent);
-                break;
-            case 1:
-                Instantiate(rainger_prefab, parent);
-                break;
-            default:
-                Debug.LogWarning("Необходимо добавить префаб нового моба в SpawnMobs");
-                break;
+            Instantiate(mobs_prefab[id], parent);
+        }
+        else
+        {
+            Debug.LogWarning("Необходимо добавить префаб нового моба в SpawnMobs");
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
 using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,34 +11,10 @@ public class Player : MonoBehaviour
 {
     public static Player Instance { get; set; }
 
-    //Характеристики
-    public int Cur_Hp;
-    public int Max_Hp;
-    public int Armor_Hp;
-
-    public int Mov_Speed;
-
-    public float Att_Range;
-    public int Att_Damage;
-    public int Att_Speed;
-    public int Proj_Speed;
-
-    public int level;
-    public int freeSkillPoints;
-    public int cur_exp;
-    public int nextLvl_exp;
-
     public bool[] DirectionOrVectorWeapon = new bool[4];
 
-    public RoleClass classPlayer;
-
-    //Knowlange
-    public int MagicPoints;
-    public int TechniquePoints;
-    public int AdjacentPoints;
-
-    //Mod Attack
-    public int count_Projectile;
+    private PlayerStats pl_stats;
+    private PlayerUI pl_ui;
 
     //GameObjects
     private Dictionary<int, WeaponControl> WeaponsObj = new Dictionary<int, WeaponControl>();
@@ -49,23 +26,6 @@ public class Player : MonoBehaviour
     [SerializeField] 
     public Toggle[] TooglesWeapon = new Toggle[4];
 
-    //UI
-    [SerializeField] 
-    private Transform hp_bar;
-    private Image cur_hp_image;
-    private TextMeshProUGUI hp_text;
-    private RectTransform hpRect;
-
-    [SerializeField] 
-    private Transform exp_bar;
-    private Image cur_exp_image;
-    private TextMeshProUGUI exp_text;
-    private RectTransform expRect;
-
-    [SerializeField]
-    private Transform player_info_panel;
-    private TextMeshProUGUI text_player_info;
-
     SpriteRenderer player_sprite;
     private void Awake()
     {
@@ -76,68 +36,33 @@ public class Player : MonoBehaviour
         }
         Instance = this;
 
-        cur_hp_image = hp_bar.GetChild(1).GetComponent<Image>();
-        hp_text = hp_bar.GetChild(2).GetComponent<TextMeshProUGUI>();
-        hpRect = hp_bar.GetComponent<RectTransform>();
-        cur_exp_image = exp_bar.GetChild(1).GetComponent<Image>();
-        exp_text = exp_bar.GetChild(2).GetComponent<TextMeshProUGUI>();
-        expRect = exp_bar.GetComponent<RectTransform>();
-        text_player_info = player_info_panel.GetChild(0).GetComponent<TextMeshProUGUI>();
+        pl_stats = new PlayerStats();
+        pl_ui = GetComponent<PlayerUI>();
+
+        pl_ui.SetComponentUI();
+
         player_sprite = PlayerModel.GetComponent<SpriteRenderer>();
     }
     private void Start()
     {
 
     }
-    public void LoadOrCreateNew(PlayerSaveData playerSaveData)
+    public void LoadOrCreateNew(PlayerStats playerSaveData)
     {
         if(playerSaveData != null && playerSaveData.Max_Hp > 0)
         {
-            LoadDataPlayer(playerSaveData);
+            pl_stats.LoadStats(playerSaveData);
         }
         else
         {
-            RoleClass rc = Classes.Instance.GetRoleClass("Shooter");
-            Mov_Speed = rc.BonusSpeedMove;
-            Max_Hp = rc.BonusHp;
-            Att_Speed = rc.BonusAttackSpeed;
-            Att_Range = rc.BonusRange;
-            nextLvl_exp = 10;
-            level = 0;
-            Cur_Hp = Max_Hp;
-            count_Projectile = 0;
-            MagicPoints = 1;
-            TechniquePoints = 1;
-            AdjacentPoints = 0;
+            pl_stats.StartStats();
         }
-
-        UpdateAllInfo();
+        pl_ui.UpdateAllInfo(pl_stats);
         ResetWeaponToggles();
         ChangeToggleWeapon();
     }
-    public void LoadDataPlayer(PlayerSaveData playerSaveData)
-    {
-        Cur_Hp = playerSaveData.Cur_Hp;
-        Max_Hp = playerSaveData.Max_Hp;
-        Armor_Hp = playerSaveData.Armor_Hp;
+    public PlayerStats GetPlayerStats() => pl_stats;
 
-        Mov_Speed = playerSaveData.Mov_Speed;
-
-        Att_Range = playerSaveData.Att_Range;
-        Att_Damage = playerSaveData.Att_Damage;
-        Att_Speed = playerSaveData.Att_Speed;
-        Proj_Speed = playerSaveData.Proj_Speed;
-
-        level = playerSaveData.level;
-        freeSkillPoints = playerSaveData.freeSkillPoints;
-        cur_exp = playerSaveData.cur_exp;
-        nextLvl_exp = playerSaveData.nextLvl_exp;
-
-        count_Projectile = playerSaveData.count_Projectile;
-        MagicPoints = playerSaveData.MagicPoints;
-        TechniquePoints = playerSaveData.TechniquePoints;
-        AdjacentPoints = playerSaveData.AdjacentPoints;
-    }
     private void ResetWeaponToggles()
     {
 
@@ -147,39 +72,7 @@ public class Player : MonoBehaviour
             TooglesWeapon[i].isOn = DirectionOrVectorWeapon[i];
         }
     }
-    public void UpdateAllInfo()
-    {
-        UpdateHpBar();
-        UpdateSizeHpBar();
-        UpdateExpBar();
-    }
-    public bool PlayerHeal(int count_heal)
-    {
-        Debug.Log("В методе");
-        if(Cur_Hp < Max_Hp)
-        {
-            Debug.Log("Условие Да");
-            if (Cur_Hp + count_heal >= Max_Hp)
-            {
-                Cur_Hp = Max_Hp;
-                Debug.Log("Условие Да ДА");
-            }
-            else
-            {
-                Cur_Hp += count_heal;
-                Debug.Log("Условие Да Нет: "+ count_heal);
-            }
 
-            UpdateHpBar();
-            return true;
-        }
-        else
-        {
-            Debug.Log("Условие Нет");
-            UpdateHpBar();
-            return false;
-        }
-    }
     public Dictionary<int, WeaponControl> GetDictWeaponAndArms()
     {
         return WeaponsObj;
@@ -202,81 +95,35 @@ public class Player : MonoBehaviour
         MinionsObj[i] = minionObj;
         UpdateSlotsInPlayerControl();
     }
-    public void UpdateHpBar()
+
+    private async Task FlashColor(Color32 color, float time) //Менять цвет на время
     {
-        cur_hp_image.fillAmount = (float)Cur_Hp / Max_Hp;
-        hp_text.text = $"{Cur_Hp} / {Max_Hp}";
-    }
-    public void UpdateExpBar()
-    {
-        cur_exp_image.fillAmount = (float)cur_exp / nextLvl_exp;
-        exp_text.text = $"{cur_exp} / {nextLvl_exp}";
-    }
-    public void TakeDamage(int damage)
-    {
-        StartCoroutine(FlashColor(new Color32(255, 108, 108, 255), 0.1f));
-        Cur_Hp -= (int)(Mathf.Max(damage / (1 + Armor_Hp / 10f), 1));
-        UpdateHpBar();
-        IsDeath();
-    }
-    private IEnumerator FlashColor(Color32 color, float time) //Менять цвет на время
-    {
-        if(player_sprite != null)
+        if (player_sprite == null) return;
+
+        player_sprite.color = color;
+
+        float elapsed = 0;
+        while (elapsed < time)
         {
-            player_sprite.color = color;
-            yield return new WaitForSeconds(time);
-            player_sprite.color = new Color32(255, 255, 255, 255);
+            if(Time.timeScale > 0)// Чтобы учитывать паузу
+            {
+                elapsed += Time.deltaTime;
+            }
+
+            await Task.Yield();// Ждать следующий кадр без блокировки поток
         }
-    }
-    public void AddMaxHP(int addMaxHp)
-    {
-        Max_Hp += addMaxHp;
-        Cur_Hp += addMaxHp;
-        UpdateHpBar();
-        UpdateSizeHpBar();
-    }
-    public void UpdateSizeHpBar()
-    {
-        if (Max_Hp <= 1000)
-        {
-            hpRect.sizeDelta = new Vector2(30f + Max_Hp / 3, 20f);
-            hpRect.anchoredPosition = new Vector2(25.5f + Max_Hp / 6, -40f);
-            return;
-        }
+
+        //await Task.Delay((int)(time * 1000));
+        player_sprite.color = new Color32(255, 255, 255, 255);
     }
     private void IsDeath()
     {
-        if (Cur_Hp < 1)
+        if (pl_stats.Cur_Hp < 1)
         {
-            Cur_Hp = 0;
             PlayerModel.SetActive(false);
         }
     }
-    public void AddExp(int add_exp)
-    {
-        cur_exp += add_exp;
-        if (isNewLevel())
-            LvlUp();
 
-        UpdateExpBar();
-    }
-    private bool isNewLevel()
-    {
-        if(cur_exp >= nextLvl_exp)
-        {
-            cur_exp -= nextLvl_exp;
-            nextLvl_exp = (int)((nextLvl_exp + 10) * 1.4f);
-            return true;
-        }
-        return false;
-    }
-    private void LvlUp()
-    {
-        level++;
-        freeSkillPoints++;
-        text_player_info.text = $"{level} lvl";
-        AddMaxHP(2);
-    }
     public void ChangeToggleWeapon()
     {
         for (int i = 0; i < DirectionOrVectorWeapon.Length; i++)
@@ -293,5 +140,37 @@ public class Player : MonoBehaviour
         GameObject trapObj = Instantiate(trap, null);
         trapObj.transform.position = PlayerModel.transform.position;
         return trapObj;
+    }
+
+
+    ///Player stats and player UI
+    public void AddMaxHP(int addMaxHp)
+    {
+        pl_stats.AddMaxHPStat(addMaxHp);
+        pl_ui.UpdateHpBar(pl_stats);
+        pl_ui.UpdateSizeHpBar(pl_stats);
+    }
+    public async void TakeDamage(int damage)
+    {
+        pl_stats.TakeDamageStat(damage);
+        pl_ui.UpdateHpBar(pl_stats);
+
+        await FlashColor(new Color32(255, 108, 108, 255), 0.1f);
+        IsDeath();
+    }
+    public bool PlayerHeal(int count_heal)
+    {
+        bool chech = pl_stats.PlayerHealStat(count_heal);
+        pl_ui.UpdateHpBar(pl_stats);
+        return chech;
+    }
+    public void AddExp(int add_exp)
+    {
+        pl_stats.AddExpStat(add_exp);
+        pl_ui.UpdateExpBar(pl_stats);
+    }
+    public void LvlUp(string lvlup_text)
+    {
+        pl_ui.LvlUpUI(lvlup_text);
     }
 }

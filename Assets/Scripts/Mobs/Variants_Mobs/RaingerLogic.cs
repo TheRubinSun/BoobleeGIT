@@ -60,10 +60,6 @@ public class RaingerLogic : BaseEnemyLogic
                 spr_ren_ch.flipX = shouldFaceLeft;
         }
     }
-    public override void Attack()
-    {
-        base.Attack();
-    }
     public void ShootArrowOne()
     {
         GameObject bullet;

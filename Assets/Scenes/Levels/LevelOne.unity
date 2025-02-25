@@ -264,6 +264,7 @@ GameObject:
   - component: {fileID: 12493177}
   - component: {fileID: 12493179}
   - component: {fileID: 12493178}
+  - component: {fileID: 12493180}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -315,29 +316,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 556f6a06eac5d254f82e58f958f63d77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Cur_Hp: 10
-  Max_Hp: 10
-  Armor_Hp: 0
-  Mov_Speed: 3
-  Att_Range: 5
-  Att_Damage: 0
-  Att_Speed: 50
-  Proj_Speed: 6
-  level: 0
-  freeSkillPoints: 0
-  cur_exp: 0
-  nextLvl_exp: 0
   DirectionOrVectorWeapon: 00000000
-  MagicPoints: 0
-  TechniquePoints: 0
-  AdjacentPoints: 0
-  count_Projectile: 0
   PlayerModel: {fileID: 403271159}
   TooglesWeapon:
   - {fileID: 1475039875}
   - {fileID: 816159378}
   - {fileID: 2135151803}
   - {fileID: 1955307445}
+--- !u!114 &12493180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 12493176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1550d74c2fa085c4a800dad9b44d2f2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   hp_bar: {fileID: 1197591720}
   exp_bar: {fileID: 1821320923}
   player_info_panel: {fileID: 1485580084}
@@ -2888,11 +2885,11 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 403271159}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 10000
+  m_Mass: 2
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 0
@@ -20634,8 +20631,10 @@ MonoBehaviour:
   spawnpoint: {fileID: 1490237489}
   parent: {fileID: 1233645975}
   player: {fileID: 403271163}
-  daizen_prefab: {fileID: 6517320329755821341, guid: fb9a4ffe9de24684b95b00ab2432b8b8, type: 3}
-  rainger_prefab: {fileID: 606919127538129739, guid: d58b2d46901232541a73c4ab31816182, type: 3}
+  mobs_prefab:
+  - {fileID: 6517320329755821341, guid: fb9a4ffe9de24684b95b00ab2432b8b8, type: 3}
+  - {fileID: 606919127538129739, guid: d58b2d46901232541a73c4ab31816182, type: 3}
+  - {fileID: 7439899762115682407, guid: 9cf6617f19be4c241825aa85edc5e6c6, type: 3}
 --- !u!224 &1252695231 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1130088363850887519, guid: 052a9025fb9dc934786275370a45af1e, type: 3}

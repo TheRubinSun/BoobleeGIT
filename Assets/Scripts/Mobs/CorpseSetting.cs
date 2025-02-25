@@ -17,7 +17,7 @@ public class CorpseSetting : MonoBehaviour
     }
     public List<Slot> GetDrop()
     {
-        Debug.Log($"труп: {NameKey}");
+        //Debug.Log($"труп: {NameKey}");
         return ChanceAllDrop();
     }
     private List<Slot> ChanceAllDrop()
@@ -29,11 +29,11 @@ public class CorpseSetting : MonoBehaviour
         {
             Item item = ItemsList.Instance.GetItemForName(nameItem);
             dropChance = CalculatingItemDrop(item) / 100f;
-            Debug.Log($"{item.NameKey}:  Шанс:{dropChance*100}%");
+            //Debug.Log($"{item.NameKey}:  Шанс:{dropChance*100}%");
             if (Random.value < dropChance)
             {
                 dropItems.Add(new Slot(item, 1));
-                Debug.Log($"Выпал предмет: {item.NameKey}");
+                //Debug.Log($"Выпал предмет: {item.NameKey}");
             }
             
         }
@@ -42,17 +42,17 @@ public class CorpseSetting : MonoBehaviour
     private float CalculatingItemDrop(Item item)
     {
         float totalChance = 0;
-        Debug.LogWarning($"TypeMob: {EnemyList.Instance.GetTypeMob(NameKey)} mob:{NameKey}");
+        //Debug.LogWarning($"TypeMob: {EnemyList.Instance.GetTypeMob(NameKey)} mob:{NameKey}");
         switch (EnemyList.Instance.GetTypeMob(NameKey))
         {
             case TypeMob.Technology:
                 {
-                    totalChance = MultiplyChanceRared(Player.Instance.TechniquePoints, item.quality);
+                    totalChance = MultiplyChanceRared(Player.Instance.GetPlayerStats().TechniquePoints, item.quality);
                     break;
                 }
             case TypeMob.Magic:
                 {
-                    totalChance = MultiplyChanceRared(Player.Instance.MagicPoints, item.quality);
+                    totalChance = MultiplyChanceRared(Player.Instance.GetPlayerStats().MagicPoints, item.quality);
                     break;
                 }
             default:

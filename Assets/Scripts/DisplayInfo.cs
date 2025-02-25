@@ -110,15 +110,15 @@ public class DisplayInfo: MonoBehaviour
     }
     public void UpdateInfoStatus()
     {
-        string info =  $"{words_level}: {Player.Instance.level}\n";
-        info += $"{words_Max_Hp}:  {Player.Instance.Cur_Hp}/{Player.Instance.Max_Hp}\n";
-        info += $"{words_Armor_Hp}: {Player.Instance.Armor_Hp}\n";
-        info += $"{words_Mov_Speed}: {Player.Instance.Mov_Speed}\n";
-        info += $"{words_Att_Range}: {Player.Instance.Att_Range}\n";
-        info += $"{words_Att_Damage}: {Player.Instance.Att_Damage}\n";
-        info += $"{words_Att_Speed}: {Player.Instance.Att_Speed}\n";
-        info += $"{words_Proj_Speed}: {Player.Instance.Proj_Speed}\n";
-        info += $"{words_freeSkillPoints}: {Player.Instance.freeSkillPoints}\n";
+        string info =  $"{words_level}: {Player.Instance.GetPlayerStats().level}\n";
+        info += $"{words_Max_Hp}:  {Player.Instance.GetPlayerStats().Cur_Hp}/{Player.Instance.GetPlayerStats().Max_Hp}\n";
+        info += $"{words_Armor_Hp}: {Player.Instance.GetPlayerStats().Armor_Hp}\n";
+        info += $"{words_Mov_Speed}: {Player.Instance.GetPlayerStats().Mov_Speed}\n";
+        info += $"{words_Att_Range}: {Player.Instance.GetPlayerStats().Att_Range}\n";
+        info += $"{words_Att_Damage}: {Player.Instance.GetPlayerStats().Att_Damage}\n";
+        info += $"{words_Att_Speed}: {Player.Instance.GetPlayerStats().Att_Speed}\n";
+        info += $"{words_Proj_Speed}: {Player.Instance.GetPlayerStats().Proj_Speed}\n";
+        info += $"{words_freeSkillPoints}: {Player.Instance.GetPlayerStats().freeSkillPoints}\n";
 
         Status_Info_Name_Text.text = words_status_info;
         Status_Info.text = info;
@@ -154,7 +154,7 @@ public class DisplayInfo: MonoBehaviour
             info += $"{words_damageType}: {weapon.typeDamage}\n";
             info += $"{words_damage}: {weapon.damage}\n";
             info += $"{words_attacks_speed}: {weapon.attackSpeed}\n";
-            info += $"{words_attacks_intervals}: {(60f / (weapon.attackSpeed * Player.Instance.Att_Speed)).ToString("F2")}\n";
+            info += $"{words_attacks_intervals}: {(60f / (weapon.attackSpeed * Player.Instance.GetPlayerStats().Att_Speed)).ToString("F2")}\n";
             info += $"{words_range}: {weapon.range}\n";
         }
 

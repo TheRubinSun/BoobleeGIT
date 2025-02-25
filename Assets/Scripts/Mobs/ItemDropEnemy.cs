@@ -21,5 +21,6 @@ public class ItemDropEnemy
         enemyAndHisDrop.Clear();
         enemyAndHisDrop["daizen_enem"] = new string[] { "material_chip_one", "material_gear_one", "material_dif_parts_one", "sword_parts_one" };
         enemyAndHisDrop["rainger_enem"] = new string[] { "material_chip_one", "material_gear_one", "material_dif_parts_one", "bow_parts_one" };
+        enemyAndHisDrop["slime_enem"] = new string[] { "item_meat", "item_potion_hp", "gun_makarov", "trap_mine", "sword_gods_slayer", "armor_armor" };
     }
 }

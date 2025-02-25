@@ -50,8 +50,9 @@ public class EnemyList: MonoBehaviour
         if (mobs.Count < 1)
         {
             //             name hp range isRange damage attackSpeed speed
-            mobs.Add(new DaizenMob("daizen_enem", 15, 1.2f, false, 2, 45, 2f, 2, TypeMob.Technology));
+            mobs.Add(new DaizenMob("daizen_enem", 15, 1.5f, false, 2, 45, 2f, 2, TypeMob.Technology));
             mobs.Add(new RangerMob("rainger_enem", 10, 6f, true, 1, 30, 1.2f, 10f, 3, TypeMob.Technology));
+            mobs.Add(new Slime("slime_enem", 10, 3f, true, 1, 30, 1.2f, 10f, 3, TypeMob.Magic));
 
             DisplayMobsList.Instance.DisplayLinesMobs(mobs);
         }
@@ -157,10 +158,6 @@ public class RangerMob : Mob
     {
         this.SpeedProjectile = speedProjectile;
     }
-    public override void Attack()
-    {
-        //Debug.Log("Shoot");
-    }
 }
 [Serializable]
 public class DaizenMob : Mob
@@ -169,8 +166,14 @@ public class DaizenMob : Mob
     {
 
     }
-    public override void Attack()
+}
+[Serializable]
+public class Slime : Mob
+{
+    public float SpeedProjectile { get; set; }
+
+    public Slime(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed, float speedProjectile, int giveExp, TypeMob typeMob) : base(_name, _hp, _rangeAt, _isranged, _damage, _attackspeed, _speed, giveExp, typeMob)
     {
-        //Debug.Log("Hit");
+        this.SpeedProjectile = speedProjectile;
     }
 }

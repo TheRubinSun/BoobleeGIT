@@ -113,8 +113,8 @@ public class PlayerControl : MonoBehaviour
     }
     public void Move()
     {
-        movement = inputDirection.normalized * player.Mov_Speed * Time.fixedDeltaTime;
-        rb.MovePosition(rb.position + movement);
+        movement = inputDirection.normalized * player.GetPlayerStats().Mov_Speed;
+        rb.MovePosition(rb.position + movement * Time.fixedDeltaTime);
 
         //transform.position += (Vector3)inputDirection.normalized * player.Mov_Speed * Time.deltaTime;
 

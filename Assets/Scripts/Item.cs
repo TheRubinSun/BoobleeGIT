@@ -67,6 +67,11 @@ public class Item
             Debug.LogWarning($"Не удалось загрузить спрайт для предмета {NameKey}");
         }
     }
+    public Sprite GetSprite()
+    {
+        if (Sprite == null) return null;
+        return Sprite;
+    }
     public Color32 GetColor()
     {
         switch(quality)

@@ -44,10 +44,6 @@ public class DaizenLogic : BaseEnemyLogic
                 spr_ren_ch.flipX = shouldFaceLeft;
         }
     }
-    public override void Attack()
-    {
-        base.Attack();
-    }
     private void MeleeAttackOne()
     {
         if (audioClips.Length > 0 && audioClips[0] != null)

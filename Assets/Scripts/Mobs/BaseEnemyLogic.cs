@@ -49,6 +49,8 @@ public class BaseEnemyLogic : MonoBehaviour
     //Анимации
     protected Animator animator_main;
 
+    protected Rigidbody2D rb;
+
     //Звуки
     [SerializeField]
     protected AudioSource audioSource_Attack;
@@ -61,6 +63,8 @@ public class BaseEnemyLogic : MonoBehaviour
         audioSource_Attack = GetComponent<AudioSource>(); //Берем звук атаки
         selfCollider = GetComponent<Collider2D>(); //Берем колайдер - форму касания
         spr_ren = GetComponent<SpriteRenderer>(); //Берем спрайт моба
+
+        rb = GetComponent<Rigidbody2D>();   
 
         original_color = spr_ren.color;
         animator_main = GetComponent<Animator>();
@@ -84,10 +88,10 @@ public class BaseEnemyLogic : MonoBehaviour
         speed = mob.speed;
         GiveExp = mob.GiveExp;
     }
-    public virtual void Update()
+    public virtual void FixedUpdate()
     {
         DetectDirection();
-        SelfMove();
+        Move();
     }
     public virtual void TakeDamage(int damage)
     {
@@ -121,10 +125,11 @@ public class BaseEnemyLogic : MonoBehaviour
     }
     ///////////////////Controle
     
-    public virtual void SelfMove()
+    public virtual void Move()
     {
         Flipface();
-        transform.position += (Vector3)moveDirection * speed * Time.deltaTime;
+        Vector2 newPosition = rb.position + moveDirection * speed * Time.fixedDeltaTime;
+        rb.MovePosition(newPosition);
     }
     public virtual void Flipface() //Разворачиваем моба 
     {
@@ -171,16 +176,15 @@ public class BaseEnemyLogic : MonoBehaviour
         {
             // Проверяем перед атакой, есть ли стена перед врагом
             RaycastHit2D finalCheck = Physics2D.Raycast(transform.position, toPlayer.normalized, distanceToPlayer, obstacleLayer);
-
             if (distanceToPlayer < attackRange && finalCheck.collider != null && finalCheck.transform.CompareTag("Player"))
             {
                 moveDirection = Vector2.zero;
-                if (distanceToPlayer < attackRange * 0.6f)
+                if (distanceToPlayer < attackRange * 0.7f)
                 {
                     moveDirection = -toPlayer.normalized;
                 }
 
-                Attack();
+                Attack(distanceToPlayer);
             }
             else
             {
@@ -188,6 +192,7 @@ public class BaseEnemyLogic : MonoBehaviour
             }
 
         }
+        
     }
     public virtual void RotateTowardsMovementDirection(Vector2 direction)
     {
@@ -197,9 +202,9 @@ public class BaseEnemyLogic : MonoBehaviour
         // Поворачиваем объект на этот угол
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
-    private float lastAttackTime = 0f; // Время последней атаки
+    protected float lastAttackTime = 0f; // Время последней атаки
 
-    public virtual void Attack()
+    public virtual void Attack(float distanceToPlayer)
     {
         // Проверяем, прошло ли достаточно времени для следующей атаки
         if (Time.time - lastAttackTime >= attackInterval)

@@ -21,16 +21,16 @@ public class ItemsData
 public class PlayerData
 {
     public Dictionary<string , RoleClass> role_Classes_data;
-    public PlayerSaveData player_data;
+    public PlayerStats player_data;
     public List<SlotTypeSave> inventory_items_data;
     public List<SlotTypeSave> equip_item_data;
 
     // ѕустой конструктор нужен дл€ JSON-десериализации
     public PlayerData() { }
-    public PlayerData(Dictionary<string, RoleClass> role_Classes, Player player, List<SlotTypeSave> inventory, List<SlotTypeSave> equip_item)
+    public PlayerData(Dictionary<string, RoleClass> role_Classes, PlayerStats player, List<SlotTypeSave> inventory, List<SlotTypeSave> equip_item)
     {
         role_Classes_data = role_Classes;
-        player_data = new PlayerSaveData(player);
+        player_data = player;
         inventory_items_data = inventory;
         equip_item_data = equip_item;
     }
