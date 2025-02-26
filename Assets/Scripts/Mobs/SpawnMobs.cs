@@ -9,7 +9,6 @@ public class SpawnMobs : MonoBehaviour
     [SerializeField] Transform player;
     [SerializeField] GameObject[] mobs_prefab;
 
-
     private void Awake()
     {
         // Проверка на существование другого экземпляра
@@ -29,7 +28,6 @@ public class SpawnMobs : MonoBehaviour
         {
             foreach(GameObject mob_pref in mobs_prefab)
             {
-                mob_pref.GetComponent<BaseEnemyLogic>().player = player;
                 mob_pref.GetComponent<BaseEnemyLogic>().player = player;
             }
 

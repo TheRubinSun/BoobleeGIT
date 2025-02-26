@@ -26,6 +26,7 @@ public class GameManager: MonoBehaviour
         Instance = this;
         LoadDataGame();
     }
+
     private void OnEnable()
     {
         BaseEnemyLogic.OnEnemyDeath += HandleEnemyDeath;
@@ -56,14 +57,19 @@ public class GameManager: MonoBehaviour
         GameObject corpseEnemy = Instantiate(CorpsePref, enemy.parent); //Создаем труп
         corpseEnemy.transform.position = enemy.transform.position;      //Назначаем позицию
 
-        if (enemy.gameObject.GetComponent<BaseEnemyLogic>().typeMob == TypeMob.Technology) corpseEnemy.tag = "Corpse_Tech";
-        else corpseEnemy.tag = "Corpse_Mag";
+        if (enemy.gameObject.GetComponent<BaseEnemyLogic>().typeMob == TypeMob.Technology) 
+            corpseEnemy.tag = "Corpse_Tech";
+        else 
+            corpseEnemy.tag = "Corpse_Mag";
 
         corpseEnemy.GetComponent<CorpseSetting>().NameKey = enemy.GetComponent<BaseEnemyLogic>().Name;
         corpseEnemy.GetComponent<SpriteRenderer>().flipX = enemy.GetComponent<SpriteRenderer>().flipX;
+
         Animator corpseAnim = corpseEnemy.GetComponent<Animator>();    //Коприруем аниматор
         Animator enemyAnim = enemy.gameObject.GetComponent<BaseEnemyLogic>().GetAnimator(); //Коприруем аниматор
+        
         corpseAnim.runtimeAnimatorController = enemyAnim.runtimeAnimatorController;        //Коприруем аниматор
+        corpseAnim.fireEvents = false;  // Выключает все Animation Events
         corpseAnim.SetTrigger("Death");
 
 

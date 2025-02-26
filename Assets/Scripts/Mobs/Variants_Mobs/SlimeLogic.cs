@@ -14,6 +14,7 @@ public class SlimeLogic : BaseEnemyLogic
     [SerializeField] Transform item_one;
     [SerializeField] Transform item_two;
     [SerializeField] Transform item_three;
+
     int face_dir = 1;
     public override void Start()
     {

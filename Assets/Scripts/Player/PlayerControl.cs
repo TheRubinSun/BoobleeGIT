@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 public class PlayerControl : MonoBehaviour 
 {
     Player player;
-    //Объекты игрока
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     [SerializeField] GameObject playerObj;
     [SerializeField] Transform cameraObj;
     [SerializeField] GameObject hand;
@@ -15,11 +15,11 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] Transform WeaponSlots;
     [SerializeField] Transform MinionsSlots;
 
-    [SerializeField] private float radiusCenterLegs = 0.4f;                // Радиус области
+    [SerializeField] private float radiusCenterLegs = 0.4f;                // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
     private LineRenderer lineRenderer;
 
-    //Напрвеления и радиусы
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     [SerializeField] private Vector2 inputDirection;
 
 
@@ -33,7 +33,7 @@ public class PlayerControl : MonoBehaviour
     private Rigidbody2D rb;
     private float rangeMinion;
 
-    //Звуки
+    //пїЅпїЅпїЅпїЅпїЅ
     AudioSource audioSource_Move;
 
     [SerializeField] AudioClip audioClips;
@@ -44,18 +44,23 @@ public class PlayerControl : MonoBehaviour
         //lineRenderer = MinionsSlots.GetComponent<LineRenderer>();
         rb = GetComponent<Rigidbody2D>();
     }
-    // Функция для проверки, находится ли указатель мыши над UI
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ UI
     private bool IsPointerOverUI()
     {
         return EventSystem.current.IsPointerOverGameObject();
     }
     private void Update()
     {
-        //Ввод движения
+        //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         inputDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         if(inputDirection.sqrMagnitude > 0 )
         {
             Move();
+        }
+        else
+        {
+            rb.linearVelocity = Vector2.zero;
+            MoveLegs();
         }
 
         RotateWeaponSlots();
@@ -86,7 +91,7 @@ public class PlayerControl : MonoBehaviour
         if (weaponsAndArms == null) return;
         foreach (WeaponControl child in weaponsAndArms.Values)
         {
-            if (child != null) //Проверка, если вдруг оружие было удаленно
+            if (child != null) //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             {
                 child.Attack();
             }
@@ -115,10 +120,12 @@ public class PlayerControl : MonoBehaviour
     {
         movement = inputDirection.normalized * player.GetPlayerStats().Mov_Speed;
         rb.MovePosition(rb.position + movement * Time.fixedDeltaTime);
+        MoveLegs();
 
-        //transform.position += (Vector3)inputDirection.normalized * player.Mov_Speed * Time.deltaTime;
-
-
+        MoveCenterLegs(inputDirection);
+    }
+    private void MoveLegs()
+    {
         foreach (Transform legsLine in legsLines)
         {
             legsLine.GetComponent<LineControle>().AnimMove();
@@ -127,11 +134,10 @@ public class PlayerControl : MonoBehaviour
         {
             legCenter.GetComponent<LegControl>().CheckPos();
         }
-        MoveCenterLegs(inputDirection);
     }
     void MoveCenterLegs(Vector2 inputDirection)
     {
-        // Рассчитываем смещение для центра ног
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
         Vector2 currentPos = centerLegs.localPosition;
         Vector2 newPos = currentPos + inputDirection.normalized * 10f * Time.deltaTime;
 
@@ -145,33 +151,4 @@ public class PlayerControl : MonoBehaviour
             centerLegs.localPosition = newPos;
         }
     }
-    //public void DrawRange(bool action, float range)
-    //{
-    //    if (action)
-    //    {
-    //        DrawCircle(range);
-    //        lineRenderer.enabled = true;
-    //    }
-    //    else
-    //    {
-    //        lineRenderer.enabled = false;
-    //    }
-    //}
-    //void DrawCircle(float range)
-    //{
-    //    int segments = 50; // Количество точек круга
-    //    Vector2 center = MinionsSlots.position;
-    //    float angleStep = 360f / segments;
-    //    for (int i = 0; i <= segments; i++)
-    //    {
-    //        float angle = Mathf.Deg2Rad * i * angleStep;
-    //        float x = center.x + Mathf.Cos(angle) * range;
-    //        float y = center.y + Mathf.Sin(angle) * range;
-    //        lineRenderer.SetPosition(i, new Vector3(x, y, 0));
-    //    }
-    //}
-    //void GetFirstMinion()
-    //{
-
-    //}
 }

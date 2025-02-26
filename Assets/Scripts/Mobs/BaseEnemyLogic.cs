@@ -59,7 +59,6 @@ public class BaseEnemyLogic : MonoBehaviour
 
     [SerializeField]
     protected AudioClip[] audioClips;
-
     public virtual void Start()
     {
         audioSource_Attack = GetComponent<AudioSource>(); //Берем звук атаки
@@ -150,8 +149,10 @@ public class BaseEnemyLogic : MonoBehaviour
     {
         Vector2 toPlayer = player.position - transform.position;
         float distanceToPlayer = toPlayer.magnitude; // Расстояние до игрока
+
         RaycastHit2D hit = Physics2D.Raycast(transform.position, toPlayer.normalized, avoidDistance, obstacleLayer);
         bool wallDetected = false;
+
         if (hit.collider != null)
         {
             // Если луч попал в стену
