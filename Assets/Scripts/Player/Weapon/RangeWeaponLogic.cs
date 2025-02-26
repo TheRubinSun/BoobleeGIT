@@ -1,0 +1,72 @@
+using UnityEngine;
+
+public class RangeWeaponLogic : WeaponControl
+{
+    protected float attack_Speed_Projectile { get; set; }
+    protected GameObject Projectile_pref { get; set; }
+    protected int CountProjectiles { get; set; }
+
+    protected GameObject projectile;
+    protected Vector2 direction_Proj;
+
+    [SerializeField] Transform ShootPos;
+    public override void GetStatsWeapon(int damage, float at_speed, float att_sp_pr, bool isRang, float attack_ran, int count_proj, damageT _damT, Transform pl_mod, GameObject _Projectile_pref = null, float att_sp_pr_coof = 0)
+    {
+        attack_damage = damage;
+        attack_Speed = at_speed;
+        attack_Speed_Projectile = (att_sp_pr + Player.Instance.GetPlayerStats().Proj_Speed) * att_sp_pr_coof;
+        isRange = isRang;
+
+        if (isRang) attack_range = attack_ran + Player.Instance.GetPlayerStats().Att_Range;
+        else attack_range = attack_ran + (Player.Instance.GetPlayerStats().Att_Range / 2);
+
+        damageType = _damT;
+        Projectile_pref = _Projectile_pref;
+        attackInterval = 60f / (attack_Speed * Player.Instance.GetPlayerStats().Att_Speed);
+        CountProjectiles = Player.Instance.GetPlayerStats().count_Projectile + count_proj;
+        PlayerModel = pl_mod;
+    }
+    public override void Attack()
+    {
+        if (Time.time - lastAttackTime < attackInterval) return;
+        lastAttackTime = Time.time;
+
+        //напишем сдивг для снарядов, если их больше одного
+        float offset = (CountProjectiles > 1) ? CountProjectiles / 2 * -0.1f : 0;
+
+        for (int i = 0; i < CountProjectiles; i++)
+        {
+            ShootAttack(offset);
+            offset += 0.1f;
+        }
+    }
+    protected override void ShootAttack(float offsetProj)
+    {
+        projectile = Instantiate(Projectile_pref, ShootPos);    //Создаем снаряд по префабу
+        projectile.transform.position += new Vector3(0, offsetProj);
+        PlayerProjectile proj_set = projectile.GetComponent<PlayerProjectile>();
+        proj_set.damage = attack_damage;//Назначем урон
+        proj_set.maxDistance = attack_range;
+
+        audioSource_Shot.PlayOneShot(audioClips[0]); //Звук выстрела
+        //Подять в иерархии объекта пули/стрелы
+        projectile.transform.SetParent(transform.root);
+
+        
+        if (AttackDirectionOrVector)
+        {
+            direction = GetDirection(ShootPos.position, transform.position).normalized;
+        }
+        else
+        {
+            direction = GetDirection(mousePos, (Vector2)ShootPos.position).normalized;
+        }
+
+        Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.linearVelocity = direction * attack_Speed_Projectile;
+        }
+
+    }
+}

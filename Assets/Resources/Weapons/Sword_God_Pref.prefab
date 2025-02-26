@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6605310741985116714}
   - component: {fileID: 1215674252710585427}
-  - component: {fileID: 3925060932897899496}
   - component: {fileID: 4740884294997987002}
   - component: {fileID: 1890836006999435829}
+  - component: {fileID: 276719725075751787}
   m_Layer: 0
   m_Name: Sword_God_Pref
   m_TagString: Untagged
@@ -91,29 +91,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3925060932897899496
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1189786356956331463}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6f686e5499fbd148bb3812ba9bedaf1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TypeAttack: 3
-  AttackDirectionOrVector: 0
-  minDistance: 0.8
-  offset: 135
-  ShootPos: {fileID: 877510644002656660}
-  PlayerModel: {fileID: 0}
-  audioClips:
-  - {fileID: 8300000, guid: a1533ce1713b39441a9917de5ba5d933, type: 3}
-  - {fileID: 8300000, guid: efbac7b2c468c4c4d8f628d98e78038a, type: 3}
-  - {fileID: 8300000, guid: d704d48b56a3f404caa73bec5c5bc730, type: 3}
-  - {fileID: 8300000, guid: cc9e2d4f2a898794b90bf5d3409cbbbf, type: 3}
 --- !u!60 &4740884294997987002
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -148,7 +125,7 @@ PolygonCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.07, y: -0.07}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -266,6 +243,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &276719725075751787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1189786356956331463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017f2883e3052ef42a34111ddfbd2490, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TypeAttack: 3
+  AttackDirectionOrVector: 0
+  minDistance: 0.8
+  offset: 135
+  PlayerModel: {fileID: 0}
+  audioClips:
+  - {fileID: 8300000, guid: a1533ce1713b39441a9917de5ba5d933, type: 3}
+  - {fileID: 8300000, guid: efbac7b2c468c4c4d8f628d98e78038a, type: 3}
+  - {fileID: 8300000, guid: d704d48b56a3f404caa73bec5c5bc730, type: 3}
+  - {fileID: 8300000, guid: cc9e2d4f2a898794b90bf5d3409cbbbf, type: 3}
 --- !u!1 &8370641025233230599
 GameObject:
   m_ObjectHideFlags: 0
