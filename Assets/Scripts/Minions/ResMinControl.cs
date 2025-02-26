@@ -1,30 +1,9 @@
-using Unity.VisualScripting;
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
-public class MinionControl : MonoBehaviour 
+public class ResMinControl : MinionControl
 {
-    private float radiusVision { get; set; }
-    private float timeResourceGat { get; set; }
-    private float speed { get; set; }
-
-
-    private bool isAlreadyBusyMinion = false;
-    //private bool MinionOnTarget = false;
-    //private bool MinionTakeItem = false;
-
-    private Transform SpawnerCropse;
-    
-    private int segments = 50; // Количество точек круга
-    public Transform MinionSlots;
-    private Transform MinionSlotParent;
-    private LineRenderer lineRenderer;
-    private Transform aim;
-    private List<Slot> dropItems = new List<Slot>();
-    GameObject[] itemsFly;
-
-
     //Объект для захвата предмета
     [SerializeField] Transform slotHand;
 
@@ -41,60 +20,26 @@ public class MinionControl : MonoBehaviour
     Animator indicator_anim;
 
     //Звуки
-    AudioSource audioSource_Move;
     AudioSource audioSource_Work;
-    [SerializeField] AudioClip[] audioClips; 
 
-    private void Start()
+    protected override void Start()
     {
-        lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.positionCount = segments + 1;
-        lineRenderer.loop = true;
-        lineRenderer.startWidth = 0.05f;
-        lineRenderer.endWidth = 0.05f;
-        lineRenderer.enabled = false; // По умолчанию круг скрыт
-
-        SpawnerCropse = GameObject.Find("MobsLayer").transform;
-        MinionSlots = transform.parent.parent;
-        MinionSlotParent = transform.parent;
+        base.Start();
 
         rotate_anim = Rotate_Obj.GetComponent<Animator>();
         body_anim = Body_Obj.GetComponent<Animator>();
         hand_anim = Hand_Obj.GetComponent<Animator>();
         indicator_anim = Indicator_Obj.GetComponent<Animator>();
 
-        audioSource_Move = gameObject.AddComponent<AudioSource>();
         audioSource_Work = gameObject.AddComponent<AudioSource>();
-        audioSource_Work.volume = 0.08f; // Громкость 5%
-        audioSource_Move.volume = 0.1f; // Громкость 10%
+        audioSource_Work.volume = 0.08f; // Громкость 8%
     }
-    public void GetStatsMinion(float _radiusVision, float _timeResourceGat, float _speed)
+    public override void UseMinion()
     {
-        radiusVision = _radiusVision;
-        timeResourceGat = _timeResourceGat;
-        speed = _speed;
-    }
-    //public void DrawRange()
-    //{
-    //    if (!isAlreadyBusyMinion)
-    //    {
-    //        DrawCircle();
-    //        lineRenderer.enabled = true;
-    //    }
-    //    else
-    //    {
-    //        lineRenderer.enabled = false;
-    //    }
-    //}
-    //public void EraseDrawRange()
-    //{
-    //    lineRenderer.enabled = false;
-    //}
-    public void UseMinion()
-    {
+        base.UseMinion();
         if (!isAlreadyBusyMinion)
         {
-            aim = FindAim();
+            aim = FindAim(SearchTypeTag());
             if (aim != null)
             {
                 isAlreadyBusyMinion = true;
@@ -105,67 +50,41 @@ public class MinionControl : MonoBehaviour
         }
         else
         {
-            
+
             Debug.Log("Миньён уже занят");
         }
         //EraseDrawRange();
     }
-    private Transform FindAim()
+    protected override string SearchTypeTag()
     {
-        foreach(Transform child in SpawnerCropse.transform)
+        switch (typeDetectMob)
         {
-            if(child.CompareTag("Corpse") && Vector2.Distance(MinionSlots.position, child.position) <= radiusVision)
-            {
-                if(!child.GetComponent<CorpseSetting>().isBusy)
-                {
-                    child.GetComponent<CorpseSetting>().Busy();
-                    Debug.Log("Объект в радиусе: " + child.name);
-                    return child;
-                }
-                else
-                {
-                    Debug.Log("Объект в радиусе: " + child.name + "уже занят");
-                }
-                
-                
-            }
+            case TypeMob.Technology: return "Corpse_Tech";
+            case TypeMob.Magic: return "Corpse_Mag";
+            case TypeMob.Mixed: return "Corpse";
+            default:
+                break;
         }
         return null;
     }
-    //void DrawCircle()
-    //{
-    //    int segments = 50; // Количество точек круга
-    //    Vector2 center = MinionSlots.position;
-    //    float angleStep = 360f / segments;
-    //    for (int i = 0; i <= segments; i++)
-    //    {
-    //        float angle = Mathf.Deg2Rad * i * angleStep;
-    //        float x = center.x + Mathf.Cos(angle) * radiusVision;
-    //        float y = center.y + Mathf.Sin(angle) * radiusVision;
-    //        lineRenderer.SetPosition(i, new Vector3(x, y, 0));
-    //    }
-    //}
-    private bool IsFindAim()
-    {
-        return false;
-    }
-    private void MoveToAim(Transform target) //Идем к цели
+    protected override void MoveToAim(Transform target) //Идем к цели
     {
         AnimOnOrOffMinion(true);
         StartCoroutine(MoveAndDo(target, () => StartCoroutine(ResourceGathering(target))));
     }
-    private void MoveToHome(Transform target) //Идем в слот для миньёна
+    protected override IEnumerator MoveSmoothly(Transform target) //Медленное движение
     {
-        StartCoroutine(MoveAndDo(target, AttachToPlayer));
-    }
-    private IEnumerator MoveAndDo(Transform target, System.Action onComplete) //Ждем когда дойдет миньён и начнет определенное действие
-    {
-        yield return StartCoroutine(MoveSmoothly(target)); // Ждём завершения движения
+        AnimOnRotation(true);
+        AnimMoveBody(true);
+        AnimHandMove(true);
 
-        if (Vector2.Distance(transform.position, target.position) < 0.1f)
+        while (Vector2.Distance(transform.position, target.position) > 0.15f)
         {
-            onComplete?.Invoke();  // Вызываем переданный метод
+            transform.position += ((Vector3)target.position - transform.position).normalized * speed * Time.deltaTime;
+
+            yield return null; // Ждём один кадр перед продолжением
         }
+        transform.position = target.position; // Чтобы точно попасть в нужную точку
     }
     private IEnumerator ResourceGathering(Transform target) //Сбор ресурсов и уничтожение трупа
     {
@@ -185,31 +104,13 @@ public class MinionControl : MonoBehaviour
 
         dropItems = target.GetComponent<CorpseSetting>().GetDrop();
 
-        AnimHandMove(dropItems.Count>0);
+        AnimHandMove(dropItems.Count > 0);
 
         VisualItems();
         Destroy(target.gameObject);
         MoveToHome(MinionSlotParent.transform);
-
-
     }
-    private IEnumerator MoveSmoothly(Transform target) //Медленное движение
-    {
-        AnimOnRotation(true);
-        AnimMoveBody(true);
-        AnimHandMove(true);
-
-        while (Vector2.Distance(transform.position, target.position) > 0.1f)
-        {
-            //transform.position = Vector2.Lerp(transform.position, targetPosition, speed * Time.deltaTime);
-
-            transform.position += ((Vector3)target.position - transform.position).normalized * speed * Time.deltaTime;
-
-            yield return null; // Ждём один кадр перед продолжением
-        }
-        transform.position = target.position; // Чтобы точно попасть в нужную точку
-    }
-    private void AttachToPlayer() //Прикрепление к игроку
+    protected override void AttachToPlayer() //Прикрепление к игроку
     {
         transform.SetParent(MinionSlotParent);
         transform.localPosition = Vector3.zero;
@@ -219,7 +120,7 @@ public class MinionControl : MonoBehaviour
         AnimOnOrOffMinion(false);
         AnimTurnAllOff();
     }
-    private void GiveItemsToPlayer()
+    public override void GiveItemsToPlayer()
     {
         Debug.Log("Передача ресурсов");
         foreach (Slot slot in dropItems)
@@ -244,7 +145,7 @@ public class MinionControl : MonoBehaviour
     {
         GameObject giveItem = new GameObject("DropItem");
         giveItem.transform.parent = slotHand;
-        giveItem.transform.localPosition = new Vector3(0, offset,0);
+        giveItem.transform.localPosition = new Vector3(0, offset, 0);
         SpriteRenderer renderer = giveItem.AddComponent<SpriteRenderer>();
         renderer.sprite = item.Sprite;
         renderer.sortingOrder = 15;
@@ -252,7 +153,7 @@ public class MinionControl : MonoBehaviour
     }
     private void DestroyAllSubObj()
     {
-       foreach(GameObject obj in itemsFly)
+        foreach (GameObject obj in itemsFly)
         {
             Destroy(obj);
         }
@@ -293,7 +194,7 @@ public class MinionControl : MonoBehaviour
                 audioSource_Work.loop = true;
                 audioSource_Work.Play();
             }
-            
+
 
         }
         else
@@ -304,7 +205,7 @@ public class MinionControl : MonoBehaviour
     private void AnimOnRotation(bool active)
     {
         rotate_anim.SetBool("Move", active);
-        if(active)
+        if (active)
         {
             if (!audioSource_Move.isPlaying)
             {

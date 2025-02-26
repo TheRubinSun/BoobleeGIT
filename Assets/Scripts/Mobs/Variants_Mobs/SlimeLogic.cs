@@ -9,6 +9,8 @@ public class SlimeLogic : BaseEnemyLogic
     public GameObject bulletPrefab { get; private set; }
     public float sp_Project { get; private set; }
 
+    private bool IsNearThePlayer = false;
+
     [SerializeField] Transform item_one;
     [SerializeField] Transform item_two;
     [SerializeField] Transform item_three;
@@ -60,22 +62,35 @@ public class SlimeLogic : BaseEnemyLogic
         }
         else
         {
+            // Дополнительный буфер для ренджа атаки
+            float attackBuffer = 1f; // Можно настроить
+            float effectiveRange = attackRange - attackBuffer;
+
             // Проверяем перед атакой, есть ли стена перед врагом
             RaycastHit2D finalCheck = Physics2D.Raycast(transform.position, toPlayer.normalized, distanceToPlayer, obstacleLayer);
-            if (distanceToPlayer < attackRange && finalCheck.collider != null && finalCheck.transform.CompareTag("Player"))
+            bool canSeePlayer = finalCheck.collider != null && finalCheck.transform.CompareTag("Player");
+            if (distanceToPlayer < effectiveRange && canSeePlayer)
             {
                 animator_main.SetBool("Move", false);
-
                 moveDirection = Vector2.zero;
-                if (distanceToPlayer < attackRange * 0.2f)
+
+                // Если моб слишком близко, он немного отходит назад
+                if (distanceToPlayer < attackRange * 0.25f)
                 {
                     moveDirection = -toPlayer.normalized;
                 }
-
+                IsNearThePlayer = true;
+                Attack(distanceToPlayer);
+            }
+            else if(distanceToPlayer < attackRange &&  canSeePlayer && IsNearThePlayer)
+            {
+                animator_main.SetBool("Move", false);
+                moveDirection = Vector2.zero;
                 Attack(distanceToPlayer);
             }
             else
             {
+                IsNearThePlayer = false;
                 moveDirection = toPlayer.normalized;
                 animator_main.SetBool("Move", true);
             }
@@ -91,7 +106,7 @@ public class SlimeLogic : BaseEnemyLogic
             // Выполняем атаку (выстрел)
             if (animator_main != null)
             {
-                if (distanceToPlayer < 1.3f)
+                if (distanceToPlayer < 1.5f)
                 {
                     animator_main.SetTrigger("MeleAttack");
                 }

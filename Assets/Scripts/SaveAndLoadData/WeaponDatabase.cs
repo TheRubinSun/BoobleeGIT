@@ -16,7 +16,9 @@ public class WeaponDatabase : MonoBehaviour
         projectiles[1] = Resources.Load<GameObject>("Projectiles/BulletMobOne");
         projectiles[2] = Resources.Load<GameObject>("Projectiles/Slime_arrow");
 
-        minions[0] = Resources.Load<GameObject>("Minions/Minion");
+        minions[0] = Resources.Load<GameObject>("Minions/Minion_Tech");
+        minions[1] = Resources.Load<GameObject>("Minions/Minion_Mage");
+        minions[2] = Resources.Load<GameObject>("Minions/Minion_Mixed");
 
         traps[0] = Resources.Load<GameObject>("Traps/Mine");
 

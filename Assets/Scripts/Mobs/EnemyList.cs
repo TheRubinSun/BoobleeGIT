@@ -12,7 +12,7 @@ public enum TypeMob
     None,
     Magic,
     Technology,
-    Adjacent
+    Mixed
 }
 public class EnemyList: MonoBehaviour 
 {
@@ -52,7 +52,7 @@ public class EnemyList: MonoBehaviour
             //             name hp range isRange damage attackSpeed speed
             mobs.Add(new DaizenMob("daizen_enem", 15, 1.5f, false, 2, 45, 2f, 2, TypeMob.Technology));
             mobs.Add(new RangerMob("rainger_enem", 10, 6f, true, 1, 30, 1.2f, 10f, 3, TypeMob.Technology));
-            mobs.Add(new Slime("slime_enem", 10, 3f, true, 1, 30, 1.2f, 10f, 3, TypeMob.Magic));
+            mobs.Add(new Slime("slime_enem", 25, 4f, true, 3, 20, 3f, 5f, 5, TypeMob.Magic));
 
             DisplayMobsList.Instance.DisplayLinesMobs(mobs);
         }

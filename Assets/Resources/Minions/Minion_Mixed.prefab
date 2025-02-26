@@ -189,7 +189,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 16
   m_Sprite: {fileID: 763081334480277637, guid: 6829d62d3ddb9dc40bbb67f6434f4903, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7624211, g: 1, b: 0.5990566, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -299,7 +299,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 13
   m_Sprite: {fileID: -6067423728751247286, guid: 6829d62d3ddb9dc40bbb67f6434f4903, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5899006, g: 1, b: 0.4481132, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -372,10 +372,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5474354063514761166}
   - component: {fileID: 4066475854404503577}
-  - component: {fileID: 1769442147856706458}
+  - component: {fileID: 7834764898014289888}
   - component: {fileID: -359069369305256782}
   m_Layer: 10
-  m_Name: Minion
+  m_Name: Minion_Mixed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -453,7 +453,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1769442147856706458
+--- !u!114 &7834764898014289888
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -462,19 +462,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 6245254297269809354}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b711cdafbfdb38a4789b3e567c6c0bf0, type: 3}
+  m_Script: {fileID: 11500000, guid: 557dc7198ce761742b8ba2a6685b97d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MinionSlots: {fileID: 0}
+  audioClips:
+  - {fileID: 8300000, guid: ebf1feb6cf8e6d9499c09ae1dcc6fd8e, type: 3}
+  - {fileID: 8300000, guid: 61d5ee2ff4f7ed1469f015a90cc53e49, type: 3}
+  - {fileID: 8300000, guid: 3d4608e2f89aeba4f89e13505482c733, type: 3}
   slotHand: {fileID: 5710650095865819719}
   Rotate_Obj: {fileID: 5500005018856370692}
   Body_Obj: {fileID: 397049028878963008}
   Hand_Obj: {fileID: 1125266123132453485}
   Indicator_Obj: {fileID: 6316606306376807765}
-  audioClips:
-  - {fileID: 8300000, guid: ebf1feb6cf8e6d9499c09ae1dcc6fd8e, type: 3}
-  - {fileID: 8300000, guid: 61d5ee2ff4f7ed1469f015a90cc53e49, type: 3}
-  - {fileID: 8300000, guid: 3d4608e2f89aeba4f89e13505482c733, type: 3}
 --- !u!120 &-359069369305256782
 LineRenderer:
   serializedVersion: 2
@@ -499,7 +499,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -543,9 +543,9 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
-      key2: {r: 0, g: 0, b: 0, a: 0}
+      key0: {r: 0.28235295, g: 0.5058824, b: 1, a: 1}
+      key1: {r: 0.28235295, g: 0.5058824, b: 1, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 1}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
@@ -561,14 +561,14 @@ LineRenderer:
       ctime7: 0
       atime0: 0
       atime1: 65535
-      atime2: 0
+      atime2: 65535
       atime3: 0
       atime4: 0
       atime5: 0
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_ColorSpace: -1
+      m_ColorSpace: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
@@ -662,7 +662,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 12
   m_Sprite: {fileID: -7931609823641813516, guid: 6829d62d3ddb9dc40bbb67f6434f4903, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.74189067, g: 1, b: 0.5896226, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

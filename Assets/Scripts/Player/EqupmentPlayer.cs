@@ -195,7 +195,7 @@ public class EqupmentPlayer : MonoBehaviour
     {
         if(slot.Item is Minion minion)
         {
-            minionObj.GetComponent<MinionControl>().GetStatsMinion(minion.radius_search, minion.time_red, minion.move_speed);
+            minionObj.GetComponent<MinionControl>().GetStatsMinion(minion.radius_search, minion.time_red, minion.move_speed, minion.typeMob);
         }
     }
 }

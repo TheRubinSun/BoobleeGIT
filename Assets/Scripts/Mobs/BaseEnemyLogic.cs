@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using UnityEditor.Build.Player;
 using UnityEngine;
 
 public class BaseEnemyLogic : MonoBehaviour 
@@ -26,6 +27,7 @@ public class BaseEnemyLogic : MonoBehaviour
 
     public float speed { get; protected set; }
     public int GiveExp { get; protected set; }
+    public TypeMob typeMob { get; protected set; }
 
     protected bool IsDead { get; set; }
 
@@ -77,6 +79,7 @@ public class BaseEnemyLogic : MonoBehaviour
     {
         mob = EnemyList.Instance.mobs[IdMobs];
         Name = mob.NameKey;
+        typeMob = mob.TypeMob;
         max_Hp = mob.Hp;
         cur_Hp = max_Hp;
         attackRange = mob.rangeAttack;

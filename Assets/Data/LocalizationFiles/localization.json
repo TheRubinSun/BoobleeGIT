@@ -41,7 +41,7 @@
         "Name": "Robo Minion",
         "TypeItem": "",
         "Quality": "",
-        "Description": "Simple minion"
+        "Description": "This minion allows you to disassemble tech creatures into tech components."
       },
       "material_chip_one": {
         "Name": "Chep TTA",
@@ -78,6 +78,18 @@
         "TypeItem": "",
         "Quality": "",
         "Description": "This mine hurts those around it"
+      },
+      "minion_mage_es": {
+        "Name": "Mage minion",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "This minion allows you to disassemble magical creatures into artifacts."
+      },
+      "minion_mixed_es": {
+        "Name": "Universal Minion",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "This very rare minion allows you to disassemble all creatures."
       }
 
     },
@@ -91,7 +103,13 @@
         "Name": "Rainger",
         "TypeMob": "",
         "Description": "Just ranger mob"
+      },
+      "slime_enem": {
+        "Name": "Slime",
+        "TypeMob": "",
+        "Description": "Medium slime"
       }
+
     },
     "ui_text": {
       "player_stats_name": {
@@ -163,7 +181,7 @@
         "Name": "Робо-миньон",
         "TypeItem": "",
         "Quality": "",
-        "Description": "Простой помощник"
+        "Description": "Этот миньон позволяет разбирать технических существ на технологические компоненты."
       },
       "material_chip_one": {
         "Name": "Чип TTA",
@@ -200,6 +218,18 @@
         "TypeItem": "",
         "Quality": "",
         "Description": "Эта мина делает больно окружающим"
+      },
+      "minion_mage_es": {
+        "Name": "Магический миньон",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Этот миньон позволяет разбирать магических существ на артефакты"
+      },
+      "minion_mixed_es": {
+        "Name": "Универсальный миньон",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Этот очень редкий миньон позволяет разбирать всех существ."
       }
     },
     "mobs": {
@@ -212,6 +242,11 @@
         "Name": "Райнгер",
         "TypeMob": "",
         "Description": "Простой моб с дальной аттакой"
+      },
+      "slime_enem": {
+        "Name": "Слайм",
+        "TypeMob": "",
+        "Description": "Средний слайм"
       }
     },
     "ui_text": {
