@@ -51,7 +51,7 @@ public class MineLogic : TrapLogic
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, radiusExp);
         foreach(Collider2D enemy in hitEnemies)
         {
-            if(enemy.CompareTag("Enemy"))
+            if(enemy.gameObject.layer == LayerMask.NameToLayer("DamageCollider"))
             {
                 enemy.GetComponent<BaseEnemyLogic>().TakeDamage(damageTrap);
             }

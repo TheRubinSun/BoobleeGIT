@@ -26,7 +26,7 @@ public class PlayerControl : MonoBehaviour
     private Vector2 mousePos;
     private Vector2 movement;
     //Vector2 mousePos;
-    private Vector2 direction;
+    public Vector2 direction;
 
     private Dictionary<int, WeaponControl> weaponsAndArms;
     private Dictionary<int, MinionControl> minionSlots;
@@ -35,6 +35,10 @@ public class PlayerControl : MonoBehaviour
 
     //�����
     AudioSource audioSource_Move;
+
+    //Таймеры
+    private float updateRate = 0.2f;
+    private float nextUpdateTime = 0f;
 
     [SerializeField] AudioClip audioClips;
 
@@ -60,7 +64,11 @@ public class PlayerControl : MonoBehaviour
         else
         {
             rb.linearVelocity = Vector2.zero;
-            MoveLegs();
+            if (Time.time >= nextUpdateTime)
+            {
+                MoveLegs();
+                nextUpdateTime = Time.time + updateRate;
+            }
         }
 
         RotateWeaponSlots();
@@ -74,8 +82,6 @@ public class PlayerControl : MonoBehaviour
         {
             UseMinions();
         }
-
-
     }
     private void LateUpdate()
     {
