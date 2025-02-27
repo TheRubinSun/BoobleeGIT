@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PistolLogic : MeleWeaponLogic
+public class PistolLogic : RangeWeaponLogic
 {
     protected override void RotateWeaponOnCursor()
     {
@@ -10,8 +10,10 @@ public class PistolLogic : MeleWeaponLogic
     {
         base.Attack();
     }
-    protected override void ShootAttack(float offsetProj)
+    protected override void ShootLogic(float offsetProj)
     {
-        base.ShootAttack(offsetProj);
+        base.ShootLogic(offsetProj);
+
+        ShootVelocity(projectile, direction); //Сам выстрел
     }
 }

@@ -179,16 +179,16 @@ public class EqupmentPlayer : MonoBehaviour
         if (slot.Item is Gun gun)
         {
             //Debug.Log($"Gun: {gun.NameKey}: {gun.projectileSpeed}");
-            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(gun.damage, gun.attackSpeed, gun.projectileSpeed, gun.rangeType, gun.range, gun.conut_Projectiles, gun.typeDamage, PlayerModel,
+            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(gun.damage, gun.attackSpeed, gun.projectileSpeed, gun.rangeType, gun.range, gun.conut_Projectiles, gun.spreadAngle, gun.typeDamage, PlayerModel,
                 WeaponDatabase.GetProjectilesPrefab(gun.idBulletPref), gun.projectileSpeedCoof);
         }
         else if (slot.Item is Sword sword)
         {
-            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(sword.damage, sword.attackSpeed, 0, sword.rangeType, sword.range, sword.conut_Projectiles, sword.typeDamage, PlayerModel, null,0);
+            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(sword.damage, sword.attackSpeed, 0, sword.rangeType, sword.range, sword.conut_Projectiles, 0f, sword.typeDamage, PlayerModel, null,0);
         }
         else if (slot.Item is Weapon weapon)
         {
-            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(weapon.damage, weapon.attackSpeed, 0, weapon.rangeType, weapon.range, weapon.conut_Projectiles, weapon.typeDamage, PlayerModel, null,0);
+            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(weapon.damage, weapon.attackSpeed, 0, weapon.rangeType, weapon.range, weapon.conut_Projectiles, 0f, weapon.typeDamage, PlayerModel, null,0);
         }
     }
     private void LoadParametersMinion(GameObject minionObj, Slot slot)

@@ -5,16 +5,23 @@ public class WeaponDatabase : MonoBehaviour
 {
     public static Dictionary<int, GameObject> weapons = new Dictionary<int, GameObject>();
     public static Dictionary<int, GameObject> projectiles = new Dictionary<int, GameObject>();
+    public static Dictionary<int, GameObject> mobsProjectiles = new Dictionary<int, GameObject>();
     public static Dictionary<int, GameObject> minions = new Dictionary<int, GameObject>();
     public static Dictionary<int, GameObject> traps = new Dictionary<int, GameObject>();
     public static void LoadWeapons()
     {
         weapons[0] = Resources.Load<GameObject>("Weapons/Sword_God_Pref");
         weapons[1] = Resources.Load<GameObject>("Weapons/Pistol_Mark_Pref");
+        weapons[2] = Resources.Load<GameObject>("Weapons/Bow_simple");
+        weapons[3] = Resources.Load<GameObject>("Weapons/ShotGun_pump");
 
-        projectiles[0] = Resources.Load<GameObject>("Projectiles/Bullet");
-        projectiles[1] = Resources.Load<GameObject>("Projectiles/BulletMobOne");
-        projectiles[2] = Resources.Load<GameObject>("Projectiles/Slime_arrow");
+        
+        projectiles[0] = Resources.Load<GameObject>("Projectiles/Pistol_Bullet");
+        projectiles[1] = Resources.Load<GameObject>("Projectiles/Shotgun_Bullet");
+        projectiles[2] = Resources.Load<GameObject>("Projectiles/Arrow");
+
+        mobsProjectiles[0] = Resources.Load<GameObject>("Mob_Projectiles/BulletMobOne");
+        mobsProjectiles[1] = Resources.Load<GameObject>("Mob_Projectiles/Slime_arrow");
 
         minions[0] = Resources.Load<GameObject>("Minions/Minion_Tech");
         minions[1] = Resources.Load<GameObject>("Minions/Minion_Mage");
@@ -35,6 +42,10 @@ public class WeaponDatabase : MonoBehaviour
     public static GameObject GetProjectilesPrefab(int id)
     {
         return projectiles.ContainsKey(id) ? projectiles[id] : null;
+    }
+    public static GameObject GetMobProjectilesPrefab(int id)
+    {
+        return mobsProjectiles.ContainsKey(id) ? mobsProjectiles[id] : null;
     }
     public static GameObject GetMinionPrefab(int id)
     {

@@ -8,6 +8,10 @@ public class PlayerProjectile : MonoBehaviour
     public float destroyTime = 3f;
     public int damage { get; set; }
 
+    [SerializeField] 
+    private Sprite[] sprites; //Разные спрайты пуль
+    private SpriteRenderer spRen;
+
     private static bool collisionIgnored = false; // Флаг, чтобы игнорировать коллизию только один раз
     private void Awake()
     {
@@ -17,9 +21,14 @@ public class PlayerProjectile : MonoBehaviour
             //Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Projectile"), LayerMask.NameToLayer("Projectile"));
             //collisionIgnored = true;
         }
+        spRen = GetComponent<SpriteRenderer>();
     }
     private void Start()
     {
+        if(sprites.Length > 0)
+        {
+            spRen.sprite = sprites[Random.Range(0,sprites.Length)];
+        }
         Destroy(gameObject, destroyTime);
         // Сохраняем начальную позицию снаряда
         startPosition = transform.position;
@@ -38,7 +47,7 @@ public class PlayerProjectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider)
     {
         //Debug.Log("Пуля столкнулась с: " + collider.name);
-        if (collider.CompareTag("Enemy"))
+        if (collider.gameObject.layer == LayerMask.NameToLayer("DamageCollider"))
         {
             collider.GetComponent<BaseEnemyLogic>().TakeDamage(damage);
             Destroy(gameObject);

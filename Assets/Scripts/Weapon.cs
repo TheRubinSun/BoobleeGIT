@@ -32,8 +32,6 @@ public abstract class Weapon : Item
         this.TypeItem = TypeItem.Weapon;
         this.conut_Projectiles = conut_Projectiles;
     }
-
-    public abstract void Attack();
 }
 [Serializable]
 public class Gun : Weapon
@@ -41,27 +39,20 @@ public class Gun : Weapon
     public float projectileSpeed { get; set; }
     public float projectileSpeedCoof { get; set; }
     public int idBulletPref {  get; set; }
-    public Gun(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string decription, bool rangeType, float range, damageT typeDamage, int damage, float attackSpeed, int conut_Projectiles, float _projectileSpeed, float _projectileSpeedCoof, int _idBulletPref) : base(id, name, maxCount, spriteID, quality, cost, decription, rangeType, range, typeDamage, damage, attackSpeed, conut_Projectiles)
+    public float spreadAngle { get; set; }
+    public Gun(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string decription, bool rangeType, float range, damageT typeDamage, int damage, float attackSpeed, int conut_Projectiles, float _projectileSpeed, float _projectileSpeedCoof, float _spreadAngle, int _idBulletPref) : base(id, name, maxCount, spriteID, quality, cost, decription, rangeType, range, typeDamage, damage, attackSpeed, conut_Projectiles)
     {
         projectileSpeed = _projectileSpeed;
         idBulletPref = _idBulletPref;
         projectileSpeedCoof = _projectileSpeedCoof;
+        spreadAngle = _spreadAngle;
 
-
-    }
-    public override void Attack()
-    {
-        
     }
 }
 [Serializable]
 public class Sword: Weapon
 {
     public Sword(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string decription, bool rangeType, float range, damageT typeDamage, int damage, float attackSpeed,int conut_Projectiles) : base(id, name, maxCount, spriteID, quality, cost, decription, rangeType, range, typeDamage, damage, attackSpeed, conut_Projectiles)
-    {
-
-    }
-    public override void Attack()
     {
 
     }

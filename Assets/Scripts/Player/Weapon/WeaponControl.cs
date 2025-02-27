@@ -51,7 +51,7 @@ public class WeaponControl : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
     }
-    public virtual void GetStatsWeapon(int damage, float at_speed, float att_sp_pr, bool isRang, float attack_ran, int count_proj, damageT _damT, Transform pl_mod, GameObject _Projectile_pref = null, float att_sp_pr_coof = 0)
+    public virtual void GetStatsWeapon(int damage, float at_speed, float att_sp_pr, bool isRang, float attack_ran, int count_proj, float _spreadAngle, damageT _damT, Transform pl_mod, GameObject _Projectile_pref = null, float att_sp_pr_coof = 0)
     {
         attack_damage = damage;
         attack_Speed = at_speed;
@@ -110,7 +110,8 @@ public class WeaponControl : MonoBehaviour
 
     protected float lastAttackTime = 0f; // Время последней атаки
     public virtual void Attack() { }
-    protected virtual void ShootAttack(float offset) { }
+    protected virtual void ShootLogic(float offset) { }
+    protected virtual void ShootVelocity(GameObject projectile, Vector2 direction) { }
     protected virtual void MeleeAttack() { }
 
 

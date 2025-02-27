@@ -11,9 +11,10 @@ public class SwordLogic : MeleWeaponLogic
     {
         // Запускаем анимацию меча с изменением угла в пределах заданной скорости
         IsAttack = true;
-        Debug.Log("Yea");
+
         int num_rand = Random.Range(0, 4);
         audioSource_Shot.PlayOneShot(audioClips[num_rand]); //Звук Меча
+
         StartCoroutine(SwordAttackCoroutine());
     }
     protected IEnumerator SwordAttackCoroutine()

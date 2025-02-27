@@ -35,7 +35,7 @@ public class SlimeLogic : BaseEnemyLogic
 
         if (mob is Slime slime)
         {
-            bulletPrefab = WeaponDatabase.GetProjectilesPrefab(2);
+            bulletPrefab = WeaponDatabase.GetMobProjectilesPrefab(slime.idProj);
             sp_Project = slime.SpeedProjectile;
         }
 

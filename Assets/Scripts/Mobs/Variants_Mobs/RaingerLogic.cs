@@ -20,6 +20,7 @@ public class RaingerLogic : BaseEnemyLogic
         base.Start();
         spr_ren_ch = child_Obj.GetComponent<SpriteRenderer>();//Берем доч спрайт моба, если есть
         audioSource_Attack.volume = 0.1f;
+
     }
     public override void LoadParametrs()
     {
@@ -27,7 +28,7 @@ public class RaingerLogic : BaseEnemyLogic
 
         if (mob is RangerMob rangerMob)
         {
-            bulletPrefab = WeaponDatabase.GetProjectilesPrefab(1);
+            bulletPrefab = WeaponDatabase.GetMobProjectilesPrefab(rangerMob.idProj);
             sp_Project = rangerMob.SpeedProjectile;
         }
 

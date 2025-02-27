@@ -59,6 +59,10 @@ public class BaseEnemyLogic : MonoBehaviour
 
     [SerializeField]
     protected AudioClip[] audioClips;
+
+    //Таймеры
+    protected float updateRate = 0.2f; // Интервал обновления (5 раза в секунду)
+    protected float nextUpdateTime = 0f;
     public virtual void Start()
     {
         audioSource_Attack = GetComponent<AudioSource>(); //Берем звук атаки
@@ -72,6 +76,7 @@ public class BaseEnemyLogic : MonoBehaviour
 
         LoadParametrs();//Загружаем параметры моба
         moveDirection = (player.position - transform.position).normalized; //Вычисление направление к игроку
+        UpdateSortingOrder();
     }
 
     public virtual void LoadParametrs()
@@ -90,10 +95,25 @@ public class BaseEnemyLogic : MonoBehaviour
         speed = mob.speed;
         GiveExp = mob.GiveExp;
     }
+    protected void Update()
+    {
+        UpdateSortingOrder();
+    }
     public virtual void FixedUpdate()
     {
         DetectDirection();
         Move();
+    }
+
+    protected virtual void UpdateSortingOrder()
+    {
+        if(Time.time >= nextUpdateTime)
+        {
+            spr_ren.sortingOrder = Mathf.RoundToInt(transform.position.y * -10);
+
+            nextUpdateTime = Time.time + updateRate;
+        }
+        
     }
     public virtual void TakeDamage(int damage)
     {

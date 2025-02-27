@@ -51,8 +51,8 @@ public class EnemyList: MonoBehaviour
         {
             //             name hp range isRange damage attackSpeed speed
             mobs.Add(new DaizenMob("daizen_enem", 15, 1.5f, false, 2, 45, 2f, 2, TypeMob.Technology));
-            mobs.Add(new RangerMob("rainger_enem", 10, 6f, true, 1, 30, 1.2f, 10f, 3, TypeMob.Technology));
-            mobs.Add(new Slime("slime_enem", 25, 4f, true, 3, 20, 3f, 5f, 5, TypeMob.Magic));
+            mobs.Add(new RangerMob("rainger_enem", 10, 6f, true, 1, 30, 1.2f, 10f, 0, 3, TypeMob.Technology));
+            mobs.Add(new Slime("slime_enem", 25, 4f, true, 3, 20, 3f, 5f, 1, 5, TypeMob.Magic));
 
             DisplayMobsList.Instance.DisplayLinesMobs(mobs);
         }
@@ -153,10 +153,11 @@ public class Mob
 public class RangerMob : Mob
 {
     public float SpeedProjectile { get; set; }
-
-    public RangerMob(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed, float speedProjectile, int giveExp, TypeMob typeMob) : base(_name, _hp, _rangeAt, _isranged, _damage, _attackspeed, _speed, giveExp, typeMob)
+    public int idProj {  get; set; }
+    public RangerMob(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed, float speedProjectile, int _idProj, int giveExp, TypeMob typeMob) : base(_name, _hp, _rangeAt, _isranged, _damage, _attackspeed, _speed, giveExp, typeMob)
     {
         this.SpeedProjectile = speedProjectile;
+        idProj = _idProj;
     }
 }
 [Serializable]
@@ -171,9 +172,10 @@ public class DaizenMob : Mob
 public class Slime : Mob
 {
     public float SpeedProjectile { get; set; }
-
-    public Slime(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed, float speedProjectile, int giveExp, TypeMob typeMob) : base(_name, _hp, _rangeAt, _isranged, _damage, _attackspeed, _speed, giveExp, typeMob)
+    public int idProj { get; set; }
+    public Slime(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed, float speedProjectile, int _idProj, int giveExp, TypeMob typeMob) : base(_name, _hp, _rangeAt, _isranged, _damage, _attackspeed, _speed, giveExp, typeMob)
     {
         this.SpeedProjectile = speedProjectile;
+        idProj = _idProj;
     }
 }
