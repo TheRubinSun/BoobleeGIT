@@ -475,6 +475,9 @@ MonoBehaviour:
   Body_Obj: {fileID: 397049028878963008}
   Hand_Obj: {fileID: 1125266123132453485}
   Indicator_Obj: {fileID: 6316606306376807765}
+  colorTakeItem:
+    serializedVersion: 2
+    rgba: 4287496092
 --- !u!120 &-359069369305256782
 LineRenderer:
   serializedVersion: 2

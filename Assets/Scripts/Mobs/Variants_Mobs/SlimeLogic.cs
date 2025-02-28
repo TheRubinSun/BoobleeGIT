@@ -15,14 +15,45 @@ public class SlimeLogic : BaseEnemyLogic
     [SerializeField] Transform item_two;
     [SerializeField] Transform item_three;
 
+    protected SpriteRenderer sr_item_one;
+    protected SpriteRenderer sr_item_two;
+    protected SpriteRenderer sr_item_three;
+
     int face_dir = 1;
     public override void Start()
     {
         base.Start();
         string[] nameKeysItem = ItemDropEnemy.enemyAndHisDrop[Name];
-        item_one.GetComponent<SpriteRenderer>().sprite = GetRandomItem(nameKeysItem).Sprite;
-        item_two.GetComponent<SpriteRenderer>().sprite = GetRandomItem(nameKeysItem).Sprite;
-        item_three.GetComponent<SpriteRenderer>().sprite = GetRandomItem(nameKeysItem).Sprite;
+
+        sr_item_one = item_one.GetComponent<SpriteRenderer>();
+        sr_item_two = item_two.GetComponent<SpriteRenderer>();
+        sr_item_three = item_three.GetComponent<SpriteRenderer>();
+
+        sr_item_one.sprite = GetRandomItem(nameKeysItem).Sprite;
+        sr_item_two.sprite = GetRandomItem(nameKeysItem).Sprite;
+        sr_item_three.sprite = GetRandomItem(nameKeysItem).Sprite;
+
+        sr_item_one.sortingOrder = spr_ren.sortingOrder - 1;
+        sr_item_two.sortingOrder = spr_ren.sortingOrder - 1;
+        sr_item_three.sortingOrder = spr_ren.sortingOrder - 1;
+    }
+    protected override void UpdateSortingOrder()
+    {
+        if (Time.time >= nextUpdateTime)
+        {
+            spr_ren.sortingOrder = Mathf.RoundToInt(transform.position.y * -10);
+
+            if(sr_item_one != null)
+            {
+                sr_item_one.sortingOrder = spr_ren.sortingOrder - 1;
+                sr_item_two.sortingOrder = spr_ren.sortingOrder - 1;
+                sr_item_three.sortingOrder = spr_ren.sortingOrder - 1;
+            }
+
+
+            nextUpdateTime = Time.time + updateRate;
+        }
+
     }
     private Item GetRandomItem(string[] nameKeysItem)
     {

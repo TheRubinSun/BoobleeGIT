@@ -58,10 +58,9 @@ public class ItemsList : MonoBehaviour
 
         items.Add(new Gun(13, "bow_simple", 1, items.Count, Quality.Mystical, 600, "_", true, 6f, damageT.Crushing, 10, 1f, 1, 8f, 0.5f, 5f, 2));
         items.Add(new Gun(14, "shotgun_pump", 1, items.Count, Quality.Rare, 400, "_", true, 2f, damageT.Crushing, 1, 0.7f, 4, 10f, 1f, 15f, 1));
+        items.Add(new Minion(15, "minion_mage_es", 1, items.Count, Quality.Rare, 500, "_", TypeItem.Minion, 4f, 6f, 2f, TypeMob.Magic));
 
-
-        items.Add(new Minion(15, "minion_mage_es", 1, 6, Quality.Rare, 500, "_", TypeItem.Minion, 4f, 6f, 2f, TypeMob.Magic));
-        items.Add(new Minion(16, "minion_mixed_es", 1, 6, Quality.Rare, 2500, "_", TypeItem.Minion, 3f, 6f, 2f, TypeMob.Mixed));
+        //items.Add(new Minion(16, "minion_mixed_es", 1, 6, Quality.Rare, 2500, "_", TypeItem.Minion, 3f, 6f, 2f, TypeMob.Mixed));
 
         //LocalizaitedItems();
 

@@ -12,6 +12,7 @@ public class ResMinControl : MinionControl
     [SerializeField] Transform Body_Obj;
     [SerializeField] Transform Hand_Obj;
     [SerializeField] Transform Indicator_Obj;
+    [SerializeField] Color32 colorTakeItem;
 
     //Компоненты анимаций
     Animator rotate_anim;
@@ -55,6 +56,7 @@ public class ResMinControl : MinionControl
         }
         //EraseDrawRange();
     }
+
     protected override string SearchTypeTag()
     {
         switch (typeDetectMob)
@@ -64,6 +66,28 @@ public class ResMinControl : MinionControl
             case TypeMob.Mixed: return "Corpse";
             default:
                 break;
+        }
+        return null;
+    }
+    protected override Transform FindAim(string findTag)
+    {
+        foreach (Transform child in SpawnerCropse.transform)
+        {
+            if (child.tag.Contains(findTag) && Vector2.Distance(MinionSlots.position, child.position) <= radiusVision)
+            {
+                if (!child.GetComponent<CorpseSetting>().isBusy)
+                {
+                    child.GetComponent<CorpseSetting>().Busy();
+                    Debug.Log("Объект в радиусе: " + child.name);
+                    return child.GetChild(0);
+                }
+                else
+                {
+                    Debug.Log("Объект в радиусе: " + child.name + "уже занят");
+                }
+
+
+            }
         }
         return null;
     }
@@ -102,12 +126,12 @@ public class ResMinControl : MinionControl
         AnimOnRotation(true);
         AnimMoveBody(true);
 
-        dropItems = target.GetComponent<CorpseSetting>().GetDrop();
+        dropItems = target.parent.GetComponent<CorpseSetting>().GetDrop();
 
         AnimHandMove(dropItems.Count > 0);
 
         VisualItems();
-        Destroy(target.gameObject);
+        Destroy(target.parent.gameObject);
         MoveToHome(MinionSlotParent.transform);
     }
     protected override void AttachToPlayer() //Прикрепление к игроку
@@ -148,6 +172,7 @@ public class ResMinControl : MinionControl
         giveItem.transform.localPosition = new Vector3(0, offset, 0);
         SpriteRenderer renderer = giveItem.AddComponent<SpriteRenderer>();
         renderer.sprite = item.Sprite;
+        renderer.color = colorTakeItem;
         renderer.sortingOrder = 15;
         return giveItem;
     }

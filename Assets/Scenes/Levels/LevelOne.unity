@@ -753,6 +753,7 @@ MonoBehaviour:
   - {fileID: 1003357866, guid: 1eb9b0402b9617a4b819dba8c8c334ec, type: 3}
   - {fileID: 492525463, guid: 1eb9b0402b9617a4b819dba8c8c334ec, type: 3}
   - {fileID: -505977679, guid: 1eb9b0402b9617a4b819dba8c8c334ec, type: 3}
+  - {fileID: 932425681, guid: 1eb9b0402b9617a4b819dba8c8c334ec, type: 3}
 --- !u!224 &65463735
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2936,6 +2937,7 @@ MonoBehaviour:
   MinionsSlots: {fileID: 0}
   radiusCenterLegs: 0.8
   inputDirection: {x: 0, y: 0}
+  direction: {x: 0, y: 0}
   audioClips: {fileID: 0}
 --- !u!1 &411759255
 GameObject:

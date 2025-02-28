@@ -248,7 +248,7 @@ Transform:
   m_GameObject: {fileID: 1071220715698787226}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.08, y: 2, z: 0}
   m_LocalScale: {x: 20, y: 20, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -475,6 +475,9 @@ MonoBehaviour:
   Body_Obj: {fileID: 397049028878963008}
   Hand_Obj: {fileID: 1125266123132453485}
   Indicator_Obj: {fileID: 6316606306376807765}
+  colorTakeItem:
+    serializedVersion: 2
+    rgba: 4294115213
 --- !u!120 &-359069369305256782
 LineRenderer:
   serializedVersion: 2
@@ -609,7 +612,7 @@ Transform:
   m_GameObject: {fileID: 7124293147301846959}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.096, y: 1.98, z: 0}
+  m_LocalPosition: {x: -0.08, y: 2, z: 0}
   m_LocalScale: {x: 20, y: 20, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

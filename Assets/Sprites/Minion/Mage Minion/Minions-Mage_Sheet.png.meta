@@ -1,37 +1,82 @@
 fileFormatVersion: 2
-guid: 6829d62d3ddb9dc40bbb67f6434f4903
+guid: aca271d3b9d4f3f41951af0e07883486
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6067423728751247286
-    second: Minion_Sheet_0
+      213: -3930770574326017800
+    second: Minions-Mage_Sheet_0
   - first:
-      213: -7931609823641813516
-    second: Minion_Sheet_1
+      213: 1394162974012923313
+    second: Minions-Mage_Sheet_1
   - first:
-      213: -5294873320263042891
-    second: Minion_Sheet_2
+      213: -7316267393933094684
+    second: Minions-Mage_Sheet_2
   - first:
-      213: -3086911210550824413
-    second: Minion_Sheet_3
+      213: 8039316991068795646
+    second: Minions-Mage_Sheet_3
   - first:
-      213: 3716796842560038203
-    second: Minion_Sheet_4
+      213: -8627218001598063696
+    second: Minions-Mage_Sheet_4
   - first:
-      213: 1680124251486254409
-    second: Minion_Sheet_5
+      213: 8634453832418496060
+    second: Minions-Mage_Sheet_5
   - first:
-      213: -3788681740823587978
-    second: Minion_Sheet_6
+      213: -4397773011810395577
+    second: Minions-Mage_Sheet_6
   - first:
-      213: -1497099659448855910
-    second: Minion_Sheet_7
+      213: 4182318636414415078
+    second: Minions-Mage_Sheet_7
   - first:
-      213: -6743186753972658859
-    second: Minion_Sheet_8
+      213: 3180512092946232782
+    second: Minions-Mage_Sheet_8
   - first:
-      213: 763081334480277637
-    second: Minion_Sheet_9
+      213: 5232115354106710546
+    second: Minions-Mage_Sheet_9
+  - first:
+      213: -5692638837372376495
+    second: Minions-Mage_Sheet_10
+  - first:
+      213: 155728556499477708
+    second: Minions-Mage_Sheet_11
+  - first:
+      213: 8749555965081098167
+    second: Minions-Mage_Sheet_12
+  - first:
+      213: 7036946750310221844
+    second: Minions-Mage_Sheet_13
+  - first:
+      213: -1285225988245894305
+    second: Minions-Mage_Sheet_14
+  - first:
+      213: -4050088277116659420
+    second: Minions-Mage_Sheet_15
+  - first:
+      213: 4640196795837426783
+    second: Minions-Mage_Sheet_16
+  - first:
+      213: 4658961487661478361
+    second: Minions-Mage_Sheet_17
+  - first:
+      213: -7447281726680690937
+    second: Minions-Mage_Sheet_18
+  - first:
+      213: -993939187707331011
+    second: Minions-Mage_Sheet_19
+  - first:
+      213: -8506915347463354173
+    second: Minions-Mage_Sheet_20
+  - first:
+      213: 7806711122069732416
+    second: Minions-Mage_Sheet_21
+  - first:
+      213: -6146884127444939242
+    second: Minions-Mage_Sheet_22
+  - first:
+      213: -6606500689164572956
+    second: Minions-Mage_Sheet_23
+  - first:
+      213: 1197390862209167642
+    second: Minions-Mage_Sheet_24
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -75,7 +120,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -100,7 +145,7 @@ TextureImporter:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
-    resizeAlgorithm: 1
+    resizeAlgorithm: 0
     textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
@@ -140,29 +185,29 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Minion_Sheet_0
+      name: Minions-Mage_Sheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 32
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.485, y: 0.8}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: a40810ae34e2ccba0800000000000000
-      internalID: -6067423728751247286
+      spriteID: cbf7bfee9cfb12c43b7c70486ce1dc07
+      internalID: 1139093964
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minion_Sheet_1
+      name: Minions-Mage_Sheet_1
       rect:
         serializedVersion: 2
         x: 32
@@ -170,21 +215,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 9
-      pivot: {x: 0.485, y: 0.84}
+      pivot: {x: 0.485, y: 0.83}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 4fdb4dc83e24de190800000000000000
-      internalID: -7931609823641813516
+      spriteID: 1c4c648679be11840a8d471c49294bd4
+      internalID: 45627550
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minion_Sheet_2
+      name: Minions-Mage_Sheet_2
       rect:
         serializedVersion: 2
         x: 64
@@ -197,16 +242,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 5b83707c4c4d486b0800000000000000
-      internalID: -5294873320263042891
+      spriteID: 3a819e02b1f029e429bd1f98d5838c9b
+      internalID: 898650619
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minion_Sheet_3
+      name: Minions-Mage_Sheet_3
       rect:
         serializedVersion: 2
         x: 96
@@ -219,16 +264,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 32272f1fb961925d0800000000000000
-      internalID: -3086911210550824413
+      spriteID: 6b1e418f5a965a743b828e48fe19f92f
+      internalID: -1199910381
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minion_Sheet_4
+      name: Minions-Mage_Sheet_4
       rect:
         serializedVersion: 2
         x: 128
@@ -241,16 +286,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: b35a51f2907b49330800000000000000
-      internalID: 3716796842560038203
+      spriteID: fe45c7a9b786c6b49906dd387dbc0c4d
+      internalID: 1561539002
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minion_Sheet_5
+      name: Minions-Mage_Sheet_5
       rect:
         serializedVersion: 2
         x: 160
@@ -263,186 +308,296 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 9457b54ea10015710800000000000000
-      internalID: 1680124251486254409
+      spriteID: 6357f3f10816f8649b32ad64370d928c
+      internalID: -39051040
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minion_Sheet_6
+      name: Minions-Mage_Sheet_6
       rect:
         serializedVersion: 2
-        x: 192
+        x: 191
         y: 32
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.485, y: 0.8}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 673933fa706eb6bc0800000000000000
-      internalID: -3788681740823587978
+      spriteID: 45ea85a128d028f428b9bab51235bc76
+      internalID: 1579827005
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minion_Sheet_7
+      name: Minions-Mage_Sheet_7
       rect:
         serializedVersion: 2
         x: 224
         y: 32
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.485, y: 0.8}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: a92513daacb393be0800000000000000
-      internalID: -1497099659448855910
+      spriteID: 9d351f2813fa429489f0f32ba7d61431
+      internalID: -566354186
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minion_Sheet_8
+      name: Minions-Mage_Sheet_8
       rect:
         serializedVersion: 2
         x: 256
         y: 32
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.485, y: 0.8}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 55d175bcf536b62a0800000000000000
-      internalID: -6743186753972658859
+      spriteID: 826755d252e9a204e92ec52689a21c5d
+      internalID: 1795806579
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minion_Sheet_9
+      name: Minions-Mage_Sheet_9
       rect:
         serializedVersion: 2
         x: 288
         y: 32
         width: 32
         height: 32
-      alignment: 9
-      pivot: {x: 0.485, y: 0.52}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 5809d644e62079a00800000000000000
-      internalID: 763081334480277637
+      spriteID: d680aa13818fdad48bf8863575b74431
+      internalID: -594560906
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minion_Sheet_10
+      name: Minions-Mage_Sheet_10
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 32
         height: 32
-      alignment: 9
-      pivot: {x: 0.485, y: 0.52}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d850062a8d1e53042bc3ebac0733b27f
-      internalID: -1521179213
+      spriteID: 772c5a91b938bfb428c3a511d39ab772
+      internalID: 91561239
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minion_Sheet_11
+      name: Minions-Mage_Sheet_11
       rect:
         serializedVersion: 2
         x: 32
         y: 0
         width: 32
         height: 32
-      alignment: 9
-      pivot: {x: 0.485, y: 0.52}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 74fd2c7b908593b49afaf6019952735b
-      internalID: 1563283326
+      spriteID: 01089087f618c3e41ab65595e4770a6e
+      internalID: 1755039524
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minion_Sheet_12
+      name: Minions-Mage_Sheet_12
       rect:
         serializedVersion: 2
         x: 64
         y: 0
         width: 32
         height: 32
-      alignment: 9
-      pivot: {x: 0.485, y: 0.52}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c8e2e0a75c331ce4c896866ffe6f861c
-      internalID: -58873830
+      spriteID: 5fa99caf1d749eb4a92ebe5d692d6c7f
+      internalID: -54844316
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Minion_Sheet_13
+      name: Minions-Mage_Sheet_13
       rect:
         serializedVersion: 2
         x: 96
         y: 0
         width: 32
         height: 32
-      alignment: 9
-      pivot: {x: 0.485, y: 0.52}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2059aca616f99b640a61ac93db9b3b0c
-      internalID: -290130258
+      spriteID: a0013001535685e408626de18c71ece1
+      internalID: 1288025223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Minions-Mage_Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a203cdb97f623814ebd6df7856d86920
+      internalID: 398796742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Minions-Mage_Sheet_15
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f3b48f3099c3534da6484ce29898030
+      internalID: -1053878190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Minions-Mage_Sheet_16
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8bc830196a1f12541b347e1891b0268a
+      internalID: 721804274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Minions-Mage_Sheet_17
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2da27b819ba6d05409222588f41fd203
+      internalID: -1912108172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Minions-Mage_Sheet_18
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5d4a89bcb5bb4242b5c2371ff2700a3
+      internalID: -251932274
       vertices: []
       indices: 
       edges: []
@@ -451,7 +606,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 9c13f1de89f9a754db1999ac0459a90b
+    spriteID: e4a4dad9af4e49542be6815c535c0519
     internalID: 0
     vertices: []
     indices: 
@@ -461,20 +616,25 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Minion_Sheet_0: -6067423728751247286
-      Minion_Sheet_1: -7931609823641813516
-      Minion_Sheet_10: -1521179213
-      Minion_Sheet_11: 1563283326
-      Minion_Sheet_12: -58873830
-      Minion_Sheet_13: -290130258
-      Minion_Sheet_2: -5294873320263042891
-      Minion_Sheet_3: -3086911210550824413
-      Minion_Sheet_4: 3716796842560038203
-      Minion_Sheet_5: 1680124251486254409
-      Minion_Sheet_6: -3788681740823587978
-      Minion_Sheet_7: -1497099659448855910
-      Minion_Sheet_8: -6743186753972658859
-      Minion_Sheet_9: 763081334480277637
+      Minions-Mage_Sheet_0: 1139093964
+      Minions-Mage_Sheet_1: 45627550
+      Minions-Mage_Sheet_10: 91561239
+      Minions-Mage_Sheet_11: 1755039524
+      Minions-Mage_Sheet_12: -54844316
+      Minions-Mage_Sheet_13: 1288025223
+      Minions-Mage_Sheet_14: 398796742
+      Minions-Mage_Sheet_15: -1053878190
+      Minions-Mage_Sheet_16: 721804274
+      Minions-Mage_Sheet_17: -1912108172
+      Minions-Mage_Sheet_18: -251932274
+      Minions-Mage_Sheet_2: 898650619
+      Minions-Mage_Sheet_3: -1199910381
+      Minions-Mage_Sheet_4: 1561539002
+      Minions-Mage_Sheet_5: -39051040
+      Minions-Mage_Sheet_6: 1579827005
+      Minions-Mage_Sheet_7: -566354186
+      Minions-Mage_Sheet_8: 1795806579
+      Minions-Mage_Sheet_9: -594560906
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
