@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class ShotGunLogic : RangeWeaponLogic
 {
+    protected override void Start()
+    {
+        base.Start();
+        audioSource_Shot.volume = 0.2f;
+    }
     protected override void ShootLogic(float offsetProj)
     {
         base.ShootLogic(offsetProj);

@@ -94,7 +94,7 @@ public class Item
                 }
             case Quality.Mystical:
                 {
-                    return new Color32(140, 40, 217, 255);
+                    return new Color32(152, 58, 224, 255);
                 }
             case Quality.Legendary:
                 {

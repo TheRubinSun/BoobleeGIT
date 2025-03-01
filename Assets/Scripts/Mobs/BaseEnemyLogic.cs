@@ -60,6 +60,10 @@ public class BaseEnemyLogic : MonoBehaviour
     [SerializeField]
     protected AudioClip[] audioClips;
 
+    protected bool IsNearThePlayer = false;
+
+    [SerializeField]
+    protected float attackBuffer; // Можно настроить
     //Таймеры
     protected float updateRate = 0.2f; // Интервал обновления (5 раза в секунду)
     protected float nextUpdateTime = 0f;
@@ -200,18 +204,32 @@ public class BaseEnemyLogic : MonoBehaviour
         {
             // Проверяем перед атакой, есть ли стена перед врагом
             RaycastHit2D finalCheck = Physics2D.Raycast(transform.position, toPlayer.normalized, distanceToPlayer, obstacleLayer);
-            if (distanceToPlayer < attackRange && finalCheck.collider != null && finalCheck.transform.CompareTag("Player"))
+
+            // Дополнительный буфер для ренджа атаки
+            
+            float effectiveRange = attackRange - attackBuffer;
+
+            bool canSeePlayer = finalCheck.collider != null && finalCheck.transform.CompareTag("Player");
+            if (distanceToPlayer < effectiveRange && canSeePlayer)
             {
                 moveDirection = Vector2.zero;
-                if (distanceToPlayer < attackRange * 0.7f)
+
+                // Если моб слишком близко, он немного отходит назад
+                if (distanceToPlayer < attackRange * 0.6f)
                 {
                     moveDirection = -toPlayer.normalized;
                 }
-
+                IsNearThePlayer = true;
+                Attack(distanceToPlayer);
+            }
+            else if (distanceToPlayer < attackRange && canSeePlayer && IsNearThePlayer)
+            {
+                moveDirection = Vector2.zero;
                 Attack(distanceToPlayer);
             }
             else
             {
+                IsNearThePlayer = false;
                 moveDirection = toPlayer.normalized;
             }
 

@@ -140,8 +140,7 @@ Transform:
   m_LocalPosition: {x: -0.014, y: -0.123, z: 0}
   m_LocalScale: {x: 20, y: 20, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 5710650095865819719}
+  m_Children: []
   m_Father: {fileID: 5474354063514761166}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7841480409125522347
@@ -355,12 +354,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6221128400833103457}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.25, y: 0.3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3, y: 5, z: 0}
+  m_LocalScale: {x: 20, y: 20, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1125266123132453485}
+  m_Father: {fileID: 5474354063514761166}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6245254297269809354
 GameObject:
@@ -395,6 +394,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5500005018856370692}
+  - {fileID: 5710650095865819719}
   - {fileID: 1125266123132453485}
   - {fileID: 397049028878963008}
   m_Father: {fileID: 0}
@@ -575,9 +575,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MinionSlots: {fileID: 0}
   audioClips:
-  - {fileID: 8300000, guid: ebf1feb6cf8e6d9499c09ae1dcc6fd8e, type: 3}
-  - {fileID: 8300000, guid: 61d5ee2ff4f7ed1469f015a90cc53e49, type: 3}
-  - {fileID: 8300000, guid: 3d4608e2f89aeba4f89e13505482c733, type: 3}
+  - {fileID: 8300000, guid: 787d7178237807e48a86ee31cad1c7af, type: 3}
+  - {fileID: 8300000, guid: f7e5eee48e17f374d9c2d2c503e6bbab, type: 3}
   slotHand: {fileID: 5710650095865819719}
   Rotate_Obj: {fileID: 5500005018856370692}
   Body_Obj: {fileID: 397049028878963008}

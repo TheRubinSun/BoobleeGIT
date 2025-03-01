@@ -110,6 +110,7 @@ public class DisplayInfo: MonoBehaviour
     }
     public void UpdateInfoStatus()
     {
+        Debug.Log("Open");
         string info =  $"{words_level}: {Player.Instance.GetPlayerStats().level}\n";
         info += $"{words_Max_Hp}:  {Player.Instance.GetPlayerStats().Cur_Hp}/{Player.Instance.GetPlayerStats().Max_Hp}\n";
         info += $"{words_Armor_Hp}: {Player.Instance.GetPlayerStats().Armor_Hp}\n";
@@ -145,7 +146,7 @@ public class DisplayInfo: MonoBehaviour
 
         //Разметка и цвет - первый текст
         string colorName = "#" + ColorUtility.ToHtmlStringRGBA(item.GetColor());
-        nameItem.text =  $"<size=8>{item.Name}</size>\n<size=7><color={colorName}>{item.quality}</color></size>";
+        nameItem.text =  $"<size=14>{item.Name}</size>\n<size=12><color={colorName}>{item.quality}</color></size>";
 
         //Второй текст
         string info = $"{words_typeItem}: {item.TypeItem.ToString()}\n";

@@ -61,6 +61,7 @@ public class RaingerLogic : BaseEnemyLogic
                 spr_ren_ch.flipX = shouldFaceLeft;
         }
     }
+
     public void ShootArrowOne()
     {
         GameObject bullet;

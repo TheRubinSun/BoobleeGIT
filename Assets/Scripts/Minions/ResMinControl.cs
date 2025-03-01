@@ -213,7 +213,7 @@ public class ResMinControl : MinionControl
         {
             if (!audioSource_Work.isPlaying)
             {
-                int numbSound = Random.Range(1, 3);
+                int numbSound = Random.Range(1, audioClips.Length);
                 Debug.Log($"Sound: {numbSound}");
                 audioSource_Work.clip = audioClips[numbSound];
                 audioSource_Work.loop = true;

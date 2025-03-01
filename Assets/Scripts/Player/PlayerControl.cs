@@ -86,6 +86,7 @@ public class PlayerControl : MonoBehaviour
     private void LateUpdate()
     {
         cameraObj.position = new Vector3(transform.position.x, transform.position.y, -10f);
+        //cameraObj.position = new Vector3(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y), -10f);
     }
     public void UpdateSlots(Dictionary<int, WeaponControl> weaponObj, Dictionary<int, MinionControl> minionObj)
     {

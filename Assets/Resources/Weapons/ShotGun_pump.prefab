@@ -235,5 +235,6 @@ MonoBehaviour:
   minDistance: 0.3
   offset: 0
   PlayerModel: {fileID: 0}
-  audioClips: []
+  audioClips:
+  - {fileID: 8300000, guid: 467b2cfee4de68b4b8b9ad0477317ac7, type: 3}
   ShootPos: {fileID: 2770646334030511382}

@@ -9,7 +9,6 @@ public class SlimeLogic : BaseEnemyLogic
     public GameObject bulletPrefab { get; private set; }
     public float sp_Project { get; private set; }
 
-    private bool IsNearThePlayer = false;
 
     [SerializeField] Transform item_one;
     [SerializeField] Transform item_two;
@@ -36,6 +35,8 @@ public class SlimeLogic : BaseEnemyLogic
         sr_item_one.sortingOrder = spr_ren.sortingOrder - 1;
         sr_item_two.sortingOrder = spr_ren.sortingOrder - 1;
         sr_item_three.sortingOrder = spr_ren.sortingOrder - 1;
+
+        audioSource_Attack.volume = 0.1f;
     }
     protected override void UpdateSortingOrder()
     {
@@ -95,7 +96,6 @@ public class SlimeLogic : BaseEnemyLogic
         else
         {
             // Дополнительный буфер для ренджа атаки
-            float attackBuffer = 1f; // Можно настроить
             float effectiveRange = attackRange - attackBuffer;
 
             // Проверяем перед атакой, есть ли стена перед врагом

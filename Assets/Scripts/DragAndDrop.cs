@@ -47,7 +47,7 @@ public class DragAndDrop:MonoBehaviour
     {
         dragItem = false;
         RadiusPickUp = 1f;
-        mouseOffset = new Vector2(0.4f, -0.4f);
+        mouseOffset = new Vector2(30f, -35f);
         
     }
     public void Drag(int numbSlot, string typeSlot)
@@ -263,8 +263,12 @@ public class DragAndDrop:MonoBehaviour
     {
         if (dragItem && tempSlot.SlotObj != null)
         {
-            mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            tempSlot.SlotObj.transform.position = mousePos+mouseOffset;
+            // Получаем мировые координаты курсора
+            mousePos = Input.mousePosition;
+            
+            //Для камеры, сейчас overlay
+            //mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            tempSlot.SlotObj.transform.position = mousePos + mouseOffset;
         }
         else if (!dragItem && tempSlot != null)
         {

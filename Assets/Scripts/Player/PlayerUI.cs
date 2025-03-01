@@ -1,3 +1,4 @@
+using System.Diagnostics.Tracing;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -48,10 +49,18 @@ public class PlayerUI : MonoBehaviour
     }
     public void UpdateSizeHpBar(PlayerStats pl_stats)
     {
-        if (pl_stats.Max_Hp <= 1000)
+        if (pl_stats.Max_Hp > 400)
         {
-            hpRect.sizeDelta = new Vector2(30f + pl_stats.Max_Hp / 3, 20f);
-            hpRect.anchoredPosition = new Vector2(25.5f + pl_stats.Max_Hp / 6, -40f);
+            hpRect.sizeDelta = new Vector2(500f, 36f);
+            return;
+        }
+        else if(pl_stats.Max_Hp < 100)
+        {
+            hpRect.sizeDelta = new Vector2(100f, 36f);
+        }
+        else
+        { 
+            hpRect.sizeDelta = new Vector2(pl_stats.Max_Hp + 100f, 36f);
             return;
         }
     }
