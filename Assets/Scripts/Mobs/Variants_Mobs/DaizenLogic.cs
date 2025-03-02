@@ -15,6 +15,20 @@ public class DaizenLogic : BaseEnemyLogic
         spr_ren_ch = child_Obj.GetComponent<SpriteRenderer>();//Берем доч спрайт моба, если есть
         audioSource_Attack.volume = 0.1f;
     }
+
+    protected override void UpdateSortingOrder()
+    {
+        if (Time.time >= nextUpdateTime)
+        {
+            spr_ren.sortingOrder = Mathf.RoundToInt((transform.position.y - 10) * -10);
+
+            if(spr_ren_ch != null ) spr_ren_ch.sortingOrder = spr_ren.sortingOrder - 1;
+
+            nextUpdateTime = Time.time + updateRate;
+        }
+
+    }
+
     public override IEnumerator FlashColor(Color32 color, float time)
     {
         if (spr_ren != null)

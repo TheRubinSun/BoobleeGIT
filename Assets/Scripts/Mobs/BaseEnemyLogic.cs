@@ -99,7 +99,7 @@ public class BaseEnemyLogic : MonoBehaviour
         speed = mob.speed;
         GiveExp = mob.GiveExp;
     }
-    protected void Update()
+    protected virtual void Update()
     {
         UpdateSortingOrder();
     }
@@ -113,7 +113,7 @@ public class BaseEnemyLogic : MonoBehaviour
     {
         if(Time.time >= nextUpdateTime)
         {
-            spr_ren.sortingOrder = Mathf.RoundToInt(transform.position.y * -10);
+            spr_ren.sortingOrder = Mathf.RoundToInt((transform.position.y - 10) * -10);
 
             nextUpdateTime = Time.time + updateRate;
         }
