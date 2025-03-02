@@ -6,7 +6,7 @@ using UnityEngine;
 public class LegControl:MonoBehaviour
 {
     [SerializeField] Transform leg;
-    [SerializeField] float range = 0.6f;
+    [SerializeField] float range = 0.3f;
     [SerializeField] float delayTime = 0.07f;  // Задержка (можно регулировать)
     [SerializeField] Transform line;
     

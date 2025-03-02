@@ -9,7 +9,7 @@ public class PlayerStats
     public int Max_Hp { get; set;}
     public int Armor_Hp { get; set; }
 
-    public int Mov_Speed { get; set; }
+    public float Mov_Speed { get; set; }
 
     public float Att_Range { get; set; }
     public int Att_Damage { get; set; }

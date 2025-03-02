@@ -1,25 +1,22 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class PlayerControl : MonoBehaviour 
 {
-    Player player;
-    //������� ������
-    [SerializeField] GameObject playerObj;
-    [SerializeField] Transform cameraObj;
-    [SerializeField] GameObject hand;
-    [SerializeField] Transform centerLegs;
-    [SerializeField] Transform[] legsLines;
-    [SerializeField] Transform[] legsCenter;
-    [SerializeField] Transform WeaponSlots;
-    [SerializeField] Transform MinionsSlots;
+    private Player player;
 
-    [SerializeField] private float radiusCenterLegs = 0.4f;                // ������ �������
+    [SerializeField] private GameObject playerObj;
+    [SerializeField] private Transform cameraObj;
+    [SerializeField] private GameObject hand;
+    [SerializeField] private Transform centerLegs;
+    [SerializeField] private LineControle[] legsLines;
+    [SerializeField] private LegsControl legsControl;
+    [SerializeField] private Transform WeaponSlots;
 
-    private LineRenderer lineRenderer;
+    [SerializeField] private float radiusCenterLegs = 0.4f;        
 
-    //����������� � �������
     [SerializeField] private Vector2 inputDirection;
 
 
@@ -45,7 +42,6 @@ public class PlayerControl : MonoBehaviour
     void Start()
     {
         player = GetComponentInParent<Player>();
-        //lineRenderer = MinionsSlots.GetComponent<LineRenderer>();
         rb = GetComponent<Rigidbody2D>();
     }
     // ������� ��� ��������, ��������� �� ��������� ���� ��� UI
@@ -57,7 +53,7 @@ public class PlayerControl : MonoBehaviour
     {
         //���� ��������
         inputDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        if(inputDirection.sqrMagnitude > 0 )
+        if(inputDirection.sqrMagnitude > 0)
         {
             Move();
         }
@@ -86,7 +82,11 @@ public class PlayerControl : MonoBehaviour
     private void LateUpdate()
     {
         cameraObj.position = new Vector3(transform.position.x, transform.position.y, -10f);
-        //cameraObj.position = new Vector3(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y), -10f);
+
+        foreach (LineControle legsLine in legsLines)
+        {
+            legsLine.MoveLinesLegs();
+        }
     }
     public void UpdateSlots(Dictionary<int, WeaponControl> weaponObj, Dictionary<int, MinionControl> minionObj)
     {
@@ -133,20 +133,13 @@ public class PlayerControl : MonoBehaviour
     }
     private void MoveLegs()
     {
-        foreach (Transform legsLine in legsLines)
-        {
-            legsLine.GetComponent<LineControle>().AnimMove();
-        }
-        foreach (Transform legCenter in legsCenter)
-        {
-            legCenter.GetComponent<LegControl>().CheckPos();
-        }
+        legsControl.MoveLegs(player.GetPlayerStats().Mov_Speed);
     }
     void MoveCenterLegs(Vector2 inputDirection)
     {
         // ������������ �������� ��� ������ ���
         Vector2 currentPos = centerLegs.localPosition;
-        Vector2 newPos = currentPos + inputDirection.normalized * 10f * Time.deltaTime;
+        Vector2 newPos = currentPos + inputDirection.normalized * 5f * Time.deltaTime;
 
 
         if (newPos.magnitude > radiusCenterLegs)

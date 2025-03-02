@@ -11,17 +11,19 @@ public class LineControle: MonoBehaviour
     [SerializeField] private float fps = 30f;
     [SerializeField] Transform body;
     [SerializeField] Transform leg;
+    [SerializeField] bool anim_need;
 
     private float fpsCounter;
 
     private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
-        AnimMove();
+        if(anim_need) AnimMove();
+
     }
     public void AnimMove()
     {
-        AssignTarget();
+        
         fpsCounter += Time.deltaTime;
         if (fpsCounter >= 1f / fps)
         {
@@ -33,11 +35,11 @@ public class LineControle: MonoBehaviour
             fpsCounter = 0f;
         }
     }
-    public void AssignTarget()
+    public void MoveLinesLegs()
     {
+        if (anim_need) AnimMove();
         lineRenderer.positionCount = 2;
         lineRenderer.SetPosition(0, body.position);
         lineRenderer.SetPosition(1, leg.position);
     }
-
 }
