@@ -1,26 +1,46 @@
+using NUnit.Framework;
+using System;
 using UnityEngine;
 
 [System.Serializable]
 public class PlayerStats
 {
-    public RoleClass classPlayer;
-    //Характеристики
-    public int Cur_Hp { get; set; }
-    public int Max_Hp { get; set;}
-    public int Armor_Hp { get; set; }
+    public RoleClass classPlayer { get; set; }
+    //Base Характеристики
+    public int Base_Strength {  get; set; }
+    public int Base_Agility { get; set; }
+    public int Base_Intelligence { get; set; }
+    public int Base_Cur_Hp { get; set; }
+    public int Base_Max_Hp { get; set;}
+    public int Base_Armor { get; set; }
+    public int Base_Evasion {  get; set; }
+    public float Base_Mov_Speed { get; set; }
+    public float Base_Att_Range { get; set; }
+    public int Base_Att_Damage { get; set; }
+    public int Base_Att_Speed { get; set; }
+    public float Base_Proj_Speed { get; set; }
+    public float Base_ExpBust {  get; set; }
 
-    public float Mov_Speed { get; set; }
+    //Итоговые Характеристики
+    [NonSerialized] public int Strength;
+    [NonSerialized] public int Agility;
+    [NonSerialized] public int Intelligence;
+    [NonSerialized] public int Cur_Hp;
+    [NonSerialized] public int Max_Hp;
+    [NonSerialized] public int Armor;
+    [NonSerialized] public int Evasion;
+    [NonSerialized] public float Mov_Speed;
+    [NonSerialized] public float Att_Range;
+    [NonSerialized] public int Att_Damage;
+    [NonSerialized] public int Att_Speed;
+    [NonSerialized] public float Proj_Speed;
+    [NonSerialized] public float ExpBust;
 
-    public float Att_Range { get; set; }
-    public int Att_Damage { get; set; }
-    public int Att_Speed { get; set; }
-    public int Proj_Speed { get; set; }
-
+    //Exp
     public int level { get; set; }
     public int freeSkillPoints { get; set; }
     public int cur_exp { get; set; }
     public int nextLvl_exp { get; set; }
-
     //Knowlange
     public int MagicPoints { get; set; }
     public int TechniquePoints { get; set; }
@@ -32,13 +52,23 @@ public class PlayerStats
     private const int AddHP_PerLvl = 2;
 
     public PlayerStats() { }
-    public void StartStats()
+    public void SetBaseStats()
     {
-        RoleClass rc = Classes.Instance.GetRoleClass("Shooter");
-        Mov_Speed = rc.BonusSpeedMove;
-        Max_Hp = rc.BonusHp;
-        Att_Speed = rc.BonusAttackSpeed;
-        Att_Range = rc.BonusRange;
+        Base_Strength = 2;
+        Base_Agility = 2;
+        Base_Intelligence = 2;
+        Base_Cur_Hp = 2;
+        Base_Max_Hp = 2;
+        Base_Armor = 0;
+        Base_Evasion = 0;
+        Base_Mov_Speed = 1f;
+        Base_Att_Range = 0;
+        Base_Att_Speed = 0;
+        Base_Att_Damage = 0;
+        Base_Att_Speed = 0;
+        Base_Proj_Speed = 0;
+        Base_ExpBust = 1f;
+
         nextLvl_exp = 10;
         level = 0;
         Cur_Hp = Max_Hp;
@@ -46,38 +76,84 @@ public class PlayerStats
         MagicPoints = 1;
         TechniquePoints = 1;
         AdjacentPoints = 0;
+
+        classPlayer = Classes.Instance.GetRoleClass("Shooter");
     }
     public void LoadStats(PlayerStats playerSaveData)
     {
-        Cur_Hp = playerSaveData.Cur_Hp;
-        Max_Hp = playerSaveData.Max_Hp;
-        Armor_Hp = playerSaveData.Armor_Hp;
+        Base_Strength = playerSaveData.Base_Strength;
+        Base_Agility = playerSaveData.Base_Agility;
+        Base_Intelligence = playerSaveData.Base_Intelligence;
+        Base_Cur_Hp = playerSaveData.Base_Cur_Hp;
+        Base_Max_Hp = playerSaveData.Base_Max_Hp;
+        Base_Armor = playerSaveData.Base_Armor;
+        Base_Evasion = playerSaveData.Base_Evasion;
+        Base_Mov_Speed = playerSaveData.Base_Mov_Speed;
+        Base_Att_Range = playerSaveData.Base_Att_Range;
+        Base_Att_Speed = playerSaveData.Base_Att_Speed;
+        Base_Att_Damage = playerSaveData.Base_Att_Damage;
+        Base_Att_Speed = playerSaveData.Base_Att_Speed;
+        Base_Proj_Speed = playerSaveData.Base_Proj_Speed;
+        Base_ExpBust = playerSaveData.Base_ExpBust;
 
-        Mov_Speed = playerSaveData.Mov_Speed;
-
-        Att_Range = playerSaveData.Att_Range;
-        Att_Damage = playerSaveData.Att_Damage;
-        Att_Speed = playerSaveData.Att_Speed;
-        Proj_Speed = playerSaveData.Proj_Speed;
-
-        level = playerSaveData.level;
-        freeSkillPoints = playerSaveData.freeSkillPoints;
-        cur_exp = playerSaveData.cur_exp;
         nextLvl_exp = playerSaveData.nextLvl_exp;
-
+        level = playerSaveData.level;
+        Cur_Hp = playerSaveData.Cur_Hp;
         count_Projectile = playerSaveData.count_Projectile;
         MagicPoints = playerSaveData.MagicPoints;
         TechniquePoints = playerSaveData.TechniquePoints;
         AdjacentPoints = playerSaveData.AdjacentPoints;
+
+        classPlayer = playerSaveData.classPlayer;
+    }
+    public void HandlerUpdateStats()
+    {
+
+    }
+    public void UpdateTotalStats()
+    {
+        EquipStats equipStats = Player.Instance.GetEquipStats();
+
+        Strength = classPlayer.Bonus_Class_Strength + equipStats.Bonus_Equip_Strength;
+        Agility = classPlayer.Bonus_Class_Agility + equipStats.Bonus_Equip_Agility;
+        Intelligence = classPlayer.Bonus_Class_Intelligence + equipStats.Bonus_Equip_Intelligence;
+
+        Max_Hp = (Strength * 2) + Base_Max_Hp + classPlayer.Bonus_Class_Hp + equipStats.Bonus_Equip_Hp;
+        Armor = (int)(Strength / 10) + Base_Armor + classPlayer.Bonus_Class_Deffence + equipStats.Bonus_Equip_Armor;
+        Mov_Speed = (Agility * 0.015f) + Base_Mov_Speed + classPlayer.Bonus_Class_SpeedMove + equipStats.Bonus_Equip_Mov_Speed;
+        Evasion = (Agility) + Base_Evasion + equipStats.Bonus_Equip_Evasion;
+        Att_Speed = (Agility * 2) + Base_Att_Speed + classPlayer.Bonus_Class_AttackSpeed + equipStats.Bonus_Equip_Att_Speed;
+        Att_Range = (Intelligence * 0.1f) + Base_Att_Range + classPlayer.Bonus_Class_Range + equipStats.Bonus_Equip_Att_Range;
+        Proj_Speed = (Intelligence * 0.1f) + Base_Proj_Speed + classPlayer.Bonus_Class_ProjectileSpeed + equipStats.Bonus_Equip_Proj_Speed;
+        Att_Damage = (int)((Strength * 2) + Base_Att_Damage + Agility + (Intelligence * 2) / 14) + classPlayer.Bonus_Class_Damage + equipStats.Bonus_Equip_Att_Damage;
+
+        ExpBust = Base_ExpBust + equipStats.Bonus_Equip_ExpBust;
+        Cur_Hp = Max_Hp;
+    }
+    public void FillHp()
+    {
+        Cur_Hp = Max_Hp;
     }
     public void AddMaxHPStat(int addMaxHp)
     {
         Max_Hp += AddHP_PerLvl;
         Cur_Hp += AddHP_PerLvl;
     }
-    public void TakeDamageStat(int damage)
+    public bool TakeDamageStat(int damage, bool canEvade)
     {
-        Cur_Hp -= (int)(Mathf.Max(damage / (1 + Armor_Hp / 10f), 1));
+        if(canEvade) if (isEvasion()) return false; //ЕСли удалось уклониться, урон не получаем
+
+        Cur_Hp -= (int)(Mathf.Max(damage / (1 + Armor / 10f), 1));
+        return true;
+    }
+    private bool isEvasion()
+    {
+        int random = UnityEngine.Random.Range(0, 100);
+        if (Evasion >= random && random < 90)
+        {
+            return true;
+        }
+        return false;
     }
     public bool PlayerHealStat(int count_heal)
     {
@@ -97,7 +173,7 @@ public class PlayerStats
     }
     public void AddExpStat(int add_exp)
     {
-        cur_exp += add_exp;
+        cur_exp += (int)(add_exp * ExpBust);
         if (isNewLevel())
             LvlUpStat();
     }

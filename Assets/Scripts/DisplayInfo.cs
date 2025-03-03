@@ -113,7 +113,7 @@ public class DisplayInfo: MonoBehaviour
         Debug.Log("Open");
         string info =  $"{words_level}: {Player.Instance.GetPlayerStats().level}\n";
         info += $"{words_Max_Hp}:  {Player.Instance.GetPlayerStats().Cur_Hp}/{Player.Instance.GetPlayerStats().Max_Hp}\n";
-        info += $"{words_Armor_Hp}: {Player.Instance.GetPlayerStats().Armor_Hp}\n";
+        info += $"{words_Armor_Hp}: {Player.Instance.GetPlayerStats().Armor}\n";
         info += $"{words_Mov_Speed}: {Player.Instance.GetPlayerStats().Mov_Speed}\n";
         info += $"{words_Att_Range}: {Player.Instance.GetPlayerStats().Att_Range}\n";
         info += $"{words_Att_Damage}: {Player.Instance.GetPlayerStats().Att_Damage}\n";

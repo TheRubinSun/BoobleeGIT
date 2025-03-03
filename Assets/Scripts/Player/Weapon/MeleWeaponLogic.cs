@@ -13,10 +13,16 @@ public class MeleWeaponLogic : WeaponControl
     protected void OnTriggerEnter2D(Collider2D collision)
     {
         // Проверяем, что столкновение произошло с врагом
-        if (IsAttack && collision.CompareTag("Enemy"))
+        if (!IsAttack || collision.CompareTag("Enemy")) return;
+
+        BaseEnemyLogic enemy = collision.GetComponent<BaseEnemyLogic>();
+        if (enemy != null)
         {
-            // Применяем урон
-            collision.GetComponent<BaseEnemyLogic>().TakeDamage(attack_damage);  // Передайте нужную логику урона
+            collision.GetComponent<BaseEnemyLogic>().TakeDamage(attack_damage);
         }
+            
+        // Передайте нужную логику урона
+
+        // Применяем урон
     }
 }

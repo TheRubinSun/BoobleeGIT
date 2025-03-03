@@ -22,7 +22,7 @@ public class BulletMob : MonoBehaviour
         //Debug.Log("Пуля столкнулась с: " + collider.name);
         if (collider.CompareTag("Player"))
         {
-            Player.Instance.TakeDamage(damage);
+            Player.Instance.TakeDamage(damage, true);
             Destroy(gameObject);
         }
         else if(collider.CompareTag("Wall"))

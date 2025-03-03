@@ -202,7 +202,7 @@ public class SlimeLogic : BaseEnemyLogic
             audioSource_Attack.Stop();
             audioSource_Attack.PlayOneShot(audioClips[0]); //Звук выстрела
         }
-        Player.Instance.TakeDamage(damage);
+        Player.Instance.TakeDamage(damage, true);
     }
     public void SetItemsPosIdle(int frame)
     {

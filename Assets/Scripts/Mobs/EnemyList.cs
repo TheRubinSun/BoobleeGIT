@@ -54,9 +54,9 @@ public class EnemyList: MonoBehaviour
         if (mobs.Count < 1)
         {
             //             name hp range isRange damage attackSpeed speed
-            mobs.Add(new DaizenMob("daizen_enem", 15, 1.5f, false, 2, 45, 2f, 2, TypeMob.Technology));
-            mobs.Add(new RangerMob("rainger_enem", 10, 6f, true, 1, 30, 1.2f, 10f, 0, 3, TypeMob.Technology));
-            mobs.Add(new Slime("slime_enem", 25, 4f, true, 3, 20, 3f, 5f, 1, 5, TypeMob.Magic));
+            mobs.Add(new DaizenMob("daizen_enem", 8, 1.5f, false, 2, 45, 1.2f, 2, TypeMob.Technology));
+            mobs.Add(new RangerMob("rainger_enem", 4, 6f, true, 1, 30, 1f, 10f, 0, 3, TypeMob.Technology));
+            mobs.Add(new Slime("slime_enem", 16, 4f, true, 3, 20, 1.6f, 5f, 1, 5, TypeMob.Magic));
 
             DisplayMobsList.Instance.DisplayLinesMobs(mobs);
         }

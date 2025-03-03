@@ -14,6 +14,9 @@ public class Player : MonoBehaviour
     public bool[] DirectionOrVectorWeapon = new bool[4];
 
     private PlayerStats pl_stats;
+    
+    [SerializeField] 
+    private EquipStats equip_Stats;
     private PlayerUI pl_ui;
 
     //GameObjects
@@ -55,14 +58,17 @@ public class Player : MonoBehaviour
         }
         else
         {
-            pl_stats.StartStats();
+            pl_stats.SetBaseStats();
         }
+        pl_stats.UpdateTotalStats();
+        pl_stats.FillHp();
+
         pl_ui.UpdateAllInfo(pl_stats);
         ResetWeaponToggles();
         ChangeToggleWeapon();
     }
     public PlayerStats GetPlayerStats() => pl_stats;
-
+    public EquipStats GetEquipStats() => equip_Stats;
     private void ResetWeaponToggles()
     {
 
@@ -150,13 +156,18 @@ public class Player : MonoBehaviour
         pl_ui.UpdateHpBar(pl_stats);
         pl_ui.UpdateSizeHpBar(pl_stats);
     }
-    public async void TakeDamage(int damage)
+    public async void TakeDamage(int damage, bool canEvade)
     {
-        pl_stats.TakeDamageStat(damage);
-        pl_ui.UpdateHpBar(pl_stats);
-
-        await FlashColor(new Color32(255, 108, 108, 255), 0.1f);
-        IsDeath();
+        if(pl_stats.TakeDamageStat(damage, canEvade))
+        {
+            pl_ui.UpdateHpBar(pl_stats);
+            await FlashColor(new Color32(255, 108, 108, 255), 0.1f);
+            IsDeath();
+        }
+        else
+        {
+            Debug.Log("Промах от врага");
+        }
     }
     public bool PlayerHeal(int count_heal)
     {

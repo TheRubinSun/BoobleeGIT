@@ -14,6 +14,8 @@ public class WeaponDatabase : MonoBehaviour
         weapons[1] = Resources.Load<GameObject>("Weapons/Pistol_Mark_Pref");
         weapons[2] = Resources.Load<GameObject>("Weapons/Bow_simple");
         weapons[3] = Resources.Load<GameObject>("Weapons/ShotGun_pump");
+        weapons[4] = Resources.Load<GameObject>("Weapons/Soldier's spear");
+        weapons[5] = Resources.Load<GameObject>("Weapons/Simple_knife");
 
         
         projectiles[0] = Resources.Load<GameObject>("Projectiles/Pistol_Bullet");

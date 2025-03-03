@@ -67,6 +67,6 @@ public class DaizenLogic : BaseEnemyLogic
         }
 
 
-        Player.Instance.TakeDamage(damage);
+        Player.Instance.TakeDamage(damage,true);
     }
 }
