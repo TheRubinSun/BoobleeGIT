@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
 {
     public static Player Instance { get; set; }
 
-    public bool[] DirectionOrVectorWeapon = new bool[4];
+
 
     private PlayerStats pl_stats;
     
@@ -46,15 +46,12 @@ public class Player : MonoBehaviour
 
         player_sprite = PlayerModel.GetComponent<SpriteRenderer>();
     }
-    private void Start()
-    {
-
-    }
     public void LoadOrCreateNew(PlayerStats playerSaveData)
     {
         if(playerSaveData != null && playerSaveData.Max_Hp > 0)
         {
             pl_stats.LoadStats(playerSaveData);
+            LoadWeaponToggles();
         }
         else
         {
@@ -65,17 +62,23 @@ public class Player : MonoBehaviour
 
         pl_ui.UpdateAllInfo(pl_stats);
         ResetWeaponToggles();
-        ChangeToggleWeapon();
+        ChangeToggleWeapons();
     }
     public PlayerStats GetPlayerStats() => pl_stats;
     public EquipStats GetEquipStats() => equip_Stats;
+    private void LoadWeaponToggles()
+    {
+        for (int i = 0; i < pl_stats.DirectionOrVectorWeapon.Length; i++)
+        {
+            TooglesWeapon[i].isOn = pl_stats.DirectionOrVectorWeapon[i];
+        }
+    }
     private void ResetWeaponToggles()
     {
-
-        for (int i = 0; i < DirectionOrVectorWeapon.Length; i++)
+        for (int i = 0; i < pl_stats.DirectionOrVectorWeapon.Length; i++)
         {
-            DirectionOrVectorWeapon[i] = false;
-            TooglesWeapon[i].isOn = DirectionOrVectorWeapon[i];
+            pl_stats.DirectionOrVectorWeapon[i] = false;
+            TooglesWeapon[i].isOn = pl_stats.DirectionOrVectorWeapon[i];
         }
     }
 
@@ -129,10 +132,16 @@ public class Player : MonoBehaviour
             PlayerModel.SetActive(false);
         }
     }
-
-    public void ChangeToggleWeapon()
+    public void ChangeToggleWeapon(int id)
     {
-        for (int i = 0; i < DirectionOrVectorWeapon.Length; i++)
+        if (WeaponsObj.ContainsKey(id))
+        {
+            WeaponsObj[id].AttackDirectionOrVector = TooglesWeapon[id].isOn;
+        }
+    }
+    public void ChangeToggleWeapons()
+    {
+        for (int i = 0; i < pl_stats.DirectionOrVectorWeapon.Length; i++)
         {
             if(WeaponsObj.ContainsKey(i))
             {

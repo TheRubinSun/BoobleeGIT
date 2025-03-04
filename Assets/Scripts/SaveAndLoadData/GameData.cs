@@ -26,7 +26,10 @@ public class PlayerData
     public List<SlotTypeSave> equip_item_data;
 
     // Пустой конструктор нужен для JSON-десериализации
-    public PlayerData() { }
+    public PlayerData() {
+        inventory_items_data = new List<SlotTypeSave>();
+        equip_item_data = new List<SlotTypeSave>();
+    }
     public PlayerData(Dictionary<string, RoleClass> role_Classes, PlayerStats player, List<SlotTypeSave> inventory, List<SlotTypeSave> equip_item)
     {
         role_Classes_data = role_Classes;
@@ -39,7 +42,9 @@ public class EnemyData
 {
     public List<Mob> mob_list_data;
     // Пустой конструктор нужен для JSON-десериализации
-    public EnemyData() { }
+    public EnemyData() {
+        mob_list_data = new List<Mob>();
+    }
     public EnemyData(List<Mob> mobs)
     {
         mob_list_data = mobs;
@@ -67,7 +72,10 @@ public class SlotTypeSave
 public class ItemsDropOnEnemy
 {
     public Dictionary<string, string[]> namesKeys;
-    public ItemsDropOnEnemy() { }
+    public ItemsDropOnEnemy() 
+    {
+        namesKeys = new Dictionary<string, string[]>(); // Инициализация пустым словарем
+    }
     public ItemsDropOnEnemy(Dictionary<string, string[]> _NameKeys)
     {
         namesKeys = _NameKeys;

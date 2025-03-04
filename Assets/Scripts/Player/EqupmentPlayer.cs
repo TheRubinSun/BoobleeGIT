@@ -35,8 +35,10 @@ public class EqupmentPlayer : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject); // Обеспечивает сохранение объекта между сценами
         }
+
+        StartDataEquip();
     }
-    private void Start()
+    public void StartDataEquip()
     {
         Item item = ItemsList.Instance.GetNoneItem();
         slotWeaponOne = new Slot(item, slotsObjEquip[0], TypeItem.Weapon);
@@ -53,7 +55,6 @@ public class EqupmentPlayer : MonoBehaviour
         {
             Inventory.Instance.UpdateSlotUI(slotsEqup[i]);
         }
-        //Загрузить сохранение если есть
     }
     public void LoadOrCreateEquipment(List<SlotTypeSave> equipment_items)
     {
@@ -123,8 +124,6 @@ public class EqupmentPlayer : MonoBehaviour
     }
     private void AddEquipOnSlot(int id)
     {
-        
-        
         if (id < 4) // Проверяем, существует ли Prefab перед инстанциированием и id до 4, так как 0 1 2 3 это слоты для оружия
         {
             int idPref = ItemsList.Instance.GetIdWeaponForNum(slotsEqup[id].Item);  //Получаем номер оружия из списка всех предметов (нужен порядковый номер оржия чтобы создать подходящий префаб)
@@ -134,6 +133,7 @@ public class EqupmentPlayer : MonoBehaviour
                 LoadParametersWeapon(weaponObj, slotsEqup[id]); //Загружаем параметры с слолта в оружие
                 Player.Instance.SetWeaponsObj(id, weaponObj.GetComponent<WeaponControl>()); //Передаем в словарь у игрока в список оружия
                 slots_Weapon[id] = weaponObj; //Словарь в этом классе, пока не используется 
+                Player.Instance.ChangeToggleWeapon(id);
             }
             else
             {

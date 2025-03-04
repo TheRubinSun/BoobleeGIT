@@ -8,6 +8,7 @@ public class WeaponDatabase : MonoBehaviour
     public static Dictionary<int, GameObject> mobsProjectiles = new Dictionary<int, GameObject>();
     public static Dictionary<int, GameObject> minions = new Dictionary<int, GameObject>();
     public static Dictionary<int, GameObject> traps = new Dictionary<int, GameObject>();
+    public static Dictionary<int, GameObject> portals = new Dictionary<int, GameObject>();
     public static void LoadWeapons()
     {
         weapons[0] = Resources.Load<GameObject>("Weapons/Sword_God_Pref");
@@ -30,6 +31,9 @@ public class WeaponDatabase : MonoBehaviour
         minions[2] = Resources.Load<GameObject>("Minions/Minion_Mixed");
 
         traps[0] = Resources.Load<GameObject>("Traps/Mine");
+
+        portals[0] = Resources.Load<GameObject>("Portals/Portal_Tech");
+        portals[0] = Resources.Load<GameObject>("Portals/Portal_Mages");
 
         if (weapons[0] == null)
             Debug.LogError("Не удалось загрузить префаб Sword_God_Pref!");
@@ -56,5 +60,9 @@ public class WeaponDatabase : MonoBehaviour
     public static GameObject GetTrapPrefab(int id)
     {
         return traps.ContainsKey(id) ? traps[id] : null;
+    }
+    public static GameObject GetPortalPrefab(int id)
+    {
+        return portals.ContainsKey(id) ? portals[id] : null;
     }
 }

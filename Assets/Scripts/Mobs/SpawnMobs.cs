@@ -5,6 +5,9 @@ public class SpawnMobs : MonoBehaviour
      public static SpawnMobs Instance {  get; private set; }
 
     [SerializeField] Transform spawnpoint;
+    [SerializeField] Transform[] portals_pos;
+    [SerializeField] GameObject tech_portal_pref;
+    [SerializeField] GameObject mage_portal_pref;
     [SerializeField] Transform parent;
     [SerializeField] Transform player;
     [SerializeField] GameObject[] mobs_prefab;
@@ -51,5 +54,16 @@ public class SpawnMobs : MonoBehaviour
         {
             Debug.LogWarning("Необходимо добавить префаб нового моба в SpawnMobs");
         }
+    }
+    public void SpawnPortal(int[] idPrefabs, int[] countsSpawn, float time)
+    {
+        GameObject[] prefEnemies = new GameObject[idPrefabs.Length];
+        for (int i = 0; i < idPrefabs.Length; i++)
+        {
+            prefEnemies[i] = mobs_prefab[idPrefabs[i]];
+        }
+
+        GameObject portal = Instantiate(tech_portal_pref, portals_pos[Random.Range(0, portals_pos.Length)]);
+        portal.GetComponent<PortalLogic>().CreateEnemy(prefEnemies, countsSpawn, time, parent);
     }
 }

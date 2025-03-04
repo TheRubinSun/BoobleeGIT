@@ -13,8 +13,7 @@ public class MeleWeaponLogic : WeaponControl
     protected void OnTriggerEnter2D(Collider2D collision)
     {
         // ѕровер€ем, что столкновение произошло с врагом
-        if (!IsAttack || collision.CompareTag("Enemy")) return;
-
+        if (!IsAttack || !(collision.gameObject.layer == LayerMask.NameToLayer("DamageCollider"))) return;
         BaseEnemyLogic enemy = collision.GetComponent<BaseEnemyLogic>();
         if (enemy != null)
         {

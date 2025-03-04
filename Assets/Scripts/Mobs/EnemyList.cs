@@ -58,7 +58,8 @@ public class EnemyList: MonoBehaviour
             mobs.Add(new RangerMob("rainger_enem", 4, 6f, true, 1, 30, 1f, 10f, 0, 3, TypeMob.Technology));
             mobs.Add(new Slime("slime_enem", 16, 4f, true, 3, 20, 1.6f, 5f, 1, 5, TypeMob.Magic));
 
-            DisplayMobsList.Instance.DisplayLinesMobs(mobs);
+            //DisplayMobsList.Instance.DisplayLinesMobs(mobs);
+            //CreatePortalUI.Instance.DisplayLinesMobs(mobs);
         }
     }
     public void LocalizaitedMobs()

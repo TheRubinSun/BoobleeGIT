@@ -13,11 +13,13 @@ public class UIControl:MonoBehaviour
     [SerializeField] GameObject allItemsWindow;
     [SerializeField] GameObject allMobsWindow;
     [SerializeField] GameObject infoPlayerWindow;
+    [SerializeField] GameObject CreatePortalWindow;
     [SerializeField] Transform inventoryBar;
     bool invIsOpened;
     bool itemsIsOpened;
     bool mobsIsOpened;
     bool infoPlayerIsOpened;
+    bool createPortalIsOpened;
 
     private bool isPaused = false;
 
@@ -46,6 +48,7 @@ public class UIControl:MonoBehaviour
             {KeyCode.M, OpenListMobs},
             {KeyCode.P, OpenInfoPlayer},
             {KeyCode.T, LocalizationTranslate},
+            {KeyCode.C, OpenCreatePortal},
             {KeyCode.E, DragAndDrop.Instance.PickUp},
         };
         for (int i = 0; i < 10; i++)
@@ -110,6 +113,19 @@ public class UIControl:MonoBehaviour
         else
         {
             allMobsWindow.SetActive(false);
+        }
+    }
+    public void OpenCreatePortal()
+    {
+        createPortalIsOpened = !createPortalIsOpened;
+        if (createPortalIsOpened)
+        {
+            CreatePortalWindow.SetActive(true);
+            CreatePortalUI.Instance.DisplayLinesMobs(EnemyList.Instance.mobs);
+        }
+        else
+        {
+            CreatePortalWindow.SetActive(false);
         }
     }
     public void OpenInfoPlayer()

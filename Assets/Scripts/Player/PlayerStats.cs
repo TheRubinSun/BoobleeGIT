@@ -51,6 +51,7 @@ public class PlayerStats
 
     private const int AddHP_PerLvl = 2;
 
+    public bool[] DirectionOrVectorWeapon = new bool[4];
     public PlayerStats() { }
     public void SetBaseStats()
     {

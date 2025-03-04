@@ -1,9 +1,8 @@
-using NUnit.Framework;
+
 using TMPro;
 using UnityEngine;
 using System.Collections.Generic;
-using System;
-using Unity.Mathematics;
+
 
 public class GameManager: MonoBehaviour 
 {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ public class ItemDropEnemy
 
     public static void LoadOrCreate(Dictionary<string, string[]> _enemyAndHisDrop)
     {
-        if(_enemyAndHisDrop != null)
+        if (_enemyAndHisDrop != null && _enemyAndHisDrop.Count > 0)
         {
             enemyAndHisDrop = _enemyAndHisDrop;
         }

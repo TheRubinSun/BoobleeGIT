@@ -37,7 +37,6 @@ public class ItemsList : MonoBehaviour
         }
         InitializeSpritesItem();
         DisplayItemList.Instance.DisplayItems(items);
-
     }
 
     private void InitializeItems()
