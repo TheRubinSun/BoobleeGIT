@@ -85,7 +85,6 @@ public class WeaponControl : MonoBehaviour
         }
         else
         {
-            
             //Замеряем от центра себя 
             distance = GetDistance(transform.position, mousePos); // Вычисляем расстояние до курсора
             direction = GetDirection(transform.position, mousePos).normalized; // Вычисляем направление до курсора

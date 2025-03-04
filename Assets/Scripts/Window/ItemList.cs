@@ -57,9 +57,8 @@ public class ItemsList : MonoBehaviour
         items.Add(new Gun(13, "bow_simple", 1, items.Count, Quality.Mystical, 600, "_", true, 6f, damageT.Crushing, 10, 1f, 1, 8f, 0.5f, 5f, 2));
         items.Add(new Gun(14, "shotgun_pump", 1, items.Count, Quality.Rare, 400, "_", true, 2f, damageT.Crushing, 3, 0.7f, 4, 10f, 1f, 15f, 1));
         items.Add(new Minion(15, "minion_mage_es", 1, items.Count, Quality.Rare, 500, "_", TypeItem.Minion, 4f, 6f, 2f, TypeMob.Magic));
-
-        items.Add(new Sword(16, "soldier_spear", 1, 1, Quality.Rare, 200, "_", false, 0.5f, damageT.Cutting, 2, 0.6f, 1));
-        items.Add(new Sword(17, "simple_knife", 1, 1, Quality.Uncommon, 100, "_", false, 0.25f, damageT.Cutting, 2, 0.5f, 1));
+        items.Add(new Sword(16, "soldier_spear", 1, items.Count, Quality.Rare, 200, "_", false, 0.5f, damageT.Cutting, 2, 0.6f, 1));
+        items.Add(new Sword(17, "simple_knife", 1, items.Count, Quality.Uncommon, 100, "_", false, 0.25f, damageT.Cutting, 2, 0.5f, 1));
         
         //items.Add(new Minion(16, "minion_mixed_es", 1, 6, Quality.Rare, 2500, "_", TypeItem.Minion, 3f, 6f, 2f, TypeMob.Mixed));
 

@@ -28,14 +28,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1189786356956331463}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0, z: -0.9238796, w: -0.38268328}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 877510644002656660}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!212 &1215674252710585427
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -79,8 +79,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 20
-  m_Sprite: {fileID: 5546671543968653177, guid: 1eb9b0402b9617a4b819dba8c8c334ec, type: 3}
+  m_SortingOrder: 21
+  m_Sprite: {fileID: 21300000, guid: b13ece2544b309b48abfd098fee12a19, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -129,7 +129,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.32, y: 0.32}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 0.32, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -137,14 +137,11 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.07942595, y: 0.22986597}
-      - {x: -0.071667, y: 0.1056288}
-      - {x: -0.058891945, y: -0.029112061}
-      - {x: -0.008160911, y: -0.07166709}
-      - {x: 0.12439414, y: -0.05378202}
-      - {x: 0.20629631, y: 0.023670228}
-      - {x: 0.24548706, y: 0.13359933}
-      - {x: 0.25110808, y: 0.20840386}
+    - - {x: 0.10116876, y: 0.14392999}
+      - {x: 0.061896153, y: 0.14186683}
+      - {x: 0.035844754, y: 0.040775612}
+      - {x: 0.09071726, y: -0.018345408}
+      - {x: 0.12439418, y: 0.053896792}
   m_UseDelaunayMesh: 0
 --- !u!82 &1890836006999435829
 AudioSource:
@@ -258,7 +255,7 @@ MonoBehaviour:
   TypeAttack: 0
   AttackDirectionOrVector: 0
   minDistance: 0.8
-  offset: 135
+  offset: 90
   PlayerModel: {fileID: 0}
   audioClips: []
 --- !u!1 &8370641025233230599

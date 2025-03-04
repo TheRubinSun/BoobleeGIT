@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MeleWeaponLogic : WeaponControl
@@ -9,11 +11,21 @@ public class MeleWeaponLogic : WeaponControl
 
         Debug.Log("SwordAttack");
         MeleeAttack();
+        ResetHitEnemies();
+    }
+    protected HashSet<Collider2D> hitEnemies = new HashSet<Collider2D>();
+    protected void ResetHitEnemies()
+    {
+        hitEnemies.Clear();
     }
     protected void OnTriggerEnter2D(Collider2D collision)
     {
         // ѕровер€ем, что столкновение произошло с врагом
         if (!IsAttack || !(collision.gameObject.layer == LayerMask.NameToLayer("DamageCollider"))) return;
+
+        if (hitEnemies.Contains(collision)) return;
+        hitEnemies.Add(collision);
+
         BaseEnemyLogic enemy = collision.GetComponent<BaseEnemyLogic>();
         if (enemy != null)
         {

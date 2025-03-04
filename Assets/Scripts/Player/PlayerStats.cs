@@ -51,7 +51,7 @@ public class PlayerStats
 
     private const int AddHP_PerLvl = 2;
 
-    public bool[] DirectionOrVectorWeapon = new bool[4];
+    public bool[] DirectionOrVectorWeapon { get; set; }
     public PlayerStats() { }
     public void SetBaseStats()
     {
@@ -79,6 +79,7 @@ public class PlayerStats
         AdjacentPoints = 0;
 
         classPlayer = Classes.Instance.GetRoleClass("Shooter");
+        DirectionOrVectorWeapon = new bool[4];
     }
     public void LoadStats(PlayerStats playerSaveData)
     {
@@ -106,9 +107,7 @@ public class PlayerStats
         AdjacentPoints = playerSaveData.AdjacentPoints;
 
         classPlayer = playerSaveData.classPlayer;
-    }
-    public void HandlerUpdateStats()
-    {
+        DirectionOrVectorWeapon = playerSaveData.DirectionOrVectorWeapon;
 
     }
     public void UpdateTotalStats()

@@ -11,8 +11,6 @@ public class Player : MonoBehaviour
 {
     public static Player Instance { get; set; }
 
-
-
     private PlayerStats pl_stats;
     
     [SerializeField] 
@@ -48,7 +46,7 @@ public class Player : MonoBehaviour
     }
     public void LoadOrCreateNew(PlayerStats playerSaveData)
     {
-        if(playerSaveData != null && playerSaveData.Max_Hp > 0)
+        if (playerSaveData != null && playerSaveData.Base_Max_Hp > 0)
         {
             pl_stats.LoadStats(playerSaveData);
             LoadWeaponToggles();
@@ -56,31 +54,16 @@ public class Player : MonoBehaviour
         else
         {
             pl_stats.SetBaseStats();
+            ResetWeaponToggles();
         }
         pl_stats.UpdateTotalStats();
         pl_stats.FillHp();
 
         pl_ui.UpdateAllInfo(pl_stats);
-        ResetWeaponToggles();
         ChangeToggleWeapons();
     }
     public PlayerStats GetPlayerStats() => pl_stats;
     public EquipStats GetEquipStats() => equip_Stats;
-    private void LoadWeaponToggles()
-    {
-        for (int i = 0; i < pl_stats.DirectionOrVectorWeapon.Length; i++)
-        {
-            TooglesWeapon[i].isOn = pl_stats.DirectionOrVectorWeapon[i];
-        }
-    }
-    private void ResetWeaponToggles()
-    {
-        for (int i = 0; i < pl_stats.DirectionOrVectorWeapon.Length; i++)
-        {
-            pl_stats.DirectionOrVectorWeapon[i] = false;
-            TooglesWeapon[i].isOn = pl_stats.DirectionOrVectorWeapon[i];
-        }
-    }
 
     public Dictionary<int, WeaponControl> GetDictWeaponAndArms()
     {
@@ -134,20 +117,37 @@ public class Player : MonoBehaviour
     }
     public void ChangeToggleWeapon(int id)
     {
+        pl_stats.DirectionOrVectorWeapon[id] = TooglesWeapon[id].isOn;
         if (WeaponsObj.ContainsKey(id))
         {
             WeaponsObj[id].AttackDirectionOrVector = TooglesWeapon[id].isOn;
+
         }
     }
     public void ChangeToggleWeapons()
     {
         for (int i = 0; i < pl_stats.DirectionOrVectorWeapon.Length; i++)
         {
-            if(WeaponsObj.ContainsKey(i))
+            pl_stats.DirectionOrVectorWeapon[i] = TooglesWeapon[i].isOn;
+            if (WeaponsObj.ContainsKey(i))
             {
                 WeaponsObj[i].AttackDirectionOrVector = TooglesWeapon[i].isOn;
             }
-            
+        }
+    }
+    private void LoadWeaponToggles()
+    {
+        for (int i = 0; i < pl_stats.DirectionOrVectorWeapon.Length; i++)
+        {
+            TooglesWeapon[i].isOn = pl_stats.DirectionOrVectorWeapon[i];
+        }
+    }
+    private void ResetWeaponToggles()
+    {
+        for (int i = 0; i < pl_stats.DirectionOrVectorWeapon.Length; i++)
+        {
+            pl_stats.DirectionOrVectorWeapon[i] = false;
+            TooglesWeapon[i].isOn = pl_stats.DirectionOrVectorWeapon[i];
         }
     }
     public GameObject CreateTrap(GameObject trap)
