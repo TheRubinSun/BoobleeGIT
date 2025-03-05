@@ -106,7 +106,7 @@ public class Inventory:MonoBehaviour
         {
             GameObject slotObj = Instantiate(slotPrefab, slotsParent.transform);
             slotObj.name = $"Slot ({i})";
-            slots.Add(new Slot(i, ItemsList.Instance.GetNoneItem(), slotObj)); //Альтернатива, которая Юнити не любит
+            slots.Add(new Slot(i, ItemsList.Instance.GetNoneItem(), slotObj)); 
         }
     }
     private void RemoveAllSlotInventory()
@@ -379,5 +379,10 @@ public class Slot
         Item = item;
         SlotObj = slotObject;
         Count = _count;
+    }
+    public void NullSLot()
+    {
+        Item = ItemsList.Instance.items[0];
+        Count = 0;
     }
 }

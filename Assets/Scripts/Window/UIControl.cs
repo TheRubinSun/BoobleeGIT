@@ -14,12 +14,15 @@ public class UIControl:MonoBehaviour
     [SerializeField] GameObject allMobsWindow;
     [SerializeField] GameObject infoPlayerWindow;
     [SerializeField] GameObject CreatePortalWindow;
+    [SerializeField] GameObject ShopWindow;
     [SerializeField] Transform inventoryBar;
+    
     bool invIsOpened;
     bool itemsIsOpened;
     bool mobsIsOpened;
     bool infoPlayerIsOpened;
     bool createPortalIsOpened;
+    bool ShopIsOpened;
 
     private bool isPaused = false;
 
@@ -49,6 +52,7 @@ public class UIControl:MonoBehaviour
             {KeyCode.P, OpenInfoPlayer},
             {KeyCode.T, LocalizationTranslate},
             {KeyCode.C, OpenCreatePortal},
+            {KeyCode.R, OpenShop},
             {KeyCode.E, DragAndDrop.Instance.PickUp},
         };
         for (int i = 0; i < 10; i++)
@@ -126,6 +130,20 @@ public class UIControl:MonoBehaviour
         else
         {
             CreatePortalWindow.SetActive(false);
+        }
+    }
+    public void OpenShop()
+    {
+        ShopIsOpened = !ShopIsOpened;
+        if (ShopIsOpened)
+        {
+            ShopWindow.SetActive(true);
+            ShopLogic.Instance.OpenShop();
+        }
+        else
+        {
+            ShopLogic.Instance.ClosedShop();
+            ShopWindow.SetActive(false);
         }
     }
     public void OpenInfoPlayer()

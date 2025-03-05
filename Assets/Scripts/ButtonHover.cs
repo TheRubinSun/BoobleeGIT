@@ -7,24 +7,54 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerEnter(PointerEventData eventData)
     {
         //Debug.Log("Мышь наведена на кнопку!");
-        if(CompareTag("Slot"))
+        switch(gameObject.tag)
         {
-            if (Inventory.Instance.GetSlot(GetNumbSlot()).Item.Id != 0)
-            {
-                Inventory.Instance.InfoPanel.gameObject.SetActive(true);
-                DisplayInfo.Instance.UpdateInfoItem(GetNumbSlot(), "Inventory");
-            }
+            case "Slot":
+                {
+                    if (Inventory.Instance.GetSlot(GetNumbSlot()).Item.Id != 0)
+                    {
+                        Inventory.Instance.InfoPanel.gameObject.SetActive(true);
+                        DisplayInfo.Instance.UpdateInfoItem(GetNumbSlot(), "Inventory");
+                    }
+                    break;
+                }
+            case "SlotEquip":
+                {
+                    if (EqupmentPlayer.Instance.GetSlot(GetNumbSlot()).Item.Id != 0)
+                    {
+                        Inventory.Instance.InfoPanel.gameObject.SetActive(true);
+                        DisplayInfo.Instance.UpdateInfoItem(GetNumbSlot(), "Equip");
+                    }
+                    break;
+                }
+            case "SellSlot":
+                {
+                    if (ShopLogic.Instance.GetSlot("Sell", GetNumbSlot()).Item.Id != 0)
+                    {
+                        Inventory.Instance.InfoPanel.gameObject.SetActive(true);
+                        DisplayInfo.Instance.UpdateInfoItem(GetNumbSlot(), "Sell");
+                    }
+                    break;
+                }
+            case "BuySlot":
+                {
+                    if (ShopLogic.Instance.GetSlot("Buy", GetNumbSlot()).Item.Id != 0)
+                    {
+                        Inventory.Instance.InfoPanel.gameObject.SetActive(true);
+                        DisplayInfo.Instance.UpdateInfoItem(GetNumbSlot(), "Buy");
+                    }
+                    break;
+                }
+            case "ShopSlot":
+                {
+                    if (ShopLogic.Instance.GetSlot("Shop", GetNumbSlot()).Item.Id != 0)
+                    {
+                        Inventory.Instance.InfoPanel.gameObject.SetActive(true);
+                        DisplayInfo.Instance.UpdateInfoItem(GetNumbSlot(), "Shop");
+                    }
+                    break;
+                }
         }
-        else if(CompareTag("SlotEquip"))
-        {
-            if (EqupmentPlayer.Instance.GetSlot(GetNumbSlot()).Item.Id != 0)
-            {
-                Inventory.Instance.InfoPanel.gameObject.SetActive(true);
-                DisplayInfo.Instance.UpdateInfoItem(GetNumbSlot(), "Equip");
-            }
-        }
-
-
     }
 
     public void OnPointerExit(PointerEventData eventData)

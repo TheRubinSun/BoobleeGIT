@@ -46,6 +46,9 @@ public class PlayerStats
     public int TechniquePoints { get; set; }
     public int AdjacentPoints { get; set; }
 
+    //Gold
+    public int Gold {  get; set; }
+    public int TraderSkill { get; set; }
     //Mod Attack
     public int count_Projectile { get; set; }
 
@@ -78,6 +81,9 @@ public class PlayerStats
         TechniquePoints = 1;
         AdjacentPoints = 0;
 
+        Gold = 0;
+        TraderSkill = 1;
+
         classPlayer = Classes.Instance.GetRoleClass("Shooter");
         DirectionOrVectorWeapon = new bool[4];
     }
@@ -105,6 +111,9 @@ public class PlayerStats
         MagicPoints = playerSaveData.MagicPoints;
         TechniquePoints = playerSaveData.TechniquePoints;
         AdjacentPoints = playerSaveData.AdjacentPoints;
+
+        Gold = playerSaveData.Gold;
+        TraderSkill = playerSaveData.TraderSkill;
 
         classPlayer = playerSaveData.classPlayer;
         DirectionOrVectorWeapon = playerSaveData.DirectionOrVectorWeapon;

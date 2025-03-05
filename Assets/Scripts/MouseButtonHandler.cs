@@ -7,46 +7,112 @@ public class MouseButtonHandler : MonoBehaviour, IPointerClickHandler
     // Этот метод вызывается при клике на объект с этим скриптом
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(gameObject.tag == "Slot")
+        switch (gameObject.tag)
         {
-            if (eventData.button == PointerEventData.InputButton.Left) // Левая кнопка
-            {
-                DragAndDrop.Instance.Drag(GetNumbSlot(), "Inventory");
+            case "Slot":
+                {
+                    if (eventData.button == PointerEventData.InputButton.Left) // Левая кнопка
+                    {
+                        DragAndDrop.Instance.DragInventorySlot(GetNumbSlot());
+                    }
+                    else if (eventData.button == PointerEventData.InputButton.Right) // Правая кнопка
+                    {
+                        DragAndDrop.Instance.DragPieceInventorySlot(GetNumbSlot());
+                    }
+                    break;
+                }
+            case "DropZone":
+                {
+                    if (DragAndDrop.Instance.dragItem && eventData.button == PointerEventData.InputButton.Left) // Левая кнопка
+                    {
+                        DragAndDrop.Instance.DropItem();
+                    }
+                    break;
+                }
+            case "SlotEquip":
+                {
+                    if (eventData.button == PointerEventData.InputButton.Left) // Левая кнопка
+                    {
+                        DragAndDrop.Instance.DragEquipmentSlot(GetNumbSlot());
+                    }
+                    else if (eventData.button == PointerEventData.InputButton.Right) // Правая кнопка
+                    {
+                        DragAndDrop.Instance.DragPieceEquipmentSlot(GetNumbSlot());
+                    }
+                    break;
+                }
+            case "SellSlot":
+                {
+                    if (eventData.button == PointerEventData.InputButton.Left) // Левая кнопка
+                    {
+                        DragAndDrop.Instance.DragSellSlot(GetNumbSlot());
+                    }
+                    else if (eventData.button == PointerEventData.InputButton.Right) // Правая кнопка
+                    {
+                        DragAndDrop.Instance.DragPieceSellSlot(GetNumbSlot());
+                    }
+                    
+                    break;
+                }
+            case "BuySlot":
+                {
+                    if (eventData.button == PointerEventData.InputButton.Left) // Левая кнопка
+                    {
+                        DragAndDrop.Instance.DragBuySlot(GetNumbSlot());
+                    }
+                    else if (eventData.button == PointerEventData.InputButton.Right) // Правая кнопка
+                    {
+                        DragAndDrop.Instance.DragPieceBuySlot(GetNumbSlot());
+                    }
+                    break;
+                }
+            case "ShopSlot":
+                {
+                    if (eventData.button == PointerEventData.InputButton.Left) // Левая кнопка
+                    {
+                        DragAndDrop.Instance.DragShopSlot(GetNumbSlot());
+                    }
+                    else if (eventData.button == PointerEventData.InputButton.Right) // Правая кнопка
+                    {
+                        DragAndDrop.Instance.DragPieceShopSlot(GetNumbSlot());
+                    }
+                    break;
+                }
+            case "SellArea":
+                {
+                    if (eventData.button == PointerEventData.InputButton.Left) // Левая кнопка
+                    {
+                        DragAndDrop.Instance.DragSellArea();
+                    }
+                    else if (eventData.button == PointerEventData.InputButton.Right) // Правая кнопка
+                    {
+                        DragAndDrop.Instance.DragPieceSellArea();
+                    }
+                    break;
+                }
+            case "SlotBar":
+                {
+                    break;
+                }
 
-                //Debug.Log("Left click on item: ");
-            }
-            else if (eventData.button == PointerEventData.InputButton.Right) // Правая кнопка
-            {
-                DragAndDrop.Instance.DragHalfOrPutOne(GetNumbSlot(), "Inventory");
-                //Debug.Log("Right click on item: ");
-            }
         }
-        else if(gameObject.tag == "DropZone" && DragAndDrop.Instance.dragItem)
-        {
-            if (eventData.button == PointerEventData.InputButton.Left) // Левая кнопка
-            {
-                DragAndDrop.Instance.DropItem();
-                //Debug.Log("Left click item on DropZone: ");
-            }
-        }
-        else if (gameObject.tag == "SlotEquip")
-        {
-            if (eventData.button == PointerEventData.InputButton.Left) // Левая кнопка
-            {
-                DragAndDrop.Instance.Drag(GetNumbSlot(), "Equip");
 
-                //Debug.Log("Left click on item: ");
-            }
-            else if (eventData.button == PointerEventData.InputButton.Right) // Правая кнопка
-            {
-                DragAndDrop.Instance.DragHalfOrPutOne(GetNumbSlot(), "Equip");
-                //Debug.Log("Right click on item: ");
-            }
-        }
-        else if(gameObject.tag == "SlotBar")
-        {
+        //if (gameObject.tag == "Slot")
+        //{
 
-        }
+        //}
+        //else if(gameObject.tag == "DropZone" && DragAndDrop.Instance.dragItem)
+        //{
+
+        //}
+        //else if (gameObject.tag == "SlotEquip")
+        //{
+
+        //}
+        //else if(gameObject.tag == "SlotBar")
+        //{
+
+        //}
     }
 
     int GetNumbSlot()

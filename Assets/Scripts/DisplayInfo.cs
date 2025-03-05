@@ -128,21 +128,28 @@ public class DisplayInfo: MonoBehaviour
     public void UpdateInfoItem(int numbSlot, string TypeSlot)
     {
         Item item;
-        if (TypeSlot == "Inventory")
+        switch (TypeSlot)
         {
-            item = Inventory.Instance.GetSlot(numbSlot).Item;
+            case "Inventory":
+                item = Inventory.Instance.GetSlot(numbSlot).Item;
+                break;
+            case "Equip":
+                item = EqupmentPlayer.Instance.GetSlot(numbSlot).Item;
+                break;
+            case "Sell":
+                item = ShopLogic.Instance.GetSlot(TypeSlot, numbSlot).Item;
+                break;
+            case "Buy":
+                item = ShopLogic.Instance.GetSlot(TypeSlot, numbSlot).Item;
+                break;
+            case "Shop":
+                item = ShopLogic.Instance.GetSlot(TypeSlot, numbSlot).Item;
+                break;
+            default:
+                return;
         }
-        else if(TypeSlot == "Equip")
-        {
-            item = EqupmentPlayer.Instance.GetSlot(numbSlot).Item;
-        }
-        else
-        {
-            item = null;
-        }
-        if (item == null) return;
-        iconItem.sprite = item.Sprite;
         
+        iconItem.sprite = item.Sprite;
 
         //Разметка и цвет - первый текст
         string colorName = "#" + ColorUtility.ToHtmlStringRGBA(item.GetColor());

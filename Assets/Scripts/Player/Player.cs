@@ -65,6 +65,18 @@ public class Player : MonoBehaviour
     public PlayerStats GetPlayerStats() => pl_stats;
     public EquipStats GetEquipStats() => equip_Stats;
 
+    public int GetGold()
+    {
+        return pl_stats.Gold;
+    }
+    public int GetSkillsTrader()
+    {
+        return pl_stats.TraderSkill;
+    }
+    public int PayGold(int cost)
+    {
+        return pl_stats.Gold += cost;
+    }
     public Dictionary<int, WeaponControl> GetDictWeaponAndArms()
     {
         return WeaponsObj;
