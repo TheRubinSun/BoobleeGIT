@@ -166,11 +166,12 @@ public class UIControl:MonoBehaviour
     }
     public void LocalizationTranslate()
     {
-        if(ItemsList.Instance.items != null && EnemyList.Instance.mobs != null && DisplayInfo.Instance != null)
+        if(ItemsList.Instance.items != null && EnemyList.Instance.mobs != null && DisplayInfo.Instance != null && ShopLogic.Instance != null)
         {
             ItemsList.Instance.LocalizaitedItems();
             EnemyList.Instance.LocalizaitedMobs();
             DisplayInfo.Instance.LocalizationText();
+            ShopLogic.Instance.LocalizationText();
         }
         else
         {

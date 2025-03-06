@@ -172,11 +172,9 @@ public class DisplayInfo: MonoBehaviour
     public void UpdateInfoStatus()
     {
         StringBuilder info = new StringBuilder();
-        Debug.Log("Open");
+
         PlayerStats pl_stat = Player.Instance.GetPlayerStats();
         EquipStats eqip_stat = Player.Instance.GetEquipStats();
-
-
 
         Strength_Text.text = $"<color={HashColorStrength}>{pl_stat.Strength} {word_strength}</color>";
         Strength_Bonus_Text.text = $"<color={HashColorBonus}>" +

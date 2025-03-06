@@ -119,6 +119,7 @@ public class GameManager: MonoBehaviour
         ItemsDropOnEnemy item_drop = await SaveSystem.LoadDataAsync<ItemsDropOnEnemy>("item_drop.json");
         ItemDropEnemy.LoadOrCreate(item_drop.namesKeys);
 
+        UIControl.Instance.LocalizationTranslate();
         Debug.Log("Игра загружена.");
     }
 

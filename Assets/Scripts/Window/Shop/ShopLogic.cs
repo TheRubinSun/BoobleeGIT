@@ -38,6 +38,10 @@ public class ShopLogic : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI totalCostOrProfitText;
 
+    [SerializeField] private TextMeshProUGUI player_Text;
+    [SerializeField] private TextMeshProUGUI Trader_Text;
+    [SerializeField] private TextMeshProUGUI Trade_name_Text;
+
     private List<Slot> sellSlots = new List<Slot>();
     private List<Slot> buySlots = new List<Slot>();
     private List<Slot> shopSlots = new List<Slot>();
@@ -45,6 +49,21 @@ public class ShopLogic : MonoBehaviour
     private int personalProfSum;
     private int personalCostSum;
     private int totalCostOrProfit;
+
+    private string word_gold;
+    private string word_not_enough_money;
+    private string word_total_value;
+    private string word_personal_cost;
+    private string word_trade_without_gold;
+    private string word_must_pay;
+    private string word_will_receive;
+    private string word_your_gold;
+    private string word_your_trade_skill;
+    private string word_cost;
+    private string word_trade_success;
+    private string word_player;
+    private string word_trader;
+    private string word_trade_name;
 
     private RectTransform item_info_rect_trans;
 
@@ -84,15 +103,52 @@ public class ShopLogic : MonoBehaviour
         personalProfSum = 0;
         personalCostSum = 0;
     }
+    public void LocalizationText()
+    {
+        if (LocalizationManager.Instance != null)
+        {
+            Dictionary<string, string> localized_shop_text = LocalizationManager.Instance.GetLocalizedValue("ui_text", "shop_text");
+            if(localized_shop_text != null)
+            {
+                word_gold = localized_shop_text["word_gold"];
+                word_not_enough_money = localized_shop_text["word_not_enough_money"];
+                word_total_value = localized_shop_text["word_total_value"];
+                word_personal_cost = localized_shop_text["word_personal_cost"];
+                word_trade_without_gold = localized_shop_text["word_trade_without_gold"];
+                word_must_pay = localized_shop_text["word_must_pay"];
+                word_will_receive = localized_shop_text["word_will_receive"];
+                word_your_gold = localized_shop_text["word_your_gold"];
+                word_your_trade_skill = localized_shop_text["word_your_trade_skill"];
+                word_cost = localized_shop_text["word_cost"];
+                word_trade_success = localized_shop_text["word_trade_success"];
+                word_player = localized_shop_text["word_player"];
+                word_trader = localized_shop_text["word_trader"];
+                word_trade_name = localized_shop_text["word_trade_name"];
+
+                LocalizationTextUI();
+            }
+            else Debug.LogWarning($"Локализация для ключа \"localized_shop_text\"  не найдена.");
+        }
+        else
+        {
+            Debug.LogWarning("LocalizationManager нет на сцене.");
+        }
+    }
+    private void LocalizationTextUI()
+    {
+        player_Text.text = word_player;
+        Trader_Text.text = word_trader;
+        Trade_name_Text.text = word_trade_name;
+    }
     private void CreateOrOpenSlots()
     {
-        if(shop_slots_parent.transform.childCount == 0)
+        if (shop_slots_parent.transform.childCount == 0)
         {
             Item none_item = ItemsList.Instance.items[0];
             for (int i = 0; countSlots > i; i++)
             {
                 CreateSlot(shop_slot_pref, shop_slots_parent, shopSlots, none_item, "ShopSlot", i);
-                
+
             }
             AddTradeItem();
         }
@@ -236,9 +292,13 @@ public class ShopLogic : MonoBehaviour
             }
         }
     }
-
     public void TradeOperation()
     {
+        if (personalProfSum == 0 && personalCostSum == 0)
+        {
+            Debug.LogWarning("Сделка пустая");
+            return;
+        }
         if(totalCostOrProfit < 0) //Если число с минусом, то игрок доленж заплатить
         {
             if ((totalCostOrProfit * -1) <= Player.Instance.GetGold()) //Проверка наличие кол-во денег у игрока
@@ -252,7 +312,7 @@ public class ShopLogic : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("Not enough money");
+                Debug.LogWarning(word_not_enough_money);
             }
         }
         else //Если игрок зарабатывает на сделке
@@ -266,6 +326,7 @@ public class ShopLogic : MonoBehaviour
         }
 
     }
+
     public void CountedGoldForSell()
     {
         int sumCost = 0;
@@ -274,13 +335,10 @@ public class ShopLogic : MonoBehaviour
             sumCost += slot.Item.Cost * slot.Count;
         }
         personalProfSum = (int)((sumCost * 0.3f) + (sumCost * Player.Instance.GetSkillsTrader() * 0.05f));
+
         //Разметка и цвет - первый текст
-
-        string textLocal = "Total value: ";
-        costWholeValueSell.text = $"{textLocal}<color={hashColorGold}>{sumCost}</color> golds";
-
-        textLocal = "Personal cost: ";
-        costSellText.text = $"{textLocal}<color={hashColorGold}>{personalProfSum}</color> golds";
+        costWholeValueSell.text = $"{word_total_value}<color={hashColorGold}>{sumCost}</color> {word_gold}";
+        costSellText.text = $"{word_personal_cost}<color={hashColorGold}>{personalProfSum}</color> {word_gold}";
 
         TotalCostOrProfit();
     }
@@ -292,26 +350,29 @@ public class ShopLogic : MonoBehaviour
             sumCost += slot.Item.Cost * slot.Count;
         }
         personalCostSum = (int)(sumCost * (10 - Player.Instance.GetSkillsTrader()) * 0.1f) + sumCost;
+
         //Разметка и цвет - первый текст
-
-        string textLocal = "Total value: ";
-        costWholeValueBuy.text = $"{textLocal}<color={hashColorGold}>{sumCost}</color> gold";
-
-        textLocal = "Personal cost: ";
-        costBuyText.text = $"{textLocal}<color={hashColorGold}>{personalCostSum}</color> gold";
+        costWholeValueBuy.text = $"{word_total_value}<color={hashColorGold}>{sumCost}</color> {word_gold}";
+        costBuyText.text = $"{word_personal_cost}<color={hashColorGold}>{personalCostSum}</color> {word_gold}";
 
         TotalCostOrProfit();
     }
+
     private void TotalCostOrProfit()
     {
+        if (personalProfSum == 0 || totalCostOrProfit == 0)
+        {
+            totalCostOrProfitText.text = "";
+            return;
+        }
+
         totalCostOrProfit = personalProfSum - personalCostSum;
-
-        string textLocal;
-        if (totalCostOrProfit == 0) textLocal = "Trading without gold";
-        else if (totalCostOrProfit < 0) textLocal = $"You must pay <color={hashColorGold}>{totalCostOrProfit}</color> gold";
-        else textLocal = $"You will receive <color={hashColorGold}>{totalCostOrProfit}</color> gold";
-
-        totalCostOrProfitText.text = textLocal;
+        if (totalCostOrProfit == 0) 
+            totalCostOrProfitText.text = word_trade_without_gold;
+        else if (totalCostOrProfit < 0) 
+            totalCostOrProfitText.text = $"{word_must_pay} <color={hashColorGold}>{totalCostOrProfit}</color> {word_gold}";
+        else 
+            totalCostOrProfitText.text = $"{word_will_receive} <color={hashColorGold}>{totalCostOrProfit}</color> {word_gold}";
     }
     private void TradeBeetwenSlots(List<Slot> slotsOut, List<Slot> slotsIn) //Из слота (покупки/продажи) в слот (игрока/продовца)
     {
@@ -378,15 +439,12 @@ public class ShopLogic : MonoBehaviour
                 }
         }
     }
+
     private void UpdateGoldInfo()
     {
-        string lineOne = "Your gold: ";
-        string lineTwo = "Your trade skill: ";
-
-
         int goldT = Player.Instance.GetGold();
         int tradeSkill = Player.Instance.GetSkillsTrader();
-        goldPlayerText.text = $"{lineOne}<color={hashColorGold}>{goldT}</color> g\n{lineTwo}{tradeSkill}";
+        goldPlayerText.text = $"{word_your_gold}<color={hashColorGold}>{goldT}</color> g\n{word_your_trade_skill}{tradeSkill}";
     }
     private void ClearAllSumAndText()
     {
@@ -395,13 +453,14 @@ public class ShopLogic : MonoBehaviour
         personalCostSum = 0;
         EraseText();
     }
+
     private void EraseText()
     {
-        costSellText.text = "Cost: 0";
+        costSellText.text = word_cost + 0;
         costWholeValueSell.text = "";
         costWholeValueBuy.text = "";
-        costBuyText.text = "Cost: 0";
-        totalCostOrProfitText.text = "Success trade";
+        costBuyText.text = word_cost + 0;
+        totalCostOrProfitText.text = word_trade_success;
     }
 
     public void UpdateSlotUITrade(Slot slot)

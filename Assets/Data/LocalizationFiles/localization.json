@@ -23,13 +23,13 @@
         "Name": "Meat",
         "TypeItem": "",
         "Quality": "",
-        "Description": "Testy meat"
+        "Description": "Tasty meat"
       },
       "item_potion_hp": {
-        "Name": "Hp potion",
+        "Name": "HP Potion",
         "TypeItem": "",
         "Quality": "",
-        "Description": "Heal 10 hp points"
+        "Description": "Heals 10 HP"
       },
       "armor_armor": {
         "Name": "Base armor",
@@ -44,10 +44,10 @@
         "Description": "This minion allows you to disassemble tech creatures into tech components."
       },
       "material_chip_one": {
-        "Name": "Chep TTA",
+        "Name": "Chip TTA",
         "TypeItem": "",
         "Quality": "",
-        "Description": "Simple chep"
+        "Description": "Basic chip"
       },
       "material_gear_one": {
         "Name": "Gear T006",
@@ -62,34 +62,34 @@
         "Description": "Rare different part TH"
       },
       "sword_parts_one": {
-        "Name": "Sword parth",
+        "Name": "Sword part",
         "TypeItem": "",
         "Quality": "",
-        "Description": "Part of the sabre"
+        "Description": "A part of a sabre"
       },
       "bow_parts_one": {
-        "Name": "Parth of the bow",
+        "Name": "Bow part",
         "TypeItem": "",
         "Quality": "",
-        "Description": "Part of the simple bow"
+        "Description": "A part of a simple bow"
       },
       "trap_mine": {
         "Name": "Mine",
         "TypeItem": "",
         "Quality": "",
-        "Description": "This mine hurts those around it"
+        "Description": "This mine damages nearby enemies"
       },
       "bow_simple": {
         "Name": "Simple bow",
         "TypeItem": "",
         "Quality": "",
-        "Description": "Long range bow"
+        "Description": "A long-range bow"
       },
       "shotgun_pump": {
         "Name": "Pump Shotgun",
         "TypeItem": "",
         "Quality": "",
-        "Description": "Lots of shells will tear up a large close target or crowd."
+        "Description": "A powerful shotgun effective at close range, dealing heavy damage to groups of enemies."
       },
       "minion_mage_es": {
         "Name": "Mage minion",
@@ -104,16 +104,16 @@
         "Description": "This very rare minion allows you to disassemble all creatures."
       },
       "soldier_spear": {
-        "Name": "Soldier's spear'",
+        "Name": "Soldier's spear",
         "TypeItem": "",
         "Quality": "",
-        "Description": "Not a bad soldier's spear."
+        "Description": "A decent soldier's spear."
       },
       "simple_knife": {
         "Name": "Simple knife",
         "TypeItem": "",
         "Quality": "",
-        "Description": "Little Simple Knife"
+        "Description": "A small simple knife"
       }
 
     },
@@ -182,7 +182,25 @@
         "word_attacks_intervals": "Attacks per second",
         "word_range": "Range",
         "word_description": "Description"
+      },
+      "shop_text": {
+        "word_gold": "gold",
+        "word_not_enough_money": "Not enough gold",
+        "word_total_value": "Total value: ",
+        "word_personal_cost": "Personal cost: ",
+        "word_trade_without_gold": "Trading without gold",
+        "word_must_pay": "You must pay",
+        "word_will_receive": "You will receive",
+        "word_your_gold": "Your gold: ",
+        "word_your_trade_skill": "Your trading skill: ",
+        "word_cost": "Cost: ",
+        "word_trade_success": "Trade successful",
+        "word_player": "Player",
+        "word_trader": "Trader",
+        "word_trade_name": "Trade"
+
       }
+
     }
   },
   "ru": {
@@ -366,6 +384,22 @@
         "word_attacks_intervals": "Атак в секунду",
         "word_range": "Дальность",
         "word_description": "Описание"
+      },
+      "shop_text": {
+        "word_gold": "золота",
+        "word_not_enough_money": "Недостаточно золота",
+        "word_total_value": "Общая ценность: ",
+        "word_personal_cost": "Персональная стоимость: ",
+        "word_trade_without_gold": "Торговля без золота",
+        "word_must_pay": "Вы должны заплатить",
+        "word_will_receive": "Вы получите",
+        "word_your_gold": "Ваше золото: ",
+        "word_your_trade_skill": "Ваш торговый навык: ",
+        "word_cost": "Цена: ",
+        "word_trade_success": "Успешная сделка",
+        "word_player": "Игрок",
+        "word_trader": "Торговец",
+        "word_trade_name": "Торговля"
       }
     }
   }
