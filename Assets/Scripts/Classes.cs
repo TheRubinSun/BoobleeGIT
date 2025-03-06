@@ -60,7 +60,7 @@ public class RoleClass
     public float Bonus_Class_ProjectileSpeed { get; set; }
     public float Bonus_Class_SpeedMove { get; set; }
     public int Bonus_Class_Hp { get; set; }
-    public int Bonus_Class_Deffence { get; set; }
+    public int Bonus_Class_Armor { get; set; }
 
     public RoleClass(int bonusStrength, int bonusAgility, int bonisIntelligence ,float bonusRange, int bonusDamage, int bonusAttackSpeed, float bonusProjectileSpeed, float bonusSpeedMove, int bonushp, int bonusDeffence)
     {
@@ -74,6 +74,6 @@ public class RoleClass
         this.Bonus_Class_ProjectileSpeed = bonusProjectileSpeed;
         this.Bonus_Class_SpeedMove = bonusSpeedMove;
         this.Bonus_Class_Hp = bonushp;
-        this.Bonus_Class_Deffence = bonusDeffence;
+        this.Bonus_Class_Armor = bonusDeffence;
     }
 }

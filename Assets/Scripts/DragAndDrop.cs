@@ -119,7 +119,7 @@ public class DragAndDrop:MonoBehaviour
         if (dragItem)
         {
             ShopLogic.Instance.CreateEmptySlot("Sell"); //Сохранем значения слота 
-            ShopLogic.Instance.AddItemToList("Sell", tempSlot.Item, tempSlot.Count);
+            ShopLogic.Instance.AddItemToType("Sell", tempSlot.Item, tempSlot.Count);
 
             Destroy(tempSlot.SlotObj);
             dragItem = false; //Отпускаем предмет
@@ -135,7 +135,7 @@ public class DragAndDrop:MonoBehaviour
             oldSlot = ShopLogic.Instance.GetSlot("Buy", numbBuySlot); //Сохранем значения слота 
             if (oldSlot.Count == 0) return;
 
-            ShopLogic.Instance.AddItemToList("Shop", oldSlot.Item, oldSlot.Count);
+            ShopLogic.Instance.AddItemToType("Shop", oldSlot.Item, oldSlot.Count);
             oldSlot.NullSLot();
             ShopLogic.Instance.UpdateSlotUITrade(oldSlot);
             ShopLogic.Instance.CountedGoldForBuy();
@@ -149,7 +149,7 @@ public class DragAndDrop:MonoBehaviour
             if (oldSlot.Count == 0) return;
 
             ShopLogic.Instance.CreateEmptySlot("Buy"); //Сохранем значения слота 
-            ShopLogic.Instance.AddItemToList("Buy", oldSlot.Item, oldSlot.Count);
+            ShopLogic.Instance.AddItemToType("Buy", oldSlot.Item, oldSlot.Count);
 
             oldSlot.NullSLot();
             ShopLogic.Instance.UpdateSlotUITrade(oldSlot);
@@ -289,7 +289,7 @@ public class DragAndDrop:MonoBehaviour
         if (dragItem)
         {
             ShopLogic.Instance.CreateEmptySlot("Sell"); //Сохранем значения слота 
-            ShopLogic.Instance.AddItemToList("Sell", tempSlot.Item, 1);
+            ShopLogic.Instance.AddItemToType("Sell", tempSlot.Item, 1);
             tempSlot.Count--;
             ShopLogic.Instance.UpdateSlotUITrade(tempSlot);
 
@@ -309,7 +309,7 @@ public class DragAndDrop:MonoBehaviour
             oldSlot = ShopLogic.Instance.GetSlot("Buy", numbBuySlot); //Сохранем значения слота 
             //if (oldSlot.Count == 0) return;
 
-            ShopLogic.Instance.AddItemToList("Shop", oldSlot.Item, 1);
+            ShopLogic.Instance.AddItemToType("Shop", oldSlot.Item, 1);
             oldSlot.Count--;
 
             if (oldSlot.Count == 0)
@@ -329,7 +329,7 @@ public class DragAndDrop:MonoBehaviour
             //if (oldSlot.Count == 0) return;
 
             ShopLogic.Instance.CreateEmptySlot("Buy"); //Сохранем значения слота 
-            ShopLogic.Instance.AddItemToList("Buy", oldSlot.Item, 1);
+            ShopLogic.Instance.AddItemToType("Buy", oldSlot.Item, 1);
             oldSlot.Count--;
             if (oldSlot.Count == 0)
             {

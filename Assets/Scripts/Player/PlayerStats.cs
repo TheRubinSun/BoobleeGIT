@@ -49,6 +49,7 @@ public class PlayerStats
     //Gold
     public int Gold {  get; set; }
     public int TraderSkill { get; set; }
+
     //Mod Attack
     public int count_Projectile { get; set; }
 
@@ -128,13 +129,13 @@ public class PlayerStats
         Intelligence = classPlayer.Bonus_Class_Intelligence + equipStats.Bonus_Equip_Intelligence;
 
         Max_Hp = (Strength * 2) + Base_Max_Hp + classPlayer.Bonus_Class_Hp + equipStats.Bonus_Equip_Hp;
-        Armor = (int)(Strength / 10) + Base_Armor + classPlayer.Bonus_Class_Deffence + equipStats.Bonus_Equip_Armor;
+        Armor = (int)(Strength / 10) + Base_Armor + classPlayer.Bonus_Class_Armor + equipStats.Bonus_Equip_Armor;
         Mov_Speed = (Agility * 0.015f) + Base_Mov_Speed + classPlayer.Bonus_Class_SpeedMove + equipStats.Bonus_Equip_Mov_Speed;
         Evasion = (Agility) + Base_Evasion + equipStats.Bonus_Equip_Evasion;
         Att_Speed = (Agility * 2) + Base_Att_Speed + classPlayer.Bonus_Class_AttackSpeed + equipStats.Bonus_Equip_Att_Speed;
         Att_Range = (Intelligence * 0.1f) + Base_Att_Range + classPlayer.Bonus_Class_Range + equipStats.Bonus_Equip_Att_Range;
         Proj_Speed = (Intelligence * 0.1f) + Base_Proj_Speed + classPlayer.Bonus_Class_ProjectileSpeed + equipStats.Bonus_Equip_Proj_Speed;
-        Att_Damage = (int)((Strength * 2) + Base_Att_Damage + Agility + (Intelligence * 2) / 14) + classPlayer.Bonus_Class_Damage + equipStats.Bonus_Equip_Att_Damage;
+        Att_Damage = (int)((Strength * 2) + (Intelligence * 2) / 10) + Base_Att_Damage + classPlayer.Bonus_Class_Damage + equipStats.Bonus_Equip_Att_Damage;
 
         ExpBust = Base_ExpBust + equipStats.Bonus_Equip_ExpBust;
         Cur_Hp = Max_Hp;

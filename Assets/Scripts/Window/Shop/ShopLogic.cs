@@ -67,6 +67,23 @@ public class ShopLogic : MonoBehaviour
         CreateOrOpenSlots();
         UpdateGoldInfo();
     }
+    public void ClosedShop()
+    {
+        ReturnSlotsFor(sellSlots, false);
+        ReturnSlotsFor(buySlots, true);
+        EraseText();
+
+        item_info.transform.SetParent(oldParent_item_info);
+        item_info_rect_trans.anchoredPosition = new Vector2(-140, 0);
+        for (int i = countSlots; i > 0; i--)
+        {
+            newParent_inventory.transform.GetChild(0).SetParent(oldParent_inventory);
+        }
+
+        totalCostOrProfit = 0;
+        personalProfSum = 0;
+        personalCostSum = 0;
+    }
     private void CreateOrOpenSlots()
     {
         if(shop_slots_parent.transform.childCount == 0)
@@ -87,7 +104,7 @@ public class ShopLogic : MonoBehaviour
         {
             Item item = ItemsList.Instance.items[UnityEngine.Random.Range(0, ItemsList.Instance.items.Count)];
             int countItem = UnityEngine.Random.Range(1, item.MaxCount);
-            AddItemToList("Shop", item, countItem);
+            AddItemToType("Shop", item, countItem);
         }
     }
 
@@ -101,52 +118,7 @@ public class ShopLogic : MonoBehaviour
             oldParent_inventory.transform.GetChild(0).SetParent(newParent_inventory);
         }
     }
-    public void ClosedShop()
-    {
-        ReturnSlotsFor(sellSlots, false);
-        ReturnSlotsFor(buySlots, true);
-        EraseText();
 
-        item_info.transform.SetParent(oldParent_item_info);
-        item_info_rect_trans.anchoredPosition = new Vector2(-140, 0);
-        for (int i = countSlots; i > 0; i--)
-        {
-            newParent_inventory.transform.GetChild(0).SetParent(oldParent_inventory);
-        }
-
-        totalCostOrProfit = 0;
-        personalProfSum = 0;
-        personalCostSum = 0;
-    }
-    private void UpdateGoldInfo()
-    {
-        string lineOne = "Your gold: ";
-        string lineTwo = "Your trade skill: ";
-
-
-        int goldT = Player.Instance.GetGold();
-        int tradeSkill = Player.Instance.GetSkillsTrader();
-        goldPlayerText.text = $"{lineOne}<color={hashColorGold}>{goldT}</color> g\n{lineTwo}{tradeSkill}";
-    }
-    private void ReturnSlotsFor(List<Slot> slots, bool IsTraider)
-    {
-        foreach (Slot slot in slots)
-        {
-            Destroy(slot.SlotObj);
-            if (slot.Count == 0) continue;
-
-            if(IsTraider)
-            {
-                AddItemToList("Shop", slot.Item, slot.Count);
-            }
-            else
-            {
-                Inventory.Instance.AddItem(slot.Item, slot.Count);
-            }
-            
-        }
-        slots.Clear();
-    }
     public Slot CreateEmptySlot(string typeSlot)
     {
         GameObject prefab = null;
@@ -197,28 +169,28 @@ public class ShopLogic : MonoBehaviour
         slotList.Add(newSlot);
         return newSlot;
     }
-    public void AddItemToList(string typeSlot, Item item, int CountItem)
+    public void AddItemToType(string typeSlot, Item item, int CountItem)
     {
         switch (typeSlot)
         {
             case "Sell":
                 {
-                    AddItemToSlot(sellSlots, item, CountItem);
+                    AddItemToListSlot(sellSlots, item, CountItem);
                     return;
                 }
             case "Buy":
                 {
-                    AddItemToSlot(buySlots, item, CountItem);
+                    AddItemToListSlot(buySlots, item, CountItem);
                     return;
                 }
             case "Shop":
                 {
-                    AddItemToSlot(shopSlots, item, CountItem);
+                    AddItemToListSlot(shopSlots, item, CountItem);
                     return;
                 }
         }
     }
-    private void AddItemToSlot(List<Slot> slots, Item itemAdd, int countItem)
+    private void AddItemToListSlot(List<Slot> slots, Item itemAdd, int countItem)
     {
         foreach (Slot slot in slots)
         {
@@ -265,10 +237,39 @@ public class ShopLogic : MonoBehaviour
         }
     }
 
+    public void TradeOperation()
+    {
+        if(totalCostOrProfit < 0) //Если число с минусом, то игрок доленж заплатить
+        {
+            if ((totalCostOrProfit * -1) <= Player.Instance.GetGold()) //Проверка наличие кол-во денег у игрока
+            {
+                Player.Instance.PayGold(totalCostOrProfit);
+                TradeBeetwenSlots(buySlots, Inventory.Instance.slots);
+                TradeBeetwenSlots(sellSlots, shopSlots);
+
+                UpdateGoldInfo();
+                ClearAllSumAndText();
+            }
+            else
+            {
+                Debug.LogWarning("Not enough money");
+            }
+        }
+        else //Если игрок зарабатывает на сделке
+        {
+            Player.Instance.PayGold(totalCostOrProfit);
+            TradeBeetwenSlots(buySlots, Inventory.Instance.slots);
+            TradeBeetwenSlots(sellSlots, shopSlots);
+
+            UpdateGoldInfo();
+            ClearAllSumAndText();
+        }
+
+    }
     public void CountedGoldForSell()
     {
         int sumCost = 0;
-        foreach(Slot slot in sellSlots)
+        foreach (Slot slot in sellSlots)
         {
             sumCost += slot.Item.Cost * slot.Count;
         }
@@ -312,49 +313,32 @@ public class ShopLogic : MonoBehaviour
 
         totalCostOrProfitText.text = textLocal;
     }
-    public void TradeOperation()
-    {
-        if(totalCostOrProfit < 0) //Если число с минусом, то игрок доленж заплатить
-        {
-            if ((totalCostOrProfit * -1) <= Player.Instance.GetGold()) //Проверка наличие кол-во денег у игрока
-            {
-                Player.Instance.PayGold(totalCostOrProfit);
-                TradeBeetwenSlots(buySlots, Inventory.Instance.slots);
-                TradeBeetwenSlots(sellSlots, shopSlots);
-
-                UpdateGoldInfo();
-                ClearAllSumAndText();
-            }
-            else
-            {
-                Debug.LogWarning("Not enough money");
-            }
-        }
-        else //Если игрок зарабатывает на сделке
-        {
-            Player.Instance.PayGold(totalCostOrProfit);
-            TradeBeetwenSlots(buySlots, Inventory.Instance.slots);
-            TradeBeetwenSlots(sellSlots, shopSlots);
-
-            UpdateGoldInfo();
-            ClearAllSumAndText();
-        }
-
-    }
-    private void ClearAllSumAndText()
-    {
-        totalCostOrProfit = 0;
-        personalProfSum = 0;
-        personalCostSum = 0;
-        EraseText();
-    }
     private void TradeBeetwenSlots(List<Slot> slotsOut, List<Slot> slotsIn) //Из слота (покупки/продажи) в слот (игрока/продовца)
     {
         foreach (Slot slot in slotsOut)
         {
-            AddItemToSlot(slotsIn, slot.Item, slot.Count);
+            AddItemToListSlot(slotsIn, slot.Item, slot.Count);
         }
         ClearSlots(slotsOut);
+    }
+    private void ReturnSlotsFor(List<Slot> slots, bool IsTraider)
+    {
+        foreach (Slot slot in slots)
+        {
+            Destroy(slot.SlotObj);
+            if (slot.Count == 0) continue;
+
+            if (IsTraider)
+            {
+                AddItemToType("Shop", slot.Item, slot.Count);
+            }
+            else
+            {
+                Inventory.Instance.AddItem(slot.Item, slot.Count);
+            }
+
+        }
+        slots.Clear();
     }
     private void ClearSlots(List<Slot> slots)
     {
@@ -394,6 +378,23 @@ public class ShopLogic : MonoBehaviour
                 }
         }
     }
+    private void UpdateGoldInfo()
+    {
+        string lineOne = "Your gold: ";
+        string lineTwo = "Your trade skill: ";
+
+
+        int goldT = Player.Instance.GetGold();
+        int tradeSkill = Player.Instance.GetSkillsTrader();
+        goldPlayerText.text = $"{lineOne}<color={hashColorGold}>{goldT}</color> g\n{lineTwo}{tradeSkill}";
+    }
+    private void ClearAllSumAndText()
+    {
+        totalCostOrProfit = 0;
+        personalProfSum = 0;
+        personalCostSum = 0;
+        EraseText();
+    }
     private void EraseText()
     {
         costSellText.text = "Cost: 0";
@@ -402,6 +403,7 @@ public class ShopLogic : MonoBehaviour
         costBuyText.text = "Cost: 0";
         totalCostOrProfitText.text = "Success trade";
     }
+
     public void UpdateSlotUITrade(Slot slot)
     {
         UpdateSlotUI(slot);

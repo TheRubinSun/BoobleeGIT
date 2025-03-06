@@ -72,6 +72,44 @@ public class Item
         if (Sprite == null) return null;
         return Sprite;
     }
+    public string GetHashColor()
+    {
+        switch (quality)
+        {
+            case Quality.None:
+                {
+                    return "#FFFFFF";
+                }
+            case Quality.Common:
+                {
+                    return "#D7AD9D";
+                }
+            case Quality.Uncommon:
+                {
+                    return "#6FA8CC";
+                }
+            case Quality.Rare:
+                {
+                    return "#52CB65";
+                }
+            case Quality.Mystical:
+                {
+                    return "#983AE0";
+                }
+            case Quality.Legendary:
+                {
+                    return "#FF10CD";
+                }
+            case Quality.Interverse:
+                {
+                    return "#10FFB2";
+                }
+            default:
+                {
+                    goto case Quality.None;
+                }
+        }
+    }
     public Color32 GetColor()
     {
         switch(quality)
