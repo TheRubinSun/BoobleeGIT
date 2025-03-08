@@ -187,7 +187,7 @@ public class UIControl:MonoBehaviour
 
     public void LoadData()
     {
-        GameManager.Instance.LoadDataGame();
+        //GameManager.Instance.LoadDataGame();
     }
     public void SaveData()
     {

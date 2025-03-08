@@ -14,6 +14,10 @@ public class LegsControl : MonoBehaviour
     [SerializeField] float range = 0.3f;
 
     [SerializeField] float time_move_legs;  // Задержка (можно регулировать)
+
+    AudioSource audioSource_Move;
+    [SerializeField] private AudioClip soundTop;
+
     private void Start()
     {
         isMoving = new bool[foots.Length];
@@ -24,6 +28,8 @@ public class LegsControl : MonoBehaviour
             isMoving[i] = false;
             lineControles[i] = lines[i].GetComponent<LineControle>();
         }
+        audioSource_Move = GetComponent<AudioSource>();
+        audioSource_Move.volume = 0.1f;
     }
     public void MoveLegs(float speed)
     {
@@ -57,9 +63,11 @@ public class LegsControl : MonoBehaviour
         
         isMoving[legIndex] = false;
 
-
-        
-        if(legIndex < (foots.Length-1))
+        if(!secondFoot)
+        {
+            //audioSource_Move.PlayOneShot(soundTop);
+        }
+        if (legIndex < (foots.Length - 1))
         {
             legIndex++;
             StartCoroutine(MoveLegSmoothle(legIndex, false, foots[legIndex].position, centerFootsPos[legIndex].position, time_move_legs));

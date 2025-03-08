@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Localization.Settings;
 using UnityEngine.Rendering;
 
-public class LocalizationManager:MonoBehaviour
+public class LocalizationManager : MonoBehaviour
 {
     public static LocalizationManager Instance;
     private Dictionary<string, Dictionary<string, Dictionary<string, string>>> localizedText;
@@ -61,15 +61,14 @@ public class LocalizationManager:MonoBehaviour
             Debug.LogError("Файл локализации не найден.");
         }
     }
-    private void SwitchLanguage()
+    public void SwitchLanguage(string language)
     {
         //Если язые изменился, то менять словарь текстовый
-        string selectedLanguage = LocalizationSettings.SelectedLocale.Identifier.Code;
-        if (selectedLanguage != currentLanguage) LoadLocalization(selectedLanguage);
+        //string selectedLanguage = LocalizationSettings.SelectedLocale.Identifier.Code;
+        if (language != currentLanguage) LoadLocalization(language);
     }
     public Dictionary<string, string> GetLocalizedValue(string type_value, string key)
     {
-        SwitchLanguage(); //Проверка на смену языка
         if (localizedText != null)
         {
             if(localizedText.ContainsKey(type_value))

@@ -73,6 +73,10 @@ public class Player : MonoBehaviour
     {
         return pl_stats.TraderSkill;
     }
+    public int GetLevel()
+    {
+        return pl_stats.level;
+    }
     public int PayGold(int cost)
     {
         return pl_stats.Gold += cost;

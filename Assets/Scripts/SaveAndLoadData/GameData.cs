@@ -7,6 +7,23 @@ public class GameData
 {
 
 }
+public class SavesDataInfo
+{
+    public int lastSaveID;
+    public Dictionary<int, SaveGameInfo> saveGameFiles;
+    public string language;
+    public SavesDataInfo()
+    {
+        saveGameFiles = new Dictionary<int, SaveGameInfo>();
+    }
+    public SavesDataInfo(Dictionary<int, SaveGameInfo> _saveGameFiles, int _lastSaveID, string language)
+    {
+        saveGameFiles = _saveGameFiles;
+        lastSaveID = _lastSaveID;
+        this.language = language;
+    }
+}
+
 public class ItemsData
 {
     public List<Item> item_List_data;
@@ -18,9 +35,20 @@ public class ItemsData
         item_List_data = items;
     }
 }
+public class RoleClassesData
+{
+    public Dictionary<string, RoleClass> role_Classes_data;
+    public RoleClassesData(Dictionary<string, RoleClass> role_Classes)
+    {
+        role_Classes_data = role_Classes;
+    }
+    public RoleClassesData()
+    {
+        role_Classes_data = new Dictionary<string, RoleClass>();
+    }
+}
 public class PlayerData
 {
-    public Dictionary<string , RoleClass> role_Classes_data;
     public PlayerStats player_data;
     public List<SlotTypeSave> inventory_items_data;
     public List<SlotTypeSave> equip_item_data;
@@ -30,9 +58,8 @@ public class PlayerData
         inventory_items_data = new List<SlotTypeSave>();
         equip_item_data = new List<SlotTypeSave>();
     }
-    public PlayerData(Dictionary<string, RoleClass> role_Classes, PlayerStats player, List<SlotTypeSave> inventory, List<SlotTypeSave> equip_item)
+    public PlayerData(PlayerStats player, List<SlotTypeSave> inventory, List<SlotTypeSave> equip_item)
     {
-        role_Classes_data = role_Classes;
         player_data = player;
         inventory_items_data = inventory;
         equip_item_data = equip_item;

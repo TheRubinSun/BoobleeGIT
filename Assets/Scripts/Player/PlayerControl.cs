@@ -139,7 +139,7 @@ public class PlayerControl : MonoBehaviour
     {
         // ������������ �������� ��� ������ ���
         Vector2 currentPos = centerLegs.localPosition;
-        Vector2 newPos = currentPos + inputDirection.normalized * 5f * Time.deltaTime;
+        Vector2 newPos = currentPos + inputDirection.normalized * 0.7f * Time.deltaTime;
 
 
         if (newPos.magnitude > radiusCenterLegs)
