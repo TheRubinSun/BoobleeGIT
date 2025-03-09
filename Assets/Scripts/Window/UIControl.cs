@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.ShaderGraph;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 public class UIControl:MonoBehaviour
@@ -53,7 +54,9 @@ public class UIControl:MonoBehaviour
             {KeyCode.T, LocalizationTranslate},
             {KeyCode.C, OpenCreatePortal},
             {KeyCode.R, OpenShop},
-            {KeyCode.E, DragAndDrop.Instance.PickUp},
+            {KeyCode.Escape, LoadMainMenu},
+            {KeyCode.E, DragAndDrop.Instance.PickUp}
+
         };
         for (int i = 0; i < 10; i++)
         {
@@ -159,6 +162,15 @@ public class UIControl:MonoBehaviour
             infoPlayerWindow.SetActive(false);
         }
         TogglePause();
+    }
+    public void LoadMainMenu()
+    {
+        // Уничтожаем объект только перед загрузкой главного меню
+        if (Instance != null)
+        {
+            Destroy(gameObject); // Удаляем объект вручную
+        }
+        SceneManager.LoadScene("Menu");
     }
     public void UpdateWeaponStats()
     {

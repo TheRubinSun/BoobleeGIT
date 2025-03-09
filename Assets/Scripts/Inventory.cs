@@ -10,6 +10,7 @@ using UnityEditorInternal.VersionControl;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Localization.SmartFormat.Core.Parsing;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
 

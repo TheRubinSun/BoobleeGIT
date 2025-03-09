@@ -69,9 +69,10 @@ public class PlayerUI : MonoBehaviour
         UpdateHpBar(pl_stats);
         UpdateSizeHpBar(pl_stats);
         UpdateExpBar(pl_stats);
+        LvlUIUpdate(pl_stats);
     }
-    public void LvlUpUI(string lvlup_text)
+    public void LvlUIUpdate(PlayerStats pl_stats)
     {
-        text_player_info.text = lvlup_text;
+        text_player_info.text = $"{pl_stats.level} lvl";
     }
 }

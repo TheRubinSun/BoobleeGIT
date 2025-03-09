@@ -10,7 +10,6 @@ public class PlayerStats
     public int Base_Strength {  get; set; }
     public int Base_Agility { get; set; }
     public int Base_Intelligence { get; set; }
-    public int Base_Cur_Hp { get; set; }
     public int Base_Max_Hp { get; set;}
     public int Base_Armor { get; set; }
     public int Base_Evasion {  get; set; }
@@ -25,7 +24,7 @@ public class PlayerStats
     [NonSerialized] public int Strength;
     [NonSerialized] public int Agility;
     [NonSerialized] public int Intelligence;
-    [NonSerialized] public int Cur_Hp;
+    public int Cur_Hp { get; set; }
     [NonSerialized] public int Max_Hp;
     [NonSerialized] public int Armor;
     [NonSerialized] public int Evasion;
@@ -62,7 +61,6 @@ public class PlayerStats
         Base_Strength = 2;
         Base_Agility = 2;
         Base_Intelligence = 2;
-        Base_Cur_Hp = 2;
         Base_Max_Hp = 2;
         Base_Armor = 0;
         Base_Evasion = 0;
@@ -76,7 +74,6 @@ public class PlayerStats
 
         nextLvl_exp = 10;
         level = 0;
-        Cur_Hp = Max_Hp;
         count_Projectile = 0;
         MagicPoints = 1;
         TechniquePoints = 1;
@@ -87,13 +84,14 @@ public class PlayerStats
 
         classPlayer = Classes.Instance.GetRoleClass("Shooter");
         DirectionOrVectorWeapon = new bool[4];
+
+        
     }
     public void LoadStats(PlayerStats playerSaveData)
     {
         Base_Strength = playerSaveData.Base_Strength;
         Base_Agility = playerSaveData.Base_Agility;
         Base_Intelligence = playerSaveData.Base_Intelligence;
-        Base_Cur_Hp = playerSaveData.Base_Cur_Hp;
         Base_Max_Hp = playerSaveData.Base_Max_Hp;
         Base_Armor = playerSaveData.Base_Armor;
         Base_Evasion = playerSaveData.Base_Evasion;
@@ -106,8 +104,9 @@ public class PlayerStats
         Base_ExpBust = playerSaveData.Base_ExpBust;
 
         nextLvl_exp = playerSaveData.nextLvl_exp;
+        cur_exp = playerSaveData.cur_exp;
         level = playerSaveData.level;
-        Cur_Hp = playerSaveData.Cur_Hp;
+
         count_Projectile = playerSaveData.count_Projectile;
         MagicPoints = playerSaveData.MagicPoints;
         TechniquePoints = playerSaveData.TechniquePoints;
@@ -119,6 +118,7 @@ public class PlayerStats
         classPlayer = playerSaveData.classPlayer;
         DirectionOrVectorWeapon = playerSaveData.DirectionOrVectorWeapon;
 
+        Cur_Hp = playerSaveData.Cur_Hp;
     }
     public void UpdateTotalStats()
     {
@@ -138,15 +138,16 @@ public class PlayerStats
         Att_Damage = (int)((Strength * 2) + (Intelligence * 2) / 10) + Base_Att_Damage + classPlayer.Bonus_Class_Damage + equipStats.Bonus_Equip_Att_Damage;
 
         ExpBust = Base_ExpBust + equipStats.Bonus_Equip_ExpBust;
-        Cur_Hp = Max_Hp;
+
     }
     public void FillHp()
     {
         Cur_Hp = Max_Hp;
     }
-    public void AddMaxHPStat(int addMaxHp)
+    public void AddMaxHPBaseStat(int addMaxHp)
     {
-        Max_Hp += AddHP_PerLvl;
+        Base_Max_Hp += AddHP_PerLvl;
+        Max_Hp = (Strength * 2) + Base_Max_Hp + classPlayer.Bonus_Class_Hp + EquipStats.Instance.Bonus_Equip_Hp;
         Cur_Hp += AddHP_PerLvl;
     }
     public bool TakeDamageStat(int damage, bool canEvade)
@@ -201,9 +202,7 @@ public class PlayerStats
     {
         level++;
         freeSkillPoints++;
-        AddMaxHPStat(AddHP_PerLvl);
-
-        string text = $"{level} lvl";
-        Player.Instance.LvlUp(text);
+        AddMaxHPBaseStat(AddHP_PerLvl);
+        Player.Instance.LvlUp();
     }
 }

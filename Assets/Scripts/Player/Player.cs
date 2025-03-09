@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
 
         pl_stats = new PlayerStats();
         pl_ui = GetComponent<PlayerUI>();
+        equip_Stats = GetComponent<EquipStats>();
 
         pl_ui.SetComponentUI();
 
@@ -50,14 +51,16 @@ public class Player : MonoBehaviour
         {
             pl_stats.LoadStats(playerSaveData);
             LoadWeaponToggles();
+            pl_stats.UpdateTotalStats();
         }
         else
         {
             pl_stats.SetBaseStats();
+            pl_stats.UpdateTotalStats();
+            pl_stats.FillHp();
             ResetWeaponToggles();
         }
-        pl_stats.UpdateTotalStats();
-        pl_stats.FillHp();
+        
 
         pl_ui.UpdateAllInfo(pl_stats);
         ChangeToggleWeapons();
@@ -177,7 +180,7 @@ public class Player : MonoBehaviour
     ///Player stats and player UI
     public void AddMaxHP(int addMaxHp)
     {
-        pl_stats.AddMaxHPStat(addMaxHp);
+        pl_stats.AddMaxHPBaseStat(addMaxHp);
         pl_ui.UpdateHpBar(pl_stats);
         pl_ui.UpdateSizeHpBar(pl_stats);
     }
@@ -205,8 +208,10 @@ public class Player : MonoBehaviour
         pl_stats.AddExpStat(add_exp);
         pl_ui.UpdateExpBar(pl_stats);
     }
-    public void LvlUp(string lvlup_text)
+    public void LvlUp()
     {
-        pl_ui.LvlUpUI(lvlup_text);
+        pl_ui.LvlUIUpdate(pl_stats);
+        pl_ui.UpdateHpBar(pl_stats);
+        pl_ui.UpdateSizeHpBar(pl_stats);
     }
 }

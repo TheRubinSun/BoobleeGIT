@@ -37,6 +37,7 @@ public class EnemyList: MonoBehaviour
         }
         
     }
+
     public void LoadOrCreateMobsList(List<Mob> mobslist)
     {
         if (mobslist != null && mobslist.Count > 0)
