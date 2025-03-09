@@ -9,7 +9,7 @@ public class ShotGunLogic : RangeWeaponLogic
     protected override void Start()
     {
         base.Start();
-        audioSource_Shot.volume = 0.2f;
+        audioSource_Shot.volume = 0.15f;
     }
     protected override void ShootLogic(float offsetProj)
     {

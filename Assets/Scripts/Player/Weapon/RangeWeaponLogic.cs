@@ -45,6 +45,7 @@ public class RangeWeaponLogic : WeaponControl
         }
         if (audioClips.Length > 0)
         {
+            audioSource_Shot.pitch = 1f + Random.Range(-pitchRange, pitchRange);
             audioSource_Shot.PlayOneShot(audioClips[0]); //Звук выстрела
         }
     }

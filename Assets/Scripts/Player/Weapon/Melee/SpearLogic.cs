@@ -16,6 +16,7 @@ public class SpearLogic : MeleWeaponLogic
         if(audioClips.Length > 0)
         {
             int num_rand = Random.Range(0, audioClips.Length);
+            audioSource_Shot.pitch = 1f + Random.Range(-pitchRange, pitchRange);
             audioSource_Shot.PlayOneShot(audioClips[num_rand]); //Звук Меча
         }
 

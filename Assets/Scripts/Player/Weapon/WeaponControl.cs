@@ -30,6 +30,9 @@ public class WeaponControl : MonoBehaviour
     [SerializeField]
     protected Transform PlayerModel;
 
+    [SerializeField]
+    protected float pitchRange = 0.1f;
+
     protected SpriteRenderer sr;
     protected Vector2 mousePos;
     protected Animator animator;

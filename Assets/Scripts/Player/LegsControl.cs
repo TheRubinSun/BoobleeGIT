@@ -16,7 +16,10 @@ public class LegsControl : MonoBehaviour
     [SerializeField] float time_move_legs;  // Задержка (можно регулировать)
 
     AudioSource audioSource_Move;
-    [SerializeField] private AudioClip soundTop;
+    [SerializeField] private AudioClip[] soundTop;
+
+    [SerializeField]
+    protected float pitchRange = 0.1f;
 
     private void Start()
     {
@@ -29,7 +32,7 @@ public class LegsControl : MonoBehaviour
             lineControles[i] = lines[i].GetComponent<LineControle>();
         }
         audioSource_Move = GetComponent<AudioSource>();
-        audioSource_Move.volume = 0.1f;
+        audioSource_Move.volume = 0.02f;
     }
     public void MoveLegs(float speed)
     {
@@ -65,7 +68,11 @@ public class LegsControl : MonoBehaviour
 
         if(!secondFoot)
         {
-            //audioSource_Move.PlayOneShot(soundTop);
+            audioSource_Move.Stop();
+            audioSource_Move.pitch = 1f + Random.Range(-pitchRange, pitchRange);
+            //audioSource_Move.PlayOneShot(soundTop[Random.Range(0,soundTop.Length)]);
+            audioSource_Move.clip = soundTop[Random.Range(0, soundTop.Length)];
+            audioSource_Move.Play();
         }
         if (legIndex < (foots.Length - 1))
         {
