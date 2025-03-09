@@ -1,51 +1,43 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.Localization.Settings;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
+
 
 
 public class Options : MonoBehaviour
 {
-    [SerializeField] private TMP_Dropdown SwitchLanguageDrop;
-
-    public void SwitchLanguage(int index)
+    [SerializeField] private Button[] SwitchLanguageButtons;
+    [SerializeField] Color32 yesGreenColor;
+    [SerializeField] Color32 noRedColor;
+    private void Start()
     {
-        string selectedLanguage = SwitchLanguageDrop.options[index].text;
-        switch (selectedLanguage)
-        {
-            case "English":
-                {
-                    SetLanguage("en");
-                    break;
-                }
-            case "–усский":
-                {
-                    SetLanguage("ru");
-                    break;
-                }
-            default: goto case "English";
-        }
+        LoadSavedLanguage();
     }
-    private void SetLanguage(string localeCode)
+    public async void SwitchLanguage(string localeCode)
     {
-        for(int i = 0; i < LocalizationSettings.AvailableLocales.Locales.Count; i++)
+        LocalizationManager.Instance.SwitchLanguage(localeCode);
+        for (int i = 0; i < SwitchLanguageButtons.Length; i++)
         {
-            if(LocalizationSettings.AvailableLocales.Locales[i].Identifier.Code == localeCode)
-            {
-                LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[i];
-
-                GlobalData.cur_language = localeCode;
-                LocalizationManager.Instance.SwitchLanguage(localeCode);
-
-                Debug.Log($"язык сменЄн на {localeCode}");
-                return;
-            }
+            SwitchLanguageButtons[i].transform.GetChild(2).GetComponent<Image>().color = noRedColor;
         }
-        Debug.LogWarning($"Ћокаль {localeCode} не найдена!");
+        GameObject obj = EventSystem.current.currentSelectedGameObject;
+        obj.transform.GetChild(2).GetComponent<Image>().color = yesGreenColor;
+
+        await GetComponent<GenInfoSaves>().SavedChanged(GenInfoSaves.saveGameFiles, GenInfoSaves.lastSaveID, localeCode);
     }
     private void LoadSavedLanguage()
     {
-        LocalizationManager.Instance.SwitchLanguage(GlobalData.cur_language);
+        for (int i = 0; i < SwitchLanguageButtons.Length; i++)
+        {
+            if (SwitchLanguageButtons[i].name == GlobalData.cur_language + "But")
+            {
+                SwitchLanguageButtons[i].transform.GetChild(2).GetComponent<Image>().color = yesGreenColor;
+            }
+            else
+            {
+                SwitchLanguageButtons[i].transform.GetChild(2).GetComponent<Image>().color = noRedColor;
+            }
+        }
     }
 }

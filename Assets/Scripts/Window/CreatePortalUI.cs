@@ -12,9 +12,10 @@ public class CreatePortalUI : MonoBehaviour
     [SerializeField] private Transform contentParent;
     [SerializeField] private GameObject prefabLine;
     [SerializeField] List<GameObject> lines = new List<GameObject>();
+    private List<EnemyLine> enemyLines = new List<EnemyLine>();
 
     [SerializeField] private TextMeshProUGUI TimeText;
-    private List<EnemyLine> enemyLines = new List<EnemyLine>();
+    
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -67,24 +68,30 @@ public class CreatePortalUI : MonoBehaviour
             return;
         }
 
-        for (int i = 0; i < lines.Count; i++)
+        if (enemyLines != null && enemyLines.Count > 0)
         {
-            if (enemyLines != null && enemyLines.Count > 0)
+            for (int i = 0; i < lines.Count; i++)
             {
-                string fixedTextCount = enemyLines[i].TextCount.text.Trim().Replace("\u200B", "");
-                if (string.IsNullOrEmpty(fixedTextCount)) break;
-                Debug.Log($"Count: {fixedTextCount}");
-                int count = int.Parse(fixedTextCount);
-                if(count > 0)
+                if (enemyLines[i] == null) continue; //если компонент пусто пропускать его
+
+                string fixedTextCount = enemyLines[i].TextCount.text.Trim().Replace("\u200B", ""); //берем количество моба убрав странный символ
+
+                if (string.IsNullOrEmpty(fixedTextCount)) continue; //≈сли количество пустое, то берем следующего
+
+                int count = int.Parse(fixedTextCount); //ѕреобразуем количество в число
+                if (count > 0) //если количество не ноль
                 {
-                    string fixedTextName = enemyLines[i].TextID.text.Trim().Replace("\u200B", "");
-                    idPref.Add(int.Parse(fixedTextName));
-                    countSpawn.Add(count);
+                    string fixedTextName = enemyLines[i].TextID.text.Trim().Replace("\u200B", ""); //берем id моба
+                    idPref.Add(int.Parse(fixedTextName)); //ѕреобразуем слово в число
+                    countSpawn.Add(count); //ƒобавл€ем в массив количества по пор€дку  
                 }
             }
         }
-
-        SpawnMobs.Instance.SpawnPortal(idPref.ToArray(), countSpawn.ToArray(), time);
+        if(idPref.Count > 0)
+        {
+            SpawnMobs.Instance.SpawnPortal(idPref.ToArray(), countSpawn.ToArray(), time);
+        }
+        
     }
     void ClearLines()
     {

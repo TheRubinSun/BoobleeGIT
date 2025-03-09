@@ -2,7 +2,6 @@ using System.Collections;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Localization.Settings;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -51,10 +50,14 @@ public class LoadingMenu : MonoBehaviour
         if(GameDataHolder.savesDataInfo.language != null)
         {
             LocalizationManager.Instance.LoadLocalization(GameDataHolder.savesDataInfo.language);
+            GlobalData.cur_language = GameDataHolder.savesDataInfo.language;
+            Debug.Log($"Загружен язык {GameDataHolder.savesDataInfo.language}");
         }
         else
         {
             LocalizationManager.Instance.LoadLocalization("en");
+            GlobalData.cur_language = "en";
+            Debug.Log($"Загружен стандартный en");
         }
         
 

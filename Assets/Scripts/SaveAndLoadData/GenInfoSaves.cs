@@ -6,8 +6,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Threading.Tasks;
-using static Unity.VisualScripting.Icons;
 using UnityEngine.UI;
+using Unity.Collections;
 
 public class GenInfoSaves : MonoBehaviour 
 {
@@ -71,8 +71,8 @@ public class GenInfoSaves : MonoBehaviour
                 File.Delete(path_player_data);
                 UpdateTextInfoCell(id);
 
-                SavesDataInfo savesDataInfo = new SavesDataInfo(GenInfoSaves.saveGameFiles, 100, GlobalData.cur_language);
-                await SavedChanged(savesDataInfo);
+                
+                await SavedChanged(GenInfoSaves.saveGameFiles, 100, GlobalData.cur_language);
 
                 Debug.Log($"Файл {path_player_data} был успешно удалён.");
             }
@@ -86,10 +86,12 @@ public class GenInfoSaves : MonoBehaviour
             Debug.LogWarning($"Файл {path_player_data} не существует, удаление невозможно.");
         }
     }
-    public async Task SavedChanged(SavesDataInfo savesDataInfo)
+    public async Task SavedChanged(Dictionary<int, SaveGameInfo> _saveGameFiles, int _lastSaveID, string _language)
     {
+        SavesDataInfo savesDataInfo = new SavesDataInfo(_saveGameFiles, _lastSaveID, _language);
         await SaveSystem.SaveDataAsync(savesDataInfo, "saves_info.json");
     }
+
     private void UpdateAllTextInfo()
     {
         for (int i = 0; i < saveGameFiles.Count; i++)

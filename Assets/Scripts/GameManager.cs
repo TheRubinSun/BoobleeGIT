@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using System.Collections.Generic;
 using Unity.Collections;
+using System.IO;
 
 
 public class GameManager: MonoBehaviour 
@@ -124,7 +125,12 @@ public class GameManager: MonoBehaviour
     }
     public async void SaveDataGame()
     {
-        
+        string fullPath = Path.Combine(Application.persistentDataPath, savePath);
+        if (!Directory.Exists(fullPath))
+        {
+            Directory.CreateDirectory(fullPath);
+        }
+
         List<SlotTypeSave> inventory_slots_list = new List<SlotTypeSave>();
         List<SlotTypeSave> equipment_item_list = new List<SlotTypeSave>();
 

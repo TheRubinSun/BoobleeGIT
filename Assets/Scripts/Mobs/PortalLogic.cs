@@ -32,7 +32,7 @@ public class PortalLogic : MonoBehaviour
 
         for (int i = 0; i < mobsPref.Length; i++)
         {
-            StartCoroutine(SpawnEnemiesOverTime(mobsPref[i], countsSpawn[i], time, transform.parent));
+            StartCoroutine(SpawnEnemiesOverTime(mobsPref[i], countsSpawn[i], time, parent));
         }
     }
     public void Event_DestroyPortal()

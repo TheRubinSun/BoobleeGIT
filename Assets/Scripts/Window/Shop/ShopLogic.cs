@@ -358,9 +358,9 @@ public class ShopLogic : MonoBehaviour
         TotalCostOrProfit();
     }
 
-    private void TotalCostOrProfit()
+    private void TotalCostOrProfit() 
     {
-        if (personalProfSum == 0 || totalCostOrProfit == 0)
+        if (personalProfSum == 0 && personalCostSum == 0)
         {
             totalCostOrProfitText.text = "";
             return;
