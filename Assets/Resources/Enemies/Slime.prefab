@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5603267853732997806}
-  m_Layer: 16
+  m_Layer: 0
   m_Name: ShootPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2859128102327179502}
   - component: {fileID: 4466510463500537168}
-  m_Layer: 16
+  m_Layer: 0
   m_Name: Item 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1331215063558217633}
   - component: {fileID: 1447597390914548616}
-  m_Layer: 16
+  m_Layer: 0
   m_Name: Item 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -215,7 +215,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3656356139783691390}
   - component: {fileID: 2509953328909146899}
-  m_Layer: 16
+  m_Layer: 0
   m_Name: Item 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -307,7 +307,7 @@ GameObject:
   - component: {fileID: 3205334774029856802}
   - component: {fileID: 476038679874665788}
   - component: {fileID: 1260200964986917490}
-  m_Layer: 16
+  m_Layer: 14
   m_Name: Slime
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -427,7 +427,7 @@ MonoBehaviour:
   player: {fileID: 0}
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 132096
   audioSource_Attack: {fileID: 1260200964986917490}
   audioClips:
   - {fileID: 8300000, guid: cd9943c938af06f49a350c0b3f7b12f7, type: 3}

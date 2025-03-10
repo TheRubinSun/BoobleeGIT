@@ -21,7 +21,7 @@ public class MeleWeaponLogic : WeaponControl
     protected void OnTriggerEnter2D(Collider2D collision)
     {
         // ѕровер€ем, что столкновение произошло с врагом
-        if (!IsAttack || !(collision.gameObject.layer == LayerMask.NameToLayer("DamageCollider"))) return;
+        if (!IsAttack || !(collision.gameObject.layer == LayerManager.enemyLayer)) return;
 
         if (hitEnemies.Contains(collision)) return;
         hitEnemies.Add(collision);

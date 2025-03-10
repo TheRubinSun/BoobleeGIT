@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEditor.Build.Player;
 using UnityEngine;
+using UnityEngine.ResourceManagement.ResourceProviders.Simulation;
 
 public class BaseEnemyLogic : MonoBehaviour 
 {
@@ -29,6 +30,7 @@ public class BaseEnemyLogic : MonoBehaviour
     public int GiveExp { get; protected set; }
     public TypeMob typeMob { get; protected set; }
 
+    //Состояния
     protected bool IsDead { get; set; }
 
     protected float avoidDistance = 1.2f; //Обходное расстояние
@@ -45,8 +47,8 @@ public class BaseEnemyLogic : MonoBehaviour
 
     public Transform player;
     
-    [SerializeField]
-    protected LayerMask obstacleLayer; // Слой для препятствий (стены и игрок)
+    //[SerializeField]
+    //protected LayerMask obstacleLayer; // Слой для препятствий (стены и игрок)
 
     //Анимации
     protected Animator animator_main;
@@ -67,6 +69,11 @@ public class BaseEnemyLogic : MonoBehaviour
     //Таймеры
     protected float updateRate = 0.2f; // Интервал обновления (5 раза в секунду)
     protected float nextUpdateTime = 0f;
+
+    //Слой
+    protected int combinedLayerMask;
+
+
     public virtual void Start()
     {
         audioSource_Attack = GetComponent<AudioSource>(); //Берем звук атаки
@@ -81,6 +88,8 @@ public class BaseEnemyLogic : MonoBehaviour
         LoadParametrs();//Загружаем параметры моба
         moveDirection = (player.position - transform.position).normalized; //Вычисление направление к игроку
         UpdateSortingOrder();
+
+        combinedLayerMask = (1 << LayerManager.obstaclesLayer) | (1 << LayerManager.playerLayer);
     }
 
     public virtual void LoadParametrs()
@@ -174,42 +183,64 @@ public class BaseEnemyLogic : MonoBehaviour
         Vector2 toPlayer = player.position - transform.position;
         float distanceToPlayer = toPlayer.magnitude; // Расстояние до игрока
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, toPlayer.normalized, avoidDistance, obstacleLayer);
+        // Создаем LayerMask, который включает оба слоя: playerLayer и obstacleLayer
+
+        RaycastHit2D hit = BuildRayCast(transform.position, toPlayer.normalized, avoidDistance, combinedLayerMask);
+
         bool wallDetected = false;
 
         if (hit.collider != null)
         {
-            // Если луч попал в стену
-            if (hit.transform.CompareTag("Wall"))
+            if (hit.collider.gameObject.layer == LayerManager.obstaclesLayer )
             {
                 wallDetected = true;
+
+                //Vector2 wallContactPoint = hit.point;
+                //Vector2 toWall = (wallContactPoint - (Vector2)transform.position).normalized;
+
+                //// Ожидаем, что если игрок находится по диагонали, нужно двигаться по одной из осей
+                //if (Mathf.Abs(toWall.x) > Mathf.Abs(toWall.y))
+                //{
+                //    // Если движение игрока по горизонтали (больший компонент x)
+                //    moveDirection = Vector2.Perpendicular(new Vector2(toWall.x, 0)).normalized; // Двигаемся только по горизонтали
+                //}
+                //else
+                //{
+                //    // Если движение игрока по вертикали (больший компонент y)
+                //    moveDirection = Vector2.Perpendicular(new Vector2(0, toWall.y)).normalized; // Двигаемся только по вертикали
+                //}
+                //moveDirection = Vector2.Perpendicular(toWall).normalized;
             }
             // Если луч попал в игрока, игнорируем
-            else if (hit.transform.CompareTag("Player") || hit.transform.CompareTag("Enemy"))
+            else if (hit.collider.gameObject.layer == LayerManager.playerLayer || hit.collider.gameObject.layer == LayerManager.enemyLayer)
             {
                 wallDetected = false;
             }
         }
         AvoidWall(wallDetected, toPlayer, distanceToPlayer);
     }
-
+    protected virtual RaycastHit2D BuildRayCast(Vector2 start, Vector2 end, float avoidDist, int combinedLayerMask)
+    {
+        return Physics2D.Raycast(start, end, avoidDist, combinedLayerMask);
+    }
     public virtual void AvoidWall(bool wallDetected, Vector2 toPlayer, float distanceToPlayer)
     {
         if (wallDetected)
         {
-            moveDirection = Vector2.Perpendicular(toPlayer).normalized;
-            //if (UnityEngine.Random.value > 0.5f) moveDirection *= -1;
+            //moveDirection = Vector2.Perpendicular(toPlayer).normalized;
         }
         else
         {
             // Проверяем перед атакой, есть ли стена перед врагом
-            RaycastHit2D finalCheck = Physics2D.Raycast(transform.position, toPlayer.normalized, distanceToPlayer, obstacleLayer);
+            RaycastHit2D finalCheck = Physics2D.Raycast(transform.position, toPlayer.normalized, distanceToPlayer, combinedLayerMask);
 
             // Дополнительный буфер для ренджа атаки
             
             float effectiveRange = attackRange - attackBuffer;
 
-            bool canSeePlayer = finalCheck.collider != null && finalCheck.transform.CompareTag("Player");
+            bool canSeePlayer = finalCheck.collider != null && finalCheck.collider.gameObject.layer == LayerManager.playerLayer;
+
+            
             if (distanceToPlayer < effectiveRange && canSeePlayer)
             {
                 moveDirection = Vector2.zero;

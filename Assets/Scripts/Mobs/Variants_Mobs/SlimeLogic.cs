@@ -99,7 +99,7 @@ public class SlimeLogic : BaseEnemyLogic
             float effectiveRange = attackRange - attackBuffer;
 
             // ѕровер€ем перед атакой, есть ли стена перед врагом
-            RaycastHit2D finalCheck = Physics2D.Raycast(transform.position, toPlayer.normalized, distanceToPlayer, obstacleLayer);
+            RaycastHit2D finalCheck = Physics2D.Raycast(transform.position, toPlayer.normalized, distanceToPlayer, combinedLayerMask);
             bool canSeePlayer = finalCheck.collider != null && finalCheck.transform.CompareTag("Player");
             if (distanceToPlayer < effectiveRange && canSeePlayer)
             {

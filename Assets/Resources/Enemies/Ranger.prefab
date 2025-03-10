@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -5091150108598142020}
   - component: {fileID: 6900467622223913232}
   - component: {fileID: 2415301041528426637}
-  m_Layer: 16
+  m_Layer: 14
   m_Name: Ranger
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -257,7 +257,7 @@ MonoBehaviour:
   player: {fileID: 0}
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 132096
   audioSource_Attack: {fileID: -5091150108598142020}
   audioClips:
   - {fileID: 8300000, guid: e90e4abc85207414a9da380f3ee90c57, type: 3}
@@ -310,7 +310,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 948129353408204618}
-  m_Layer: 16
+  m_Layer: 0
   m_Name: ShootPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -344,7 +344,7 @@ GameObject:
   - component: {fileID: 4239282424010776049}
   - component: {fileID: 6001120730720510026}
   - component: {fileID: 7331888116926746902}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}

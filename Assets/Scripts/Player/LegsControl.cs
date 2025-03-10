@@ -7,6 +7,7 @@ public class LegsControl : MonoBehaviour
     [SerializeField] Transform [] foots;
     [SerializeField] Transform[] centerFootsPos;
     [SerializeField] Transform[] lines;
+    [SerializeField] Transform[] minionsSlots;
     private LineControle[] lineControles;
 
     private bool[] isMoving;
@@ -20,7 +21,7 @@ public class LegsControl : MonoBehaviour
 
     [SerializeField]
     protected float pitchRange = 0.1f;
-
+    private bool pairIsMove = true;
     private void Start()
     {
         isMoving = new bool[foots.Length];
@@ -38,10 +39,20 @@ public class LegsControl : MonoBehaviour
     {
         for (int i = 0; i < foots.Length; i += 2)
         {
-            if (!isMoving[i] && (foots[i].position - centerFootsPos[i].position).sqrMagnitude > range)
+            Vector2 moveToEnd;
+            RaycastHit2D hitEnd = Physics2D.Raycast(centerFootsPos[i].position, Vector2.zero);
+            if (hitEnd.collider != null && hitEnd.collider.gameObject.layer == LayerManager.obstaclesLayer)
+            {
+                moveToEnd = minionsSlots[i].position;
+            }
+            else
+            {
+                moveToEnd = centerFootsPos[i].position;
+            }
+            if (!isMoving[i] && ((Vector2)foots[i].position - moveToEnd).sqrMagnitude > range)
             {
                 time_move_legs = 0.3f / speed;
-                StartCoroutine(MoveLegSmoothle(i, true, foots[i].position, centerFootsPos[i].position, time_move_legs));
+                StartCoroutine(MoveLegSmoothle(i, true, foots[i].position, moveToEnd, time_move_legs));
             }
         }
     }
@@ -51,6 +62,25 @@ public class LegsControl : MonoBehaviour
 
         float elapsedTime = 0f;
 
+        Vector2 lastValidPos = start; // Последняя позиция, где не было столкновения
+        //Vector2 savePos = minionsSlots[legIndex].position; // Целевая позиция, если встречена стена
+
+        //while (elapsedTime < time_move_legs)
+        //{
+        //    elapsedTime += Time.deltaTime;
+        //    float t = elapsedTime / time_move_legs;
+        //    t = t * t * (3f - 2f * t);
+
+        //    foots[legIndex].position = Vector2.Lerp(start, end, t);
+        //    lineControles[legIndex].MoveLinesLegs();
+
+        //    yield return null;
+        //}
+        RaycastHit2D hitEnd = Physics2D.Raycast(end, Vector2.zero);
+        if(hitEnd.collider != null && hitEnd.collider.gameObject.layer == LayerManager.obstaclesLayer)
+        {
+            end = minionsSlots[legIndex].position;
+        }
         while (elapsedTime < time_move_legs)
         {
             elapsedTime += Time.deltaTime;
@@ -62,8 +92,38 @@ public class LegsControl : MonoBehaviour
 
             yield return null;
         }
-        foots[legIndex].position = end;
-        
+        //while (elapsedTime < time_move_legs)
+        //{
+        //    elapsedTime += Time.deltaTime;
+        //    float t = elapsedTime / time_move_legs;
+        //    t = t * t * (3f - 2f * t);
+
+        //    Vector2 newPos = Vector2.Lerp(start, end, t);
+
+        //    // Проверяем столкновение
+        //    Vector2 direction = (newPos - lastValidPos).normalized;
+        //    float distance = Vector2.Distance(lastValidPos, newPos);
+        //    RaycastHit2D hit = Physics2D.Raycast(lastValidPos, direction, distance);
+
+        //    //if (hit.collider != null && hit.collider.CompareTag("Wall")) // Если есть препятствие
+        //    if (hit.collider != null && hit.collider.gameObject.layer == LayerManager.obstaclesLayer) // Если есть препятствие
+        //    {
+        //        foots[legIndex].position = savePos; // Оставляем ногу в целевой безопасной позиции
+        //        break; // Останавливаем движение ноги
+        //    }
+        //    else
+        //    {
+        //        foots[legIndex].position = newPos;
+        //        lastValidPos = newPos; // Обновляем последнюю безопасную позицию
+        //        savePos = newPos; // Запоминаем последнюю допустимую позицию
+        //    }
+
+        //    lineControles[legIndex].MoveLinesLegs();
+        //    yield return null;
+        //}
+
+        //foots[legIndex].position = end;
+
         isMoving[legIndex] = false;
 
         if(!secondFoot)

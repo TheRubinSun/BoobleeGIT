@@ -20,12 +20,14 @@ public class BulletMob : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider)
     {
         //Debug.Log("Пуля столкнулась с: " + collider.name);
-        if (collider.CompareTag("Player"))
+        //if (collider.CompareTag("Player"))
+        if (collider.gameObject.layer == LayerManager.playerLayer)
         {
             Player.Instance.TakeDamage(damage, true);
             Destroy(gameObject);
         }
-        else if(collider.CompareTag("Wall"))
+        //else if(collider.CompareTag("Wall"))
+        else if (collider.gameObject.layer == LayerManager.obstaclesLayer)
         {
             Destroy(gameObject);
         }

@@ -47,12 +47,14 @@ public class PlayerProjectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider)
     {
         //Debug.Log("Пуля столкнулась с: " + collider.name);
-        if (collider.gameObject.layer == LayerMask.NameToLayer("DamageCollider"))
+        //if (collider.gameObject.layer == LayerMask.NameToLayer("DamageCollider"))
+        if (collider.gameObject.layer == LayerManager.enemyLayer)
         {
             collider.GetComponent<BaseEnemyLogic>().TakeDamage(damage);
             Destroy(gameObject);
         }
-        else if (collider.CompareTag("Wall"))
+        //else if (collider.CompareTag("Wall"))
+        else if (collider.gameObject.layer == LayerManager.obstaclesLayer)
         {
             Destroy(gameObject);
         }

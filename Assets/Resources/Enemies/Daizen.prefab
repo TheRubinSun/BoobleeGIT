@@ -1,5 +1,67 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1203460565206696397
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3974114210181848432}
+  m_Layer: 0
+  m_Name: UpPointAvoid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3974114210181848432
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1203460565206696397}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.12, y: 0.12, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 963642846896233289}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3840822671360660296
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2510857080656454094}
+  m_Layer: 0
+  m_Name: BotPointAvoid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2510857080656454094
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3840822671360660296}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.12, y: -0.12, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 963642846896233289}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3932506572196894507
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,7 +74,7 @@ GameObject:
   - component: {fileID: 7325878779231251070}
   - component: {fileID: 689068543011641609}
   - component: {fileID: 2656678798138720126}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Ball
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -31,7 +93,9 @@ Transform:
   m_LocalPosition: {x: 0, y: -0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3974114210181848432}
+  - {fileID: 2510857080656454094}
   m_Father: {fileID: 5130604581209291186}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7325878779231251070
@@ -162,7 +226,7 @@ GameObject:
   - component: {fileID: 8116289618665286984}
   - component: {fileID: -5201166721265612376}
   - component: {fileID: 8046097991667167877}
-  m_Layer: 16
+  m_Layer: 14
   m_Name: Daizen
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -254,13 +318,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IdMobs: 0
   Name: 
+  avoidDistance: 1.2
   player: {fileID: 0}
-  obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 1024
   audioSource_Attack: {fileID: -5201166721265612376}
   audioClips:
   - {fileID: 8300000, guid: cc9e2d4f2a898794b90bf5d3409cbbbf, type: 3}
+  attackBuffer: 0
   child_Obj: {fileID: 963642846896233289}
 --- !u!50 &1506659503319625883
 Rigidbody2D:
