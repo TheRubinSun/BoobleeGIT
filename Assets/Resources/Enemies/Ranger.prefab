@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -5091150108598142020}
   - component: {fileID: 6900467622223913232}
   - component: {fileID: 2415301041528426637}
+  - component: {fileID: 8740790774485729184}
   m_Layer: 14
   m_Name: Ranger
   m_TagString: Enemy
@@ -255,9 +256,6 @@ MonoBehaviour:
   IdMobs: 1
   Name: 
   player: {fileID: 0}
-  obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 132096
   audioSource_Attack: {fileID: -5091150108598142020}
   audioClips:
   - {fileID: 8300000, guid: e90e4abc85207414a9da380f3ee90c57, type: 3}
@@ -301,6 +299,18 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: -0.08}
   m_Size: {x: 0.23, y: 0.6}
   m_Direction: 0
+--- !u!114 &8740790774485729184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606919127538129739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08492b67ee78a0646bc237ac09a99783, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3158182691329252234
 GameObject:
   m_ObjectHideFlags: 0

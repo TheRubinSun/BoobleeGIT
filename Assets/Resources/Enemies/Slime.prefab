@@ -307,6 +307,7 @@ GameObject:
   - component: {fileID: 3205334774029856802}
   - component: {fileID: 476038679874665788}
   - component: {fileID: 1260200964986917490}
+  - component: {fileID: -8730817586083184656}
   m_Layer: 14
   m_Name: Slime
   m_TagString: Enemy
@@ -425,9 +426,6 @@ MonoBehaviour:
   IdMobs: 2
   Name: 
   player: {fileID: 0}
-  obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 132096
   audioSource_Attack: {fileID: 1260200964986917490}
   audioClips:
   - {fileID: 8300000, guid: cd9943c938af06f49a350c0b3f7b12f7, type: 3}
@@ -597,3 +595,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-8730817586083184656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7439899762115682407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08492b67ee78a0646bc237ac09a99783, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

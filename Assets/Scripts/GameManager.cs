@@ -88,8 +88,8 @@ public class GameManager: MonoBehaviour
     {
         KillsEnemy++;
         enemisRemaining--;
-        Debug.Log($"Убит {enemy.Name} {enemy.max_Hp}");
-        Player.Instance.AddExp(enemy.GiveExp);
+        Debug.Log($"Убит {enemy.Name} {enemy.enum_stat.Max_Hp}");
+        Player.Instance.AddExp(enemy.enum_stat.GiveExp);
 
         int chanceSpawnCorpse = UnityEngine.Random.Range(1, 10);
         if(chanceSpawnCorpse < 4) SpawnCorpse(enemy.gameObject.transform);
