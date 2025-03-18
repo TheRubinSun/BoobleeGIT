@@ -223,6 +223,10 @@ public class Player : MonoBehaviour
         if (pl_stats.Cur_Hp == pl_stats.Max_Hp) return true;
         else return false;
     }
+    public int GetHp()
+    {
+        return GetPlayerStats().Cur_Hp;
+    }
     public void AddExp(int add_exp)
     {
         pl_stats.AddExpStat(add_exp);

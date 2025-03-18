@@ -139,7 +139,7 @@ public class BaseEnemyLogic : MonoBehaviour
 
             yield return new WaitForSeconds(time);
 
-            spr_ren.color = new Color32(255, 255, 255, 255);
+            spr_ren.color = original_color;
         }
     }
 

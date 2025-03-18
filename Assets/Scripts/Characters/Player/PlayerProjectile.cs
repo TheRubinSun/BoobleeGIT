@@ -47,8 +47,6 @@ public class PlayerProjectile : MonoBehaviour
     // Если используется триггер, то используйте OnTriggerEnter2D
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        //Debug.Log("Пуля столкнулась с: " + collider.name);
-        //if (collider.gameObject.layer == LayerMask.NameToLayer("DamageCollider"))
         if (collider.gameObject.layer == LayerManager.enemyLayer)
         {
             collider.GetComponent<BaseEnemyLogic>().TakeDamage(damage);
@@ -57,9 +55,8 @@ public class PlayerProjectile : MonoBehaviour
             {
                 collider.GetComponent<EffectsManager>().ApplyEffect(effectBul);
             }
-            
+            //Debug.Log(collider.GetComponent<BaseEnemyLogic>().enum_stat.Cur_Hp+" "+ collider.GetComponent<BaseEnemyLogic>().enum_stat.Max_Hp);
         }
-        //else if (collider.CompareTag("Wall"))
         else if (collider.gameObject.layer == LayerManager.obstaclesLayer)
         {
             Destroy(gameObject);

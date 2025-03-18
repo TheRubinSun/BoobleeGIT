@@ -8,6 +8,7 @@ public class EffectsManager : MonoBehaviour
 {
     private List<ActionEffect> acitveEffects = new List<ActionEffect>();
     private CharacterStats stats;
+    private Dictionary<string, Coroutine> activeCoroutines = new Dictionary<string, Coroutine>();
     private void Awake()
     {
         if(this.gameObject.layer == LayerManager.playerManegerLayer)
