@@ -65,7 +65,7 @@ public class DragAndDrop:MonoBehaviour
             {
                 if (oldSlot.itemFilter == newSlot.Item.TypeItem) //Если из слота оружия поменять с оружием из инвенторя
                 {
-                    Inventory.Instance.SwapSlots(oldSlot, newSlot); //Меняем местами слоты
+                    Inventory.Instance.SwapSlots(oldSlot, tempSlot); //Меняем местами слоты
                     Inventory.Instance.SwapSlots(newSlot, oldSlot); //Меняем местами слоты
                     DragSuccess();
                     return;
@@ -178,7 +178,6 @@ public class DragAndDrop:MonoBehaviour
 
         dragItem = true; //Взяли предмет + в Update тащем за курсором
         DragZone.SetActive(dragItem); //Включить возможность выбросить
-
         return true;
     }
     private bool PutItem()
@@ -208,6 +207,7 @@ public class DragAndDrop:MonoBehaviour
                     newSlot.Count = newSlot.Item.MaxCount;
                     Inventory.Instance.UpdateSlotUI(tempSlot);  //Обновляем картинку в UI
                     Inventory.Instance.UpdateSlotUI(newSlot);  //Обновляем картинку в UI
+
                     return false;
                 }
             }
