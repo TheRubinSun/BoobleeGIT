@@ -9,7 +9,7 @@ public class DaizenLogic : BaseEnemyLogic
     [SerializeField]
     private Transform child_Obj; //Дочерний объект
 
-    public override void Start()
+    protected override void Start()
     {
         base.Start();
         spr_ren_ch = child_Obj.GetComponent<SpriteRenderer>();//Берем доч спрайт моба, если есть

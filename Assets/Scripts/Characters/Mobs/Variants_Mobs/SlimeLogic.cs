@@ -19,7 +19,16 @@ public class SlimeLogic : BaseEnemyLogic
     protected SpriteRenderer sr_item_three;
 
     int face_dir = 1;
-    public override void Start()
+
+    protected EffectData posionNewEff;
+    protected int idPosion;
+    protected override void Awake()
+    {
+        base.Awake();
+        Debug.Log(idPosion);
+        posionNewEff = WeaponDatabase.GetEffectsPrefab(idPosion);
+    }
+    protected override void Start()
     {
         base.Start();
         string[] nameKeysItem = ItemDropEnemy.enemyAndHisDrop[Name];
@@ -37,6 +46,7 @@ public class SlimeLogic : BaseEnemyLogic
         sr_item_three.sortingOrder = spr_ren.sortingOrder - 1;
 
         audioSource_Attack.volume = 0.1f;
+        
     }
     protected override void UpdateSortingOrder()
     {
@@ -61,7 +71,7 @@ public class SlimeLogic : BaseEnemyLogic
         string nameItem = nameKeysItem[Random.Range(0, nameKeysItem.Length)];
         return ItemsList.Instance.GetItemForName(nameItem);
     }
-    public override void LoadParametrs()
+    protected override void LoadParametrs()
     {
         base.LoadParametrs();
 
@@ -69,6 +79,7 @@ public class SlimeLogic : BaseEnemyLogic
         {
             bulletPrefab = WeaponDatabase.GetMobProjectilesPrefab(slime.idProj);
             sp_Project = slime.SpeedProjectile;
+            idPosion = slime.idPosion;
         }
 
     }
@@ -157,6 +168,7 @@ public class SlimeLogic : BaseEnemyLogic
     {
         GameObject bullet;
         Vector2 direction;
+        
 
         if (audioClips.Length > 0 && audioClips[0] != null)
         {
@@ -175,13 +187,14 @@ public class SlimeLogic : BaseEnemyLogic
             bullet = Instantiate(bulletPrefab, this.transform);
             direction = (player.position - transform.position).normalized;
         }
+        BulletMob bull_log = bullet.GetComponent<BulletMob>();
 
         //Подять в иерархии объекта пули/стрелы
         bullet.transform.SetParent(transform.parent);
 
         //Устанавливаем урон снаряду
-        bullet.GetComponent<BulletMob>().damage = enum_stat.Att_Damage;
-
+        bull_log.damage = enum_stat.Att_Damage;
+        bull_log.effectBul = posionNewEff;
         // Получаем направление к игроку
 
         // Устанавливаем поворот стрелы в сторону игрока
@@ -194,6 +207,7 @@ public class SlimeLogic : BaseEnemyLogic
         {
             rb.linearVelocity = direction * sp_Project;
         }
+        
     }
     private void MeleeAttackOne()
     {

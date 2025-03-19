@@ -57,8 +57,8 @@ public class EnemyList: MonoBehaviour
             //             name hp range isRange damage attackSpeed speed
             mobs.Add(new DaizenMob("daizen_enem", 8, 1.5f, false, 2, 45, 1.2f, 2, TypeMob.Technology));
             mobs.Add(new RangerMob("rainger_enem", 4, 6f, true, 1, 30, 1f, 10f, 0, 3, TypeMob.Technology));
-            mobs.Add(new Slime("slime_enem", 16, 4f, true, 3, 20, 1.4f, 5f, 1, 5, TypeMob.Magic));
-            mobs.Add(new Slime("slime_boss_enem", 50, 5f, true, 4, 30, 1.6f, 6f, 1, 50, TypeMob.Magic));
+            mobs.Add(new Slime("slime_enem", 16, 4f, true, 1, 20, 1.4f, 5f, 1, 5, TypeMob.Magic, 3));
+            mobs.Add(new Slime("slime_boss_enem", 50, 5f, true, 2, 30, 1.6f, 6f, 1, 50, TypeMob.Magic, 4));
             //DisplayMobsList.Instance.DisplayLinesMobs(mobs);
             //CreatePortalUI.Instance.DisplayLinesMobs(mobs);
         }
@@ -179,9 +179,11 @@ public class Slime : Mob
 {
     public float SpeedProjectile { get; set; }
     public int idProj { get; set; }
-    public Slime(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed, float speedProjectile, int _idProj, int giveExp, TypeMob typeMob) : base(_name, _hp, _rangeAt, _isranged, _damage, _attackspeed, _speed, giveExp, typeMob)
+    public int idPosion {  get; set; }
+    public Slime(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed, float speedProjectile, int _idProj, int giveExp, TypeMob typeMob, int _idPosion) : base(_name, _hp, _rangeAt, _isranged, _damage, _attackspeed, _speed, giveExp, typeMob)
     {
         this.SpeedProjectile = speedProjectile;
         idProj = _idProj;
+        idPosion = _idPosion;
     }
 }

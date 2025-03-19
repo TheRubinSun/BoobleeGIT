@@ -207,10 +207,6 @@ public class Player : MonoBehaviour
             pl_ui.UpdateHpBar(pl_stats);
             await FlashColor(new Color32(110, 255, 93, 255), 0.1f);
         }
-        else
-        {
-            Debug.Log("Промах от врага");
-        }
     }
     public bool PlayerHeal(int count_heal)
     {

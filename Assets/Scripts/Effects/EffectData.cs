@@ -6,6 +6,8 @@ using UnityEngine;
 public class EffectData : ScriptableObject
 {
     public string EffectName;
+    public Sprite Sprite;
+    public int idSprite;
     public float duration;
     public float cooldown;
     public float value;

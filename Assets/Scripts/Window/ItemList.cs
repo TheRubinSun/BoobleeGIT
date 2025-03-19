@@ -44,8 +44,8 @@ public class ItemsList : MonoBehaviour
         if (items.Count == 0) items.Add(new Item(0, "item_none", 0, items.Count, Quality.None,0, ""));
         items.Add(new Sword(1, "sword_gods_slayer", 1, items.Count, Quality.Legendary,1000, "_", false, 1f, damageT.Cutting, 5, 0.8f, 1));
         items.Add(new Gun(2, "gun_makarov", 1, items.Count, Quality.Rare, 100,              "_", true, 4f, damageT.Crushing, 2, 1f, 1, 12f, 1.0f, 5f, 0));
-        items.Add(new Food(3, "item_meat", 20, items.Count, Quality.Common, 1, "_", 1, 5, "Heal"));
-        items.Add(new HealPotion(4, "item_potion_hp", 10, items.Count, Quality.Uncommon,10, "_", 3));
+        items.Add(new Food(3, "item_meat", 20, items.Count, Quality.Common, 1, "_", 1, 5, 15, "Heal", 1));
+        items.Add(new HealPotion(4, "item_potion_hp", 20, items.Count, Quality.Uncommon, 20, "_", 5));
         items.Add(new Item(5, "armor_armor", 1, items.Count, Quality.Common,300, "_", TypeItem.Armor));
         items.Add(new Minion(6, "minion_robot_es", 1, items.Count, Quality.Rare,500, "_", TypeItem.Minion, 5f, 6f, 2f,TypeMob.Technology));
         items.Add(new Item(7, "material_chip_one", 20, items.Count, Quality.Uncommon, 15, "_", TypeItem.Material));
@@ -59,11 +59,8 @@ public class ItemsList : MonoBehaviour
         items.Add(new Minion(15, "minion_mage_es", 1, items.Count, Quality.Rare, 500, "_", TypeItem.Minion, 4f, 6f, 2f, TypeMob.Magic));
         items.Add(new Sword(16, "soldier_spear", 1, items.Count, Quality.Rare, 200, "_", false, 0.5f, damageT.Cutting, 2, 0.6f, 1));
         items.Add(new Sword(17, "simple_knife", 1, items.Count, Quality.Uncommon, 100, "_", false, 0.25f, damageT.Cutting, 2, 0.5f, 1));
+        items.Add(new SpeedUpPotion(18, "item_potion_speed", 20, items.Count, Quality.Rare, 50, "_", 1, 10, "SpeedUp", 5));
 
-        items.Add(new SpeedUpPotion(18, "item_speedUp_potion", 20, 3, Quality.Common, 1, "_", 2, 5, "SpeedUp"));
-        //items.Add(new Minion(16, "minion_mixed_es", 1, 6, Quality.Rare, 2500, "_", TypeItem.Minion, 3f, 6f, 2f, TypeMob.Mixed));
-
-        //LocalizaitedItems();
 
         //PrintItemList();
     }
@@ -72,14 +69,6 @@ public class ItemsList : MonoBehaviour
         for(int i = 1;i<items.Count;i++)
         {
             items[i].SetSprite(spriteList[items[i].SpriteID]);
-            if (spriteList.Count > i)
-            {
-                //items[i].SetSprite(spriteList[items[i].SpriteID]);
-            }
-            else
-            {
-                //items[i].SetSprite(spriteList[5]);
-            }
         }
     }
     private void InitializeSpriteItem(int i)

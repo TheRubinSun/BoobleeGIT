@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Posion_Pistol
   m_EditorClassIdentifier: 
   EffectName: posion_pistol
+  Sprite: {fileID: 1846423006, guid: ea0ee6003c21dcb4289360442e07771d, type: 3}
+  idSprite: 0
   duration: 5
   cooldown: 1
   value: 1

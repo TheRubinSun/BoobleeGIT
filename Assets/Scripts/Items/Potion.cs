@@ -36,12 +36,14 @@ public class SpeedUpPotion : Potion
 {
     public int valueUp;
     public float duration;
+    public int idSpriteEffect;
     public string nameEffect { get; set; }
-    public SpeedUpPotion(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, int _valueUp, float _duration, string _nameEffect) : base(id, name, maxCount, spriteID, quality, cost, description)
+    public SpeedUpPotion(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, int _valueUp, float _duration, string _nameEffect, int _idSpriteEffect) : base(id, name, maxCount, spriteID, quality, cost, description)
     {
         valueUp = _valueUp;
         duration = _duration;
         nameEffect = _nameEffect;
+        idSpriteEffect = _idSpriteEffect;
     }
     public override bool Use()
     {
@@ -49,23 +51,22 @@ public class SpeedUpPotion : Potion
         EffectsManager eff_man = Player.Instance.GetComponent<EffectsManager>();
         if (eff_man != null)
         {
-            EffectData regenEffect = ScriptableObject.CreateInstance<EffectData>();
-            regenEffect = Resources.Load<EffectData>("Effects/" + nameEffect);
-            if (regenEffect != null)
-            {
-                Debug.Log($"Ёффект с именем {nameEffect} найден");
-            }
-            else
-            {
-                Debug.LogWarning("Ёффект с именем " + nameEffect + " не найден в папке Resources/Effects.");
-                Debug.Log("создаем временный новый");
+            EffectData effect = ScriptableObject.CreateInstance<EffectData>();
 
-                regenEffect.EffectName = "Food Regen";
-                regenEffect.effectType = EffectData.EffectType.HpRegenBoost;
-                regenEffect.value = valueUp;
-                regenEffect.duration = duration;
-            }
-            return eff_man.ApplyEffect(regenEffect); ;
+            Debug.LogWarning("Ёффект с именем " + nameEffect + " не найден в папке Resources/Effects.");
+            Debug.Log("создаем временный новый");
+
+            effect.EffectName = "Speed Up";
+            effect.effectType = EffectData.EffectType.SpeedBoost;
+            effect.value = valueUp;
+            effect.idSprite = idSpriteEffect;
+            effect.duration = duration;
+            //effect = Resources.Load<EffectData>("Effects/" + nameEffect);
+            //if (effect != null)
+            //{
+            //    Debug.Log($"Ёффект с именем {nameEffect} найден");
+            //}
+            return eff_man.ApplyEffect(effect); ;
         }
         else
         {
@@ -78,12 +79,16 @@ public class Food : Item, IUsable
 {
     public int countHeal;
     public float duration;
+    public float cooldown;
+    public int idSpriteEffect;
     public string nameEffect { get; set; }
-    public Food(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, int _countHeal, float _duration, string _nameEffect) : base(id, name, maxCount, spriteID, quality, cost, description)
+    public Food(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, int _countHeal, float _duration, float _cooldown, string _nameEffect, int _idSpriteEffect) : base(id, name, maxCount, spriteID, quality, cost, description)
     {
         countHeal = _countHeal;
         duration = _duration;
         nameEffect = _nameEffect;
+        cooldown = _cooldown;
+        idSpriteEffect = _idSpriteEffect;
     }
     public bool Use()
     {
@@ -111,8 +116,9 @@ public class Food : Item, IUsable
                 regenEffect.EffectName = "Food Regen";
                 regenEffect.effectType = EffectData.EffectType.HpRegenBoost;
                 regenEffect.value = countHeal;
+                regenEffect.idSprite = idSpriteEffect;
                 regenEffect.duration = duration;
-                regenEffect.cooldown = 1f;
+                regenEffect.cooldown = cooldown;
             }
             return eff_man.ApplyEffect(regenEffect);
         }

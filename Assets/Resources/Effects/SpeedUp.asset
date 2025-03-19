@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: SpeedUp
   m_EditorClassIdentifier: 
   EffectName: Speed Up
+  Sprite: {fileID: -830944995, guid: ea0ee6003c21dcb4289360442e07771d, type: 3}
+  idSprite: 0
   duration: 5
   cooldown: 0
   value: 2

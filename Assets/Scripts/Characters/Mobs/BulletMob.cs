@@ -5,6 +5,7 @@ public class BulletMob : MonoBehaviour
     // Время, через которое пуля исчезнет (в секундах)
     public float destroyTime = 3f;
     public int damage {  get; set; }
+    public EffectData effectBul { get; set; }
 
     private void Awake()
     {
@@ -25,6 +26,10 @@ public class BulletMob : MonoBehaviour
         {
             Player.Instance.TakeDamage(damage, true);
             Destroy(gameObject);
+            if (effectBul != null)
+            {
+                collider.transform.parent.GetComponent<EffectsManager>().ApplyEffect(effectBul);
+            }
         }
         //else if(collider.CompareTag("Wall"))
         else if (collider.gameObject.layer == LayerManager.obstaclesLayer)

@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Heal
   m_EditorClassIdentifier: 
   EffectName: Regen hp
-  duration: 5
-  cooldown: 1
+  Sprite: {fileID: 360549386, guid: ea0ee6003c21dcb4289360442e07771d, type: 3}
+  idSprite: 0
+  duration: 15
+  cooldown: 5
   value: 1
   effectType: 2

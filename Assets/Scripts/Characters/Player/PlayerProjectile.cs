@@ -4,8 +4,8 @@ public class PlayerProjectile : MonoBehaviour
 {
     public float maxDistance = 1f;  // ћаксимальное рассто€ние, после которого снар€д исчезает
     private Vector2 startPosition;   // —тартова€ позици€ снар€да
-    // ¬рем€, через которое пул€ исчезнет (в секундах)
-    public float destroyTime = 3f;
+    
+    public float destroyTime = 3f;  // ¬рем€, через которое пул€ исчезнет (в секундах)
     public int damage { get; set; }
     public EffectData effectBul {  get; set; }
 

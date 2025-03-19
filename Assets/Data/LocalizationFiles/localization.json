@@ -114,6 +114,12 @@
         "TypeItem": "",
         "Quality": "",
         "Description": "A small simple knife"
+      },
+      "item_potion_speed": {
+        "Name": "Slime Speed ​​Potion",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "A simple yet effective speed potion."
       }
 
     },
@@ -132,8 +138,12 @@
         "Name": "Slime",
         "TypeMob": "",
         "Description": "Medium slime"
+      },
+      "slime_boss_enem": {
+        "Name": "Big Damn Slime",
+        "TypeMob": "",
+        "Description": "This is a really big damn slime, no joke!"
       }
-
     },
     "ui_text": {
       "player_stats_name": {
@@ -318,6 +328,12 @@
         "TypeItem": "",
         "Quality": "",
         "Description": "Маленький простой ножик"
+      },
+      "item_potion_speed": {
+        "Name": "Слизневое зелье скорости",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Простое, но эффективное зелье скорости"
       }
     },
     "mobs": {
@@ -332,9 +348,14 @@
         "Description": "Простой моб с дальной аттакой"
       },
       "slime_enem": {
-        "Name": "Слайм",
+        "Name": "Слизень",
         "TypeMob": "",
-        "Description": "Средний слайм"
+        "Description": "Средний слизень"
+      },
+      "slime_boss_enem": {
+        "Name": "Большой чертов слизень",
+        "TypeMob": "",
+        "Description": "Этот чертов слизень большой, без шуток!"
       }
     },
     "ui_text": {

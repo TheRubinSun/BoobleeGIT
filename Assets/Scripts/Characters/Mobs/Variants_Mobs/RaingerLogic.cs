@@ -15,7 +15,7 @@ public class RaingerLogic : BaseEnemyLogic
     private Transform Shoot_point; //Точка выстрела
 
 
-    public override void Start()
+    protected override void Start()
     {
         base.Start();
         spr_ren_ch = child_Obj.GetComponent<SpriteRenderer>();//Берем доч спрайт моба, если есть
@@ -34,7 +34,7 @@ public class RaingerLogic : BaseEnemyLogic
         }
 
     }
-    public override void LoadParametrs()
+    protected override void LoadParametrs()
     {
         base.LoadParametrs();
 

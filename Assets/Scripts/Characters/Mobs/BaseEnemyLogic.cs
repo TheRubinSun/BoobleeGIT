@@ -61,8 +61,11 @@ public class BaseEnemyLogic : MonoBehaviour
     //Слой
     protected int combinedLayerMask;
 
-
-    public virtual void Start()
+    protected virtual void Awake()
+    {
+        LoadParametrs();//Загружаем параметры моба
+    }
+    protected virtual void Start()
     {
         audioSource_Attack = GetComponent<AudioSource>(); //Берем звук атаки
         selfCollider = GetComponent<Collider2D>(); //Берем колайдер - форму касания
@@ -73,14 +76,14 @@ public class BaseEnemyLogic : MonoBehaviour
         original_color = spr_ren.color;
         animator_main = GetComponent<Animator>();
 
-        LoadParametrs();//Загружаем параметры моба
+        
         moveDirection = (player.position - transform.position).normalized; //Вычисление направление к игроку
         UpdateSortingOrder();
 
         combinedLayerMask = (1 << LayerManager.obstaclesLayer) | (1 << LayerManager.playerLayer);
     }
 
-    public virtual void LoadParametrs()
+    protected virtual void LoadParametrs()
     {
         mob = EnemyList.Instance.mobs[IdMobs];
         Name = mob.NameKey;

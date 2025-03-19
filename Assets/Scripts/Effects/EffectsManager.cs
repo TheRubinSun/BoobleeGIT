@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Rendering;
@@ -6,83 +7,97 @@ using UnityEngine;
 
 public class EffectsManager : MonoBehaviour
 {
-    private List<ActionEffect> acitveEffects = new List<ActionEffect>();
+    public static Action<EffectData> OnDisplayEffectUI;
+    public static Action<EffectData> OnRemoveEffectUI;
+    public static Action<ActionEffect> OnEffectTimerUpdate;
+
+    public List<ActionEffect> activeEffects = new List<ActionEffect>();
     private CharacterStats stats;
-    private Dictionary<string, Coroutine> activeCoroutines = new Dictionary<string, Coroutine>();
-    private void Awake()
+    private Dictionary<EffectData, Coroutine> activeCoroutines = new Dictionary<EffectData, Coroutine>();
+    private void Start()
     {
-        if(this.gameObject.layer == LayerManager.playerManegerLayer)
+        if (stats == null)
         {
-            stats = GetComponent<Player>().GetPlayerStats();
+            if (gameObject.layer == LayerManager.playerManegerLayer)
+            {
+                stats = GetComponent<Player>().GetPlayerStats();
+            }
+            else if (gameObject.layer == LayerManager.enemyLayer)
+            {
+                stats = GetComponent<BaseEnemyLogic>().enum_stat;
+            }
         }
-        else if(this.gameObject.layer == LayerManager.enemyLayer)
-        {
-            stats = GetComponent<BaseEnemyLogic>().enum_stat;
-        }
-        
     }
     public bool ApplyEffect(EffectData effect)
     {
-        foreach (ActionEffect actionEffect in acitveEffects)
+        if (activeCoroutines.ContainsKey(effect))
         {
-            if (actionEffect.Effect.EffectName == effect.EffectName)
+            Debug.LogWarning($"{effect.EffectName} Уже действует");
+            if (effect.cooldown > 0)
             {
-                if(effect.cooldown > 0)
-                {
-                    RemoveEffect(effect);
-                    StartCoroutine(HandleEffect(effect));
-                    return true;
-                }
+                
+                StopCoroutine(activeCoroutines[effect]);
+                RemoveEffect(effect);
+            }
+            else
+            {
                 return false;
             }
+
         }
 
-        StartCoroutine(HandleEffect(effect));
+        AddEffectIcon(effect);
+        Coroutine newCorutine = StartCoroutine(HandleEffect(effect));
+        activeCoroutines[effect] = newCorutine;
         return true;
+    }
+    private void AddEffectIcon(EffectData effect)
+    {
+        if (gameObject.layer == LayerManager.playerManegerLayer)
+        {
+            OnDisplayEffectUI?.Invoke(effect);
+        }
     }
     private IEnumerator HandleEffect(EffectData effect)
     {
-        ActionEffect newEffect = new ActionEffect(effect);
-        acitveEffects.Add(newEffect);
+        ActionEffect newEffect = new ActionEffect(effect, effect.duration);
+        activeEffects.Add(newEffect);
+        OnEffectTimerUpdate?.Invoke(newEffect);
 
-        // Если это периодический эффект (яд, реген), запускаем CooldownEffect
-        if (effect.cooldown > 0)
+        while (effect.duration == 0 || (newEffect.time_remains > 0))
         {
-            StartCoroutine(CooldownEffect(effect));
-        }
-        else
-        {
-            UseEffect(effect, true);
-        }
-
-        // Ждём завершения эффекта
-        if (effect.duration > 0)
-        {
-            yield return new WaitForSeconds(effect.duration);
-            RemoveEffect(effect);
-        }
-    }
-    private IEnumerator CooldownEffect(EffectData effect)
-    {
-        float elapsedTime = 0;
-        while (elapsedTime < effect.duration || effect.duration == 0)
-        {
-            yield return new WaitForSeconds(effect.cooldown);
-
-            // Повторяем действие эффекта (например, наносим урон ядом)
-            UseEffect(effect, true);
-            elapsedTime += effect.cooldown;
-
-        }
-    }
-    private void RemoveEffect(EffectData effectData)
-    {
-        foreach(ActionEffect effect in acitveEffects)
-        {
-            if(effect.Effect == effectData)
+            if (effect.cooldown > 0)
             {
-                UseEffect(effectData, false);
-                acitveEffects.Remove(effect);
+                yield return new WaitForSeconds(effect.cooldown);
+                UseEffect(effect, true);
+                newEffect.time_remains -= effect.cooldown;
+                
+            }
+            else
+            {
+                if (effect.duration > 0)
+                {
+                    if(newEffect.time_remains == effect.duration) UseEffect(effect, true);
+                    yield return new WaitForSeconds(1);
+                    newEffect.time_remains -= 1;
+                }
+                else yield return null; // Для бесконечного эффекта просто ждём
+
+            }
+            OnEffectTimerUpdate?.Invoke(newEffect);
+        }
+        RemoveEffect(effect);
+        activeCoroutines.Remove(effect);
+    }
+    private void RemoveEffect(EffectData effect)
+    {
+        OnRemoveEffectUI?.Invoke(effect);
+        for (int i = activeEffects.Count - 1; i >= 0; i--)
+        {
+            if (activeEffects[i].Effect == effect)
+            {
+                UseEffect(effect, false);
+                activeEffects.RemoveAt(i);
                 break;
             }
         }
@@ -104,42 +119,52 @@ public class EffectsManager : MonoBehaviour
                 }
             case EffectData.EffectType.HpRegenBoost:
                 {
-                    if(multiply > 0)
-                    {
-                        if (this.gameObject.layer == LayerManager.playerManegerLayer)
-                        {
-                            Player.Instance.TakeHeal((int)effect.value);
-                        }
-                        else if(this.gameObject.layer == LayerManager.enemyLayer)
-                        {
-                            this.gameObject.GetComponent<BaseEnemyLogic>().TakeHeal((int)effect.value);
-                        }
-                    }
+                    HealTarget(effect, apply);
                     break;
                 }
             case EffectData.EffectType.Posion:
                 {
-                    if (multiply > 0)
-                    {
-                        if (this.gameObject.layer == LayerManager.playerManegerLayer)
-                        {
-                            Player.Instance.TakeDamage((int)effect.value, false);
-                        }
-                        else if (this.gameObject.layer == LayerManager.enemyLayer)
-                        {
-                            this.gameObject.GetComponent<BaseEnemyLogic>().TakeDamage((int)effect.value);
-                        }
-                    }
+                    DamageTarget(effect, apply);
                     break;
                 }
+        }
+    }
+    private void HealTarget(EffectData effect, bool apply)
+    {
+        if(apply)
+        {
+            if (gameObject.layer == LayerManager.playerManegerLayer)
+            {
+                Player.Instance.TakeHeal((int)effect.value);
+            }
+            else if (gameObject.layer == LayerManager.enemyLayer)
+            {
+                gameObject.GetComponent<BaseEnemyLogic>().TakeHeal((int)effect.value);
+            }
+        }
+    }
+    private void DamageTarget(EffectData effect, bool apply)
+    {
+        if (apply)
+        {
+            if (this.gameObject.layer == LayerManager.playerManegerLayer)
+            {
+                Player.Instance.TakeDamage((int)effect.value, false);
+            }
+            else if (this.gameObject.layer == LayerManager.enemyLayer)
+            {
+                this.gameObject.GetComponent<BaseEnemyLogic>().TakeDamage((int)effect.value);
+            }
         }
     }
 }
 public class ActionEffect
 {
-    public EffectData Effect { get; private set; }
-    public ActionEffect(EffectData effect)
+    public EffectData Effect { get;}
+    public float time_remains;
+    public ActionEffect(EffectData effect, float duration)
     {
         Effect = effect;
+        time_remains = duration;
     }
 }

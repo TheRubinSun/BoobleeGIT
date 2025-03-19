@@ -39,6 +39,8 @@ public class WeaponDatabase : MonoBehaviour
         effects[0] = Resources.Load<EffectData>("Effects/Heal");
         effects[1] = Resources.Load<EffectData>("Effects/Posion_Pistol");
         effects[2] = Resources.Load<EffectData>("Effects/SpeedUp");
+        effects[3] = Resources.Load<EffectData>("Effects/Posion_SmallSlime");
+        effects[4] = Resources.Load<EffectData>("Effects/Posion_BossSlime");
 
         if (weapons[0] == null)
             Debug.LogError("Не удалось загрузить префаб Sword_God_Pref!");
