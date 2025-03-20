@@ -74,6 +74,8 @@ public class PlayerStats : CharacterStats
         TechniquePoints = 1;
         AdjacentPoints = 0;
 
+        freeSkillPoints = 0;
+
         Gold = 0;
         TraderSkill = 1;
 
@@ -110,6 +112,8 @@ public class PlayerStats : CharacterStats
         Gold = playerSaveData.Gold;
         TraderSkill = playerSaveData.TraderSkill;
 
+        freeSkillPoints = playerSaveData.freeSkillPoints;
+
         classPlayer = playerSaveData.classPlayer;
         DirectionOrVectorWeapon = playerSaveData.DirectionOrVectorWeapon;
 
@@ -119,9 +123,9 @@ public class PlayerStats : CharacterStats
     {
         EquipStats equipStats = Player.Instance.GetEquipStats();
 
-        Strength = classPlayer.Bonus_Class_Strength + equipStats.Bonus_Equip_Strength;
-        Agility = classPlayer.Bonus_Class_Agility + equipStats.Bonus_Equip_Agility;
-        Intelligence = classPlayer.Bonus_Class_Intelligence + equipStats.Bonus_Equip_Intelligence;
+        Strength = Base_Strength + classPlayer.Bonus_Class_Strength + equipStats.Bonus_Equip_Strength;
+        Agility = Base_Agility + classPlayer.Bonus_Class_Agility + equipStats.Bonus_Equip_Agility;
+        Intelligence = Base_Intelligence + classPlayer.Bonus_Class_Intelligence + equipStats.Bonus_Equip_Intelligence;
 
         Max_Hp = (Strength * 2) + Base_Max_Hp + classPlayer.Bonus_Class_Hp + equipStats.Bonus_Equip_Hp;
         Armor = (int)(Strength / 10) + Base_Armor + classPlayer.Bonus_Class_Armor + equipStats.Bonus_Equip_Armor;

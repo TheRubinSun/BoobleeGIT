@@ -65,36 +65,24 @@ public class Player : MonoBehaviour
         pl_ui.UpdateAllInfo(pl_stats);
         ChangeToggleWeapons();
     }
-    public PlayerStats GetPlayerStats() => pl_stats;
-    public EquipStats GetEquipStats() => equip_Stats;
+
     public void UpdateHP()
     {
         pl_ui.UpdateHpBar(pl_stats);
     }
-    public int GetGold()
-    {
-        return pl_stats.Gold;
-    }
-    public int GetSkillsTrader()
-    {
-        return pl_stats.TraderSkill;
-    }
-    public int GetLevel()
-    {
-        return pl_stats.level;
-    }
+    public PlayerStats GetPlayerStats() => pl_stats;
+    public EquipStats GetEquipStats() => equip_Stats;
+    public int GetGold() => pl_stats.Gold;
+    public int GetSkillsTrader() => pl_stats.TraderSkill;
+    public int GetLevel() => pl_stats.level;
+    public int GetFreeSkillPoint() => pl_stats.freeSkillPoints;
+    public Dictionary<int, WeaponControl> GetDictWeaponAndArms() => WeaponsObj;
+    public Dictionary<int, MinionControl> GetDictMinions() => MinionsObj;
     public int PayGold(int cost)
     {
         return pl_stats.Gold += cost;
     }
-    public Dictionary<int, WeaponControl> GetDictWeaponAndArms()
-    {
-        return WeaponsObj;
-    }
-    public Dictionary<int, MinionControl> GetDictMinions()
-    {
-        return MinionsObj;
-    }
+
     private void UpdateSlotsInPlayerControl()
     {
         transform.GetChild(0).GetComponent<PlayerControl>().UpdateSlots(WeaponsObj, MinionsObj);
@@ -108,6 +96,67 @@ public class Player : MonoBehaviour
     {
         MinionsObj[i] = minionObj;
         UpdateSlotsInPlayerControl();
+    }
+    public void SetAspect(AspectName aspectName, float value)
+    {
+        pl_stats.freeSkillPoints--;
+        switch (aspectName)
+        {
+            case AspectName.Agillity:
+                pl_stats.Base_Agility += (int)value;
+                break;
+
+            case AspectName.Strength:
+                pl_stats.Base_Strength += (int)value;
+                break;
+
+            case AspectName.Intelligence:
+                pl_stats.Base_Intelligence += (int)value;
+                break;
+
+            case AspectName.Tech_Point:
+                pl_stats.TechniquePoints += (int)value;
+                break;
+
+            case AspectName.Mage_Point:
+                pl_stats.MagicPoints += (int)value;
+                break;
+
+            case AspectName.Exp_Bust:
+                pl_stats.Base_ExpBust += value;
+                break;
+
+            case AspectName.Speed:
+                pl_stats.Base_Mov_Speed += value;
+                break;
+
+            case AspectName.Damage:
+                pl_stats.Base_Att_Damage += (int)value;
+                break;
+
+            case AspectName.Hp:
+                pl_stats.Base_Max_Hp += (int)value;
+                break;
+
+            case AspectName.Gold:
+                pl_stats.Gold += ((int)value);
+                break;
+
+            case AspectName.AttackSpeed:
+                pl_stats.Base_Att_Speed += (int)value;
+                break;
+            case AspectName.Range:
+                pl_stats.Base_Att_Range += value; // Увеличение дальности атаки
+                break;
+
+            case AspectName.Projectile_speed:
+                pl_stats.Base_Proj_Speed += value; // Увеличение скорости снаряда
+                break;
+            default:
+                Debug.LogWarning("Неизвестный аспект: " + aspectName);
+                break;
+        }
+        pl_stats.UpdateTotalStats();
     }
 
     private async Task FlashColor(Color32 color, float time) //Менять цвет на время
@@ -230,6 +279,7 @@ public class Player : MonoBehaviour
     }
     public void LvlUp()
     {
+        UIControl.Instance.LvlUpWindow();
         pl_ui.LvlUIUpdate(pl_stats);
         pl_ui.UpdateHpBar(pl_stats);
         pl_ui.UpdateSizeHpBar(pl_stats);

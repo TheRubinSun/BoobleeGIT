@@ -164,10 +164,13 @@ public class GameManager: MonoBehaviour
         await SaveSystem.SaveDataAsync(item_drop, "item_drop.json");
 
         SaveGameInfo saveGameIngo = GenInfoSaves.saveGameFiles[GlobalData.SaveInt];
+
         saveGameIngo.timeHasPassed = totalSecondsPlayed;
         saveGameIngo.enemy_kills = KillsEnemy;
         saveGameIngo.level = Player.Instance.GetLevel();
         saveGameIngo.isStarted = true;
+        saveGameIngo.seed = GlobalData.cur_seed;
+        //saveGameIngo.randomCalls = GlobalData.randomCalls;
         SavesDataInfo savesDataInfo = new SavesDataInfo(GenInfoSaves.saveGameFiles, GlobalData.SaveInt, GlobalData.cur_language);
         await SaveSystem.SaveDataAsync(savesDataInfo, "saves_info.json");
 

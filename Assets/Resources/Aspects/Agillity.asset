@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d077671a8415a264f886e179146b2c6e, type: 3}
+  m_Name: Agillity
+  m_EditorClassIdentifier: 
+  name_asp: 0
+  BG_Color:
+    serializedVersion: 2
+    rgba: 4278991388
+  icon_color:
+    serializedVersion: 2
+    rgba: 4280063265
+  min_value: 1
+  max_value: 2
+  sprite: {fileID: 7294835199286303614, guid: e1e761b1dcd7495459aa40445b4527f8, type: 3}

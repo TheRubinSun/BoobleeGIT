@@ -16,6 +16,7 @@ public class UIControl:MonoBehaviour
     [SerializeField] GameObject infoPlayerWindow;
     [SerializeField] GameObject CreatePortalWindow;
     [SerializeField] GameObject ShopWindow;
+    [SerializeField] GameObject LvlUPWindow;
     [SerializeField] Transform inventoryBar;
     
     bool invIsOpened;
@@ -24,6 +25,7 @@ public class UIControl:MonoBehaviour
     bool infoPlayerIsOpened;
     bool createPortalIsOpened;
     bool ShopIsOpened;
+    bool LvlUpIsOpen;
 
     private bool isPaused = false;
 
@@ -162,6 +164,24 @@ public class UIControl:MonoBehaviour
             infoPlayerWindow.SetActive(false);
         }
         TogglePause();
+    }
+    public void LvlUpWindow()
+    {
+        LvlUpIsOpen = !LvlUpIsOpen;
+        if (LvlUpIsOpen && (Player.Instance.GetFreeSkillPoint() > 0))
+        {
+            LvlUPWindow.SetActive(true);
+            LvlUpLogic.Instance.GenAspects();
+        }
+        else
+        {
+            LvlUPWindow.SetActive(false);
+        }
+    }
+    public void CloseWindowLvlUP()
+    {
+        LvlUpIsOpen = false;
+        LvlUPWindow.SetActive(false);
     }
     public void LoadMainMenu()
     {

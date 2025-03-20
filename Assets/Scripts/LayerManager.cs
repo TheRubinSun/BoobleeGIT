@@ -17,10 +17,10 @@ public class LayerManager : MonoBehaviour
             playerManegerLayer = LayerMask.NameToLayer("PlayerManager");
             enemyLayer = LayerMask.NameToLayer("Enemy");
 
-            Debug.Log($"Obstacles {obstaclesLayer}");
-            Debug.Log($"Player {playerLayer}");
-            Debug.Log($"Player Man{playerManegerLayer}");
-            Debug.Log($"Enemy {enemyLayer}");
+            //Debug.Log($"Obstacles {obstaclesLayer}");
+            //Debug.Log($"Player {playerLayer}");
+            //Debug.Log($"Player Man{playerManegerLayer}");
+            //Debug.Log($"Enemy {enemyLayer}");
         }
     }
 }
