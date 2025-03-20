@@ -130,12 +130,8 @@ public class Player : MonoBehaviour
                 pl_stats.Base_Mov_Speed += value;
                 break;
 
-            case AspectName.Damage:
-                pl_stats.Base_Att_Damage += (int)value;
-                break;
-
             case AspectName.Hp:
-                pl_stats.Base_Max_Hp += (int)value;
+                AddMaxHP((int)value);
                 break;
 
             case AspectName.Gold:
@@ -157,6 +153,7 @@ public class Player : MonoBehaviour
                 break;
         }
         pl_stats.UpdateTotalStats();
+        UpdateHP();
     }
 
     private async Task FlashColor(Color32 color, float time) //Менять цвет на время
@@ -279,7 +276,8 @@ public class Player : MonoBehaviour
     }
     public void LvlUp()
     {
-        UIControl.Instance.LvlUpWindow();
+        UIControl.Instance.ShowHideLvlUP(true);
+        UIControl.Instance.OpenLvlUPWindow();
         pl_ui.LvlUIUpdate(pl_stats);
         pl_ui.UpdateHpBar(pl_stats);
         pl_ui.UpdateSizeHpBar(pl_stats);

@@ -13,6 +13,10 @@ public class LvlUpLogic : MonoBehaviour
     [SerializeField] private Transform parent_aspects;
     [SerializeField] private List<AspectData> aspectDatas = new List<AspectData>();
     private List<TempAspect> tempAspects = new List<TempAspect>();
+
+
+    private static readonly HashSet<AspectName> percentageAspects = new HashSet<AspectName>
+    { AspectName.Range, AspectName.Speed, AspectName.Projectile_speed, AspectName.Exp_Bust}; //те что в процентах
     private static System.Random random;
     private void Awake()
     {
@@ -22,17 +26,6 @@ public class LvlUpLogic : MonoBehaviour
             return;
         }
         Instance = this;
-
-        random = new System.Random(GlobalData.cur_seed + Player.Instance.GetLevel());
-        //if (GlobalData.randomCalls > 0) CounterRandom();
-        GenAspects();
-    }
-    private void CounterRandom()
-    {
-        for (int i = 0; i < GlobalData.randomCalls; i++)
-        {
-            random.Next(); // Используем `random.Next()` без параметров, чтобы точно сдвинуть состояние
-        }
     }
     public void RemoveObj()
     {
@@ -61,7 +54,6 @@ public class LvlUpLogic : MonoBehaviour
                 if(aspectData.name_asp == aspect)
                 {
                     float value;
-                    GlobalData.randomCalls++; //Используемых рандомов
                     if (aspectData.min_value % 1 == 0 && aspectData.max_value % 1 == 0)
                         value = random.Next((int)aspectData.min_value, (int)aspectData.max_value + 1);
                     else value = Mathf.Round((float)(random.NextDouble() * (aspectData.max_value - aspectData.min_value) + aspectData.min_value) * 100) / 100f;
@@ -70,7 +62,10 @@ public class LvlUpLogic : MonoBehaviour
                     GameObject AspectObg = Instantiate(pref_Aspect, parent_aspects);
                     AspectObg.name = id.ToString();
                     AspectObg.GetComponent<Image>().color = aspectData.BG_Color;
-                    AspectObg.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"+{value} {aspectData.name_asp.ToString()}";
+                    AspectObg.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
+                        percentageAspects.Contains(aspect)
+                        ? $"+{value * 100}% {aspectData.name_asp}"
+                        : $"+{value} {aspectData.name_asp}";
                     AspectObg.transform.GetChild(1).GetComponent<Image>().color = aspectData.BG_Color;
 
                     Button btnAccept = AspectObg.transform.GetChild(1).GetComponent<Button>();
@@ -97,11 +92,13 @@ public class LvlUpLogic : MonoBehaviour
 
         if(Player.Instance.GetFreeSkillPoint() > 0)
         {
+            UIControl.Instance.ShowHideLvlUP(true);
             GenAspects();
         }
         else
         {
             UIControl.Instance.CloseWindowLvlUP();
+            UIControl.Instance.ShowHideLvlUP(false);
         }
     }
     private void NewLevel()
@@ -118,11 +115,10 @@ public class LvlUpLogic : MonoBehaviour
         {
             AspectName.Agillity, AspectName.Strength, AspectName.Intelligence,
             AspectName.Tech_Point, AspectName.Mage_Point, AspectName.Exp_Bust,
-            AspectName.Speed, AspectName.Damage, AspectName.Hp,
+            AspectName.Speed, AspectName.Hp,
             AspectName.Gold, AspectName.AttackSpeed
         };
         //Выбираем случайный гарантированный атрибут 
-        GlobalData.randomCalls++; //Используемых рандомов
         AspectName guaranteedAttribute = coreAttributes[random.Next(0, coreAttributes.Count)];
 
 
@@ -132,7 +128,6 @@ public class LvlUpLogic : MonoBehaviour
         //Перемешиваем
         for (int i = allAspects.Count - 1; i > 0; i--)
         {
-            GlobalData.randomCalls++; //Используемых рандомов
             int j = random.Next(0, i + 1);
             (allAspects[i], allAspects[j]) = (allAspects[j], allAspects[i]);
         }
@@ -153,7 +148,6 @@ public enum AspectName
     Mage_Point,
     Exp_Bust,
     Speed,
-    Damage,
     Hp,
     Gold,
     AttackSpeed,

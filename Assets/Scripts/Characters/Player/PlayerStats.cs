@@ -53,9 +53,9 @@ public class PlayerStats : CharacterStats
     public PlayerStats() { }
     public void SetBaseStats()
     {
-        Base_Strength = 2;
-        Base_Agility = 2;
-        Base_Intelligence = 2;
+        Base_Strength = 0;
+        Base_Agility = 0;
+        Base_Intelligence = 0;
         Base_Max_Hp = 2;
         Base_Armor = 0;
         Base_Evasion = 0;
@@ -131,7 +131,7 @@ public class PlayerStats : CharacterStats
         Armor = (int)(Strength / 10) + Base_Armor + classPlayer.Bonus_Class_Armor + equipStats.Bonus_Equip_Armor;
         Mov_Speed = (Agility * 0.015f) + Base_Mov_Speed + classPlayer.Bonus_Class_SpeedMove + equipStats.Bonus_Equip_Mov_Speed;
         Evasion = (Agility) + Base_Evasion + equipStats.Bonus_Equip_Evasion;
-        Att_Speed = (Agility * 2) + Base_Att_Speed + classPlayer.Bonus_Class_AttackSpeed + equipStats.Bonus_Equip_Att_Speed;
+        Att_Speed = (Agility) + Base_Att_Speed + classPlayer.Bonus_Class_AttackSpeed + equipStats.Bonus_Equip_Att_Speed;
         Att_Range = (Intelligence * 0.1f) + Base_Att_Range + classPlayer.Bonus_Class_Range + equipStats.Bonus_Equip_Att_Range;
         Proj_Speed = (Intelligence * 0.1f) + Base_Proj_Speed + classPlayer.Bonus_Class_ProjectileSpeed + equipStats.Bonus_Equip_Proj_Speed;
         Att_Damage = (int)((Strength * 2) + (Intelligence * 2) / 10) + Base_Att_Damage + classPlayer.Bonus_Class_Damage + equipStats.Bonus_Equip_Att_Damage;
@@ -145,9 +145,9 @@ public class PlayerStats : CharacterStats
     }
     public void AddMaxHPBaseStat(int addMaxHp)
     {
-        Base_Max_Hp += AddHP_PerLvl;
+        Base_Max_Hp += addMaxHp;
         Max_Hp = (Strength * 2) + Base_Max_Hp + classPlayer.Bonus_Class_Hp + EquipStats.Instance.Bonus_Equip_Hp;
-        Cur_Hp += AddHP_PerLvl;
+        Cur_Hp += addMaxHp;
     }
     public bool TakeDamageStat(int damage, bool canEvade)
     {
@@ -183,7 +183,11 @@ public class PlayerStats : CharacterStats
     }
     public void AddExpStat(int add_exp)
     {
-        cur_exp += (int)(add_exp * ExpBust);
+        cur_exp += (int)(add_exp + (add_exp * ExpBust));
+        CheckLevel();
+    }
+    private void CheckLevel()
+    {
         if (isNewLevel())
             LvlUpStat();
     }
@@ -192,7 +196,7 @@ public class PlayerStats : CharacterStats
         if (cur_exp >= nextLvl_exp)
         {
             cur_exp -= nextLvl_exp;
-            nextLvl_exp = (int)((nextLvl_exp + 10) * 1.4f);
+            nextLvl_exp = (int)((nextLvl_exp + 20) * 1.5f);
             return true;
         }
         return false;
@@ -203,5 +207,6 @@ public class PlayerStats : CharacterStats
         freeSkillPoints++;
         AddMaxHPBaseStat(AddHP_PerLvl);
         Player.Instance.LvlUp();
+        if (cur_exp >= nextLvl_exp) CheckLevel();
     }
 }

@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d077671a8415a264f886e179146b2c6e, type: 3}
   m_Name: AttSpeed
   m_EditorClassIdentifier: 
-  name_asp: 10
+  name_asp: 9
   BG_Color:
     serializedVersion: 2
     rgba: 4278853170
   icon_color:
     serializedVersion: 2
     rgba: 4281497800
-  min_value: 3
-  max_value: 8
-  sprite: {fileID: 0}
+  min_value: 2
+  max_value: 5
+  sprite: {fileID: 1410226727, guid: e1e761b1dcd7495459aa40445b4527f8, type: 3}

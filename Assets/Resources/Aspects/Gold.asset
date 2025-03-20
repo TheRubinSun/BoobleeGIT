@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d077671a8415a264f886e179146b2c6e, type: 3}
   m_Name: Gold
   m_EditorClassIdentifier: 
-  name_asp: 9
+  name_asp: 8
   BG_Color:
     serializedVersion: 2
     rgba: 4278866020
   icon_color:
     serializedVersion: 2
     rgba: 4278245375
-  min_value: 50
-  max_value: 150
-  sprite: {fileID: 0}
+  min_value: 70
+  max_value: 200
+  sprite: {fileID: 678323752, guid: e1e761b1dcd7495459aa40445b4527f8, type: 3}

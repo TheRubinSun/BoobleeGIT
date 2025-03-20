@@ -17,6 +17,7 @@ public class UIControl:MonoBehaviour
     [SerializeField] GameObject CreatePortalWindow;
     [SerializeField] GameObject ShopWindow;
     [SerializeField] GameObject LvlUPWindow;
+    [SerializeField] GameObject LvlUPButton;
     [SerializeField] Transform inventoryBar;
     
     bool invIsOpened;
@@ -177,6 +178,16 @@ public class UIControl:MonoBehaviour
         {
             LvlUPWindow.SetActive(false);
         }
+    }
+    public void OpenLvlUPWindow()
+    {
+        LvlUpIsOpen = true;
+        LvlUPWindow.SetActive(true);
+        LvlUpLogic.Instance.GenAspects();
+    }
+    public void ShowHideLvlUP(bool showOrHide)
+    {
+        LvlUPButton.SetActive(showOrHide);
     }
     public void CloseWindowLvlUP()
     {

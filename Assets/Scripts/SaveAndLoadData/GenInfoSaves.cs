@@ -40,7 +40,6 @@ public class GenInfoSaves : MonoBehaviour
 
 
             GlobalData.cur_seed = (saveGameFiles[saveInt].seed != 0) ? saveGameFiles[saveInt].seed : saveGameFiles[saveInt].GenNewSeed();
-            GlobalData.randomCalls = saveGameFiles[saveInt].randomCalls;
 
             Debug.Log($"Выбран слот {saveInt}, путь: {GlobalData.SavePath}");
 
@@ -58,7 +57,6 @@ public class GenInfoSaves : MonoBehaviour
             GlobalData.SavePath = saveGameFiles[lastSaveID].fileName;
             GlobalData.SaveInt = lastSaveID;
             GlobalData.cur_seed = (saveGameFiles[lastSaveID].seed != 0) ? saveGameFiles[lastSaveID].seed : saveGameFiles[lastSaveID].GenNewSeed();
-            GlobalData.randomCalls = saveGameFiles[lastSaveID].randomCalls;
             Debug.Log($"Выбран слот {lastSaveID}, путь: {GlobalData.SavePath}");
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("LoadingScreen");
         }
@@ -70,7 +68,6 @@ public class GenInfoSaves : MonoBehaviour
         saveGameFiles[id].timeHasPassed = 0;
         saveGameFiles[id].isStarted = false;
         saveGameFiles[id].seed = 0;
-        saveGameFiles[id].randomCalls = 0;
         lastSaveID = 100;
         string path_player_data = Path.Combine(Application.persistentDataPath, saveGameFiles[id].fileName + "player.json");
         if (File.Exists(path_player_data))
@@ -180,7 +177,6 @@ public class SaveGameInfo
     public int timeHasPassed { get; set; }
     public int level { get; set; }
     public int seed { get; set; }
-    public int randomCalls {  get; set; }
     public SaveGameInfo(int ID)
     {
         if (ID == 0)
@@ -207,7 +203,6 @@ public class SaveGameInfo
         this.timeHasPassed = timeHasPassed;
         this.level = level;
         this.seed = seed;
-        randomCalls = 0;
     }
     public int GenNewSeed()
     {

@@ -204,7 +204,7 @@ public class DisplayInfo: MonoBehaviour
         AppendStat(info, word_Evasion, pl_stat.Evasion, pl_stat.Base_Evasion, pl_stat.Agility, eqip_stat.Bonus_Equip_Evasion, 0, 
             ($"{word_for + word_agility}"), word_roleClass, word_eqipment);
         AppendStat(info, word_Att_Speed, pl_stat.Att_Speed, pl_stat.Base_Att_Speed, pl_stat.Agility * 2, pl_stat.classPlayer.Bonus_Class_AttackSpeed, eqip_stat.Bonus_Equip_Att_Speed,
-            ($"{word_agility} * 2"), word_roleClass, word_eqipment);
+            ($"{word_agility}"), word_roleClass, word_eqipment);
         AppendStat(info, word_Att_Range, pl_stat.Att_Range, pl_stat.Base_Att_Range, pl_stat.Intelligence * 0.01f, pl_stat.classPlayer.Bonus_Class_Range, eqip_stat.Bonus_Equip_Att_Range,
             ($"{word_intelligence} * 0.01"), word_roleClass, word_eqipment);
         AppendStat(info, word_Proj_Speed, pl_stat.Proj_Speed, pl_stat.Base_Proj_Speed, pl_stat.Intelligence * 0.01f, pl_stat.classPlayer.Bonus_Class_ProjectileSpeed, eqip_stat.Bonus_Equip_Proj_Speed, 

@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d077671a8415a264f886e179146b2c6e, type: 3}
   m_Name: SpeedProjectile
   m_EditorClassIdentifier: 
-  name_asp: 3
+  name_asp: 11
   BG_Color:
     serializedVersion: 2
-    rgba: 4283443240
+    rgba: 4283440670
   icon_color:
     serializedVersion: 2
-    rgba: 4291317840
-  min_value: 1
-  max_value: 1
-  sprite: {fileID: 0}
+    rgba: 4294932530
+  min_value: 0.2
+  max_value: 0.5
+  sprite: {fileID: 1231912602, guid: e1e761b1dcd7495459aa40445b4527f8, type: 3}

@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d077671a8415a264f886e179146b2c6e, type: 3}
-  m_Name: Damage
+  m_Name: HP
   m_EditorClassIdentifier: 
   name_asp: 7
   BG_Color:
     serializedVersion: 2
-    rgba: 4278190180
+    rgba: 4283443240
   icon_color:
     serializedVersion: 2
-    rgba: 4281479880
-  min_value: 1
-  max_value: 1
-  sprite: {fileID: 0}
+    rgba: 4291317840
+  min_value: 3
+  max_value: 7
+  sprite: {fileID: -150774449, guid: e1e761b1dcd7495459aa40445b4527f8, type: 3}
