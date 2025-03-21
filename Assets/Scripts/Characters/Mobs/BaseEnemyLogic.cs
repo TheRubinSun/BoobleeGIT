@@ -170,10 +170,17 @@ public class BaseEnemyLogic : MonoBehaviour
         tempSource.pitch = UnityEngine.Random.Range(0.5f, 1.5f);
         tempSource.PlayOneShot(die_sound);
 
-
-        OnEnemyDeath?.Invoke(this);
-        Destroy(gameObject, die_sound.length / tempSource.pitch);
+        StartCoroutine(WaitToDie(die_sound.length / tempSource.pitch));
     }
+    private IEnumerator WaitToDie(float time)
+    {
+        yield return new WaitForSeconds(time);
+        OnEnemyDeath?.Invoke(this);
+        Destroy(gameObject);
+    }
+
+
+
     ///////////////////Controle
     
     public virtual void Move()
