@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6605310741985116714}
   - component: {fileID: 1215674252710585427}
+  - component: {fileID: 1420390612320581154}
   - component: {fileID: 4740884294997987002}
   - component: {fileID: 1890836006999435829}
-  - component: {fileID: 1420390612320581154}
   m_Layer: 0
   m_Name: Simple_knife
   m_TagString: Untagged
@@ -91,6 +91,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1420390612320581154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1189786356956331463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6baf4af4d7bf9f64786b9069239cdb2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TypeAttack: 0
+  AttackDirectionOrVector: 0
+  minDistance: 0.8
+  offset: 90
+  PlayerModel: {fileID: 0}
+  pitchRange: 0.1
+  volumeSounds: 0.05
+  audioClips:
+  - {fileID: 8300000, guid: cc9e2d4f2a898794b90bf5d3409cbbbf, type: 3}
 --- !u!60 &4740884294997987002
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -240,24 +261,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1420390612320581154
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1189786356956331463}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6baf4af4d7bf9f64786b9069239cdb2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TypeAttack: 0
-  AttackDirectionOrVector: 0
-  minDistance: 0.8
-  offset: 90
-  PlayerModel: {fileID: 0}
-  audioClips: []
 --- !u!1 &8370641025233230599
 GameObject:
   m_ObjectHideFlags: 0

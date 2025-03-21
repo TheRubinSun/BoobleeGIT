@@ -45,8 +45,6 @@ public class SlimeLogic : BaseEnemyLogic
         sr_item_two.sortingOrder = spr_ren.sortingOrder - 1;
         sr_item_three.sortingOrder = spr_ren.sortingOrder - 1;
 
-        audioSource_Attack.volume = 0.1f;
-        
     }
     protected override void UpdateSortingOrder()
     {
@@ -168,13 +166,10 @@ public class SlimeLogic : BaseEnemyLogic
     {
         GameObject bullet;
         Vector2 direction;
-        
 
-        if (audioClips.Length > 0 && audioClips[0] != null)
-        {
-            audioSource_Attack.Stop();
-            audioSource_Attack.PlayOneShot(audioClips[0]); //Звук выстрела
-        }
+        audioSource.volume = attack_volume;
+        audioSource.Stop();
+        audioSource.PlayOneShot(attack_sound); //Звук выстрела
 
         //Стреляет из определенной точки или из центра моба
         if (Shoot_point != null)
@@ -211,11 +206,9 @@ public class SlimeLogic : BaseEnemyLogic
     }
     private void MeleeAttackOne()
     {
-        if (audioClips.Length > 0 && audioClips[0] != null)
-        {
-            audioSource_Attack.Stop();
-            audioSource_Attack.PlayOneShot(audioClips[0]); //Звук выстрела
-        }
+        audioSource.volume = attack_volume;
+        audioSource.Stop();
+        audioSource.PlayOneShot(attack_sound); //Звук выстрела
         Player.Instance.TakeDamage(enum_stat.Att_Damage, true);
     }
     public void SetItemsPosIdle(int frame)

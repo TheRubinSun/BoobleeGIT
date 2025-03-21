@@ -123,6 +123,11 @@ public class MinionControl : MonoBehaviour
     public virtual void GiveItemsToPlayer()
     {
         Debug.Log("Передача ресурсов");
+        if (dropItems.Count > 0)
+        {
+            Debug.Log("Попытка произвести звук");
+            SoundsManager.Instance.PlayTakeDropItem();
+        }
         foreach (Slot slot in dropItems)
         {
             Inventory.Instance.AddItem(slot.Item, slot.Count);

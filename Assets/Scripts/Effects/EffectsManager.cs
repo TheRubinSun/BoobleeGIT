@@ -32,7 +32,7 @@ public class EffectsManager : MonoBehaviour
     {
         if (activeCoroutines.ContainsKey(effect))
         {
-            Debug.LogWarning($"{effect.EffectName} Уже действует");
+            //Debug.LogWarning($"{effect.EffectName} Уже действует");
             if (effect.cooldown > 0)
             {
                 

@@ -125,6 +125,8 @@ public class DragAndDrop:MonoBehaviour
             dragItem = false; //Отпускаем предмет
             DragZone.SetActive(dragItem);  //Выключить возможность выбросить
             ShopLogic.Instance.CountedGoldForSell();
+
+            SoundsManager.Instance.PlayPutItem();
         }
         
     }
@@ -139,6 +141,8 @@ public class DragAndDrop:MonoBehaviour
             oldSlot.NullSLot();
             ShopLogic.Instance.UpdateSlotUITrade(oldSlot);
             ShopLogic.Instance.CountedGoldForBuy();
+
+            SoundsManager.Instance.PlayPutItem();
         }
     }
     public void DragShopSlot(int numbShopSlot)
@@ -154,16 +158,20 @@ public class DragAndDrop:MonoBehaviour
             oldSlot.NullSLot();
             ShopLogic.Instance.UpdateSlotUITrade(oldSlot);
             ShopLogic.Instance.CountedGoldForBuy();
+
+            SoundsManager.Instance.PlayTakeItem();
         }
     }
     public bool Drag()
     {
         if (!dragItem) //Если нужно взять предмет
         {
+            SoundsManager.Instance.PlayTakeItem();
             return TakeItem(); //Берем предмет
         }
         else //Если предмет взят
         {
+            SoundsManager.Instance.PlayPutItem();
             return PutItem();
         }
     }
@@ -283,6 +291,7 @@ public class DragAndDrop:MonoBehaviour
         }
         DragHalfOrPutOne();
         ShopLogic.Instance.CountedGoldForSell();
+
     }
     public void DragPieceSellArea()
     {
@@ -300,6 +309,8 @@ public class DragAndDrop:MonoBehaviour
                 DragZone.SetActive(dragItem);  //Выключить возможность выбросить
             }
             ShopLogic.Instance.CountedGoldForSell();
+
+            SoundsManager.Instance.PlayTakeItem();
         }
     }
     public void DragPieceBuySlot(int numbBuySlot)
@@ -319,6 +330,8 @@ public class DragAndDrop:MonoBehaviour
 
             ShopLogic.Instance.UpdateSlotUITrade(oldSlot);
             ShopLogic.Instance.CountedGoldForBuy();
+
+            SoundsManager.Instance.PlayPutItem();
         }
     }
     public void DragPieceShopSlot(int numbShopSlot)
@@ -338,6 +351,8 @@ public class DragAndDrop:MonoBehaviour
 
             ShopLogic.Instance.UpdateSlotUITrade(oldSlot);
             ShopLogic.Instance.CountedGoldForBuy();
+
+            SoundsManager.Instance.PlayTakeItem();
         }
     }
     //==============================================
@@ -345,10 +360,12 @@ public class DragAndDrop:MonoBehaviour
     {
         if (!dragItem)
         {
+            SoundsManager.Instance.PlayTakeItem();
             TakeHalfItem();
         }
         else if (dragItem)
         {
+            SoundsManager.Instance.PlayPutItem();
             PutOneItem();
         }
     }
@@ -393,6 +410,7 @@ public class DragAndDrop:MonoBehaviour
     //================================================ Блок бросить предмет ====================================================================
     public void DropItem()
     {
+        SoundsManager.Instance.PlayPutDropItem();
         GameObject gameObject = Instantiate(ItemDropPref, ItemsOnMapLevel);
         gameObject.transform.position = player.position;
         ItemDrop ItemD = gameObject.GetComponent<ItemDrop>();
@@ -425,6 +443,7 @@ public class DragAndDrop:MonoBehaviour
                     TextMeshPro textMeshPro = gameObject.GetComponentInChildren<TextMeshPro>();
                     if (textMeshPro != null)
                     {
+                        
                         textMeshPro.text = $"{ItemD.item.Name} ({ItemD.count})";
                     }
                     else
@@ -434,6 +453,7 @@ public class DragAndDrop:MonoBehaviour
                 }
                 else
                 {
+                    SoundsManager.Instance.PlayTakeDropItem();
                     Destroy(child.gameObject);
                 }
             }

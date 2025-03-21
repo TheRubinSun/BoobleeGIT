@@ -22,16 +22,13 @@ public class WeaponControl : MonoBehaviour
     protected float attackInterval { get; set; }
 
 
-    [SerializeField]
-    protected float minDistance = 0.3f; // Минимальный радиус, в котором оружие НЕ должно крутиться
-    [SerializeField]
-    protected int offset; // Смещение для установки правильной позиции, если нужно
+    [SerializeField] protected float minDistance = 0.3f; // Минимальный радиус, в котором оружие НЕ должно крутиться
+    [SerializeField] protected int offset; // Смещение для установки правильной позиции, если нужно
 
-    [SerializeField]
-    protected Transform PlayerModel;
+    [SerializeField]  protected Transform PlayerModel;
 
-    [SerializeField]
-    protected float pitchRange = 0.1f;
+
+    [SerializeField]  protected float pitchRange = 0.1f;
 
     protected SpriteRenderer sr;
     protected Vector2 mousePos;
@@ -40,15 +37,15 @@ public class WeaponControl : MonoBehaviour
 
     protected Vector2 direction;
     protected float distance;
+    [SerializeField]  protected float volumeSounds;
     //Звуки
     protected AudioSource audioSource_Shot;
 
-    [SerializeField] 
-    protected AudioClip[] audioClips;
+    [SerializeField] protected AudioClip[] audioClips;
     protected virtual void Start()
     {
         audioSource_Shot = GetComponent<AudioSource>();
-        audioSource_Shot.volume = 0.1f;
+        audioSource_Shot.volume = volumeSounds;
 
 
         sr = GetComponent<SpriteRenderer>();

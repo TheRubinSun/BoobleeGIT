@@ -13,7 +13,6 @@ public class DaizenLogic : BaseEnemyLogic
     {
         base.Start();
         spr_ren_ch = child_Obj.GetComponent<SpriteRenderer>();//Берем доч спрайт моба, если есть
-        audioSource_Attack.volume = 0.1f;
     }
 
     protected override void UpdateSortingOrder()
@@ -60,11 +59,9 @@ public class DaizenLogic : BaseEnemyLogic
     }
     private void MeleeAttackOne()
     {
-        if (audioClips.Length > 0 && audioClips[0] != null)
-        {
-            audioSource_Attack.Stop();
-            audioSource_Attack.PlayOneShot(audioClips[0]); //Звук выстрела
-        }
+        audioSource.volume = attack_volume;
+        audioSource.Stop();
+        audioSource.PlayOneShot(attack_sound); //Звук выстрела
 
 
         Player.Instance.TakeDamage(enum_stat.Att_Damage, true);

@@ -19,7 +19,6 @@ public class RaingerLogic : BaseEnemyLogic
     {
         base.Start();
         spr_ren_ch = child_Obj.GetComponent<SpriteRenderer>();//Берем доч спрайт моба, если есть
-        audioSource_Attack.volume = 0.1f;
 
     }
     protected override void UpdateSortingOrder()
@@ -79,11 +78,9 @@ public class RaingerLogic : BaseEnemyLogic
         GameObject bullet;
         Vector2 direction;
 
-        if (audioClips.Length > 0 && audioClips[0] != null)
-        {
-            audioSource_Attack.Stop();
-            audioSource_Attack.PlayOneShot(audioClips[0]); //Звук выстрела
-        }
+        audioSource.volume = attack_volume;
+        audioSource.Stop();
+        audioSource.PlayOneShot(attack_sound); //Звук выстрела
 
 
         //Стреляет из определенной точки или из центра моба

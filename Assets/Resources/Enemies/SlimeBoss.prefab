@@ -302,8 +302,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8978249526785545920}
   - component: {fileID: 3265674552959988833}
-  - component: {fileID: 1452969437514469714}
   - component: {fileID: 7308889567802266086}
+  - component: {fileID: 1452969437514469714}
   - component: {fileID: 3205334774029856802}
   - component: {fileID: 476038679874665788}
   - component: {fileID: 1260200964986917490}
@@ -389,6 +389,33 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7308889567802266086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7439899762115682407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d20e19578729a741993d16859890aa5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IdMobs: 3
+  Name: 
+  player: {fileID: 0}
+  audioSource: {fileID: 0}
+  attack_sound: {fileID: 8300000, guid: cd9943c938af06f49a350c0b3f7b12f7, type: 3}
+  player_touch_sound: {fileID: 8300000, guid: 63d4cc6623a94b6489be1af4aa5f28d9, type: 3}
+  die_sound: {fileID: 8300000, guid: a392a1df9f28efc4a94e02bd4c97cb53, type: 3}
+  attackBuffer: 1
+  attack_volume: 0.1
+  touch_volume: 0.15
+  die_volume: 0.5
+  Shoot_point: {fileID: 5603267853732997806}
+  item_one: {fileID: 1331215063558217633}
+  item_two: {fileID: 2859128102327179502}
+  item_three: {fileID: 3656356139783691390}
 --- !u!95 &1452969437514469714
 Animator:
   serializedVersion: 7
@@ -411,29 +438,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7308889567802266086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7439899762115682407}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d20e19578729a741993d16859890aa5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IdMobs: 3
-  Name: 
-  player: {fileID: 0}
-  audioSource_Attack: {fileID: 1260200964986917490}
-  audioClips:
-  - {fileID: 8300000, guid: cd9943c938af06f49a350c0b3f7b12f7, type: 3}
-  attackBuffer: 1
-  Shoot_point: {fileID: 5603267853732997806}
-  item_one: {fileID: 1331215063558217633}
-  item_two: {fileID: 2859128102327179502}
-  item_three: {fileID: 3656356139783691390}
 --- !u!50 &3205334774029856802
 Rigidbody2D:
   serializedVersion: 5

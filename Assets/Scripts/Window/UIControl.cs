@@ -173,17 +173,22 @@ public class UIControl:MonoBehaviour
         {
             LvlUPWindow.SetActive(true);
             LvlUpLogic.Instance.GenAspects();
+            SoundsManager.Instance.PlayOpenWindow();
         }
         else
         {
             LvlUPWindow.SetActive(false);
         }
     }
-    public void OpenLvlUPWindow()
+    public void OpenLvlUPWindow(bool isOpen)
     {
-        LvlUpIsOpen = true;
-        LvlUPWindow.SetActive(true);
+        LvlUpIsOpen = isOpen;
+        LvlUPWindow.SetActive(isOpen);
+
+        if (!isOpen) return;
+
         LvlUpLogic.Instance.GenAspects();
+        SoundsManager.Instance.PlayOpenWindow();
     }
     public void ShowHideLvlUP(bool showOrHide)
     {

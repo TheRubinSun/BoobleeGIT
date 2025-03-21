@@ -41,8 +41,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7898525117434782447}
   - component: {fileID: 2088188270394327670}
-  - component: {fileID: -556651292473087703}
   - component: {fileID: -4625664901199227015}
+  - component: {fileID: -556651292473087703}
   m_Layer: 0
   m_Name: ShotGun_pump
   m_TagString: Untagged
@@ -121,6 +121,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-4625664901199227015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6980527794144593444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ea114b14579b5e40aab4d7c23007d8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TypeAttack: 1
+  AttackDirectionOrVector: 0
+  minDistance: 0.3
+  offset: 0
+  PlayerModel: {fileID: 0}
+  pitchRange: 0.15
+  volumeSounds: 0.05
+  audioClips:
+  - {fileID: 8300000, guid: 467b2cfee4de68b4b8b9ad0477317ac7, type: 3}
+  ShootPos: {fileID: 2770646334030511382}
 --- !u!82 &-556651292473087703
 AudioSource:
   m_ObjectHideFlags: 0
@@ -218,24 +240,3 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &-4625664901199227015
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6980527794144593444}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ea114b14579b5e40aab4d7c23007d8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TypeAttack: 1
-  AttackDirectionOrVector: 0
-  minDistance: 0.3
-  offset: 0
-  PlayerModel: {fileID: 0}
-  audioClips:
-  - {fileID: 8300000, guid: 467b2cfee4de68b4b8b9ad0477317ac7, type: 3}
-  pitchRange: 0.15
-  ShootPos: {fileID: 2770646334030511382}

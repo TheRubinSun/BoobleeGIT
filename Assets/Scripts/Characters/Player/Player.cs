@@ -52,6 +52,7 @@ public class Player : MonoBehaviour
             pl_stats.LoadStats(playerSaveData);
             LoadWeaponToggles();
             pl_stats.UpdateTotalStats();
+            if (GetFreeSkillPoint() > 0) UIControl.Instance.ShowHideLvlUP(true);
         }
         else
         {
@@ -276,10 +277,18 @@ public class Player : MonoBehaviour
     }
     public void LvlUp()
     {
-        UIControl.Instance.ShowHideLvlUP(true);
-        UIControl.Instance.OpenLvlUPWindow();
         pl_ui.LvlUIUpdate(pl_stats);
         pl_ui.UpdateHpBar(pl_stats);
         pl_ui.UpdateSizeHpBar(pl_stats);
+
+        SoundsManager.Instance.PlayLevelUP();
+        StartCoroutine(ShowLevelUPWithDelay());
+    }
+    private IEnumerator ShowLevelUPWithDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        
+        UIControl.Instance.ShowHideLvlUP(true);
+        UIControl.Instance.OpenLvlUPWindow(true);
     }
 }

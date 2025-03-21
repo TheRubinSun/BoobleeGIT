@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEditor.Build.Player;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.ResourceManagement.ResourceProviders.Simulation;
 
 public class BaseEnemyLogic : MonoBehaviour
@@ -45,10 +46,12 @@ public class BaseEnemyLogic : MonoBehaviour
 
     //Звуки
     [SerializeField]
-    protected AudioSource audioSource_Attack;
+    protected AudioSource audioSource;
 
-    [SerializeField]
-    protected AudioClip[] audioClips;
+
+    [SerializeField] protected AudioClip attack_sound;
+    [SerializeField] protected AudioClip player_touch_sound;
+    [SerializeField] public AudioClip die_sound;
 
     protected bool IsNearThePlayer = false;
 
@@ -58,6 +61,9 @@ public class BaseEnemyLogic : MonoBehaviour
     protected float updateRate = 0.2f; // Интервал обновления (5 раза в секунду)
     protected float nextUpdateTime = 0f;
 
+    [SerializeField] protected float attack_volume;
+    [SerializeField] protected float touch_volume;
+    [SerializeField] protected float die_volume;
     //Слой
     protected int combinedLayerMask;
 
@@ -67,7 +73,7 @@ public class BaseEnemyLogic : MonoBehaviour
     }
     protected virtual void Start()
     {
-        audioSource_Attack = GetComponent<AudioSource>(); //Берем звук атаки
+        audioSource = GetComponent<AudioSource>(); //Берем звук 
         selfCollider = GetComponent<Collider2D>(); //Берем колайдер - форму касания
         spr_ren = GetComponent<SpriteRenderer>(); //Берем спрайт моба
 
@@ -122,6 +128,12 @@ public class BaseEnemyLogic : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
+        audioSource.Stop();
+        audioSource.volume = touch_volume;
+        audioSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f);
+        audioSource.PlayOneShot(player_touch_sound);
+        audioSource.pitch = 1f;
+
         StartCoroutine(FlashColor(new Color32(255, 108, 108, 255), 0.1f));
         enum_stat.Cur_Hp -= (int)(Mathf.Max(damage / (1 + enum_stat.Armor / 10f), 1));
         if (enum_stat.Cur_Hp <= 0)
@@ -151,9 +163,16 @@ public class BaseEnemyLogic : MonoBehaviour
         if (IsDead) return;
         IsDead = true;
 
-        OnEnemyDeath?.Invoke(this);
-        Destroy(gameObject);
+        enum_stat.Att_Speed = 0;
+        enum_stat.Mov_Speed = 0;
+        AudioSource tempSource = gameObject.AddComponent<AudioSource>();
+        tempSource.volume = die_volume;
+        tempSource.pitch = UnityEngine.Random.Range(0.5f, 1.5f);
+        tempSource.PlayOneShot(die_sound);
 
+
+        OnEnemyDeath?.Invoke(this);
+        Destroy(gameObject, die_sound.length / tempSource.pitch);
     }
     ///////////////////Controle
     

@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEditor.Experimental.GraphView;
@@ -37,7 +38,8 @@ public class LvlUpLogic : MonoBehaviour
     }
     public void GenAspects()
     {
-        Debug.Log(GlobalData.cur_seed + " " + GlobalData.cur_seed + (Player.Instance.GetLevel() - Player.Instance.GetFreeSkillPoint()));
+        
+        //Debug.Log(GlobalData.cur_seed + " " + GlobalData.cur_seed + (Player.Instance.GetLevel() - Player.Instance.GetFreeSkillPoint()));
         random = new System.Random(GlobalData.cur_seed + (Player.Instance.GetLevel() - Player.Instance.GetFreeSkillPoint()));
         if (tempAspects.Count > 0)
         {
@@ -92,17 +94,23 @@ public class LvlUpLogic : MonoBehaviour
 
         if(Player.Instance.GetFreeSkillPoint() > 0)
         {
-            UIControl.Instance.ShowHideLvlUP(true);
-            GenAspects();
+            UIControl.Instance.OpenLvlUPWindow(false);
+            StartCoroutine(StartNewAspectChoose());
         }
         else
         {
             UIControl.Instance.CloseWindowLvlUP();
             UIControl.Instance.ShowHideLvlUP(false);
         }
+        SoundsManager.Instance.PlayAcceptAspect();
     }
-    private void NewLevel()
+    private IEnumerator StartNewAspectChoose()
     {
+        yield return new WaitForSeconds(0.6f);
+        
+        UIControl.Instance.ShowHideLvlUP(true);
+        GenAspects();
+        UIControl.Instance.OpenLvlUPWindow(true);
     }
     public static List<AspectName> GetRandomAspects()
     {

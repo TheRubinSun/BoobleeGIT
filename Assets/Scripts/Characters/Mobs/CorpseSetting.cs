@@ -7,6 +7,11 @@ public class CorpseSetting : MonoBehaviour
 {
     public bool isBusy { get; private set; }
     public string NameKey { get; set; }
+    public AudioSource audioSource;
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
     public void Start()
     {
         isBusy = false;
@@ -19,6 +24,13 @@ public class CorpseSetting : MonoBehaviour
     {
         //Debug.Log($"труп: {NameKey}");
         return ChanceAllDrop();
+    }
+    public void PlayDieSoind(AudioClip dieSound)
+    {
+        Debug.Log(dieSound.name + " Played");
+        audioSource.Stop();
+        audioSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f);
+        audioSource.PlayOneShot(dieSound);
     }
     private List<Slot> ChanceAllDrop()
     {

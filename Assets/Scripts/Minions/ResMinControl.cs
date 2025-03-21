@@ -146,13 +146,8 @@ public class ResMinControl : MinionControl
     }
     public override void GiveItemsToPlayer()
     {
-        Debug.Log("Передача ресурсов");
-        foreach (Slot slot in dropItems)
-        {
-            Inventory.Instance.AddItem(slot.Item, slot.Count);
-        }
+        base.GiveItemsToPlayer();
         DestroyAllSubObj();
-        dropItems.Clear();
     }
     private void VisualItems()
     {
@@ -197,7 +192,6 @@ public class ResMinControl : MinionControl
         rotate_anim.SetBool("Move", false);
         body_anim.SetBool("Move", false);
 
-        Debug.Log("Попытка остановки звука");
         audioSource_Move.Stop();
         audioSource_Work.Stop();
     }

@@ -115,12 +115,14 @@ public class GameManager: MonoBehaviour
         else 
             corpseEnemy.tag = "Corpse_Mag";
 
-        corpseEnemy.GetComponent<CorpseSetting>().NameKey = enemy.GetComponent<BaseEnemyLogic>().Name;
+        CorpseSetting corpseSetting = corpseEnemy.GetComponent<CorpseSetting>();
+        corpseSetting.NameKey = enemy.GetComponent<BaseEnemyLogic>().Name;
         corpseEnemy.GetComponent<SpriteRenderer>().flipX = enemy.GetComponent<SpriteRenderer>().flipX;
+        //corpseSetting.PlayDieSoind(enemy.GetComponent<BaseEnemyLogic>().die_sound);
 
         Animator corpseAnim = corpseEnemy.GetComponent<Animator>();    //Коприруем аниматор
         Animator enemyAnim = enemy.gameObject.GetComponent<BaseEnemyLogic>().GetAnimator(); //Коприруем аниматор
-        
+
         corpseAnim.runtimeAnimatorController = enemyAnim.runtimeAnimatorController;        //Коприруем аниматор
         corpseAnim.fireEvents = false;  // Выключает все Animation Events
         corpseAnim.SetTrigger("Death");

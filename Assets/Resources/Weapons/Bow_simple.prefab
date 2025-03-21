@@ -41,8 +41,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7898525117434782447}
   - component: {fileID: 2088188270394327670}
-  - component: {fileID: -556651292473087703}
   - component: {fileID: 8376059232493342199}
+  - component: {fileID: -556651292473087703}
   - component: {fileID: 7496193161229393789}
   m_Layer: 0
   m_Name: Bow_simple
@@ -122,6 +122,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8376059232493342199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6980527794144593444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e79c6fdc7048dc943ab0bf9414cc1898, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TypeAttack: 2
+  AttackDirectionOrVector: 0
+  minDistance: 0.3
+  offset: 0
+  PlayerModel: {fileID: 0}
+  pitchRange: 0.15
+  volumeSounds: 0.1
+  audioClips:
+  - {fileID: 8300000, guid: e90e4abc85207414a9da380f3ee90c57, type: 3}
+  ShootPos: {fileID: 2770646334030511382}
 --- !u!82 &-556651292473087703
 AudioSource:
   m_ObjectHideFlags: 0
@@ -219,27 +241,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &8376059232493342199
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6980527794144593444}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e79c6fdc7048dc943ab0bf9414cc1898, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TypeAttack: 2
-  AttackDirectionOrVector: 0
-  minDistance: 0.3
-  offset: 0
-  PlayerModel: {fileID: 0}
-  audioClips:
-  - {fileID: 8300000, guid: e90e4abc85207414a9da380f3ee90c57, type: 3}
-  pitchRange: 0.15
-  ShootPos: {fileID: 2770646334030511382}
 --- !u!95 &7496193161229393789
 Animator:
   serializedVersion: 7
