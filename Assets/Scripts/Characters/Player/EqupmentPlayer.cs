@@ -127,9 +127,9 @@ public class EqupmentPlayer : MonoBehaviour
         if (id < 4) // Проверяем, существует ли Prefab перед инстанциированием и id до 4, так как 0 1 2 3 это слоты для оружия
         {
             int idPref = ItemsList.Instance.GetIdWeaponForNum(slotsEqup[id].Item);  //Получаем номер оружия из списка всех предметов (нужен порядковый номер оржия чтобы создать подходящий префаб)
-            if(WeaponDatabase.GetWeaponPrefab(idPref) != null)
+            if(ResourcesData.GetWeaponPrefab(idPref) != null)
             {
-                GameObject weaponObj = Instantiate(WeaponDatabase.GetWeaponPrefab(idPref), EquipSlotPrefab[id]);  //Создаем оружие в слот 
+                GameObject weaponObj = Instantiate(ResourcesData.GetWeaponPrefab(idPref), EquipSlotPrefab[id]);  //Создаем оружие в слот 
                 LoadParametersWeapon(weaponObj, slotsEqup[id]); //Загружаем параметры с слолта в оружие
                 Player.Instance.SetWeaponsObj(id, weaponObj.GetComponent<WeaponControl>()); //Передаем в словарь у игрока в список оружия
                 slots_Weapon[id] = weaponObj; //Словарь в этом классе, пока не используется 
@@ -143,9 +143,9 @@ public class EqupmentPlayer : MonoBehaviour
         else if(id > 4 && id < 9) //Для слотов миньон
         {
             int idPref = ItemsList.Instance.GetIdMinoinForNum(slotsEqup[id].Item);  //Получаем номер миньона из списка всех предметов (нужен порядковый номер миньоена чтобы создать подходящий префаб)
-            if (WeaponDatabase.GetMinionPrefab(idPref) != null)
+            if (ResourcesData.GetMinionPrefab(idPref) != null)
             {
-                GameObject minionObj = Instantiate(WeaponDatabase.GetMinionPrefab(idPref), EquipSlotPrefab[id]);
+                GameObject minionObj = Instantiate(ResourcesData.GetMinionPrefab(idPref), EquipSlotPrefab[id]);
                 LoadParametersMinion(minionObj, slotsEqup[id]);
                 Player.Instance.SetMinionsObj(id, minionObj.GetComponent<MinionControl>());
                 slots_minions[id] = minionObj; //Словарь в этом классе, пока не используется 
@@ -180,7 +180,7 @@ public class EqupmentPlayer : MonoBehaviour
         {
             //Debug.Log($"Gun: {gun.NameKey}: {gun.projectileSpeed}");
             weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(gun.damage, gun.attackSpeed, gun.projectileSpeed, gun.rangeType, gun.range, gun.conut_Projectiles, gun.spreadAngle, gun.typeDamage, PlayerModel,
-                WeaponDatabase.GetProjectilesPrefab(gun.idBulletPref), gun.projectileSpeedCoof);
+                ResourcesData.GetProjectilesPrefab(gun.idBulletPref), gun.projectileSpeedCoof);
         }
         else if (slot.Item is Sword sword)
         {

@@ -8,7 +8,7 @@ public class LoadSystem
     //public LoadSystem()
     //{
     //    savePath = Path.Combine(Application.persistentDataPath, "weapon_save.json");
-    //    WeaponDatabase.LoadWeapons(); // Загружаем префабы при старте
+    //    ResourcesData.LoadWeapons(); // Загружаем префабы при старте
     //}
     //public GameObject LoadWeapon()
     //{
@@ -20,6 +20,6 @@ public class LoadSystem
     //    string json = File.ReadAllText(savePath);
     //    WeaponSaveData loadedData = JsonUtility.FromJson<WeaponSaveData>(json);
 
-    //    return WeaponDatabase.GetWeaponPrefab(loadedData.weaponId);
+    //    return ResourcesData.GetWeaponPrefab(loadedData.weaponId);
     //}
 }

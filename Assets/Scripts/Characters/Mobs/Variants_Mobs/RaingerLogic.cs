@@ -39,7 +39,7 @@ public class RaingerLogic : BaseEnemyLogic
 
         if (mob is RangerMob rangerMob)
         {
-            bulletPrefab = WeaponDatabase.GetMobProjectilesPrefab(rangerMob.idProj);
+            bulletPrefab = ResourcesData.GetMobProjectilesPrefab(rangerMob.idProj);
             sp_Project = rangerMob.SpeedProjectile;
         }
 

@@ -23,7 +23,7 @@ public class HealPotion : Potion
     }
     public override bool Use()
     {
-        if(Player.Instance.PlayerHeal(countHeal))
+        if(Player.Instance.TakeHeal(countHeal))
         {
             Debug.Log("ѕытаюсь отхилить");
             return true;

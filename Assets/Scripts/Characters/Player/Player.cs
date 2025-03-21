@@ -157,26 +157,6 @@ public class Player : MonoBehaviour
         UpdateHP();
     }
 
-    private async Task FlashColor(Color32 color, float time) //Менять цвет на время
-    {
-        if (player_sprite == null) return;
-
-        player_sprite.color = color;
-
-        float elapsed = 0;
-        while (elapsed < time)
-        {
-            if(Time.timeScale > 0)// Чтобы учитывать паузу
-            {
-                elapsed += Time.deltaTime;
-            }
-
-            await Task.Yield();// Ждать следующий кадр без блокировки поток
-        }
-
-        //await Task.Delay((int)(time * 1000));
-        player_sprite.color = new Color32(255, 255, 255, 255);
-    }
     private void IsDeath()
     {
         if (pl_stats.Cur_Hp < 1)
@@ -234,12 +214,12 @@ public class Player : MonoBehaviour
         pl_ui.UpdateHpBar(pl_stats);
         pl_ui.UpdateSizeHpBar(pl_stats);
     }
-    public async void TakeDamage(int damage, bool canEvade)
+    public void TakeDamage(int damage, bool canEvade)
     {
         if(pl_stats.TakeDamageStat(damage, canEvade))
         {
             pl_ui.UpdateHpBar(pl_stats);
-            await FlashColor(new Color32(255, 108, 108, 255), 0.1f);
+            StartCoroutine(FlashColor(new Color32(255, 108, 108, 255), 0.1f));
             IsDeath();
         }
         else
@@ -247,20 +227,38 @@ public class Player : MonoBehaviour
             Debug.Log("Промах от врага");
         }
     }
-    public async void TakeHeal(int heal)
+    public bool TakeHeal(int heal)
     {
         if (pl_stats.PlayerHealStat(heal))
         {
+            SoundsManager.Instance.PlayItemSounds(4);
             pl_ui.UpdateHpBar(pl_stats);
-            await FlashColor(new Color32(110, 255, 93, 255), 0.1f);
+            StartCoroutine(FlashColor(new Color32(110, 255, 93, 255), 0.1f));
+            return true;
         }
+        return false;
     }
-    public bool PlayerHeal(int count_heal)
+
+    private IEnumerator FlashColor(Color32 color, float time)
     {
-        bool chech = pl_stats.PlayerHealStat(count_heal);
-        pl_ui.UpdateHpBar(pl_stats);
-        return chech;
+        if (player_sprite == null) yield break;
+
+        player_sprite.color = color;
+        float elapsed = 0;
+
+        while (elapsed < time)
+        {
+            if (Time.timeScale > 0)
+            {
+                elapsed += Time.deltaTime;
+            }
+
+            yield return null; // Ждет следующий кадр
+        }
+
+        player_sprite.color = new Color32(255, 255, 255, 255);
     }
+
     public bool IsFullHP()
     {
         if (pl_stats.Cur_Hp == pl_stats.Max_Hp) return true;

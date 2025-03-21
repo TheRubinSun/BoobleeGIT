@@ -15,10 +15,29 @@ public class LvlUpLogic : MonoBehaviour
     [SerializeField] private List<AspectData> aspectDatas = new List<AspectData>();
     private List<TempAspect> tempAspects = new List<TempAspect>();
 
+    [SerializeField] private TextMeshProUGUI nameWindow;
+
+    private string word_nameWindow;
+    private string word_acceptButton;
+    private string word_Agillity;
+    private string word_Strength;
+    private string word_Intelligence;
+    private string word_Tech_Point;
+    private string word_Mage_Point;
+    private string word_Exp_Bust;
+    private string word_Speed;
+    private string word_Hp;
+    private string word_Gold;
+    private string word_AttackSpeed;
+    private string word_Range;
+    private string word_Projectile_speed;
+
 
     private static readonly HashSet<AspectName> percentageAspects = new HashSet<AspectName>
     { AspectName.Range, AspectName.Speed, AspectName.Projectile_speed, AspectName.Exp_Bust}; //те что в процентах
     private static System.Random random;
+
+
     private void Awake()
     {
         if(Instance != null && Instance != this)
@@ -28,6 +47,35 @@ public class LvlUpLogic : MonoBehaviour
         }
         Instance = this;
     }
+    public void LocalizationText()
+    {
+        if(LocalizationManager.Instance != null)
+        {
+            Dictionary<string, string> localized_player_stats_name = LocalizationManager.Instance.GetLocalizedValue("ui_text", "aspects_name");
+            if(localized_player_stats_name != null)
+            {
+                word_nameWindow = localized_player_stats_name["word_nameWindow"];
+                word_acceptButton = localized_player_stats_name["word_acceptButton"];
+                word_Agillity = localized_player_stats_name["word_Agillity"];
+                word_Strength = localized_player_stats_name["word_Strength"];
+                word_Intelligence = localized_player_stats_name["word_Intelligence"];
+                word_Tech_Point = localized_player_stats_name["word_Tech_Point"];
+                word_Mage_Point = localized_player_stats_name["word_Mage_Point"];
+                word_Exp_Bust = localized_player_stats_name["word_Exp_Bust"];
+                word_Speed = localized_player_stats_name["word_Speed"];
+                word_Hp = localized_player_stats_name["word_Hp"];
+                word_Gold = localized_player_stats_name["word_Gold"];
+                word_AttackSpeed = localized_player_stats_name["word_AttackSpeed"];
+                word_Range = localized_player_stats_name["word_Range"];
+                word_Projectile_speed = localized_player_stats_name["word_Projectile_speed"];
+
+                nameWindow.text = word_nameWindow;
+            }
+
+        }
+
+    }
+
     public void RemoveObj()
     {
         foreach(TempAspect tempAsp in tempAspects)
@@ -64,12 +112,14 @@ public class LvlUpLogic : MonoBehaviour
                     GameObject AspectObg = Instantiate(pref_Aspect, parent_aspects);
                     AspectObg.name = id.ToString();
                     AspectObg.GetComponent<Image>().color = aspectData.BG_Color;
+
                     AspectObg.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
                         percentageAspects.Contains(aspect)
-                        ? $"+{value * 100}% {aspectData.name_asp}"
-                        : $"+{value} {aspectData.name_asp}";
-                    AspectObg.transform.GetChild(1).GetComponent<Image>().color = aspectData.BG_Color;
+                        ? $"+{value * 100}% {TranslateWord(aspect)}"
+                        : $"+{value} {TranslateWord(aspect)}";
 
+                    AspectObg.transform.GetChild(1).GetComponent<Image>().color = aspectData.BG_Color;
+                    AspectObg.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = word_acceptButton;
                     Button btnAccept = AspectObg.transform.GetChild(1).GetComponent<Button>();
                     int currentId = id;
                     btnAccept.onClick.AddListener(() => AcceptAspect(currentId));
@@ -103,6 +153,38 @@ public class LvlUpLogic : MonoBehaviour
             UIControl.Instance.ShowHideLvlUP(false);
         }
         SoundsManager.Instance.PlayAcceptAspect();
+    }
+    private string TranslateWord(AspectName aspect)
+    {
+        switch (aspect)
+        {
+            case AspectName.Agillity:
+                return word_Agillity;
+            case AspectName.Strength:
+                return word_Strength;
+            case AspectName.Intelligence:
+                return word_Intelligence;
+            case AspectName.Tech_Point:
+                return word_Tech_Point;
+            case AspectName.Mage_Point:
+                return word_Mage_Point;
+            case AspectName.Exp_Bust:
+                return word_Exp_Bust;
+            case AspectName.Speed:
+                return word_Speed;
+            case AspectName.Hp:
+                return word_Hp;
+            case AspectName.Gold:
+                return word_Gold;
+            case AspectName.AttackSpeed:
+                return word_AttackSpeed;
+            case AspectName.Range:
+                return word_Range;
+            case AspectName.Projectile_speed:
+                return word_Projectile_speed;
+            default:
+                return "Unknown Aspect"; // На случай, если что-то пойдет не так
+        }
     }
     private IEnumerator StartNewAspectChoose()
     {

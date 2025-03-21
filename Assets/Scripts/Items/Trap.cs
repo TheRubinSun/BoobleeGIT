@@ -14,7 +14,7 @@ public class Trap : Item, IUsable
     }
     public virtual void LoadParamToObj()
     {
-        prefab_trap = WeaponDatabase.GetTrapPrefab(id_trap_prefab);
+        prefab_trap = ResourcesData.GetTrapPrefab(id_trap_prefab);
     }
     public virtual int GetSoundID() => 0;
 }

@@ -6,7 +6,7 @@ public class PistolLogic : RangeWeaponLogic
     protected override void Start()
     {
         base.Start();
-        posionNewEff = WeaponDatabase.effects[1];
+        posionNewEff = ResourcesData.effects[1];
     }
     protected override void RotateWeaponOnCursor()
     {

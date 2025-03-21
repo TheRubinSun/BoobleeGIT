@@ -39,7 +39,7 @@ public class UIControl:MonoBehaviour
             return;
         }
         Instance = this;
-        WeaponDatabase.LoadWeapons();
+        ResourcesData.LoadWeapons();
     }
     private void Start()
     {
@@ -214,12 +214,13 @@ public class UIControl:MonoBehaviour
     }
     public void LocalizationTranslate()
     {
-        if(ItemsList.Instance.items != null && EnemyList.Instance.mobs != null && DisplayInfo.Instance != null && ShopLogic.Instance != null)
+        if(ItemsList.Instance.items != null && EnemyList.Instance.mobs != null && DisplayInfo.Instance != null && ShopLogic.Instance != null && LvlUpLogic.Instance != null)
         {
             ItemsList.Instance.LocalizaitedItems();
             EnemyList.Instance.LocalizaitedMobs();
             DisplayInfo.Instance.LocalizationText();
             ShopLogic.Instance.LocalizationText();
+            LvlUpLogic.Instance.LocalizationText();
         }
         else
         {

@@ -26,7 +26,7 @@ public class SlimeLogic : BaseEnemyLogic
     {
         base.Awake();
         Debug.Log(idPosion);
-        posionNewEff = WeaponDatabase.GetEffectsPrefab(idPosion);
+        posionNewEff = ResourcesData.GetEffectsPrefab(idPosion);
     }
     protected override void Start()
     {
@@ -75,7 +75,7 @@ public class SlimeLogic : BaseEnemyLogic
 
         if (mob is Slime slime)
         {
-            bulletPrefab = WeaponDatabase.GetMobProjectilesPrefab(slime.idProj);
+            bulletPrefab = ResourcesData.GetMobProjectilesPrefab(slime.idProj);
             sp_Project = slime.SpeedProjectile;
             idPosion = slime.idPosion;
         }
