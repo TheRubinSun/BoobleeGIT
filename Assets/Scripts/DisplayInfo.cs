@@ -29,7 +29,7 @@ public class DisplayInfo: MonoBehaviour
     const string HashColorAgility = "#22A64C";
     const string HashColorIntelligence = "#2273A6";
     const string HashColorBonus = "#E3B23F";
-    const string HashColorAddInfo = "#236465";
+    const string HashColorAddInfo = "#589310";
 
     //Player
     //Характеристики
@@ -223,7 +223,7 @@ public class DisplayInfo: MonoBehaviour
     }
     private void AppendStat(StringBuilder info, string statName, float totalStat, float baseStat, float statModifier, float classBonus, float equipBonus, string statNameMofifier, string roleClass, string equipment)
     {
-        int sizeFont = 10;
+        int sizeFont = 13;
         info.Append($"{statName}: {totalStat}");
         if (totalStat <= 0)
         {
