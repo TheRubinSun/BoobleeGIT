@@ -12,6 +12,16 @@ public class EffectData : ScriptableObject
     public float cooldown;
     public float value;
     public EffectType effectType;
+
+    public EffectData(EffectData original)
+    {
+        this.EffectName = original.EffectName;
+        this.effectType = original.effectType;
+        this.value = original.value;
+        this.idSprite = original.idSprite;
+        this.duration = original.duration;
+    }
+    public EffectData() { }
     public enum EffectType
     {
         SpeedBoost,

@@ -13,6 +13,8 @@ public class SoundsManager : MonoBehaviour
     [SerializeField] private AudioClip acceptAspect;
     [SerializeField] private AudioClip openLvelUPWindow;
 
+    [SerializeField] private AudioClip[] items_sounds;
+
     public float volume;
     private void Awake()
     {
@@ -59,5 +61,10 @@ public class SoundsManager : MonoBehaviour
     {
         audioSource.pitch = 1f;
         audioSource.PlayOneShot(acceptAspect);
+    }
+    public void PlayItemSounds(int id)
+    {
+        audioSource.pitch = 1f;
+        audioSource.PlayOneShot(items_sounds[id]);
     }
 }

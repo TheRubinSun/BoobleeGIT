@@ -28,6 +28,7 @@ public enum Quality
 public interface IUsable
 {
     public bool Use();
+    public int GetSoundID();
 }
 
 [Serializable]

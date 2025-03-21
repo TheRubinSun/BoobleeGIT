@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor.Rendering;
 using UnityEngine;
 
@@ -30,7 +31,10 @@ public class EffectsManager : MonoBehaviour
     }
     public bool ApplyEffect(EffectData effect)
     {
-        if (activeCoroutines.ContainsKey(effect))
+        EffectData existingEffect = activeCoroutines.Keys.FirstOrDefault(e => e.EffectName == effect.EffectName);
+
+
+        if (existingEffect != null)
         {
             //Debug.LogWarning($"{effect.EffectName} Уже действует");
             if (effect.cooldown > 0)

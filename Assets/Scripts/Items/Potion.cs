@@ -10,10 +10,13 @@ public class Potion : Item, IUsable
     {
         return false;
     }
+    public virtual int GetSoundID() => 0;
+
 }
 public class HealPotion : Potion
 {
     public int countHeal;
+    private static int soundID = 1;
     public HealPotion(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description,int _countHeal) : base(id, name, maxCount, spriteID, quality, cost, description)
     {
         countHeal = _countHeal;
@@ -31,6 +34,10 @@ public class HealPotion : Potion
             return false;
         }
     }
+    public override int GetSoundID()
+    {
+        return soundID;
+    }
 }
 public class SpeedUpPotion : Potion
 {
@@ -38,6 +45,7 @@ public class SpeedUpPotion : Potion
     public float duration;
     public int idSpriteEffect;
     public string nameEffect { get; set; }
+    private static int soundID = 2;
     public SpeedUpPotion(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, int _valueUp, float _duration, string _nameEffect, int _idSpriteEffect) : base(id, name, maxCount, spriteID, quality, cost, description)
     {
         valueUp = _valueUp;
@@ -51,21 +59,30 @@ public class SpeedUpPotion : Potion
         EffectsManager eff_man = Player.Instance.GetComponent<EffectsManager>();
         if (eff_man != null)
         {
-            EffectData effect = ScriptableObject.CreateInstance<EffectData>();
+            
+            //EffectData effect = new EffectData();
+            //EffectData effect = Resources.Load<EffectData>("Effects/" + nameEffect);
+            //if (effect != null)
+            //{
+            //    //Debug.Log($"Ёффект с именем {nameEffect} найден");
+            //    effect = new EffectData(effect);
+                
+                
+            //}
+            //else
+            //{
+            //    Debug.LogWarning("Ёффект с именем " + nameEffect + " не найден в папке Resources/Effects.");
+            //    Debug.Log("создаем временный новый");
 
-            Debug.LogWarning("Ёффект с именем " + nameEffect + " не найден в папке Resources/Effects.");
-            Debug.Log("создаем временный новый");
-
+            //    effect = ScriptableObject.CreateInstance<EffectData>();
+            //}
+            EffectData effect = new EffectData();
             effect.EffectName = "Speed Up";
             effect.effectType = EffectData.EffectType.SpeedBoost;
             effect.value = valueUp;
             effect.idSprite = idSpriteEffect;
             effect.duration = duration;
-            //effect = Resources.Load<EffectData>("Effects/" + nameEffect);
-            //if (effect != null)
-            //{
-            //    Debug.Log($"Ёффект с именем {nameEffect} найден");
-            //}
+
             return eff_man.ApplyEffect(effect); ;
         }
         else
@@ -73,6 +90,10 @@ public class SpeedUpPotion : Potion
             Debug.LogWarning("ќшибка использовани€ предмета");
             return false;
         }
+    }
+    public override int GetSoundID()
+    {
+        return soundID;
     }
 }
 public class Food : Item, IUsable
@@ -82,6 +103,7 @@ public class Food : Item, IUsable
     public float cooldown;
     public int idSpriteEffect;
     public string nameEffect { get; set; }
+    private static int soundID = 0;
     public Food(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, int _countHeal, float _duration, float _cooldown, string _nameEffect, int _idSpriteEffect) : base(id, name, maxCount, spriteID, quality, cost, description)
     {
         countHeal = _countHeal;
@@ -127,5 +149,9 @@ public class Food : Item, IUsable
             Debug.LogWarning("ќшибка использовани€ предмета");
             return false;
         }
+    }
+    public virtual int GetSoundID()
+    {
+        return soundID;
     }
 }

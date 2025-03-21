@@ -51,9 +51,22 @@ public class PlayerControl : MonoBehaviour
     }
     private void Update()
     {
-        //���� ��������
         inputDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        if(inputDirection.sqrMagnitude > 0)
+        RotateWeaponSlots();
+
+        if (!IsPointerOverUI())
+        {
+            if(Input.GetMouseButton(0))
+            Attack();
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            UseMinions();
+        }
+    }
+    private void FixedUpdate()
+    {
+        if (inputDirection.sqrMagnitude > 0)
         {
             Move();
         }
@@ -66,22 +79,11 @@ public class PlayerControl : MonoBehaviour
                 nextUpdateTime = Time.time + updateRate;
             }
         }
-
-        RotateWeaponSlots();
-
-        if(!IsPointerOverUI())
-        {
-            if(Input.GetMouseButton(0))
-            Attack();
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            UseMinions();
-        }
     }
     private void LateUpdate()
     {
-        cameraObj.position = new Vector3(transform.position.x, transform.position.y, -10f);
+        Vector3 targerPos = new Vector3(transform.position.x, transform.position.y, -10f);
+        cameraObj.position = Vector3.Lerp(cameraObj.position, targerPos, Time.deltaTime * 7f);
 
         foreach (LineControle legsLine in legsLines)
         {
@@ -120,15 +122,18 @@ public class PlayerControl : MonoBehaviour
     {
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 direction = mousePos - (Vector2)transform.position;
-        float angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
-        WeaponSlots.rotation = Quaternion.Euler(0, 0, -angle);
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        WeaponSlots.rotation = Quaternion.Euler(0, 0, angle);
     }
     public void Move()
     {
         movement = inputDirection.normalized * player.GetPlayerStats().Mov_Speed;
-        rb.MovePosition(rb.position + movement * Time.fixedDeltaTime);
-        MoveLegs();
+        //rb.MovePosition(rb.position + movement * Time.fixedDeltaTime);
+        rb.linearVelocity = movement;
 
+        MoveLegs();
         MoveCenterLegs(inputDirection);
     }
     private void MoveLegs()
