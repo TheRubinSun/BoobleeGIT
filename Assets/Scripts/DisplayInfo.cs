@@ -188,29 +188,30 @@ public class DisplayInfo: MonoBehaviour
             $"{word_AttSpeed} + {(pl_stat.Agility * 2)}";
         Intelligence_Text.text = $"<color={HashColorIntelligence}>{pl_stat.Intelligence} {word_intelligence}</color>";
         Intelligence_Bonus_Text.text = $"<color={HashColorBonus}>" +
-            $"{word_AttRange} + {(pl_stat.Intelligence * 0.01f).ToString("F2")}\n" +
-            $"{word_ProjSpeed} + {(pl_stat.Intelligence * 0.01f).ToString("F2")}\n" +
+            $"{word_AttRange} + {(pl_stat.Intelligence * 0.1f).ToString("F2")}\n" +
+            $"{word_ProjSpeed} + {(pl_stat.Intelligence * 0.1f).ToString("F2")}\n" +
             $"{word_Damage} + {(pl_stat.Intelligence * 2 / 10).ToString("F2")}";
 
         
-        info.Append($"{word_level}: {pl_stat.level} | {word_expBonus}: {pl_stat.ExpBust}\n");
+        info.Append($"{word_level}: {pl_stat.level} | {word_expBonus}: {((pl_stat.ExpBust-1)*100).ToString("F1")}%\n");
         info.Append($"{word_gold}: {pl_stat.Gold}\n");
-        AppendStat(info, word_Max_Hp, pl_stat.Max_Hp, pl_stat.Base_Max_Hp, pl_stat.Strength * 2, pl_stat.classPlayer.Bonus_Class_Hp, eqip_stat.Bonus_Equip_Hp,
+        AppendStat(info, word_Max_Hp, pl_stat.Max_Hp, false, pl_stat.Base_Max_Hp, pl_stat.Strength * 2, pl_stat.classPlayer.Bonus_Class_Hp, eqip_stat.Bonus_Equip_Hp,
             ($"{word_strength} * 2"), word_roleClass, word_eqipment);
-        AppendStat(info, word_Armor_Hp, pl_stat.Armor, pl_stat.Base_Armor, pl_stat.Strength / 10, pl_stat.classPlayer.Bonus_Class_Armor, eqip_stat.Bonus_Equip_Armor,
+        AppendStat(info, word_Armor_Hp, pl_stat.Armor, false, pl_stat.Base_Armor, pl_stat.Strength / 10, pl_stat.classPlayer.Bonus_Class_Armor, eqip_stat.Bonus_Equip_Armor,
             ($"{word_strength} / 10"), word_roleClass, word_eqipment);
-        AppendStat(info, word_Mov_Speed, pl_stat.Mov_Speed, pl_stat.Base_Mov_Speed, pl_stat.Agility * 0.015f, pl_stat.classPlayer.Bonus_Class_SpeedMove, eqip_stat.Bonus_Equip_Mov_Speed,
+        AppendStat(info, word_Mov_Speed, pl_stat.Mov_Speed, false, pl_stat.Base_Mov_Speed, pl_stat.Agility * 0.015f, pl_stat.classPlayer.Bonus_Class_SpeedMove, eqip_stat.Bonus_Equip_Mov_Speed,
             ($"{word_agility} * 0.015"), word_roleClass, word_eqipment);
-        AppendStat(info, word_Evasion, pl_stat.Evasion, pl_stat.Base_Evasion, pl_stat.Agility, eqip_stat.Bonus_Equip_Evasion, 0, 
+        AppendStat(info, word_Evasion, pl_stat.Evasion, true, pl_stat.Base_Evasion, pl_stat.Agility, eqip_stat.Bonus_Equip_Evasion, 0, 
             ($"{word_for + word_agility}"), word_roleClass, word_eqipment);
-        AppendStat(info, word_Att_Speed, pl_stat.Att_Speed, pl_stat.Base_Att_Speed, pl_stat.Agility * 2, pl_stat.classPlayer.Bonus_Class_AttackSpeed, eqip_stat.Bonus_Equip_Att_Speed,
+        AppendStat(info, word_Att_Speed, pl_stat.Att_Speed, false, pl_stat.Base_Att_Speed, pl_stat.Agility * 2, pl_stat.classPlayer.Bonus_Class_AttackSpeed, eqip_stat.Bonus_Equip_Att_Speed,
             ($"{word_agility}"), word_roleClass, word_eqipment);
-        AppendStat(info, word_Att_Range, pl_stat.Att_Range, pl_stat.Base_Att_Range, pl_stat.Intelligence * 0.01f, pl_stat.classPlayer.Bonus_Class_Range, eqip_stat.Bonus_Equip_Att_Range,
-            ($"{word_intelligence} * 0.01"), word_roleClass, word_eqipment);
-        AppendStat(info, word_Proj_Speed, pl_stat.Proj_Speed, pl_stat.Base_Proj_Speed, pl_stat.Intelligence * 0.01f, pl_stat.classPlayer.Bonus_Class_ProjectileSpeed, eqip_stat.Bonus_Equip_Proj_Speed, 
-            ($"{word_intelligence} * 0.01"), word_roleClass, word_eqipment);
-        AppendStat(info, word_Att_Damage, pl_stat.Att_Damage, pl_stat.Base_Att_Damage, (pl_stat.Strength * 2 + pl_stat.Intelligence * 2) / 10, pl_stat.classPlayer.Bonus_Class_Damage, eqip_stat.Bonus_Equip_Att_Damage,
-            ($"{pl_stat.Strength * 2} ({word_strength} * 2) + {pl_stat.Intelligence * 2} ({word_intelligence} * 2) / 10"), word_roleClass, word_eqipment);
+        AppendStat(info, word_Att_Range, pl_stat.Att_Range, false, pl_stat.Base_Att_Range, pl_stat.Intelligence * 0.1f, pl_stat.classPlayer.Bonus_Class_Range, eqip_stat.Bonus_Equip_Att_Range,
+            ($"{word_intelligence} * 0.1"), word_roleClass, word_eqipment);
+        AppendStat(info, word_Proj_Speed, pl_stat.Proj_Speed, false, pl_stat.Base_Proj_Speed, pl_stat.Intelligence * 0.1f, pl_stat.classPlayer.Bonus_Class_ProjectileSpeed, eqip_stat.Bonus_Equip_Proj_Speed, 
+            ($"{word_intelligence} * 0.1"), word_roleClass, word_eqipment);
+        AppendStat(info, word_Att_Damage, pl_stat.Att_Damage, false, pl_stat.Base_Att_Damage, (pl_stat.Strength * 2 + pl_stat.Intelligence * 2) / 10, pl_stat.classPlayer.Bonus_Class_Damage, eqip_stat.Bonus_Equip_Att_Damage,
+            ($"{pl_stat.Strength * 2} ({word_strength} * 2) + {pl_stat.Intelligence * 2} ({word_intelligence} * 2) / 10"),
+            word_roleClass, word_eqipment);
 
         info.AppendLine($"{word_freeSkillPoints}: {pl_stat.freeSkillPoints}");
         info.AppendLine($"{word_TradeSkill}: {pl_stat.TraderSkill}");
@@ -221,10 +222,12 @@ public class DisplayInfo: MonoBehaviour
         Status_Info_Name_Text.text = word_status_info;
         Status_Info.text = info.ToString();
     }
-    private void AppendStat(StringBuilder info, string statName, float totalStat, float baseStat, float statModifier, float classBonus, float equipBonus, string statNameMofifier, string roleClass, string equipment)
+    private void AppendStat(StringBuilder info, string statName, float totalStat,bool IsProcent, float baseStat, float statModifier, float classBonus, float equipBonus, string statNameMofifier, string roleClass, string equipment)
     {
         int sizeFont = 13;
-        info.Append($"{statName}: {totalStat}");
+        //info.Append($"{statName}: {totalStat}");
+        if (IsProcent) info.Append($"{statName}: {totalStat}%"); 
+        else info.Append($"{statName}: {totalStat}");
         if (totalStat <= 0)
         {
             info.Append("\n");
@@ -278,7 +281,7 @@ public class DisplayInfo: MonoBehaviour
             info.AppendLine($"{word_damage}: {weapon.damage} {SetStyleLine(HashColorAddInfo, 10, $"+ {pl_st.Att_Damage} {word_Damage} {word_player}")}");
             info.AppendLine($"{word_attacks_speed}: {weapon.attackSpeed} {SetStyleLine(HashColorAddInfo, 10, $"* {pl_st.Att_Speed} {word_AttSpeed} {word_player}")}");
             info.AppendLine($"{word_attacks_intervals}: {(60f / (weapon.attackSpeed * pl_st.Att_Speed)).ToString("F2")} {SetStyleLine(HashColorAddInfo, 10, $"= 60 / {word_attacks_speed} * {pl_st.Att_Speed} {word_AttSpeed} {word_player}")}");
-            info.AppendLine($"{word_range}: {weapon.range}  {SetStyleLine(HashColorAddInfo, 10, $"= {weapon.range/pl_st.Att_Range} * {pl_st.Att_Range} {word_AttRange} {word_player}")}");
+            info.AppendLine($"{word_range}: {weapon.range}  {SetStyleLine(HashColorAddInfo, 10, $"= {weapon.range} + {pl_st.Att_Range} {word_AttRange} {word_player}")}");
             //attack_ran + (Player.Instance.GetPlayerStats().Att_Range/2)
         }
         info.AppendLine($"{word_description}: {item.Description}");

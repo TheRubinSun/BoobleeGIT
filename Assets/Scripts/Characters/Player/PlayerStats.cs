@@ -79,7 +79,7 @@ public class PlayerStats : CharacterStats
         Gold = 0;
         TraderSkill = 1;
 
-        classPlayer = Classes.Instance.GetRoleClass("Shooter");
+        classPlayer = Classes.Instance.GetRoleClass("Warrior");
         DirectionOrVectorWeapon = new bool[4];
 
         
@@ -131,10 +131,10 @@ public class PlayerStats : CharacterStats
         Armor = (int)(Strength / 10) + Base_Armor + classPlayer.Bonus_Class_Armor + equipStats.Bonus_Equip_Armor;
         Mov_Speed = (Agility * 0.015f) + Base_Mov_Speed + classPlayer.Bonus_Class_SpeedMove + equipStats.Bonus_Equip_Mov_Speed;
         Evasion = (Agility) + Base_Evasion + equipStats.Bonus_Equip_Evasion;
-        Att_Speed = (Agility) + Base_Att_Speed + classPlayer.Bonus_Class_AttackSpeed + equipStats.Bonus_Equip_Att_Speed;
+        Att_Speed = (Agility * 2) + Base_Att_Speed + classPlayer.Bonus_Class_AttackSpeed + equipStats.Bonus_Equip_Att_Speed;
         Att_Range = (Intelligence * 0.1f) + Base_Att_Range + classPlayer.Bonus_Class_Range + equipStats.Bonus_Equip_Att_Range;
         Proj_Speed = (Intelligence * 0.1f) + Base_Proj_Speed + classPlayer.Bonus_Class_ProjectileSpeed + equipStats.Bonus_Equip_Proj_Speed;
-        Att_Damage = (int)((Strength * 2) + (Intelligence * 2) / 10) + Base_Att_Damage + classPlayer.Bonus_Class_Damage + equipStats.Bonus_Equip_Att_Damage;
+        Att_Damage = (int)(((Strength * 2) + (Intelligence * 2)) / 10) + Base_Att_Damage + classPlayer.Bonus_Class_Damage + equipStats.Bonus_Equip_Att_Damage;
 
         ExpBust = Base_ExpBust + equipStats.Bonus_Equip_ExpBust;
 

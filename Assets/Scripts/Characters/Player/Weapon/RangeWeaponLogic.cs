@@ -64,6 +64,7 @@ public class RangeWeaponLogic : WeaponControl
         if (AttackDirectionOrVector)
         {
             direction = GetDirection(ShootPos.position, transform.position).normalized;
+            //direction = GetDirection(ShootPos.position, new Vector2(transform.position.x, transform.position.y - 0.01f)).normalized;
         }
         else
         {

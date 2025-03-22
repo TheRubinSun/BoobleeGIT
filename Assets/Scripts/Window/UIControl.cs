@@ -202,6 +202,7 @@ public class UIControl:MonoBehaviour
     public void LoadMainMenu()
     {
         // Уничтожаем объект только перед загрузкой главного меню
+        if (isPaused) Time.timeScale = 1;
         if (Instance != null)
         {
             Destroy(gameObject); // Удаляем объект вручную

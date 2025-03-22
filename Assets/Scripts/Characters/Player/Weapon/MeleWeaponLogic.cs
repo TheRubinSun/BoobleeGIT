@@ -10,8 +10,9 @@ public class MeleWeaponLogic : WeaponControl
         lastAttackTime = Time.time;
 
         Debug.Log("SwordAttack");
+        //ResetHitEnemies();
         MeleeAttack();
-        ResetHitEnemies();
+        
     }
     protected HashSet<Collider2D> hitEnemies = new HashSet<Collider2D>();
     protected void ResetHitEnemies()

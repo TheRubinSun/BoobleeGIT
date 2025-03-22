@@ -162,17 +162,15 @@ public class DragAndDrop:MonoBehaviour
             SoundsManager.Instance.PlayTakeItem();
         }
     }
-    public bool Drag()
+    public void Drag()
     {
         if (!dragItem) //Если нужно взять предмет
         {
-            SoundsManager.Instance.PlayTakeItem();
-            return TakeItem(); //Берем предмет
+            if(TakeItem()) SoundsManager.Instance.PlayTakeItem();
         }
         else //Если предмет взят
         {
-            SoundsManager.Instance.PlayPutItem();
-            return PutItem();
+            if (PutItem()) SoundsManager.Instance.PlayPutItem();
         }
     }
     private bool TakeItem()
@@ -318,7 +316,7 @@ public class DragAndDrop:MonoBehaviour
         if (!dragItem)
         {
             oldSlot = ShopLogic.Instance.GetSlot("Buy", numbBuySlot); //Сохранем значения слота 
-            //if (oldSlot.Count == 0) return;
+            if (oldSlot.Count == 0) return;
 
             ShopLogic.Instance.AddItemToType("Shop", oldSlot.Item, 1);
             oldSlot.Count--;
@@ -339,7 +337,7 @@ public class DragAndDrop:MonoBehaviour
         if (!dragItem)
         {
             oldSlot = ShopLogic.Instance.GetSlot("Shop", numbShopSlot); //Сохранем значения слота 
-            //if (oldSlot.Count == 0) return;
+            if (oldSlot.Count == 0) return;
 
             ShopLogic.Instance.CreateEmptySlot("Buy"); //Сохранем значения слота 
             ShopLogic.Instance.AddItemToType("Buy", oldSlot.Item, 1);
@@ -360,19 +358,18 @@ public class DragAndDrop:MonoBehaviour
     {
         if (!dragItem)
         {
-            SoundsManager.Instance.PlayTakeItem();
-            TakeHalfItem();
+            if(TakeHalfItem()) SoundsManager.Instance.PlayTakeItem();
         }
         else if (dragItem)
         {
-            SoundsManager.Instance.PlayPutItem();
-            PutOneItem();
+            ;
+            if(PutOneItem()) SoundsManager.Instance.PlayPutItem();
         }
     }
-    private void TakeHalfItem()
+    private bool TakeHalfItem()
     {
-        if (oldSlot.Item.Id == 0) return; //Если выделяемый слот пуст (id = 0 пустой), то незачем его брать курсором
-        if (oldSlot.Count < 2) return; //Если значение один или меньше, его не нужно делить
+        if (oldSlot.Item.Id == 0) return false; //Если выделяемый слот пуст (id = 0 пустой), то незачем его брать курсором
+        if (oldSlot.Count < 2) return false; //Если значение один или меньше, его не нужно делить
 
         int dragCountItem = oldSlot.Count >> 1;              //Берем одну половину
         tempSlot = new Slot(oldSlot.Item, oldSlot.Count - dragCountItem); //Копируем данные клетки
@@ -384,8 +381,9 @@ public class DragAndDrop:MonoBehaviour
         //newSlot = null;
         dragItem = true;
         DragZone.SetActive(dragItem);  //Включить возможность выбросить
+        return true;
     }
-    private void PutOneItem()
+    private bool PutOneItem()
     {
         //Кладём в пустую ячейку по одному или в ячейку того же тима предмета с свободным слотом
         if (newSlot.Item.Id == 0)
@@ -405,6 +403,7 @@ public class DragAndDrop:MonoBehaviour
         }
         Inventory.Instance.UpdateSlotUI(tempSlot);  //Обновляем картинку в UI
         Inventory.Instance.UpdateSlotUI(newSlot);  //Обновляем картинку в UI
+        return true;
     }
     //==========================================================================================================================================
     //================================================ Блок бросить предмет ====================================================================
