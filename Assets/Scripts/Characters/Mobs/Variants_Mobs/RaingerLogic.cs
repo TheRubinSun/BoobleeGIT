@@ -14,15 +14,16 @@ public class RaingerLogic : BaseEnemyLogic
     [SerializeField]
     private Transform Shoot_point; //Точка выстрела
 
-
     protected override void Start()
     {
-        base.Start();
         spr_ren_ch = child_Obj.GetComponent<SpriteRenderer>();//Берем доч спрайт моба, если есть
 
+        base.Start();
     }
     protected override void UpdateSortingOrder()
     {
+        if (!isVisibleNow) return;
+
         if (Time.time >= nextUpdateTime)
         {
             spr_ren.sortingOrder = Mathf.RoundToInt((transform.position.y - 10) * -10);
@@ -113,5 +114,9 @@ public class RaingerLogic : BaseEnemyLogic
         {
             rb.linearVelocity = direction * sp_Project;
         }
+    }
+    public override void CreateCulling()
+    {
+        culling = new CullingObject(spr_ren, animator_main, new SpriteRenderer[] { spr_ren_ch }, new Animator[] { child_Obj.GetComponent<Animator>()});
     }
 }

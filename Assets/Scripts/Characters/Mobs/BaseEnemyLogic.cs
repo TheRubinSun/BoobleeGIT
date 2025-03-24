@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.ResourceManagement.ResourceProviders.Simulation;
 
-public class BaseEnemyLogic : MonoBehaviour
+public class BaseEnemyLogic : MonoBehaviour, ICullableObject
 {
     public static event Action<BaseEnemyLogic> OnEnemyDeath;
 
@@ -48,7 +48,6 @@ public class BaseEnemyLogic : MonoBehaviour
     [SerializeField]
     protected AudioSource audioSource;
 
-
     [SerializeField] protected AudioClip attack_sound;
     [SerializeField] protected AudioClip player_touch_sound;
     [SerializeField] public AudioClip die_sound;
@@ -67,28 +66,31 @@ public class BaseEnemyLogic : MonoBehaviour
     //Слой
     protected int combinedLayerMask;
 
+    protected CullingObject culling;
+    protected bool isVisibleNow = true;
+
     protected virtual void Awake()
     {
         LoadParametrs();//Загружаем параметры моба
-    }
-    protected virtual void Start()
-    {
+
         audioSource = GetComponent<AudioSource>(); //Берем звук 
         selfCollider = GetComponent<Collider2D>(); //Берем колайдер - форму касания
         spr_ren = GetComponent<SpriteRenderer>(); //Берем спрайт моба
-
-        rb = GetComponent<Rigidbody2D>();   
-
-        original_color = spr_ren.color;
+        rb = GetComponent<Rigidbody2D>();
         animator_main = GetComponent<Animator>();
-
-        
+    }
+    protected virtual void Start()
+    {
+        original_color = spr_ren.color;
         moveDirection = (player.position - transform.position).normalized; //Вычисление направление к игроку
         UpdateSortingOrder();
 
         combinedLayerMask = (1 << LayerManager.obstaclesLayer) | (1 << LayerManager.playerLayer);
-    }
 
+        CreateCulling();
+        UpdateCulling(false);
+        CullingManager.Instance.RegisterObject(this);
+    }
     protected virtual void LoadParametrs()
     {
         mob = EnemyList.Instance.mobs[IdMobs];
@@ -118,7 +120,9 @@ public class BaseEnemyLogic : MonoBehaviour
 
     protected virtual void UpdateSortingOrder()
     {
-        if(Time.time >= nextUpdateTime)
+        if (!isVisibleNow) return;
+
+        if (Time.time >= nextUpdateTime)
         {
             spr_ren.sortingOrder = Mathf.RoundToInt((transform.position.y - 10) * -10);
 
@@ -248,10 +252,7 @@ public class BaseEnemyLogic : MonoBehaviour
     }
     public virtual void AvoidWall(bool wallDetected, Vector2 toPlayer, float distanceToPlayer)
     {
-        if (wallDetected)
-        {
-            //moveDirection = Vector2.Perpendicular(toPlayer).normalized;
-        }
+        if (wallDetected) return;
         else
         {
             // Проверяем перед атакой, есть ли стена перед врагом
@@ -323,4 +324,23 @@ public class BaseEnemyLogic : MonoBehaviour
         }
         else return null;
     }
+    public Transform GetTransform() => transform;
+    public virtual void CreateCulling()
+    {
+        culling = new CullingObject(spr_ren, animator_main);
+    }
+    private void OnDisable()
+    {
+        if (CullingManager.Instance != null)
+            CullingManager.Instance.UnregisterObject(this);
+    }
+    public void UpdateCulling(bool shouldBeVisible)
+    {
+        if(isVisibleNow != shouldBeVisible)
+        {
+            isVisibleNow = shouldBeVisible;
+            culling.SetVisible(shouldBeVisible);
+        }
+    }
 }
+

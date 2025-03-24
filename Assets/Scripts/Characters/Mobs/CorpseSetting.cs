@@ -3,18 +3,31 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.Progress;
 
-public class CorpseSetting : MonoBehaviour
+public class CorpseSetting : MonoBehaviour, ICullableObject
 {
     public bool isBusy { get; private set; }
     public string NameKey { get; set; }
     public AudioSource audioSource;
+
+
+    private SpriteRenderer spr_ren;
+    private Animator animator_main;
+
+    private CullingObject culling;
+    private bool isVisibleNow = true;
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+        spr_ren = GetComponent<SpriteRenderer>();
+        animator_main = GetComponent<Animator>();
     }
     public void Start()
     {
         isBusy = false;
+
+        CreateCulling();
+        UpdateCulling(false);
+        CullingManager.Instance.RegisterObject(this);
     }
     public void Busy()
     {
@@ -128,5 +141,23 @@ public class CorpseSetting : MonoBehaviour
         return chance;
     }
 
+    public void CreateCulling()
+    {
+        culling = new CullingObject(spr_ren, animator_main);
+    }
+    private void OnDisable()
+    {
+        if (CullingManager.Instance != null)
+            CullingManager.Instance.UnregisterObject(this);
 
+    }
+    public Transform GetTransform() => transform;
+    public void UpdateCulling(bool shouldBeVisible)
+    {
+        if (isVisibleNow != shouldBeVisible)
+        {
+            isVisibleNow = shouldBeVisible;
+            culling.SetVisible(shouldBeVisible);
+        }
+    }
 }

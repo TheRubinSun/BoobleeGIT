@@ -25,12 +25,11 @@ public class SlimeLogic : BaseEnemyLogic
     protected override void Awake()
     {
         base.Awake();
-        Debug.Log(idPosion);
+        
         posionNewEff = ResourcesData.GetEffectsPrefab(idPosion);
     }
     protected override void Start()
     {
-        base.Start();
         string[] nameKeysItem = ItemDropEnemy.enemyAndHisDrop[Name];
 
         sr_item_one = item_one.GetComponent<SpriteRenderer>();
@@ -45,9 +44,13 @@ public class SlimeLogic : BaseEnemyLogic
         sr_item_two.sortingOrder = spr_ren.sortingOrder - 1;
         sr_item_three.sortingOrder = spr_ren.sortingOrder - 1;
 
+        base.Start();
+
     }
     protected override void UpdateSortingOrder()
     {
+        if (!isVisibleNow) return;
+
         if (Time.time >= nextUpdateTime)
         {
             spr_ren.sortingOrder = Mathf.RoundToInt(transform.position.y * -10);
@@ -322,5 +325,9 @@ public class SlimeLogic : BaseEnemyLogic
                 Debug.LogWarning("ПРоблема с анимацией");
                 break;
         } 
+    }
+    public override void CreateCulling()
+    {
+        culling = new CullingObject(spr_ren, animator_main, new SpriteRenderer[] { sr_item_one, sr_item_two, sr_item_three });
     }
 }

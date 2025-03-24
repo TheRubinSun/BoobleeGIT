@@ -11,12 +11,15 @@ public class DaizenLogic : BaseEnemyLogic
 
     protected override void Start()
     {
-        base.Start();
         spr_ren_ch = child_Obj.GetComponent<SpriteRenderer>();//Берем доч спрайт моба, если есть
+
+        base.Start();
     }
 
     protected override void UpdateSortingOrder()
     {
+        if (!isVisibleNow) return;
+
         if (Time.time >= nextUpdateTime)
         {
             spr_ren.sortingOrder = Mathf.RoundToInt((transform.position.y - 10) * -10);
@@ -65,5 +68,9 @@ public class DaizenLogic : BaseEnemyLogic
 
 
         Player.Instance.TakeDamage(enum_stat.Att_Damage, true);
+    }
+    public override void CreateCulling()
+    {
+        culling = new CullingObject(spr_ren, animator_main, new SpriteRenderer[] { spr_ren_ch }, new Animator[] { child_Obj.GetComponent<Animator>() });
     }
 }

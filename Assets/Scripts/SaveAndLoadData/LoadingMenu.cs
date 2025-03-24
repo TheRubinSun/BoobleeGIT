@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -9,6 +10,8 @@ public class LoadingMenu : MonoBehaviour
 {
     public Slider progressBar;
     public TextMeshProUGUI progressText;
+
+    [SerializeField] private Sprite spriteSheet;
     private void Start()
     {
         StartCoroutine(LoadGameScene());
@@ -46,8 +49,9 @@ public class LoadingMenu : MonoBehaviour
         GameDataHolder.EnemyData = await SaveSystem.LoadDataAsync<EnemyData>("enemies.json");
         GameDataHolder.RoleClassesData = await SaveSystem.LoadDataAsync<RoleClassesData>("role_classes_data.json");
         GameDataHolder.ItemsDropOnEnemy = await SaveSystem.LoadDataAsync<ItemsDropOnEnemy>("item_drop.json");
+        GameDataHolder.spriteList = LoadSprites();
 
-        if(GameDataHolder.savesDataInfo.language != null)
+        if (GameDataHolder.savesDataInfo.language != null)
         {
             LocalizationManager.Instance.LoadLocalization(GameDataHolder.savesDataInfo.language);
             GlobalData.cur_language = GameDataHolder.savesDataInfo.language;
@@ -62,5 +66,26 @@ public class LoadingMenu : MonoBehaviour
         
 
         Debug.Log("Данные загружены в LoadingMenu.");
+    }
+    private Sprite[] LoadSprites()
+    {
+        if (spriteSheet != null)
+        {
+            string path = UnityEditor.AssetDatabase.GetAssetPath(spriteSheet);
+            Object[] assets = UnityEditor.AssetDatabase.LoadAllAssetRepresentationsAtPath(path);
+
+            List<Sprite> sprites = new List<Sprite>();
+            sprites.Add(null);
+            foreach (var asset in assets)
+            {
+                if (asset is Sprite sprite)
+                {
+                    sprites.Add(sprite);
+                }
+            }
+            return sprites.ToArray();
+        }
+        Debug.LogError("Нет спрайтов предметов");
+        return null;
     }
 }

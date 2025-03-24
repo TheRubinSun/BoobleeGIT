@@ -3095,6 +3095,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   items: []
+  spriteSheet: {fileID: 5546671543968653177, guid: 1eb9b0402b9617a4b819dba8c8c334ec, type: 3}
   spriteList:
   - {fileID: 0}
   - {fileID: 5546671543968653177, guid: 1eb9b0402b9617a4b819dba8c8c334ec, type: 3}
@@ -20813,6 +20814,7 @@ GameObject:
   - component: {fileID: 2042744850}
   - component: {fileID: 2042744852}
   - component: {fileID: 2042744851}
+  - component: {fileID: 2042744853}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -20988,6 +20990,20 @@ MonoBehaviour:
   - {fileID: 8300000, guid: febaaa54e833cbe4d949f9f5d1243d5a, type: 3}
   - {fileID: 8300000, guid: 7fa08e1790a45d34b8a5cfaf00e9f4be, type: 3}
   volume: 0.2
+--- !u!114 &2042744853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2042744846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 010ae1ad7cabedd43a942e46f5bbfce5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 403271163}
+  allVisible: 0
 --- !u!4 &2049548792 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3528983640240945953, guid: be985b8f5b0d8dc49a17f1826a3b7001, type: 3}

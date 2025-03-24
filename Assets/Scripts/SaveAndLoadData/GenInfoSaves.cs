@@ -89,6 +89,8 @@ public class GenInfoSaves : MonoBehaviour
         }
         else
         {
+            UpdateTextInfoCell(id);
+            await SavedChanged(GenInfoSaves.saveGameFiles, 100, GlobalData.cur_language);
             Debug.LogWarning($"Файл {path_player_data} не существует, удаление невозможно.");
         }
     }

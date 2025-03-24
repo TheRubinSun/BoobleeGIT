@@ -8,4 +8,5 @@ public static class GlobalData
     public static int cur_seed;
     public static Vector2 center;
     public static int chunkSize;
+    public static Transform PlayerModel;
 }

@@ -7,7 +7,8 @@ public class ItemsList : MonoBehaviour
 {
     public static ItemsList Instance { get; private set; }
     public List<Item> items = new List<Item>();
-    [SerializeField] List<Sprite> spriteList = new List<Sprite>();
+
+    [SerializeField] Sprite[] spriteList;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -16,10 +17,17 @@ public class ItemsList : MonoBehaviour
             return;
         }
         Instance = this;
+
+        LoadSprites();
+
+    }
+    private void LoadSprites()
+    {
+        spriteList = GameDataHolder.spriteList;
     }
     private void Start()
     {
-        if (spriteList.Count == 0)
+        if (spriteList.Length == 0)
         {
             Debug.LogError("Список spriteList пуст! Добавьте спрайты через инспектор.");
             return;

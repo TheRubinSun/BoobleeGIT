@@ -8,4 +8,5 @@ public static class GameDataHolder
     public static RoleClassesData RoleClassesData;
     public static EnemyData EnemyData;
     public static ItemsDropOnEnemy ItemsDropOnEnemy;
+    public static Sprite[] spriteList;
 }
