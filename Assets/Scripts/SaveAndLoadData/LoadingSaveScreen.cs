@@ -9,6 +9,7 @@ public class LoadingSaveScreen : MonoBehaviour
 {
     public Slider progressBar;
     public TextMeshProUGUI progressText;
+
     private void Start()
     {
         StartCoroutine(LoadGameScene());
