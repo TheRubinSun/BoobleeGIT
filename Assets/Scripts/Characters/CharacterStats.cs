@@ -12,5 +12,11 @@ public class CharacterStats
     [NonSerialized] public int Att_Damage;
     [NonSerialized] public int Att_Speed;
     [NonSerialized] public float Proj_Speed;
+    [NonSerialized] public float Magic_Resis;
+    [NonSerialized] public float Tech_Resis;
 
+}
+public interface ITakeDamage
+{
+    public void TakeDamage(int damage, damageT typeAttack, bool canEvade);
 }

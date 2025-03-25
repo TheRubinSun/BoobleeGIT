@@ -190,9 +190,7 @@ public class SlimeLogic : BaseEnemyLogic
         //Подять в иерархии объекта пули/стрелы
         bullet.transform.SetParent(transform.parent);
 
-        //Устанавливаем урон снаряду
-        bull_log.damage = enum_stat.Att_Damage;
-        bull_log.effectBul = posionNewEff;
+        bull_log.SetStats(10, enum_stat.Att_Damage, posionNewEff, damageT.Magic, CanBeMissedAttack);
         // Получаем направление к игроку
 
         // Устанавливаем поворот стрелы в сторону игрока
@@ -212,7 +210,7 @@ public class SlimeLogic : BaseEnemyLogic
         audioSource.volume = attack_volume;
         audioSource.Stop();
         audioSource.PlayOneShot(attack_sound); //Звук выстрела
-        Player.Instance.TakeDamage(enum_stat.Att_Damage, true);
+        Player.Instance.TakeDamage(enum_stat.Att_Damage, damageT.Magic, true);
     }
     public void SetItemsPosIdle(int frame)
     {

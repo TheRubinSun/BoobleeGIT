@@ -1,14 +1,28 @@
 using UnityEngine;
 
-public class BulletMob : MonoBehaviour 
+public class BulletMob : MonoBehaviour, UBullet
 {
     // Время, через которое пуля исчезнет (в секундах)
     public float destroyTime = 3f;
+    private float maxDistance;
+
     public int damage {  get; set; }
     public EffectData effectBul { get; set; }
 
+    private damageT typeDamage;
+
+    public bool CanBeMissed { get; private set; }
+
     private void Awake()
     {
+    }
+    public void SetStats(float _maxDistance = 7f, int _damage = 1, EffectData _effectBul = null, damageT _typeDamage = damageT.Physical, bool _CanBeMissed = true)
+    {
+        maxDistance = _maxDistance;
+        damage = _damage;
+        effectBul = _effectBul;
+        typeDamage = _typeDamage;
+        CanBeMissed = _CanBeMissed;
     }
     private void Start()
     {
@@ -24,7 +38,7 @@ public class BulletMob : MonoBehaviour
         //if (collider.CompareTag("Player"))
         if (collider.gameObject.layer == LayerManager.playerLayer)
         {
-            Player.Instance.TakeDamage(damage, true);
+            Player.Instance.TakeDamage(damage, typeDamage, CanBeMissed);
             Destroy(gameObject);
             if (effectBul != null)
             {

@@ -72,6 +72,8 @@ public class DisplayInfo: MonoBehaviour
     private string word_mage_gold;
     private string word_count_proj;
 
+    private string word_Tech_Resis;
+    private string word_Magic_Resis;
 
     //Slots
     private string word_player;
@@ -142,6 +144,8 @@ public class DisplayInfo: MonoBehaviour
                 word_technology_gold = localized_player_stats_name["word_technology_gold"];
                 word_mage_gold = localized_player_stats_name["word_mage_gold"];
                 word_count_proj = localized_player_stats_name["word_count_proj"];
+                word_Tech_Resis = localized_player_stats_name["word_Tech_Resis"];
+                word_Magic_Resis = localized_player_stats_name["word_Magic_Resis"];
             }
             else Debug.LogWarning($"Локализация для ключа \"localized_player_stats_name\"  не найдена.");
             if(localized_slots_name != null)
@@ -192,26 +196,32 @@ public class DisplayInfo: MonoBehaviour
             $"{word_ProjSpeed} + {(pl_stat.Intelligence * 0.1f).ToString("F2")}\n" +
             $"{word_Damage} + {(pl_stat.Intelligence * 2 / 10).ToString("F2")}";
 
-        
-        info.Append($"{word_level}: {pl_stat.level} | {word_expBonus}: {((pl_stat.ExpBust-1)*100).ToString("F1")}%\n");
+
+        info.Append($"{word_level}: {pl_stat.level} | {word_expBonus}: {((pl_stat.ExpBust - 1) * 100).ToString("F1")}%\n");
         info.Append($"{word_gold}: {pl_stat.Gold}\n");
-        AppendStat(info, word_Max_Hp, pl_stat.Max_Hp, false, pl_stat.Base_Max_Hp, pl_stat.Strength * 2, pl_stat.classPlayer.Bonus_Class_Hp, eqip_stat.Bonus_Equip_Hp,
+        AppendStat(info, word_Max_Hp, pl_stat.Max_Hp, false, false, pl_stat.Base_Max_Hp, pl_stat.Strength * 2, pl_stat.classPlayer.Bonus_Class_Hp, eqip_stat.Bonus_Equip_Hp,
             ($"{word_strength} * 2"), word_roleClass, word_eqipment);
-        AppendStat(info, word_Armor_Hp, pl_stat.Armor, false, pl_stat.Base_Armor, pl_stat.Strength / 10, pl_stat.classPlayer.Bonus_Class_Armor, eqip_stat.Bonus_Equip_Armor,
+        AppendStat(info, word_Armor_Hp, pl_stat.Armor, false, false, pl_stat.Base_Armor, pl_stat.Strength / 10, pl_stat.classPlayer.Bonus_Class_Armor, eqip_stat.Bonus_Equip_Armor,
             ($"{word_strength} / 10"), word_roleClass, word_eqipment);
-        AppendStat(info, word_Mov_Speed, pl_stat.Mov_Speed, false, pl_stat.Base_Mov_Speed, pl_stat.Agility * 0.015f, pl_stat.classPlayer.Bonus_Class_SpeedMove, eqip_stat.Bonus_Equip_Mov_Speed,
+        AppendStat(info, word_Mov_Speed, pl_stat.Mov_Speed, false, false, pl_stat.Base_Mov_Speed, pl_stat.Agility * 0.015f, pl_stat.classPlayer.Bonus_Class_SpeedMove, eqip_stat.Bonus_Equip_Mov_Speed,
             ($"{word_agility} * 0.015"), word_roleClass, word_eqipment);
-        AppendStat(info, word_Evasion, pl_stat.Evasion, true, pl_stat.Base_Evasion, pl_stat.Agility, eqip_stat.Bonus_Equip_Evasion, 0, 
+        AppendStat(info, word_Evasion, pl_stat.Evasion, true, true, pl_stat.Base_Evasion, pl_stat.Agility, eqip_stat.Bonus_Equip_Evasion, 0,
             ($"{word_for + word_agility}"), word_roleClass, word_eqipment);
-        AppendStat(info, word_Att_Speed, pl_stat.Att_Speed, false, pl_stat.Base_Att_Speed, pl_stat.Agility * 2, pl_stat.classPlayer.Bonus_Class_AttackSpeed, eqip_stat.Bonus_Equip_Att_Speed,
+        AppendStat(info, word_Att_Speed, pl_stat.Att_Speed, false, false, pl_stat.Base_Att_Speed, pl_stat.Agility * 2, pl_stat.classPlayer.Bonus_Class_AttackSpeed, eqip_stat.Bonus_Equip_Att_Speed,
             ($"{word_agility}"), word_roleClass, word_eqipment);
-        AppendStat(info, word_Att_Range, pl_stat.Att_Range, false, pl_stat.Base_Att_Range, pl_stat.Intelligence * 0.1f, pl_stat.classPlayer.Bonus_Class_Range, eqip_stat.Bonus_Equip_Att_Range,
+        AppendStat(info, word_Att_Range, pl_stat.Att_Range, false, false, pl_stat.Base_Att_Range, pl_stat.Intelligence * 0.1f, pl_stat.classPlayer.Bonus_Class_Range, eqip_stat.Bonus_Equip_Att_Range,
             ($"{word_intelligence} * 0.1"), word_roleClass, word_eqipment);
-        AppendStat(info, word_Proj_Speed, pl_stat.Proj_Speed, false, pl_stat.Base_Proj_Speed, pl_stat.Intelligence * 0.1f, pl_stat.classPlayer.Bonus_Class_ProjectileSpeed, eqip_stat.Bonus_Equip_Proj_Speed, 
+        AppendStat(info, word_Proj_Speed, pl_stat.Proj_Speed, false, false, pl_stat.Base_Proj_Speed, pl_stat.Intelligence * 0.1f, pl_stat.classPlayer.Bonus_Class_ProjectileSpeed, eqip_stat.Bonus_Equip_Proj_Speed,
             ($"{word_intelligence} * 0.1"), word_roleClass, word_eqipment);
-        AppendStat(info, word_Att_Damage, pl_stat.Att_Damage, false, pl_stat.Base_Att_Damage, (pl_stat.Strength * 2 + pl_stat.Intelligence * 2) / 10, pl_stat.classPlayer.Bonus_Class_Damage, eqip_stat.Bonus_Equip_Att_Damage,
+        AppendStat(info, word_Att_Damage, pl_stat.Att_Damage, false, false, pl_stat.Base_Att_Damage, (pl_stat.Strength * 2 + pl_stat.Intelligence * 2) / 10, pl_stat.classPlayer.Bonus_Class_Damage, eqip_stat.Bonus_Equip_Att_Damage,
             ($"{pl_stat.Strength * 2} ({word_strength} * 2) + {pl_stat.Intelligence * 2} ({word_intelligence} * 2) / 10"),
             word_roleClass, word_eqipment);
+        // Добавление сопротивлений в статистику
+        AppendStat(info, word_Tech_Resis, pl_stat.Tech_Resis, true, false, pl_stat.Base_Tech_Resis, pl_stat.Intelligence, pl_stat.classPlayer.Bonus_Tech_Resis, eqip_stat.Bonus_Tech_Resis,
+            ($"{word_intelligence} / ({word_intelligence} + 100)"), word_roleClass, word_eqipment);
+
+        AppendStat(info, word_Magic_Resis, pl_stat.Magic_Resis, true, false, pl_stat.Base_Magic_Resis, pl_stat.Intelligence, pl_stat.classPlayer.Bonus_Magic_Resis, eqip_stat.Bonus_Magic_Resis,
+            ($"{word_intelligence} / ({word_intelligence} + 100)"), word_roleClass, word_eqipment);
 
         info.AppendLine($"{word_freeSkillPoints}: {pl_stat.freeSkillPoints}");
         info.AppendLine($"{word_TradeSkill}: {pl_stat.TraderSkill}");
@@ -222,12 +232,30 @@ public class DisplayInfo: MonoBehaviour
         Status_Info_Name_Text.text = word_status_info;
         Status_Info.text = info.ToString();
     }
-    private void AppendStat(StringBuilder info, string statName, float totalStat,bool IsProcent, float baseStat, float statModifier, float classBonus, float equipBonus, string statNameMofifier, string roleClass, string equipment)
+    private void AppendStat(StringBuilder info, string statName, float totalStat, bool IsProcent, bool isHundred, float baseStat, float statModifier, float classBonus, float equipBonus, string statNameMofifier, string roleClass, string equipment)
     {
         int sizeFont = 13;
-        //info.Append($"{statName}: {totalStat}");
-        if (IsProcent) info.Append($"{statName}: {totalStat}%"); 
-        else info.Append($"{statName}: {totalStat}");
+
+        if (IsProcent && !isHundred)
+        {
+            totalStat *= 100;
+            baseStat *= 100;
+            statModifier *= 100;
+            classBonus *= 100;
+            equipBonus *= 100;
+        }
+
+        if (IsProcent) 
+            info.Append($"{statName}: {totalStat.ToString("F0")}%"); 
+        else
+        {
+            if(totalStat % 1 == 0)
+                info.Append($"{statName}: {totalStat.ToString("F0")}");
+            else
+                info.Append($"{statName}: {totalStat.ToString("F2")}");
+        }
+            
+        
         if (totalStat <= 0)
         {
             info.Append("\n");

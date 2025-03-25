@@ -50,8 +50,8 @@ public class ItemsList : MonoBehaviour
     private void InitializeItems()
     {
         if (items.Count == 0) items.Add(new Item(0, "item_none", 0, items.Count, Quality.None,0, ""));
-        items.Add(new Sword(1, "sword_gods_slayer", 1, items.Count, Quality.Legendary,1000, "_", false, 1f, damageT.Cutting, 5, 0.9f, 1));
-        items.Add(new Gun(2, "gun_makarov", 1, items.Count, Quality.Rare, 100,              "_", true, 4f, damageT.Crushing, 2, 1f, 1, 12f, 1.0f, 5f, 0));
+        items.Add(new Sword(1, "sword_gods_slayer", 1, items.Count, Quality.Legendary,1000, "_", false, 1f, damageT.Physical, 5, 0.9f, 1));
+        items.Add(new Gun(2, "gun_makarov", 1, items.Count, Quality.Rare, 100,              "_", true, 4f, damageT.Physical, 2, 1f, 1, 12f, 1.0f, 5f, 0));
         items.Add(new Food(3, "item_meat", 20, items.Count, Quality.Common, 1, "_", 1, 5, 15, "Heal", 1));
         items.Add(new HealPotion(4, "item_potion_hp", 20, items.Count, Quality.Uncommon, 20, "_", 5));
         items.Add(new Item(5, "armor_armor", 1, items.Count, Quality.Common,300, "_", TypeItem.Armor));
@@ -62,11 +62,11 @@ public class ItemsList : MonoBehaviour
         items.Add(new Item(10, "sword_parts_one", 20, items.Count, Quality.Mystical, 200, "_", TypeItem.Material));
         items.Add(new Item(11, "bow_parts_one", 20, items.Count, Quality.Mystical, 200, "_", TypeItem.Material));
         items.Add(new Mine(12, "trap_mine", 10, items.Count, Quality.Rare, 40, "_", 0, 15, damageT.Technical, 1.5f, 0.5f));
-        items.Add(new Gun(13, "bow_simple", 1, items.Count, Quality.Mystical, 600, "_", true, 6f, damageT.Crushing, 10, 1f, 1, 8f, 0.5f, 5f, 2));
-        items.Add(new Gun(14, "shotgun_pump", 1, items.Count, Quality.Rare, 400, "_", true, 2f, damageT.Crushing, 3, 0.7f, 4, 10f, 1f, 15f, 1));
+        items.Add(new Gun(13, "bow_simple", 1, items.Count, Quality.Mystical, 600, "_", true, 6f, damageT.Physical, 10, 1f, 1, 8f, 0.5f, 5f, 2));
+        items.Add(new Gun(14, "shotgun_pump", 1, items.Count, Quality.Rare, 400, "_", true, 2f, damageT.Physical, 3, 0.7f, 4, 10f, 1f, 15f, 1));
         items.Add(new Minion(15, "minion_mage_es", 1, items.Count, Quality.Rare, 500, "_", TypeItem.Minion, 4f, 6f, 2f, TypeMob.Magic));
-        items.Add(new Sword(16, "soldier_spear", 1, items.Count, Quality.Rare, 200, "_", false, 0.5f, damageT.Cutting, 2, 0.8f, 1));
-        items.Add(new Sword(17, "simple_knife", 1, items.Count, Quality.Uncommon, 100, "_", false, 0.25f, damageT.Cutting, 2, 0.8f, 1));
+        items.Add(new Sword(16, "soldier_spear", 1, items.Count, Quality.Rare, 200, "_", false, 0.5f, damageT.Physical, 2, 0.8f, 1));
+        items.Add(new Sword(17, "simple_knife", 1, items.Count, Quality.Uncommon, 100, "_", false, 0.25f, damageT.Physical, 2, 0.8f, 1));
         items.Add(new SpeedUpPotion(18, "item_potion_speed", 20, items.Count, Quality.Rare, 50, "_", 1, 10, "SpeedUp", 5));
 
 

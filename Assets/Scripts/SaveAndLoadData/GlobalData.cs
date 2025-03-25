@@ -9,4 +9,5 @@ public static class GlobalData
     public static Vector2 center;
     public static int chunkSize;
     public static Transform PlayerModel;
+    public static bool isVisibleHpBarEnemy = true;
 }

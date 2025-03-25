@@ -7,13 +7,13 @@ using UnityEngine.UIElements;
 
 public class WeaponControl : MonoBehaviour
 {
-    [SerializeField] TypeAttack TypeAttack;
     protected int attack_damage {  get; set; }
     protected float attack_Speed { get; set; }
 
     protected bool isRange {  get;  set; }
     protected float attack_range {  get; set; }
     protected damageT damageType {  get; set; }
+    protected bool CanBeMissedAttack = true;
 
 
     public bool AttackDirectionOrVector;
@@ -114,13 +114,5 @@ public class WeaponControl : MonoBehaviour
     protected virtual void MeleeAttack() { }
 
 
-
-}
-public enum TypeAttack
-{
-    None,
-    Bullet,
-    Arrow,
-    Sword
 
 }

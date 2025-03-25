@@ -153,11 +153,11 @@ public class EffectsManager : MonoBehaviour
         {
             if (this.gameObject.layer == LayerManager.playerManegerLayer)
             {
-                Player.Instance.TakeDamage((int)effect.value, false);
+                Player.Instance.TakeDamage((int)effect.value, damageT.Posion, false);
             }
             else if (this.gameObject.layer == LayerManager.enemyLayer)
             {
-                this.gameObject.GetComponent<BaseEnemyLogic>().TakeDamage((int)effect.value);
+                this.gameObject.GetComponent<BaseEnemyLogic>().TakeDamage((int)effect.value, damageT.Posion, false);
             }
         }
     }

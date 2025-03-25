@@ -95,12 +95,12 @@ public class RaingerLogic : BaseEnemyLogic
             bullet = Instantiate(bulletPrefab, this.transform);
             direction = (player.position - transform.position).normalized;
         }
+        BulletMob bull_log = bullet.GetComponent<BulletMob>();
 
         //Подять в иерархии объекта пули/стрелы
         bullet.transform.SetParent(transform.parent);
 
-        //Устанавливаем урон снаряду
-        bullet.GetComponent<BulletMob>().damage = enum_stat.Att_Damage;
+        bull_log.SetStats(10, enum_stat.Att_Damage, null, damageT.Magic, CanBeMissedAttack);
 
         // Получаем направление к игроку
 

@@ -7,7 +7,7 @@ using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, ITakeDamage
 {
     public static Player Instance { get; set; }
 
@@ -214,18 +214,43 @@ public class Player : MonoBehaviour
         pl_ui.UpdateHpBar(pl_stats);
         pl_ui.UpdateSizeHpBar(pl_stats);
     }
-    public void TakeDamage(int damage, bool canEvade)
+    public void TakeDamage(int damage, damageT typeAttack, bool canEvade)
     {
-        if(pl_stats.TakeDamageStat(damage, canEvade))
+        if(canEvade)
         {
-            pl_ui.UpdateHpBar(pl_stats);
-            StartCoroutine(FlashColor(new Color32(255, 108, 108, 255), 0.1f));
-            IsDeath();
+            if (pl_stats.isEvasion())
+            {
+                Debug.Log("Игрок уклонился от удара");
+                return;
+            }
         }
-        else
+        switch (typeAttack)
         {
-            Debug.Log("Промах от врага");
+            case damageT.Physical:
+                {
+                    pl_stats.TakePhysicalDamageStat(damage);
+                    break;
+                }
+            case damageT.Magic:
+                {
+                    pl_stats.TakeMagicDamageStat(damage);
+                    break;
+                }
+            case damageT.Technical:
+                {
+                    pl_stats.TakeTechDamageStat(damage);
+                    break;
+                }
+            case damageT.Posion:
+                {
+                    pl_stats.TakePosionDamageStat(damage);
+                    break;
+                }
+            default: goto case damageT.Physical;
         }
+        pl_ui.UpdateHpBar(pl_stats);
+        StartCoroutine(FlashColor(new Color32(255, 108, 108, 255), 0.1f));
+        IsDeath();
     }
     public bool TakeHeal(int heal)
     {

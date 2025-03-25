@@ -7,8 +7,8 @@ public enum damageT
 {
     Magic,
     Technical,
-    Cutting,
-    Crushing,
+    Physical,
+    Posion,
     Mixed
 }
 [Serializable]

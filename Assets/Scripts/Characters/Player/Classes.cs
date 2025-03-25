@@ -30,9 +30,9 @@ public class Classes : MonoBehaviour
         {
             //                    strength agility intell range, damage, at_sp, projSpeed, speed, hp, def
             //                                       s  a  i  r   d  a   p   s  h   d
-            roleClasses.Add("Shooter", new RoleClass(0, 2, 0, 2f, 0, 35, 4f, 0.2f, 2, 0));
-            roleClasses.Add("Mage",    new RoleClass(0, 0, 2, 1f, 4, 30, 0, 0.2f, 3, 0));
-            roleClasses.Add("Warrior", new RoleClass(2, 0, 0, 1f, 2, 25, 0, 0.4f, 4, 2));
+            roleClasses.Add("Shooter", new RoleClass(0, 2, 0, 2f, 0, 35, 4f, 0.2f, 2, 0, 0, 0));
+            roleClasses.Add("Mage",    new RoleClass(0, 0, 2, 1f, 0, 30, 0, 0.2f, 3, 0, 10, 10));
+            roleClasses.Add("Warrior", new RoleClass(2, 0, 0, 1f, 2, 25, 0, 0.4f, 4, 2, 0, 0));
         }
     }
     void Start()
@@ -61,19 +61,25 @@ public class RoleClass
     public float Bonus_Class_SpeedMove { get; set; }
     public int Bonus_Class_Hp { get; set; }
     public int Bonus_Class_Armor { get; set; }
+    public float Bonus_Magic_Resis { get; set; }
+    public float Bonus_Tech_Resis { get; set; }
 
-    public RoleClass(int bonusStrength, int bonusAgility, int bonisIntelligence ,float bonusRange, int bonusDamage, int bonusAttackSpeed, float bonusProjectileSpeed, float bonusSpeedMove, int bonushp, int bonusDeffence)
+    public RoleClass(int bonusStrength, int bonusAgility, int bonisIntelligence ,float bonusRange, int bonusDamage, 
+        int bonusAttackSpeed, float bonusProjectileSpeed, float bonusSpeedMove, int bonushp, int bonusDeffence, 
+        float bonus_Magic_Resis,float bonus_Tech_Resis)
     {
-        this.Bonus_Class_Strength = bonusStrength;
-        this.Bonus_Class_Agility = bonusAgility;
-        this.Bonus_Class_Intelligence = bonisIntelligence;
+        Bonus_Class_Strength = bonusStrength;
+        Bonus_Class_Agility = bonusAgility;
+        Bonus_Class_Intelligence = bonisIntelligence;
 
-        this.Bonus_Class_Range = bonusRange;
-        this.Bonus_Class_Damage = bonusDamage;
-        this.Bonus_Class_AttackSpeed = bonusAttackSpeed;
-        this.Bonus_Class_ProjectileSpeed = bonusProjectileSpeed;
-        this.Bonus_Class_SpeedMove = bonusSpeedMove;
-        this.Bonus_Class_Hp = bonushp;
-        this.Bonus_Class_Armor = bonusDeffence;
+        Bonus_Class_Range = bonusRange;
+        Bonus_Class_Damage = bonusDamage;
+        Bonus_Class_AttackSpeed = bonusAttackSpeed;
+        Bonus_Class_ProjectileSpeed = bonusProjectileSpeed;
+        Bonus_Class_SpeedMove = bonusSpeedMove;
+        Bonus_Class_Hp = bonushp;
+        Bonus_Class_Armor = bonusDeffence;
+        Bonus_Magic_Resis = bonus_Magic_Resis;
+        Bonus_Tech_Resis = bonus_Tech_Resis;
     }
 }

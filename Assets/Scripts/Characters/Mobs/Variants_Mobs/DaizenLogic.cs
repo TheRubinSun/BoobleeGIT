@@ -67,7 +67,7 @@ public class DaizenLogic : BaseEnemyLogic
         audioSource.PlayOneShot(attack_sound); //Звук выстрела
 
 
-        Player.Instance.TakeDamage(enum_stat.Att_Damage, true);
+        Player.Instance.TakeDamage(enum_stat.Att_Damage, damageT.Physical, true);
     }
     public override void CreateCulling()
     {

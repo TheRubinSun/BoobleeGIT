@@ -22,6 +22,9 @@ public class PlayerStats : CharacterStats
     public int Base_Att_Speed { get; set; }
     public float Base_Proj_Speed { get; set; }
     public float Base_ExpBust {  get; set; }
+    public float Base_Magic_Resis { get; set; }
+    public float Base_Tech_Resis { get; set; }
+    public float Int_Resis;
 
     //Итоговые Характеристики
 
@@ -67,6 +70,9 @@ public class PlayerStats : CharacterStats
         Base_Proj_Speed = 0;
         Base_ExpBust = 1f;
 
+        Base_Magic_Resis = 0;
+        Base_Tech_Resis = 0;
+
         nextLvl_exp = 10;
         level = 0;
         count_Projectile = 0;
@@ -99,6 +105,9 @@ public class PlayerStats : CharacterStats
         Base_Att_Speed = playerSaveData.Base_Att_Speed;
         Base_Proj_Speed = playerSaveData.Base_Proj_Speed;
         Base_ExpBust = playerSaveData.Base_ExpBust;
+
+        Base_Magic_Resis = playerSaveData.Base_Magic_Resis;
+        Base_Tech_Resis = playerSaveData.Base_Tech_Resis;
 
         nextLvl_exp = playerSaveData.nextLvl_exp;
         cur_exp = playerSaveData.cur_exp;
@@ -138,6 +147,9 @@ public class PlayerStats : CharacterStats
 
         ExpBust = Base_ExpBust + equipStats.Bonus_Equip_ExpBust;
 
+        float Int_Resis = Intelligence / (Intelligence + 100f);
+        Tech_Resis = 1 - ((1 - Int_Resis) * (1 - Base_Tech_Resis) * (1 - classPlayer.Bonus_Tech_Resis) * (1 - equipStats.Bonus_Tech_Resis));
+        Magic_Resis = 1 - ((1 - Int_Resis) * (1 - Base_Magic_Resis) * (1 - classPlayer.Bonus_Magic_Resis) * (1 - equipStats.Bonus_Magic_Resis));
     }
     public void FillHp()
     {
@@ -149,14 +161,7 @@ public class PlayerStats : CharacterStats
         Max_Hp = (Strength * 2) + Base_Max_Hp + classPlayer.Bonus_Class_Hp + EquipStats.Instance.Bonus_Equip_Hp;
         Cur_Hp += addMaxHp;
     }
-    public bool TakeDamageStat(int damage, bool canEvade)
-    {
-        if(canEvade) if (isEvasion()) return false; //ЕСли удалось уклониться, урон не получаем
-
-        Cur_Hp -= (int)(Mathf.Max(damage / (1 + Armor / 10f), 1));
-        return true;
-    }
-    private bool isEvasion()
+    public bool isEvasion()
     {
         int random = UnityEngine.Random.Range(0, 100);
         if (Evasion >= random && random < 90)
@@ -164,6 +169,30 @@ public class PlayerStats : CharacterStats
             return true;
         }
         return false;
+    }
+    public bool TakePhysicalDamageStat(int damage)
+    {
+        float decreasePhisDamage = (Mathf.Max(damage / (1 + Armor / 10f), 1));
+        decreasePhisDamage -= Armor;
+        Cur_Hp -= (int)Mathf.Max(decreasePhisDamage, 1);
+        return true;
+    }
+    public bool TakeMagicDamageStat(int damage)
+    {
+        float finalDamage = damage * (1 - Magic_Resis);
+        Cur_Hp -= (Mathf.Max((int)finalDamage, 1));
+        return true;
+    }
+    public bool TakeTechDamageStat(int damage)
+    {
+        float finalDamage = damage * (1 - Tech_Resis);
+        Cur_Hp -= (Mathf.Max((int)finalDamage, 1));
+        return true;
+    }
+    public bool TakePosionDamageStat(int damage)
+    {
+        Cur_Hp -= damage;
+        return true;
     }
     public bool PlayerHealStat(int count_heal)
     {
@@ -183,7 +212,8 @@ public class PlayerStats : CharacterStats
     }
     public void AddExpStat(int add_exp)
     {
-        cur_exp += (int)(add_exp + (add_exp * ExpBust));
+        int added_exp = Mathf.RoundToInt(add_exp * ExpBust);
+        cur_exp += added_exp;
         CheckLevel();
     }
     private void CheckLevel()

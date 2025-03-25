@@ -1,11 +1,13 @@
+using NUnit.Framework;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEditor.Build.Player;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.ResourceManagement.ResourceProviders.Simulation;
 
-public class BaseEnemyLogic : MonoBehaviour, ICullableObject
+public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage
 {
     public static event Action<BaseEnemyLogic> OnEnemyDeath;
 
@@ -35,7 +37,9 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject
     protected Collider2D selfCollider;  
 
     public Transform player;
-    
+
+    protected bool CanBeMissedAttack = true;
+
     //[SerializeField]
     //protected LayerMask obstacleLayer; // Слой для препятствий (стены и игрок)
 
@@ -63,10 +67,16 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject
     [SerializeField] protected float attack_volume;
     [SerializeField] protected float touch_volume;
     [SerializeField] protected float die_volume;
+
+    //Hp Bar
+    [SerializeField] private GameObject HPBar;
+    protected HealthBar2D healthBar;
+
     //Слой
     protected int combinedLayerMask;
 
     protected CullingObject culling;
+
     protected bool isVisibleNow = true;
 
     protected virtual void Awake()
@@ -78,6 +88,11 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject
         spr_ren = GetComponent<SpriteRenderer>(); //Берем спрайт моба
         rb = GetComponent<Rigidbody2D>();
         animator_main = GetComponent<Animator>();
+
+        if(HPBar != null)
+        {
+            healthBar = new HealthBar2D(HPBar.transform.GetChild(0).gameObject, HPBar.transform.GetChild(1).gameObject);
+        }
     }
     protected virtual void Start()
     {
@@ -107,6 +122,10 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject
         enum_stat.Att_Speed = mob.attackSpeed;
         enum_stat.Attack_Interval = 60f / enum_stat.Att_Speed;
         enum_stat.GiveExp = mob.GiveExp;
+
+        enum_stat.Armor = mob.Armor;
+        enum_stat.Magic_Resis = mob.Mag_Resis;
+        enum_stat.Tech_Resis = mob.Tech_Resis;
     }
     protected virtual void Update()
     {
@@ -130,7 +149,22 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject
         }
         
     }
-    public void TakeDamage(int damage)
+    //public void TakeDamage(int damage)
+    //{
+    //    audioSource.Stop();
+    //    audioSource.volume = touch_volume;
+    //    audioSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f);
+    //    audioSource.PlayOneShot(player_touch_sound);
+    //    audioSource.pitch = 1f;
+
+    //    StartCoroutine(FlashColor(new Color32(255, 108, 108, 255), 0.1f));
+    //    enum_stat.Cur_Hp -= (int)(Mathf.Max(damage / (1 + enum_stat.Armor / 10f), 1));
+    //    if (enum_stat.Cur_Hp <= 0)
+    //    {
+    //        Death();
+    //    }
+    //}
+    public void TakeDamage(int damage, damageT typeAttack, bool canEvade)
     {
         audioSource.Stop();
         audioSource.volume = touch_volume;
@@ -138,8 +172,43 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject
         audioSource.PlayOneShot(player_touch_sound);
         audioSource.pitch = 1f;
 
+        if (canEvade)
+        {
+            if (enum_stat.isEvasion())
+            {
+                Debug.Log("Враг уклонился от удара");
+                return;
+            }
+        }
+        switch (typeAttack)
+        {
+            case damageT.Physical:
+                {
+                    enum_stat.TakePhysicalDamageStat(damage);
+                    break;
+                }
+            case damageT.Magic:
+                {
+                    enum_stat.TakeMagicDamageStat(damage);
+                    break;
+                }
+            case damageT.Technical:
+                {
+                    enum_stat.TakeTechDamageStat(damage);
+                    break;
+                }
+            case damageT.Posion:
+                {
+                    enum_stat.TakePosionDamageStat(damage);
+                    break;
+                }
+            default: goto case damageT.Physical;
+        }
+        if(GlobalData.isVisibleHpBarEnemy == true && healthBar != null)
+        {
+            healthBar.UpdateHealthBar(enum_stat.Cur_Hp, enum_stat.Max_Hp);
+        }
         StartCoroutine(FlashColor(new Color32(255, 108, 108, 255), 0.1f));
-        enum_stat.Cur_Hp -= (int)(Mathf.Max(damage / (1 + enum_stat.Armor / 10f), 1));
         if (enum_stat.Cur_Hp <= 0)
         {
             Death();
@@ -148,6 +217,10 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject
     public void TakeHeal(int heal)
     {
         enum_stat.Cur_Hp += heal;
+        if (GlobalData.isVisibleHpBarEnemy == true && healthBar != null)
+        {
+            healthBar.UpdateHealthBar(enum_stat.Cur_Hp, enum_stat.Max_Hp);
+        }
         StartCoroutine(FlashColor(new Color32(110, 255, 93, 255), 0.1f));
     }
     public virtual IEnumerator FlashColor(Color32 color, float time) //Менять цвет на время
@@ -340,6 +413,11 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject
         {
             isVisibleNow = shouldBeVisible;
             culling.SetVisible(shouldBeVisible);
+
+            if (GlobalData.isVisibleHpBarEnemy == true && healthBar != null)
+            {
+                healthBar.SetActiveHP(shouldBeVisible);
+            }
         }
     }
 }

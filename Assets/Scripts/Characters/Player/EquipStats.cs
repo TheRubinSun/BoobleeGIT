@@ -15,6 +15,8 @@ public class EquipStats : MonoBehaviour
     public int Bonus_Equip_Att_Speed { get; set; }
     public int Bonus_Equip_Proj_Speed { get; set; }
     public float Bonus_Equip_ExpBust { get; set; }
+    public float Bonus_Magic_Resis { get; set; }
+    public float Bonus_Tech_Resis { get; set; }
 
     private void Awake()
     {
@@ -25,4 +27,5 @@ public class EquipStats : MonoBehaviour
         }
         Instance = this;
     }
+
 }

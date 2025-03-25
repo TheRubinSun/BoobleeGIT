@@ -65,7 +65,7 @@ public class MineLogic : TrapLogic
             //if(enemy.gameObject.layer == LayerMask.NameToLayer("DamageCollider"))
             if (enemy.gameObject.layer == LayerManager.enemyLayer)
             {
-                enemy.GetComponent<BaseEnemyLogic>().TakeDamage(damageTrap);
+                enemy.GetComponent<BaseEnemyLogic>().TakeDamage(damageTrap, damageT.Physical, false);
             }
         }
         Destroy(explosion, 0.05f);

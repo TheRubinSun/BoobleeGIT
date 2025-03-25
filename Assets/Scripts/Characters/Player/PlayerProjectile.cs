@@ -1,13 +1,20 @@
 using UnityEngine;
 
-public class PlayerProjectile : MonoBehaviour 
+public interface UBullet
 {
-    public float maxDistance = 1f;  // ћаксимальное рассто€ние, после которого снар€д исчезает
+    public void SetStats(float _maxDistance = 1f, int _damage = 1, EffectData _effectBul = null, damageT _typeDamage = damageT.Physical, bool _CanBeMissed = true);
+}
+public class PlayerProjectile : MonoBehaviour, UBullet
+{
+
     private Vector2 startPosition;   // —тартова€ позици€ снар€да
-    
+
+    public float maxDistance;  // ћаксимальное рассто€ние, после которого снар€д исчезает
     public float destroyTime = 3f;  // ¬рем€, через которое пул€ исчезнет (в секундах)
     public int damage { get; set; }
     public EffectData effectBul {  get; set; }
+    public damageT typeDamage;
+    public bool CanBeMissed;
 
     [SerializeField] 
     private Sprite[] sprites; //–азные спрайты пуль
@@ -23,6 +30,14 @@ public class PlayerProjectile : MonoBehaviour
             //collisionIgnored = true;
         }
         spRen = GetComponent<SpriteRenderer>();
+    }
+    public void SetStats(float _maxDistance = 1f, int _damage = 1, EffectData _effectBul = null, damageT _typeDamage = damageT.Physical, bool _CanBeMissed = true)
+    {
+        maxDistance = _maxDistance;
+        damage = _damage;
+        effectBul = _effectBul;
+        typeDamage = _typeDamage;
+        CanBeMissed = _CanBeMissed;
     }
     private void Start()
     {
@@ -49,7 +64,7 @@ public class PlayerProjectile : MonoBehaviour
     {
         if (collider.gameObject.layer == LayerManager.enemyLayer)
         {
-            collider.GetComponent<BaseEnemyLogic>().TakeDamage(damage);
+            collider.GetComponent<BaseEnemyLogic>().TakeDamage(damage, typeDamage, CanBeMissed);
             Destroy(gameObject);
             if (effectBul != null)
             {
