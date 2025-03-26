@@ -15,20 +15,16 @@ public class DaizenLogic : BaseEnemyLogic
 
         base.Start();
     }
-
-    protected override void UpdateSortingOrder()
+    public override void UpdateSortingOrder()
     {
         if (!isVisibleNow) return;
 
-        if (Time.time >= nextUpdateTime)
-        {
-            spr_ren.sortingOrder = Mathf.RoundToInt((transform.position.y - 10) * -10);
+        float mobPosY = transform.position.y;
+        float PlayerPosY = GlobalData.PlayerPosY;
 
-            if(spr_ren_ch != null ) spr_ren_ch.sortingOrder = spr_ren.sortingOrder - 1;
+        spr_ren.sortingOrder = Mathf.RoundToInt((mobPosY - PlayerPosY - 2) * -5);
 
-            nextUpdateTime = Time.time + updateRate;
-        }
-
+        if (spr_ren_ch != null) spr_ren_ch.sortingOrder = spr_ren.sortingOrder - 5;
     }
 
     public override IEnumerator FlashColor(Color32 color, float time)

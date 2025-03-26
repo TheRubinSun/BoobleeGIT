@@ -1,20 +1,23 @@
 using NUnit.Framework;
 using System.Collections.Generic;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 
 public interface ICullableObject
 {
+    Vector2 GetPosition();
     void CreateCulling();
     void UpdateCulling(bool shouldBeVisible);
-    Transform GetTransform();
 
+    void UpdateSortingOrder();
 }
 public class CullingManager : MonoBehaviour
 {
     public static CullingManager Instance;
     public Transform target;
-    private float activationRadius = 12f;
+
+    public float activationRadiusX = 14f; // горизонталь
+    public float activationRadiusY = 8f;  // вертикаль
+
     public bool allVisible = false;
     private HashSet<ICullableObject> objects_visibles = new HashSet<ICullableObject>();
 
@@ -33,6 +36,18 @@ public class CullingManager : MonoBehaviour
             }
         }
     }
+    private void Start()
+    {
+        Camera cam = Camera.main;
+        if(cam.orthographic)
+        {
+            float vert = cam.orthographicSize;
+            float horiz = vert * cam.aspect;
+
+            activationRadiusY = vert + 2f;
+            activationRadiusX = horiz + 2f;
+        }
+    }
     public void RegisterObject(ICullableObject object_Visible)
     {
         objects_visibles.Add(object_Visible);
@@ -47,14 +62,19 @@ public class CullingManager : MonoBehaviour
         if (cullCheckTimer < cullCheckInterval) return;
 
         cullCheckTimer = 0;
+
         foreach (ICullableObject object_Visible in objects_visibles)
         {
             if (object_Visible == null) continue;
 
-            float dist = Vector2.Distance(object_Visible.GetTransform().position, target.position);
-            bool shouldBeVisible = dist <= activationRadius;
+            Vector2 objectPos = object_Visible.GetPosition();
 
-            if(!allVisible)
+            bool inBounds = Mathf.Abs(objectPos.x - target.position.x) <= activationRadiusX &&
+                            Mathf.Abs(objectPos.y - target.position.y) <= activationRadiusY;
+
+            bool shouldBeVisible = allVisible || inBounds;
+
+            if (!allVisible)
             {
                 object_Visible.UpdateCulling(shouldBeVisible);
             }
@@ -63,6 +83,10 @@ public class CullingManager : MonoBehaviour
                 object_Visible.UpdateCulling(true);
             }
             
+            if(shouldBeVisible)
+            {
+                object_Visible.UpdateSortingOrder();
+            }
         }
     }
 }

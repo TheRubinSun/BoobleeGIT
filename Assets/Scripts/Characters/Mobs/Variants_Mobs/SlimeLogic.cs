@@ -47,25 +47,21 @@ public class SlimeLogic : BaseEnemyLogic
         base.Start();
 
     }
-    protected override void UpdateSortingOrder()
+    public override void UpdateSortingOrder()
     {
         if (!isVisibleNow) return;
 
-        if (Time.time >= nextUpdateTime)
+        float mobPosY = transform.position.y;
+        float PlayerPosY = GlobalData.PlayerPosY;
+
+        spr_ren.sortingOrder = Mathf.RoundToInt((mobPosY - PlayerPosY - 2) * -5);
+
+        if (sr_item_one != null)
         {
-            spr_ren.sortingOrder = Mathf.RoundToInt(transform.position.y * -10);
-
-            if(sr_item_one != null)
-            {
-                sr_item_one.sortingOrder = spr_ren.sortingOrder - 1;
-                sr_item_two.sortingOrder = spr_ren.sortingOrder - 1;
-                sr_item_three.sortingOrder = spr_ren.sortingOrder - 1;
-            }
-
-
-            nextUpdateTime = Time.time + updateRate;
+            sr_item_one.sortingOrder = spr_ren.sortingOrder - 1;
+            sr_item_two.sortingOrder = spr_ren.sortingOrder - 1;
+            sr_item_three.sortingOrder = spr_ren.sortingOrder - 1;
         }
-
     }
     private Item GetRandomItem(string[] nameKeysItem)
     {

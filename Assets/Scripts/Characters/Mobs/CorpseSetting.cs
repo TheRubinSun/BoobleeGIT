@@ -15,6 +15,8 @@ public class CorpseSetting : MonoBehaviour, ICullableObject
 
     private CullingObject culling;
     private bool isVisibleNow = true;
+
+    private Vector2 startPosition;
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -25,9 +27,19 @@ public class CorpseSetting : MonoBehaviour, ICullableObject
     {
         isBusy = false;
 
+        startPosition = transform.position;
         CreateCulling();
         UpdateCulling(false);
         CullingManager.Instance.RegisterObject(this);
+    }
+    public virtual void UpdateSortingOrder()
+    {
+        if (!isVisibleNow) return;
+
+        float corpsePosY = transform.position.y;
+        float PlayerPosY = GlobalData.PlayerPosY;
+
+        spr_ren.sortingOrder = (Mathf.RoundToInt((corpsePosY - PlayerPosY - 2) * -10));
     }
     public void Busy()
     {
@@ -151,7 +163,7 @@ public class CorpseSetting : MonoBehaviour, ICullableObject
             CullingManager.Instance.UnregisterObject(this);
 
     }
-    public Transform GetTransform() => transform;
+    public Vector2 GetPosition() => startPosition;
     public void UpdateCulling(bool shouldBeVisible)
     {
         if (isVisibleNow != shouldBeVisible)

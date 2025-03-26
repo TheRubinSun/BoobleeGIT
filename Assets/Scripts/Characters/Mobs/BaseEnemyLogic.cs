@@ -61,7 +61,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage
     [SerializeField]
     protected float attackBuffer; // Можно настроить
     //Таймеры
-    protected float updateRate = 0.2f; // Интервал обновления (5 раза в секунду)
+    protected float updateRate = 0.25f; // Интервал обновления (5 раза в секунду)
     protected float nextUpdateTime = 0f;
 
     [SerializeField] protected float attack_volume;
@@ -96,6 +96,9 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage
     }
     protected virtual void Start()
     {
+        if (player == null && GlobalData.PlayerModel != null)
+            player = GlobalData.PlayerModel;
+
         original_color = spr_ren.color;
         moveDirection = (player.position - transform.position).normalized; //Вычисление направление к игроку
         UpdateSortingOrder();
@@ -129,41 +132,22 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage
     }
     protected virtual void Update()
     {
-        UpdateSortingOrder();
+        //UpdateSortingOrder();
     }
     public virtual void FixedUpdate()
     {
         DetectDirection();
         Move();
     }
-
-    protected virtual void UpdateSortingOrder()
+    public virtual void UpdateSortingOrder()
     {
         if (!isVisibleNow) return;
 
-        if (Time.time >= nextUpdateTime)
-        {
-            spr_ren.sortingOrder = Mathf.RoundToInt((transform.position.y - 10) * -10);
+        float mobPosY = transform.position.y;
+        float PlayerPosY = GlobalData.PlayerPosY;
 
-            nextUpdateTime = Time.time + updateRate;
-        }
-        
+        spr_ren.sortingOrder = Mathf.RoundToInt((mobPosY - PlayerPosY - 2) * -5);
     }
-    //public void TakeDamage(int damage)
-    //{
-    //    audioSource.Stop();
-    //    audioSource.volume = touch_volume;
-    //    audioSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f);
-    //    audioSource.PlayOneShot(player_touch_sound);
-    //    audioSource.pitch = 1f;
-
-    //    StartCoroutine(FlashColor(new Color32(255, 108, 108, 255), 0.1f));
-    //    enum_stat.Cur_Hp -= (int)(Mathf.Max(damage / (1 + enum_stat.Armor / 10f), 1));
-    //    if (enum_stat.Cur_Hp <= 0)
-    //    {
-    //        Death();
-    //    }
-    //}
     public void TakeDamage(int damage, damageT typeAttack, bool canEvade)
     {
         audioSource.Stop();
@@ -397,7 +381,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage
         }
         else return null;
     }
-    public Transform GetTransform() => transform;
+    public Vector2 GetPosition() => transform.position;
     public virtual void CreateCulling()
     {
         culling = new CullingObject(spr_ren, animator_main);

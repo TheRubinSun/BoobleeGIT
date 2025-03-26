@@ -9,6 +9,7 @@ public class Tree : MonoBehaviour, ICullableObject
     protected CullingObject culling;
     protected bool isVisibleNow = true;
 
+    private Vector2 startPosition;
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -21,16 +22,25 @@ public class Tree : MonoBehaviour, ICullableObject
     }
     private void Start()
     {
+        startPosition = transform.position;
         CreateCulling();
         UpdateCulling(false);
         CullingManager.Instance.RegisterObject(this);
     }
+    public virtual void UpdateSortingOrder()
+    {
+        if (!isVisibleNow) return;
 
+        float treePosY = transform.position.y;
+        float PlayerPosY = GlobalData.PlayerPosY;
+
+        spr_ren.sortingOrder = Mathf.RoundToInt(((treePosY - 2f) - PlayerPosY - 2) * -5);
+    }
     public void CreateCulling()
     {
         culling = new CullingObject(spr_ren, anim, new SpriteRenderer[] { spr_Child_ren });
     }
-    public Transform GetTransform() => transform;
+    public Vector2 GetPosition() => startPosition;
     private void OnDisable()
     {
         if (CullingManager.Instance != null)

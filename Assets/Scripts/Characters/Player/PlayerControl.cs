@@ -130,7 +130,8 @@ public class PlayerControl : MonoBehaviour
     public void Move()
     {
         movement = inputDirection.normalized * player.GetPlayerStats().Mov_Speed;
-        //rb.MovePosition(rb.position + movement * Time.fixedDeltaTime);
+        GlobalData.PlayerPosY = transform.position.y;
+
         rb.linearVelocity = movement;
 
         MoveLegs();
