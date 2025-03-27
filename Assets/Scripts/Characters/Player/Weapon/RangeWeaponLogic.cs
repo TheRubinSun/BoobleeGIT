@@ -14,6 +14,12 @@ public class RangeWeaponLogic : WeaponControl
 
     [SerializeField]
     protected Transform ShootPos;
+    protected Vector2 defaultShootPos;
+    protected override void Start()
+    {
+        base.Start();
+        defaultShootPos = ShootPos.localPosition;
+    }
     public override void GetStatsWeapon(int damage, float at_speed, float att_sp_pr, bool isRang, float attack_ran, int count_proj, float _spreadAngle, damageT _damT, Transform pl_mod, GameObject _Projectile_pref = null, float att_sp_pr_coof = 0)
     {
         attack_damage = damage;
@@ -75,6 +81,19 @@ public class RangeWeaponLogic : WeaponControl
         
         float randomAngle = Random.Range(-spreadAngle, spreadAngle);
         direction = Quaternion.Euler(0, 0, randomAngle) * direction; //Добавляем разброс снарядам
+    }
+    protected override void FlipWeapon(float dirX)
+    {
+        if (dirX > 0)
+        {
+            sr.flipY = false;
+            ShootPos.localPosition = new Vector2(defaultShootPos.x, defaultShootPos.y);
+        }
+        else
+        {
+            sr.flipY = true;
+            ShootPos.localPosition = new Vector2(defaultShootPos.x, -defaultShootPos.y);
+        }
     }
     protected override void ShootVelocity(GameObject projectile, Vector2 direction)
     {

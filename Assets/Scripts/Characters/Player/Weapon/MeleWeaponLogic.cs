@@ -12,17 +12,20 @@ public class MeleWeaponLogic : WeaponControl
         MeleeAttack();
         
     }
-    protected HashSet<Collider2D> hitEnemies = new HashSet<Collider2D>();
+    protected HashSet<Collider2D> hitObjAndEnemies = new HashSet<Collider2D>();
     protected void ResetHitEnemies()
     {
-        hitEnemies.Clear();
+        hitObjAndEnemies.Clear();
     }
     protected void OnTriggerEnter2D(Collider2D collision)
     {
         // Проверяем, что столкновение произошло с врагом
         if (!IsAttack) return;
-        
-        if(collision.gameObject.layer == LayerManager.touchObjectsLayer) //Столкновение в врагов или объектом
+
+        if (hitObjAndEnemies.Contains(collision)) return;
+        hitObjAndEnemies.Add(collision);
+
+        if (collision.gameObject.layer == LayerManager.touchObjectsLayer) //Столкновение в врагов или объектом
         {
             ObjectLBroken objectL = collision.gameObject.GetComponent<ObjectLBroken>();
             if (objectL != null)
@@ -42,8 +45,7 @@ public class MeleWeaponLogic : WeaponControl
         {
             return;
         }
-        if (hitEnemies.Contains(collision)) return;
-        hitEnemies.Add(collision);
+
 
         // Передайте нужную логику урона
 

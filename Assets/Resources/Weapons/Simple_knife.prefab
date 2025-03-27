@@ -111,6 +111,8 @@ MonoBehaviour:
   volumeSounds: 0.05
   audioClips:
   - {fileID: 8300000, guid: cc9e2d4f2a898794b90bf5d3409cbbbf, type: 3}
+  animStartAttack: 0.4
+  animEndAttack: 0.58
 --- !u!82 &1890836006999435829
 AudioSource:
   m_ObjectHideFlags: 0

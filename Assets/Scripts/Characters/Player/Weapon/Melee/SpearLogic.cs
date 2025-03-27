@@ -4,8 +4,8 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class SpearLogic : MeleWeaponLogic
 {
-    [SerializeField] protected float animStartAttack = 0.3f;
-    [SerializeField] protected float animEndAttack = 0.5f;
+    [SerializeField] protected float animStartAttack = 0.4f;
+    [SerializeField] protected float animEndAttack = 0.58f;
     public override void Attack()
     {
         base.Attack();
@@ -68,8 +68,10 @@ public class SpearLogic : MeleWeaponLogic
 
         transform.position = transform.parent.position;
         transform.rotation = Quaternion.Euler(0, 0, startRotation);
-        ResetHitEnemies();
+
         IsAttack = false;
+        ResetHitEnemies();
+        
 
         // ===== Локальные функции =====
         float attackDuration() => adjustedInterval * animStartAttack;
