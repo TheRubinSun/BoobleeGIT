@@ -9,8 +9,6 @@ public class MeleWeaponLogic : WeaponControl
         if (Time.time - lastAttackTime < attackInterval) return;
         lastAttackTime = Time.time;
 
-        Debug.Log("SwordAttack");
-        //ResetHitEnemies();
         MeleeAttack();
         
     }
@@ -22,17 +20,31 @@ public class MeleWeaponLogic : WeaponControl
     protected void OnTriggerEnter2D(Collider2D collision)
     {
         // Проверяем, что столкновение произошло с врагом
-        if (!IsAttack || !(collision.gameObject.layer == LayerManager.enemyLayer)) return;
-
+        if (!IsAttack) return;
+        
+        if(collision.gameObject.layer == LayerManager.touchObjectsLayer) //Столкновение в врагов или объектом
+        {
+            ObjectLBroken objectL = collision.gameObject.GetComponent<ObjectLBroken>();
+            if (objectL != null)
+            {
+                objectL.Break(canBeWeapon);
+            }
+        }
+        else if(collision.gameObject.layer == LayerManager.enemyLayer)
+        {
+            BaseEnemyLogic enemy = collision.GetComponent<BaseEnemyLogic>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(attack_damage, damageType, canBeWeapon.canBeMissed);
+            }
+        }
+        else
+        {
+            return;
+        }
         if (hitEnemies.Contains(collision)) return;
         hitEnemies.Add(collision);
 
-        BaseEnemyLogic enemy = collision.GetComponent<BaseEnemyLogic>();
-        if (enemy != null)
-        {
-            collision.GetComponent<BaseEnemyLogic>().TakeDamage(attack_damage, damageType, CanBeMissedAttack);
-        }
-            
         // Передайте нужную логику урона
 
         // Применяем урон

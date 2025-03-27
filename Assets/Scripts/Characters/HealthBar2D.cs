@@ -10,6 +10,7 @@ public class HealthBar2D
     private float localPosY;
     private float xPosForHp;
     float healthPercent;
+
     public HealthBar2D(GameObject HpBarBG, GameObject HpBarFill)
     {
         this.HpBarFillTrans = HpBarFill.transform;
@@ -28,7 +29,13 @@ public class HealthBar2D
     public void UpdateHealthBar(float currentHp, float maxHp)
     {
         if(healthBarBG_sp_ren.enabled == false) SetActive(true);
+
         healthPercent = Mathf.Clamp01(currentHp / maxHp);
+        
+        if (healthPercent >= 0.65f) healthBarFill_sp_ren.color = GlobalColors.fullHp;
+        else if(healthPercent < 0.65f && healthPercent >= 0.30f) healthBarFill_sp_ren.color = GlobalColors.halfHp;
+        else healthBarFill_sp_ren.color = GlobalColors.lowHp;
+
         HpBarFillTrans.localScale = new Vector2(maxWidth * healthPercent, height);
         HpBarFillTrans.localPosition = new Vector2(xPosForHp * (1 - healthPercent), localPosY);
     }

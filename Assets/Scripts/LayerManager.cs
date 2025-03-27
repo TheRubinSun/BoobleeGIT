@@ -7,6 +7,7 @@ public class LayerManager : MonoBehaviour
     public static int playerLayer = -1;
     public static int playerManegerLayer = -1;
     public static int enemyLayer = -1;
+    public static int touchObjectsLayer = -1;
 
     private void Awake()
     {
@@ -16,7 +17,7 @@ public class LayerManager : MonoBehaviour
             playerLayer = LayerMask.NameToLayer("Player");
             playerManegerLayer = LayerMask.NameToLayer("PlayerManager");
             enemyLayer = LayerMask.NameToLayer("Enemy");
-
+            touchObjectsLayer = LayerMask.NameToLayer("TouchObjects");
             //Debug.Log($"Obstacles {obstaclesLayer}");
             //Debug.Log($"Player {playerLayer}");
             //Debug.Log($"Player Man{playerManegerLayer}");

@@ -50,9 +50,9 @@ public class Gun : Weapon
     }
 }
 [Serializable]
-public class Sword: Weapon
+public class MeleWeapon: Weapon
 {
-    public Sword(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string decription, bool rangeType, float range, damageT typeDamage, int damage, float attackSpeed,int conut_Projectiles) : base(id, name, maxCount, spriteID, quality, cost, decription, rangeType, range, typeDamage, damage, attackSpeed, conut_Projectiles)
+    public MeleWeapon(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string decription, bool rangeType, float range, damageT typeDamage, int damage, float attackSpeed,int conut_Projectiles) : base(id, name, maxCount, spriteID, quality, cost, decription, rangeType, range, typeDamage, damage, attackSpeed, conut_Projectiles)
     {
 
     }

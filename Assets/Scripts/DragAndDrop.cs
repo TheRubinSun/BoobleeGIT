@@ -17,7 +17,6 @@ public class DragAndDrop:MonoBehaviour
 
     [SerializeField] Transform ItemsOnMapLevel;
     [SerializeField] Transform player;
-    [SerializeField] GameObject ItemDropPref;
     [SerializeField] GameObject DragZone;
 
     private float RadiusPickUp { get; set; }
@@ -410,7 +409,7 @@ public class DragAndDrop:MonoBehaviour
     public void DropItem()
     {
         SoundsManager.Instance.PlayPutDropItem();
-        GameObject gameObject = Instantiate(ItemDropPref, ItemsOnMapLevel);
+        GameObject gameObject = Instantiate(GlobalPrefabs.Instance.ItemDropPref, ItemsOnMapLevel);
         gameObject.transform.position = player.position;
         ItemDrop ItemD = gameObject.GetComponent<ItemDrop>();
         ItemD.sprite = tempSlot.Item.Sprite;

@@ -18,7 +18,7 @@ public class ResourcesData : MonoBehaviour
         weapons[3] = Resources.Load<GameObject>("Weapons/ShotGun_pump");
         weapons[4] = Resources.Load<GameObject>("Weapons/Soldier's spear");
         weapons[5] = Resources.Load<GameObject>("Weapons/Simple_knife");
-
+        weapons[6] = Resources.Load<GameObject>("Weapons/Axe_woodcut_Pref");
 
         projectiles[0] = Resources.Load<GameObject>("Projectiles/Pistol_Bullet");
         projectiles[1] = Resources.Load<GameObject>("Projectiles/Shotgun_Bullet");

@@ -182,7 +182,7 @@ public class EqupmentPlayer : MonoBehaviour
             weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(gun.damage, gun.attackSpeed, gun.projectileSpeed, gun.rangeType, gun.range, gun.conut_Projectiles, gun.spreadAngle, gun.typeDamage, PlayerModel,
                 ResourcesData.GetProjectilesPrefab(gun.idBulletPref), gun.projectileSpeedCoof);
         }
-        else if (slot.Item is Sword sword)
+        else if (slot.Item is MeleWeapon sword)
         {
             weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(sword.damage, sword.attackSpeed, 0, sword.rangeType, sword.range, sword.conut_Projectiles, 0f, sword.typeDamage, PlayerModel, null,0);
         }

@@ -54,7 +54,6 @@ public class SwordLogic : MeleWeaponLogic
         Vector2 midAttackPos = (Vector2)transform.position + attackDirection * attack_range;
 
         // ”станавливаем минимальный интервал
-        Debug.Log(attackInterval + " Interval");
         float maxInterval = 1.5f;
         float adjustedInterval = Mathf.Min(attackInterval, maxInterval);
 
@@ -74,7 +73,7 @@ public class SwordLogic : MeleWeaponLogic
         yield return AnimatePhase(midAttackPos, windupLeftPos, startRotation, startRotation + maxRotationAngle, arcHeight, attackBackDuration());
         startPos = transform.parent.position; // Ќачальна€ позици€ - если родитель сдвинулс€
 
-        yield return AnimatePhase(windupLeftPos, transform.parent.position, startRotation + maxRotationAngle, startRotation, 0, returnDuration());
+        yield return AnimatePhase(windupLeftPos, startPos, startRotation + maxRotationAngle, startRotation, 0, returnDuration());
 
         transform.position = transform.parent.position;
         transform.rotation = Quaternion.Euler(0, 0, startRotation);

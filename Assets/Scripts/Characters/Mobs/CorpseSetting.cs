@@ -39,7 +39,7 @@ public class CorpseSetting : MonoBehaviour, ICullableObject
         float corpsePosY = transform.position.y;
         float PlayerPosY = GlobalData.PlayerPosY;
 
-        spr_ren.sortingOrder = (Mathf.RoundToInt((corpsePosY - PlayerPosY - 2) * -10));
+        spr_ren.sortingOrder = (Mathf.RoundToInt((corpsePosY - PlayerPosY) * -10));
     }
     public void Busy()
     {

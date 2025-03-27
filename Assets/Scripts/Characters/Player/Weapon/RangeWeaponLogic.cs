@@ -57,7 +57,7 @@ public class RangeWeaponLogic : WeaponControl
         proj_set = projectile.GetComponent<PlayerProjectile>();
         proj_set.damage = attack_damage;//Назначем урон
         proj_set.maxDistance = attack_range;
-        proj_set.SetStats(attack_range, attack_damage, null, damageType, CanBeMissedAttack);
+        proj_set.SetStats(attack_range, attack_damage, null, damageType, canBeWeapon.canBeMissed);
 
         projectile.transform.SetParent(transform.root); //Подять в иерархии объекта пули/стрелы
 

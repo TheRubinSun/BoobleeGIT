@@ -14,7 +14,9 @@ public class PlayerProjectile : MonoBehaviour, UBullet
     public int damage { get; set; }
     public EffectData effectBul {  get; set; }
     public damageT typeDamage;
-    public bool CanBeMissed;
+
+    protected CanBeWeapon canBeWeapon = new CanBeWeapon();
+
 
     [SerializeField] 
     private Sprite[] sprites; //Разные спрайты пуль
@@ -37,7 +39,7 @@ public class PlayerProjectile : MonoBehaviour, UBullet
         damage = _damage;
         effectBul = _effectBul;
         typeDamage = _typeDamage;
-        CanBeMissed = _CanBeMissed;
+        canBeWeapon.canBeMissed = _CanBeMissed;
     }
     private void Start()
     {
@@ -64,13 +66,21 @@ public class PlayerProjectile : MonoBehaviour, UBullet
     {
         if (collider.gameObject.layer == LayerManager.enemyLayer)
         {
-            collider.GetComponent<BaseEnemyLogic>().TakeDamage(damage, typeDamage, CanBeMissed);
+            collider.GetComponent<BaseEnemyLogic>().TakeDamage(damage, typeDamage, canBeWeapon.canBeMissed);
             Destroy(gameObject);
             if (effectBul != null)
             {
                 collider.GetComponent<EffectsManager>().ApplyEffect(effectBul);
             }
             //Debug.Log(collider.GetComponent<BaseEnemyLogic>().enum_stat.Cur_Hp+" "+ collider.GetComponent<BaseEnemyLogic>().enum_stat.Max_Hp);
+        }
+        else if(collider.gameObject.layer == LayerManager.touchObjectsLayer)
+        {
+            ObjectLBroken objectL = collider.gameObject.GetComponent<ObjectLBroken>();
+            if (objectL != null)
+            {
+                objectL.Break(canBeWeapon);
+            }
         }
         else if (collider.gameObject.layer == LayerManager.obstaclesLayer)
         {

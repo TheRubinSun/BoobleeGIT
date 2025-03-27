@@ -13,8 +13,8 @@ public class WeaponControl : MonoBehaviour
     protected bool isRange {  get;  set; }
     protected float attack_range {  get; set; }
     protected damageT damageType {  get; set; }
-    protected bool CanBeMissedAttack = true;
 
+    protected CanBeWeapon canBeWeapon = new CanBeWeapon();
 
     public bool AttackDirectionOrVector;
 
@@ -63,6 +63,8 @@ public class WeaponControl : MonoBehaviour
         damageType = _damT;
         attackInterval = 60f / (attack_Speed * Player.Instance.GetPlayerStats().Att_Speed);
         PlayerModel = pl_mod;
+
+        canBeWeapon.canBeMissed = true;
     }
 
     protected virtual void Update()
