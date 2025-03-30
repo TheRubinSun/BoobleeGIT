@@ -52,7 +52,7 @@ public class SlimeLogic : BaseEnemyLogic
         if (!isVisibleNow) return;
 
         float mobPosY = transform.position.y;
-        float PlayerPosY = GlobalData.PlayerPosY;
+        float PlayerPosY = GameManager.Instance.PlayerPosY;
 
         spr_ren.sortingOrder = Mathf.RoundToInt((mobPosY - PlayerPosY - 2) * -5);
 

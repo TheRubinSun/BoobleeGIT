@@ -9,7 +9,13 @@ using System.IO;
 public class GameManager: MonoBehaviour 
 {
     public static GameManager Instance;
-    [SerializeField] GameObject CorpsePref; 
+    [SerializeField] GameObject CorpsePref;
+
+    public Transform dropParent;
+    public Transform PlayerModel;
+
+    public float PlayerPosY;
+
     bool BuildingMode;
 
     public int KillsEnemy;
@@ -27,6 +33,9 @@ public class GameManager: MonoBehaviour
             return;
         }
         Instance = this;
+
+        if (dropParent == null) dropParent = GameObject.Find("DropItems").transform;
+        if (PlayerModel == null) PlayerModel = GameObject.Find("PlayerModel").transform;
     }
     private void Start()
     {
@@ -176,7 +185,8 @@ public class GameManager: MonoBehaviour
         SavesDataInfo savesDataInfo = new SavesDataInfo(GenInfoSaves.saveGameFiles, GlobalData.SaveInt, GlobalData.cur_language);
         await SaveSystem.SaveDataAsync(savesDataInfo, "saves_info.json");
 
-
+        CraftsRecipesData savesDataRecipesCrafts = new CraftsRecipesData(RecipesCraft.recipesCraft);
+        await SaveSystem.SaveDataAsync(savesDataRecipesCrafts, "recipes_crafts_data.json");
     }
     //public async void LoadDataGame()
     //{

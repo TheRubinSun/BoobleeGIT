@@ -395,7 +395,7 @@ public class ShopLogic : MonoBehaviour
             }
             else
             {
-                Inventory.Instance.AddItem(slot.Item, slot.Count);
+                Inventory.Instance.FindSlotAndAdd(slot.Item, slot.Count, true);
             }
 
         }

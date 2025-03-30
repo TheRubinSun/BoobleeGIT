@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: InventoryGroup
+  m_EditorClassIdentifier: 
+  m_GroupName: InventoryGroup
+  m_GUID: e98564a4b8298a24d8605602a1eface7
+  m_SerializeEntries:
+  - m_GUID: 0b94a2a72634c634ba6980405395e377
+    m_Address: Inventory/DragAndDrop
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InventoryPrefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 640e3e697b3eba2478ea11c487c97a5a
+    m_Address: Inventory/BarInvent (0)
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InventoryPrefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8acf445bdee6e7248bca7236fee62b34
+    m_Address: Inventory/InfoPanel
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InventoryPrefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aac1e13db162a284a9213847f28a71e8
+    m_Address: Inventory/ItemDrop
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InventoryPrefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d3ab3db6862024b4daf670217c786c78
+    m_Address: Inventory/Slots
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InventoryPrefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d6e420bdd5704774bb05b37bb65b039e
+    m_Address: Inventory/Player_Info
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - InventoryPrefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 0c39e9370348b1f4abc1856cad86f478, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: ac2a76bf2f8b21049bfa881ac304d667, type: 2}
+    - {fileID: 11400000, guid: 01165fd9ccf79b64babc45442fd64be1, type: 2}

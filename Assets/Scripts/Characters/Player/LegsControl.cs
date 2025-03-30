@@ -21,7 +21,6 @@ public class LegsControl : MonoBehaviour
 
     [SerializeField]
     protected float pitchRange = 0.1f;
-    private bool pairIsMove = true;
     private void Start()
     {
         isMoving = new bool[foots.Length];

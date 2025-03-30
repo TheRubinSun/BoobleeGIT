@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -11,7 +13,7 @@ public class LoadingMenu : MonoBehaviour
     public Slider progressBar;
     public TextMeshProUGUI progressText;
 
-    [SerializeField] private Sprite spriteSheet;
+    public string spriteSheetPath;
     private void Start()
     {
         StartCoroutine(LoadGameScene());
@@ -21,6 +23,8 @@ public class LoadingMenu : MonoBehaviour
 
         // Загружаем данные и сохраняем в GameDataHolder
         yield return LoadData();
+        yield return LoadLanguage();
+        yield return LoadSprites(spriteSheetPath);
 
         // Загружаем игровую сцену асинхронно
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Menu");
@@ -49,43 +53,41 @@ public class LoadingMenu : MonoBehaviour
         GameDataHolder.EnemyData = await SaveSystem.LoadDataAsync<EnemyData>("enemies.json");
         GameDataHolder.RoleClassesData = await SaveSystem.LoadDataAsync<RoleClassesData>("role_classes_data.json");
         GameDataHolder.ItemsDropOnEnemy = await SaveSystem.LoadDataAsync<ItemsDropOnEnemy>("item_drop.json");
-        GameDataHolder.spriteList = LoadSprites();
+        RecipesCraft.LoadAllCrafts((await SaveSystem.LoadDataAsync<CraftsRecipesData>("recipes_crafts_data.json")).craftsRecipesData);
+        await GlobalPrefabs.LoadPrefabs();
 
+        Debug.Log("Данные загружены в LoadingMenu.");
+    }
+    private async Task LoadLanguage()
+    {
         if (GameDataHolder.savesDataInfo.language != null)
         {
-            LocalizationManager.Instance.LoadLocalization(GameDataHolder.savesDataInfo.language);
+            await LocalizationManager.Instance.LoadLocalization(GameDataHolder.savesDataInfo.language);
             GlobalData.cur_language = GameDataHolder.savesDataInfo.language;
             Debug.Log($"Загружен язык {GameDataHolder.savesDataInfo.language}");
         }
         else
         {
-            LocalizationManager.Instance.LoadLocalization("en");
+            await LocalizationManager.Instance.LoadLocalization("en");
             GlobalData.cur_language = "en";
             Debug.Log($"Загружен стандартный en");
         }
-        
-
-        Debug.Log("Данные загружены в LoadingMenu.");
     }
-    private Sprite[] LoadSprites()
+    private async Task LoadSprites(string addressableKey)
     {
-        if (spriteSheet != null)
-        {
-            string path = UnityEditor.AssetDatabase.GetAssetPath(spriteSheet);
-            Object[] assets = UnityEditor.AssetDatabase.LoadAllAssetRepresentationsAtPath(path);
+        List<Sprite> sprites = new List<Sprite> { null};
+        AsyncOperationHandle<IList<Sprite>> handle = Addressables.LoadAssetAsync<IList<Sprite>>(addressableKey);
+        await handle.Task;
 
-            List<Sprite> sprites = new List<Sprite>();
-            sprites.Add(null);
-            foreach (var asset in assets)
-            {
-                if (asset is Sprite sprite)
-                {
-                    sprites.Add(sprite);
-                }
-            }
-            return sprites.ToArray();
+        if(handle.Status == AsyncOperationStatus.Succeeded)
+        {
+            sprites.AddRange(handle.Result);
+            Addressables.Release(handle);
+            GameDataHolder.spriteList = sprites.ToArray();
         }
-        Debug.LogError("Нет спрайтов предметов");
-        return null;
+        else
+        {
+            Debug.LogError("Не удалось загрузить спрайты через Addressables");
+        }
     }
 }

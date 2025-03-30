@@ -121,13 +121,13 @@ public class Inventory:MonoBehaviour
     {
         foreach(Item item in ItemsList.Instance.items)
         {
-            if (item.Id == id) AddItem(item, count);
+            if (item.Id == id) FindSlotAndAdd(item, count, true);
         }
         return 0;
     }
-    public int AddItem(Item itemAdd, int count)
+    public int FindSlotAndAdd(Item itemAdd, int count, bool dropRemains)
     {
-        foreach(Slot slot in slots)
+        foreach (Slot slot in slots)
         {
 
             if (slot.Item.Id == itemAdd.Id)
@@ -138,7 +138,7 @@ public class Inventory:MonoBehaviour
                     //Полностью размещаем
                     slot.Count += count;
                     UpdateSlotUI(slot);
-                    return 0;
+                    return 0; 
                 }
                 else
                 {
@@ -150,17 +150,17 @@ public class Inventory:MonoBehaviour
             }
 
         }
-        foreach(Slot slot in slots)
+        foreach (Slot slot in slots)
         {
-            if(slot.Item.Id == ItemsList.Instance.GetNoneItem().Id)
+            if (slot.Item.Id == ItemsList.Instance.GetNoneItem().Id)
             {
                 slot.Item = itemAdd;
                 if (itemAdd.MaxCount >= count)
                 {
-                    //Полностью размещаем
-                    slot.Count = count;
-                    UpdateSlotUI(slot);
-                    return 0;
+                   //Полностью размещаем
+                   slot.Count = count;
+                   UpdateSlotUI(slot);
+                   return 0;
                 }
                 else
                 {
@@ -172,8 +172,66 @@ public class Inventory:MonoBehaviour
             }
         }
         Debug.LogWarning("Инвентарь полон!");
+
+        if(dropRemains)
+        {
+            DragAndDrop.Instance.DropItemThat(itemAdd, count);
+            return 0;
+        }
+
         return count;
     }
+    //public int AddItem(Item itemAdd, int count, Slot slot)
+    //{
+    //    foreach(Slot slot in slots)
+    //    {
+
+    //        if (slot.Item.Id == itemAdd.Id)
+    //        {
+    //            int freeSpace = itemAdd.MaxCount - slot.Count; //Свободного места в ячейке с предметом
+    //            if (freeSpace >= count)
+    //            {
+    //                //Полностью размещаем
+    //                slot.Count += count;
+    //                UpdateSlotUI(slot);
+    //                return 0;
+    //            }
+    //            else
+    //            {
+    //                //Частично добавляем, но оставляем остаток для дальнейшей обработки
+    //                slot.Count = itemAdd.MaxCount;
+    //                UpdateSlotUI(slot);
+    //                count -= freeSpace;
+    //            }
+    //        }
+
+    //    }
+    //    foreach(Slot slot in slots)
+    //    {
+    //        if(slot.Item.Id == ItemsList.Instance.GetNoneItem().Id)
+    //        {
+    //            slot.Item = itemAdd;
+    //            if (itemAdd.MaxCount >= count)
+    //            {
+    //                //Полностью размещаем
+    //                slot.Count = count;
+    //                UpdateSlotUI(slot);
+    //                return 0;
+    //            }
+    //            else
+    //            {
+    //                //Частично добавляем, но оставляем остаток для дальнейшей обработки
+    //                slot.Count = itemAdd.MaxCount;
+    //                UpdateSlotUI(slot);
+    //                count -= itemAdd.MaxCount;
+    //            }
+    //        }
+    //    }
+    //    Debug.LogWarning("Инвентарь полон!");
+
+    //    DragAndDrop.Instance.DropItemThat(itemAdd, count);
+    //    return 0;
+    //}
 
     public void RemoveItem(Slot slot, int count)
     {

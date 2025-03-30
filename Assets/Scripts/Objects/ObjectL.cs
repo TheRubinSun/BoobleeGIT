@@ -44,7 +44,7 @@ public abstract class ObjectLBroken : ObjectL
         spr_ren = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         audioS = GetComponent<AudioSource>();
-        
+
     }
     protected virtual void Start()
     {
@@ -86,18 +86,17 @@ public abstract class ObjectLBroken : ObjectL
     protected virtual void DropItems()
     {
         int id = 0;
-        GlobalPrefabs globPref = GlobalPrefabs.Instance;
         foreach (KeyValuePair<string, MinMax> item in itemsDrop)
         {
             int countItem = Random.Range(item.Value.min, (item.Value.max + 1));
             if (countItem == 0) return;
 
-            GameObject dropItem = Instantiate(globPref.ItemDropPref, globPref.itemsDropParent);
+            GameObject dropItem = Instantiate(GlobalPrefabs.ItemDropPref, GameManager.Instance.dropParent);
             dropItem.transform.position = GetPosition();
             ItemDrop ItemD = dropItem.GetComponent<ItemDrop>();
 
             Item tempItem = ItemsList.Instance.GetItemForNameKey(item.Key);
-            Debug.Log($"tempItem.Name: {tempItem.Name} tempItem.Name {tempItem.NameKey} sprite {tempItem.Sprite.name}");
+            //Debug.Log($"tempItem.Name: {tempItem.Name} tempItem.Name {tempItem.NameKey} sprite {tempItem.Sprite.name}");
             ItemD.sprite = tempItem.GetSprite();
             ItemD.item = tempItem;
             ItemD.count = countItem;

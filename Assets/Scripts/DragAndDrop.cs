@@ -409,7 +409,8 @@ public class DragAndDrop:MonoBehaviour
     public void DropItem()
     {
         SoundsManager.Instance.PlayPutDropItem();
-        GameObject gameObject = Instantiate(GlobalPrefabs.Instance.ItemDropPref, ItemsOnMapLevel);
+        GameObject gameObject = Instantiate(GlobalPrefabs.ItemDropPref, ItemsOnMapLevel);
+
         gameObject.transform.position = player.position;
         ItemDrop ItemD = gameObject.GetComponent<ItemDrop>();
         ItemD.sprite = tempSlot.Item.Sprite;
@@ -420,6 +421,23 @@ public class DragAndDrop:MonoBehaviour
         {
             gameObject.GetComponent<SpriteRenderer>().sprite = ItemD.sprite;
             gameObject.GetComponentInChildren<TextMeshPro>().text = $"{ItemD.item.Name} ({ItemD.count})";
+        }
+        DragSuccess();
+    }
+    public void DropItemThat(Item itemAdd, int count)
+    {
+        SoundsManager.Instance.PlayPutDropItem();
+        GameObject dropItem = Instantiate(GlobalPrefabs.ItemDropPref, ItemsOnMapLevel);
+        dropItem.transform.position = player.position;
+        ItemDrop ItemD = dropItem.GetComponent<ItemDrop>();
+        ItemD.sprite = itemAdd.Sprite;
+        ItemD.item = itemAdd;
+        ItemD.count = count;
+        dropItem.name = $"{itemAdd.NameKey} ({count})";
+        if (ItemD.sprite != null)
+        {
+            dropItem.GetComponent<SpriteRenderer>().sprite = ItemD.sprite;
+            dropItem.GetComponentInChildren<TextMeshPro>().text = $"{ItemD.item.Name} ({ItemD.count})";
         }
         DragSuccess();
     }
@@ -434,14 +452,14 @@ public class DragAndDrop:MonoBehaviour
             {
                 Debug.Log($"Объект в радиусе: {child.gameObject.name}");
                 ItemDrop ItemD = child.GetComponent<ItemDrop>();
-                int remains = Inventory.Instance.AddItem(ItemD.item, ItemD.count);
+                int remains = Inventory.Instance.FindSlotAndAdd(ItemD.item, ItemD.count, false);
                 if(remains > 0)
                 {
+                    SoundsManager.Instance.PlayTakeDropItem();
                     ItemD.count = remains;
-                    TextMeshPro textMeshPro = gameObject.GetComponentInChildren<TextMeshPro>();
+                    TextMeshPro textMeshPro = child.gameObject.GetComponentInChildren<TextMeshPro>();
                     if (textMeshPro != null)
                     {
-                        
                         textMeshPro.text = $"{ItemD.item.Name} ({ItemD.count})";
                     }
                     else

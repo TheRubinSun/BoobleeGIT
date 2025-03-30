@@ -23,7 +23,20 @@ public class SavesDataInfo
         this.language = language;
     }
 }
+public class CraftsRecipesData
+{
+    public RecipeCraft[] craftsRecipesData;
 
+    // ѕустой конструктор нужен дл€ JSON-десериализации
+    public CraftsRecipesData() 
+    {
+        craftsRecipesData = new RecipeCraft[0];
+    }
+    public CraftsRecipesData(RecipeCraft[] _craftsRecipesData)
+    {
+        craftsRecipesData = _craftsRecipesData;
+    }
+}
 public class ItemsData
 {
     public List<Item> item_List_data;

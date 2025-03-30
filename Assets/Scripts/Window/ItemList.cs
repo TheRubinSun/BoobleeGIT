@@ -54,7 +54,7 @@ public class ItemsList : MonoBehaviour
         items.Add(new MeleWeapon(1, "sword_gods_slayer", 1, items.Count, Quality.Legendary,1000, "_", false, 1f, damageT.Physical, 5, 0.9f, 1));
         items.Add(new Gun(2, "gun_makarov", 1, items.Count, Quality.Rare, 100,              "_", true, 4f, damageT.Physical, 2, 1f, 1, 12f, 1.0f, 5f, 0));
         items.Add(new Food(3, "item_meat", 20, items.Count, Quality.Common, 1, "_", 1, 5, 15, "Heal", 1));
-        items.Add(new HealPotion(4, "item_potion_hp", 20, items.Count, Quality.Uncommon, 20, "_", 5));
+        items.Add(new HealPotion(4, "item_potion_hp", 20, items.Count, Quality.Uncommon, 30, "_", 8));
         items.Add(new Item(5, "armor_armor", 1, items.Count, Quality.Common,300, "_", TypeItem.Armor));
         items.Add(new Minion(6, "minion_robot_es", 1, items.Count, Quality.Rare,500, "_", TypeItem.Minion, 5f, 6f, 2f,TypeMob.Technology));
         items.Add(new Item(7, "material_chip_one", 20, items.Count, Quality.Uncommon, 15, "_", TypeItem.Material));
@@ -72,7 +72,13 @@ public class ItemsList : MonoBehaviour
         items.Add(new Item(19, "material_iron_bar", 20, items.Count, Quality.Common, 20, "_", TypeItem.Material));
         items.Add(new MeleWeapon(20, "axe_woodcutter", 1, items.Count, Quality.Common, 250, "_", false, 0.2f, damageT.Physical, 1, 1f, 1));
         items.Add(new Item(21, "material_wood", 20, items.Count, Quality.Common, 3, "_", TypeItem.Material));
-
+        items.Add(new Item(22, "material_bottle", 20, items.Count, Quality.Common, 3, "_", TypeItem.Material));
+        items.Add(new Item(23, "material_sunflower", 20, items.Count, Quality.Common, 3, "_", TypeItem.Material));
+        items.Add(new Item(24, "material_rubin", 20, items.Count, Quality.Rare, 120, "_", TypeItem.Material));
+        items.Add(new Item(25, "material_rubin_piece", 200, items.Count, Quality.Uncommon, 5, "_", TypeItem.Material));
+        items.Add(new Item(26, "material_glass", 20, items.Count, Quality.Common, 15, "_", TypeItem.Material));
+        items.Add(new Item(27, "material_someone_eye", 20, items.Count, Quality.Uncommon, 35, "_", TypeItem.Material));
+        items.Add(new Item(28, "material_strange_eye", 20, items.Count, Quality.Mystical, 350, "_", TypeItem.Material));
         //PrintItemList();
     }
     private void InitializeSpritesItem()

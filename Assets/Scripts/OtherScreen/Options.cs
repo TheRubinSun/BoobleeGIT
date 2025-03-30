@@ -16,7 +16,7 @@ public class Options : MonoBehaviour
     }
     public async void SwitchLanguage(string localeCode)
     {
-        LocalizationManager.Instance.SwitchLanguage(localeCode);
+        await LocalizationManager.Instance.SwitchLanguage(localeCode);
         for (int i = 0; i < SwitchLanguageButtons.Length; i++)
         {
             SwitchLanguageButtons[i].transform.GetChild(2).GetComponent<Image>().color = noRedColor;

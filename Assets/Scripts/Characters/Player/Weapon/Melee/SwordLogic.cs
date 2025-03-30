@@ -6,10 +6,10 @@ public class SwordLogic : MeleWeaponLogic
     [SerializeField] protected float arcHeight = 1f; // Чуть меньше дуга для лучшей анимации
     [SerializeField] protected float maxRotationAngle = 120f; // Меньше угол, чтобы не было "перекручивания"
 
-    [SerializeField] protected float animVzmax = 0.13f;
-    [SerializeField] protected float animStartAttack = 0.36f;
-    [SerializeField] protected float animEndAttack = 0.36f;
-    [SerializeField] protected float animReturnPos = 0.13f;
+    [SerializeField] protected float animVzmax = 0.1f;
+    [SerializeField] protected float animStartAttack = 0.3f;
+    [SerializeField] protected float animEndAttack = 0.3f;
+    [SerializeField] protected float animReturnPos = 0.1f;
     public override void Attack()
     {
         base.Attack();

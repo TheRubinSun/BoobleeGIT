@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2700428708030867163}
   - component: {fileID: 6189718523042928103}
+  - component: {fileID: 861748323065434305}
   - component: {fileID: 3098389959272517242}
   - component: {fileID: 7346230669341897387}
   - component: {fileID: 8905573443214119498}
-  - component: {fileID: 2165780745872915997}
   m_Layer: 19
   m_Name: Vase_one (0)
   m_TagString: Untagged
@@ -91,6 +91,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &861748323065434305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7782324958446010600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10517414469b2524797834ad952d2ad8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  remainsHits: 4
+  toNextStageAnim: 1
+  soundsBroken:
+  - {fileID: 8300000, guid: 6dcb7194c813fd84d941b39638928272, type: 3}
+  - {fileID: 8300000, guid: 11032f1622ca32141938226d76481460, type: 3}
+  fullBroken: {fileID: 8300000, guid: eade12cd5b5038046925a883864d679b, type: 3}
 --- !u!61 &3098389959272517242
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -256,21 +274,3 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2165780745872915997
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7782324958446010600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f630ee14afd4184dba67d95281a2c09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  remainsHits: 4
-  toNextStageAnim: 1
-  soundsBroken:
-  - {fileID: 8300000, guid: 11032f1622ca32141938226d76481460, type: 3}
-  - {fileID: 8300000, guid: 6dcb7194c813fd84d941b39638928272, type: 3}
-  fullBroken: {fileID: 8300000, guid: eade12cd5b5038046925a883864d679b, type: 3}

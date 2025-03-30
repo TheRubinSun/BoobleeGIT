@@ -96,8 +96,8 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage
     }
     protected virtual void Start()
     {
-        if (player == null && GlobalData.PlayerModel != null)
-            player = GlobalData.PlayerModel;
+        if (player == null && GameManager.Instance.PlayerModel != null)
+            player = GameManager.Instance.PlayerModel;
 
         original_color = spr_ren.color;
         moveDirection = (player.position - transform.position).normalized; //Вычисление направление к игроку
@@ -144,7 +144,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage
         if (!isVisibleNow) return;
 
         float mobPosY = transform.position.y;
-        float PlayerPosY = GlobalData.PlayerPosY;
+        float PlayerPosY = GameManager.Instance.PlayerPosY;
 
         spr_ren.sortingOrder = Mathf.RoundToInt((mobPosY - PlayerPosY - 2) * -5);
     }

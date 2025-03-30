@@ -10,7 +10,4 @@ public static class GlobalData
     public static int chunkSize;
 
     public static bool isVisibleHpBarEnemy = true;
-
-    public static Transform PlayerModel;
-    public static float PlayerPosY;
 }

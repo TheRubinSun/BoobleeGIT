@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Tree : ObjectLBroken
+public class TreeLogic : ObjectLBroken
 {
     private SpriteRenderer spr_Child_ren;
     protected override void Awake()
@@ -13,7 +13,7 @@ public class Tree : ObjectLBroken
     public override void Break(CanBeWeapon canBeWeapon)
     {
         Debug.Log($"gam: {canBeWeapon.canBeAxe}");
-        if(canBeWeapon.canBeAxe == true)
+        if (canBeWeapon.canBeAxe == true)
         {
             remainsHits--;
             if (remainsHits == 0)
@@ -30,14 +30,14 @@ public class Tree : ObjectLBroken
     }
     protected override void AddDropItem()
     {
-        itemsDrop.Add("material_wood", new MinMax(3,7));
+        itemsDrop.Add("material_wood", new MinMax(3, 7));
     }
     public override void UpdateSortingOrder()
     {
         if (!isVisibleNow) return;
 
         float treePosY = transform.position.y;
-        float PlayerPosY = GlobalData.PlayerPosY;
+        float PlayerPosY = GameManager.Instance.PlayerPosY;
 
         spr_ren.sortingOrder = Mathf.RoundToInt(((treePosY - 2f) - PlayerPosY - 2) * -5);
         spr_Child_ren.sortingOrder = spr_ren.sortingOrder - 1;

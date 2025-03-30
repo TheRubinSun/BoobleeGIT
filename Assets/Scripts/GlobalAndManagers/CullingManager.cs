@@ -28,11 +28,11 @@ public class CullingManager : MonoBehaviour
         Instance = this;
         if(target == null)
         {
-            if(GlobalData.PlayerModel != null) target = GlobalData.PlayerModel;
+            if(GameManager.Instance.PlayerModel != null) target = GameManager.Instance.PlayerModel;
             else
             {
                 target = GameObject.Find("PlayerModel").transform;
-                GlobalData.PlayerModel = target;
+                GameManager.Instance.PlayerModel = target;
             }
         }
     }

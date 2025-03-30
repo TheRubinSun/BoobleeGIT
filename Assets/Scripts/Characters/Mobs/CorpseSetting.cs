@@ -37,7 +37,7 @@ public class CorpseSetting : MonoBehaviour, ICullableObject
         if (!isVisibleNow) return;
 
         float corpsePosY = transform.position.y;
-        float PlayerPosY = GlobalData.PlayerPosY;
+        float PlayerPosY = GameManager.Instance.PlayerPosY;
 
         spr_ren.sortingOrder = (Mathf.RoundToInt((corpsePosY - PlayerPosY) * -10));
     }

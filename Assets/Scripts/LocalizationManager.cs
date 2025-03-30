@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Newtonsoft.Json; // Для работы с Newtonsoft.Json
 using UnityEngine;
 using UnityEngine.Localization.Settings;
@@ -21,10 +22,8 @@ public class LocalizationManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public void LoadLocalization(string language)
+    public async Task LoadLocalization(string language)
     {
-
-
         currentLanguage = language;
 
         string nameFile = "localization.json";
@@ -32,7 +31,7 @@ public class LocalizationManager : MonoBehaviour
         string filePath = Path.Combine(Application.dataPath + pathToFile, nameFile);
         if(File.Exists(filePath))
         {
-            string dataAsJson = File.ReadAllText(filePath, System.Text.Encoding.UTF8);
+            string dataAsJson = await File.ReadAllTextAsync(filePath, System.Text.Encoding.UTF8);
             //Debug.Log(dataAsJson);
 
             Dictionary<string, Dictionary<string, Dictionary<string, Dictionary<string, string>>>> allLanguages = 
@@ -75,11 +74,11 @@ public class LocalizationManager : MonoBehaviour
         }
         Debug.LogWarning($"Локаль {localeCode} не найдена!");
     }
-    public void SwitchLanguage(string language)
+    public async Task SwitchLanguage(string language)
     {
         //Если язые изменился, то менять словарь текстовый
         //string selectedLanguage = LocalizationSettings.SelectedLocale.Identifier.Code;
-        if (language != currentLanguage) LoadLocalization(language);
+        if (language != currentLanguage) await LoadLocalization(language);
     }
     public Dictionary<string, string> GetLocalizedValue(string type_value, string key)
     {

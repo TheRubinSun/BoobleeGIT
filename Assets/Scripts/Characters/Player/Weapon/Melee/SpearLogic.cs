@@ -4,8 +4,8 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class SpearLogic : MeleWeaponLogic
 {
-    [SerializeField] protected float animStartAttack = 0.4f;
-    [SerializeField] protected float animEndAttack = 0.58f;
+    [SerializeField] protected float animStartAttack = 0.3f;
+    [SerializeField] protected float animEndAttack = 0.5f;
     public override void Attack()
     {
         base.Attack();

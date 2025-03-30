@@ -1,11 +1,10 @@
-using System.Collections;
 using UnityEngine;
 
-public class Vasa : ObjectLBroken
+public class VasaLogic : ObjectLBroken
 {
     public override void Break(CanBeWeapon canBeWeapon)
     {
-        remainsHits--; 
+        remainsHits--;
         if (remainsHits == 0)
         {
             StartCoroutine(PlayeSoundFullBroken());
@@ -38,7 +37,7 @@ public class Vasa : ObjectLBroken
         if (!isVisibleNow) return;
 
         float treePosY = transform.position.y;
-        float PlayerPosY = GlobalData.PlayerPosY;
+        float PlayerPosY = GameManager.Instance.PlayerPosY;
 
         spr_ren.sortingOrder = Mathf.RoundToInt((treePosY - PlayerPosY - 2) * -5);
     }

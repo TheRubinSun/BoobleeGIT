@@ -138,8 +138,49 @@
         "TypeItem": "",
         "Quality": "",
         "Description": "A basic material used in crafting."
+      },
+      "material_bottle": {
+        "Name": "Bottle",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "A simple glass bottle, essential for potion-making."
+      },
+      "material_sunflower": {
+        "Name": "Sunflower",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "A bright flower infused with a trace of solar energy. Used in alchemy."
+      },
+      "material_rubin": {
+        "Name": "Ruby",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "A precious gemstone of deep red color, used in crafting, magic, and alchemy."
+      },
+      "material_rubin_piece": {
+        "Name": "Ruby Shard",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "A piece of ruby, essential for potion brewing and accessory crafting."
+      },
+      "material_glass": {
+        "Name": "Glass",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "A transparent material used in crafting and alchemy."
+      },
+      "material_someone_eye": {
+        "Name": "Someone's Eye",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "A strange eye, its owner unknown."
+      },
+      "material_strange_eye": {
+        "Name": "Strange Eye",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "An eye with a mystical aura."
       }
-
     },
     "mobs": {
       "daizen_enem": {
@@ -303,7 +344,7 @@
         "Name": "Шестерня T006",
         "TypeItem": "",
         "Quality": "",
-        "Description": "Простая шестерняr"
+        "Description": "Простая шестерня"
       },
       "material_dif_parts_one": {
         "Name": "Разные части TH",
@@ -354,7 +395,7 @@
         "Description": "Этот очень редкий миньон позволяет разбирать всех существ."
       },
       "soldier_spear": {
-        "Name": "Солдатское копьё'",
+        "Name": "Солдатское копьё",
         "TypeItem": "",
         "Quality": "",
         "Description": "Неплохое солдатское копьё."
@@ -388,7 +429,50 @@
         "TypeItem": "",
         "Quality": "",
         "Description": "Основной материал, используемый в ремесле."
+      },
+      "material_bottle": {
+        "Name": "Бутылка",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Простая стеклянная бутылка, необходимая для создания зелий."
+      },
+      "material_sunflower": {
+        "Name": "Подсолнух",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Яркий цветок с частицей солнечной энергии. Используется в алхимии."
+      },
+      "material_rubin": {
+        "Name": "Рубин",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Драгоценный камень насыщенного красного цвета, применяемый в ремесле, магии и алхимии."
+      },
+      "material_rubin_piece": {
+        "Name": "Осколок рубина",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Кусок рубина, необходимый для зельеварения и создания аксессуаров."
+      },
+      "material_glass": {
+        "Name": "Стекло",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Прозрачный материал, используемый в ремесле и алхимии."
+      },
+      "material_someone_eye": {
+        "Name": "Чей-то глаз",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Странный глаз, неизвестно кому принадлежащий."
+      },
+      "material_strange_eye": {
+        "Name": "Странный глаз",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Глаз с мистической аурой."
       }
+
     },
     "mobs": {
       "daizen_enem": {
