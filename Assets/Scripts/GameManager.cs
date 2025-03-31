@@ -151,7 +151,7 @@ public class GameManager: MonoBehaviour
 
         foreach (Slot slot in Inventory.Instance.slots)
         {
-            inventory_slots_list.Add(new SlotTypeSave(slot.IdSlotInv,slot.Item.NameKey, slot.Count));
+            inventory_slots_list.Add(new SlotTypeSave(slot.IdSlot,slot.Item.NameKey, slot.Count));
         }
 
         foreach (Slot slot in EqupmentPlayer.Instance.slotsEqup)

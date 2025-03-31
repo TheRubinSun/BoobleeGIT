@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
 
-public class ShopLogic : MonoBehaviour 
+public class ShopLogic : MonoBehaviour , ISlot
 {
     public static ShopLogic Instance;
 
@@ -24,9 +24,9 @@ public class ShopLogic : MonoBehaviour
     [SerializeField] private Transform buy_slots_parent;
     [SerializeField] private Transform shop_slots_parent;
 
-    [SerializeField] private GameObject sell_slot_pref;
-    [SerializeField] private GameObject buy_slot_pref;
-    [SerializeField] private GameObject shop_slot_pref;
+    //[SerializeField] private GameObject sell_slot_pref;
+    //[SerializeField] private GameObject buy_slot_pref;
+    //[SerializeField] private GameObject shop_slot_pref;
 
     [SerializeField] private TextMeshProUGUI goldPlayerText;
 
@@ -147,7 +147,7 @@ public class ShopLogic : MonoBehaviour
             Item none_item = ItemsList.Instance.items[0];
             for (int i = 0; countSlots > i; i++)
             {
-                CreateSlot(shop_slot_pref, shop_slots_parent, shopSlots, none_item, "ShopSlot", i);
+                CreateSlot("ShopSlot", shop_slots_parent, shopSlots, none_item, i);
 
             }
             AddTradeItem();
@@ -177,28 +177,28 @@ public class ShopLogic : MonoBehaviour
 
     public Slot CreateEmptySlot(string typeSlot)
     {
-        GameObject prefab = null;
+        string tagSlot = null;
         Transform parent = null;
         List<Slot> slots = new List<Slot>();
         switch (typeSlot)
         {
             case "Sell":
                 {
-                    prefab = sell_slot_pref;
+                    tagSlot = "SellSlot";
                     parent = sells_slots_parent;
                     slots = sellSlots;
                     break;
                 }
             case "Buy":
                 {
-                    prefab = buy_slot_pref;
+                    tagSlot = "BuySlot";
                     parent = buy_slots_parent;
                     slots = buySlots;
                     break;
                 }
             case "Shop":
                 {
-                    prefab = shop_slot_pref;
+                    tagSlot = "ShopSlot";
                     parent = shop_slots_parent;
                     slots = shopSlots;
                     break;
@@ -213,14 +213,16 @@ public class ShopLogic : MonoBehaviour
         else
         {
             Item none_item = ItemsList.Instance.items[0];
-            return CreateSlot(prefab, parent, slots, none_item, "SellSLot", slots.Count);
+            return CreateSlot(tagSlot, parent, slots, none_item, slots.Count);
         }
             
     }
-    private Slot CreateSlot(GameObject prefab, Transform parent, List<Slot> slotList, Item item, string slotName, int index)
+    private Slot CreateSlot(string tagSlot, Transform parent, List<Slot> slotList, Item item, int index)
     {
-        GameObject newSlotObj = Instantiate(prefab, parent);
-        newSlotObj.name = $"slotName ({index})";
+        GameObject newSlotObj = Instantiate(GlobalPrefabs.SlotPref, parent);
+        newSlotObj.tag = tagSlot;
+
+        newSlotObj.name = $"{tagSlot} ({index})";
         Slot newSlot = new Slot(item, newSlotObj);
         slotList.Add(newSlot);
         return newSlot;
@@ -257,14 +259,14 @@ public class ShopLogic : MonoBehaviour
                 {
                     //Полностью размещаем
                     slot.Count += countItem;
-                    UpdateSlotUI(slot);
+                    SlotsManager.UpdateSlotUI(slot);
                     return;
                 }
                 else
                 {
                     //Частично добавляем, но оставляем остаток для дальнейшей обработки
                     slot.Count = itemAdd.MaxCount;
-                    UpdateSlotUI(slot);
+                    SlotsManager.UpdateSlotUI(slot);
                     countItem -= freeSpace;
                 }
             }
@@ -279,14 +281,14 @@ public class ShopLogic : MonoBehaviour
                 {
                     //Полностью размещаем
                     slot.Count = countItem;
-                    UpdateSlotUI(slot);
+                    SlotsManager.UpdateSlotUI(slot);
                     return;
                 }
                 else
                 {
                     //Частично добавляем, но оставляем остаток для дальнейшей обработки
                     slot.Count = itemAdd.MaxCount;
-                    UpdateSlotUI(slot);
+                    SlotsManager.UpdateSlotUI(slot);
                     countItem -= itemAdd.MaxCount;
                 }
             }
@@ -417,26 +419,14 @@ public class ShopLogic : MonoBehaviour
         }
         return null;
     }
-    public Slot GetSlot(string type,int index)
+    public Slot GetSlot(SlotRequest request)
     {
-        switch(type)
+        switch (request.Type)
         {
-            case "Sell":
-                {
-                    return sellSlots[index];
-                }
-            case "Buy":
-                {
-                    return buySlots[index];
-                }
-            case "Shop":
-                {
-                    return shopSlots[index];
-                }
-            default:
-                {
-                    return null;
-                }
+            case "Sell": return sellSlots[request.index];
+            case "Buy": return buySlots[request.index];
+            case "Shop": return shopSlots[request.index];
+            default: return null;
         }
     }
 
@@ -463,52 +453,52 @@ public class ShopLogic : MonoBehaviour
         totalCostOrProfitText.text = word_trade_success;
     }
 
-    public void UpdateSlotUITrade(Slot slot)
-    {
-        UpdateSlotUI(slot);
-    }
-    private void UpdateSlotUI(Slot slot)
-    {
-        Transform dAdTemp = slot.SlotObj.transform.GetChild(0);
-        Image image = dAdTemp.GetChild(0).GetComponent<Image>();
-        Image item_frame = dAdTemp.GetChild(1).GetComponentInChildren<Image>();
-        TextMeshProUGUI text = dAdTemp.GetChild(2).GetComponentInChildren<TextMeshProUGUI>();
+    //public void UpdateSlotUITrade(Slot slot)
+    //{
+    //    SlotsManager.UpdateSlotUI(slot);
+    //}
+    //private void UpdateSlotUI(Slot slot)
+    //{
+    //    Transform dAdTemp = slot.SlotObj.transform.GetChild(0);
+    //    Image image = dAdTemp.GetChild(0).GetComponent<Image>();
+    //    Image item_frame = dAdTemp.GetChild(1).GetComponentInChildren<Image>();
+    //    TextMeshProUGUI text = dAdTemp.GetChild(2).GetComponentInChildren<TextMeshProUGUI>();
 
 
-        if (image != null)
-        {
-            image.sprite = slot.Item.Sprite;
-            if (slot.Item.Sprite == null)
-            {
-                image.color = new Color32(0, 0, 0, 0);
-            }
-            else
-            {
-                image.color = new Color32(255, 255, 255, 255);
-            }
-        }
-        if (item_frame != null)
-        {
-            if (slot.Item.Sprite == null)
-            {
-                image.color = new Color32(0, 0, 0, 0);
-            }
-            else
-            {
-                image.color = new Color32(255, 255, 255, 255);
-            }
-            item_frame.color = slot.Item.GetColor();
-        }
-        if (text != null)
-        {
-            if (slot.Count > 0)
-            {
-                text.text = $"{slot.Count.ToString()}";
-            }
-            else
-            {
-                text.text = "";
-            }
-        }
-    }
+    //    if (image != null)
+    //    {
+    //        image.sprite = slot.Item.Sprite;
+    //        if (slot.Item.Sprite == null)
+    //        {
+    //            image.color = new Color32(0, 0, 0, 0);
+    //        }
+    //        else
+    //        {
+    //            image.color = new Color32(255, 255, 255, 255);
+    //        }
+    //    }
+    //    if (item_frame != null)
+    //    {
+    //        if (slot.Item.Sprite == null)
+    //        {
+    //            image.color = new Color32(0, 0, 0, 0);
+    //        }
+    //        else
+    //        {
+    //            image.color = new Color32(255, 255, 255, 255);
+    //        }
+    //        item_frame.color = slot.Item.GetColor();
+    //    }
+    //    if (text != null)
+    //    {
+    //        if (slot.Count > 0)
+    //        {
+    //            text.text = $"{slot.Count.ToString()}";
+    //        }
+    //        else
+    //        {
+    //            text.text = "";
+    //        }
+    //    }
+    //}
 }

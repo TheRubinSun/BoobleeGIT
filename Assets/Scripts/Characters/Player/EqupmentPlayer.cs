@@ -3,7 +3,7 @@ using TMPro;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
-public class EqupmentPlayer : MonoBehaviour
+public class EqupmentPlayer : MonoBehaviour, ISlot
 {
     public static EqupmentPlayer Instance { get; private set; }
     public Slot slotWeaponOne { get; set; }
@@ -80,10 +80,10 @@ public class EqupmentPlayer : MonoBehaviour
 
 
 
-    public Slot GetSlot(int numbSlot)
+    public Slot GetSlot(SlotRequest request)
     {
         //Debug.Log($"Слот: {numbSlot} {slotsEqup.Length}");
-        return slotsEqup[numbSlot];
+        return slotsEqup[request.index];
     }
 
     public void UpdateAllSlots()

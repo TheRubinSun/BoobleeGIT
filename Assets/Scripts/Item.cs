@@ -13,7 +13,9 @@ public enum TypeItem
     Material,
     Minion,
     Trap,
-    Other
+    Other,
+    True,
+    False
 }
 public enum Quality
 {

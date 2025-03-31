@@ -10,14 +10,9 @@ public static class GlobalPrefabs
 
     public static Dictionary<string, GameObject> PrefabDict = new Dictionary<string, GameObject>();
     public static GameObject ItemDropPref { get; private set; }
-    public static GameObject BuySlotPref { get; private set; }
-    public static GameObject CraftSlotPref { get; private set; }
-    public static GameObject ISlotPref { get; private set; }
     public static GameObject ListSlotPref { get; private set; }
-    public static GameObject MaterialSlotPref { get; private set; }
-    public static GameObject SellSlotPref { get; private set; }
-    public static GameObject ShopSlotPref { get; private set; }
-    public static GameObject TempSlotPref { get; private set; }
+    public static GameObject SlotPref { get; private set; }
+    public static GameObject SlotMaterial { get; private set; }
 
     public static async Task<bool> LoadPrefabs()
     {
@@ -30,24 +25,14 @@ public static class GlobalPrefabs
         if(handle.Status == AsyncOperationStatus.Succeeded)
         {
             ItemDropPref = GetPrefab("ItemDrop");
-            BuySlotPref = GetPrefab("BuySlot");
-            CraftSlotPref = GetPrefab("CraftSlot");
-            ISlotPref = GetPrefab("ISlot"); ;
             ListSlotPref = GetPrefab("ListSlot");
-            MaterialSlotPref = GetPrefab("MaterialSlot");
-            SellSlotPref = GetPrefab("SellSlot");
-            ShopSlotPref = GetPrefab("ShopSlot");
-            TempSlotPref = GetPrefab("TempSlot");
+            SlotPref = GetPrefab("Slot");
+            SlotMaterial = GetPrefab("SlotMaterial");
 
             if (ItemDropPref == null) Debug.LogError("ItemDropPref is NULL!");
-            if (BuySlotPref == null) Debug.LogError("BuySlotPref is NULL!");
-            if (CraftSlotPref == null) Debug.LogError("CraftSlotPref is NULL!");
-            if (ISlotPref == null) Debug.LogError("ISlotPref is NULL!");
             if (ListSlotPref == null) Debug.LogError("ListSlotPref is NULL!");
-            if (MaterialSlotPref == null) Debug.LogError("MaterialSlotPref is NULL!");
-            if (SellSlotPref == null) Debug.LogError("SellSlotPref is NULL!");
-            if (ShopSlotPref == null) Debug.LogError("ShopSlotPref is NULL!");
-            if (TempSlotPref == null) Debug.LogError("TempSlotPref is NULL!");
+            if (SlotPref == null) Debug.LogError("Slot is NULL!");
+            if (SlotMaterial == null) Debug.LogError("SlotMaterial is NULL!");
 
             return true;
         }

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,9 +10,9 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         //Debug.Log("Мышь наведена на кнопку!");
         switch(gameObject.tag)
         {
-            case "Slot":
+            case "InvSlot":
                 {
-                    if (Inventory.Instance.GetSlot(GetNumbSlot()).Item.Id != 0)
+                    if (Inventory.Instance.GetSlot(new SlotRequest { index = GetNumbSlot()}).Item.Id != 0)
                     {
                         Inventory.Instance.InfoPanel.gameObject.SetActive(true);
                         DisplayInfo.Instance.UpdateInfoItem(GetNumbSlot(), "Inventory");
@@ -20,7 +21,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 }
             case "SlotEquip":
                 {
-                    if (EqupmentPlayer.Instance.GetSlot(GetNumbSlot()).Item.Id != 0)
+                    if (EqupmentPlayer.Instance.GetSlot(new SlotRequest { index = GetNumbSlot()}).Item.Id != 0)
                     {
                         Inventory.Instance.InfoPanel.gameObject.SetActive(true);
                         DisplayInfo.Instance.UpdateInfoItem(GetNumbSlot(), "Equip");
@@ -29,7 +30,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 }
             case "SellSlot":
                 {
-                    if (ShopLogic.Instance.GetSlot("Sell", GetNumbSlot()).Item.Id != 0)
+                    if (ShopLogic.Instance.GetSlot(new SlotRequest { index = GetNumbSlot(), Type = "Sell"}).Item.Id != 0)
                     {
                         Inventory.Instance.InfoPanel.gameObject.SetActive(true);
                         DisplayInfo.Instance.UpdateInfoItem(GetNumbSlot(), "Sell");
@@ -38,7 +39,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 }
             case "BuySlot":
                 {
-                    if (ShopLogic.Instance.GetSlot("Buy", GetNumbSlot()).Item.Id != 0)
+                    if (ShopLogic.Instance.GetSlot(new SlotRequest { index = GetNumbSlot(), Type = "Buy" }).Item.Id != 0)
                     {
                         Inventory.Instance.InfoPanel.gameObject.SetActive(true);
                         DisplayInfo.Instance.UpdateInfoItem(GetNumbSlot(), "Buy");
@@ -47,7 +48,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 }
             case "ShopSlot":
                 {
-                    if (ShopLogic.Instance.GetSlot("Shop", GetNumbSlot()).Item.Id != 0)
+                    if (ShopLogic.Instance.GetSlot(new SlotRequest { index = GetNumbSlot(), Type = "Shop"}).Item.Id != 0)
                     {
                         Inventory.Instance.InfoPanel.gameObject.SetActive(true);
                         DisplayInfo.Instance.UpdateInfoItem(GetNumbSlot(), "Shop");

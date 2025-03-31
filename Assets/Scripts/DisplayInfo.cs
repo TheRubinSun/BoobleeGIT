@@ -275,19 +275,19 @@ public class DisplayInfo: MonoBehaviour
         switch (TypeSlot)
         {
             case "Inventory":
-                item = Inventory.Instance.GetSlot(numbSlot).Item;
+                item = Inventory.Instance.GetSlot(new SlotRequest { index = numbSlot}).Item;
                 break;
             case "Equip":
-                item = EqupmentPlayer.Instance.GetSlot(numbSlot).Item;
+                item = EqupmentPlayer.Instance.GetSlot(new SlotRequest { index = numbSlot}).Item;
                 break;
             case "Sell":
-                item = ShopLogic.Instance.GetSlot(TypeSlot, numbSlot).Item;
+                item = ShopLogic.Instance.GetSlot(new SlotRequest { index = numbSlot, Type = TypeSlot }).Item;
                 break;
             case "Buy":
-                item = ShopLogic.Instance.GetSlot(TypeSlot, numbSlot).Item;
+                item = ShopLogic.Instance.GetSlot(new SlotRequest { index = numbSlot, Type = TypeSlot }).Item;
                 break;
             case "Shop":
-                item = ShopLogic.Instance.GetSlot(TypeSlot, numbSlot).Item;
+                item = ShopLogic.Instance.GetSlot(new SlotRequest { index = numbSlot, Type = TypeSlot }).Item;
                 break;
             default:
                 return;

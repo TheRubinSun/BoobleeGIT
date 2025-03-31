@@ -9,7 +9,7 @@ public class MouseButtonHandler : MonoBehaviour, IPointerClickHandler
     {
         switch (gameObject.tag)
         {
-            case "Slot":
+            case "InvSlot":
                 {
                     if (eventData.button == PointerEventData.InputButton.Left) // Левая кнопка
                     {
@@ -88,6 +88,24 @@ public class MouseButtonHandler : MonoBehaviour, IPointerClickHandler
                     {
                         DragAndDrop.Instance.DragPieceSellArea();
                     }
+                    break;
+                }
+            case "CraftSlot":
+                {
+                    if (eventData.button == PointerEventData.InputButton.Left) // Левая кнопка
+                    {
+                        if (CraftLogic.Instance.isEnoughResourse())
+                        {
+                            CraftLogic.Instance.SpendResource();
+                            DragAndDrop.Instance.DragCrafttSlot(GetNumbSlot());
+                        }
+                        else
+                        {
+                            Debug.Log("Не хватает ресурсов");
+                        }
+                    }
+
+
                     break;
                 }
             case "SlotBar":

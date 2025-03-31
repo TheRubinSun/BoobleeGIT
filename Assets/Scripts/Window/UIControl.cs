@@ -19,7 +19,8 @@ public class UIControl:MonoBehaviour
     [SerializeField] GameObject LvlUPWindow;
     [SerializeField] GameObject LvlUPButton;
     [SerializeField] Transform inventoryBar;
-    
+    [SerializeField] GameObject CraftWindow;
+
     bool invIsOpened;
     bool itemsIsOpened;
     bool mobsIsOpened;
@@ -27,6 +28,7 @@ public class UIControl:MonoBehaviour
     bool createPortalIsOpened;
     bool ShopIsOpened;
     bool LvlUpIsOpen;
+    bool CraftIsOpened;
 
     private bool isPaused = false;
 
@@ -57,6 +59,7 @@ public class UIControl:MonoBehaviour
             {KeyCode.T, LocalizationTranslate},
             {KeyCode.C, OpenCreatePortal},
             {KeyCode.R, OpenShop},
+            {KeyCode.Q, OpenCraftWindow},
             {KeyCode.Escape, LoadMainMenu},
             {KeyCode.E, DragAndDrop.Instance.PickUp}
 
@@ -189,6 +192,20 @@ public class UIControl:MonoBehaviour
 
         LvlUpLogic.Instance.GenAspects();
         SoundsManager.Instance.PlayOpenWindow();
+    }
+    public void OpenCraftWindow()
+    {
+        CraftIsOpened = !CraftIsOpened;
+        if (CraftIsOpened)
+        {
+            CraftWindow.SetActive(true);
+            CraftLogic.Instance.LoadCrafts(); //Выполняется только один раз, когда загружает рецепты
+            CraftLogic.Instance.ReloadFirstMaterials();
+        }
+        else
+        {
+            CraftWindow.SetActive(false);
+        }
     }
     public void ShowHideLvlUP(bool showOrHide)
     {

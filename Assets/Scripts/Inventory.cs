@@ -14,7 +14,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
 
-public class Inventory:MonoBehaviour
+public class Inventory:MonoBehaviour, ISlot
 {
     public static Inventory Instance { get; private set; }
     public Transform InfoPanel;
@@ -25,7 +25,7 @@ public class Inventory:MonoBehaviour
     private int countSlotsInBar { get; set; }//Количество слотов в InventoryBar
     private int startIdInventoryBar { get; set; }//Начало ID inventoryBar
     [SerializeField] private Transform slotsParent;
-    [SerializeField] private GameObject slotPrefab;
+    //[SerializeField] private GameObject slotPrefab;
     [SerializeField] private Transform InventoryBarParent;
     [SerializeField] private Sprite sprite_inventory_bar;
     private void Awake()
@@ -77,7 +77,7 @@ public class Inventory:MonoBehaviour
         {
             for(int i = 0; i<slots.Count;i++)
             {
-                slots[i].IdSlotInv = i;
+                slots[i].IdSlot = i;
                 slots[i].Item = ItemsList.Instance.GetItemForName(invntory_items[i].NameKey);
                 slots[i].Count = invntory_items[i].count;
             }
@@ -92,7 +92,9 @@ public class Inventory:MonoBehaviour
             int i = 0;
             foreach (SlotTypeSave slotTypeSave in invntory_items)
             {
-                GameObject slotObj = Instantiate(slotPrefab, slotsParent.transform);
+                GameObject slotObj = Instantiate(GlobalPrefabs.SlotPref, slotsParent.transform);
+                slotObj.tag = "InvSlot";
+
                 slotObj.name = $"Slot ({i})";
                 slots.Add(new Slot(i, ItemsList.Instance.GetItemForName(slotTypeSave.NameKey), slotObj, slotTypeSave.count));
                 i++;
@@ -105,7 +107,9 @@ public class Inventory:MonoBehaviour
     {
         for (int i = 0; i < sizeInventory; i++)
         {
-            GameObject slotObj = Instantiate(slotPrefab, slotsParent.transform);
+            GameObject slotObj = Instantiate(GlobalPrefabs.SlotPref, slotsParent.transform);
+            slotObj.tag = "InvSlot";
+            
             slotObj.name = $"Slot ({i})";
             slots.Add(new Slot(i, ItemsList.Instance.GetNoneItem(), slotObj)); 
         }
@@ -125,6 +129,51 @@ public class Inventory:MonoBehaviour
         }
         return 0;
     }
+
+    //Ищем предмет (кол-во), если хватает
+    public bool FindItem(Item item, int count)
+    {
+        int totalCountItem = 0;
+        foreach(Slot slot in slots)
+        {
+            if (slot.Item == item)
+            {
+                if (slot.Count >= count) return true;
+                else totalCountItem += slot.Count;
+            }
+        }
+        if (totalCountItem >= count) return true;
+        return false;
+    }
+   public bool SubractItem(Item item, int count)
+   {
+        int totalSubractItem = 0;
+        foreach(Slot slot in slots)
+        {
+            if(slot.Item == item)
+            {
+                if (slot.Count >= count - totalSubractItem) //Если предмета хватает одним слотом
+                {
+                    int removeCount = count - totalSubractItem; //Сколько нужно еще добавить
+                    slot.Count -= removeCount;
+                    if (slot.Count == 0) 
+                        SetNone(slot);
+                    else 
+                        UpdateSlotUI(slot);
+
+                    return true;
+                }
+                else //Если предмета не хватает одним слотом
+                {
+                    totalSubractItem += slot.Count; //Добавляем, сколько уже можно и идём дальше
+                    slot.Count = 0;
+                    SetNone(slot);
+                }
+            }
+        }
+        return totalSubractItem == count;
+    }
+
     public int FindSlotAndAdd(Item itemAdd, int count, bool dropRemains)
     {
         foreach (Slot slot in slots)
@@ -249,61 +298,63 @@ public class Inventory:MonoBehaviour
     }
     public void UpdateSlotUI(Slot slot)
     {
-        if(slot.IdSlotInv >= startIdInventoryBar)
+        if (slot.IdSlot >= startIdInventoryBar)
         {
-            int id = slot.IdSlotInv - startIdInventoryBar;
+            int id = slot.IdSlot - startIdInventoryBar;
 
             inventoryBarSlots[id].Item = slot.Item;
             inventoryBarSlots[id].Count = slot.Count;
 
-            UpdateSlotUIWhole(inventoryBarSlots[id]);
+            //UpdateSlotUIWhole(inventoryBarSlots[id]);
+            SlotsManager.UpdateSlotUI(inventoryBarSlots[id]);
         }
-        UpdateSlotUIWhole(slot);   
+        SlotsManager.UpdateSlotUI(slot);
+        //UpdateSlotUIWhole(slot);   
     }
-    public void UpdateSlotUIWhole(Slot slot)
-    {
-        Transform dAdTemp = slot.SlotObj.transform.GetChild(0);
-        Image image = dAdTemp.GetChild(0).GetComponent<Image>();
-        Image item_frame = dAdTemp.GetChild(1).GetComponentInChildren<Image>();
-        TextMeshProUGUI text = dAdTemp.GetChild(2).GetComponentInChildren<TextMeshProUGUI>();
+    //public void UpdateSlotUIWhole(Slot slot)
+    //{
+    //    Transform dAdTemp = slot.SlotObj.transform.GetChild(0);
+    //    Image image = dAdTemp.GetChild(0).GetComponent<Image>();
+    //    Image item_frame = dAdTemp.GetChild(1).GetComponentInChildren<Image>();
+    //    TextMeshProUGUI text = dAdTemp.GetChild(2).GetComponentInChildren<TextMeshProUGUI>();
 
 
-        if (image != null)
-        {
-            image.sprite = slot.Item.Sprite;
-            if (slot.Item.Sprite == null)
-            {
-                image.color = new Color32(0, 0, 0, 0);
-            }
-            else
-            {
-                image.color = new Color32(255, 255, 255, 255);
-            }
-        }
-        if (item_frame != null)
-        {
-            if (slot.Item.Sprite == null)
-            {
-                image.color = new Color32(0, 0, 0, 0);
-            }
-            else
-            {
-                image.color = new Color32(255, 255, 255, 255);
-            }
-            item_frame.color = slot.Item.GetColor();
-        }
-        if (text != null)
-        {
-            if (slot.Count > 0)
-            {
-                text.text = $"{slot.Count.ToString()}";
-            }
-            else
-            {
-                text.text = "";
-            }
-        }
-    }
+    //    if (image != null)
+    //    {
+    //        image.sprite = slot.Item.Sprite;
+    //        if (slot.Item.Sprite == null)
+    //        {
+    //            image.color = new Color32(0, 0, 0, 0);
+    //        }
+    //        else
+    //        {
+    //            image.color = new Color32(255, 255, 255, 255);
+    //        }
+    //    }
+    //    if (item_frame != null)
+    //    {
+    //        if (slot.Item.Sprite == null)
+    //        {
+    //            image.color = new Color32(0, 0, 0, 0);
+    //        }
+    //        else
+    //        {
+    //            image.color = new Color32(255, 255, 255, 255);
+    //        }
+    //        item_frame.color = slot.Item.GetColor();
+    //    }
+    //    if (text != null)
+    //    {
+    //        if (slot.Count > 0)
+    //        {
+    //            text.text = $"{slot.Count.ToString()}";
+    //        }
+    //        else
+    //        {
+    //            text.text = "";
+    //        }
+    //    }
+    //}
     private void UpdateWholeSlots()
     {
         foreach(Slot slot in slots)
@@ -358,9 +409,9 @@ public class Inventory:MonoBehaviour
         slot.Count = 0;
         UpdateSlotUI(slot);
     }
-    public Slot GetSlot(int numbSlot)
+    public Slot GetSlot(SlotRequest request)
     {
-        return slots[numbSlot];
+        return slots[request.index];
     }
     
 
@@ -385,63 +436,4 @@ public class Inventory:MonoBehaviour
     //    Item slot = GetSlot(numbSlot).Item;
 
     //}
-}
-[Serializable]
-public class Slot 
-{
-    public int IdSlotInv = -1;
-    public Item Item { get; set; }
-    public int Count { get; set; }
-    //public int MaxCount { get; set; }
-    [JsonIgnore]public GameObject SlotObj { get; set; }
-    public TypeItem itemFilter { get; set; }
-    public Slot(Item item, GameObject slotObject)
-    {
-        Item = item;
-        Count = 0;
-        //MaxCount = item.MaxCount;
-        SlotObj = slotObject;
-    }
-    public Slot(int _IdSlotInv,Item item, GameObject slotObject)
-    {
-        IdSlotInv = _IdSlotInv;
-        Item = item;
-        Count = 0;
-        SlotObj = slotObject;
-    }
-    public Slot(Item item, int count)
-    {
-        Item = item;
-        Count = count;
-    }
-    public Slot(Item item, GameObject slotObject, TypeItem _itemFilter)
-    {
-        Item = item;
-        SlotObj = slotObject;
-        itemFilter = _itemFilter;
-    }
-    public Slot(Item item, GameObject slotObject, int _count)
-    {
-        Item = item;
-        SlotObj = slotObject;
-        Count = _count;
-    }
-    public Slot(int _IdSlotInv, Item item, GameObject slotObject, int _count)
-    {
-        IdSlotInv = _IdSlotInv;
-        Item = item;
-        SlotObj = slotObject;
-        Count = _count;
-    }
-    public Slot(Item item, GameObject slotObject, int _count, TypeItem _itemFilter)
-    {
-        Item = item;
-        SlotObj = slotObject;
-        Count = _count;
-    }
-    public void NullSLot()
-    {
-        Item = ItemsList.Instance.items[0];
-        Count = 0;
-    }
 }
