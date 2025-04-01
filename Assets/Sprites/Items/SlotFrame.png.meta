@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: ab8c5679ce6fb8d429b59d1cda3963ce
+guid: 71414786fa079414d80099e1bf780d3e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4789714797251024186
-    second: SlotsSheet_0
+      213: -2813119029548609608
+    second: SlotFrame_0
+  - first:
+      213: 3526430273871837199
+    second: SlotFrame_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -48,7 +51,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 50
@@ -113,7 +116,7 @@ TextureImporter:
     buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: 4
+    textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -126,7 +129,29 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SlotsSheet_0
+      name: SlotFrame_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 50
+        width: 50
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8bf0ddca52bc5f8d0800000000000000
+      internalID: -2813119029548609608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SlotFrame_1
       rect:
         serializedVersion: 2
         x: 0
@@ -139,98 +164,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 5cb5333e75bec9f40991ec307351e5b1
-      internalID: 4789714797251024186
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SlotsSheet_1
-      rect:
-        serializedVersion: 2
-        x: 50
-        y: 0
-        width: 50
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 43ee3280f0ebbf24b90442c6e5620701
-      internalID: -327590820
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SlotsSheet_2
-      rect:
-        serializedVersion: 2
-        x: 100
-        y: 0
-        width: 50
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 072c18677379dc64b854bc2836a828c3
-      internalID: 1011257214
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SlotsSheet_3
-      rect:
-        serializedVersion: 2
-        x: 150
-        y: 0
-        width: 50
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f68f5f9bc5a6e0f45af87b0f06508f64
-      internalID: -1697213634
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SlotsSheet_4
-      rect:
-        serializedVersion: 2
-        x: 200
-        y: 0
-        width: 50
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 80eafd53fd920fd4eb547d26d2bc0686
-      internalID: 1885131612
+      spriteID: f08705776a560f030800000000000000
+      internalID: 3526430273871837199
       vertices: []
       indices: 
       edges: []
@@ -239,7 +176,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: e03fc0e475a251444a49bc82e4b4d524
+    spriteID: a8adf3aa6d2a11d42bd1472152571066
     internalID: 0
     vertices: []
     indices: 
@@ -249,11 +186,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      SlotsSheet_0: 4789714797251024186
-      SlotsSheet_1: -327590820
-      SlotsSheet_2: 1011257214
-      SlotsSheet_3: -1697213634
-      SlotsSheet_4: 1885131612
+      SlotFrame_0: -2813119029548609608
+      SlotFrame_1: 3526430273871837199
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -119,7 +119,7 @@ public class Item
         {
             case Quality.None:
                 {
-                    return new Color32(255, 255, 255, 155);
+                    return new Color32(255, 255, 255, 80);
                 }
             case Quality.Common:
                 {

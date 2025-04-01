@@ -37,14 +37,14 @@ public static class SlotsManager
         }
         if (item_frame != null)
         {
-            if (slot.Item.Sprite == null)
-            {
-                image.color = new Color32(0, 0, 0, 0);
-            }
-            else
-            {
-                image.color = new Color32(255, 255, 255, 255);
-            }
+            //if (slot.Item.Sprite == null)
+            //{
+            //    image.color = new Color32(0, 0, 0, 0);
+            //}
+            //else
+            //{
+            //    image.color = new Color32(255, 255, 255, 255);
+            //}
             item_frame.color = slot.Item.GetColor();
         }
         if (text != null)

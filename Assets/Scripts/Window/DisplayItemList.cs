@@ -8,7 +8,7 @@ public class DisplayItemList:MonoBehaviour
 {
     public static DisplayItemList Instance;
 
-    [SerializeField] GameObject slotPrefab;
+    //[SerializeField] GameObject slotPrefab;
     [SerializeField] Transform parent; // Родитель для ячеек
     [SerializeField] List<GameObject> slots = new List<GameObject>();
 
@@ -27,7 +27,7 @@ public class DisplayItemList:MonoBehaviour
 
         foreach (Item item in items)
         {
-            GameObject slot = Instantiate(slotPrefab, parent);
+            GameObject slot = Instantiate(GlobalPrefabs.ListSlotPref, parent);
             
             slot.name = item.Id.ToString();
             slots.Add(slot);

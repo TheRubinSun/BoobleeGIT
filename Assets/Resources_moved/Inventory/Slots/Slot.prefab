@@ -62,14 +62,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5882353}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 558178360808909147, guid: 3bc62f0312c484449bb1bb4a4fe1ea66, type: 3}
+  m_Sprite: {fileID: 4789714797251024186, guid: ab8c5679ce6fb8d429b59d1cda3963ce, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -167,14 +167,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5712700868656491271}
     m_Modifications:
-    - target: {fileID: 5143224028018781987, guid: 6b4bd2c692827a6449cd204881b7e775, type: 3}
-      propertyPath: m_text
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5143224028018781987, guid: 6b4bd2c692827a6449cd204881b7e775, type: 3}
-      propertyPath: m_fontSize
-      value: 7
-      objectReference: {fileID: 0}
     - target: {fileID: 5819742567439936716, guid: 6b4bd2c692827a6449cd204881b7e775, type: 3}
       propertyPath: m_Name
       value: DragAndDrop
@@ -205,11 +197,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8858206623656100204, guid: 6b4bd2c692827a6449cd204881b7e775, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8858206623656100204, guid: 6b4bd2c692827a6449cd204881b7e775, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8858206623656100204, guid: 6b4bd2c692827a6449cd204881b7e775, type: 3}
       propertyPath: m_LocalPosition.x
