@@ -9,81 +9,73 @@ public class DisplayInfo: MonoBehaviour
 {
     public static DisplayInfo Instance { get; private set; }
 
-    [SerializeField] Transform iconObj;
-    private Image iconItem;
-    [SerializeField] TextMeshProUGUI nameItem;
-    [SerializeField] TextMeshProUGUI infoItem;
+    [SerializeField] private GameObject InfoStatusObj;
+    private DisplayPlayerStats InfoStatus;
 
-    [SerializeField] TextMeshProUGUI Status_Info_Name_Text;
-    [SerializeField] TextMeshProUGUI Status_Info;
+    [SerializeField] private GameObject InfoItemsObj;
+    private RectTransform sizeInfoItem;
+    private DisplayItem InfoItem;
 
-    [SerializeField] TextMeshProUGUI Strength_Text;
-    [SerializeField] TextMeshProUGUI Strength_Bonus_Text;
-    [SerializeField] TextMeshProUGUI Agility_Text;
-    [SerializeField] TextMeshProUGUI Agility_Bonus_Text;
-    [SerializeField] TextMeshProUGUI Intelligence_Text;
-    [SerializeField] TextMeshProUGUI Intelligence_Bonus_Text;
+    private PlayerStats pl_stat;
+    private EquipStats eqip_stat;
 
-
-    const string HashColorStrength = "#A62E22";
-    const string HashColorAgility = "#22A64C";
-    const string HashColorIntelligence = "#2273A6";
-    const string HashColorBonus = "#E3B23F";
-    const string HashColorAddInfo = "#589310";
-
+    private Vector2 mousePos;
+    //private Vector2 mouseOffset;
+    public bool moveInfo;
     //Player
     //Характеристики
-    private string word_status_info;
-    private string word_Cur_Hp;
-    private string word_Max_Hp;
-    private string word_Armor_Hp;
+    public string word_status_info { get; private set; }
+    public string word_Cur_Hp {get; private set;}
+    public string word_Max_Hp {get; private set;}
+    public string word_Armor_Hp {get; private set;}
 
-    private string word_Mov_Speed;
+    public string word_Mov_Speed {get; private set;}
 
-    private string word_Att_Range;
-    private string word_Att_Damage;
-    private string word_Att_Speed;
-    private string word_Proj_Speed;
+    public string word_Att_Range {get; private set;}
+    public string word_Att_Damage {get; private set;}
+    public string word_Att_Speed {get; private set;}
+    public string word_Proj_Speed {get; private set;}
 
-    private string word_level;
-    private string word_freeSkillPoints;
-    private string word_cur_exp;
-    private string word_nextLvl_exp;
-    private string word_classPlayer;
+    public string word_level {get; private set;}
+    public string word_freeSkillPoints {get; private set;}
+    public string word_cur_exp {get; private set;}
+    public string word_nextLvl_exp {get; private set;}
+    public string word_classPlayer {get; private set;}
 
-    private string word_Damage;
-    private string word_Armor;
-    private string word_Speed;
-    private string word_Evasion;
-    private string word_AttSpeed;
-    private string word_AttRange;
-    private string word_ProjSpeed;
-    private string word_eqipment;
-    private string word_roleClass;
-    private string word_strength;
-    private string word_agility;
-    private string word_intelligence;
-    private string word_expBonus;
-    private string word_base;
-    private string word_for;
-    private string word_TradeSkill;
-    private string word_gold;
-    private string word_technology_gold;
-    private string word_mage_gold;
-    private string word_count_proj;
+    public string word_Damage {get; private set;}
+    public string word_Armor {get; private set;}
+    public string word_Speed {get; private set;}
+    public string word_Evasion {get; private set;}
+    public string word_AttSpeed {get; private set;}
+    public string word_AttRange {get; private set;}
+    public string word_ProjSpeed {get; private set;}
+    public string word_eqipment {get; private set;}
+    public string word_roleClass {get; private set;}
+    public string word_strength {get; private set;}
+    public string word_agility {get; private set;}
+    public string word_intelligence {get; private set;}
+    public string word_expBonus {get; private set;}
+    public string word_base {get; private set;}
+    public string word_for {get; private set;}
+    public string word_TradeSkill {get; private set;}
+    public string word_gold {get; private set;}
+    public string word_technology_gold {get; private set;}
+    public string word_mage_gold {get; private set;}
+    public string word_count_proj {get; private set;}
 
-    private string word_Tech_Resis;
-    private string word_Magic_Resis;
+    public string word_Tech_Resis {get; private set;}
+    public string word_Magic_Resis {get; private set;}
+
 
     //Slots
-    private string word_player;
-    private string word_typeItem;
-    private string word_damageType;
-    private string word_damage;
-    private string word_attacks_speed;
-    private string word_attacks_intervals;
-    private string word_range;
-    private string word_description;
+    public string word_player {get; private set;}
+    public string word_typeItem {get; private set;}
+    public string word_damageType {get; private set;}
+    public string word_damage {get; private set;}
+    public string word_attacks_speed {get; private set;}
+    public string word_attacks_intervals {get; private set;}
+    public string word_range {get; private set;}
+    public string word_description {get; private set;}
 
 
     private void Awake()
@@ -95,7 +87,43 @@ public class DisplayInfo: MonoBehaviour
             return;
         }
         Instance = this;
-        iconItem = iconObj.GetComponent<Image>();
+
+        InfoStatus = InfoStatusObj.GetComponent<DisplayPlayerStats>();
+        InfoItem = InfoItemsObj.GetComponent<DisplayItem>();
+
+        sizeInfoItem = InfoItemsObj.GetComponent<RectTransform>();
+        //mouseOffset = new Vector2(sizeInfoItem.rect.width / 2, 0);
+        //sizeInfoItem.pivot = new Vector2(1f, 1.15f); //Центр выше, смещение
+    }
+    private void Update()
+    {
+        if(moveInfo)
+        {
+            UpdateItemInfoPanel();
+        }
+    }
+    public void SetActiveStatusInfo(bool isActive)
+    {
+        InfoStatusObj.SetActive(isActive);
+    }
+    public void SetActiveItemInfo(bool isActive)
+    {
+        InfoItemsObj.SetActive(isActive);
+    }
+    public void UpdateItemInfoPanel()
+    {
+        mousePos = Input.mousePosition;
+        int newPivotX = mousePos.x > Screen.width * 0.66f ? 1 : 0;
+        int newPivotY = mousePos.y > Screen.height / 3 ? 1 : 0;
+
+        if (sizeInfoItem.pivot.x != newPivotX || sizeInfoItem.pivot.y != newPivotY)
+        {
+            sizeInfoItem.pivot = new Vector2(newPivotX, newPivotY);
+        }
+        Vector2 offset = new Vector2(20f * (newPivotX == 1 ? -1 : 1),  // Смещение по X влево или вправо
+                                     20f * (newPivotY == 1 ? -1 : 1));  // Смещение по Y вверх или вниз
+
+        sizeInfoItem.position = mousePos + offset; ;
     }
     public void LocalizationText()
     {
@@ -168,34 +196,31 @@ public class DisplayInfo: MonoBehaviour
         }
     }
 
-
-    public void SetActive(bool turn)
-    {
-        gameObject.SetActive(turn);
-    }
     public void UpdateInfoStatus()
     {
         StringBuilder info = new StringBuilder();
 
-        PlayerStats pl_stat = Player.Instance.GetPlayerStats();
-        EquipStats eqip_stat = Player.Instance.GetEquipStats();
+        pl_stat = Player.Instance.GetPlayerStats();
+        eqip_stat = Player.Instance.GetEquipStats();
 
-        Strength_Text.text = $"<color={HashColorStrength}>{pl_stat.Strength} {word_strength}</color>";
-        Strength_Bonus_Text.text = $"<color={HashColorBonus}>" +
-            $"HP + {pl_stat.Strength*2}\n" +
-            $"{word_Damage} + {(pl_stat.Strength * 2/10).ToString("F2")}\n" +
-            $"{word_Armor} + {(pl_stat.Strength/ 10).ToString("F2")}";
-        Agility_Text.text = $"<color={HashColorAgility}>{pl_stat.Agility} {word_agility}</color>";
-        Agility_Bonus_Text.text = $"<color={HashColorBonus}>" +
+        string str = $"<color={GlobalColors.Hh_Str}>{pl_stat.Strength} {word_strength}</color>";
+        string strB = $"<color={GlobalColors.Hh_Bonus}>" +
+            $"HP + {pl_stat.Strength * 2}\n" +
+            $"{word_Damage} + {(pl_stat.Strength * 2 / 10).ToString("F2")}\n" +
+            $"{word_Armor} + {(pl_stat.Strength / 10).ToString("F2")}";
+
+        string agil = $"<color={GlobalColors.Hh_Agi}>{pl_stat.Agility} {word_agility}</color>";
+        string agilB = $"<color={GlobalColors.Hh_Bonus}>" +
             $"{word_Speed} + {(pl_stat.Agility * 0.015f).ToString("F2")}\n" +
             $"{word_Evasion} + {(pl_stat.Agility)}\n" +
             $"{word_AttSpeed} + {(pl_stat.Agility * 2)}";
-        Intelligence_Text.text = $"<color={HashColorIntelligence}>{pl_stat.Intelligence} {word_intelligence}</color>";
-        Intelligence_Bonus_Text.text = $"<color={HashColorBonus}>" +
+        string intel = $"<color={GlobalColors.Hh_Int}>{pl_stat.Intelligence} {word_intelligence}</color>";
+        string intelB = $"<color={GlobalColors.Hh_Bonus}>" +
             $"{word_AttRange} + {(pl_stat.Intelligence * 0.1f).ToString("F2")}\n" +
             $"{word_ProjSpeed} + {(pl_stat.Intelligence * 0.1f).ToString("F2")}\n" +
             $"{word_Damage} + {(pl_stat.Intelligence * 2 / 10).ToString("F2")}";
 
+        InfoStatus.UpdateAttribute(str, strB, agil, agilB, intel, intelB);
 
         info.Append($"{word_level}: {pl_stat.level} | {word_expBonus}: {((pl_stat.ExpBust - 1) * 100).ToString("F1")}%\n");
         info.Append($"{word_gold}: {pl_stat.Gold}\n");
@@ -229,8 +254,9 @@ public class DisplayInfo: MonoBehaviour
         info.AppendLine($"{word_mage_gold}: {pl_stat.MagicPoints}");
         info.AppendLine($"{word_count_proj}: {pl_stat.count_Projectile}");
 
-        Status_Info_Name_Text.text = word_status_info;
-        Status_Info.text = info.ToString();
+
+        InfoStatus.UpdateOtherInfo(word_status_info, info.ToString());
+
     }
     private void AppendStat(StringBuilder info, string statName, float totalStat, bool IsProcent, bool isHundred, float baseStat, float statModifier, float classBonus, float equipBonus, string statNameMofifier, string roleClass, string equipment)
     {
@@ -245,30 +271,29 @@ public class DisplayInfo: MonoBehaviour
             equipBonus *= 100;
         }
 
-        if (IsProcent) 
-            info.Append($"{statName}: {totalStat.ToString("F0")}%"); 
+        if (IsProcent)
+            info.Append($"{statName}: {totalStat.ToString("F0")}%");
         else
         {
-            if(totalStat % 1 == 0)
+            if (totalStat % 1 == 0)
                 info.Append($"{statName}: {totalStat.ToString("F0")}");
             else
                 info.Append($"{statName}: {totalStat.ToString("F2")}");
         }
-            
-        
+
+
         if (totalStat <= 0)
         {
             info.Append("\n");
             return;
-        }    
-        info.Append($"<size={sizeFont}><color={HashColorAddInfo}>    = ");
+        }
+        info.Append($"<size={sizeFont}><color={GlobalColors.Hh_AddInfo}>    = ");
         info.Append($"{baseStat} ({word_base})");
         if (statModifier > 0) info.Append($" + {statModifier} ({statNameMofifier})");
         if (classBonus > 0) info.Append($" + {classBonus} ({word_for + roleClass})");
         if (equipBonus > 0) info.Append($" + {equipBonus} ({word_for + equipment})");
         info.Append($"\n</color></size>");
     }
-
     public void UpdateInfoItem(int numbSlot, string TypeSlot)
     {
         Item item;
@@ -292,37 +317,37 @@ public class DisplayInfo: MonoBehaviour
             default:
                 return;
         }
-        
-        iconItem.sprite = item.Sprite;
+        if (item == null || item.Id == 0) return;
 
-        //Разметка и цвет - первый текст
+        pl_stat = Player.Instance.GetPlayerStats();
+        moveInfo = true;
+
+
+        //Первый текст
         string colorName = "#" + ColorUtility.ToHtmlStringRGBA(item.GetColor());
-        nameItem.text =  $"<size=14>{item.Name}</size>\n<size=12><color={colorName}>{item.quality}</color></size>";
+        string nameItem =  $"<size=14>{item.Name}</size>\n<size=12><color={colorName}>{item.quality}</color></size>";
 
-        PlayerStats pl_st = Player.Instance.GetPlayerStats();
+
         //Второй текст
         StringBuilder info = new StringBuilder();
         info.AppendLine($"{word_typeItem}: {item.TypeItem.ToString()}");
         if (item is Weapon weapon)
         {
             info.AppendLine($"{word_damageType}: {weapon.typeDamage}");
-            info.AppendLine($"{word_damage}: {weapon.damage} {SetStyleLine(HashColorAddInfo, 10, $"+ {pl_st.Att_Damage} {word_Damage} {word_player}")}");
-            info.AppendLine($"{word_attacks_speed}: {weapon.attackSpeed} {SetStyleLine(HashColorAddInfo, 10, $"* {pl_st.Att_Speed} {word_AttSpeed} {word_player}")}");
-            info.AppendLine($"{word_attacks_intervals}: {(60f / (weapon.attackSpeed * pl_st.Att_Speed)).ToString("F2")} {SetStyleLine(HashColorAddInfo, 10, $"= 60 / {word_attacks_speed} * {pl_st.Att_Speed} {word_AttSpeed} {word_player}")}");
-            info.AppendLine($"{word_range}: {weapon.range}  {SetStyleLine(HashColorAddInfo, 10, $"= {weapon.range} + {pl_st.Att_Range} {word_AttRange} {word_player}")}");
+            info.AppendLine($"{word_damage}: {weapon.damage} {SetStyleLine(GlobalColors.Hh_AddInfo, 10, $"+ {pl_stat.Att_Damage} {word_Damage} {word_player}")}");
+            info.AppendLine($"{word_attacks_speed}: {weapon.attackSpeed} {SetStyleLine(GlobalColors.Hh_AddInfo, 10, $"* {pl_stat.Att_Speed} {word_AttSpeed} {word_player}")}");
+            info.AppendLine($"{word_attacks_intervals}: {(60f / (weapon.attackSpeed * pl_stat.Att_Speed)).ToString("F2")} {SetStyleLine(GlobalColors.Hh_AddInfo, 10, $"= 60 / {word_attacks_speed} * {pl_stat.Att_Speed} {word_AttSpeed} {word_player}")}");
+            info.AppendLine($"{word_range}: {weapon.range}  {SetStyleLine(GlobalColors.Hh_AddInfo, 10, $"= {weapon.range} + {pl_stat.Att_Range} {word_AttRange} {word_player}")}");
             //attack_ran + (Player.Instance.GetPlayerStats().Att_Range/2)
         }
         info.AppendLine($"{word_description}: {item.Description}");
-        infoItem.text = info.ToString();
+
+
+        InfoItem.LoadInfo(item.Sprite, nameItem, info.ToString());
     }
     private string SetStyleLine(string HashColor, int sizeFont, string line)
     {
         return $"<size={sizeFont}><color={HashColor}>{line}</color></size>";
     }
-    public void ClearInfo()
-    {
-        iconItem.sprite = null;
-        nameItem.text = "";
-        infoItem.text = "";
-    }
+
 }

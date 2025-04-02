@@ -10,9 +10,11 @@ public class CraftLogic : MonoBehaviour, ISlot
     public static CraftLogic Instance;
     [SerializeField] private Transform CraftsParent;
     [SerializeField] private Transform MaterialsParent;
+    [SerializeField] private Transform parentInventSlots;
 
     Dictionary<Slot, Dictionary<Item, int>> slotsCrafts = new Dictionary<Slot, Dictionary<Item, int>>();
     List<Slot> materialsSelectSlot = new List<Slot>();
+    private Slot SelectSlot;
 
     private bool recipeIsLoaded = false;
     private int curIndexCraft;
@@ -26,7 +28,20 @@ public class CraftLogic : MonoBehaviour, ISlot
         }
         Instance = this;
     }
-    public void LoadCrafts()
+    public void OpenCrafts()
+    {
+        UIControl.Instance.TransfromSlotsFromInventory(parentInventSlots);
+
+        LoadCrafts();
+        ReloadFirstMaterials();
+    }
+    public void CloseCrafts()
+    {
+        UIControl.Instance.RetrunSlotsToInventory(parentInventSlots);
+        ClearMaterials();
+        DisplayInfo.Instance.SetActiveItemInfo(false);
+    }
+    private void LoadCrafts()
     {
         if (recipeIsLoaded) return;
 
@@ -59,7 +74,7 @@ public class CraftLogic : MonoBehaviour, ISlot
     }
     public void LoadMaterials(int index)
     {
-        Slot SelectSlot = slotsCrafts.Keys.FirstOrDefault(slot => slot.IdSlot == index);
+        SelectSlot = slotsCrafts.Keys.FirstOrDefault(slot => slot.IdSlot == index);
         if (SelectSlot == null) return;
 
         curIndexCraft = index;
@@ -92,7 +107,7 @@ public class CraftLogic : MonoBehaviour, ISlot
             }
         }
     }
-    public void ReloadFirstMaterials()
+    private void ReloadFirstMaterials()
     {
         LoadMaterials(curIndexCraft);
     }
@@ -110,6 +125,34 @@ public class CraftLogic : MonoBehaviour, ISlot
         {
             Inventory.Instance.SubractItem(material.Item, material.Count);
         }
+        int idSounds = 0;
+        switch(SelectSlot.Item.TypeItem)
+        {
+            case TypeItem.Weapon:
+                {
+                    idSounds = 2;
+                    break;
+                }
+            case TypeItem.Food:
+                {
+                    idSounds = 3;
+                    break;
+                }
+            case TypeItem.Trap:
+                {
+                    idSounds = 4;
+                    break;
+                }
+            case TypeItem.Potion:
+                {
+                    idSounds = 1;
+                    break;
+                }
+            case TypeItem.Minion: goto case TypeItem.Weapon;
+            case TypeItem.Armor: goto case TypeItem.Weapon;
+            default: idSounds = 0; break;
+        }
+        SoundsManager.Instance.PlayCraftItemSounds(idSounds);
         ReloadFirstMaterials();
     }
     private void ClearMaterials()

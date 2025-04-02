@@ -12,8 +12,10 @@ public class SoundsManager : MonoBehaviour
     [SerializeField] private AudioClip LvlUP;
     [SerializeField] private AudioClip acceptAspect;
     [SerializeField] private AudioClip openLvelUPWindow;
+    [SerializeField] private AudioClip switchItem;
 
     [SerializeField] private AudioClip[] items_sounds;
+    [SerializeField] private AudioClip[] craftItems;
 
     public float volume;
     private void Awake()
@@ -66,5 +68,15 @@ public class SoundsManager : MonoBehaviour
     {
         audioSource.pitch = 1f;
         audioSource.PlayOneShot(items_sounds[id]);
+    }
+    public void PlayCraftItemSounds(int id)
+    {
+        audioSource.pitch = Random.Range(0.8f, 1.2f);
+        audioSource.PlayOneShot(craftItems[id]);
+    }
+    public void PlaySwitchItemSounds()
+    {
+        audioSource.pitch = Random.Range(0.8f, 1.2f);
+        audioSource.PlayOneShot(switchItem);
     }
 }

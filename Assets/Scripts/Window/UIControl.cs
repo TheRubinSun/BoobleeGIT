@@ -21,6 +21,8 @@ public class UIControl:MonoBehaviour
     [SerializeField] Transform inventoryBar;
     [SerializeField] GameObject CraftWindow;
 
+    [SerializeField] Transform mainParentInventory;
+
     bool invIsOpened;
     bool itemsIsOpened;
     bool mobsIsOpened;
@@ -143,6 +145,8 @@ public class UIControl:MonoBehaviour
     }
     public void OpenShop()
     {
+        if (CraftIsOpened) return;
+
         ShopIsOpened = !ShopIsOpened;
         if (ShopIsOpened)
         {
@@ -165,6 +169,7 @@ public class UIControl:MonoBehaviour
         }
         else
         {
+            DisplayInfo.Instance.SetActiveItemInfo(false);
             infoPlayerWindow.SetActive(false);
         }
         TogglePause();
@@ -195,16 +200,18 @@ public class UIControl:MonoBehaviour
     }
     public void OpenCraftWindow()
     {
+        if (ShopIsOpened) return;
+
         CraftIsOpened = !CraftIsOpened;
         if (CraftIsOpened)
         {
             CraftWindow.SetActive(true);
-            CraftLogic.Instance.LoadCrafts(); //Выполняется только один раз, когда загружает рецепты
-            CraftLogic.Instance.ReloadFirstMaterials();
+            CraftLogic.Instance.OpenCrafts();
         }
         else
         {
             CraftWindow.SetActive(false);
+            CraftLogic.Instance.CloseCrafts();
         }
     }
     public void ShowHideLvlUP(bool showOrHide)
@@ -265,5 +272,22 @@ public class UIControl:MonoBehaviour
         isPaused = !isPaused;
         Time.timeScale = isPaused ? 0 : 1;  // 0 - пауза, 1 - нормальное время
         AudioListener.pause = isPaused;     // Останавливаем все звуки
+    }
+
+    public void RetrunSlotsToInventory(Transform fromParent)
+    {
+        int countSlots = Inventory.Instance.sizeInventory;
+        for (int i = countSlots; i > 0; i--)
+        {
+            fromParent.transform.GetChild(0).SetParent(mainParentInventory);
+        }
+    }
+    public void TransfromSlotsFromInventory(Transform newParent)
+    {
+        int countSlots = Inventory.Instance.sizeInventory;
+        for (int i = countSlots; i > 0; i--)
+        {
+            mainParentInventory.transform.GetChild(0).SetParent(newParent);
+        }
     }
 }

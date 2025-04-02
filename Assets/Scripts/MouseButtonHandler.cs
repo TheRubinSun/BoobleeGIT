@@ -96,8 +96,7 @@ public class MouseButtonHandler : MonoBehaviour, IPointerClickHandler
                     {
                         if (CraftLogic.Instance.isEnoughResourse())
                         {
-                            CraftLogic.Instance.SpendResource();
-                            DragAndDrop.Instance.DragCrafttSlot(GetNumbSlot());
+                            DragAndDrop.Instance.DragCraftSlot(GetNumbSlot());
                         }
                         else
                         {

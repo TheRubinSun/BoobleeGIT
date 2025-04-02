@@ -38,6 +38,7 @@ public class SlotSelector : MonoBehaviour
             {
                 SelectSlot(currentSlotIndex - 1);
                 MoveContentToSlot(currentSlotIndex);
+                SoundsManager.Instance.PlaySwitchItemSounds();
             }
         }
         else if (scroll < 0f) // Прокрутка вниз
@@ -46,6 +47,7 @@ public class SlotSelector : MonoBehaviour
             {
                 SelectSlot(currentSlotIndex + 1);
                 MoveContentToSlot(currentSlotIndex);
+                SoundsManager.Instance.PlaySwitchItemSounds();
             }
         }
     }
@@ -54,6 +56,7 @@ public class SlotSelector : MonoBehaviour
     {
         SelectSlot(index);
         MoveContentToSlot(index);
+        SoundsManager.Instance.PlaySwitchItemSounds();
     }
 
     void SelectSlot(int newIndex)

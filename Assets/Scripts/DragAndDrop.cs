@@ -99,17 +99,17 @@ public class DragAndDrop:MonoBehaviour
         }
         Drag();
     }
-    public void DragCrafttSlot(int numbCraftSlot)
+    public void DragCraftSlot(int numbCraftSlot)
     {
         if (dragItem)
         {
-            Debug.Log("Tut");
             Slot craftSlot = CraftLogic.Instance.GetSlot(new SlotRequest { index = numbCraftSlot });
             if (tempSlot.Item == craftSlot.Item)
             {
                 int freeCount = (tempSlot.Item.MaxCount - tempSlot.Count);
                 if (freeCount >= craftSlot.Count)
                 {
+                    CraftLogic.Instance.SpendResource();
                     tempSlot.Count += craftSlot.Count;
                     Inventory.Instance.UpdateSlotUI(tempSlot);  //Обновляем картинку в UI
                 }
@@ -123,6 +123,8 @@ public class DragAndDrop:MonoBehaviour
         }
         else
         {
+            CraftLogic.Instance.SpendResource();
+
             Slot craftSlot = CraftLogic.Instance.GetSlot(new SlotRequest { index = numbCraftSlot });
             tempSlot = new Slot(craftSlot.Item, craftSlot.Count); //Копируем данные клетки
 
@@ -447,6 +449,10 @@ public class DragAndDrop:MonoBehaviour
         Inventory.Instance.UpdateSlotUI(newSlot);  //Обновляем картинку в UI
         return true;
     }
+    public void ClearOldSlot()
+    {
+        oldSlot = null;
+    }
     //==========================================================================================================================================
     //================================================ Блок бросить предмет ====================================================================
     public void DropItem()
@@ -526,8 +532,8 @@ public class DragAndDrop:MonoBehaviour
         dragItem = false; //Отпускаем предмет
         DragZone.SetActive(dragItem);  //Выключить возможность выбросить
 
-        if (newSlot != null && newSlot.SlotObj.CompareTag("SlotEquip")) EqupmentPlayer.Instance.PutOnEquip(newSlot);
-        if (oldSlot != null && oldSlot.SlotObj.CompareTag("SlotEquip")) EqupmentPlayer.Instance.PutOnEquip(oldSlot);
+        if (newSlot != null && newSlot.SlotObj != null && newSlot.SlotObj.CompareTag("SlotEquip")) EqupmentPlayer.Instance.PutOnEquip(newSlot);
+        if (oldSlot != null && oldSlot.SlotObj != null && oldSlot.SlotObj.CompareTag("SlotEquip")) EqupmentPlayer.Instance.PutOnEquip(oldSlot);
     }
     //==========================================================================================================================================
     void Update()

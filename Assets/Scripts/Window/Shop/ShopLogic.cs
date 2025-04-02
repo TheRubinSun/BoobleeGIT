@@ -12,12 +12,11 @@ public class ShopLogic : MonoBehaviour , ISlot
 {
     public static ShopLogic Instance;
 
-    [SerializeField] private Transform oldParent_inventory;
-    [SerializeField] private Transform newParent_inventory;
+    [SerializeField] private Transform parentInventSlots;
 
-    [SerializeField] private Transform item_info;
-    [SerializeField] private Transform oldParent_item_info;
-    [SerializeField] private Transform newParent_item_info;
+    //[SerializeField] private Transform item_info;
+    //[SerializeField] private Transform oldParent_item_info;
+    //[SerializeField] private Transform newParent_item_info;
 
 
     [SerializeField] private Transform sells_slots_parent;
@@ -65,7 +64,7 @@ public class ShopLogic : MonoBehaviour , ISlot
     private string word_trader;
     private string word_trade_name;
 
-    private RectTransform item_info_rect_trans;
+    //private RectTransform item_info_rect_trans;
 
     private int countSlots = 0;
 
@@ -78,7 +77,7 @@ public class ShopLogic : MonoBehaviour , ISlot
             return;
         }
         Instance = this;
-        item_info_rect_trans = item_info.GetComponent<RectTransform>();
+        //item_info_rect_trans = item_info.GetComponent<RectTransform>();
     }
     public void OpenShop()
     {
@@ -91,17 +90,21 @@ public class ShopLogic : MonoBehaviour , ISlot
         ReturnSlotsFor(sellSlots, false);
         ReturnSlotsFor(buySlots, true);
         EraseText();
+        DragAndDrop.Instance.ClearOldSlot();
+        //item_info.transform.SetParent(oldParent_item_info);
+        //item_info_rect_trans.anchoredPosition = new Vector2(-140, 0);
 
-        item_info.transform.SetParent(oldParent_item_info);
-        item_info_rect_trans.anchoredPosition = new Vector2(-140, 0);
-        for (int i = countSlots; i > 0; i--)
-        {
-            newParent_inventory.transform.GetChild(0).SetParent(oldParent_inventory);
-        }
+        UIControl.Instance.RetrunSlotsToInventory(parentInventSlots);
+        //for (int i = countSlots; i > 0; i--)
+        //{
+        //    newParent_inventory.transform.GetChild(0).SetParent(oldParent_inventory);
+        //}
 
         totalCostOrProfit = 0;
         personalProfSum = 0;
         personalCostSum = 0;
+
+        DisplayInfo.Instance.SetActiveItemInfo(false);
     }
     public void LocalizationText()
     {
@@ -144,18 +147,20 @@ public class ShopLogic : MonoBehaviour , ISlot
     {
         if (shop_slots_parent.transform.childCount == 0)
         {
+            countSlots = Inventory.Instance.sizeInventory;
+
             Item none_item = ItemsList.Instance.items[0];
             for (int i = 0; countSlots > i; i++)
             {
-                CreateSlot("ShopSlot", shop_slots_parent, shopSlots, none_item, i);
-
+                Slot slot = CreateSlot("ShopSlot", shop_slots_parent, shopSlots, none_item, i);
+                SlotsManager.UpdateSlotUI(slot);
             }
             AddTradeItem();
         }
     }
     private void AddTradeItem()
     {
-        int count = 5;
+        int count = 10;
         for(int i = 0; i < count; i++)
         {
             Item item = ItemsList.Instance.items[UnityEngine.Random.Range(0, ItemsList.Instance.items.Count)];
@@ -166,13 +171,15 @@ public class ShopLogic : MonoBehaviour , ISlot
 
     private void DisplayInventory()
     {
-        countSlots = oldParent_inventory.transform.childCount;
-        item_info.transform.SetParent(newParent_item_info);
-        item_info_rect_trans.anchoredPosition = new Vector2(855, -270);
-        for (int i = countSlots; i > 0; i--)
-        {
-            oldParent_inventory.transform.GetChild(0).SetParent(newParent_inventory);
-        }
+        //countSlots = oldParent_inventory.transform.childCount;
+        //item_info.transform.SetParent(newParent_item_info);
+        //item_info_rect_trans.anchoredPosition = new Vector2(855, -270);
+
+        UIControl.Instance.TransfromSlotsFromInventory(parentInventSlots);
+        //for (int i = countSlots; i > 0; i--)
+        //{
+        //    oldParent_inventory.transform.GetChild(0).SetParent(newParent_inventory);
+        //}
     }
 
     public Slot CreateEmptySlot(string typeSlot)
