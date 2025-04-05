@@ -130,7 +130,7 @@ public class MinionControl : MonoBehaviour
         }
         foreach (Slot slot in dropItems)
         {
-            Inventory.Instance.FindSlotAndAdd(slot.Item, slot.Count, true);
+            Inventory.Instance.FindSlotAndAdd(slot.Item, slot.Count, true, slot.artifact_id);
         }
         dropItems.Clear();
     }

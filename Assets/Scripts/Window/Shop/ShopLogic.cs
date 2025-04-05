@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.Experimental;
 using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using UnityEngine.UI;
@@ -165,7 +166,7 @@ public class ShopLogic : MonoBehaviour , ISlot
         {
             Item item = ItemsList.Instance.items[UnityEngine.Random.Range(0, ItemsList.Instance.items.Count)];
             int countItem = UnityEngine.Random.Range(1, item.MaxCount);
-            AddItemToType("Shop", item, countItem);
+            AddItemToType("Shop", item, countItem, 0);
         }
     }
 
@@ -234,29 +235,30 @@ public class ShopLogic : MonoBehaviour , ISlot
         slotList.Add(newSlot);
         return newSlot;
     }
-    public void AddItemToType(string typeSlot, Item item, int CountItem)
+    public void AddItemToType(string typeSlot, Item item, int CountItem, int artID)
     {
         switch (typeSlot)
         {
             case "Sell":
                 {
-                    AddItemToListSlot(sellSlots, item, CountItem);
+                    AddItemToListSlot(sellSlots, item, CountItem, artID);
                     return;
                 }
             case "Buy":
                 {
-                    AddItemToListSlot(buySlots, item, CountItem);
+                    AddItemToListSlot(buySlots, item, CountItem, artID);
                     return;
                 }
             case "Shop":
                 {
-                    AddItemToListSlot(shopSlots, item, CountItem);
+                    AddItemToListSlot(shopSlots, item, CountItem, artID);
                     return;
                 }
         }
     }
-    private void AddItemToListSlot(List<Slot> slots, Item itemAdd, int countItem)
+    private void AddItemToListSlot(List<Slot> slots, Item itemAdd, int countItem, int artID)
     {
+
         foreach (Slot slot in slots)
         {
             if (slot.Item.Id == itemAdd.Id)
@@ -288,6 +290,9 @@ public class ShopLogic : MonoBehaviour , ISlot
                 {
                     //Полностью размещаем
                     slot.Count = countItem;
+
+                    IsArtifact(slot, itemAdd, artID); // Если артефакт (он один) то добавляем ID артефакта
+
                     SlotsManager.UpdateSlotUI(slot);
                     return;
                 }
@@ -300,6 +305,15 @@ public class ShopLogic : MonoBehaviour , ISlot
                 }
             }
         }
+    }
+    private void IsArtifact(Slot slot, Item itemAdd, int artID)
+    {
+        if (itemAdd is ArtifactItem artifact)
+        {
+            if (artID == 0) slot.artifact_id = Artifacts.Instance.AddNewArtifact(artifact.artifactLevel);
+            else slot.artifact_id = artID;
+        }
+        
     }
     public void TradeOperation()
     {
@@ -387,7 +401,7 @@ public class ShopLogic : MonoBehaviour , ISlot
     {
         foreach (Slot slot in slotsOut)
         {
-            AddItemToListSlot(slotsIn, slot.Item, slot.Count);
+            AddItemToListSlot(slotsIn, slot.Item, slot.Count, slot.artifact_id);
         }
         ClearSlots(slotsOut);
     }
@@ -400,11 +414,11 @@ public class ShopLogic : MonoBehaviour , ISlot
 
             if (IsTraider)
             {
-                AddItemToType("Shop", slot.Item, slot.Count);
+                AddItemToType("Shop", slot.Item, slot.Count, slot.artifact_id);
             }
             else
             {
-                Inventory.Instance.FindSlotAndAdd(slot.Item, slot.Count, true);
+                Inventory.Instance.FindSlotAndAdd(slot.Item, slot.Count, true, slot.artifact_id);
             }
 
         }

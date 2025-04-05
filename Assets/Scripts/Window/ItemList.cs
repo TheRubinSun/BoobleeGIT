@@ -79,6 +79,8 @@ public class ItemsList : MonoBehaviour
         items.Add(new Item(26, "material_glass", 20, items.Count, Quality.Common, 15, "_", TypeItem.Material));
         items.Add(new Item(27, "material_someone_eye", 20, items.Count, Quality.Uncommon, 35, "_", TypeItem.Material));
         items.Add(new Item(28, "material_strange_eye", 20, items.Count, Quality.Mystical, 350, "_", TypeItem.Material));
+        items.Add(new ArtifactItem(29, "artifact_simple_ring", 1, items.Count, Quality.Uncommon, 100, "_", TypeItem.Artifact, 1));
+        items.Add(new ArtifactItem(30, "artifact_eye_ring", 1, items.Count, Quality.Rare, 300, "_", TypeItem.Artifact, 5));
         //PrintItemList();
     }
     private void InitializeSpritesItem()
@@ -138,7 +140,7 @@ public class ItemsList : MonoBehaviour
             Debug.Log($"ID: {item.Id}, Name: {item.NameKey}");
         }
     }
-    public int GetIdWeaponForNum(Item itemT)
+    public int GetIdWeaponForItem(Item itemT)
     {
         int select = 0;
 
@@ -160,7 +162,29 @@ public class ItemsList : MonoBehaviour
         Debug.LogWarning($"Ошибка №200 - {select}/{items.Count}/{itemT.NameKey}");
         return -1;
     }
-    public int GetIdMinoinForNum(Item itemT)
+    public int GetArtifactForItem(Item itemT)
+    {
+        int select = 0;
+
+        if (!(itemT is ArtifactItem))
+        {
+            Debug.LogWarning($"Ошибка: {itemT.NameKey} не является артефактом. {itemT.GetType()}");
+            return -1;
+        }
+        foreach (Item item in items)
+        {
+            if (item is ArtifactItem artifact)
+            {
+                if (artifact.Id == itemT.Id) return select;
+                select++;
+            }
+
+        }
+
+        Debug.LogWarning($"Ошибка №200 - {select}/{items.Count}/{itemT.NameKey}");
+        return -1;
+    }
+    public int GetIdMinoinForItem(Item itemT)
     {
         int select = 0;
 

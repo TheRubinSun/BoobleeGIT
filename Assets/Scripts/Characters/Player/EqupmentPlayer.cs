@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
+using UnityEditor.Experimental;
 using UnityEngine;
 
 public class EqupmentPlayer : MonoBehaviour, ISlot
@@ -10,12 +12,20 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     public Slot slotWeaponTwo { get; set; }
     public Slot slotWeaponThree { get; set; }
     public Slot slotWeaponFour { get; set; }
+
     public Slot slotArrmorOne { get; set; }
+
     public Slot slotMinionOne { get; set; }
     public Slot slotMinionTwo { get; set; }
     public Slot slotMinionThree { get; set; }
     public Slot slotMinionFour { get; set; }
+
+    public Slot slotArtefOne { get; set; }
+    public Slot slotArtefTwo { get; set; }
+    public Slot slotArtefThree { get; set; }
+    public Slot slotArtefFour { get; set; }
     public Slot[] slotsEqup {  get; set; }
+
 
     [SerializeField] GameObject [] slotsObjEquip; //Массив слотов
     [SerializeField] Transform [] EquipSlotPrefab; //Префабы рук как родителя
@@ -23,6 +33,7 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
 
     Dictionary<int, GameObject> slots_Weapon = new Dictionary<int, GameObject>(); //В ячейки рук по порядку префабы оружия 
     Dictionary<int, GameObject> slots_minions= new Dictionary<int, GameObject>(); //В ячейки рук по порядку префабы миньонс 
+    Dictionary<int, int> slots_artifacts = new Dictionary<int, int>(); //В ячейки рук по порядку префабы миньонс 
     private void Awake()
     {
         // Проверка на существование другого экземпляра
@@ -50,7 +61,12 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         slotMinionTwo = new Slot(item, slotsObjEquip[6], TypeItem.Minion);
         slotMinionThree = new Slot(item, slotsObjEquip[7], TypeItem.Minion);
         slotMinionFour = new Slot(item, slotsObjEquip[8], TypeItem.Minion);
-        slotsEqup = new Slot[] { slotWeaponOne, slotWeaponTwo, slotWeaponThree, slotWeaponFour, slotArrmorOne, slotMinionOne, slotMinionTwo, slotMinionThree, slotMinionFour };
+        slotArtefOne = new Slot(item, slotsObjEquip[9], TypeItem.Artifact);
+        slotArtefTwo = new Slot(item, slotsObjEquip[10], TypeItem.Artifact);
+        slotArtefThree = new Slot(item, slotsObjEquip[11], TypeItem.Artifact);
+        slotArtefFour = new Slot(item, slotsObjEquip[12], TypeItem.Artifact);
+        slotsEqup = new Slot[] { slotWeaponOne, slotWeaponTwo, slotWeaponThree, slotWeaponFour, slotArrmorOne, slotMinionOne, slotMinionTwo, slotMinionThree, slotMinionFour,
+        slotArtefOne, slotArtefTwo, slotArtefThree, slotArtefFour};
         for (int i = 0; i < slotsEqup.Length; i++)
         {
             Inventory.Instance.UpdateSlotUI(slotsEqup[i]);
@@ -71,6 +87,7 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
             {
                 slotsEqup[i].Item = ItemsList.Instance.GetItemForNameKey(equipment_items[i].NameKey);
                 slotsEqup[i].Count = equipment_items[i].count;
+                slotsEqup[i].artifact_id = equipment_items[i].artefact_id;
                 Inventory.Instance.UpdateSlotUI(slotsEqup[i]);
             }
             return true;
@@ -78,41 +95,74 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         return false;
     }
 
-
-
     public Slot GetSlot(SlotRequest request)
     {
         //Debug.Log($"Слот: {numbSlot} {slotsEqup.Length}");
         return slotsEqup[request.index];
     }
-
     public void UpdateAllSlots()
     {
-        foreach(Slot slot in slotsEqup)
+        int id = 0;
+        foreach (Slot slot in slotsEqup)
         {
-            PutOnEquip(slot);
+            PutOnEquip(slot, id);
+            id++;
         }
     }
-    public void PutOnEquip(Slot slot)
+    public void PutOnEquip(Slot slot, int id) //Проверить префаб
     {
-
-        for (int i = 0; i < slotsEqup.Length; i++)
+        if (id < 9)
         {
-            if(slot.SlotObj.CompareTag("SlotEquip"))
-            {
-                if (slotsEqup[i] == slot)
-                {
-                    DeleteEquipOnSlot(i, EquipSlotPrefab[i]);
+            DeleteEquipOnSlot(id, EquipSlotPrefab[id]);
+        }
+        else if(id < 13)
+        {
+            DeleteAttributeArtifact(id);
 
-                    if(slot.Item.NameKey != "item_none")
-                    {
-                        AddEquipOnSlot(i);
-                    }
-                    
-                }
-            }
+        }
+        if (slot.Item.NameKey != "item_none")
+        {
+            AddEquipOnSlot(id);
+        }
+        Player.Instance.UpdateAllStats();
+        DisplayInfo.Instance.UpdateInfoStatus();
+        Player.Instance.UpdateHP();
+    }
+    public void PutOnEquip(Slot slot) //Проверить префаб
+    {
+        if (slot.SlotObj.CompareTag("SlotEquip"))
+        {
+            int id = Array.IndexOf(slotsEqup, slot);
+            PutOnEquip(slot, id);
         }
     }
+    //public void UpdateAllSlots()
+    //{
+    //    foreach(Slot slot in slotsEqup)
+    //    {
+    //        PutOnEquip(slot);
+    //    }
+    //}
+    //public void PutOnEquip(Slot slot)
+    //{
+
+    //    for (int i = 0; i < slotsEqup.Length; i++)
+    //    {
+    //        if(slot.SlotObj.CompareTag("SlotEquip"))
+    //        {
+    //            if (slotsEqup[i] == slot)
+    //            {
+    //                DeleteEquipOnSlot(i, EquipSlotPrefab[i]);
+
+    //                if(slot.Item.NameKey != "item_none")
+    //                {
+    //                    AddEquipOnSlot(i);
+    //                }
+
+    //            }
+    //        }
+    //    }
+    //}
     private void DeleteEquipOnSlot(int id,Transform deleteAllChild)
     {
         foreach (Transform child in deleteAllChild)
@@ -126,7 +176,7 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     {
         if (id < 4) // Проверяем, существует ли Prefab перед инстанциированием и id до 4, так как 0 1 2 3 это слоты для оружия
         {
-            int idPref = ItemsList.Instance.GetIdWeaponForNum(slotsEqup[id].Item);  //Получаем номер оружия из списка всех предметов (нужен порядковый номер оржия чтобы создать подходящий префаб)
+            int idPref = ItemsList.Instance.GetIdWeaponForItem(slotsEqup[id].Item);  //Получаем номер оружия из списка всех предметов (нужен порядковый номер оржия чтобы создать подходящий префаб)
             if(ResourcesData.GetWeaponPrefab(idPref) != null)
             {
                 GameObject weaponObj = Instantiate(ResourcesData.GetWeaponPrefab(idPref), EquipSlotPrefab[id]);  //Создаем оружие в слот 
@@ -142,7 +192,7 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         }
         else if(id > 4 && id < 9) //Для слотов миньон
         {
-            int idPref = ItemsList.Instance.GetIdMinoinForNum(slotsEqup[id].Item);  //Получаем номер миньона из списка всех предметов (нужен порядковый номер миньоена чтобы создать подходящий префаб)
+            int idPref = ItemsList.Instance.GetIdMinoinForItem(slotsEqup[id].Item);  //Получаем номер миньона из списка всех предметов (нужен порядковый номер миньоена чтобы создать подходящий префаб)
             if (ResourcesData.GetMinionPrefab(idPref) != null)
             {
                 GameObject minionObj = Instantiate(ResourcesData.GetMinionPrefab(idPref), EquipSlotPrefab[id]);
@@ -154,6 +204,12 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
             {
                 Debug.LogWarning($"Ошибка 401, префаба нет {id}");
             }
+        }
+        else if (id > 8 && id < 13) //Для слотов артифакты
+        {
+            //LoadAttributeArtifact(slotsEqup[id].artifact_id);
+            slots_artifacts[id] = slotsEqup[id].artifact_id;
+            UpdateAllArtifactsAtribute();
         }
         else
         {
@@ -174,6 +230,14 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
             LoadParametersMinion(slotsMinions.Value, slotsEqup[slotsMinions.Key]); //Загружаем параметры с слота в миньона
         }
     }
+    public void UpdateAllArtifactsAtribute()
+    {
+        EquipStats.Instance.AllNull();
+        foreach (KeyValuePair<int, int> slot_artifact in slots_artifacts)
+        {
+            LoadAttributeArtifact(slot_artifact.Value); //Загружаем параметры с слота артефакта
+        }
+    }
     private void LoadParametersWeapon(GameObject weaponObj, Slot slot)
     {
         if (slot.Item is Gun gun)
@@ -184,7 +248,7 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         }
         else if (slot.Item is MeleWeapon sword)
         {
-            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(sword.damage, sword.attackSpeed, 0, sword.rangeType, sword.range, sword.conut_Projectiles, 0f, sword.typeDamage, PlayerModel, null,0);
+            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(sword.damage, sword.attackSpeed, 0, sword.rangeType, sword.range, sword.conut_Projectiles, 0f, sword.typeDamage, PlayerModel, null, 0);
         }
         else if (slot.Item is Weapon weapon)
         {
@@ -197,5 +261,50 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         {
             minionObj.GetComponent<MinionControl>().GetStatsMinion(minion.radius_search, minion.time_red, minion.move_speed, minion.typeMob);
         }
+    }
+    private void LoadAttributeArtifact(int idArt)
+    {
+        EquipStats equipStats = EquipStats.Instance;
+        Artifacts allArtifacts = Artifacts.Instance;
+        ArtifactObj artifact = allArtifacts.artifacts[idArt]; // Получаем артефакт по ID
+
+        // Загружаем атрибуты артефакта в EquipStats
+        equipStats.Bonus_Equip_Strength += artifact.Artif_Strength;
+        equipStats.Bonus_Equip_Agility += artifact.Artif_Agility;
+        equipStats.Bonus_Equip_Intelligence += artifact.Artif_Intelligence;
+        equipStats.Bonus_Equip_Hp += artifact.Artif_Hp;
+        equipStats.Bonus_Equip_Armor += artifact.Artif_Armor;
+        equipStats.Bonus_Equip_Evasion += artifact.Artif_Evasion;
+        equipStats.Bonus_Equip_Mov_Speed += artifact.Artif_Mov_Speed;
+        equipStats.Bonus_Equip_Att_Range += artifact.Artif_Att_Range;
+        equipStats.Bonus_Equip_Att_Speed += artifact.Artif_Att_Speed;
+        equipStats.Bonus_Equip_Proj_Speed += artifact.Artif_Proj_Speed;
+        equipStats.Bonus_Equip_ExpBust += artifact.Artif_ExpBust;
+        equipStats.Bonus_Magic_Resis += artifact.Artif_Mage_Resis;
+        equipStats.Bonus_Tech_Resis += artifact.Artif_Tech_Resis;
+    }
+    private void DeleteAttributeArtifact(int idSlot)
+    {
+        if (!slots_artifacts.ContainsKey(idSlot)) return;
+        int artId = slots_artifacts[idSlot];
+        slots_artifacts.Remove(idSlot);
+
+        ArtifactObj artifact = Artifacts.Instance.artifacts[artId];
+        EquipStats equipStats = EquipStats.Instance;
+
+        // Вычитаем атрибуты артефакта из EquipStats
+        equipStats.Bonus_Equip_Strength -= artifact.Artif_Strength;
+        equipStats.Bonus_Equip_Agility -= artifact.Artif_Agility;
+        equipStats.Bonus_Equip_Intelligence -= artifact.Artif_Intelligence;
+        equipStats.Bonus_Equip_Hp -= artifact.Artif_Hp;
+        equipStats.Bonus_Equip_Armor -= artifact.Artif_Armor;
+        equipStats.Bonus_Equip_Evasion -= artifact.Artif_Evasion;
+        equipStats.Bonus_Equip_Mov_Speed -= artifact.Artif_Mov_Speed;
+        equipStats.Bonus_Equip_Att_Range -= artifact.Artif_Att_Range;
+        equipStats.Bonus_Equip_Att_Speed -= artifact.Artif_Att_Speed;
+        equipStats.Bonus_Equip_Proj_Speed -= artifact.Artif_Proj_Speed;
+        equipStats.Bonus_Equip_ExpBust -= artifact.Artif_ExpBust;
+        equipStats.Bonus_Magic_Resis -= artifact.Artif_Mage_Resis;
+        equipStats.Bonus_Tech_Resis -= artifact.Artif_Tech_Resis;
     }
 }

@@ -21,6 +21,7 @@ public class LoadingSaveScreen : MonoBehaviour
 
         // Загружаем данные и сохраняем в GameDataHolder
         yield return LoadData(savePath);
+        yield return LoadArtifact(savePath);
 
         // Загружаем игровую сцену асинхронно
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("GameVillage");
@@ -46,5 +47,9 @@ public class LoadingSaveScreen : MonoBehaviour
         GameDataHolder.PlayerData = await SaveSystem.LoadDataAsync<PlayerData>(savePath + "player.json");
 
         Debug.Log("Данные загружены в LoadingScene.");
+    }
+    private async Task LoadArtifact(string savePath)
+    {
+        GameDataHolder.ArtifactsData = await SaveSystem.LoadDataAsync<ArtifactsData>(savePath + "artifacts.json");
     }
 }

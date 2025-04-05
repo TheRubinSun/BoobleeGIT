@@ -66,6 +66,7 @@ public class Slot
     public int IdSlot = -1;
     public Item Item { get; set; }
     public int Count { get; set; }
+    public int artifact_id { get; set; }
     //public int MaxCount { get; set; }
     [JsonIgnore] public GameObject SlotObj { get; set; }
     public TypeItem itemFilter { get; set; }
@@ -114,9 +115,32 @@ public class Slot
         Count = _count;
         itemFilter = _itemFilter;
     }
+    public Slot(int _IdSlot, Item item, GameObject slotObject, int _count, int _artifact_id)
+    {
+        IdSlot = _IdSlot;
+        Item = item;
+        SlotObj = slotObject;
+        Count = _count;
+        artifact_id = _artifact_id;
+    }
+    public Slot(Item item, GameObject slotObject, int _count, TypeItem _itemFilter, int _artifact_id)
+    {
+        Item = item;
+        SlotObj = slotObject;
+        Count = _count;
+        itemFilter = _itemFilter;
+        artifact_id = _artifact_id;
+    }
+    public Slot(Item item, int _count, int _artifact_id)
+    {
+        Item = item;
+        Count = _count;
+        artifact_id = _artifact_id;
+    }
     public void NullSLot()
     {
         Item = ItemsList.Instance.items[0];
         Count = 0;
+        artifact_id = 0;
     }
 }

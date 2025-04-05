@@ -48,6 +48,18 @@ public class ItemsData
         item_List_data = items;
     }
 }
+public class ArtifactsData
+{
+    public List<ArtifactObj> artifacts;
+    public ArtifactsData(List<ArtifactObj> _artefacts)
+    {
+        artifacts = _artefacts;
+    }
+    public ArtifactsData()
+    {
+        artifacts = new List<ArtifactObj>();
+    }
+}
 public class RoleClassesData
 {
     public Dictionary<string, RoleClass> role_Classes_data;
@@ -95,17 +107,19 @@ public class SlotTypeSave
     public int IdSlot;
     public string NameKey;
     public int count;
-
-    public SlotTypeSave(int idSlot, string _name, int _count)
+    public int artefact_id;
+    public SlotTypeSave(int idSlot, string _name, int _count, int artefact_id)
     {
         IdSlot = idSlot;
         NameKey = _name;
         count = _count;
+        this.artefact_id = artefact_id;
     }
-    public SlotTypeSave(string _name, int _count)
+    public SlotTypeSave(string _name, int _count, int artefact_id)
     {
         NameKey = _name;
         count = _count;
+        this.artefact_id = artefact_id;
     }
     public SlotTypeSave() { }
 }

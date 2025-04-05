@@ -70,11 +70,13 @@ public class GenInfoSaves : MonoBehaviour
         saveGameFiles[id].seed = 0;
         lastSaveID = 100;
         string path_player_data = Path.Combine(Application.persistentDataPath, saveGameFiles[id].fileName + "player.json");
+        string path_artifacts_data = Path.Combine(Application.persistentDataPath, saveGameFiles[id].fileName + "artifacts.json");
         if (File.Exists(path_player_data))
         {
             try
             {
                 File.Delete(path_player_data);
+                File.Delete(path_artifacts_data);
                 UpdateTextInfoCell(id);
 
                 

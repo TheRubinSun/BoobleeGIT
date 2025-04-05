@@ -300,11 +300,15 @@ public class DisplayInfo: MonoBehaviour
         switch (TypeSlot)
         {
             case "Inventory":
-                item = Inventory.Instance.GetSlot(new SlotRequest { index = numbSlot}).Item;
-                break;
+                {
+                    item = Inventory.Instance.GetSlot(new SlotRequest { index = numbSlot }).Item;
+                    break;
+                }
             case "Equip":
-                item = EqupmentPlayer.Instance.GetSlot(new SlotRequest { index = numbSlot}).Item;
-                break;
+                {
+                    item = EqupmentPlayer.Instance.GetSlot(new SlotRequest { index = numbSlot }).Item;
+                    break;
+                }
             case "Sell":
                 item = ShopLogic.Instance.GetSlot(new SlotRequest { index = numbSlot, Type = TypeSlot }).Item;
                 break;
@@ -318,6 +322,8 @@ public class DisplayInfo: MonoBehaviour
                 return;
         }
         if (item == null || item.Id == 0) return;
+
+
 
         pl_stat = Player.Instance.GetPlayerStats();
         moveInfo = true;

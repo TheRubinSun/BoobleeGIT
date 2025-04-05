@@ -98,6 +98,10 @@ public class Player : MonoBehaviour, ITakeDamage
         MinionsObj[i] = minionObj;
         UpdateSlotsInPlayerControl();
     }
+    public void UpdateAllStats()
+    {
+        pl_stats.UpdateTotalStats();
+    }
     public void SetAspect(AspectName aspectName, float value)
     {
         pl_stats.freeSkillPoints--;
@@ -153,7 +157,7 @@ public class Player : MonoBehaviour, ITakeDamage
                 Debug.LogWarning("Неизвестный аспект: " + aspectName);
                 break;
         }
-        pl_stats.UpdateTotalStats();
+        UpdateAllStats();
         UpdateHP();
     }
 

@@ -17,8 +17,6 @@ public class Classes : MonoBehaviour
             return;
         }
         Instance = this;
-
-
     }
     public void LoadOrCreateClasses(Dictionary<string, RoleClass> classes)
     {

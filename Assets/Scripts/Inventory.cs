@@ -80,6 +80,7 @@ public class Inventory:MonoBehaviour, ISlot
                 slots[i].IdSlot = i;
                 slots[i].Item = ItemsList.Instance.GetItemForName(invntory_items[i].NameKey);
                 slots[i].Count = invntory_items[i].count;
+                slots[i].artifact_id = invntory_items[i].artefact_id;
             }
             return true;
         }
@@ -96,7 +97,7 @@ public class Inventory:MonoBehaviour, ISlot
                 slotObj.tag = "InvSlot";
 
                 slotObj.name = $"Slot ({i})";
-                slots.Add(new Slot(i, ItemsList.Instance.GetItemForName(slotTypeSave.NameKey), slotObj, slotTypeSave.count));
+                slots.Add(new Slot(i, ItemsList.Instance.GetItemForName(slotTypeSave.NameKey), slotObj, slotTypeSave.count, slotTypeSave.artefact_id));
                 i++;
             }
             return true;
@@ -121,11 +122,15 @@ public class Inventory:MonoBehaviour, ISlot
             Destroy(slot.SlotObj);
         }
     }
-    public int AddItemForID(int id, int count)
+    public int AddItemForID(int id, int count, int idArt)
     {
         foreach(Item item in ItemsList.Instance.items)
         {
-            if (item.Id == id) FindSlotAndAdd(item, count, true);
+            if (item.Id == id)
+            {
+                FindSlotAndAdd(item, count, true, idArt);
+
+            }
         }
         return 0;
     }
@@ -174,7 +179,7 @@ public class Inventory:MonoBehaviour, ISlot
         return totalSubractItem == count;
     }
 
-    public int FindSlotAndAdd(Item itemAdd, int count, bool dropRemains)
+    public int FindSlotAndAdd(Item itemAdd, int count, bool dropRemains, int artID)
     {
         foreach (Slot slot in slots)
         {
@@ -208,8 +213,14 @@ public class Inventory:MonoBehaviour, ISlot
                 {
                    //Полностью размещаем
                    slot.Count = count;
-                   UpdateSlotUI(slot);
-                   return 0;
+
+                    if (itemAdd is ArtifactItem artifact)
+                    {
+                        if (artID == 0) artID = Artifacts.Instance.AddNewArtifact(artifact.artifactLevel);
+                        slot.artifact_id = artID;
+                    }
+                    UpdateSlotUI(slot);
+                    return 0;
                 }
                 else
                 {
@@ -224,7 +235,7 @@ public class Inventory:MonoBehaviour, ISlot
 
         if(dropRemains)
         {
-            DragAndDrop.Instance.DropItemThat(itemAdd, count);
+            DragAndDrop.Instance.DropItemThat(itemAdd, count, artID);
             return 0;
         }
 
@@ -368,12 +379,15 @@ public class Inventory:MonoBehaviour, ISlot
 
         Item tempItem = oldSlot.Item;
         int tempCount = oldSlot.Count;
+        int tempArtifactId = oldSlot.artifact_id;
 
         oldSlot.Item = newSlot.Item;
         oldSlot.Count = newSlot.Count;
+        oldSlot.artifact_id = newSlot.artifact_id;
 
         newSlot.Item = tempItem;
         newSlot.Count = tempCount;
+        newSlot.artifact_id = tempArtifactId;
 
         //Destroy(tempSlot);
         Inventory.Instance.UpdateSlotUI(oldSlot);
@@ -407,6 +421,7 @@ public class Inventory:MonoBehaviour, ISlot
     {
         slot.Item = ItemsList.Instance.GetItemForId(0);
         slot.Count = 0;
+        slot.artifact_id = 0;
         UpdateSlotUI(slot);
     }
     public Slot GetSlot(SlotRequest request)

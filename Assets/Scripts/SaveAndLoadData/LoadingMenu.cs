@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -13,6 +14,8 @@ public class LoadingMenu : MonoBehaviour
     public Slider progressBar;
     public TextMeshProUGUI progressText;
 
+    private float progress = 0f;
+
     public string spriteSheetPath;
     private void Start()
     {
@@ -20,11 +23,18 @@ public class LoadingMenu : MonoBehaviour
     }
     private IEnumerator LoadGameScene()
     {
+        int totalSteps = 4;
+        int currentStep = 0;
 
         // Загружаем данные и сохраняем в GameDataHolder
-        yield return LoadData();
-        yield return LoadLanguage();
-        yield return LoadSprites(spriteSheetPath);
+        yield return StartCoroutine(LoadDataCoroutine());
+        UpdateProgress(++currentStep, totalSteps);
+
+        yield return StartCoroutine(LoadLanguageCoroutine());
+        UpdateProgress(++currentStep, totalSteps);
+
+        yield return StartCoroutine(LoadSprites(spriteSheetPath));
+        UpdateProgress(++currentStep, totalSteps);
 
         // Загружаем игровую сцену асинхронно
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Menu");
@@ -32,9 +42,8 @@ public class LoadingMenu : MonoBehaviour
 
         while (!asyncLoad.isDone)
         {
-            float progress = Mathf.Clamp01(asyncLoad.progress / 0.9f);
-            progressBar.value = progress;
-            progressText.text = $"Loading: {progress * 100:F0}%";
+            float sceneProgress = Mathf.Clamp01(asyncLoad.progress / 0.9f);
+            UpdateProgress(currentStep + sceneProgress, totalSteps);
 
             if (asyncLoad.progress >= 0.9f)
             {
@@ -44,6 +53,14 @@ public class LoadingMenu : MonoBehaviour
         }
 
         yield return null;
+    }
+    private IEnumerator LoadDataCoroutine()
+    {
+        Task loadDataTask = LoadData();
+        while (!loadDataTask.IsCompleted)
+        {
+            yield return null;
+        }
     }
     private async Task LoadData()
     {
@@ -57,6 +74,14 @@ public class LoadingMenu : MonoBehaviour
         await GlobalPrefabs.LoadPrefabs();
 
         Debug.Log("Данные загружены в LoadingMenu.");
+    }
+    private IEnumerator LoadLanguageCoroutine()
+    {
+        Task loadLanguageTask = LoadLanguage();
+        while (!loadLanguageTask.IsCompleted)
+        {
+            yield return null;
+        }
     }
     private async Task LoadLanguage()
     {
@@ -73,21 +98,58 @@ public class LoadingMenu : MonoBehaviour
             Debug.Log($"Загружен стандартный en");
         }
     }
-    private async Task LoadSprites(string addressableKey)
+    //private async Task LoadSprites(string addressableKey)
+    //{
+    //    List<Sprite> sprites = new List<Sprite> { null };
+    //    AsyncOperationHandle<IList<Sprite>> handle = Addressables.LoadAssetAsync<IList<Sprite>>(addressableKey);
+    //    await handle.Task;
+    //    if (handle.Status == AsyncOperationStatus.Succeeded)
+    //    {
+    //        sprites.AddRange(handle.Result);
+    //        Addressables.Release(handle);
+    //        GameDataHolder.spriteList = sprites.ToArray();
+    //    }
+    //    else
+    //    {
+    //        Debug.LogError("Не удалось загрузить спрайты через Addressables");
+    //    }
+    //}
+    private IEnumerator LoadSprites(string addressableKey)
     {
-        List<Sprite> sprites = new List<Sprite> { null};
-        AsyncOperationHandle<IList<Sprite>> handle = Addressables.LoadAssetAsync<IList<Sprite>>(addressableKey);
-        await handle.Task;
+        if (string.IsNullOrEmpty(addressableKey))
+        {
+            Debug.LogError("LoadSprites: передан пустой addressableKey!");
+            GameDataHolder.spriteList = new Sprite[0]; // Чтобы не было null-ошибок
+            yield break;
+        }
 
-        if(handle.Status == AsyncOperationStatus.Succeeded)
+        List<Sprite> sprites = new List<Sprite> { null }; //первый элемент `null`
+        AsyncOperationHandle<IList<Sprite>> handle = Addressables.LoadAssetAsync<IList<Sprite>>(addressableKey);
+
+        while (!handle.IsDone) // Ждем окончания загрузки
+        {
+            progressBar.value = handle.PercentComplete; // Обновляем прогресс загрузки
+            yield return null;
+        }
+
+        if (handle.Status == AsyncOperationStatus.Succeeded && handle.Result != null && handle.Result.Count > 0)
         {
             sprites.AddRange(handle.Result);
-            Addressables.Release(handle);
             GameDataHolder.spriteList = sprites.ToArray();
+            Debug.Log($"Успешно загружено {GameDataHolder.spriteList.Length} спрайтов.");
         }
         else
         {
-            Debug.LogError("Не удалось загрузить спрайты через Addressables");
+            Debug.LogError("Не удалось загрузить спрайты через Addressables или список пуст.");
+            GameDataHolder.spriteList = new Sprite[0]; // Чтобы избежать ошибок
         }
+
+        Addressables.Release(handle);
+    }
+    private void UpdateProgress(float step, float totalStep)
+    {
+        progress = step / totalStep;
+        progressBar.value = progress;
+        progressText.text = $"Loading: {progress * 100:F0}%";
     }
 }

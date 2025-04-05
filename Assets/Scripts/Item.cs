@@ -8,6 +8,7 @@ public enum TypeItem
     None,
     Weapon,
     Armor,
+    Artifact,
     Food,
     Potion,
     Material,

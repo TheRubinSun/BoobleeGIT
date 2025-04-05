@@ -23,6 +23,7 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                         dispInfo.SetActiveItemInfo(true);
                         //Inventory.Instance.InfoPanel.gameObject.SetActive(true);
                         dispInfo.UpdateInfoItem(GetNumbSlot(), "Inventory");
+                        
                     }
                     break;
                 }
@@ -73,9 +74,9 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerExit(PointerEventData eventData)
     {
         //Debug.Log("Мышь ушла с кнопки!");
-
         dispInfo.SetActiveItemInfo(false);
         dispInfo.moveInfo = false;
+
         //DisplayInfo.Instance.ClearInfo();
         //Inventory.Instance.InfoPanel.gameObject.SetActive(false);
     }

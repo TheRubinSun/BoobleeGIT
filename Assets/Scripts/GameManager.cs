@@ -58,7 +58,11 @@ public class GameManager: MonoBehaviour
             ItemsList.Instance.LoadOrCreateItemList(GameDataHolder.ItemsData.item_List_data);
             Classes.Instance.LoadOrCreateClasses(GameDataHolder.RoleClassesData.role_Classes_data);
 
+
+            Artifacts.Instance.LoadOrNew(GameDataHolder.ArtifactsData.artifacts);
+
             Player.Instance.LoadOrCreateNew(GameDataHolder.PlayerData.player_data);
+
             Inventory.Instance.LoadOrCreateInventory(GameDataHolder.PlayerData.inventory_items_data);
             EqupmentPlayer.Instance.LoadOrCreateEquipment(GameDataHolder.PlayerData.equip_item_data);
 
@@ -151,12 +155,12 @@ public class GameManager: MonoBehaviour
 
         foreach (Slot slot in Inventory.Instance.slots)
         {
-            inventory_slots_list.Add(new SlotTypeSave(slot.IdSlot,slot.Item.NameKey, slot.Count));
+            inventory_slots_list.Add(new SlotTypeSave(slot.IdSlot,slot.Item.NameKey, slot.Count, slot.artifact_id));
         }
 
         foreach (Slot slot in EqupmentPlayer.Instance.slotsEqup)
         {
-            equipment_item_list.Add(new SlotTypeSave(slot.Item.NameKey, slot.Count));
+            equipment_item_list.Add(new SlotTypeSave(slot.Item.NameKey, slot.Count, slot.artifact_id));
         }
 
         ItemsData items_Data = new ItemsData(ItemsList.Instance.items);
@@ -167,6 +171,9 @@ public class GameManager: MonoBehaviour
 
         PlayerData player_Data = new PlayerData(Player.Instance.GetPlayerStats() , inventory_slots_list, equipment_item_list);
         await SaveSystem.SaveDataAsync(player_Data, savePath + "player.json");
+
+        ArtifactsData artifacts_Data = new ArtifactsData(Artifacts.Instance.artifacts);
+        await SaveSystem.SaveDataAsync(artifacts_Data, savePath + "artifacts.json");
 
         EnemyData enemy_Data = new EnemyData(EnemyList.Instance.mobs);
         await SaveSystem.SaveDataAsync(enemy_Data, "enemies.json");

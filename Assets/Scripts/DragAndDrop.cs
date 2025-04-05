@@ -156,7 +156,7 @@ public class DragAndDrop:MonoBehaviour
         if (dragItem)
         {
             ShopLogic.Instance.CreateEmptySlot("Sell"); //Сохранем значения слота 
-            ShopLogic.Instance.AddItemToType("Sell", tempSlot.Item, tempSlot.Count);
+            ShopLogic.Instance.AddItemToType("Sell", tempSlot.Item, tempSlot.Count, tempSlot.artifact_id);
 
             Destroy(tempSlot.SlotObj);
             dragItem = false; //Отпускаем предмет
@@ -174,7 +174,7 @@ public class DragAndDrop:MonoBehaviour
             oldSlot = ShopLogic.Instance.GetSlot(new SlotRequest { index = numbBuySlot, Type = "Buy" }); //Сохранем значения слота 
             if (oldSlot.Count == 0) return;
 
-            ShopLogic.Instance.AddItemToType("Shop", oldSlot.Item, oldSlot.Count);
+            ShopLogic.Instance.AddItemToType("Shop", oldSlot.Item, oldSlot.Count, oldSlot.artifact_id);
             oldSlot.NullSLot();
             SlotsManager.UpdateSlotUI(oldSlot);
             ShopLogic.Instance.CountedGoldForBuy();
@@ -190,7 +190,7 @@ public class DragAndDrop:MonoBehaviour
             if (oldSlot.Count == 0) return;
 
             ShopLogic.Instance.CreateEmptySlot("Buy"); //Сохранем значения слота 
-            ShopLogic.Instance.AddItemToType("Buy", oldSlot.Item, oldSlot.Count);
+            ShopLogic.Instance.AddItemToType("Buy", oldSlot.Item, oldSlot.Count, oldSlot.artifact_id);
 
             oldSlot.NullSLot();
             SlotsManager.UpdateSlotUI(oldSlot);
@@ -213,7 +213,7 @@ public class DragAndDrop:MonoBehaviour
     private bool TakeItem()
     {
         if (oldSlot.Item.Id == 0) return false; //Если выделяемый слот пуст (id = 0 пустой), то незачем его брать курсором
-        tempSlot = new Slot(oldSlot.Item, oldSlot.Count); //Копируем данные клетки
+        tempSlot = new Slot(oldSlot.Item, oldSlot.Count, oldSlot.artifact_id); //Копируем данные клетки
         tempSlot.SlotObj = Instantiate(GlobalPrefabs.SlotPref, parentUI); //Определяем картинку и текст в объекте
 
         Inventory.Instance.UpdateSlotUI(tempSlot);  //Обновляем картинку в UI
@@ -221,6 +221,9 @@ public class DragAndDrop:MonoBehaviour
 
         dragItem = true; //Взяли предмет + в Update тащем за курсором
         DragZone.SetActive(dragItem); //Включить возможность выбросить
+
+        if (newSlot != null && newSlot.SlotObj != null && newSlot.SlotObj.CompareTag("SlotEquip")) EqupmentPlayer.Instance.PutOnEquip(newSlot);
+        if (oldSlot != null && oldSlot.SlotObj != null && oldSlot.SlotObj.CompareTag("SlotEquip")) EqupmentPlayer.Instance.PutOnEquip(oldSlot);
         return true;
     }
     private bool PutItem()
@@ -337,7 +340,7 @@ public class DragAndDrop:MonoBehaviour
         if (dragItem)
         {
             ShopLogic.Instance.CreateEmptySlot("Sell"); //Сохранем значения слота 
-            ShopLogic.Instance.AddItemToType("Sell", tempSlot.Item, 1);
+            ShopLogic.Instance.AddItemToType("Sell", tempSlot.Item, 1, tempSlot.artifact_id);
             tempSlot.Count--;
             SlotsManager.UpdateSlotUI(tempSlot);
 
@@ -359,7 +362,7 @@ public class DragAndDrop:MonoBehaviour
             oldSlot = ShopLogic.Instance.GetSlot(new SlotRequest { index = numbBuySlot, Type = "Buy" }); //Сохранем значения слота 
             if (oldSlot.Count == 0) return;
 
-            ShopLogic.Instance.AddItemToType("Shop", oldSlot.Item, 1);
+            ShopLogic.Instance.AddItemToType("Shop", oldSlot.Item, 1, oldSlot.artifact_id);
             oldSlot.Count--;
 
             if (oldSlot.Count == 0)
@@ -381,7 +384,7 @@ public class DragAndDrop:MonoBehaviour
             if (oldSlot.Count == 0) return;
 
             ShopLogic.Instance.CreateEmptySlot("Buy"); //Сохранем значения слота 
-            ShopLogic.Instance.AddItemToType("Buy", oldSlot.Item, 1);
+            ShopLogic.Instance.AddItemToType("Buy", oldSlot.Item, 1, oldSlot.artifact_id);
             oldSlot.Count--;
             if (oldSlot.Count == 0)
             {
@@ -465,6 +468,7 @@ public class DragAndDrop:MonoBehaviour
         ItemD.sprite = tempSlot.Item.Sprite;
         ItemD.item = tempSlot.Item;
         ItemD.count = tempSlot.Count;
+        ItemD.artId = tempSlot.artifact_id;
         gameObject.name = $"{tempSlot.Item.NameKey} ({tempSlot.Count})" ;
         if (ItemD.sprite != null)
         {
@@ -473,7 +477,7 @@ public class DragAndDrop:MonoBehaviour
         }
         DragSuccess();
     }
-    public void DropItemThat(Item itemAdd, int count)
+    public void DropItemThat(Item itemAdd, int count, int artID)
     {
         SoundsManager.Instance.PlayPutDropItem();
         GameObject dropItem = Instantiate(GlobalPrefabs.ItemDropPref, ItemsOnMapLevel);
@@ -482,6 +486,7 @@ public class DragAndDrop:MonoBehaviour
         ItemD.sprite = itemAdd.Sprite;
         ItemD.item = itemAdd;
         ItemD.count = count;
+        ItemD.artId = artID;
         dropItem.name = $"{itemAdd.NameKey} ({count})";
         if (ItemD.sprite != null)
         {
@@ -501,7 +506,7 @@ public class DragAndDrop:MonoBehaviour
             {
                 Debug.Log($"Объект в радиусе: {child.gameObject.name}");
                 ItemDrop ItemD = child.GetComponent<ItemDrop>();
-                int remains = Inventory.Instance.FindSlotAndAdd(ItemD.item, ItemD.count, false);
+                int remains = Inventory.Instance.FindSlotAndAdd(ItemD.item, ItemD.count, false, ItemD.artId);
                 if(remains > 0)
                 {
                     SoundsManager.Instance.PlayTakeDropItem();
