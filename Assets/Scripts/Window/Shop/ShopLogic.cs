@@ -24,10 +24,6 @@ public class ShopLogic : MonoBehaviour , ISlot
     [SerializeField] private Transform buy_slots_parent;
     [SerializeField] private Transform shop_slots_parent;
 
-    //[SerializeField] private GameObject sell_slot_pref;
-    //[SerializeField] private GameObject buy_slot_pref;
-    //[SerializeField] private GameObject shop_slot_pref;
-
     [SerializeField] private TextMeshProUGUI goldPlayerText;
 
     [SerializeField] private TextMeshProUGUI costSellText;

@@ -24,6 +24,6 @@ public static class BASE_VALUE_STATS_ARTEFACT
     public const int ATT_SPEED = 5;
     public const float PROJ_SPEED = 0.3f;
     public const float EXPBUST = 0.03f;
-    public const float MAGE_RESIS = 0.03f;
-    public const float TECH_RESIS = 0.03f;
+    public const float MAGE_RESIS = 0.02f;
+    public const float TECH_RESIS = 0.02f;
 }

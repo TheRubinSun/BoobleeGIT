@@ -224,6 +224,7 @@ public class DragAndDrop:MonoBehaviour
 
         if (newSlot != null && newSlot.SlotObj != null && newSlot.SlotObj.CompareTag("SlotEquip")) EqupmentPlayer.Instance.PutOnEquip(newSlot);
         if (oldSlot != null && oldSlot.SlotObj != null && oldSlot.SlotObj.CompareTag("SlotEquip")) EqupmentPlayer.Instance.PutOnEquip(oldSlot);
+
         return true;
     }
     private bool PutItem()

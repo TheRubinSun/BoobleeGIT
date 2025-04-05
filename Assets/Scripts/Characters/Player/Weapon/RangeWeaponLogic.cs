@@ -22,20 +22,11 @@ public class RangeWeaponLogic : WeaponControl
     }
     public override void GetStatsWeapon(int damage, float at_speed, float att_sp_pr, bool isRang, float attack_ran, int count_proj, float _spreadAngle, damageT _damT, Transform pl_mod, GameObject _Projectile_pref = null, float att_sp_pr_coof = 0)
     {
-        attack_damage = damage;
-        attack_Speed = at_speed;
+        base.GetStatsWeapon(damage, at_speed, att_sp_pr, isRang, attack_ran, count_proj, _spreadAngle, _damT, pl_mod, Projectile_pref, att_sp_pr_coof);
         attack_Speed_Projectile = (att_sp_pr + Player.Instance.GetPlayerStats().Proj_Speed) * att_sp_pr_coof;
-        isRange = isRang;
-
-        if (isRang) attack_range = attack_ran + Player.Instance.GetPlayerStats().Att_Range;
-        else attack_range = attack_ran + (Player.Instance.GetPlayerStats().Att_Range / 2);
-
-        damageType = _damT;
         Projectile_pref = _Projectile_pref;
-        attackInterval = 60f / (attack_Speed * Player.Instance.GetPlayerStats().Att_Speed);
         CountProjectiles = Player.Instance.GetPlayerStats().count_Projectile + count_proj;
         spreadAngle = _spreadAngle;
-        PlayerModel = pl_mod;
     }
     public override void Attack()
     {

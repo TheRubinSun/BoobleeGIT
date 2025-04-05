@@ -1,11 +1,14 @@
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
 public class ArtifactObj
 {
-    public int ID_Art {  get; set; }
+    public int ID_Art { get; set; }
     public int art_level { get; set; }
+    public int costMultiply { get; set; }
+
 
     public int Artif_Strength { get; set; }
     public int Artif_Agility { get; set; }
@@ -21,7 +24,8 @@ public class ArtifactObj
     public float Artif_Mage_Resis { get; set; }
     public float Artif_Tech_Resis { get; set; }
 
-    public bool StatsGen { get; private set; }
+    public bool StatsGen { get; set; }
+    private HashSet<StatType> statTypes = new HashSet<StatType>();
     public ArtifactObj(int id,  int _art_level)
     {
         art_level = _art_level;
@@ -117,7 +121,29 @@ public class ArtifactObj
     }
     private float GetValueStat(int levelCharm, float baseValue)
     {
-        return baseValue *= Random.Range(-levelCharm, levelCharm + 1);
+        float positive = Random.Range(baseValue, (baseValue * levelCharm) + baseValue);
+        float negative = Mathf.Min(-0.01f, baseValue * Random.Range(-baseValue * levelCharm, -baseValue));
+        float result = Random.value < 0.5 ? negative : positive;
+
+
+        costMultiply++;
+        return result;
+    }
+    public bool isAllNull()
+    {
+        return Artif_Strength == 0 &&
+       Artif_Agility == 0 &&
+       Artif_Intelligence == 0 &&
+       Artif_Hp == 0 &&
+       Artif_Armor == 0 &&
+       Artif_Evasion == 0 &&
+       Artif_Mov_Speed == 0f &&
+       Artif_Att_Range == 0f &&
+       Artif_Att_Speed == 0 &&
+       Artif_Proj_Speed == 0 &&
+       Artif_ExpBust == 0f &&
+       Artif_Mage_Resis == 0f &&
+       Artif_Tech_Resis == 0f;
     }
 }
 public enum StatType

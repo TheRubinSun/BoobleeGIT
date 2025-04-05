@@ -153,6 +153,9 @@ public class LvlUpLogic : MonoBehaviour
             UIControl.Instance.ShowHideLvlUP(false);
         }
         SoundsManager.Instance.PlayAcceptAspect();
+
+        DisplayInfo.Instance.UpdateInfoStatus();
+        EqupmentPlayer.Instance.UpdateAllWeaponsStats();
     }
     private string TranslateWord(AspectName aspect)
     {

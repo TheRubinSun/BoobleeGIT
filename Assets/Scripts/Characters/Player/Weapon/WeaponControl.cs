@@ -61,7 +61,12 @@ public class WeaponControl : MonoBehaviour
         else attack_range = attack_ran + (Player.Instance.GetPlayerStats().Att_Range/2);
 
         damageType = _damT;
-        attackInterval = 60f / (attack_Speed * Player.Instance.GetPlayerStats().Att_Speed);
+
+        if (Player.Instance.GetPlayerStats().Att_Speed < 1)
+            attackInterval = 10f;
+        else
+            attackInterval = 60f / (attack_Speed * Player.Instance.GetPlayerStats().Att_Speed);
+
         PlayerModel = pl_mod;
 
         canBeWeapon.canBeMissed = true;

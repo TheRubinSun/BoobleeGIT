@@ -118,15 +118,20 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         else if(id < 13)
         {
             DeleteAttributeArtifact(id);
-
         }
         if (slot.Item.NameKey != "item_none")
         {
             AddEquipOnSlot(id);
         }
+        UpdateAttribute();
+    }
+    public void UpdateAttribute()
+    {
         Player.Instance.UpdateAllStats();
-        DisplayInfo.Instance.UpdateInfoStatus();
         Player.Instance.UpdateHP();
+
+        DisplayInfo.Instance.UpdateInfoStatus();
+        UpdateAllWeaponsStats();
     }
     public void PutOnEquip(Slot slot) //Проверить префаб
     {
@@ -266,7 +271,7 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     {
         EquipStats equipStats = EquipStats.Instance;
         Artifacts allArtifacts = Artifacts.Instance;
-        ArtifactObj artifact = allArtifacts.artifacts[idArt]; // Получаем артефакт по ID
+        ArtifactObj artifact = allArtifacts.GetArtifact(idArt); // Получаем артефакт по ID
 
         // Загружаем атрибуты артефакта в EquipStats
         equipStats.Bonus_Equip_Strength += artifact.Artif_Strength;
@@ -289,7 +294,7 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         int artId = slots_artifacts[idSlot];
         slots_artifacts.Remove(idSlot);
 
-        ArtifactObj artifact = Artifacts.Instance.artifacts[artId];
+        ArtifactObj artifact = Artifacts.Instance.GetArtifact(artId);
         EquipStats equipStats = EquipStats.Instance;
 
         // Вычитаем атрибуты артефакта из EquipStats

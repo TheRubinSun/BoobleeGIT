@@ -296,31 +296,32 @@ public class DisplayInfo: MonoBehaviour
     }
     public void UpdateInfoItem(int numbSlot, string TypeSlot)
     {
-        Item item;
+        Slot slot;
         switch (TypeSlot)
         {
             case "Inventory":
                 {
-                    item = Inventory.Instance.GetSlot(new SlotRequest { index = numbSlot }).Item;
+                    slot = Inventory.Instance.GetSlot(new SlotRequest { index = numbSlot });
                     break;
                 }
             case "Equip":
                 {
-                    item = EqupmentPlayer.Instance.GetSlot(new SlotRequest { index = numbSlot }).Item;
+                    slot = EqupmentPlayer.Instance.GetSlot(new SlotRequest { index = numbSlot });
                     break;
                 }
             case "Sell":
-                item = ShopLogic.Instance.GetSlot(new SlotRequest { index = numbSlot, Type = TypeSlot }).Item;
+                slot = ShopLogic.Instance.GetSlot(new SlotRequest { index = numbSlot, Type = TypeSlot });
                 break;
             case "Buy":
-                item = ShopLogic.Instance.GetSlot(new SlotRequest { index = numbSlot, Type = TypeSlot }).Item;
+                slot = ShopLogic.Instance.GetSlot(new SlotRequest { index = numbSlot, Type = TypeSlot });
                 break;
             case "Shop":
-                item = ShopLogic.Instance.GetSlot(new SlotRequest { index = numbSlot, Type = TypeSlot }).Item;
+                slot = ShopLogic.Instance.GetSlot(new SlotRequest { index = numbSlot, Type = TypeSlot });
                 break;
             default:
                 return;
         }
+        Item item = slot.Item;
         if (item == null || item.Id == 0) return;
 
 
@@ -346,10 +347,38 @@ public class DisplayInfo: MonoBehaviour
             info.AppendLine($"{word_range}: {weapon.range}  {SetStyleLine(GlobalColors.Hh_AddInfo, 10, $"= {weapon.range} + {pl_stat.Att_Range} {word_AttRange} {word_player}")}");
             //attack_ran + (Player.Instance.GetPlayerStats().Att_Range/2)
         }
+        else if(item is ArtifactItem)
+        {
+            ArtifactObj artifactObj = Artifacts.Instance.GetArtifact(slot.artifact_id);
+            FormatStat(info, artifactObj.Artif_Strength, word_strength, GlobalColors.Hh_Str);
+            FormatStat(info, artifactObj.Artif_Agility, word_agility, GlobalColors.Hh_Agi);
+            FormatStat(info, artifactObj.Artif_Intelligence, word_intelligence, GlobalColors.Hh_Int);
+            FormatStat(info, artifactObj.Artif_Hp, word_Max_Hp, GlobalColors.Hh_Hp);
+            FormatStat(info, artifactObj.Artif_Armor, word_Armor, GlobalColors.Hh_Armor);
+            FormatStat(info, artifactObj.Artif_Evasion, word_Evasion, GlobalColors.Hh_Evasion);
+            FormatStat(info, artifactObj.Artif_Mov_Speed, word_Mov_Speed, GlobalColors.Hh_Mov_Speed);
+            FormatStat(info, artifactObj.Artif_Att_Range, word_AttRange, GlobalColors.Hh_Att_Range);
+            FormatStat(info, artifactObj.Artif_Att_Speed, word_AttSpeed, GlobalColors.Hh_Att_Speed);
+            FormatStat(info, artifactObj.Artif_Proj_Speed, word_ProjSpeed, GlobalColors.Hh_Proj_Speed);
+            FormatStat(info, artifactObj.Artif_ExpBust, word_expBonus, GlobalColors.Hh_ExpBust);
+            FormatStat(info, artifactObj.Artif_Mage_Resis, word_Magic_Resis, GlobalColors.Hh_Mage_Resis);
+            FormatStat(info, artifactObj.Artif_Tech_Resis, word_Tech_Resis, GlobalColors.Hh_Tech_Resis);
+
+        }
         info.AppendLine($"{word_description}: {item.Description}");
 
-
         InfoItem.LoadInfo(item.Sprite, nameItem, info.ToString());
+    }
+    private void FormatStat<T>(StringBuilder sb, T value, string word, string color)
+    {
+        if(value is float f && f != 0)
+        {
+            sb.AppendLine($"<color={color}>{word}: {(f > 0 ? "+" : "")}{f:F2}</color>");
+        }
+        else if(value is int i && i != 0)
+        {
+            sb.AppendLine($"<color={color}>{word}: {(i > 0 ? "+" : "")}{i}</color>");
+        }
     }
     private string SetStyleLine(string HashColor, int sizeFont, string line)
     {
