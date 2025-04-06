@@ -63,13 +63,13 @@ public class ArtifactObj
         int baseChance = 50;
 
         // –ассчитываем шанс
-        precent = baseChance + art_level * 7; // ”величение шанса с каждым уровнем на 7%
-        levelCharm = Random.Range(1, art_level + 1);
+        precent = baseChance + art_level * 6; // ”величение шанса с каждым уровнем на 7%
+        levelCharm = Mathf.Max(1, Random.Range(art_level - 1, art_level + 1));
 
         // ƒл€ уровн€ выше 5 можно задать максимальный шанс
-        if (precent > 80)
+        if (precent > 85)
         {
-            precent = 80; // ќграничиваем шанс максимальным значением, например, 80%
+            precent = 85; // ќграничиваем шанс максимальным значением, например, 80%
         }
     }
     private void GetStat(int levelCharm)
@@ -122,8 +122,8 @@ public class ArtifactObj
     private float GetValueStat(int levelCharm, float baseValue)
     {
         float positive = Random.Range(baseValue, (baseValue * levelCharm) + baseValue);
-        float negative = Mathf.Min(-0.01f, baseValue * Random.Range(-baseValue * levelCharm, -baseValue));
-        float result = Random.value < 0.5 ? negative : positive;
+        float negative = Mathf.Min(-0.01f, Random.Range(-baseValue * levelCharm, -baseValue));
+        float result = Random.value < 0.35 ? negative : positive;
 
 
         costMultiply++;

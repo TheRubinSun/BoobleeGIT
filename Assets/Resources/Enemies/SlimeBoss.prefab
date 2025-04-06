@@ -404,6 +404,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IdMobs: 3
   Name: 
+  CenterObject: {fileID: 8978249526785545920}
   player: {fileID: 0}
   audioSource: {fileID: 0}
   attack_sound: {fileID: 8300000, guid: cd9943c938af06f49a350c0b3f7b12f7, type: 3}

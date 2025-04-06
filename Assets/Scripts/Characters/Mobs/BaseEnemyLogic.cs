@@ -24,21 +24,26 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage
     //Состояния
     protected bool IsDead { get; set; }
 
-    protected float avoidDistance = 1.2f; //Обходное расстояние
+
 
     protected Color32 original_color; //Цвет
 
+    //Движение
+    protected float avoidDistance = 2f; //Обходное расстояние
     protected SpriteRenderer spr_ren { get; set; }
-
     protected Vector2 moveDirection;
-
     protected RaycastHit2D[] hits;
-
-    protected Collider2D selfCollider;  
-
+    protected Collider2D selfCollider;
+    [SerializeField] protected Transform CenterObject;
     public Transform player;
 
+    // Для задержки обновления направления
+    private int directionUpdateInterval = 8; // 60 / 10 = каждые 6 FixedUpdate
+    private float directionUpdateTimer = 0f;
+    protected bool IsNearThePlayer = false;
+
     protected bool CanBeMissedAttack = true;
+
 
     //[SerializeField]
     //protected LayerMask obstacleLayer; // Слой для препятствий (стены и игрок)
@@ -56,7 +61,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage
     [SerializeField] protected AudioClip player_touch_sound;
     [SerializeField] public AudioClip die_sound;
 
-    protected bool IsNearThePlayer = false;
+
 
     [SerializeField]
     protected float attackBuffer; // Можно настроить
@@ -79,6 +84,10 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage
 
     protected bool isVisibleNow = true;
 
+
+
+
+
     protected virtual void Awake()
     {
         LoadParametrs();//Загружаем параметры моба
@@ -100,7 +109,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage
             player = GameManager.Instance.PlayerModel;
 
         original_color = spr_ren.color;
-        moveDirection = (player.position - transform.position).normalized; //Вычисление направление к игроку
+        moveDirection = (player.position - CenterObject.position).normalized; //Вычисление направление к игроку
         UpdateSortingOrder();
 
         combinedLayerMask = (1 << LayerManager.obstaclesLayer) | (1 << LayerManager.playerLayer);
@@ -134,9 +143,18 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage
     {
         //UpdateSortingOrder();
     }
+
+    protected int fixedUpdateCounter = 0;
     public virtual void FixedUpdate()
     {
-        DetectDirection();
+        fixedUpdateCounter++;
+        if (IsNearThePlayer) directionUpdateInterval = 8;
+        else directionUpdateInterval = 24;
+        if (fixedUpdateCounter >= directionUpdateInterval)
+        {
+            DetectDirection();
+            fixedUpdateCounter = 0;
+        }
         Move();
     }
     public virtual void UpdateSortingOrder()
@@ -264,12 +282,12 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage
 
     public virtual void DetectDirection() //Вычисляем направление
     {
-        Vector2 toPlayer = player.position - transform.position;
+        Vector2 toPlayer = player.position - CenterObject.position;
         float distanceToPlayer = toPlayer.magnitude; // Расстояние до игрока
 
         // Создаем LayerMask, который включает оба слоя: playerLayer и obstacleLayer
 
-        RaycastHit2D hit = BuildRayCast(transform.position, toPlayer.normalized, avoidDistance, combinedLayerMask);
+        RaycastHit2D hit = BuildRayCast(CenterObject.position, toPlayer.normalized, avoidDistance, combinedLayerMask);
 
         bool wallDetected = false;
 
@@ -278,22 +296,6 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage
             if (hit.collider.gameObject.layer == LayerManager.obstaclesLayer )
             {
                 wallDetected = true;
-
-                //Vector2 wallContactPoint = hit.point;
-                //Vector2 toWall = (wallContactPoint - (Vector2)transform.position).normalized;
-
-                //// Ожидаем, что если игрок находится по диагонали, нужно двигаться по одной из осей
-                //if (Mathf.Abs(toWall.x) > Mathf.Abs(toWall.y))
-                //{
-                //    // Если движение игрока по горизонтали (больший компонент x)
-                //    moveDirection = Vector2.Perpendicular(new Vector2(toWall.x, 0)).normalized; // Двигаемся только по горизонтали
-                //}
-                //else
-                //{
-                //    // Если движение игрока по вертикали (больший компонент y)
-                //    moveDirection = Vector2.Perpendicular(new Vector2(0, toWall.y)).normalized; // Двигаемся только по вертикали
-                //}
-                //moveDirection = Vector2.Perpendicular(toWall).normalized;
             }
             // Если луч попал в игрока, игнорируем
             else if (hit.collider.gameObject.layer == LayerManager.playerLayer || hit.collider.gameObject.layer == LayerManager.enemyLayer)
@@ -309,44 +311,57 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage
     }
     public virtual void AvoidWall(bool wallDetected, Vector2 toPlayer, float distanceToPlayer)
     {
-        if (wallDetected) return;
-        else
+        if (wallDetected)
         {
-            // Проверяем перед атакой, есть ли стена перед врагом
-            RaycastHit2D finalCheck = Physics2D.Raycast(transform.position, toPlayer.normalized, distanceToPlayer, combinedLayerMask);
+            Vector2 avoidDir = Vector2.Perpendicular(toPlayer).normalized;
 
-            // Дополнительный буфер для ренджа атаки
-            
-            float effectiveRange = enum_stat.Att_Range - attackBuffer;
-
-            bool canSeePlayer = finalCheck.collider != null && finalCheck.collider.gameObject.layer == LayerManager.playerLayer;
-
-            
-            if (distanceToPlayer < effectiveRange && canSeePlayer)
-            {
-                moveDirection = Vector2.zero;
-
-                // Если моб слишком близко, он немного отходит назад
-                if (distanceToPlayer < enum_stat.Att_Range * 0.6f)
-                {
-                    moveDirection = -toPlayer.normalized;
-                }
-                IsNearThePlayer = true;
-                Attack(distanceToPlayer);
-            }
-            else if (distanceToPlayer < enum_stat.Att_Range && canSeePlayer && IsNearThePlayer)
-            {
-                moveDirection = Vector2.zero;
-                Attack(distanceToPlayer);
-            }
+            bool canLeft = !Physics2D.Raycast(CenterObject.position, avoidDir, avoidDistance, combinedLayerMask);
+            bool canRight= !Physics2D.Raycast(CenterObject.position, -avoidDir, avoidDistance, combinedLayerMask);
+            if (canLeft)
+                moveDirection = avoidDir;
+            else if(canRight)
+                moveDirection = -avoidDir;
             else
             {
-                IsNearThePlayer = false;
-                moveDirection = toPlayer.normalized;
+                moveDirection = -toPlayer.normalized;
             }
-
+            IsNearThePlayer = false;
+            return;
         }
-        
+
+        // Проверяем перед атакой, есть ли стена перед врагом
+        RaycastHit2D finalCheck = Physics2D.Raycast(CenterObject.position, toPlayer.normalized, distanceToPlayer, combinedLayerMask);
+
+        // Дополнительный буфер для ренджа атаки
+
+        float effectiveRange = enum_stat.Att_Range - attackBuffer;
+
+        bool canSeePlayer = finalCheck.collider != null && finalCheck.collider.gameObject.layer == LayerManager.playerLayer;
+
+
+        if (distanceToPlayer < effectiveRange && canSeePlayer)
+        {
+            moveDirection = Vector2.zero;
+
+            // Если моб слишком близко, он немного отходит назад
+            if (distanceToPlayer < enum_stat.Att_Range * 0.6f)
+            {
+                moveDirection = -toPlayer.normalized;
+            }
+            IsNearThePlayer = true;
+            Attack(distanceToPlayer);
+        }
+        else if (distanceToPlayer < enum_stat.Att_Range && canSeePlayer && IsNearThePlayer)
+        {
+            moveDirection = Vector2.zero;
+            Attack(distanceToPlayer);
+        }
+        else
+        {
+            IsNearThePlayer = false;
+            moveDirection = toPlayer.normalized;
+        }
+
     }
     public virtual void RotateTowardsMovementDirection(Vector2 direction)
     {

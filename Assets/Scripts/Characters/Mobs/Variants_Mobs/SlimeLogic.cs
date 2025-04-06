@@ -98,8 +98,20 @@ public class SlimeLogic : BaseEnemyLogic
         {
             animator_main.SetBool("Move", true);
 
-            moveDirection = Vector2.Perpendicular(toPlayer).normalized;
-            //if (UnityEngine.Random.value > 0.5f) moveDirection *= -1;
+            Vector2 avoidDir = Vector2.Perpendicular(toPlayer).normalized;
+
+            bool canLeft = !Physics2D.Raycast(CenterObject.position, avoidDir, avoidDistance, combinedLayerMask);
+            bool canRight = !Physics2D.Raycast(CenterObject.position, -avoidDir, avoidDistance, combinedLayerMask);
+            if (canLeft)
+                moveDirection = avoidDir;
+            else if (canRight)
+                moveDirection = -avoidDir;
+            else
+            {
+                moveDirection = -toPlayer.normalized;
+            }
+            IsNearThePlayer = false;
+            return;
         }
         else
         {
@@ -107,7 +119,7 @@ public class SlimeLogic : BaseEnemyLogic
             float effectiveRange = enum_stat.Att_Range - attackBuffer;
 
             // ѕровер€ем перед атакой, есть ли стена перед врагом
-            RaycastHit2D finalCheck = Physics2D.Raycast(transform.position, toPlayer.normalized, distanceToPlayer, combinedLayerMask);
+            RaycastHit2D finalCheck = Physics2D.Raycast(CenterObject.position, toPlayer.normalized, distanceToPlayer, combinedLayerMask);
             bool canSeePlayer = finalCheck.collider != null && finalCheck.transform.CompareTag("Player");
             if (distanceToPlayer < effectiveRange && canSeePlayer)
             {
