@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -62,21 +63,9 @@ public class LegsControl : MonoBehaviour
         float elapsedTime = 0f;
 
         Vector2 lastValidPos = start; // Последняя позиция, где не было столкновения
-        //Vector2 savePos = minionsSlots[legIndex].position; // Целевая позиция, если встречена стена
 
-        //while (elapsedTime < time_move_legs)
-        //{
-        //    elapsedTime += Time.deltaTime;
-        //    float t = elapsedTime / time_move_legs;
-        //    t = t * t * (3f - 2f * t);
-
-        //    foots[legIndex].position = Vector2.Lerp(start, end, t);
-        //    lineControles[legIndex].MoveLinesLegs();
-
-        //    yield return null;
-        //}
         RaycastHit2D hitEnd = Physics2D.Raycast(end, Vector2.zero);
-        if(hitEnd.collider != null && hitEnd.collider.gameObject.layer == LayerManager.obstaclesLayer)
+        if (hitEnd.collider != null && hitEnd.collider.gameObject.layer == LayerManager.obstaclesLayer)
         {
             end = minionsSlots[legIndex].position;
         }
@@ -86,46 +75,17 @@ public class LegsControl : MonoBehaviour
             float t = elapsedTime / time_move_legs;
             t = t * t * (3f - 2f * t);
 
-            foots[legIndex].position = Vector2.Lerp(start, end, t);
-            lineControles[legIndex].MoveLinesLegs();
+            //foots[legIndex].position = Vector2.Lerp(start, end, t);
+            foots[legIndex].position = Vector2.MoveTowards(start, end, t);
+            //lineControles[legIndex].MoveLinesLegs();
 
             yield return null;
         }
-        //while (elapsedTime < time_move_legs)
-        //{
-        //    elapsedTime += Time.deltaTime;
-        //    float t = elapsedTime / time_move_legs;
-        //    t = t * t * (3f - 2f * t);
 
-        //    Vector2 newPos = Vector2.Lerp(start, end, t);
-
-        //    // Проверяем столкновение
-        //    Vector2 direction = (newPos - lastValidPos).normalized;
-        //    float distance = Vector2.Distance(lastValidPos, newPos);
-        //    RaycastHit2D hit = Physics2D.Raycast(lastValidPos, direction, distance);
-
-        //    //if (hit.collider != null && hit.collider.CompareTag("Wall")) // Если есть препятствие
-        //    if (hit.collider != null && hit.collider.gameObject.layer == LayerManager.obstaclesLayer) // Если есть препятствие
-        //    {
-        //        foots[legIndex].position = savePos; // Оставляем ногу в целевой безопасной позиции
-        //        break; // Останавливаем движение ноги
-        //    }
-        //    else
-        //    {
-        //        foots[legIndex].position = newPos;
-        //        lastValidPos = newPos; // Обновляем последнюю безопасную позицию
-        //        savePos = newPos; // Запоминаем последнюю допустимую позицию
-        //    }
-
-        //    lineControles[legIndex].MoveLinesLegs();
-        //    yield return null;
-        //}
-
-        //foots[legIndex].position = end;
 
         isMoving[legIndex] = false;
 
-        if(!secondFoot)
+        if (!secondFoot)
         {
             audioSource_Move.Stop();
             audioSource_Move.pitch = 1f + Random.Range(-pitchRange, pitchRange);

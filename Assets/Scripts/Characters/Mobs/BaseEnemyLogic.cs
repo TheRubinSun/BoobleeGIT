@@ -39,7 +39,6 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage
 
     // Для задержки обновления направления
     private int directionUpdateInterval = 8; // 60 / 10 = каждые 6 FixedUpdate
-    private float directionUpdateTimer = 0f;
     protected bool IsNearThePlayer = false;
 
     protected bool CanBeMissedAttack = true;

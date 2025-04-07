@@ -57,9 +57,10 @@ public class SpearLogic : MeleWeaponLogic
         float startRotation = transform.eulerAngles.z;
         IsAttack = true;
 
+        audioSource_Shot.PlayOneShot(audioClips[idSound]);
         //Взмах
         yield return AnimatePhase(startPos, midAttackPos, attackDuration());
-        audioSource_Shot.PlayOneShot(audioClips[idSound]);
+
 
         startPos = transform.parent.position; // Начальная позиция - если родитель сдвинулся
 
