@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.TerrainTools;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
-public class SlimeLogic : BaseEnemyLogic
+public class SlimeLogic : BaseEnemyLogic, IItemMove
 {
     [SerializeField]
     private Transform Shoot_point; //Точка выстрела
@@ -78,7 +78,6 @@ public class SlimeLogic : BaseEnemyLogic
             sp_Project = slime.SpeedProjectile;
             idPosion = slime.idPosion;
         }
-
     }
     public override void Flipface() //Разворачиваем моба 
     {
@@ -173,7 +172,7 @@ public class SlimeLogic : BaseEnemyLogic
             lastAttackTime = Time.time;
         }
     }
-    public void ShootArrowOne()
+    public override void RangeAttack()
     {
         GameObject bullet;
         Vector2 direction;
@@ -213,12 +212,12 @@ public class SlimeLogic : BaseEnemyLogic
         }
         
     }
-    private void MeleeAttackOne()
+    public override void MeleeAttack()
     {
         audioSource.volume = attack_volume;
         audioSource.Stop();
         audioSource.PlayOneShot(attack_sound); //Звук выстрела
-        Player.Instance.TakeDamage(enum_stat.Att_Damage, damageT.Magic, true);
+        Player.Instance.TakeDamage(enum_stat.Att_Damage, damageT.Magic, true, posionNewEff);
     }
     public void SetItemsPosIdle(int frame)
     {

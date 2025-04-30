@@ -18,5 +18,18 @@ public class CharacterStats
 }
 public interface ITakeDamage
 {
-    public void TakeDamage(int damage, damageT typeAttack, bool canEvade);
+    public void TakeDamage(int damage, damageT typeAttack, bool canEvade, EffectData effect);
 }
+public interface IAttack
+{
+    public void RangeAttack();
+    public void MeleeAttack();
+}
+public interface IItemMove
+{
+    public void SetItemsPosIdle(int frame);
+    public void SetItemsPosMove(int frame);
+    public void SetItemsPosShoot(int frame);
+    public void SetItemsPosMeleAttack(int frame);
+}
+

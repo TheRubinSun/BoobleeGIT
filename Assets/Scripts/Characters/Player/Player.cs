@@ -218,7 +218,7 @@ public class Player : MonoBehaviour, ITakeDamage
         pl_ui.UpdateHpBar(pl_stats);
         pl_ui.UpdateSizeHpBar(pl_stats);
     }
-    public void TakeDamage(int damage, damageT typeAttack, bool canEvade)
+    public void TakeDamage(int damage,  damageT typeAttack, bool canEvade, EffectData effect = null)
     {
         if(canEvade)
         {
@@ -251,6 +251,10 @@ public class Player : MonoBehaviour, ITakeDamage
                     break;
                 }
             default: goto case damageT.Physical;
+        }
+        if (effect != null)
+        {
+            GetComponent<EffectsManager>().ApplyEffect(effect);
         }
         pl_ui.UpdateHpBar(pl_stats);
         StartCoroutine(FlashColor(new Color32(255, 108, 108, 255), 0.1f));

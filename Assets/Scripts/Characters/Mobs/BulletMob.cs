@@ -38,12 +38,8 @@ public class BulletMob : MonoBehaviour, UBullet
         //if (collider.CompareTag("Player"))
         if (collider.gameObject.layer == LayerManager.playerLayer)
         {
-            Player.Instance.TakeDamage(damage, typeDamage, CanBeMissed);
+            Player.Instance.TakeDamage(damage, typeDamage, CanBeMissed, effectBul);
             Destroy(gameObject);
-            if (effectBul != null)
-            {
-                collider.transform.parent.GetComponent<EffectsManager>().ApplyEffect(effectBul);
-            }
         }
         //else if(collider.CompareTag("Wall"))
         else if (collider.gameObject.layer == LayerManager.obstaclesLayer)

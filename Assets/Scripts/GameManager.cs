@@ -109,7 +109,7 @@ public class GameManager: MonoBehaviour
         
 
         int chanceSpawnCorpse = UnityEngine.Random.Range(1, 10);
-        if(chanceSpawnCorpse < 4) SpawnCorpse(enemy.gameObject.transform);
+        if(chanceSpawnCorpse < 4) SpawnCorpse(enemy.mob_object.transform, enemy);
 
 
 
@@ -118,23 +118,23 @@ public class GameManager: MonoBehaviour
             InfoReaminingEnemy.text = $"Убито врагов {KillsEnemy} из {enemisRemaining}";
         }
     }
-    public void SpawnCorpse(Transform enemy)
+    public void SpawnCorpse(Transform enemy, BaseEnemyLogic mob_logic)
     {
-        GameObject corpseEnemy = Instantiate(CorpsePref, enemy.parent); //Создаем труп
+        GameObject corpseEnemy = Instantiate(CorpsePref, mob_logic.transform.parent); //Создаем труп
         corpseEnemy.transform.position = enemy.transform.position;      //Назначаем позицию
 
-        if (enemy.gameObject.GetComponent<BaseEnemyLogic>().typeMob == TypeMob.Technology) 
+        if (mob_logic.typeMob == TypeMob.Technology) 
             corpseEnemy.tag = "Corpse_Tech";
         else 
             corpseEnemy.tag = "Corpse_Mag";
 
         CorpseSetting corpseSetting = corpseEnemy.GetComponent<CorpseSetting>();
-        corpseSetting.NameKey = enemy.GetComponent<BaseEnemyLogic>().Name;
+        corpseSetting.NameKey = mob_logic.Name;
         corpseEnemy.GetComponent<SpriteRenderer>().flipX = enemy.GetComponent<SpriteRenderer>().flipX;
         //corpseSetting.PlayDieSoind(enemy.GetComponent<BaseEnemyLogic>().die_sound);
 
         Animator corpseAnim = corpseEnemy.GetComponent<Animator>();    //Коприруем аниматор
-        Animator enemyAnim = enemy.gameObject.GetComponent<BaseEnemyLogic>().GetAnimator(); //Коприруем аниматор
+        Animator enemyAnim = mob_logic.GetAnimator(); //Коприруем аниматор
 
         corpseAnim.runtimeAnimatorController = enemyAnim.runtimeAnimatorController;        //Коприруем аниматор
         corpseAnim.fireEvents = false;  // Выключает все Animation Events

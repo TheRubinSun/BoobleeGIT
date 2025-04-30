@@ -56,11 +56,14 @@ public class DaizenLogic : BaseEnemyLogic
                 spr_ren_ch.flipX = shouldFaceLeft;
         }
     }
-    private void MeleeAttackOne()
+    public override void MeleeAttack()
     {
-        audioSource.volume = attack_volume;
-        audioSource.Stop();
-        audioSource.PlayOneShot(attack_sound); //Звук выстрела
+        if (attack_sound != null)
+        {
+            audioSource.volume = attack_volume;
+            audioSource.Stop();
+            audioSource.PlayOneShot(attack_sound); //Звук выстрела
+        }
 
 
         Player.Instance.TakeDamage(enum_stat.Att_Damage, damageT.Physical, true);

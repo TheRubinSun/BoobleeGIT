@@ -71,7 +71,7 @@ public class RaingerLogic : BaseEnemyLogic
         }
     }
 
-    public void ShootArrowOne()
+    public override void RangeAttack()
     {
         GameObject bullet;
         Vector2 direction;

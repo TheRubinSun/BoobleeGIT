@@ -66,12 +66,9 @@ public class PlayerProjectile : MonoBehaviour, UBullet
     {
         if (collider.gameObject.layer == LayerManager.enemyLayer)
         {
-            collider.GetComponent<BaseEnemyLogic>().TakeDamage(damage, typeDamage, canBeWeapon.canBeMissed);
+            collider.GetComponent<BaseEnemyLogic>().TakeDamage(damage, typeDamage, canBeWeapon.canBeMissed, effectBul);
             Destroy(gameObject);
-            if (effectBul != null)
-            {
-                collider.GetComponent<EffectsManager>().ApplyEffect(effectBul);
-            }
+
             //Debug.Log(collider.GetComponent<BaseEnemyLogic>().enum_stat.Cur_Hp+" "+ collider.GetComponent<BaseEnemyLogic>().enum_stat.Max_Hp);
         }
         else if(collider.gameObject.layer == LayerManager.touchObjectsLayer)

@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.ResourceManagement.ResourceProviders.Simulation;
 
-public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage
+public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAttack
 {
     public static event Action<BaseEnemyLogic> OnEnemyDeath;
 
@@ -30,7 +30,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage
 
     //Движение
     protected float avoidDistance = 2f; //Обходное расстояние
-    protected SpriteRenderer spr_ren { get; set; }
+
     protected Vector2 moveDirection;
     protected RaycastHit2D[] hits;
     protected Collider2D selfCollider;
@@ -48,6 +48,8 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage
     //protected LayerMask obstacleLayer; // Слой для препятствий (стены и игрок)
 
     //Анимации
+    [SerializeField] public GameObject mob_object;
+    protected SpriteRenderer spr_ren;
     protected Animator animator_main;
 
     protected Rigidbody2D rb;
@@ -84,18 +86,15 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage
     protected bool isVisibleNow = true;
 
 
-
-
-
     protected virtual void Awake()
     {
         LoadParametrs();//Загружаем параметры моба
 
         audioSource = GetComponent<AudioSource>(); //Берем звук 
         selfCollider = GetComponent<Collider2D>(); //Берем колайдер - форму касания
-        spr_ren = GetComponent<SpriteRenderer>(); //Берем спрайт моба
+        spr_ren = mob_object.GetComponent<SpriteRenderer>(); //Берем спрайт моба
         rb = GetComponent<Rigidbody2D>();
-        animator_main = GetComponent<Animator>();
+        animator_main = mob_object.GetComponent<Animator>();
 
         if(HPBar != null)
         {
@@ -165,7 +164,8 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage
 
         spr_ren.sortingOrder = Mathf.RoundToInt((mobPosY - PlayerPosY - 2) * -5);
     }
-    public void TakeDamage(int damage, damageT typeAttack, bool canEvade)
+
+    public void TakeDamage(int damage, damageT typeAttack, bool canEvade, EffectData effect = null)
     {
         audioSource.Stop();
         audioSource.volume = touch_volume;
@@ -205,7 +205,11 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage
                 }
             default: goto case damageT.Physical;
         }
-        if(GlobalData.isVisibleHpBarEnemy == true && healthBar != null)
+        if (effect != null)
+        {
+            GetComponent<EffectsManager>().ApplyEffect(effect);
+        }
+        if (GlobalData.isVisibleHpBarEnemy == true && healthBar != null)
         {
             healthBar.UpdateHealthBar(enum_stat.Cur_Hp, enum_stat.Max_Hp);
         }
@@ -387,6 +391,9 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage
             lastAttackTime = Time.time;
         }
     }
+    public virtual void RangeAttack() {; }
+    public virtual void MeleeAttack() {; }
+
     public Animator GetAnimator()
     {
         if (animator_main != null)
