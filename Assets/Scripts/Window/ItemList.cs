@@ -81,6 +81,8 @@ public class ItemsList : MonoBehaviour
         items.Add(new Item(28, "material_strange_eye", 20, items.Count, Quality.Mystical, 350, "_", TypeItem.Material));
         items.Add(new ArtifactItem(29, "artifact_simple_ring", 1, items.Count, Quality.Uncommon, 100, "_", TypeItem.Artifact, 1));
         items.Add(new ArtifactItem(30, "artifact_eye_ring", 1, items.Count, Quality.Rare, 300, "_", TypeItem.Artifact, 5));
+        items.Add(new Item(31, "material_tooth_mimic", 100, items.Count, Quality.Uncommon, 50, "_", TypeItem.Material));
+        items.Add(new Item(32, "material_tongue_mimic", 20, items.Count, Quality.Mystical, 1000, "_", TypeItem.Material));
         //PrintItemList();
     }
     private void InitializeSpritesItem()

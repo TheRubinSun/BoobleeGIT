@@ -75,6 +75,10 @@ public class GameManager: MonoBehaviour
             KillsEnemy = dataInfo.enemy_kills;
             totalSecondsPlayed = dataInfo.timeHasPassed;
 
+            if (dataInfo.godMode == true) Player.Instance.SetGodMode();
+            else Player.Instance.SetSurvaveMode();
+
+            UIControl.Instance.LoadButtons();
             Debug.Log("Игра загружена.");
         }
         else
@@ -189,7 +193,7 @@ public class GameManager: MonoBehaviour
         saveGameIngo.isStarted = true;
         saveGameIngo.seed = GlobalData.cur_seed;
         //saveGameIngo.randomCalls = GlobalData.randomCalls;
-        SavesDataInfo savesDataInfo = new SavesDataInfo(GenInfoSaves.saveGameFiles, GlobalData.SaveInt, GlobalData.cur_language);
+        SavesDataInfo savesDataInfo = new SavesDataInfo(GenInfoSaves.saveGameFiles, GlobalData.SaveInt, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS);
         await SaveSystem.SaveDataAsync(savesDataInfo, "saves_info.json");
 
         CraftsRecipesData savesDataRecipesCrafts = new CraftsRecipesData(RecipesCraft.recipesCraft);

@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour, ITakeDamage
 {
     public static Player Instance { get; set; }
+    public bool godMode { get; private set; }
 
     private PlayerStats pl_stats;
     
@@ -66,7 +67,6 @@ public class Player : MonoBehaviour, ITakeDamage
         pl_ui.UpdateAllInfo(pl_stats);
         ChangeToggleWeapons();
     }
-
     public void UpdateHP()
     {
         pl_ui.UpdateHpBar(pl_stats);
@@ -321,5 +321,13 @@ public class Player : MonoBehaviour, ITakeDamage
         
         UIControl.Instance.ShowHideLvlUP(true);
         UIControl.Instance.OpenLvlUPWindow(true);
+    }
+    public void SetGodMode()
+    {
+        godMode = true;
+    }
+    public void SetSurvaveMode()
+    {
+        godMode = false;
     }
 }

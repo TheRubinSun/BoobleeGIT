@@ -794,6 +794,50 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: SpriteSheet_30
+      rect:
+        serializedVersion: 2
+        x: 1260
+        y: 0
+        width: 42
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2275bc259a5950f48a430abd68e869dd
+      internalID: -2086959531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteSheet_31
+      rect:
+        serializedVersion: 2
+        x: 1302
+        y: 0
+        width: 42
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 192acc030a3bc1947bf9bccf35da70d4
+      internalID: 1642689221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -832,6 +876,8 @@ TextureImporter:
       SpriteSheet_28: -1247087552
       SpriteSheet_29: 983743960
       SpriteSheet_3: 659797372610145418
+      SpriteSheet_30: -2086959531
+      SpriteSheet_31: 1642689221
       SpriteSheet_4: 400206155
       SpriteSheet_5: -748685289
       SpriteSheet_6: 1008013879

@@ -12,15 +12,20 @@ public class SavesDataInfo
     public int lastSaveID;
     public Dictionary<int, SaveGameInfo> saveGameFiles;
     public string language;
+
+    public int volume_sounds;
+    public int volume_musics;
     public SavesDataInfo()
     {
         saveGameFiles = new Dictionary<int, SaveGameInfo>();
     }
-    public SavesDataInfo(Dictionary<int, SaveGameInfo> _saveGameFiles, int _lastSaveID, string language)
+    public SavesDataInfo(Dictionary<int, SaveGameInfo> _saveGameFiles, int _lastSaveID, string language, int volume_sounds, int volume_musics)
     {
         saveGameFiles = _saveGameFiles;
         lastSaveID = _lastSaveID;
         this.language = language;
+        this.volume_sounds = volume_sounds;
+        this.volume_musics = volume_musics;
     }
 }
 public class CraftsRecipesData

@@ -9,6 +9,10 @@ public static class GlobalData
     public static Vector2 center;
     public static int chunkSize;
 
+    //public static bool GOD_MODE;
+    public static int VOLUME_SOUNDS;
+    public static int VOLUME_MUSICS;
+
     public static bool isVisibleHpBarEnemy = true;
 }
 public static class BASE_VALUE_STATS_ARTEFACT

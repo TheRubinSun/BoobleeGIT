@@ -192,7 +192,19 @@
         "TypeItem": "",
         "Quality": "",
         "Description": "A mysterious ring with an embedded eye. It seems to watch your every move."
-      }
+      },
+	  "material_tooth_mimic": {
+		"Name": "Mimic Tooth",
+		"TypeItem": "",
+		"Quality": "",
+		"Description": "A jagged tooth torn from a mimic. Still drips with slime and menace."
+	  },
+	 "material_tongue_mimic": {
+		"Name": "Mimic Tongue",
+		"TypeItem": "",
+		"Quality": "",
+		"Description": "The squirming tongue of a mimic. It occasionally twitches as if still alive."
+	 }
     },
     "mobs": {
       "daizen_enem": {
@@ -214,6 +226,11 @@
         "Name": "Big Damn Slime",
         "TypeMob": "",
         "Description": "This is a really big damn slime, no joke!"
+      },
+	  "mimic_enem": {
+		"Name": "Mimic Chest",
+		"TypeMob": "",
+		"Description": "A fast and dangerous chest"
       }
     },
     "ui_text": {
@@ -495,8 +512,19 @@
         "TypeItem": "",
         "Quality": "",
         "Description": "Загадочное кольцо с вкраплённым глазом. Кажется, оно следит за каждым твоим движением."
-      }
-
+      },
+	  "material_tooth_mimic": {
+		"Name": "Зуб мимика",
+		"TypeItem": "",
+		"Quality": "",
+		"Description": "Оскалённый зуб, вырванный из пасти мимика. Всё ещё покрыт слизью и злобой."
+	  },
+	  "material_tongue_mimic": {
+		"Name": "Язык мимика",
+		"TypeItem": "",
+		"Quality": "",
+		"Description": "Извивающийся язык мимика. Порой вздрагивает, будто всё ещё живой."
+	  }
     },
     "mobs": {
       "daizen_enem": {
@@ -518,6 +546,11 @@
         "Name": "Большой чертов слизень",
         "TypeMob": "",
         "Description": "Этот чертов слизень большой, без шуток!"
+      },
+	  "mimic_enem": {
+        "Name": "Сундук мимик",
+        "TypeMob": "",
+        "Description": "Быстрый и опасный сундук"
       }
     },
     "ui_text": {

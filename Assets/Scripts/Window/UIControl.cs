@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEditor.ShaderGraph;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 public class UIControl:MonoBehaviour
@@ -35,6 +36,8 @@ public class UIControl:MonoBehaviour
     private bool isPaused = false;
 
     private List<ButInventoryBar> buttonsInventoryHud = new List<ButInventoryBar>();
+
+    [SerializeField] GameObject allUIButtonsParent;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -49,6 +52,20 @@ public class UIControl:MonoBehaviour
     {
         InitializeKeyActions();
         LoadButtonsHud();
+    }
+    public void LoadButtons()
+    {
+        if (!Player.Instance.godMode) return;
+
+        Button[] buttonsUI = allUIButtonsParent.GetComponentsInChildren<Button>(true);
+        HashSet<string> targetNames = new HashSet<string>() { "ButListItems", "ButListMobs", "ButListCreatePortal", "ButUpdateWeaponStats" };
+        foreach (Button buttonUI in buttonsUI)
+        {
+            if (targetNames.Contains(buttonUI.name))
+            {
+                buttonUI.gameObject.SetActive(true);
+            }
+        }
     }
     private void InitializeKeyActions()
     {
@@ -106,6 +123,8 @@ public class UIControl:MonoBehaviour
     }
     public void OpenListItems()
     {
+        if (!Player.Instance.godMode) return;
+
         itemsIsOpened = !itemsIsOpened;
         if (itemsIsOpened)
         {
@@ -119,6 +138,8 @@ public class UIControl:MonoBehaviour
     }
     public void OpenListMobs()
     {
+        if (!Player.Instance.godMode) return;
+
         mobsIsOpened = !mobsIsOpened;
         if (mobsIsOpened)
         {
@@ -132,6 +153,8 @@ public class UIControl:MonoBehaviour
     }
     public void OpenCreatePortal()
     {
+        if (!Player.Instance.godMode) return;
+
         createPortalIsOpened = !createPortalIsOpened;
         if (createPortalIsOpened)
         {
@@ -225,6 +248,17 @@ public class UIControl:MonoBehaviour
     }
     public void LoadMainMenu()
     {
+        if(ShopIsOpened)
+        {
+            OpenShop();
+            return;
+        }
+        else if(CraftIsOpened)
+        {
+            OpenCraftWindow();
+            return;
+        }
+
         // ”ничтожаем объект только перед загрузкой главного меню
         if (isPaused) Time.timeScale = 1;
         if (Instance != null)

@@ -180,9 +180,9 @@ MonoBehaviour:
   player: {fileID: 0}
   mob_object: {fileID: 756568382040267094}
   audioSource: {fileID: 0}
-  attack_sound: {fileID: 8300000, guid: 21b9313310adf0d4197250be98cae679, type: 3}
+  attack_sound: {fileID: 8300000, guid: 278edd9d24fb4bf49b887b53b3661a19, type: 3}
   player_touch_sound: {fileID: 8300000, guid: 63d4cc6623a94b6489be1af4aa5f28d9, type: 3}
-  die_sound: {fileID: 8300000, guid: ae1ad3859bcab6442b39ca6812e03c4c, type: 3}
+  die_sound: {fileID: 8300000, guid: eb30882ef6b84d64d8270a7ae0d643f3, type: 3}
   attackBuffer: 1
   attack_volume: 0.1
   touch_volume: 0.5
@@ -380,7 +380,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.025926411, y: -0.049337737}
+  m_Offset: {x: 0.008656979, y: -0.060268655}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -390,7 +390,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.35814768, y: 0.37296736}
+  m_Size: {x: 0.29944962, y: 0.32392648}
   m_EdgeRadius: 0
 --- !u!1 &1852044187561295959
 GameObject:

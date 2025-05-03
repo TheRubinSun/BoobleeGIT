@@ -24,7 +24,7 @@ public class Options : MonoBehaviour
         GameObject obj = EventSystem.current.currentSelectedGameObject;
         obj.transform.GetChild(2).GetComponent<Image>().color = yesGreenColor;
 
-        await GetComponent<GenInfoSaves>().SavedChanged(GenInfoSaves.saveGameFiles, GenInfoSaves.lastSaveID, localeCode);
+        await GetComponent<GenInfoSaves>().SavedChanged(GenInfoSaves.saveGameFiles, GenInfoSaves.lastSaveID, localeCode, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS);
     }
     private void LoadSavedLanguage()
     {
