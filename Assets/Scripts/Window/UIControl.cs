@@ -173,11 +173,13 @@ public class UIControl:MonoBehaviour
         ShopIsOpened = !ShopIsOpened;
         if (ShopIsOpened)
         {
+            Player.Instance.playerStay = true;
             ShopWindow.SetActive(true);
             ShopLogic.Instance.OpenShop();
         }
         else
         {
+            Player.Instance.playerStay = false;
             ShopLogic.Instance.ClosedShop();
             ShopWindow.SetActive(false);
         }
@@ -228,11 +230,13 @@ public class UIControl:MonoBehaviour
         CraftIsOpened = !CraftIsOpened;
         if (CraftIsOpened)
         {
+            Player.Instance.playerStay = true;
             CraftWindow.SetActive(true);
             CraftLogic.Instance.OpenCrafts();
         }
         else
         {
+            Player.Instance.playerStay = false;
             CraftWindow.SetActive(false);
             CraftLogic.Instance.CloseCrafts();
         }

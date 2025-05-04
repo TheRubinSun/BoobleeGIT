@@ -5,9 +5,10 @@ public class LayerManager : MonoBehaviour
     // Статические переменные, которые будут сохранять значения слоев для всех мобов
     public static int obstaclesLayer = -1;
     public static int playerLayer = -1;
-    public static int playerManegerLayer = -1;
+    public static int playerManagerLayer = -1;
     public static int enemyLayer = -1;
     public static int touchObjectsLayer = -1;
+    public static int interactableLayer = -1;
 
     private void Awake()
     {
@@ -15,9 +16,10 @@ public class LayerManager : MonoBehaviour
         {
             obstaclesLayer = LayerMask.NameToLayer("Obstacles");
             playerLayer = LayerMask.NameToLayer("Player");
-            playerManegerLayer = LayerMask.NameToLayer("PlayerManager");
+            playerManagerLayer = LayerMask.NameToLayer("PlayerManager");
             enemyLayer = LayerMask.NameToLayer("Enemy");
             touchObjectsLayer = LayerMask.NameToLayer("TouchObjects");
+            interactableLayer = LayerMask.NameToLayer("Interactable");
             //Debug.Log($"Obstacles {obstaclesLayer}");
             //Debug.Log($"Player {playerLayer}");
             //Debug.Log($"Player Man{playerManegerLayer}");

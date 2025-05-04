@@ -19,7 +19,7 @@ public class EffectsManager : MonoBehaviour
     {
         if (stats == null)
         {
-            if (gameObject.layer == LayerManager.playerManegerLayer)
+            if (gameObject.layer == LayerManager.playerManagerLayer)
             {
                 stats = GetComponent<Player>().GetPlayerStats();
             }
@@ -57,7 +57,7 @@ public class EffectsManager : MonoBehaviour
     }
     private void AddEffectIcon(EffectData effect)
     {
-        if (gameObject.layer == LayerManager.playerManegerLayer)
+        if (gameObject.layer == LayerManager.playerManagerLayer)
         {
             OnDisplayEffectUI?.Invoke(effect);
         }
@@ -137,7 +137,7 @@ public class EffectsManager : MonoBehaviour
     {
         if(apply)
         {
-            if (gameObject.layer == LayerManager.playerManegerLayer)
+            if (gameObject.layer == LayerManager.playerManagerLayer)
             {
                 Player.Instance.TakeHeal((int)effect.value);
             }
@@ -151,7 +151,7 @@ public class EffectsManager : MonoBehaviour
     {
         if (apply)
         {
-            if (this.gameObject.layer == LayerManager.playerManegerLayer)
+            if (this.gameObject.layer == LayerManager.playerManagerLayer)
             {
                 Player.Instance.TakeDamage((int)effect.value, damageT.Posion, false);
             }

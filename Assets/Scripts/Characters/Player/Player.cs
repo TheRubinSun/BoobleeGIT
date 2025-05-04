@@ -11,6 +11,7 @@ public class Player : MonoBehaviour, ITakeDamage
 {
     public static Player Instance { get; set; }
     public bool godMode { get; private set; }
+    public bool playerStay {  get; set; }
 
     private PlayerStats pl_stats;
     

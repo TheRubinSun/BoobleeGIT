@@ -57,6 +57,7 @@ public class RecipeCraft
 }
 public enum CraftTable
 {
+    None,
     Alchemy_Station,
     Workbench,
     Anvil,
