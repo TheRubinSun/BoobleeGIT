@@ -61,6 +61,7 @@ public enum CraftTable
     Alchemy_Station,
     Workbench,
     Anvil,
-    Smelter
+    Smelter,
+    God
 }
 

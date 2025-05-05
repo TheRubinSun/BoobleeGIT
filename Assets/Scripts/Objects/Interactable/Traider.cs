@@ -4,6 +4,6 @@ public class Traider : DrawOutline, IInteractable
 {
     public void Interact()
     {
-        UIControl.Instance.OpenShop();
+        UIControl.Instance.OpenShopSurv();
     }
 }

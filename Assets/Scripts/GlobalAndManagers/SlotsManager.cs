@@ -108,6 +108,12 @@ public class Slot
         SlotObj = slotObject;
         Count = _count;
     }
+    public Slot(int _IdSlot, Item item, int _count)
+    {
+        IdSlot = _IdSlot;
+        Item = item;
+        Count = _count;
+    }
     public Slot(Item item, GameObject slotObject, int _count, TypeItem _itemFilter)
     {
         Item = item;

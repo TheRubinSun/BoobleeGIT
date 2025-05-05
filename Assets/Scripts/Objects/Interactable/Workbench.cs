@@ -4,6 +4,6 @@ public class Workbench : DrawOutline, IInteractable
 {
     public void Interact()
     {
-        UIControl.Instance.OpenCraftWindow();
+        UIControl.Instance.OpenCraftWindowSurv(CraftTable.Workbench);
     }
 }

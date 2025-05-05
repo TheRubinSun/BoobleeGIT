@@ -11,14 +11,18 @@ public class CraftLogic : MonoBehaviour, ISlot
     [SerializeField] private Transform CraftsParent;
     [SerializeField] private Transform MaterialsParent;
     [SerializeField] private Transform parentInventSlots;
+    [SerializeField] private SlotSelector slotSelector;
 
     Dictionary<Slot, Dictionary<Item, int>> slotsCrafts = new Dictionary<Slot, Dictionary<Item, int>>();
+
     List<Slot> materialsSelectSlot = new List<Slot>();
     private Slot SelectSlot;
 
     private bool recipeIsLoaded = false;
     private int curIndexCraft;
+    private List<int> idCrafts = new List<int>();
 
+    private CraftTable lastStation;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -28,35 +32,97 @@ public class CraftLogic : MonoBehaviour, ISlot
         }
         Instance = this;
     }
-    public void OpenCrafts()
+    private void Start()
+    {
+
+    }
+    public void OpenSelectCrafts(CraftTable craftTable)
     {
         UIControl.Instance.TransfromSlotsFromInventory(parentInventSlots);
 
-        LoadCrafts();
-        ReloadFirstMaterials();
+        LoadSelectTableCrafts(craftTable);
     }
     public void CloseCrafts()
     {
         UIControl.Instance.RetrunSlotsToInventory(parentInventSlots);
-        ClearMaterials();
+        ClearCrafts();
         DisplayInfo.Instance.SetActiveItemInfo(false);
+        idCrafts.Clear();
     }
-    private void LoadCrafts()
+    //private void LoadAllCrafts()
+    //{
+    //    if (recipeIsLoaded) return;
+
+    //    int id = 0;
+    //    foreach(RecipeCraft recipe in RecipesCraft.recipesCraft)
+    //    {
+    //        //======================================
+    //        Item craftItem = ItemsList.Instance.GetItemForNameKey(recipe.craftItem);
+
+    //        GameObject SlotObj = Instantiate(GlobalPrefabs.SlotPref, CraftsParent);
+    //        SlotObj.tag = "CraftSlot";
+    //        SlotObj.name = $"Slot ({id})";
+
+    //        Slot craftSlot = new Slot(id, craftItem, SlotObj, recipe.countCraftItem);
+    //        slotsCrafts.Add(craftSlot, null);
+    //        //======================================
+
+    //        Dictionary<Item, int> materialsInCraft = new Dictionary<Item, int>();
+    //        foreach (KeyValuePair<string, int> material in recipe.needsMaterials)
+    //        {
+    //            materialsInCraft.Add(ItemsList.Instance.GetItemForNameKey(material.Key), material.Value);
+    //        }
+    //        slotsCrafts[craftSlot] = materialsInCraft;
+
+    //        SlotsManager.UpdateSlotUI(craftSlot);
+    //        id++;
+    //    }
+    //    LoadMaterials(0);
+    //    recipeIsLoaded = true;
+    //}
+    private void LoadAllCrafts()
     {
-        if (recipeIsLoaded) return;
+        int id = 0;
+        foreach (RecipeCraft recipe in RecipesCraft.recipesCraft)
+        {
+            Item craftItem = ItemsList.Instance.GetItemForNameKey(recipe.craftItem);
+            Slot craftSlot = new Slot(id, craftItem, recipe.countCraftItem);
+            slotsCrafts.Add(craftSlot, null);
+            id++;
+        }
+        recipeIsLoaded = true;
+    }
+    private void LoadSelectTableCrafts(CraftTable craftTable)
+    {
+        if (!recipeIsLoaded) LoadAllCrafts();
 
         int id = 0;
-        foreach(RecipeCraft recipe in RecipesCraft.recipesCraft)
+        foreach (RecipeCraft recipe in RecipesCraft.recipesCraft)
         {
-            //======================================
-            Item craftItem = ItemsList.Instance.GetItemForNameKey(recipe.craftItem);
-
+            //Тип крафтов
+            if (recipe.craftTable != craftTable && craftTable != CraftTable.God)
+            {
+                id++;
+                continue;
+            }
+            Slot craftSlot = slotsCrafts.Keys.FirstOrDefault(slot => slot.IdSlot == id);
             GameObject SlotObj = Instantiate(GlobalPrefabs.SlotPref, CraftsParent);
             SlotObj.tag = "CraftSlot";
             SlotObj.name = $"Slot ({id})";
+            craftSlot.SlotObj = SlotObj;
+            idCrafts.Add(id);
 
-            Slot craftSlot = new Slot(id, craftItem, SlotObj, recipe.countCraftItem);
-            slotsCrafts.Add(craftSlot, null);
+            SlotsManager.UpdateSlotUI(craftSlot);
+            //======================================Crafts
+
+            //Item craftItem = ItemsList.Instance.GetItemForNameKey(recipe.craftItem);
+
+            //GameObject SlotObj = Instantiate(GlobalPrefabs.SlotPref, CraftsParent);
+            //SlotObj.tag = "CraftSlot";
+            //SlotObj.name = $"Slot ({id})";
+
+            //Slot craftSlot = new Slot(id, craftItem, SlotObj, recipe.countCraftItem);
+            //slotsCrafts.Add(craftSlot, null);
             //======================================
 
             Dictionary<Item, int> materialsInCraft = new Dictionary<Item, int>();
@@ -66,20 +132,46 @@ public class CraftLogic : MonoBehaviour, ISlot
             }
             slotsCrafts[craftSlot] = materialsInCraft;
 
-            SlotsManager.UpdateSlotUI(craftSlot);
             id++;
         }
-        LoadMaterials(0);
-        recipeIsLoaded = true;
+        curIndexCraft = idCrafts[0]; //Получаем превый набор ресурсов для первого из крафтов в списке
+        LoadMaterials(curIndexCraft);
+
+        if (lastStation != CraftTable.None && lastStation == craftTable) //Если открыта та же станция, то сохранять старую позицию, иначе запускаем первый слот
+        {
+            slotSelector.UpdateItems(true);
+        }
+        else
+        {
+            slotSelector.UpdateItems(false);
+            curIndexCraft = 0;
+            SelectSlot = slotsCrafts.FirstOrDefault().Key;
+        }
+
+        lastStation = craftTable;
     }
-    public void LoadMaterials(int index)
+    private void ClearCrafts()
+    {
+        ClearMaterials();
+        foreach (Slot slot in slotsCrafts.Keys)
+        {
+            Destroy(slot.SlotObj);
+        }
+        //slotsCrafts.Clear();
+    }
+    public void LoadMaterialsForIdSelect(int index)
+    {
+        index = idCrafts[index]; //Получаем Id крафта
+        LoadMaterials(index);
+    }
+    private void LoadMaterials(int index)
     {
         SelectSlot = slotsCrafts.Keys.FirstOrDefault(slot => slot.IdSlot == index);
-        if (SelectSlot == null) return;
+        if (SelectSlot == null || SelectSlot.SlotObj == null) return;
 
         curIndexCraft = index;
         if (slotsCrafts.TryGetValue(SelectSlot, out Dictionary<Item, int> materials))
-        {
+        { 
             ClearMaterials();
             int id = 0;
             foreach (KeyValuePair<Item, int> material in materials)
@@ -107,10 +199,12 @@ public class CraftLogic : MonoBehaviour, ISlot
             }
         }
     }
-    private void ReloadFirstMaterials()
+
+    private void ReloadSelectMaterials()
     {
         LoadMaterials(curIndexCraft);
     }
+
     public bool isEnoughResourse()
     {
         foreach(Slot material in materialsSelectSlot)
@@ -153,7 +247,7 @@ public class CraftLogic : MonoBehaviour, ISlot
             default: idSounds = 0; break;
         }
         SoundsManager.Instance.PlayCraftItemSounds(idSounds);
-        ReloadFirstMaterials();
+        ReloadSelectMaterials();
     }
     private void ClearMaterials()
     {
@@ -164,7 +258,7 @@ public class CraftLogic : MonoBehaviour, ISlot
         materialsSelectSlot.Clear();
     }
 
-    public Slot GetSlot(SlotRequest request) 
+    public Slot GetSlot(SlotRequest request)
     {
         return slotsCrafts.Keys.FirstOrDefault(slot => slot.IdSlot == request.index);
     }

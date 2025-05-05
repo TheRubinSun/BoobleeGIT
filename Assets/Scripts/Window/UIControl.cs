@@ -10,7 +10,7 @@ public class UIControl:MonoBehaviour
 {
     public static UIControl Instance { get; private set; }
     private Dictionary<KeyCode, System.Action> keyActions;
-
+    
     [SerializeField] GameObject inventoryWindow;
     [SerializeField] GameObject allItemsWindow;
     [SerializeField] GameObject allMobsWindow;
@@ -58,7 +58,7 @@ public class UIControl:MonoBehaviour
         if (!Player.Instance.godMode) return;
 
         Button[] buttonsUI = allUIButtonsParent.GetComponentsInChildren<Button>(true);
-        HashSet<string> targetNames = new HashSet<string>() { "ButListItems", "ButListMobs", "ButListCreatePortal", "ButUpdateWeaponStats" };
+        HashSet<string> targetNames = new HashSet<string>() { "ButListItems", "ButListMobs", "ButListCreatePortal", "ButUpdateWeaponStats", "ButCrafts", "ButShop" };
         foreach (Button buttonUI in buttonsUI)
         {
             if (targetNames.Contains(buttonUI.name))
@@ -168,6 +168,11 @@ public class UIControl:MonoBehaviour
     }
     public void OpenShop()
     {
+        if (!Player.Instance.godMode) return;
+        OpenShopSurv();
+    }
+    public void OpenShopSurv()
+    {
         if (CraftIsOpened) return;
 
         ShopIsOpened = !ShopIsOpened;
@@ -225,6 +230,12 @@ public class UIControl:MonoBehaviour
     }
     public void OpenCraftWindow()
     {
+        if (!Player.Instance.godMode) return;
+        OpenCraftWindowSurv(CraftTable.God);
+    }
+    public void OpenCraftWindowSurv(CraftTable craftTable)
+    {
+
         if (ShopIsOpened) return;
 
         CraftIsOpened = !CraftIsOpened;
@@ -232,7 +243,7 @@ public class UIControl:MonoBehaviour
         {
             Player.Instance.playerStay = true;
             CraftWindow.SetActive(true);
-            CraftLogic.Instance.OpenCrafts();
+            CraftLogic.Instance.OpenSelectCrafts(craftTable);
         }
         else
         {

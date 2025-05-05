@@ -19,9 +19,22 @@ public class SlotSelector : MonoBehaviour
 
     void Start()
     {
+        //UpdateItems();
+    }
+    public void UpdateItems(bool thatStation)
+    {
         UpdateSlots();
-        HighlightSlot(currentSlotIndex, -1);
+        StartPosSlot(thatStation);
+
         //CraftLogic.Instance.LoadMaterials(currentSlotIndex);
+
+
+    }
+    private void StartPosSlot(bool thatStation)//≈сли та же станци€, то не обнул€ем позицию
+    {
+        if(!thatStation) currentSlotIndex = 0;
+        HighlightSlot(currentSlotIndex, -1);
+        MoveContentToSlot(currentSlotIndex);
         buttonsSlots[currentSlotIndex].enabled = true;
     }
     void Update()
@@ -70,7 +83,8 @@ public class SlotSelector : MonoBehaviour
         oldIndex = currentSlotIndex;
         currentSlotIndex = newIndex;
         HighlightSlot(newIndex, oldIndex);
-        CraftLogic.Instance.LoadMaterials(newIndex);
+        CraftLogic.Instance.LoadMaterialsForIdSelect(newIndex);
+        //CraftLogic.Instance.ReloadSelectMaterials(newIndex);
     }
 
     void HighlightSlot(int newIndex, int oldIndex)
