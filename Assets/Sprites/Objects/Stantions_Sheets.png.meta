@@ -8,6 +8,18 @@ TextureImporter:
   - first:
       213: 2569054452176909711
     second: Stantions_Sheets_1
+  - first:
+      213: -2871665623440857591
+    second: Stantions_Sheets_2
+  - first:
+      213: 2222790264544727237
+    second: Stantions_Sheets_3
+  - first:
+      213: -1930561628202101759
+    second: Stantions_Sheets_4
+  - first:
+      213: 4184075844398433310
+    second: Stantions_Sheets_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -172,11 +184,55 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Stantions_Sheets_2
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 0
+        width: 150
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9066b19845bc528d0800000000000000
+      internalID: -2871665623440857591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stantions_Sheets_3
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 0
+        width: 150
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c0926008ffe8de10800000000000000
+      internalID: 2222790264544727237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 8da42cde675eb874a8db8bee11ba0f9d
+    spriteID: 241640a8d1588404aa8f117abcb6fdba
     internalID: 0
     vertices: []
     indices: 
@@ -188,6 +244,8 @@ TextureImporter:
     nameFileIdTable:
       Stantions_Sheets_0: 3064098373982928753
       Stantions_Sheets_1: 2569054452176909711
+      Stantions_Sheets_2: -2871665623440857591
+      Stantions_Sheets_3: 2222790264544727237
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

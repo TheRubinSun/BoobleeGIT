@@ -261,7 +261,7 @@ public class UIControl:MonoBehaviour
         LvlUpIsOpen = false;
         LvlUPWindow.SetActive(false);
     }
-    public void LoadMainMenu()
+    public async void LoadMainMenu()
     {
         if(ShopIsOpened)
         {
@@ -280,7 +280,8 @@ public class UIControl:MonoBehaviour
         {
             Destroy(gameObject); // Удаляем объект вручную
         }
-        SceneManager.LoadScene("Menu");
+        await GameManager.Instance.SavePlayTime();
+        await SceneManager.LoadSceneAsync("Menu");
     }
     public void UpdateWeaponStats()
     {

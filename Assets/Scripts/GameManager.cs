@@ -4,6 +4,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using Unity.Collections;
 using System.IO;
+using System.Collections;
+using System.Threading.Tasks;
 
 
 public class GameManager: MonoBehaviour 
@@ -19,7 +21,9 @@ public class GameManager: MonoBehaviour
     bool BuildingMode;
 
     public int KillsEnemy;
-    public int totalSecondsPlayed;
+
+    private int totalSecondsPlayed;
+    private float lastRealTime;
 
     public int enemisRemaining;
     public TextMeshProUGUI InfoReaminingEnemy;
@@ -75,6 +79,8 @@ public class GameManager: MonoBehaviour
             KillsEnemy = dataInfo.enemy_kills;
             totalSecondsPlayed = dataInfo.timeHasPassed;
 
+            lastRealTime = Time.realtimeSinceStartup; //Сохраняем настоящее время входа в игру
+
             if (dataInfo.godMode == true) Player.Instance.SetGodMode();
             else Player.Instance.SetSurvaveMode();
 
@@ -86,13 +92,39 @@ public class GameManager: MonoBehaviour
             Debug.LogError("Ошибка: данные из GameDataHolder не были загружены!");
         }
 
-
-        InvokeRepeating(nameof(UpdatePlayTime), 1f, 1f);
+        StartCoroutine(TrackPlayTime(5));
+        //InvokeRepeating(nameof(UpdatePlayTime), 1f, 1f);
     }
-    private void UpdatePlayTime()
+    private IEnumerator TrackPlayTime(int timer)
     {
-        totalSecondsPlayed++;
+        //float lastTime = Time.realtimeSinceStartup;
+        while (true)
+        {
+            yield return new WaitForSecondsRealtime(timer);
+
+            //float currentTime = Time.realtimeSinceStartup;
+            //float delta = currentTime - lastTime;
+            //lastTime = currentTime;
+            totalSecondsPlayed += timer;
+        }
     }
+    private async void OnApplicationQuit()
+    {
+        await SavePlayTime();
+    }
+    public async Task SavePlayTime()
+    {
+        SaveGameInfo saveGameIngo = GenInfoSaves.saveGameFiles[GlobalData.SaveInt];
+        if (!saveGameIngo.isStarted) return;
+
+        saveGameIngo.timeHasPassed = totalSecondsPlayed;
+        SavesDataInfo savesDataInfo = new SavesDataInfo(GenInfoSaves.saveGameFiles, GlobalData.SaveInt, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS);
+        await SaveSystem.SaveDataAsync(savesDataInfo, "saves_info.json");
+    }
+    //private void UpdatePlayTime()
+    //{
+    //    totalSecondsPlayed++;
+    //}
     private void OnEnable()
     {
         BaseEnemyLogic.OnEnemyDeath += HandleEnemyDeath;
