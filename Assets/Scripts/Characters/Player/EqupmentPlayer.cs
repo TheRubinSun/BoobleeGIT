@@ -44,7 +44,7 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Обеспечивает сохранение объекта между сценами
+            //DontDestroyOnLoad(gameObject); // Обеспечивает сохранение объекта между сценами
         }
 
         StartDataEquip();

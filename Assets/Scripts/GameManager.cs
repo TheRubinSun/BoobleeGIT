@@ -178,7 +178,7 @@ public class GameManager: MonoBehaviour
 
 
     }
-    public async void SaveDataGame()
+    public async Task SaveDataGame()
     {
         string fullPath = Path.Combine(Application.persistentDataPath, savePath);
         if (!Directory.Exists(fullPath))

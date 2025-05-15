@@ -24,7 +24,7 @@ public class LoadingSaveScreen : MonoBehaviour
         yield return LoadArtifact(savePath);
 
         // Загружаем игровую сцену асинхронно
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("GameVillage");
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(GlobalData.NAME_NEW_LOCATION);
         asyncLoad.allowSceneActivation = false;
 
         while (!asyncLoad.isDone)

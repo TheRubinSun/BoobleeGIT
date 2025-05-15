@@ -12,7 +12,7 @@ public class Player : MonoBehaviour, ITakeDamage
     public static Player Instance { get; set; }
     public bool godMode { get; private set; }
     public bool playerStay {  get; set; }
-
+    [SerializeField] private Transform spawnPoint;
     private PlayerStats pl_stats;
     
     [SerializeField] 
@@ -63,7 +63,7 @@ public class Player : MonoBehaviour, ITakeDamage
             pl_stats.FillHp();
             ResetWeaponToggles();
         }
-        
+        if (spawnPoint != null) transform.position = spawnPoint.transform.position;
 
         pl_ui.UpdateAllInfo(pl_stats);
         ChangeToggleWeapons();

@@ -23,10 +23,10 @@ public class SpawnMobs : MonoBehaviour
         else
         {
             Instance = this;
-            if (gameObject.scene.name != "DontDestroyOnLoad")
-            {
-                DontDestroyOnLoad(gameObject); // Обеспечивает сохранение объекта между сценами
-            }
+            //if (gameObject.scene.name != "DontDestroyOnLoad")
+            //{
+            //    DontDestroyOnLoad(gameObject); // Обеспечивает сохранение объекта между сценами
+            //}
         }
     }
     private void Start()

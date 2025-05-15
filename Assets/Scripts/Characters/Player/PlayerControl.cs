@@ -19,6 +19,7 @@ public class PlayerControl : MonoBehaviour
 
     [SerializeField] private Vector2 inputDirection;
 
+    
 
     private Vector2 mousePos;
     private Vector2 movement;

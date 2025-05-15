@@ -36,7 +36,7 @@ public class DragAndDrop:MonoBehaviour
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Обеспечивает сохранение объекта между сценами
+            //DontDestroyOnLoad(gameObject); // Обеспечивает сохранение объекта между сценами
         }
     }
     private void Start()

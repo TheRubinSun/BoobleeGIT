@@ -10,10 +10,12 @@ public static class GlobalData
     public static int chunkSize;
 
     //public static bool GOD_MODE;
-    public static int VOLUME_SOUNDS;
-    public static int VOLUME_MUSICS;
+    public static float VOLUME_SOUNDS = 0.5f;
+    public static float VOLUME_MUSICS;
 
     public static bool isVisibleHpBarEnemy = true;
+    public static string NAME_NEW_LOCATION = "Game_village";
+    public static string NAME_NEW_LOCATION_TEXT;
 }
 public static class BASE_VALUE_STATS_ARTEFACT
 {

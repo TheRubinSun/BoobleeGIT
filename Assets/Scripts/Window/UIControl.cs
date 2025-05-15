@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEditor.ShaderGraph;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -239,7 +240,7 @@ public class UIControl:MonoBehaviour
         if (ShopIsOpened) return;
 
         CraftIsOpened = !CraftIsOpened;
-        if (CraftIsOpened)
+        if (CraftIsOpened && craftTable != CraftTable.None)
         {
             Player.Instance.playerStay = true;
             CraftWindow.SetActive(true);
@@ -263,14 +264,15 @@ public class UIControl:MonoBehaviour
     }
     public async void LoadMainMenu()
     {
+        Debug.Log($"ShopIsOpened {ShopIsOpened} | CraftIsOpened {CraftIsOpened}");
         if(ShopIsOpened)
         {
-            OpenShop();
+            OpenShopSurv();
             return;
         }
         else if(CraftIsOpened)
         {
-            OpenCraftWindow();
+            OpenCraftWindowSurv(CraftTable.None);
             return;
         }
 
@@ -280,6 +282,7 @@ public class UIControl:MonoBehaviour
         {
             Destroy(gameObject); // Удаляем объект вручную
         }
+        GlobalData.NAME_NEW_LOCATION = "Game_village";
         await GameManager.Instance.SavePlayTime();
         await SceneManager.LoadSceneAsync("Menu");
     }
@@ -313,9 +316,13 @@ public class UIControl:MonoBehaviour
     {
         //GameManager.Instance.LoadDataGame();
     }
-    public void SaveData()
+    public async void SaveDataButton()
     {
-        GameManager.Instance.SaveDataGame();
+        await SaveData();
+    }
+    public async Task SaveData()
+    {
+        await GameManager.Instance.SaveDataGame();
     }
     public void TogglePause()
     {

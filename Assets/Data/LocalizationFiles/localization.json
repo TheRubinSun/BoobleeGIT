@@ -315,8 +315,11 @@
         "word_AttackSpeed": "to Attack Speed",
         "word_Range": "to Range",
         "word_Projectile_speed": "to Projectile Speed"
-      }
-
+      },
+	  "name_location":{
+		  "Game_village": "Village Tonio",
+		  "Level_one": "Level №1"
+	  }
     }
   },
   "ru": {
@@ -634,7 +637,11 @@
         "word_AttackSpeed": "к скорости атаки",
         "word_Range": "к дальности",
         "word_Projectile_speed": "к скорости снаряда"
-      }
+      },
+      "name_location":{
+		  "Game_village": "Деревня Тоньё",
+		  "Level_one": "Уровень №1"
+	  }
     }
   }
 }

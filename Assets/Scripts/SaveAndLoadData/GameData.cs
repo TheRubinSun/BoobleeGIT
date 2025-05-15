@@ -13,13 +13,13 @@ public class SavesDataInfo
     public Dictionary<int, SaveGameInfo> saveGameFiles;
     public string language;
 
-    public int volume_sounds;
-    public int volume_musics;
+    public float volume_sounds;
+    public float volume_musics;
     public SavesDataInfo()
     {
         saveGameFiles = new Dictionary<int, SaveGameInfo>();
     }
-    public SavesDataInfo(Dictionary<int, SaveGameInfo> _saveGameFiles, int _lastSaveID, string language, int volume_sounds, int volume_musics)
+    public SavesDataInfo(Dictionary<int, SaveGameInfo> _saveGameFiles, int _lastSaveID, string language, float volume_sounds, float volume_musics)
     {
         saveGameFiles = _saveGameFiles;
         lastSaveID = _lastSaveID;

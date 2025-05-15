@@ -15,8 +15,8 @@ public class GenInfoSaves : MonoBehaviour
     public static string language;
     public static int lastSaveID;
 
-    public static int volume_sounds;
-    public static int volume_musics;
+    public static float volume_sounds;
+    public static float volume_musics;
     public static Dictionary<int, SaveGameInfo> saveGameFiles = new Dictionary<int, SaveGameInfo>();
 
     [SerializeField] GameObject[] SavesBut;
@@ -109,7 +109,7 @@ public class GenInfoSaves : MonoBehaviour
             Debug.LogWarning($"Файл {path_player_data} не существует, удаление невозможно.");
         }
     }
-    public async Task SavedChanged(Dictionary<int, SaveGameInfo> _saveGameFiles, int _lastSaveID, string _language, int volume_sounds, int volume_musics)
+    public async Task SavedChanged(Dictionary<int, SaveGameInfo> _saveGameFiles, int _lastSaveID, string _language, float volume_sounds, float volume_musics)
     {
         SavesDataInfo savesDataInfo = new SavesDataInfo(_saveGameFiles, _lastSaveID, _language, volume_sounds, volume_musics);
         await SaveSystem.SaveDataAsync(savesDataInfo, "saves_info.json");
