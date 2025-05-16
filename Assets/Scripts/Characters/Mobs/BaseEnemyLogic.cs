@@ -118,7 +118,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     }
     protected virtual void LoadParametrs()
     {
-        mob = EnemyList.Instance.mobs[IdMobs];
+        mob = EnemyList.mobs[IdMobs];
         Name = mob.NameKey;
         typeMob = mob.TypeMob;
 

@@ -47,10 +47,16 @@ public class LoadingMenu : MonoBehaviour
 
             if (asyncLoad.progress >= 0.9f)
             {
+                ItemsList.LoadSprites();
+                ItemsList.LoadOrCreateItemList(GameDataHolder.ItemsData.item_List_data);
+
+                EnemyList.LoadOrCreateMobsList(GameDataHolder.EnemyData.mob_list_data);
+
                 yield return new WaitForSeconds(1f);
                 asyncLoad.allowSceneActivation = true;
             }
         }
+
 
         yield return null;
     }
@@ -67,6 +73,7 @@ public class LoadingMenu : MonoBehaviour
         GameDataHolder.savesDataInfo = await SaveSystem.LoadDataAsync<SavesDataInfo>("saves_info.json");
 
         GameDataHolder.ItemsData = await SaveSystem.LoadDataAsync<ItemsData>("items.json");
+
         GameDataHolder.EnemyData = await SaveSystem.LoadDataAsync<EnemyData>("enemies.json");
         GameDataHolder.RoleClassesData = await SaveSystem.LoadDataAsync<RoleClassesData>("role_classes_data.json");
         GameDataHolder.ItemsDropOnEnemy = await SaveSystem.LoadDataAsync<ItemsDropOnEnemy>("item_drop.json");

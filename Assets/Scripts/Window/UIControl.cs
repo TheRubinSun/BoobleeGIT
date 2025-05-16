@@ -145,7 +145,7 @@ public class UIControl:MonoBehaviour
         if (mobsIsOpened)
         {
             allMobsWindow.SetActive(true);
-            DisplayMobsList.Instance.DisplayLinesMobs(EnemyList.Instance.mobs);
+            DisplayMobsList.Instance.DisplayLinesMobs(EnemyList.mobs);
         }
         else
         {
@@ -160,7 +160,7 @@ public class UIControl:MonoBehaviour
         if (createPortalIsOpened)
         {
             CreatePortalWindow.SetActive(true);
-            CreatePortalUI.Instance.DisplayLinesMobs(EnemyList.Instance.mobs);
+            CreatePortalUI.Instance.DisplayLinesMobs(EnemyList.mobs);
         }
         else
         {
@@ -292,10 +292,10 @@ public class UIControl:MonoBehaviour
     }
     public void LocalizationTranslate()
     {
-        if(ItemsList.Instance.items != null && EnemyList.Instance.mobs != null && DisplayInfo.Instance != null && ShopLogic.Instance != null && LvlUpLogic.Instance != null)
+        if(ItemsList.items != null && EnemyList.mobs != null && DisplayInfo.Instance != null && ShopLogic.Instance != null && LvlUpLogic.Instance != null)
         {
-            ItemsList.Instance.LocalizaitedItems();
-            EnemyList.Instance.LocalizaitedMobs();
+            ItemsList.LocalizaitedItems();
+            EnemyList.LocalizaitedMobs();
             DisplayInfo.Instance.LocalizationText();
             ShopLogic.Instance.LocalizationText();
             LvlUpLogic.Instance.LocalizationText();

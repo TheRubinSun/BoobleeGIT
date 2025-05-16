@@ -4,37 +4,38 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-public class ItemsList : MonoBehaviour
+public static class ItemsList
 {
-    public static ItemsList Instance { get; private set; }
-    public List<Item> items = new List<Item>();
+    //public static ItemsList Instance { get; private set; }
+    public static List<Item> items = new List<Item>();
+    private static Sprite[] spriteList;
 
-    [SerializeField] Sprite[] spriteList;
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
+    private static Dictionary<string, Item> itemByKey;
+    private static Dictionary<int, Item> itemById;
+    //private void Awake()
+    //{
+    //    if (Instance != null && Instance != this)
+    //    {
+    //        Destroy(gameObject);
+    //        return;
+    //    }
+    //    Instance = this;
 
-        LoadSprites();
-
-    }
-    private void LoadSprites()
+    //    LoadSprites();
+    //}
+    public static void LoadSprites()
     {
         spriteList = GameDataHolder.spriteList;
     }
-    private void Start()
-    {
-        if (spriteList.Length == 0)
-        {
-            Debug.LogError("Список spriteList пуст! Добавьте спрайты через инспектор.");
-            return;
-        }
-    }
-    public void LoadOrCreateItemList(List<Item> itemList)
+    //private void Start()
+    //{
+    //    if (spriteList.Length == 0)
+    //    {
+    //        Debug.LogError("Список spriteList пуст! Добавьте спрайты через инспектор.");
+    //        return;
+    //    }
+    //}
+    public static void LoadOrCreateItemList(List<Item> itemList)
     {
         if(itemList != null && itemList.Count > 0)
         {
@@ -44,12 +45,16 @@ public class ItemsList : MonoBehaviour
         {
             InitializeItems();
         }
+        
         InitializeSpritesItem();
-        DisplayItemList.Instance.DisplayItems(items);
+
+        itemByKey = items.ToDictionary(item => item.NameKey);
+        itemById = items.ToDictionary(item => item.Id);
     }
 
-    private void InitializeItems()
+    private static void InitializeItems()
     {
+        items.Clear();
         if (items.Count == 0) items.Add(new Item(0, "item_none", 0, items.Count, Quality.None,0, ""));
         items.Add(new MeleWeapon(1, "sword_gods_slayer", 1, items.Count, Quality.Legendary,1000, "_", false, 1f, damageT.Physical, 5, 0.9f, 1));
         items.Add(new Gun(2, "gun_makarov", 1, items.Count, Quality.Rare, 100,              "_", true, 4f, damageT.Physical, 2, 1f, 1, 12f, 1.0f, 5f, 0));
@@ -85,25 +90,32 @@ public class ItemsList : MonoBehaviour
         items.Add(new Item(32, "material_tongue_mimic", 20, items.Count, Quality.Mystical, 1000, "_", TypeItem.Material));
         //PrintItemList();
     }
-    private void InitializeSpritesItem()
+    private static void InitializeSpritesItem()
     {
         for(int i = 1;i<items.Count;i++)
         {
-            items[i].SetSprite(spriteList[items[i].SpriteID]);
+            if (items[i].SpriteID < spriteList.Length)
+            {
+                items[i].SetSprite(spriteList[items[i].SpriteID]);
+            }
+            else
+            {
+                Debug.LogWarning($"[ItemsList] Спрайт не найден для предмета ID={items[i].Id}, SpriteID={items[i].SpriteID}");
+            }
         }
     }
-    private void InitializeSpriteItem(int i)
+    private static void InitializeSpriteItem(int i)
     {
         items[i].SetSprite(spriteList[i]);
     }
-    public void LocalizaitedItems()
+    public static void LocalizaitedItems()
     {
         foreach (var item in items)
         {
             item.LocalizationItem();
         }
     }
-    public Item GetItemForName(string nameKey)
+    public static Item GetItemForName(string nameKey)
     {
         foreach (Item item in items)
         {
@@ -111,23 +123,25 @@ public class ItemsList : MonoBehaviour
         }
         return items[0];
     }
-    public Item GetItemForId(int id)
-    {
-        foreach (Item item in items)
-        {
-            if (item.Id == id) return item;
-        }
-        return items[0];
-    }
-    public Item GetItemForNameKey(string key)
-    {
-        foreach (Item item in items)
-        {
-            if (item.NameKey == key) return item;
-        }
-        return items[0];
-    }
-    public Item GetNoneItem()
+    public static Item GetItemForId(int id) => itemById.TryGetValue(id, out Item item) ? item : items[0];
+    public static Item GetItemForNameKey(string name_key) => itemByKey.TryGetValue(name_key, out Item item) ? item : items[0];
+    //public static Item GetItemForId(int id)
+    //{
+    //    foreach (Item item in items)
+    //    {
+    //        if (item.Id == id) return item;
+    //    }
+    //    return items[0];
+    //}
+    //public static Item GetItemForNameKey(string key)
+    //{
+    //    foreach (Item item in items)
+    //    {
+    //        if (item.NameKey == key) return item;
+    //    }
+    //    return items[0];
+    //}
+    public static Item GetNoneItem()
     {
         if(items.Count == 0)
         {
@@ -135,14 +149,14 @@ public class ItemsList : MonoBehaviour
         }
         return items[0];
     }
-    private void PrintItemList()
+    private static void PrintItemList()
     {
         foreach (var item in items)
         {
             Debug.Log($"ID: {item.Id}, Name: {item.NameKey}");
         }
     }
-    public int GetIdWeaponForItem(Item itemT)
+    public static int GetIdWeaponForItem(Item itemT)
     {
         int select = 0;
 
@@ -164,7 +178,7 @@ public class ItemsList : MonoBehaviour
         Debug.LogWarning($"Ошибка №200 - {select}/{items.Count}/{itemT.NameKey}");
         return -1;
     }
-    public int GetArtifactForItem(Item itemT)
+    public static int GetArtifactForItem(Item itemT)
     {
         int select = 0;
 
@@ -186,7 +200,7 @@ public class ItemsList : MonoBehaviour
         Debug.LogWarning($"Ошибка №200 - {select}/{items.Count}/{itemT.NameKey}");
         return -1;
     }
-    public int GetIdMinoinForItem(Item itemT)
+    public static int GetIdMinoinForItem(Item itemT)
     {
         int select = 0;
 

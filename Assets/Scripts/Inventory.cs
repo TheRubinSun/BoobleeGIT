@@ -78,7 +78,7 @@ public class Inventory:MonoBehaviour, ISlot
             for(int i = 0; i<slots.Count;i++)
             {
                 slots[i].IdSlot = i;
-                slots[i].Item = ItemsList.Instance.GetItemForName(invntory_items[i].NameKey);
+                slots[i].Item = ItemsList.GetItemForName(invntory_items[i].NameKey);
                 slots[i].Count = invntory_items[i].count;
                 slots[i].artifact_id = invntory_items[i].artefact_id;
             }
@@ -97,7 +97,7 @@ public class Inventory:MonoBehaviour, ISlot
                 slotObj.tag = "InvSlot";
 
                 slotObj.name = $"Slot ({i})";
-                slots.Add(new Slot(i, ItemsList.Instance.GetItemForName(slotTypeSave.NameKey), slotObj, slotTypeSave.count, slotTypeSave.artefact_id));
+                slots.Add(new Slot(i, ItemsList.GetItemForName(slotTypeSave.NameKey), slotObj, slotTypeSave.count, slotTypeSave.artefact_id));
                 i++;
             }
             return true;
@@ -112,7 +112,7 @@ public class Inventory:MonoBehaviour, ISlot
             slotObj.tag = "InvSlot";
             
             slotObj.name = $"Slot ({i})";
-            slots.Add(new Slot(i, ItemsList.Instance.GetNoneItem(), slotObj)); 
+            slots.Add(new Slot(i, ItemsList.GetNoneItem(), slotObj)); 
         }
     }
     private void RemoveAllSlotInventory()
@@ -124,7 +124,7 @@ public class Inventory:MonoBehaviour, ISlot
     }
     public int AddItemForID(int id, int count, int idArt)
     {
-        foreach(Item item in ItemsList.Instance.items)
+        foreach(Item item in ItemsList.items)
         {
             if (item.Id == id)
             {
@@ -206,7 +206,7 @@ public class Inventory:MonoBehaviour, ISlot
         }
         foreach (Slot slot in slots)
         {
-            if (slot.Item.Id == ItemsList.Instance.GetNoneItem().Id)
+            if (slot.Item.Id == ItemsList.GetNoneItem().Id)
             {
                 slot.Item = itemAdd;
                 if (itemAdd.MaxCount >= count)
@@ -297,7 +297,7 @@ public class Inventory:MonoBehaviour, ISlot
     {
         if (slot.Count <= count)
         {
-            slot.Item = ItemsList.Instance.GetNoneItem();
+            slot.Item = ItemsList.GetNoneItem();
             slot.Count = 0;
             //slot.MaxCount = 1;
         }
@@ -419,7 +419,7 @@ public class Inventory:MonoBehaviour, ISlot
     }
     public void SetNone(Slot slot)
     {
-        slot.Item = ItemsList.Instance.GetItemForId(0);
+        slot.Item = ItemsList.GetItemForId(0);
         slot.Count = 0;
         slot.artifact_id = 0;
         UpdateSlotUI(slot);

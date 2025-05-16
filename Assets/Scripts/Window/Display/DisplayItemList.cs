@@ -20,6 +20,12 @@ public class DisplayItemList:MonoBehaviour
             return;
         }
         Instance = this;
+
+
+    }
+    private void Start()
+    {
+        DisplayItems(ItemsList.items);
     }
     public void DisplayItems(List<Item> items)
     {

@@ -1,6 +1,8 @@
+using System;
 using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditorInternal.VersionControl;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR;
@@ -50,6 +52,7 @@ public class DragAndDrop:MonoBehaviour
     //================================================ Блок с цельным слотом =====================================================================
     public void DragInventorySlot(int numbSlot)
     {
+        //Debug.LogWarning($"oldSlot {oldSlot} {oldSlot.Item.NameKey}");
         if (!dragItem)
         {
             oldSlot = Inventory.Instance.GetSlot(new SlotRequest{index = numbSlot });
@@ -238,6 +241,7 @@ public class DragAndDrop:MonoBehaviour
             }
             if (tempSlot.Item.Id == newSlot.Item.Id && newSlot.Count < newSlot.Item.MaxCount) //Если временный слот имеет такой же предмет и есть место, то можно доложить (даже не полностью)
             {
+
                 if (newSlot.Count + tempSlot.Count <= newSlot.Item.MaxCount) //Если слоты по количеству объединяются (оставляем предмет в один слот)
                 {
                     newSlot.Count = newSlot.Count + tempSlot.Count;
@@ -246,6 +250,7 @@ public class DragAndDrop:MonoBehaviour
                     DragZone.SetActive(dragItem);  //Выкл возможность выбросить
                     Inventory.Instance.UpdateSlotUI(newSlot);  //Обновляем картинку в UI
                     Destroy(tempSlot.SlotObj);
+
                     return true;
                 }
                 else //Если слоты по количеству суммируются с остатком (дальше таскаем предмет)
@@ -254,20 +259,22 @@ public class DragAndDrop:MonoBehaviour
                     newSlot.Count = newSlot.Item.MaxCount;
                     Inventory.Instance.UpdateSlotUI(tempSlot);  //Обновляем картинку в UI
                     Inventory.Instance.UpdateSlotUI(newSlot);  //Обновляем картинку в UI
-
                     return false;
                 }
             }
             else
             {
-                if(oldSlot == null)
+                if (oldSlot == null)
                 {
+                    if (newSlot.Item != tempSlot.Item && newSlot.Item != ItemsList.GetNoneItem()) return false; //Если предметы разные или не пустой (баг был из-за крафта когда oldSlot == null)
+
                     Inventory.Instance.SwapSlots(newSlot, tempSlot); //Меняем местами слоты
                 }
                 else if(oldSlot.Count == 0) //Если слоты просто разные, то меняем их местами
                 {
                     Inventory.Instance.SwapSlots(oldSlot, tempSlot); //Меняем местами слоты
                     Inventory.Instance.SwapSlots(newSlot, oldSlot); //Меняем местами слоты
+                    oldSlot = null;
                 }
                 else
                 {
@@ -277,6 +284,7 @@ public class DragAndDrop:MonoBehaviour
         }
         else //Если один и тот же слот, возвращаем предмет обратно
         {
+            if (oldSlot == newSlot && tempSlot.Item != newSlot.Item) return false; //Если предметы разные и менять некуда (баг после крафта)
             if (oldSlot.Count == 0)
             {
                 Inventory.Instance.SwapSlots(oldSlot, tempSlot); //Меняем местами слоты

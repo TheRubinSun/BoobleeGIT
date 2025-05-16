@@ -49,9 +49,22 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
 
         StartDataEquip();
     }
+    public void Start()
+    {
+        if (!GenInfoSaves.saveGameFiles[GlobalData.SaveInt].isStarted)
+        {
+
+            slotWeaponFour.Item = ItemsList.GetItemForNameKey("simple_knife");
+            Debug.LogWarning($"Item: {slotWeaponFour.Item.NameKey} {slotWeaponFour.Item.SpriteID} {ItemsList.items.Count}");
+            slotWeaponFour.Count = 1;
+
+            SlotsManager.UpdateSlotUI(slotWeaponFour);
+        }
+
+    }
     public void StartDataEquip()
     {
-        Item item = ItemsList.Instance.GetNoneItem();
+        Item item = ItemsList.GetNoneItem();
         slotWeaponOne = new Slot(item, slotsObjEquip[0], TypeItem.Weapon);
         slotWeaponTwo = new Slot(item, slotsObjEquip[1], TypeItem.Weapon);
         slotWeaponThree = new Slot(item, slotsObjEquip[2], TypeItem.Weapon);
@@ -69,7 +82,8 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         slotArtefOne, slotArtefTwo, slotArtefThree, slotArtefFour};
         for (int i = 0; i < slotsEqup.Length; i++)
         {
-            Inventory.Instance.UpdateSlotUI(slotsEqup[i]);
+            SlotsManager.UpdateSlotUI(slotsEqup[i]);
+            //Inventory.Instance.UpdateSlotUI(slotsEqup[i]);
         }
     }
     public void LoadOrCreateEquipment(List<SlotTypeSave> equipment_items)
@@ -85,7 +99,7 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         {
             for(int i = 0; i < equipment_items.Count; i++)
             {
-                slotsEqup[i].Item = ItemsList.Instance.GetItemForNameKey(equipment_items[i].NameKey);
+                slotsEqup[i].Item = ItemsList.GetItemForNameKey(equipment_items[i].NameKey);
                 slotsEqup[i].Count = equipment_items[i].count;
                 slotsEqup[i].artifact_id = equipment_items[i].artefact_id;
                 Inventory.Instance.UpdateSlotUI(slotsEqup[i]);
@@ -181,7 +195,7 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     {
         if (id < 4) // Проверяем, существует ли Prefab перед инстанциированием и id до 4, так как 0 1 2 3 это слоты для оружия
         {
-            int idPref = ItemsList.Instance.GetIdWeaponForItem(slotsEqup[id].Item);  //Получаем номер оружия из списка всех предметов (нужен порядковый номер оржия чтобы создать подходящий префаб)
+            int idPref = ItemsList.GetIdWeaponForItem(slotsEqup[id].Item);  //Получаем номер оружия из списка всех предметов (нужен порядковый номер оржия чтобы создать подходящий префаб)
             if(ResourcesData.GetWeaponPrefab(idPref) != null)
             {
                 GameObject weaponObj = Instantiate(ResourcesData.GetWeaponPrefab(idPref), EquipSlotPrefab[id]);  //Создаем оружие в слот 
@@ -197,7 +211,7 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         }
         else if(id > 4 && id < 9) //Для слотов миньон
         {
-            int idPref = ItemsList.Instance.GetIdMinoinForItem(slotsEqup[id].Item);  //Получаем номер миньона из списка всех предметов (нужен порядковый номер миньоена чтобы создать подходящий префаб)
+            int idPref = ItemsList.GetIdMinoinForItem(slotsEqup[id].Item);  //Получаем номер миньона из списка всех предметов (нужен порядковый номер миньоена чтобы создать подходящий префаб)
             if (ResourcesData.GetMinionPrefab(idPref) != null)
             {
                 GameObject minionObj = Instantiate(ResourcesData.GetMinionPrefab(idPref), EquipSlotPrefab[id]);

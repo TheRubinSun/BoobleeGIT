@@ -13,7 +13,7 @@ public class EffectData : ScriptableObject
     public float value;
     public EffectType effectType;
 
-    public EffectData(EffectData original)
+    public EffectData (EffectData original)
     {
         this.EffectName = original.EffectName;
         this.effectType = original.effectType;

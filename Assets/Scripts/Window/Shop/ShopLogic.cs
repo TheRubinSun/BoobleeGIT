@@ -146,7 +146,7 @@ public class ShopLogic : MonoBehaviour , ISlot
         {
             countSlots = Inventory.Instance.sizeInventory;
 
-            Item none_item = ItemsList.Instance.items[0];
+            Item none_item = ItemsList.items[0];
             for (int i = 0; countSlots > i; i++)
             {
                 Slot slot = CreateSlot("ShopSlot", shop_slots_parent, shopSlots, none_item, i);
@@ -160,7 +160,7 @@ public class ShopLogic : MonoBehaviour , ISlot
         int count = 10;
         for(int i = 0; i < count; i++)
         {
-            Item item = ItemsList.Instance.items[UnityEngine.Random.Range(0, ItemsList.Instance.items.Count)];
+            Item item = ItemsList.items[UnityEngine.Random.Range(0, ItemsList.items.Count)];
             int countItem = UnityEngine.Random.Range(1, item.MaxCount);
             AddItemToType("Shop", item, countItem, 0);
         }
@@ -216,7 +216,7 @@ public class ShopLogic : MonoBehaviour , ISlot
         }
         else
         {
-            Item none_item = ItemsList.Instance.items[0];
+            Item none_item = ItemsList.items[0];
             return CreateSlot(tagSlot, parent, slots, none_item, slots.Count);
         }
             
@@ -279,7 +279,7 @@ public class ShopLogic : MonoBehaviour , ISlot
         }
         foreach (Slot slot in slots)
         {
-            if (slot.Item.Id == ItemsList.Instance.GetNoneItem().Id)
+            if (slot.Item.Id == ItemsList.GetNoneItem().Id)
             {
                 slot.Item = itemAdd;
                 if (itemAdd.MaxCount >= countItem)

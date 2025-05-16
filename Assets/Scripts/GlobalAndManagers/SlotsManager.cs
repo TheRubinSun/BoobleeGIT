@@ -145,7 +145,7 @@ public class Slot
     }
     public void NullSLot()
     {
-        Item = ItemsList.Instance.items[0];
+        Item = ItemsList.items[0];
         Count = 0;
         artifact_id = 0;
     }

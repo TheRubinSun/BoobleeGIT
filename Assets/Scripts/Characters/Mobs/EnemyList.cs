@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -14,31 +15,41 @@ public enum TypeMob
     Technology,
     Mixed
 }
-public class EnemyList: MonoBehaviour 
+public enum AllEnemy
 {
-    public static EnemyList Instance {  get; private set; }
-    public List<Mob> mobs = new List<Mob>();
-    [SerializeField] GameObject bullet_Rainger;
-    private void Awake()
-    {
-        // Проверка на существование другого экземпляра
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            Instance = this;
+    Daizen,
+    Rainger,
+    Slime,
+    Slime_boss,
+    Mimic
+}
 
-            //if (gameObject.scene.name != "DontDestroyOnLoad")
-            //{
-            //    DontDestroyOnLoad(gameObject); // Обеспечивает сохранение объекта между сценами
-            //}
-        }
-        
-    }
+public static class EnemyList 
+{
+    //public static EnemyList Instance {  get; private set; }
+    public static List<Mob> mobs = new List<Mob>();
 
-    public void LoadOrCreateMobsList(List<Mob> mobslist)
+    //[SerializeField] GameObject bullet_Rainger;
+    //private void Awake()
+    //{
+    //    // Проверка на существование другого экземпляра
+    //    if (Instance != null && Instance != this)
+    //    {
+    //        Destroy(gameObject);
+    //    }
+    //    else
+    //    {
+    //        Instance = this;
+
+    //        //if (gameObject.scene.name != "DontDestroyOnLoad")
+    //        //{
+    //        //    DontDestroyOnLoad(gameObject); // Обеспечивает сохранение объекта между сценами
+    //        //}
+    //    }
+
+    //}
+
+    public static void LoadOrCreateMobsList(List<Mob> mobslist)
     {
         if (mobslist != null && mobslist.Count > 0)
         {
@@ -49,7 +60,7 @@ public class EnemyList: MonoBehaviour
             CreateMobs();
         }
     }
-    public void CreateMobs()
+    public static void CreateMobs()
     {
         mobs.Clear();
         if (mobs.Count < 1)
@@ -64,14 +75,14 @@ public class EnemyList: MonoBehaviour
             //CreatePortalUI.Instance.DisplayLinesMobs(mobs);
         }
     }
-    public void LocalizaitedMobs()
+    public static void LocalizaitedMobs()
     {
         foreach (var mob in mobs)
         {
             mob.LocalizationMobs();
         }
     }
-    public TypeMob GetTypeMob(string NameKey)
+    public static TypeMob GetTypeMob(string NameKey)
     {
         foreach(Mob mob in mobs)
         {
@@ -80,29 +91,31 @@ public class EnemyList: MonoBehaviour
         Debug.LogError($"Ошибка! Не найден моб с ключом {NameKey}");
         return TypeMob.None;
     }
-    public void GetMobs(int id)
+    public static void GetMobs(int id)
     {
         if(mobs.Count<1)
         {
             CreateMobs();
         }
     }
-    public Mob GetMobByName(string Name)
+    public static Mob GetMobByName(string Name)
     {
-        foreach(Mob mob in mobs)
+        foreach (Mob mob in mobs)
         {
-            if(mob.Name == Name) return mob;
+            if (mob.Name == Name) return mob;
         }
         return null;
     }
-    public int GetIdByMob(Mob mob)
+    public static int GetIdByMob(Mob mob)
     {
         for (int i = 0; i < mobs.Count; i++)
         {
-            if(mob == mobs[i]) return i;
+            if (mob == mobs[i]) return i;
         }
         return 0;
     }
+    //public static Item GetItemForId(int id) => itemById.TryGetValue(id, out Item item) ? item : items[0];
+
 }
 [Serializable]
 public class Mob

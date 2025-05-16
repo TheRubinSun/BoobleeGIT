@@ -3,13 +3,13 @@ using UnityEngine.SceneManagement;
 
 public class SpawnMobs : MonoBehaviour
 {
-     public static SpawnMobs Instance {  get; private set; }
+    public static SpawnMobs Instance {  get; private set; }
 
     [SerializeField] Transform spawnpoint;
     [SerializeField] Transform[] portals_pos;
-    [SerializeField] GameObject tech_portal_pref;
-    [SerializeField] GameObject mage_portal_pref;
-    [SerializeField] Transform parent;
+    public GameObject tech_portal_pref;
+    public GameObject mage_portal_pref;
+    public Transform parent;
     [SerializeField] Transform player;
     [SerializeField] GameObject[] mobs_prefab;
 

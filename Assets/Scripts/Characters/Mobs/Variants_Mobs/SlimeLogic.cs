@@ -66,7 +66,7 @@ public class SlimeLogic : BaseEnemyLogic, IItemMove
     private Item GetRandomItem(string[] nameKeysItem)
     {
         string nameItem = nameKeysItem[Random.Range(0, nameKeysItem.Length)];
-        return ItemsList.Instance.GetItemForName(nameItem);
+        return ItemsList.GetItemForName(nameItem);
     }
     protected override void LoadParametrs()
     {

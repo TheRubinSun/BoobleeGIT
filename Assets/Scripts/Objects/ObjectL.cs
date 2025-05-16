@@ -95,7 +95,7 @@ public abstract class ObjectLBroken : ObjectL
             dropItem.transform.position = GetPosition();
             ItemDrop ItemD = dropItem.GetComponent<ItemDrop>();
 
-            Item tempItem = ItemsList.Instance.GetItemForNameKey(item.Key);
+            Item tempItem = ItemsList.GetItemForNameKey(item.Key);
             //Debug.Log($"tempItem.Name: {tempItem.Name} tempItem.Name {tempItem.NameKey} sprite {tempItem.Sprite.name}");
             ItemD.sprite = tempItem.GetSprite();
             ItemD.item = tempItem;

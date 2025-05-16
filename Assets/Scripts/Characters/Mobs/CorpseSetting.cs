@@ -64,7 +64,7 @@ public class CorpseSetting : MonoBehaviour, ICullableObject
         List<Slot> dropItems = new List<Slot>();
         foreach (string nameItem in nameKeysItem)
         {
-            Item item = ItemsList.Instance.GetItemForName(nameItem);
+            Item item = ItemsList.GetItemForName(nameItem);
             dropChance = CalculatingItemDrop(item) / 100f;
             //Debug.Log($"{item.NameKey}:  Шанс:{dropChance*100}%");
             if (Random.value < dropChance)
@@ -80,7 +80,7 @@ public class CorpseSetting : MonoBehaviour, ICullableObject
     {
         float totalChance = 0;
         //Debug.LogWarning($"TypeMob: {EnemyList.Instance.GetTypeMob(NameKey)} mob:{NameKey}");
-        switch (EnemyList.Instance.GetTypeMob(NameKey))
+        switch (EnemyList.GetTypeMob(NameKey))
         {
             case TypeMob.Technology:
                 {

@@ -23,6 +23,8 @@ public class CraftLogic : MonoBehaviour, ISlot
     private List<int> idCrafts = new List<int>();
 
     private CraftTable lastStation;
+    private CraftTable CurStation;
+    private int[] lastIdStationSlot = new int[Enum.GetValues(typeof(CraftTable)).Length];
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -85,7 +87,7 @@ public class CraftLogic : MonoBehaviour, ISlot
         int id = 0;
         foreach (RecipeCraft recipe in RecipesCraft.recipesCraft)
         {
-            Item craftItem = ItemsList.Instance.GetItemForNameKey(recipe.craftItem);
+            Item craftItem = ItemsList.GetItemForNameKey(recipe.craftItem);
             Slot craftSlot = new Slot(id, craftItem, recipe.countCraftItem);
             slotsCrafts.Add(craftSlot, null);
             id++;
@@ -96,6 +98,7 @@ public class CraftLogic : MonoBehaviour, ISlot
     {
         if (!recipeIsLoaded) LoadAllCrafts();
 
+        CurStation = craftTable;
         int id = 0;
         foreach (RecipeCraft recipe in RecipesCraft.recipesCraft)
         {
@@ -128,26 +131,74 @@ public class CraftLogic : MonoBehaviour, ISlot
             Dictionary<Item, int> materialsInCraft = new Dictionary<Item, int>();
             foreach (KeyValuePair<string, int> material in recipe.needsMaterials)
             {
-                materialsInCraft.Add(ItemsList.Instance.GetItemForNameKey(material.Key), material.Value);
+                materialsInCraft.Add(ItemsList.GetItemForNameKey(material.Key), material.Value);
             }
             slotsCrafts[craftSlot] = materialsInCraft;
 
             id++;
         }
-        curIndexCraft = idCrafts[0]; //Получаем превый набор ресурсов для первого из крафтов в списке
-        LoadMaterials(curIndexCraft);
 
-        if (lastStation != CraftTable.None && lastStation == craftTable) //Если открыта та же станция, то сохранять старую позицию, иначе запускаем первый слот
+        //if (lastStation != CraftTable.None && lastStation == craftTable) //Если открыта та же станция, то сохранять старую позицию, иначе запускаем первый слот
+        //{
+        //    slotSelector.UpdateItems(true);
+        //}
+        //else
+        int id_line = 0;
+        switch (CurStation)//Получаем ID последнего наведеного слота из определенной станции
         {
-            slotSelector.UpdateItems(true);
+            case CraftTable.Workbench:
+                {
+                    id_line = lastIdStationSlot[0]; //Последний наведеный слот верстака 
+                    break;
+                }
+            case CraftTable.Alchemy_Station:
+                {
+                    id_line = lastIdStationSlot[1];
+                    break;
+                }
+            case CraftTable.Anvil:
+                {
+                    id_line = lastIdStationSlot[2];
+                    break;
+                }
+            case CraftTable.Smelter:
+                {
+                    id_line = lastIdStationSlot[3];
+                    break;
+                }
+            case CraftTable.God:
+                {
+                    id_line += lastIdStationSlot[4];
+                    break;
+                }
+            default:
+                {
+                    id_line = idCrafts[0];
+                    break;
+                }
+        }
+        if (lastStation == CraftTable.None)
+        {
+            slotSelector.UpdateItems(0);
         }
         else
         {
-            slotSelector.UpdateItems(false);
-            curIndexCraft = 0;
-            SelectSlot = slotsCrafts.FirstOrDefault().Key;
+            slotSelector.UpdateItems(id_line);
         }
+        curIndexCraft = idCrafts[id_line]; //Получаем id текущего выделенного слота среди всех крафтов, но выделяя именно из выбранной станции
+        SelectSlot = slotsCrafts.FirstOrDefault().Key;
 
+        //if (lastStation != CraftTable.None && lastStation == craftTable) //Если открыта та же станция, то сохранять старую позицию, иначе запускаем первый слот
+        //{
+        //    slotSelector.UpdateItems(true);
+        //}
+        //else
+        //{
+        //    curIndexCraft = idCrafts[0]; //Получаем превый набор ресурсов для первого из крафтов в списке
+        //    slotSelector.UpdateItems(false);
+        //    SelectSlot = slotsCrafts.FirstOrDefault().Key;
+        //}
+        LoadMaterials(curIndexCraft);
         lastStation = craftTable;
     }
     private void ClearCrafts()
@@ -161,6 +212,40 @@ public class CraftLogic : MonoBehaviour, ISlot
     }
     public void LoadMaterialsForIdSelect(int index)
     {
+        switch (CurStation)//Записываем наведенный слот выбранной станции для крафта
+        {
+            case CraftTable.Workbench:
+                {
+                    lastIdStationSlot[0] = index;
+                    break;
+                }
+            case CraftTable.Alchemy_Station:
+                {
+                    lastIdStationSlot[1] = index;
+                    break;
+                }
+            case CraftTable.Anvil:
+                {
+                    lastIdStationSlot[2] = index;
+                    break;
+                }
+            case CraftTable.Smelter:
+                {
+                    lastIdStationSlot[3] = index;
+                    break;
+                }
+            case CraftTable.God:
+                {
+                    lastIdStationSlot[4] = index;
+                    break;
+                }
+            default:
+                {
+                    curIndexCraft = 0;
+                    break;
+                }
+        }
+
         index = idCrafts[index]; //Получаем Id крафта
         LoadMaterials(index);
     }
