@@ -20,9 +20,9 @@ public class RangeWeaponLogic : WeaponControl
         base.Start();
         defaultShootPos = ShootPos.localPosition;
     }
-    public override void GetStatsWeapon(int damage, float at_speed, float att_sp_pr, bool isRang, float attack_ran, int count_proj, float _spreadAngle, damageT _damT, Transform pl_mod, GameObject _Projectile_pref = null, float att_sp_pr_coof = 0)
+    public override void GetStatsWeapon(int damage, float at_speed_coof,float add_attack_speed, float att_sp_pr, bool isRang, float attack_ran, int count_proj, float _spreadAngle, damageT _damT, Transform pl_mod, GameObject _Projectile_pref = null, float att_sp_pr_coof = 0)
     {
-        base.GetStatsWeapon(damage, at_speed, att_sp_pr, isRang, attack_ran, count_proj, _spreadAngle, _damT, pl_mod, Projectile_pref, att_sp_pr_coof);
+        base.GetStatsWeapon(damage, at_speed_coof, add_attack_speed, att_sp_pr, isRang, attack_ran, count_proj, _spreadAngle, _damT, pl_mod, Projectile_pref, att_sp_pr_coof);
         attack_Speed_Projectile = (att_sp_pr + Player.Instance.GetPlayerStats().Proj_Speed) * att_sp_pr_coof;
         Projectile_pref = _Projectile_pref;
         CountProjectiles = Player.Instance.GetPlayerStats().count_Projectile + count_proj;
@@ -52,9 +52,9 @@ public class RangeWeaponLogic : WeaponControl
         projectile = Instantiate(Projectile_pref, ShootPos);    //Создаем снаряд по префабу
         projectile.transform.position += new Vector3(0, offsetProj);
         proj_set = projectile.GetComponent<PlayerProjectile>();
-        proj_set.damage = attack_damage;//Назначем урон
-        proj_set.maxDistance = attack_range;
-        proj_set.SetStats(attack_range, attack_damage, null, damageType, canBeWeapon.canBeMissed);
+        proj_set.damage = Attack_Damage;//Назначем урон
+        proj_set.maxDistance = Attack_Range;
+        proj_set.SetStats(Attack_Range, Attack_Damage, null, damageType, canBeWeapon.canBeMissed);
 
         projectile.transform.SetParent(transform.root); //Подять в иерархии объекта пули/стрелы
 

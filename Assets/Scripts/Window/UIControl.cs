@@ -275,6 +275,27 @@ public class UIControl:MonoBehaviour
             OpenCraftWindowSurv(CraftTable.None);
             return;
         }
+        else if(LvlUpIsOpen)
+        {
+            OpenLvlUPWindow(false);
+            return;
+        }
+        else if (infoPlayerIsOpened)
+        {
+            OpenInfoPlayer();
+            return;
+        }
+        else if (itemsIsOpened)
+        {
+            OpenListItems();
+            return;
+        }
+        else if (invIsOpened)
+        {
+            OpenInventory();
+            return;
+        }
+
 
         // ”ничтожаем объект только перед загрузкой главного меню
         if (isPaused) Time.timeScale = 1;

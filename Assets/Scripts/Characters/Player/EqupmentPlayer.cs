@@ -55,7 +55,7 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         {
 
             slotWeaponFour.Item = ItemsList.GetItemForNameKey("simple_knife");
-            Debug.LogWarning($"Item: {slotWeaponFour.Item.NameKey} {slotWeaponFour.Item.SpriteID} {ItemsList.items.Count}");
+            //Debug.LogWarning($"Item: {slotWeaponFour.Item.NameKey} {slotWeaponFour.Item.SpriteID} {ItemsList.items.Count}");
             slotWeaponFour.Count = 1;
 
             SlotsManager.UpdateSlotUI(slotWeaponFour);
@@ -196,9 +196,9 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         if (id < 4) // Проверяем, существует ли Prefab перед инстанциированием и id до 4, так как 0 1 2 3 это слоты для оружия
         {
             int idPref = ItemsList.GetIdWeaponForItem(slotsEqup[id].Item);  //Получаем номер оружия из списка всех предметов (нужен порядковый номер оржия чтобы создать подходящий префаб)
-            if(ResourcesData.GetWeaponPrefab(idPref) != null)
+            if(ResourcesData.GetWeaponPrefab(slotsEqup[id].Item.NameKey) != null)
             {
-                GameObject weaponObj = Instantiate(ResourcesData.GetWeaponPrefab(idPref), EquipSlotPrefab[id]);  //Создаем оружие в слот 
+                GameObject weaponObj = Instantiate(ResourcesData.GetWeaponPrefab(slotsEqup[id].Item.NameKey), EquipSlotPrefab[id]);  //Создаем оружие в слот 
                 LoadParametersWeapon(weaponObj, slotsEqup[id]); //Загружаем параметры с слолта в оружие
                 Player.Instance.SetWeaponsObj(id, weaponObj.GetComponent<WeaponControl>()); //Передаем в словарь у игрока в список оружия
                 slots_Weapon[id] = weaponObj; //Словарь в этом классе, пока не используется 
@@ -262,16 +262,16 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         if (slot.Item is Gun gun)
         {
             //Debug.Log($"Gun: {gun.NameKey}: {gun.projectileSpeed}");
-            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(gun.damage, gun.attackSpeed, gun.projectileSpeed, gun.rangeType, gun.range, gun.conut_Projectiles, gun.spreadAngle, gun.typeDamage, PlayerModel,
+            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(gun.damage, gun.attackSpeedCoof,gun.addAttackSpeed, gun.projectileSpeed, gun.rangeType, gun.range, gun.conut_Projectiles, gun.spreadAngle, gun.typeDamage, PlayerModel,
                 ResourcesData.GetProjectilesPrefab(gun.idBulletPref), gun.projectileSpeedCoof);
         }
         else if (slot.Item is MeleWeapon sword)
         {
-            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(sword.damage, sword.attackSpeed, 0, sword.rangeType, sword.range, sword.conut_Projectiles, 0f, sword.typeDamage, PlayerModel, null, 0);
+            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(sword.damage, sword.attackSpeedCoof,sword.addAttackSpeed, 0, sword.rangeType, sword.range, sword.conut_Projectiles, 0f, sword.typeDamage, PlayerModel, null, 0);
         }
         else if (slot.Item is Weapon weapon)
         {
-            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(weapon.damage, weapon.attackSpeed, 0, weapon.rangeType, weapon.range, weapon.conut_Projectiles, 0f, weapon.typeDamage, PlayerModel, null,0);
+            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(weapon.damage, weapon.attackSpeedCoof, weapon.addAttackSpeed, 0, weapon.rangeType, weapon.range, weapon.conut_Projectiles, 0f, weapon.typeDamage, PlayerModel, null,0);
         }
     }
     private void LoadParametersMinion(GameObject minionObj, Slot slot)

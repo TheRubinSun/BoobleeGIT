@@ -46,7 +46,7 @@ public class SpearLogic : MeleWeaponLogic
 
         Vector2 windupRightPos = (Vector2)transform.position + windupOffset;
 
-        Vector2 midAttackPos = (Vector2)transform.position + attackDirection * attack_range;
+        Vector2 midAttackPos = (Vector2)transform.position + attackDirection * Attack_Range;
 
         // Устанавливаем минимальный интервал
         float maxInterval = 1.5f;

@@ -342,8 +342,12 @@ public class DisplayInfo: MonoBehaviour
         {
             info.AppendLine($"{word_damageType}: {weapon.typeDamage}");
             info.AppendLine($"{word_damage}: {weapon.damage} {SetStyleLine(GlobalColors.Hh_AddInfo, 10, $"+ {pl_stat.Att_Damage} {word_Damage} {word_player}")}");
-            info.AppendLine($"{word_attacks_speed}: {weapon.attackSpeed} {SetStyleLine(GlobalColors.Hh_AddInfo, 10, $"* {pl_stat.Att_Speed} {word_AttSpeed} {word_player}")}");
-            info.AppendLine($"{word_attacks_intervals}: {(60f / (weapon.attackSpeed * pl_stat.Att_Speed)).ToString("F2")} {SetStyleLine(GlobalColors.Hh_AddInfo, 10, $"= 60 / {word_attacks_speed} * {pl_stat.Att_Speed} {word_AttSpeed} {word_player}")}");
+
+            int finally_AttackSpeed = weapon.addAttackSpeed + pl_stat.Att_Speed;
+            info.AppendLine($"{word_attacks_speed}: {weapon.addAttackSpeed} {SetStyleLine(GlobalColors.Hh_AddInfo, 10, $"+ {pl_stat.Att_Speed} {word_AttSpeed} {word_player}")}");
+            info.AppendLine($"{word_attacks_speed}: {weapon.attackSpeedCoof} {SetStyleLine(GlobalColors.Hh_AddInfo, 10, $"* {finally_AttackSpeed} {word_AttSpeed} {word_player}")}");
+
+            info.AppendLine($"{word_attacks_intervals}: {(60f / ((finally_AttackSpeed) * weapon.attackSpeedCoof)).ToString("F2")} {SetStyleLine(GlobalColors.Hh_AddInfo, 10, $"= 60 / {word_attacks_speed} * {pl_stat.Att_Speed} {word_AttSpeed} {word_player}")}");
             info.AppendLine($"{word_range}: {weapon.range}  {SetStyleLine(GlobalColors.Hh_AddInfo, 10, $"= {weapon.range} + {pl_stat.Att_Range} {word_AttRange} {word_player}")}");
             //attack_ran + (Player.Instance.GetPlayerStats().Att_Range/2)
         }

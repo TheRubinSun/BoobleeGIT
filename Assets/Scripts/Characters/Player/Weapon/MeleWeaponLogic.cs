@@ -38,7 +38,7 @@ public class MeleWeaponLogic : WeaponControl
             BaseEnemyLogic enemy = collision.GetComponent<BaseEnemyLogic>();
             if (enemy != null)
             {
-                enemy.TakeDamage(attack_damage, damageType, canBeWeapon.canBeMissed);
+                enemy.TakeDamage(Attack_Damage, damageType, canBeWeapon.canBeMissed);
             }
         }
         else

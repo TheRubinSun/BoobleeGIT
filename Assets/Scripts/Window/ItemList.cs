@@ -55,52 +55,58 @@ public static class ItemsList
     private static void InitializeItems()
     {
         items.Clear();
-        if (items.Count == 0) items.Add(new Item(0, "item_none", 0, items.Count, Quality.None,0, ""));
-        items.Add(new MeleWeapon(1, "sword_gods_slayer", 1, items.Count, Quality.Legendary,1000, "_", false, 1f, damageT.Physical, 5, 0.9f, 1));
-        items.Add(new Gun(2, "gun_makarov", 1, items.Count, Quality.Rare, 100,              "_", true, 4f, damageT.Physical, 2, 1f, 1, 12f, 1.0f, 5f, 0));
-        items.Add(new Food(3, "item_meat", 20, items.Count, Quality.Common, 1, "_", 1, 5, 15, "Heal", 1));
-        items.Add(new HealPotion(4, "item_potion_hp", 20, items.Count, Quality.Uncommon, 30, "_", 8));
-        items.Add(new Item(5, "armor_armor", 1, items.Count, Quality.Common,300, "_", TypeItem.Armor));
-        items.Add(new Minion(6, "minion_robot_es", 1, items.Count, Quality.Rare,500, "_", TypeItem.Minion, 5f, 6f, 2f,TypeMob.Technology));
-        items.Add(new Item(7, "material_chip_one", 20, items.Count, Quality.Uncommon, 15, "_", TypeItem.Material));
-        items.Add(new Item(8, "material_gear_one", 20, items.Count, Quality.Common, 5, "_", TypeItem.Material));
-        items.Add(new Item(9, "material_dif_parts_one", 20, items.Count, Quality.Rare, 50, "_", TypeItem.Material));
-        items.Add(new Item(10, "sword_parts_one", 20, items.Count, Quality.Mystical, 200, "_", TypeItem.Material));
-        items.Add(new Item(11, "bow_parts_one", 20, items.Count, Quality.Mystical, 200, "_", TypeItem.Material));
-        items.Add(new Mine(12, "trap_mine", 10, items.Count, Quality.Rare, 40, "_", 0, 15, damageT.Technical, 1.5f, 0.5f));
-        items.Add(new Gun(13, "bow_simple", 1, items.Count, Quality.Mystical, 600, "_", true, 6f, damageT.Physical, 10, 1f, 1, 8f, 0.5f, 5f, 2));
-        items.Add(new Gun(14, "shotgun_pump", 1, items.Count, Quality.Rare, 400, "_", true, 2f, damageT.Physical, 3, 0.7f, 4, 10f, 1f, 15f, 1));
-        items.Add(new Minion(15, "minion_mage_es", 1, items.Count, Quality.Rare, 500, "_", TypeItem.Minion, 4f, 6f, 2f, TypeMob.Magic));
-        items.Add(new MeleWeapon(16, "soldier_spear", 1, items.Count, Quality.Rare, 200, "_", false, 0.5f, damageT.Physical, 2, 0.8f, 1));
-        items.Add(new MeleWeapon(17, "simple_knife", 1, items.Count, Quality.Uncommon, 100, "_", false, 0.25f, damageT.Physical, 2, 0.8f, 1));
-        items.Add(new SpeedUpPotion(18, "item_potion_speed", 20, items.Count, Quality.Rare, 50, "_", 1, 10, "SpeedUp", 5));
-        items.Add(new Item(19, "material_iron_bar", 20, items.Count, Quality.Common, 20, "_", TypeItem.Material));
-        items.Add(new MeleWeapon(20, "axe_woodcutter", 1, items.Count, Quality.Common, 250, "_", false, 0.2f, damageT.Physical, 1, 1f, 1));
-        items.Add(new Item(21, "material_wood", 20, items.Count, Quality.Common, 3, "_", TypeItem.Material));
-        items.Add(new Item(22, "material_bottle", 20, items.Count, Quality.Common, 3, "_", TypeItem.Material));
-        items.Add(new Item(23, "material_sunflower", 20, items.Count, Quality.Common, 3, "_", TypeItem.Material));
-        items.Add(new Item(24, "material_rubin", 20, items.Count, Quality.Rare, 120, "_", TypeItem.Material));
-        items.Add(new Item(25, "material_rubin_piece", 200, items.Count, Quality.Uncommon, 5, "_", TypeItem.Material));
-        items.Add(new Item(26, "material_glass", 20, items.Count, Quality.Common, 15, "_", TypeItem.Material));
-        items.Add(new Item(27, "material_someone_eye", 20, items.Count, Quality.Uncommon, 35, "_", TypeItem.Material));
-        items.Add(new Item(28, "material_strange_eye", 20, items.Count, Quality.Mystical, 350, "_", TypeItem.Material));
-        items.Add(new ArtifactItem(29, "artifact_simple_ring", 1, items.Count, Quality.Uncommon, 100, "_", TypeItem.Artifact, 1));
-        items.Add(new ArtifactItem(30, "artifact_eye_ring", 1, items.Count, Quality.Rare, 300, "_", TypeItem.Artifact, 5));
-        items.Add(new Item(31, "material_tooth_mimic", 100, items.Count, Quality.Uncommon, 50, "_", TypeItem.Material));
-        items.Add(new Item(32, "material_tongue_mimic", 20, items.Count, Quality.Mystical, 1000, "_", TypeItem.Material));
+        if (items.Count == 0) items.Add(new Item(0, "item_none", 0, 0, Quality.None, 0, ""));
+        items.Add(new MeleWeapon(1, "sword_gods_slayer", 1, 0, Quality.Mystical, 1000, "_", false, 1f, damageT.Physical,    5, 0.8f,    30, 1));
+        items.Add(new MeleWeapon(20, "axe_woodcutter",   1, 0, Quality.Common, 250, "_",     false, 0.2f, damageT.Physical,  1, 1f,      40, 1));
+        items.Add(new MeleWeapon(16, "soldier_spear",    1, 0, Quality.Uncommon, 200, "_",       false, 0.55f, damageT.Physical,  2, 0.75f,  40, 1));
+        items.Add(new MeleWeapon(17, "simple_knife",     1, 0, Quality.Common, 100, "_",   false, 0.32f, damageT.Physical, 2, 0.7f,    50, 1));
+
+        items.Add(new Gun(2,  "gun_makarov",  1, 0, Quality.Rare, 100, "_",     true, 4f, damageT.Physical, 2,  0.7f, 40, 1, 12f, 1.0f, 5f, 0));
+        items.Add(new Gun(13, "bow_simple",   1, 0, Quality.Mystical, 600, "_", true, 6f, damageT.Physical, 10, 0.7f, 30, 1, 8f,  0.5f, 5f, 2));
+        items.Add(new Gun(14, "shotgun_pump", 1, 0, Quality.Rare, 400, "_",     true, 2f, damageT.Physical, 3,  0.6f, 40, 4, 10f, 1f,  15f, 1));
+
+        items.Add(new Food(3, "item_meat",                     20, 0, Quality.Common, 1, "_", 1, 5, 15, "Heal", 1));
+        items.Add(new HealPotion(4, "item_potion_hp",          20, 0, Quality.Uncommon, 30, "_", 8));
+        items.Add(new Item(5, "armor_armor",                   1, 0, Quality.Common, 300, "_", TypeItem.Armor));
+        items.Add(new Minion(6, "minion_robot_es",             1, 0, Quality.Rare, 500, "_", TypeItem.Minion, 5f, 6f, 2f, TypeMob.Technology));
+        items.Add(new Item(7, "material_chip_one",             20, 0, Quality.Uncommon, 15, "_", TypeItem.Material));
+        items.Add(new Item(8, "material_gear_one",             20, 0, Quality.Common, 5, "_", TypeItem.Material));
+        items.Add(new Item(9, "material_dif_parts_one",        20, 0, Quality.Rare, 50, "_", TypeItem.Material));
+        items.Add(new Item(10, "sword_parts_one",              20, 0, Quality.Mystical, 200, "_", TypeItem.Material));
+        items.Add(new Item(11, "bow_parts_one",                20, 0, Quality.Mystical, 200, "_", TypeItem.Material));
+        items.Add(new Mine(12, "trap_mine",                    10, 0, Quality.Rare, 40, "_", 0, 15, damageT.Technical, 1.5f, 0.5f));
+        items.Add(new Minion(15, "minion_mage_es",             1, 0, Quality.Rare, 500, "_", TypeItem.Minion, 4f, 6f, 2f, TypeMob.Magic));
+        items.Add(new SpeedUpPotion(18, "item_potion_speed",   20, 0, Quality.Rare, 50, "_", 1, 10, "SpeedUp", 5));
+        items.Add(new Item(19, "material_iron_bar",            20, 0, Quality.Common, 20, "_", TypeItem.Material));
+        items.Add(new Item(21, "material_wood",                20, 0, Quality.Common, 3, "_", TypeItem.Material));
+        items.Add(new Item(22, "material_bottle",              20, 0, Quality.Common, 3, "_", TypeItem.Material));
+        items.Add(new Item(23, "material_sunflower",           20, 0, Quality.Common, 3, "_", TypeItem.Material));
+        items.Add(new Item(24, "material_rubin",               20, 0, Quality.Rare, 120, "_", TypeItem.Material));
+        items.Add(new Item(25, "material_rubin_piece",         200, 0, Quality.Uncommon, 5, "_", TypeItem.Material));
+        items.Add(new Item(26, "material_glass",               20, 0, Quality.Common, 15, "_", TypeItem.Material));
+        items.Add(new Item(27, "material_someone_eye",         20, 0, Quality.Uncommon, 35, "_", TypeItem.Material));
+        items.Add(new Item(28, "material_strange_eye",         20, 0, Quality.Mystical, 350, "_", TypeItem.Material));
+        items.Add(new ArtifactItem(29, "artifact_simple_ring", 1, 0, Quality.Uncommon, 100, "_", TypeItem.Artifact, 1));
+        items.Add(new ArtifactItem(30, "artifact_eye_ring",    1, 0, Quality.Rare, 300, "_", TypeItem.Artifact, 5));
+        items.Add(new Item(31, "material_tooth_mimic",         100, 0, Quality.Uncommon, 50, "_", TypeItem.Material));
+        items.Add(new Item(32, "material_tongue_mimic",        20, 0, Quality.Mystical, 1000, "_", TypeItem.Material));
         //PrintItemList();
     }
     private static void InitializeSpritesItem()
     {
         for(int i = 1;i<items.Count;i++)
         {
-            if (items[i].SpriteID < spriteList.Length)
+
+            if (items[i].Id < spriteList.Length)
             {
-                items[i].SetSprite(spriteList[items[i].SpriteID]);
+                if(items[i].SpriteID != 0) items[i].SetSprite(spriteList[items[i].SpriteID]); //Если записан какой-то другой id sprite не по порядку, то берем его
+
+                else items[i].SetSprite(spriteList[items[i].Id]); //Иначе берем по ID предмета спрайт, так как там по порядку идут
+
             }
             else
             {
-                Debug.LogWarning($"[ItemsList] Спрайт не найден для предмета ID={items[i].Id}, SpriteID={items[i].SpriteID}");
+                Debug.LogWarning($"[ItemsList] Спрайт не найден для предмета ID={items[i].Id}, SpriteID={items[i].Id}");
             }
         }
     }

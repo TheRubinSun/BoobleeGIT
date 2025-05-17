@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ResourcesData : MonoBehaviour 
 {
-    public static Dictionary<int, GameObject> weapons = new Dictionary<int, GameObject>();
+    public static Dictionary<string, GameObject> weapons = new Dictionary<string, GameObject>();
     public static Dictionary<int, GameObject> projectiles = new Dictionary<int, GameObject>();
     public static Dictionary<int, GameObject> mobsProjectiles = new Dictionary<int, GameObject>();
     public static Dictionary<int, GameObject> minions = new Dictionary<int, GameObject>();
@@ -12,13 +12,17 @@ public class ResourcesData : MonoBehaviour
     public static Dictionary<int, EffectData> effects = new Dictionary<int, EffectData>();
     public static void LoadWeapons()
     {
-        weapons[0] = Resources.Load<GameObject>("Weapons/Sword_God_Pref");
-        weapons[1] = Resources.Load<GameObject>("Weapons/Pistol_Mark_Pref");
-        weapons[2] = Resources.Load<GameObject>("Weapons/Bow_simple");
-        weapons[3] = Resources.Load<GameObject>("Weapons/ShotGun_pump");
-        weapons[4] = Resources.Load<GameObject>("Weapons/Soldier's spear");
-        weapons[5] = Resources.Load<GameObject>("Weapons/Simple_knife");
-        weapons[6] = Resources.Load<GameObject>("Weapons/Axe_woodcut_Pref");
+        weapons["sword_gods_slayer"] = Resources.Load<GameObject>("Weapons/Sword_God_Pref");
+        weapons["axe_woodcutter"] = Resources.Load<GameObject>("Weapons/Axe_woodcut_Pref");
+        weapons["soldier_spear"] = Resources.Load<GameObject>("Weapons/Soldier's spear");
+        weapons["simple_knife"] = Resources.Load<GameObject>("Weapons/Simple_knife");
+
+        weapons["gun_makarov"] = Resources.Load<GameObject>("Weapons/Pistol_Mark_Pref");
+        weapons["bow_simple"] = Resources.Load<GameObject>("Weapons/Bow_simple");
+        weapons["shotgun_pump"] = Resources.Load<GameObject>("Weapons/ShotGun_pump");
+
+
+
 
         projectiles[0] = Resources.Load<GameObject>("Projectiles/Pistol_Bullet");
         projectiles[1] = Resources.Load<GameObject>("Projectiles/Shotgun_Bullet");
@@ -42,15 +46,15 @@ public class ResourcesData : MonoBehaviour
         effects[3] = Resources.Load<EffectData>("Effects/Posion_SmallSlime");
         effects[4] = Resources.Load<EffectData>("Effects/Posion_BossSlime");
 
-        if (weapons[0] == null)
+        if (weapons["sword_gods_slayer"] == null)
             Debug.LogError("Не удалось загрузить префаб Sword_God_Pref!");
-        if (weapons[1] == null)
+        if (weapons["gun_makarov"] == null)
             Debug.LogError("Не удалось загрузить префаб Pistol_Mark_Pref!");
     }
 
-    public static GameObject GetWeaponPrefab(int id)
+    public static GameObject GetWeaponPrefab(string nameKey)
     {
-        return weapons.ContainsKey(id) ? weapons[id] : null;
+        return weapons.ContainsKey(nameKey) ? weapons[nameKey] : null;
     }
     public static GameObject GetProjectilesPrefab(int id)
     {

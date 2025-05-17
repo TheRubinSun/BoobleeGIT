@@ -284,7 +284,7 @@ public class DragAndDrop:MonoBehaviour
         }
         else //Если один и тот же слот, возвращаем предмет обратно
         {
-            if (oldSlot == newSlot && tempSlot.Item != newSlot.Item) return false; //Если предметы разные и менять некуда (баг после крафта)
+            if (oldSlot == newSlot && tempSlot.Item != newSlot.Item && newSlot.Item != ItemsList.GetNoneItem()) return false; //Если предметы разные и менять некуда (баг после крафта)
             if (oldSlot.Count == 0)
             {
                 Inventory.Instance.SwapSlots(oldSlot, tempSlot); //Меняем местами слоты
