@@ -1,11 +1,11 @@
-using System.Collections;
+ï»¿using System.Collections;
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class AxeLogic : MeleWeaponLogic
 {
-    [SerializeField] protected float arcHeight = 0.4f; // ×óòü ìåíüøå äóãà äëÿ ëó÷øåé àíèìàöèè
-    [SerializeField] protected float maxRotationAngle = 120f; // Ìåíüøå óãîë, ÷òîáû íå áûëî "ïåðåêðó÷èâàíèÿ"
+    [SerializeField] protected float arcHeight = 0.4f; // Ð§ÑƒÑ‚ÑŒ Ð¼ÐµÐ½ÑŒÑˆÐµ Ð´ÑƒÐ³Ð° Ð´Ð»Ñ Ð»ÑƒÑ‡ÑˆÐµÐ¹ Ð°Ð½Ð¸Ð¼Ð°Ñ†Ð¸Ð¸
+    [SerializeField] protected float maxRotationAngle = 120f; // ÐœÐµÐ½ÑŒÑˆÐµ ÑƒÐ³Ð¾Ð», Ñ‡Ñ‚Ð¾Ð±Ñ‹ Ð½Ðµ Ð±Ñ‹Ð»Ð¾ "Ð¿ÐµÑ€ÐµÐºÑ€ÑƒÑ‡Ð¸Ð²Ð°Ð½Ð¸Ñ"
 
     [SerializeField] protected float animVzmax = 0.1f;
     [SerializeField] protected float animStartAttack = 0.3f;
@@ -15,6 +15,7 @@ public class AxeLogic : MeleWeaponLogic
     {
         base.Start();
         canBeWeapon.canBeAxe = true;
+        canBeWeapon.canBeCut = true;
     }
     public override void Attack()
     {
@@ -22,16 +23,16 @@ public class AxeLogic : MeleWeaponLogic
     }
     protected override void MeleeAttack()
     {
-        // Çàïóñêàåì àíèìàöèþ ìå÷à ñ èçìåíåíèåì óãëà â ïðåäåëàõ çàäàííîé ñêîðîñòè
+        // Ð—Ð°Ð¿ÑƒÑÐºÐ°ÐµÐ¼ Ð°Ð½Ð¸Ð¼Ð°Ñ†Ð¸ÑŽ Ð¼ÐµÑ‡Ð° Ñ Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸ÐµÐ¼ ÑƒÐ³Ð»Ð° Ð² Ð¿Ñ€ÐµÐ´ÐµÐ»Ð°Ñ… Ð·Ð°Ð´Ð°Ð½Ð½Ð¾Ð¹ ÑÐºÐ¾Ñ€Ð¾ÑÑ‚Ð¸
 
         int idSound = PlaySounds();
         StartCoroutine(SwordAttackCoroutine(idSound));
     }
     protected int PlaySounds()
     {
-        // ÷åì ìåíüøå attackInterval, òåì âûøå pitch
+        // Ñ‡ÐµÐ¼ Ð¼ÐµÐ½ÑŒÑˆÐµ attackInterval, Ñ‚ÐµÐ¼ Ð²Ñ‹ÑˆÐµ pitch
         float speedFactor = Mathf.Clamp(1f / attackInterval, 0.65f, 1.5f);
-        // Äîáàâëÿåì íåìíîãî ñëó÷àéíîñòè
+        // Ð”Ð¾Ð±Ð°Ð²Ð»ÑÐµÐ¼ Ð½ÐµÐ¼Ð½Ð¾Ð³Ð¾ ÑÐ»ÑƒÑ‡Ð°Ð¹Ð½Ð¾ÑÑ‚Ð¸
         audioSource_Shot.pitch = speedFactor + Random.Range(-pitchRange, pitchRange);
 
         int num_rand = 0;
@@ -40,18 +41,18 @@ public class AxeLogic : MeleWeaponLogic
             num_rand = Random.Range(0, audioClips.Length);
         }
         return num_rand;
-        //audioSource_Shot.PlayOneShot(audioClips[num_rand]); //Çâóê Ìå÷à
+        //audioSource_Shot.PlayOneShot(audioClips[num_rand]); //Ð—Ð²ÑƒÐº ÐœÐµÑ‡Ð°
     }
     protected IEnumerator SwordAttackCoroutine(int idSound)
     {
-        Vector2 startPos = transform.parent.position; // Íà÷àëüíàÿ ïîçèöèÿ
-        // Îïðåäåëÿåì íàïðàâëåíèå àòàêè (â ñòîðîíó ìûøè èëè èãðîêà)
+        Vector2 startPos = transform.parent.position; // ÐÐ°Ñ‡Ð°Ð»ÑŒÐ½Ð°Ñ Ð¿Ð¾Ð·Ð¸Ñ†Ð¸Ñ
+        // ÐžÐ¿Ñ€ÐµÐ´ÐµÐ»ÑÐµÐ¼ Ð½Ð°Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸Ðµ Ð°Ñ‚Ð°ÐºÐ¸ (Ð² ÑÑ‚Ð¾Ñ€Ð¾Ð½Ñƒ Ð¼Ñ‹ÑˆÐ¸ Ð¸Ð»Ð¸ Ð¸Ð³Ñ€Ð¾ÐºÐ°)
         Vector2 attackDirection = AttackDirectionOrVector
             ? GetDirection(transform.parent.position, PlayerModel.position).normalized
             : GetDirection(mousePos, transform.position).normalized;
-        Vector2 attackNormal = new Vector2(-attackDirection.y, attackDirection.x); // Íîðìàëü ê íàïðàâëåíèþ àòàêè
+        Vector2 attackNormal = new Vector2(-attackDirection.y, attackDirection.x); // ÐÐ¾Ñ€Ð¼Ð°Ð»ÑŒ Ðº Ð½Ð°Ð¿Ñ€Ð°Ð²Ð»ÐµÐ½Ð¸ÑŽ Ð°Ñ‚Ð°ÐºÐ¸
 
-        // Îñíîâíûå òî÷êè äëÿ çàìàõà  
+        // ÐžÑÐ½Ð¾Ð²Ð½Ñ‹Ðµ Ñ‚Ð¾Ñ‡ÐºÐ¸ Ð´Ð»Ñ Ð·Ð°Ð¼Ð°Ñ…Ð°  
         float windupAngle = 60f;
         Quaternion windupRotation = Quaternion.AngleAxis(windupAngle, Vector3.forward);
         Vector2 windupOffset = windupRotation * (-attackDirection) * 0.5f;
@@ -60,38 +61,45 @@ public class AxeLogic : MeleWeaponLogic
 
         Vector2 midAttackPos = (Vector2)transform.position + attackDirection * Attack_Range;
 
-        // Óñòàíàâëèâàåì ìèíèìàëüíûé èíòåðâàë
+        // Ð£ÑÑ‚Ð°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÐ¼ Ð¼Ð¸Ð½Ð¸Ð¼Ð°Ð»ÑŒÐ½Ñ‹Ð¹ Ð¸Ð½Ñ‚ÐµÑ€Ð²Ð°Ð»
         float maxInterval = 1.5f;
         float adjustedInterval = Mathf.Min(attackInterval, maxInterval);
 
-        //Ïàðàìåòðû
+        //ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹
 
         float startRotation = transform.eulerAngles.z;
-        IsAttack = true;
-
-        //Ôàçà âçìàõà, íà÷àëî àòàêàè, êîíåö àòàêè, âîçâðàò ìå÷à 
+        //IsAttack = true;
+        col_weap.enabled = true;
+        //Ð¤Ð°Ð·Ð° Ð²Ð·Ð¼Ð°Ñ…Ð°, Ð½Ð°Ñ‡Ð°Ð»Ð¾ Ð°Ñ‚Ð°ÐºÐ°Ð¸, ÐºÐ¾Ð½ÐµÑ† Ð°Ñ‚Ð°ÐºÐ¸, Ð²Ð¾Ð·Ð²Ñ€Ð°Ñ‚ Ð¼ÐµÑ‡Ð° 
         yield return AnimatePhase(startPos, windupRightPos, startRotation, startRotation - maxRotationAngle, arcHeight * 0.5f, windupDuration());
         audioSource_Shot.PlayOneShot(audioClips[idSound]);
+        //ManualHitDetection(midAttackPos, 0.8f); // â† Ñ€Ð°Ð´Ð¸ÑƒÑ Ð¿Ð¾Ð´Ð±Ð¾Ñ€Ð° (Ð¼Ð¾Ð¶Ð½Ð¾ Ð²Ð°Ñ€ÑŒÐ¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ)
 
         yield return AnimatePhase(windupRightPos, midAttackPos, startRotation - maxRotationAngle, startRotation, -arcHeight, attackRightDuration());
-        startPos = transform.parent.position; // Íà÷àëüíàÿ ïîçèöèÿ - åñëè ðîäèòåëü ñäâèíóëñÿ
+        startPos = transform.parent.position; // ÐÐ°Ñ‡Ð°Ð»ÑŒÐ½Ð°Ñ Ð¿Ð¾Ð·Ð¸Ñ†Ð¸Ñ - ÐµÑÐ»Ð¸ Ñ€Ð¾Ð´Ð¸Ñ‚ÐµÐ»ÑŒ ÑÐ´Ð²Ð¸Ð½ÑƒÐ»ÑÑ
         Vector2 windupLeftPos = startPos - windupOffset;
+        //ManualHitDetection(midAttackPos, 0.8f); // â† Ñ€Ð°Ð´Ð¸ÑƒÑ Ð¿Ð¾Ð´Ð±Ð¾Ñ€Ð° (Ð¼Ð¾Ð¶Ð½Ð¾ Ð²Ð°Ñ€ÑŒÐ¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ)
 
         yield return AnimatePhase(midAttackPos, windupLeftPos, startRotation, startRotation + maxRotationAngle, arcHeight, attackBackDuration());
-        startPos = transform.parent.position; // Íà÷àëüíàÿ ïîçèöèÿ - åñëè ðîäèòåëü ñäâèíóëñÿ
+        startPos = transform.parent.position; // ÐÐ°Ñ‡Ð°Ð»ÑŒÐ½Ð°Ñ Ð¿Ð¾Ð·Ð¸Ñ†Ð¸Ñ - ÐµÑÐ»Ð¸ Ñ€Ð¾Ð´Ð¸Ñ‚ÐµÐ»ÑŒ ÑÐ´Ð²Ð¸Ð½ÑƒÐ»ÑÑ
+        //ManualHitDetection(midAttackPos, 0.8f); // â† Ñ€Ð°Ð´Ð¸ÑƒÑ Ð¿Ð¾Ð´Ð±Ð¾Ñ€Ð° (Ð¼Ð¾Ð¶Ð½Ð¾ Ð²Ð°Ñ€ÑŒÐ¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ)
 
         yield return AnimatePhase(windupLeftPos, startPos, startRotation + maxRotationAngle, startRotation, 0, returnDuration());
+        //ManualHitDetection(midAttackPos, 0.8f); // â† Ñ€Ð°Ð´Ð¸ÑƒÑ Ð¿Ð¾Ð´Ð±Ð¾Ñ€Ð° (Ð¼Ð¾Ð¶Ð½Ð¾ Ð²Ð°Ñ€ÑŒÐ¸Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ)
+
+        col_weap.enabled = false;
 
         transform.position = transform.parent.position;
         transform.rotation = Quaternion.Euler(0, 0, startRotation);
         ResetHitEnemies();
-        IsAttack = false;
+        //IsAttack = false;
 
-        // ===== Ëîêàëüíûå ôóíêöèè =====
+        // ===== Ð›Ð¾ÐºÐ°Ð»ÑŒÐ½Ñ‹Ðµ Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¸ =====
         float windupDuration() => adjustedInterval * animVzmax;
         float attackRightDuration() => adjustedInterval * animStartAttack;
         float attackBackDuration() => adjustedInterval * animEndAttack;
         float returnDuration() => adjustedInterval * animReturnPos;
+        
 
         IEnumerator AnimatePhase(Vector2 from, Vector2 to, float rotatFrom, float rotatTo, float arcFactor, float duration)
         {
@@ -108,4 +116,5 @@ public class AxeLogic : MeleWeaponLogic
             }
         }
     }
+    
 }

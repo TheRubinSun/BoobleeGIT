@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class SoundsManager : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class SoundsManager : MonoBehaviour
             return;
         }
         Instance = this;
+        volume = GlobalData.VOLUME_SOUNDS;
         audioSource.volume = volume;
         audioSource.ignoreListenerPause = true; // Звук будет играть даже в паузе!
     }

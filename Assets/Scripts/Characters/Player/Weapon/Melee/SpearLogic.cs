@@ -6,6 +6,11 @@ public class SpearLogic : MeleWeaponLogic
 {
     [SerializeField] protected float animStartAttack = 0.3f;
     [SerializeField] protected float animEndAttack = 0.5f;
+    protected override void Start()
+    {
+        base.Start();
+        canBeWeapon.canBeCut = true;
+    }
     public override void Attack()
     {
         base.Attack();
@@ -55,10 +60,12 @@ public class SpearLogic : MeleWeaponLogic
         //Параметры
 
         float startRotation = transform.eulerAngles.z;
-        IsAttack = true;
+        //IsAttack = true;
 
         audioSource_Shot.PlayOneShot(audioClips[idSound]);
         //Взмах
+        col_weap.enabled = true;
+
         yield return AnimatePhase(startPos, midAttackPos, attackDuration());
 
 
@@ -67,10 +74,12 @@ public class SpearLogic : MeleWeaponLogic
         //Возврат
         yield return AnimatePhase(midAttackPos, startPos, returnDuration());
 
+        col_weap.enabled = false;
+
         transform.position = transform.parent.position;
         transform.rotation = Quaternion.Euler(0, 0, startRotation);
 
-        IsAttack = false;
+        //IsAttack = false;
         ResetHitEnemies();
         
 

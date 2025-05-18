@@ -109,6 +109,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6dcb7194c813fd84d941b39638928272, type: 3}
   - {fileID: 8300000, guid: 11032f1622ca32141938226d76481460, type: 3}
   fullBroken: {fileID: 8300000, guid: eade12cd5b5038046925a883864d679b, type: 3}
+  itemsDrop:
+  - item_key: material_iron_bar
+    min: 0
+    max: 1
 --- !u!61 &3098389959272517242
 BoxCollider2D:
   m_ObjectHideFlags: 0

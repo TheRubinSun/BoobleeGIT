@@ -10,6 +10,11 @@ public class SwordLogic : MeleWeaponLogic
     [SerializeField] protected float animStartAttack = 0.3f;
     [SerializeField] protected float animEndAttack = 0.3f;
     [SerializeField] protected float animReturnPos = 0.1f;
+    protected override void Start()
+    {
+        base.Start();
+        canBeWeapon.canBeCut = true;
+    }
     public override void Attack()
     {
         base.Attack();
@@ -38,7 +43,7 @@ public class SwordLogic : MeleWeaponLogic
     }
     protected IEnumerator SwordAttackCoroutine(int idSound)
     {
-        IsAttack = true;
+        //IsAttack = true;
         Vector2 startPos = transform.parent.position; // Начальная позиция
         // Определяем направление атаки (в сторону мыши или игрока)
         Vector2 attackDirection = AttackDirectionOrVector
@@ -62,7 +67,8 @@ public class SwordLogic : MeleWeaponLogic
         //Параметры
 
         float startRotation = transform.eulerAngles.z;
-        
+
+        col_weap.enabled = true;
 
         //Фаза взмаха, начало атакаи, конец атаки, возврат меча 
         yield return AnimatePhase(startPos, windupRightPos, startRotation, startRotation - maxRotationAngle, arcHeight * 0.5f, windupDuration());
@@ -77,10 +83,14 @@ public class SwordLogic : MeleWeaponLogic
 
         yield return AnimatePhase(windupLeftPos, startPos, startRotation + maxRotationAngle, startRotation, 0, returnDuration());
 
+        col_weap.enabled = false;
+
         transform.position = transform.parent.position;
         transform.rotation = Quaternion.Euler(0, 0, startRotation);
         ResetHitEnemies();
-        IsAttack = false;
+
+
+        //IsAttack = false;
 
         // ===== Локальные функции =====
         float windupDuration() => adjustedInterval * animVzmax;

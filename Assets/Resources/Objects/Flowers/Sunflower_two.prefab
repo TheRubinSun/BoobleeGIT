@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2403298566602668848
+--- !u!1 &294128056547279690
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,26 +8,26 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5602464058556343175}
-  - component: {fileID: 4419370200962542185}
-  - component: {fileID: -4012462173478922615}
-  - component: {fileID: 6757492980838664436}
-  - component: {fileID: 3230300700553814094}
-  - component: {fileID: 2924276965934133670}
+  - component: {fileID: 1587097921260616462}
+  - component: {fileID: 3447455876865029177}
+  - component: {fileID: 2471752485526426815}
+  - component: {fileID: 537814440007233801}
+  - component: {fileID: 863736202380144601}
+  - component: {fileID: 7520884781995511583}
   m_Layer: 19
-  m_Name: Vase_two (1)
+  m_Name: Sunflower_two
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
---- !u!4 &5602464058556343175
+--- !u!4 &1587097921260616462
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2403298566602668848}
+  m_GameObject: {fileID: 294128056547279690}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -36,13 +36,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &4419370200962542185
+--- !u!212 &3447455876865029177
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2403298566602668848}
+  m_GameObject: {fileID: 294128056547279690}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -80,46 +80,47 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 373657860, guid: 0968bbbb8d3fa0f44bdf637e815a6392, type: 3}
+  m_Sprite: {fileID: -7283420898087826543, guid: 596efb0636c1fd2458f74354cad18b57, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.24, y: 0.4}
+  m_Size: {x: 0.4, y: 1.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-4012462173478922615
+--- !u!114 &2471752485526426815
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2403298566602668848}
+  m_GameObject: {fileID: 294128056547279690}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10517414469b2524797834ad952d2ad8, type: 3}
+  m_Script: {fileID: 11500000, guid: 390089f32b7c0994c986cddb87e052df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  remainsHits: 4
+  remainsHits: 2
   toNextStageAnim: 1
   soundsBroken:
-  - {fileID: 8300000, guid: 6dcb7194c813fd84d941b39638928272, type: 3}
-  - {fileID: 8300000, guid: 11032f1622ca32141938226d76481460, type: 3}
-  fullBroken: {fileID: 8300000, guid: eade12cd5b5038046925a883864d679b, type: 3}
+  - {fileID: 8300000, guid: 1b40ded6ccbeade49a550de71431e2a2, type: 3}
+  - {fileID: 8300000, guid: d335f1dc4d6d6544bb1211f6414fcdb4, type: 3}
+  - {fileID: 8300000, guid: 6cddb74011dd4074cb0ba5eff1798a40, type: 3}
+  fullBroken: {fileID: 8300000, guid: f35ab162af0412b4495d87fc28894a8d, type: 3}
   itemsDrop:
-  - item_key: material_iron_bar
-    min: 0
-    max: 1
---- !u!61 &6757492980838664436
+  - item_key: material_sunflower
+    min: 1
+    max: 2
+--- !u!61 &537814440007233801
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2403298566602668848}
+  m_GameObject: {fileID: 294128056547279690}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -143,51 +144,29 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.05}
+  m_Offset: {x: -0.026024744, y: -0.08855158}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.24, y: 0.4}
-    newSize: {x: 0.24, y: 0.4}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 0.4, y: 1.2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.18, y: 0.27}
+  m_Size: {x: 0.32168087, y: 0.63110936}
   m_EdgeRadius: 0
---- !u!95 &3230300700553814094
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2403298566602668848}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 490c997060ed588438b3a80cc23e26da, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!82 &2924276965934133670
+--- !u!82 &863736202380144601
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2403298566602668848}
+  m_GameObject: {fileID: 294128056547279690}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
@@ -278,3 +257,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &7520884781995511583
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 294128056547279690}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9d3e4a78f17b2224586bbaa49faccb77, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

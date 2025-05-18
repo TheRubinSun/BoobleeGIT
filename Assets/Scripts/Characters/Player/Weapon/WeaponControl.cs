@@ -40,6 +40,7 @@ public class WeaponControl : MonoBehaviour
     [SerializeField]  protected float volumeSounds;
     //Звуки
     protected AudioSource audioSource_Shot;
+    protected Collider2D col_weap;
 
     [SerializeField] protected AudioClip[] audioClips;
     protected virtual void Start()
@@ -50,6 +51,7 @@ public class WeaponControl : MonoBehaviour
 
         sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        col_weap = GetComponent<Collider2D>();
     }
     public virtual void GetStatsWeapon(int damage, float at_speed_coof, float add_at_speed, float att_sp_pr, bool isRang, float attack_ran, int count_proj, float _spreadAngle, damageT _damT, Transform pl_mod, GameObject _Projectile_pref = null, float att_sp_pr_coof = 0)
     {

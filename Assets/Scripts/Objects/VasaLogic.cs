@@ -16,10 +16,6 @@ public class VasaLogic : ObjectLBroken
             anim.SetInteger("broken_state", brokenStage);
         }
     }
-    protected override void AddDropItem()
-    {
-        itemsDrop.Add("material_iron_bar", new MinMax(0, 1));
-    }
     public override void CreateCulling()
     {
         culling = new CullingObject(spr_ren, anim);

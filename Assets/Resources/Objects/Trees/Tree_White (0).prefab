@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -1232833939990007755}
   - component: {fileID: 537814440007233801}
   - component: {fileID: 863736202380144601}
+  - component: {fileID: -8992734811548694500}
   m_Layer: 19
   m_Name: Tree_White (0)
   m_TagString: Untagged
@@ -110,6 +111,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a23ff7bf0e5bbea48b2f3339765105a2, type: 3}
   - {fileID: 8300000, guid: 4648d15d261a0f940bbf6a0fbc5e6bf6, type: 3}
   fullBroken: {fileID: 8300000, guid: bf002cdde924afa4d85e72115a025606, type: 3}
+  itemsDrop:
+  - item_key: material_wood
+    min: 1
+    max: 3
 --- !u!61 &537814440007233801
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -144,7 +149,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.005, y: 0.03}
+  m_Offset: {x: -0.0038000196, y: 0.049799763}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.43, y: 0.07}
@@ -154,7 +159,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.05, y: 0.1}
+  m_Size: {x: 0.06919977, y: 0.13959952}
   m_EdgeRadius: 0
 --- !u!82 &863736202380144601
 AudioSource:
@@ -253,6 +258,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &-8992734811548694500
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 294128056547279690}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dae3cab59ca1c994f83fc0927c5f88f4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5199243870632919736
 GameObject:
   m_ObjectHideFlags: 0

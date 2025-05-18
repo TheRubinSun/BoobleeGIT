@@ -1,18 +1,16 @@
 using UnityEngine;
 
-public class TreeLogic : ObjectLBroken
+public class FlowerLogic : ObjectLBroken
 {
-    private SpriteRenderer spr_Child_ren;
     protected override void Awake()
     {
         base.Awake();
 
-        spr_Child_ren = transform.GetChild(0).GetComponent<SpriteRenderer>();
         anim.speed = Random.Range(0.9f, 1.1f);
     }
     public override void Break(CanBeWeapon canBeWeapon)
     {
-        if (canBeWeapon.canBeAxe == true)
+        if (canBeWeapon.canBeCut == true)
         {
             remainsHits--;
             if (remainsHits == 0)
@@ -23,23 +21,13 @@ public class TreeLogic : ObjectLBroken
             {
                 PlayeSoundBroken();
                 brokenStage++;
-                //anim.SetInteger("broken_state", brokenStage);
             }
         }
     }
-    public override void UpdateSortingOrder()
-    {
-        if (!isVisibleNow) return;
 
-        float treePosY = transform.position.y;
-        float PlayerPosY = GameManager.Instance.PlayerPosY;
-
-        spr_ren.sortingOrder = Mathf.RoundToInt(((treePosY - 2f) - PlayerPosY - 2) * -5);
-        spr_Child_ren.sortingOrder = spr_ren.sortingOrder - 1;
-    }
     public override void CreateCulling()
     {
-        culling = new CullingObject(spr_ren, anim, new SpriteRenderer[] { spr_Child_ren });
+        culling = new CullingObject(spr_ren, anim, null);
     }
 
     public override void UpdateCulling(bool shouldBeVisible)
@@ -49,5 +37,15 @@ public class TreeLogic : ObjectLBroken
             isVisibleNow = shouldBeVisible;
             culling.SetVisible(shouldBeVisible);
         }
+    }
+
+    public override void UpdateSortingOrder()
+    {
+        if (!isVisibleNow) return;
+
+        float treePosY = transform.position.y;
+        float PlayerPosY = GameManager.Instance.PlayerPosY;
+
+        spr_ren.sortingOrder = Mathf.RoundToInt(((treePosY - 2f) - PlayerPosY - 2) * -5);
     }
 }

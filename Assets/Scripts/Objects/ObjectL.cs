@@ -2,7 +2,10 @@ using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public abstract class ObjectL : MonoBehaviour, ICullableObject
 {
@@ -10,7 +13,6 @@ public abstract class ObjectL : MonoBehaviour, ICullableObject
     protected CullingObject culling;
     protected bool isVisibleNow = true;
     protected Vector2 startPos;
-
     public abstract void CreateCulling();
     public abstract Vector2 GetPosition();
     public abstract void UpdateCulling(bool shouldBeVisible);
@@ -31,7 +33,7 @@ public abstract class ObjectLBroken : ObjectL
     [SerializeField] protected AudioClip[] soundsBroken;
     [SerializeField] protected AudioClip fullBroken;
 
-    protected Dictionary<string, MinMax> itemsDrop = new Dictionary<string, MinMax>();
+    [SerializeField] protected List<ItemDropData> itemsDrop = new List<ItemDropData>();
 
     protected AudioSource audioS;
     protected int brokenStage;
@@ -44,7 +46,6 @@ public abstract class ObjectLBroken : ObjectL
         spr_ren = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         audioS = GetComponent<AudioSource>();
-
     }
     protected virtual void Start()
     {
@@ -56,7 +57,13 @@ public abstract class ObjectLBroken : ObjectL
         UpdateCulling(false);
         CullingManager.Instance.RegisterObject(this);
     }
-    protected abstract void AddDropItem();
+    protected virtual void AddDropItem()
+    {
+        foreach (ItemDropData itemDrop in itemsDrop)
+        {
+            itemDrop.Item = ItemsList.GetItemForNameKey(itemDrop.item_key);
+        }
+    }
 
     protected virtual IEnumerator PlayeSoundFullBroken()
     {
@@ -86,16 +93,16 @@ public abstract class ObjectLBroken : ObjectL
     protected virtual void DropItems()
     {
         int id = 0;
-        foreach (KeyValuePair<string, MinMax> item in itemsDrop)
+        foreach (ItemDropData item in itemsDrop)
         {
-            int countItem = Random.Range(item.Value.min, (item.Value.max + 1));
+            int countItem = Random.Range(item.min, (item.max + 1));
             if (countItem == 0) return;
 
             GameObject dropItem = Instantiate(GlobalPrefabs.ItemDropPref, GameManager.Instance.dropParent);
             dropItem.transform.position = GetPosition();
             ItemDrop ItemD = dropItem.GetComponent<ItemDrop>();
 
-            Item tempItem = ItemsList.GetItemForNameKey(item.Key);
+            Item tempItem = item.Item;
             //Debug.Log($"tempItem.Name: {tempItem.Name} tempItem.Name {tempItem.NameKey} sprite {tempItem.Sprite.name}");
             ItemD.sprite = tempItem.GetSprite();
             ItemD.item = tempItem;
@@ -108,13 +115,17 @@ public abstract class ObjectLBroken : ObjectL
         }
     }
 }
-public class MinMax
+[System.Serializable]
+public class ItemDropData
 {
+    public string item_key;
+    public Item Item { get; set; }
     public int min;
     public int max;
 
-    public MinMax(int min, int max)
+    public ItemDropData(string item_name, int min, int max)
     {
+        this.item_key = item_name;
         this.min = min;
         this.max = max;
     }
