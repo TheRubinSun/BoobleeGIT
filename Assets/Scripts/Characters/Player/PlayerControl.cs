@@ -5,6 +5,8 @@ using UnityEngine.EventSystems;
 
 public class PlayerControl : MonoBehaviour 
 {
+    //public event System.Action Switch_volume;
+
     private Player player;
 
     [SerializeField] private GameObject playerObj;
@@ -19,7 +21,7 @@ public class PlayerControl : MonoBehaviour
 
     [SerializeField] private Vector2 inputDirection;
 
-    
+
 
     private Vector2 mousePos;
     private Vector2 movement;
@@ -42,8 +44,14 @@ public class PlayerControl : MonoBehaviour
 
     void Start()
     {
+        if (cameraObj == null) cameraObj =  GameObject.Find("Main Camera").transform;
         player = GetComponentInParent<Player>();
         rb = GetComponent<Rigidbody2D>();
+        SetVolume();
+    }
+    private void SetVolume()
+    {
+        //legsControl.GetComponent<AudioSource>().volume = GlobalData.VOLUME_SOUNDS;
     }
     // ������� ��� ��������, ��������� �� ��������� ���� ��� UI
     private bool IsPointerOverUI()

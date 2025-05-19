@@ -26,7 +26,7 @@ public class NameLocation : MonoBehaviour
 
         yield return new WaitForSeconds(timeToStart);
 
-        audioSource.volume = GlobalData.VOLUME_SOUNDS;
+        //audioSource.volume = GlobalData.VOLUME_SOUNDS;
 
         audioSource.PlayOneShot(fade_sound[Random.Range(0, fade_sound.Length)]);
         float elapsedTime = 0f;

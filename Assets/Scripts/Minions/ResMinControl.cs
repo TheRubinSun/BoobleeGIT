@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class ResMinControl : MinionControl
 {
@@ -13,7 +14,7 @@ public class ResMinControl : MinionControl
     [SerializeField] Transform Hand_Obj;
     [SerializeField] Transform Indicator_Obj;
     [SerializeField] Color32 colorTakeItem;
-
+    [SerializeField] GameObject resource_pref;
     //Компоненты анимаций
     Animator rotate_anim;
     Animator body_anim;
@@ -22,9 +23,12 @@ public class ResMinControl : MinionControl
 
     //Звуки
     AudioSource audioSource_Work;
-
+    [SerializeField] private AudioMixerGroup minionWorkGroup;
     protected override void Start()
     {
+        audioSource_Work = gameObject.AddComponent<AudioSource>();
+        audioSource_Work.outputAudioMixerGroup = minionWorkGroup;
+
         base.Start();
 
         rotate_anim = Rotate_Obj.GetComponent<Animator>();
@@ -32,8 +36,13 @@ public class ResMinControl : MinionControl
         hand_anim = Hand_Obj.GetComponent<Animator>();
         indicator_anim = Indicator_Obj.GetComponent<Animator>();
 
-        audioSource_Work = gameObject.AddComponent<AudioSource>();
-        audioSource_Work.volume = 0.08f; // Громкость 8%
+
+
+    }
+    protected override void SetVolume()
+    {
+        base.SetVolume();
+        //audioSource_Work.volume = GlobalData.VOLUME_SOUNDS; 
     }
     public override void UseMinion()
     {
@@ -156,16 +165,18 @@ public class ResMinControl : MinionControl
         float offset = 0;
         for (int i = 0; i < dropItems.Count; i++)
         {
-            offset -= 0.1f;
+            offset -= 0.13f;
             itemsFly[i] = CreateGameObjItem(dropItems[i].Item, offset);
         }
     }
     private GameObject CreateGameObjItem(Item item, float offset)
     {
-        GameObject giveItem = new GameObject("DropItem");
-        giveItem.transform.parent = slotHand;
+        GameObject giveItem = Instantiate(resource_pref, slotHand);
+        //GameObject giveItem = new GameObject("DropItem");
+        //giveItem.transform.parent = slotHand;
         giveItem.transform.localPosition = new Vector3(0, offset, 0);
-        SpriteRenderer renderer = giveItem.AddComponent<SpriteRenderer>();
+        //SpriteRenderer renderer = giveItem.AddComponent<SpriteRenderer>();
+        SpriteRenderer renderer = giveItem.GetComponent<SpriteRenderer>();
         renderer.sprite = item.Sprite;
         renderer.color = colorTakeItem;
         renderer.sortingOrder = 15;

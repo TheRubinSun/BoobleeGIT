@@ -33,7 +33,7 @@ public class LegsControl : MonoBehaviour
             lineControles[i] = lines[i].GetComponent<LineControle>();
         }
         audioSource_Move = GetComponent<AudioSource>();
-        audioSource_Move.volume = 0.02f;
+        //audioSource_Move.volume = 0.02f;
     }
     public void MoveLegs(float speed)
     {

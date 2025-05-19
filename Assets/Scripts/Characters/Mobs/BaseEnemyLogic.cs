@@ -115,6 +115,12 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
         CreateCulling();
         UpdateCulling(false);
         CullingManager.Instance.RegisterObject(this);
+
+        //SetVolume();
+    }
+    protected virtual void SetVolume()
+    {
+        //audioSource.volume = GlobalData.VOLUME_SOUNDS;
     }
     protected virtual void LoadParametrs()
     {
@@ -168,7 +174,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     public void TakeDamage(int damage, damageT typeAttack, bool canEvade, EffectData effect = null)
     {
         audioSource.Stop();
-        audioSource.volume = touch_volume;
+        //audioSource.volume = touch_volume;
         audioSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f);
         audioSource.PlayOneShot(player_touch_sound);
         audioSource.pitch = 1f;
@@ -248,7 +254,8 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
         enum_stat.Att_Speed = 0;
         enum_stat.Mov_Speed = 0;
         AudioSource tempSource = gameObject.AddComponent<AudioSource>();
-        tempSource.volume = die_volume;
+        tempSource.outputAudioMixerGroup = audioSource.outputAudioMixerGroup;
+        //tempSource.volume = die_volume;
         tempSource.pitch = UnityEngine.Random.Range(0.5f, 1.5f);
         tempSource.PlayOneShot(die_sound);
 

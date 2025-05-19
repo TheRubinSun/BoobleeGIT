@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public static class GlobalData
@@ -13,12 +14,20 @@ public static class GlobalData
     public static float VOLUME_SOUNDS = 0.5f;
     public static float VOLUME_MUSICS;
 
+
     public static bool isVisibleHpBarEnemy = true;
     public static string NAME_NEW_LOCATION = "Game_village";
     public static string NAME_NEW_LOCATION_TEXT;
 
     public static int difficulty = 1;
     public static int add_mobs = 1;
+
+    
+    //public static void SwitchVolume()
+    //{
+
+    //}
+
 }
 public static class BASE_VALUE_STATS_ARTEFACT
 {

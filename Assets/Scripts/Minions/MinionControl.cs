@@ -42,8 +42,12 @@ public class MinionControl : MonoBehaviour
         MinionSlots = transform.parent.parent;
         MinionSlotParent = transform.parent;
 
-        audioSource_Move = gameObject.AddComponent<AudioSource>();
-        audioSource_Move.volume = 0.1f; // Громкость 10%
+        audioSource_Move = GetComponent<AudioSource>();
+        //SetVolume();
+    }
+    protected virtual void SetVolume()
+    {
+        //audioSource_Move.volume = GlobalData.VOLUME_SOUNDS; 
     }
     public virtual void GetStatsMinion(float _radiusVision, float _timeResourceGat, float _speed, TypeMob _typeDetectMob)
     {

@@ -50,7 +50,7 @@ public abstract class ObjectLBroken : ObjectL
     protected virtual void Start()
     {
         startPos = transform.position;
-        audioS.volume = SoundsManager.Instance.volume;
+        //audioS.volume = GlobalData.VOLUME_SOUNDS;
 
         AddDropItem();
         CreateCulling();

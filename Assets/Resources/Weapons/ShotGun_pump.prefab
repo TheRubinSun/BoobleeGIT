@@ -138,7 +138,6 @@ MonoBehaviour:
   offset: 0
   PlayerModel: {fileID: 0}
   pitchRange: 0.15
-  volumeSounds: 0.05
   audioClips:
   - {fileID: 8300000, guid: 467b2cfee4de68b4b8b9ad0477317ac7, type: 3}
   ShootPos: {fileID: 2770646334030511382}
@@ -151,7 +150,7 @@ AudioSource:
   m_GameObject: {fileID: 6980527794144593444}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 5293607849866484469, guid: 1178313d785468941ae1fbfa072bd037, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1

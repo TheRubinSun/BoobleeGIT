@@ -60,7 +60,7 @@ public class DaizenLogic : BaseEnemyLogic
     {
         if (attack_sound != null)
         {
-            audioSource.volume = attack_volume;
+            //audioSource.volume = attack_volume;
             audioSource.Stop();
             audioSource.PlayOneShot(attack_sound); //Звук выстрела
         }

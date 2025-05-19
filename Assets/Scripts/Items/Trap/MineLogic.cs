@@ -11,7 +11,6 @@ public class MineLogic : TrapLogic
 
     [SerializeField] private GameObject Explosion_Pref;
     [SerializeField] private AudioClip explosion_sound;
-    public float volume;
 
     private AudioSource audioSource;
 
@@ -23,8 +22,9 @@ public class MineLogic : TrapLogic
     {
         anim = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
-        audioSource.volume = volume;
+        //audioSource.volume = GlobalData.VOLUME_SOUNDS;
     }
+
     public void SetParameters(int _damageTrap, damageT _damageT, float _radiusExp, float _delayTime)
     {
         damageTrap = _damageTrap;

@@ -177,7 +177,7 @@ public class SlimeLogic : BaseEnemyLogic, IItemMove
         GameObject bullet;
         Vector2 direction;
 
-        audioSource.volume = attack_volume;
+        //audioSource.volume = attack_volume;
         audioSource.Stop();
         audioSource.PlayOneShot(attack_sound); //Звук выстрела
 
@@ -214,7 +214,7 @@ public class SlimeLogic : BaseEnemyLogic, IItemMove
     }
     public override void MeleeAttack()
     {
-        audioSource.volume = attack_volume;
+        //audioSource.volume = attack_volume;
         audioSource.Stop();
         audioSource.PlayOneShot(attack_sound); //Звук выстрела
         Player.Instance.TakeDamage(enum_stat.Att_Damage, damageT.Magic, true, posionNewEff);

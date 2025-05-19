@@ -18,7 +18,7 @@ public class SoundsManager : MonoBehaviour
     [SerializeField] private AudioClip[] items_sounds;
     [SerializeField] private AudioClip[] craftItems;
 
-    public float volume;
+    //public float volume;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -27,8 +27,8 @@ public class SoundsManager : MonoBehaviour
             return;
         }
         Instance = this;
-        volume = GlobalData.VOLUME_SOUNDS;
-        audioSource.volume = volume;
+        //volume = GlobalData.VOLUME_SOUNDS;
+        //audioSource.volume = volume;
         audioSource.ignoreListenerPause = true; // Звук будет играть даже в паузе!
     }
     public void PlayTakeItem ()

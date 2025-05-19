@@ -76,7 +76,7 @@ public class RaingerLogic : BaseEnemyLogic
         GameObject bullet;
         Vector2 direction;
 
-        audioSource.volume = attack_volume;
+        //audioSource.volume = attack_volume;
         audioSource.Stop();
         audioSource.PlayOneShot(attack_sound); //Звук выстрела
 
