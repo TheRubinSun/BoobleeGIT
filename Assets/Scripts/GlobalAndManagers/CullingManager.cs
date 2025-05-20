@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public interface ICullableObject
 {
@@ -15,8 +16,8 @@ public class CullingManager : MonoBehaviour
     public static CullingManager Instance;
     public Transform target;
 
-    public float activationRadiusX = 14f; // горизонталь
-    public float activationRadiusY = 8f;  // вертикаль
+    public float activationRadiusX = 2f; // горизонталь
+    public float activationRadiusY = 2f;  // вертикаль
 
     public bool allVisible = false;
     private HashSet<ICullableObject> objects_visibles = new HashSet<ICullableObject>();
@@ -44,8 +45,8 @@ public class CullingManager : MonoBehaviour
             float vert = cam.orthographicSize;
             float horiz = vert * cam.aspect;
 
-            activationRadiusY = vert + 2f;
-            activationRadiusX = horiz + 2f;
+            activationRadiusY = vert + activationRadiusY;
+            activationRadiusX = horiz + activationRadiusX;
         }
     }
     public void RegisterObject(ICullableObject object_Visible)
@@ -96,13 +97,15 @@ public class CullingObject
     private SpriteRenderer[] sprites_ren_childs;
     private Animator animator_main;
     private Animator[] animator_main_childs;
+    private Light2D light;
 
-    public CullingObject(SpriteRenderer ren, Animator anim = null, SpriteRenderer[] _sprites_ren_childs = null, Animator[] _animator_main_childs = null)
+    public CullingObject(SpriteRenderer ren, Animator anim = null, SpriteRenderer[] _sprites_ren_childs = null, Animator[] _animator_main_childs = null, Light2D light2D = null)
     {
         sprite_ren = ren;
         sprites_ren_childs = _sprites_ren_childs;
         animator_main = anim;
         animator_main_childs = _animator_main_childs;
+        light = light2D;
     }
     public void SetVisible(bool isVisible)
     {
@@ -112,6 +115,8 @@ public class CullingObject
         if (animator_main != null && animator_main.enabled != isVisible)
             animator_main.enabled = isVisible;
 
+        if(light != null && light.enabled != isVisible)
+            light.enabled = isVisible;
 
         if (sprites_ren_childs != null && sprites_ren_childs.Length > 0)
         {

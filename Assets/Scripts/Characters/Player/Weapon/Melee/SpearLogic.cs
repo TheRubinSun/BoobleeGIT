@@ -60,7 +60,7 @@ public class SpearLogic : MeleWeaponLogic
         //Параметры
 
         float startRotation = transform.eulerAngles.z;
-        //IsAttack = true;
+        IsAttack = true;
 
         audioSource_Shot.PlayOneShot(audioClips[idSound]);
         //Взмах
@@ -79,7 +79,7 @@ public class SpearLogic : MeleWeaponLogic
         transform.position = transform.parent.position;
         transform.rotation = Quaternion.Euler(0, 0, startRotation);
 
-        //IsAttack = false;
+        IsAttack = false;
         ResetHitEnemies();
         
 

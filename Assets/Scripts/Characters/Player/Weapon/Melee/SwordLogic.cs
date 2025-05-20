@@ -43,7 +43,7 @@ public class SwordLogic : MeleWeaponLogic
     }
     protected IEnumerator SwordAttackCoroutine(int idSound)
     {
-        //IsAttack = true;
+        IsAttack = true;
         Vector2 startPos = transform.parent.position; // Начальная позиция
         // Определяем направление атаки (в сторону мыши или игрока)
         Vector2 attackDirection = AttackDirectionOrVector
@@ -90,7 +90,7 @@ public class SwordLogic : MeleWeaponLogic
         ResetHitEnemies();
 
 
-        //IsAttack = false;
+        IsAttack = false;
 
         // ===== Локальные функции =====
         float windupDuration() => adjustedInterval * animVzmax;

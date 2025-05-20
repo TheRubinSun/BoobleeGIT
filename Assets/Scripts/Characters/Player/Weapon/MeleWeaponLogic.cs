@@ -24,7 +24,7 @@ public class MeleWeaponLogic : WeaponControl
     protected void OnTriggerEnter2D(Collider2D collision)
     {
         // Проверяем, что столкновение произошло с врагом
-        //if (!IsAttack) return;
+        if (!IsAttack) return;
 
         if (hitObjAndEnemies.Contains(collision)) return; //Если удар уже был
 

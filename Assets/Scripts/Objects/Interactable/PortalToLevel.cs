@@ -16,9 +16,9 @@ public class PortalToLevel : MonoBehaviour
         }
         if(collision.gameObject.layer == LayerManager.playerLayer)
         {
-            Dictionary<string, string> localized_shop_text = LocalizationManager.Instance.GetLocalizedValue("ui_text", "name_location");
+            Dictionary<string, string> localized_nameLoc_text = LocalizationManager.Instance.GetLocalizedValue("ui_text", "name_location");
             GlobalData.NAME_NEW_LOCATION = nameNewLocation;
-            GlobalData.NAME_NEW_LOCATION_TEXT = localized_shop_text[nameNewLocation];
+            GlobalData.NAME_NEW_LOCATION_TEXT = localized_nameLoc_text[nameNewLocation];
 
             await UIControl.Instance.SaveData();
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("LoadingScreen");

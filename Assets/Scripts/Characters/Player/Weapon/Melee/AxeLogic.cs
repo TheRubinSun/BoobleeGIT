@@ -68,7 +68,7 @@ public class AxeLogic : MeleWeaponLogic
         //Параметры
 
         float startRotation = transform.eulerAngles.z;
-        //IsAttack = true;
+        IsAttack = true;
         col_weap.enabled = true;
         //Фаза взмаха, начало атакаи, конец атаки, возврат меча 
         yield return AnimatePhase(startPos, windupRightPos, startRotation, startRotation - maxRotationAngle, arcHeight * 0.5f, windupDuration());
@@ -92,7 +92,7 @@ public class AxeLogic : MeleWeaponLogic
         transform.position = transform.parent.position;
         transform.rotation = Quaternion.Euler(0, 0, startRotation);
         ResetHitEnemies();
-        //IsAttack = false;
+        IsAttack = false;
 
         // ===== Локальные функции =====
         float windupDuration() => adjustedInterval * animVzmax;
