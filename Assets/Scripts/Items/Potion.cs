@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Potion : Item, IUsable
@@ -57,17 +58,20 @@ public class SpeedUpPotion : Potion
     {
         Debug.Log("ѕытаюсь использовать");
         EffectsManager eff_man = Player.Instance.GetComponent<EffectsManager>();
+
+
+
         if (eff_man != null)
         {
-            
+
             //EffectData effect = new EffectData();
             //EffectData effect = Resources.Load<EffectData>("Effects/" + nameEffect);
             //if (effect != null)
             //{
             //    //Debug.Log($"Ёффект с именем {nameEffect} найден");
             //    effect = new EffectData(effect);
-                
-                
+
+
             //}
             //else
             //{
@@ -76,7 +80,16 @@ public class SpeedUpPotion : Potion
 
             //    effect = ScriptableObject.CreateInstance<EffectData>();
             //}
+
             EffectData effect = new EffectData();
+            EffectData effectType = Resources.Load<EffectData>("Effects/" + nameEffect);
+
+            if (effectType != null)
+            {
+                //Debug.Log($"Ёффект с именем {nameEffect} найден");
+                effect.effectObj = effectType.effectObj;
+            }
+
             effect.EffectName = "Speed Up";
             effect.effectType = EffectData.EffectType.SpeedBoost;
             effect.value = valueUp;

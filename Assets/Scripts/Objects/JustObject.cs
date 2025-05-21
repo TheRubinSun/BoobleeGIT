@@ -8,7 +8,7 @@ public class JustObject : ObjectL
     {
         spr_ren = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-        anim.speed = Random.Range(0.9f, 1.1f);
+        anim.speed = Random.Range(0.8f, 1.2f);
     }
     protected virtual void Start()
     {

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.Rendering;
 using UnityEngine;
+using static EffectData;
 
 public class EffectsManager : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class EffectsManager : MonoBehaviour
     public List<ActionEffect> activeEffects = new List<ActionEffect>();
     private CharacterStats stats;
     private Dictionary<EffectData, Coroutine> activeCoroutines = new Dictionary<EffectData, Coroutine>();
+
+    private Dictionary<EffectType, GameObject> curEffectsObj = new Dictionary<EffectType, GameObject>();
+    [SerializeField] private Transform parentCurEffect;
     private void Start()
     {
         if (stats == null)
@@ -26,13 +30,17 @@ public class EffectsManager : MonoBehaviour
             else if (gameObject.layer == LayerManager.enemyLayer)
             {
                 stats = GetComponent<BaseEnemyLogic>().enum_stat;
-            }
+            } 
         }
     }
     public bool ApplyEffect(EffectData effect)
     {
         EffectData existingEffect = activeCoroutines.Keys.FirstOrDefault(e => e.EffectName == effect.EffectName);
 
+        if(!curEffectsObj.ContainsKey(effect.effectType) && parentCurEffect != null && effect.effectObj != null)
+        {
+            curEffectsObj.Add(effect.effectType, Instantiate(effect.effectObj, parentCurEffect));
+        }
 
         if (existingEffect != null)
         {
@@ -41,7 +49,7 @@ public class EffectsManager : MonoBehaviour
             {
                 
                 StopCoroutine(activeCoroutines[effect]);
-                RemoveEffect(effect);
+                RemoveEffect(effect, false);
             }
             else
             {
@@ -90,16 +98,22 @@ public class EffectsManager : MonoBehaviour
             }
             OnEffectTimerUpdate?.Invoke(newEffect);
         }
-        RemoveEffect(effect);
+        RemoveEffect(effect, true);
         activeCoroutines.Remove(effect);
     }
-    private void RemoveEffect(EffectData effect)
+    private void RemoveEffect(EffectData effect, bool ContinueOrRemoveObj)
     {
         OnRemoveEffectUI?.Invoke(effect);
         for (int i = activeEffects.Count - 1; i >= 0; i--)
         {
             if (activeEffects[i].Effect == effect)
             {
+                if(ContinueOrRemoveObj && effect.effectObj != null && curEffectsObj.ContainsKey(effect.effectType))
+                {
+                    Destroy(curEffectsObj[effect.effectType]);
+                    curEffectsObj.Remove(effect.effectType);
+                }
+
                 UseEffect(effect, false);
                 activeEffects.RemoveAt(i);
                 break;
