@@ -231,7 +231,12 @@
 		"Name": "Mimic Chest",
 		"TypeMob": "",
 		"Description": "A fast and dangerous chest"
-      }
+      },
+	  "death_car_enem": {
+		"Name": "Death Machine",
+		"TypeMob": "",
+		"Description": "A robotic car with a circular saw, built to exterminate all life in its path"
+}
     },
     "ui_text": {
       "player_stats_name": {
@@ -555,7 +560,12 @@
         "Name": "Сундук мимик",
         "TypeMob": "",
         "Description": "Быстрый и опасный сундук"
-      }
+      },
+	  "death_car_enem": {
+		"Name": "Машина-убийца",
+		"TypeMob": "",
+		"Description": "Роботизированная машина с циркулярной пилой, созданная истреблять всё живое на своём пути"
+}
     },
     "ui_text": {
       "player_stats_name": {

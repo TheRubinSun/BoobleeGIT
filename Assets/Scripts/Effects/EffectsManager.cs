@@ -47,9 +47,12 @@ public class EffectsManager : MonoBehaviour
             //Debug.LogWarning($"{effect.EffectName} Уже действует");
             if (effect.cooldown > 0)
             {
-                
-                StopCoroutine(activeCoroutines[effect]);
-                RemoveEffect(effect, false);
+                if (activeCoroutines.ContainsKey(existingEffect))
+                {
+                    StopCoroutine(activeCoroutines[effect]);
+                    RemoveEffect(effect, false);
+                }
+
             }
             else
             {

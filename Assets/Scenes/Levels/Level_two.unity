@@ -1016,7 +1016,7 @@ PrefabInstance:
       objectReference: {fileID: 411759256}
     - target: {fileID: 3159483985110951664, guid: afdf47f5b8678e546bf74f4eb46fcd7f, type: 3}
       propertyPath: fade_sound.Array.size
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3159483985110951664, guid: afdf47f5b8678e546bf74f4eb46fcd7f, type: 3}
       propertyPath: 'fade_sound.Array.data[0]'
@@ -1034,6 +1034,14 @@ PrefabInstance:
       propertyPath: 'fade_sound.Array.data[3]'
       value: 
       objectReference: {fileID: 8300000, guid: 26407e218ff7d9c428be768eae0a2014, type: 3}
+    - target: {fileID: 3159483985110951664, guid: afdf47f5b8678e546bf74f4eb46fcd7f, type: 3}
+      propertyPath: 'fade_sound.Array.data[4]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 9ab432e11ced51e42aaa2fbb6c4edb5e, type: 3}
+    - target: {fileID: 3159483985110951664, guid: afdf47f5b8678e546bf74f4eb46fcd7f, type: 3}
+      propertyPath: 'fade_sound.Array.data[5]'
+      value: 
+      objectReference: {fileID: 8300000, guid: c61bb1ef672516a45a1374ec07ad0e04, type: 3}
     - target: {fileID: 3305356089962957725, guid: afdf47f5b8678e546bf74f4eb46fcd7f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

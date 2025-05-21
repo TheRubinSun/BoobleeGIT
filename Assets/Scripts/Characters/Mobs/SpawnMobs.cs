@@ -49,7 +49,7 @@ public class SpawnMobs : MonoBehaviour
     {
         if (mobs_prefab[id] != null)
         {
-            Instantiate(mobs_prefab[id], parent);
+            Instantiate(mobs_prefab[id], spawnpoint);
         }
         else
         {
