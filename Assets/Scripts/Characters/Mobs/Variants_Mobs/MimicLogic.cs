@@ -8,11 +8,11 @@ public class MimicLogic : BaseEnemyLogic
     }
     public override void MeleeAttack()
     {
-        if(attack_sound != null)
+        if(attack_sounds != null)
         {
             //audioSource.volume = attack_volume;
             audioSource.Stop();
-            audioSource.PlayOneShot(attack_sound); //Звук выстрела
+            audioSource.PlayOneShot(attack_sounds[UnityEngine.Random.Range(0, attack_sounds.Length)]); //Звук выстрела
         }
 
         Player.Instance.TakeDamage(enum_stat.Att_Damage, damageT.Physical, true);

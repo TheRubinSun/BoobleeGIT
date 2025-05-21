@@ -391,13 +391,14 @@ MonoBehaviour:
   player: {fileID: 0}
   mob_object: {fileID: 202375288678573708}
   audioSource: {fileID: 0}
-  attack_sound: {fileID: 8300000, guid: 67f4ec30a53140e43844231d342513b3, type: 3}
-  player_touch_sound: {fileID: 8300000, guid: 33c9ba42e68415f44b067ef9967beafd, type: 3}
-  die_sound: {fileID: 8300000, guid: 94f794e742bf7964480c57259a9a3153, type: 3}
+  attack_sounds:
+  - {fileID: 8300000, guid: e90e4abc85207414a9da380f3ee90c57, type: 3}
+  player_touch_sounds:
+  - {fileID: 8300000, guid: 33c9ba42e68415f44b067ef9967beafd, type: 3}
+  die_sounds:
+  - {fileID: 8300000, guid: d890bdc5c6bc5ed40af71ed409aafd1d, type: 3}
+  - {fileID: 8300000, guid: 94f794e742bf7964480c57259a9a3153, type: 3}
   attackBuffer: 1
-  attack_volume: 0.1
-  touch_volume: 0.1
-  die_volume: 0.5
   HPBar: {fileID: 4755589234796842308}
   child_Obj: {fileID: 256399650496971137}
   Shoot_point: {fileID: 456431214478227135}
@@ -555,7 +556,7 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0

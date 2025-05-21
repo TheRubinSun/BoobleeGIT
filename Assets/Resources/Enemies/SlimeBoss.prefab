@@ -476,13 +476,13 @@ MonoBehaviour:
   player: {fileID: 0}
   mob_object: {fileID: 3549562018070256771}
   audioSource: {fileID: 0}
-  attack_sound: {fileID: 8300000, guid: cd9943c938af06f49a350c0b3f7b12f7, type: 3}
-  player_touch_sound: {fileID: 8300000, guid: 63d4cc6623a94b6489be1af4aa5f28d9, type: 3}
-  die_sound: {fileID: 8300000, guid: a392a1df9f28efc4a94e02bd4c97cb53, type: 3}
+  attack_sounds:
+  - {fileID: 8300000, guid: cd9943c938af06f49a350c0b3f7b12f7, type: 3}
+  player_touch_sounds:
+  - {fileID: 8300000, guid: 63d4cc6623a94b6489be1af4aa5f28d9, type: 3}
+  die_sounds:
+  - {fileID: 8300000, guid: a392a1df9f28efc4a94e02bd4c97cb53, type: 3}
   attackBuffer: 1
-  attack_volume: 0.1
-  touch_volume: 0.15
-  die_volume: 0.5
   HPBar: {fileID: 3479262678630990401}
   Shoot_point: {fileID: 9074315482117823633}
   item_one: {fileID: 5415039935339223680}

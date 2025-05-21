@@ -81,13 +81,15 @@ public class SpeedUpPotion : Potion
             //    effect = ScriptableObject.CreateInstance<EffectData>();
             //}
 
-            EffectData effect = new EffectData();
-            EffectData effectType = Resources.Load<EffectData>("Effects/" + nameEffect);
+            //EffectData effect = new EffectData();
+            EffectData effect = ScriptableObject.CreateInstance<EffectData>();
+            EffectData effectTemplate = Resources.Load<EffectData>("Effects/" + nameEffect);
 
-            if (effectType != null)
+            if (effectTemplate != null)
             {
                 //Debug.Log($"Ёффект с именем {nameEffect} найден");
-                effect.effectObj = effectType.effectObj;
+                effect.effectObj = effectTemplate.effectObj;
+                effect.Sprite = effectTemplate.Sprite;
             }
 
             effect.EffectName = "Speed Up";
@@ -96,7 +98,7 @@ public class SpeedUpPotion : Potion
             effect.idSprite = idSpriteEffect;
             effect.duration = duration;
 
-            return eff_man.ApplyEffect(effect); ;
+            return eff_man.ApplyEffect(effect); 
         }
         else
         {
@@ -137,24 +139,34 @@ public class Food : Item, IUsable
         EffectsManager eff_man = Player.Instance.GetComponent<EffectsManager>();
         if (eff_man != null)
         {
-            EffectData regenEffect = new EffectData();
-            regenEffect = Resources.Load<EffectData>("Effects/" + nameEffect);
-            if (regenEffect != null)
+            //EffectData regenEffect = new EffectData();
+
+            EffectData regenEffect = ScriptableObject.CreateInstance<EffectData>();
+            EffectData effectTemplate = Resources.Load<EffectData>("Effects/" + nameEffect);
+
+            if (effectTemplate != null)
             {
                 Debug.Log($"Ёффект с именем {nameEffect} найден");
+                regenEffect.effectObj = effectTemplate.effectObj;
+                regenEffect.Sprite = effectTemplate.Sprite;
             }
-            else
-            {
-                Debug.LogWarning("Ёффект с именем " + nameEffect + " не найден в папке Resources/Effects.");
-                Debug.Log("создаем временный новый");
+            //Debug.LogWarning("Ёффект с именем " + nameEffect + " не найден в папке Resources/Effects.");
+            Debug.Log("создаем временный новый");
 
-                regenEffect.EffectName = "Food Regen";
-                regenEffect.effectType = EffectData.EffectType.HpRegenBoost;
-                regenEffect.value = countHeal;
-                regenEffect.idSprite = idSpriteEffect;
-                regenEffect.duration = duration;
-                regenEffect.cooldown = cooldown;
-            }
+            regenEffect.EffectName = "Food Regen";
+            regenEffect.effectType = EffectData.EffectType.HpRegenBoost;
+            regenEffect.value = countHeal;
+            regenEffect.idSprite = idSpriteEffect;
+            regenEffect.duration = duration;
+            regenEffect.cooldown = cooldown;
+            //if (regenEffect != null)
+            //{
+            //    Debug.Log($"Ёффект с именем {nameEffect} найден");
+            //}
+            //else
+            //{
+
+            //}
             return eff_man.ApplyEffect(regenEffect);
         }
         else

@@ -65,7 +65,7 @@ public static class ItemsList
         items.Add(new Gun(13, "bow_simple",   1, 0, Quality.Mystical, 600, "_", true, 6f, damageT.Physical, 10, 0.7f, 30, 1, 8f,  0.5f, 5f, 2));
         items.Add(new Gun(14, "shotgun_pump", 1, 0, Quality.Rare, 400, "_",     true, 2f, damageT.Physical, 3,  0.6f, 40, 4, 10f, 1f,  15f, 1));
 
-        items.Add(new Food(3, "item_meat",                     20, 0, Quality.Common, 1, "_", 1, 5, 15, "Heal", 1));
+        items.Add(new Food(3, "item_meat",                     20, 0, Quality.Common, 1, "_", 1, 15, 5, "Heal", 1));
         items.Add(new HealPotion(4, "item_potion_hp",          20, 0, Quality.Uncommon, 30, "_", 8));
         items.Add(new Item(5, "armor_armor",                   1, 0, Quality.Common, 300, "_", TypeItem.Armor));
         items.Add(new Minion(6, "minion_robot_es",             1, 0, Quality.Rare, 500, "_", TypeItem.Minion, 5f, 6f, 2f, TypeMob.Technology));

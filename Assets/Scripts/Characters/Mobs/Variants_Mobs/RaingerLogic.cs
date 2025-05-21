@@ -78,7 +78,7 @@ public class RaingerLogic : BaseEnemyLogic
 
         //audioSource.volume = attack_volume;
         audioSource.Stop();
-        audioSource.PlayOneShot(attack_sound); //Звук выстрела
+        audioSource.PlayOneShot(attack_sounds[UnityEngine.Random.Range(0, attack_sounds.Length)]); //Звук выстрела
 
 
         //Стреляет из определенной точки или из центра моба

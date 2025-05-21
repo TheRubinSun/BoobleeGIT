@@ -58,9 +58,9 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     [SerializeField]
     protected AudioSource audioSource;
 
-    [SerializeField] protected AudioClip attack_sound;
-    [SerializeField] protected AudioClip player_touch_sound;
-    [SerializeField] public AudioClip die_sound;
+    [SerializeField] protected AudioClip[] attack_sounds;
+    [SerializeField] protected AudioClip[] player_touch_sounds;
+    [SerializeField] public AudioClip[] die_sounds;
 
 
 
@@ -70,9 +70,9 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     protected float updateRate = 0.25f; // Интервал обновления (5 раза в секунду)
     protected float nextUpdateTime = 0f;
 
-    [SerializeField] protected float attack_volume;
-    [SerializeField] protected float touch_volume;
-    [SerializeField] protected float die_volume;
+    //[SerializeField] protected float attack_volume;
+    //[SerializeField] protected float touch_volume;
+    //[SerializeField] protected float die_volume;
 
     //Hp Bar
     [SerializeField] private GameObject HPBar;
@@ -176,7 +176,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
         audioSource.Stop();
         //audioSource.volume = touch_volume;
         audioSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f);
-        audioSource.PlayOneShot(player_touch_sound);
+        audioSource.PlayOneShot(player_touch_sounds[UnityEngine.Random.Range(0, player_touch_sounds.Length)]);
         audioSource.pitch = 1f;
 
         if (canEvade)
@@ -257,9 +257,10 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
         tempSource.outputAudioMixerGroup = audioSource.outputAudioMixerGroup;
         //tempSource.volume = die_volume;
         tempSource.pitch = UnityEngine.Random.Range(0.5f, 1.5f);
-        tempSource.PlayOneShot(die_sound);
+        AudioClip dieSounds = die_sounds[UnityEngine.Random.Range(0, die_sounds.Length)];
+        tempSource.PlayOneShot(dieSounds);
 
-        StartCoroutine(WaitToDie(die_sound.length / tempSource.pitch));
+        StartCoroutine(WaitToDie(dieSounds.length / tempSource.pitch));
     }
     private IEnumerator WaitToDie(float time)
     {

@@ -179,7 +179,7 @@ public class SlimeLogic : BaseEnemyLogic, IItemMove
 
         //audioSource.volume = attack_volume;
         audioSource.Stop();
-        audioSource.PlayOneShot(attack_sound); //Звук выстрела
+        audioSource.PlayOneShot(attack_sounds[UnityEngine.Random.Range(0, attack_sounds.Length)]); //Звук выстрела
 
         //Стреляет из определенной точки или из центра моба
         if (Shoot_point != null)
@@ -216,7 +216,7 @@ public class SlimeLogic : BaseEnemyLogic, IItemMove
     {
         //audioSource.volume = attack_volume;
         audioSource.Stop();
-        audioSource.PlayOneShot(attack_sound); //Звук выстрела
+        audioSource.PlayOneShot(attack_sounds[UnityEngine.Random.Range(0, attack_sounds.Length)]); //Звук выстрела
         Player.Instance.TakeDamage(enum_stat.Att_Damage, damageT.Magic, true, posionNewEff);
     }
     public void SetItemsPosIdle(int frame)
