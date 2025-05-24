@@ -98,14 +98,23 @@ public class CullingObject
     private Animator animator_main;
     private Animator[] animator_main_childs;
     private Light2D light;
+    private AudioSource[] audioSources;
 
-    public CullingObject(SpriteRenderer ren, Animator anim = null, SpriteRenderer[] _sprites_ren_childs = null, Animator[] _animator_main_childs = null, Light2D light2D = null)
+    public CullingObject(SpriteRenderer ren, Animator anim = null, SpriteRenderer[] _sprites_ren_childs = null, Animator[] _animator_main_childs = null, 
+        Light2D light2D = null, AudioSource[] _audioSources = null)
     {
         sprite_ren = ren;
         sprites_ren_childs = _sprites_ren_childs;
         animator_main = anim;
         animator_main_childs = _animator_main_childs;
         light = light2D;
+        audioSources = _audioSources;
+    }
+    public CullingObject(SpriteRenderer ren, Animator anim, AudioSource[] _audioSources)
+    {
+        sprite_ren = ren;
+        animator_main = anim;
+        audioSources = _audioSources;
     }
     public void SetVisible(bool isVisible)
     {
@@ -129,6 +138,14 @@ public class CullingObject
             foreach (var anim_child in animator_main_childs)
                 anim_child.enabled = isVisible;
 
+        }
+        if (audioSources != null && audioSources.Length > 0)
+        {
+            foreach (var audio_child in audioSources)
+            {
+                audio_child.enabled = isVisible;
+            }
+                
         }
     }
 }

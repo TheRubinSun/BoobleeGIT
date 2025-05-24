@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 using static UnityEditor.Progress;
 
 public class CorpseSetting : MonoBehaviour, ICullableObject
@@ -49,13 +50,6 @@ public class CorpseSetting : MonoBehaviour, ICullableObject
     {
         //Debug.Log($"труп: {NameKey}");
         return ChanceAllDrop();
-    }
-    public void PlayDieSoind(AudioClip dieSound)
-    {
-        Debug.Log(dieSound.name + " Played");
-        audioSource.Stop();
-        audioSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f);
-        audioSource.PlayOneShot(dieSound);
     }
     private List<Slot> ChanceAllDrop()
     {

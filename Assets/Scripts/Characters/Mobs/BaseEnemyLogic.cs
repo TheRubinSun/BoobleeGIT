@@ -61,6 +61,8 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     [SerializeField] protected AudioClip[] attack_sounds;
     [SerializeField] protected AudioClip[] player_touch_sounds;
     [SerializeField] public AudioClip[] die_sounds;
+    [SerializeField] protected AudioClip[] abolity_sounds;
+
 
 
 
@@ -85,6 +87,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
 
     protected bool isVisibleNow = true;
 
+    [SerializeField] protected Abillity[] abillities;
 
     protected virtual void Awake()
     {
@@ -116,7 +119,30 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
         UpdateCulling(false);
         CullingManager.Instance.RegisterObject(this);
 
+        if (abillities.Length > 0) StartCoroutine(LoadAbilities());
         //SetVolume();
+    }
+    protected virtual IEnumerator LoadAbilities()
+    {
+        for (int i = 0; i < abillities.Length; i++)
+        {
+            StartCoroutine(UseSkillWithCooldown(i));
+        }
+        yield break;
+    }
+    protected virtual IEnumerator UseSkillWithCooldown(int index)
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(abillities[index].Cooldown);
+            StartCoroutine(UseSkill(index));
+        }
+    }
+    protected virtual IEnumerator UseSkill(int index)
+    {
+        Debug.Log($"Применяется скилл {index}");
+        // логика применения
+        yield return null;
     }
     protected virtual void SetVolume()
     {
@@ -176,7 +202,10 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
         audioSource.Stop();
         //audioSource.volume = touch_volume;
         audioSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f);
-        audioSource.PlayOneShot(player_touch_sounds[UnityEngine.Random.Range(0, player_touch_sounds.Length)]);
+
+        if(player_touch_sounds.Length != 0)
+            audioSource.PlayOneShot(player_touch_sounds[UnityEngine.Random.Range(0, player_touch_sounds.Length)]);
+
         audioSource.pitch = 1f;
 
         if (canEvade)
@@ -253,26 +282,37 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
 
         enum_stat.Att_Speed = 0;
         enum_stat.Mov_Speed = 0;
-        AudioSource tempSource = gameObject.AddComponent<AudioSource>();
-        tempSource.outputAudioMixerGroup = audioSource.outputAudioMixerGroup;
-        //tempSource.volume = die_volume;
-        tempSource.pitch = UnityEngine.Random.Range(0.5f, 1.5f);
-        AudioClip dieSounds = die_sounds[UnityEngine.Random.Range(0, die_sounds.Length)];
-        tempSource.PlayOneShot(dieSounds);
 
-        StartCoroutine(WaitToDie(dieSounds.length / tempSource.pitch));
-    }
-    private IEnumerator WaitToDie(float time)
-    {
-        yield return new WaitForSeconds(time);
+        StopAllCoroutines();
+        //AudioSource tempSource = gameObject.AddComponent<AudioSource>();
+        //tempSource.outputAudioMixerGroup = audioSource.outputAudioMixerGroup;
+        //tempSource.volume = die_volume;
+        //audioSource.Stop();
+        //audioSource.pitch = UnityEngine.Random.Range(0.5f, 1.5f);
+
+        //AudioClip dieSounds = null;
+
+        //if (die_sounds.Length != 0)
+        //    dieSounds = die_sounds[UnityEngine.Random.Range(0, die_sounds.Length)];
+
+        //audioSource.PlayOneShot(dieSounds);
+        //animator_main.SetTrigger("Death");
+        //selfCollider.enabled = false;
+
         OnEnemyDeath?.Invoke(this);
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        //StartCoroutine(WaitToDie(0.1f));
     }
+    //public IEnumerator WaitToDie(float time)
+    //{
+    //    yield return new WaitForSeconds(time);
+    //    Destroy(gameObject);
+    //}
 
 
 
     ///////////////////Controle
-    
+
     public virtual void Move()
     {
         Flipface();
@@ -413,7 +453,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     public Vector2 GetPosition() => transform.position;
     public virtual void CreateCulling()
     {
-        culling = new CullingObject(spr_ren, animator_main);
+        culling = new CullingObject(spr_ren, animator_main, new AudioSource[] {audioSource});
     }
     private void OnDisable()
     {

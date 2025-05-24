@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1204238096058712948}
   - component: {fileID: 2639762130523624797}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: BG_Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2565291048464916904}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: HpBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -253,7 +253,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8463999436107976746}
   - component: {fileID: 9142574797561494589}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: 'Fill_Bar '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -339,7 +339,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6146058071365724942}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: EffectCur
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -428,9 +428,18 @@ MonoBehaviour:
   die_sounds:
   - {fileID: 8300000, guid: 6658e9fb3e7bd6f48abe121d4566f67d, type: 3}
   - {fileID: 8300000, guid: e61869f33c5b5f74b911e5261e0ba792, type: 3}
+  abolity_sounds:
+  - {fileID: 8300000, guid: 8b034a59b2daf384b833d41329b5f29f, type: 3}
+  - {fileID: 8300000, guid: f1903128da6e82d41959a723c2a255e8, type: 3}
   attackBuffer: 1
   HPBar: {fileID: 4426098493281138801}
+  abillities:
+  - nameAbility: 
+    Duration: 2
+    Cooldown: 10
+    Value: 2.5
   moveSound: {fileID: 8300000, guid: 4f8e879b54ff5e74399acea974eb719d, type: 3}
+  Skill_speed: 0
 --- !u!114 &7636874673718867518
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -134,7 +134,6 @@ GameObject:
   - component: {fileID: 5087607263787814741}
   - component: {fileID: 2656565291024380920}
   - component: {fileID: 6522999422788731205}
-  - component: {fileID: 8730074933656655903}
   - component: {fileID: 7045439422286936719}
   - component: {fileID: 7684383841310394027}
   - component: {fileID: 1262916076298341429}
@@ -187,8 +186,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 63d4cc6623a94b6489be1af4aa5f28d9, type: 3}
   die_sounds:
   - {fileID: 8300000, guid: f4dd72f0c3f3f61499091a0cf94b8083, type: 3}
+  abolity_sounds: []
   attackBuffer: 1
   HPBar: {fileID: 1852044187561295959}
+  abillities: []
 --- !u!114 &6522999422788731205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,28 +203,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentCurEffect: {fileID: 6496129284565621122}
---- !u!95 &8730074933656655903
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1364478753005154909}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!50 &7045439422286936719
 Rigidbody2D:
   serializedVersion: 5
@@ -403,7 +382,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4161489549784394222}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: HpBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -437,7 +416,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1605736038696546719}
   - component: {fileID: 2940888618948633913}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: 'Fill_Bar '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -523,7 +502,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6496129284565621122}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: EffectCur
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -555,7 +534,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7621599432605976301}
   - component: {fileID: 791042815301819080}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: BG_Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}

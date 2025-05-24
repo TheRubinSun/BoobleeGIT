@@ -49,7 +49,8 @@ public class SpawnMobs : MonoBehaviour
     {
         if (mobs_prefab[id] != null)
         {
-            Instantiate(mobs_prefab[id], spawnpoint);
+            GameObject mob = Instantiate(mobs_prefab[id], parent);
+            mob.transform.position = spawnpoint.position;
         }
         else
         {

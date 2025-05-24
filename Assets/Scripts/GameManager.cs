@@ -12,6 +12,7 @@ public class GameManager: MonoBehaviour
 {
     public static GameManager Instance;
     [SerializeField] GameObject CorpsePref;
+    [SerializeField] GameObject CorpseTempPref;
 
     public Transform dropParent;
     public Transform PlayerModel;
@@ -144,8 +145,10 @@ public class GameManager: MonoBehaviour
         }
         
 
-        int chanceSpawnCorpse = UnityEngine.Random.Range(1, 10);
-        if(chanceSpawnCorpse < 4) SpawnCorpse(enemy.mob_object.transform, enemy);
+        int chanceSpawnCorpse = UnityEngine.Random.Range(0, 100);
+        if(chanceSpawnCorpse < 30) StartCoroutine(SpawnCorpse(enemy.mob_object.transform, enemy, false));
+        else StartCoroutine(SpawnCorpse(enemy.mob_object.transform, enemy, true));
+
 
 
 
@@ -154,29 +157,58 @@ public class GameManager: MonoBehaviour
             InfoReaminingEnemy.text = $"Убито врагов {KillsEnemy} из {enemisRemaining}";
         }
     }
-    public void SpawnCorpse(Transform enemy, BaseEnemyLogic mob_logic)
+    private IEnumerator SpawnCorpse(Transform enemy, BaseEnemyLogic mob_logic, bool destroyCorpse)
     {
-        GameObject corpseEnemy = Instantiate(CorpsePref, mob_logic.transform.parent); //Создаем труп
-        corpseEnemy.transform.position = enemy.transform.position;      //Назначаем позицию
+        //Создаем труп
+        GameObject corpseEnemy = Instantiate(CorpsePref, mob_logic.transform.parent);
 
-        if (mob_logic.typeMob == TypeMob.Technology) 
-            corpseEnemy.tag = "Corpse_Tech";
-        else 
-            corpseEnemy.tag = "Corpse_Mag";
+        //Назначаем позицию
+        corpseEnemy.transform.position = enemy.transform.position;      
 
-        CorpseSetting corpseSetting = corpseEnemy.GetComponent<CorpseSetting>();
-        corpseSetting.NameKey = mob_logic.Name;
-        corpseEnemy.GetComponent<SpriteRenderer>().flipX = enemy.GetComponent<SpriteRenderer>().flipX;
-        //corpseSetting.PlayDieSoind(enemy.GetComponent<BaseEnemyLogic>().die_sound);
+        //Звук
+        AudioClip die_sound = mob_logic.die_sounds[Random.Range(0, mob_logic.die_sounds.Length)];
+        corpseEnemy.GetComponent<AudioSource>().PlayOneShot(die_sound); //Звук смерти моба
 
-        Animator corpseAnim = corpseEnemy.GetComponent<Animator>();    //Коприруем аниматор
-        Animator enemyAnim = mob_logic.GetAnimator(); //Коприруем аниматор
+        //Спрайт
+        corpseEnemy.GetComponent<SpriteRenderer>().flipX = enemy.GetComponent<SpriteRenderer>().flipX; //Отразить  как нужно
 
-        corpseAnim.runtimeAnimatorController = enemyAnim.runtimeAnimatorController;        //Коприруем аниматор
+
+        //Анимация
+        Animator corpseAnim = corpseEnemy.GetComponent<Animator>();//Берем аниматор трупа
+        Animator enemyAnim = mob_logic.GetAnimator(); //Берем аниматор моба
+        corpseAnim.runtimeAnimatorController = enemyAnim.runtimeAnimatorController;//Коприруем анимации
         corpseAnim.fireEvents = false;  // Выключает все Animation Events
-        corpseAnim.SetTrigger("Death");
+        corpseAnim.SetTrigger("Death"); // Включаем анимацию смерти
+
+        yield return null;
 
 
+        // Удаляем моба только после этого
+
+
+        //Уничтожение трупа или нет
+        if (!destroyCorpse)
+        {
+            Debug.LogWarning("Не уничтожать труп");
+            if (mob_logic.typeMob == TypeMob.Technology)
+                corpseEnemy.tag = "Corpse_Tech";
+            else
+                corpseEnemy.tag = "Corpse_Mag";
+            CorpseSetting corpseSetting = corpseEnemy.GetComponent<CorpseSetting>();
+            corpseSetting.NameKey = mob_logic.Name;
+        }
+        else
+        {
+            StartCoroutine(WaitToDie(corpseEnemy, die_sound.length + 0.4f));
+        }
+        yield return null;
+
+        Destroy(mob_logic.gameObject);
+    }
+    private IEnumerator WaitToDie(GameObject corpse, float time)
+    {
+        yield return new WaitForSeconds(time);
+        Destroy(corpse);
     }
     public async Task SaveDataGame()
     {

@@ -268,7 +268,7 @@ Transform:
   m_GameObject: {fileID: 3642993609024824129}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.1273901, y: -0.5128749, z: -0.004348378}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -301,8 +301,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 63d4cc6623a94b6489be1af4aa5f28d9, type: 3}
   die_sounds:
   - {fileID: 8300000, guid: a392a1df9f28efc4a94e02bd4c97cb53, type: 3}
+  abolity_sounds: []
   attackBuffer: 1
   HPBar: {fileID: 1098463901228223266}
+  abillities: []
   Shoot_point: {fileID: 3575310581425249754}
   item_one: {fileID: 2294067478213102104}
   item_two: {fileID: 671930686264628453}
