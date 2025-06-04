@@ -38,7 +38,8 @@ public class MinionControl : MonoBehaviour
         lineRenderer.endWidth = 0.05f;
         lineRenderer.enabled = false; // По умолчанию круг скрыт
 
-        SpawnerCropse = GameObject.Find("MobsLayer").transform;
+        SpawnerCropse = GameManager.Instance.mobsLayer;
+        //SpawnerCropse = GameObject.Find("MobsLayer").transform;
         MinionSlots = transform.parent.parent;
         MinionSlotParent = transform.parent;
 

@@ -6,6 +6,15 @@ public class TastyFlyLogic : BaseEnemyLogic
 {
     protected bool isAttack;
     protected float attack_move_speed;
+    [SerializeField] protected GameObject shadow;
+    protected Animator shadow_anim;
+    protected SpriteRenderer shadow_sprite;
+    protected override void Start()
+    {
+        shadow_anim = shadow.GetComponent<Animator>();
+        shadow_sprite = shadow.GetComponent<SpriteRenderer>();
+        base.Start();
+    }
     protected override void LoadParametrs()
     {  
         base.LoadParametrs();
@@ -14,6 +23,18 @@ public class TastyFlyLogic : BaseEnemyLogic
             attack_move_speed = tastyfly.attack_move_speed;
         }
 
+    }
+    public override void Flipface() //Разворачиваем моба 
+    {
+        if (player == null) return; // Проверка на null
+
+        bool shouldFaceLeft = player.position.x < transform.position.x; // Игрок слева?
+
+        if (spr_ren.flipX != shouldFaceLeft) // Если нужно сменить направление
+        {
+            spr_ren.flipX = shouldFaceLeft;
+            shadow_sprite.flipX = shouldFaceLeft;
+        }
     }
     public override void AvoidWall(bool wallDetected, Vector2 toPlayer, float distanceToPlayer) { }
     public override void DetectDirection() //Вычисляем направление
@@ -50,7 +71,11 @@ public class TastyFlyLogic : BaseEnemyLogic
         {
             isAttack = true;
             // Выполняем атаку (выстрел)
-            if (animator_main != null) animator_main.SetBool("Attack", true);
+            if (animator_main != null)
+            {
+                animator_main.SetBool("Attack", true);
+                shadow_anim.SetBool("Attack", true);
+            }
 
 
             StartCoroutine(AttackFly(toPlayer));
@@ -70,7 +95,11 @@ public class TastyFlyLogic : BaseEnemyLogic
         }
         transform.position = endPos;
         isAttack = false; 
-        if (animator_main != null) animator_main.SetBool("Attack", false);
+        if (animator_main != null)
+        {
+            animator_main.SetBool("Attack", false);
+            shadow_anim.SetBool("Attack", false);
+        }
     }
     protected void OnTriggerEnter2D(Collider2D collision)
     {
@@ -79,5 +108,9 @@ public class TastyFlyLogic : BaseEnemyLogic
             Player.Instance.TakeDamage(enum_stat.Att_Damage, damageT.Magic, true);
             audioSource.PlayOneShot(attack_sounds[UnityEngine.Random.Range(0, attack_sounds.Length)]); //Звук выстрела
         }
+    }
+    public override void CreateCulling()
+    {
+        culling = new CullingObject(spr_ren, animator_main, new SpriteRenderer[] { shadow_sprite }, new Animator[] { shadow_anim },null, new AudioSource[] { audioSource });
     }
 }

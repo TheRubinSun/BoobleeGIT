@@ -12,7 +12,10 @@ public class GameManager: MonoBehaviour
 {
     public static GameManager Instance;
     [SerializeField] GameObject CorpsePref;
-    [SerializeField] GameObject CorpseTempPref;
+    [SerializeField] GameObject AudioManager;
+    [SerializeField] AudioClip[] musics;
+    public Transform mobsLayer;
+    private AudioSource music_source;
 
     public Transform dropParent;
     public Transform PlayerModel;
@@ -44,6 +47,13 @@ public class GameManager: MonoBehaviour
     }
     private void Start()
     {
+        music_source = AudioManager.GetComponent<AudioSource>();
+        music_source.volume = GlobalData.VOLUME_MUSICS;
+        music_source.loop = true;
+        music_source.clip = musics[Random.Range(0, musics.Length)];
+        music_source.Play();
+
+
         savePath = GlobalData.SavePath;
         if (savePath == null) savePath = "";
 

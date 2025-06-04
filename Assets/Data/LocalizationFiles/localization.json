@@ -193,18 +193,72 @@
         "Quality": "",
         "Description": "A mysterious ring with an embedded eye. It seems to watch your every move."
       },
-	  "material_tooth_mimic": {
-		"Name": "Mimic Tooth",
-		"TypeItem": "",
-		"Quality": "",
-		"Description": "A jagged tooth torn from a mimic. Still drips with slime and menace."
-	  },
-	 "material_tongue_mimic": {
-		"Name": "Mimic Tongue",
-		"TypeItem": "",
-		"Quality": "",
-		"Description": "The squirming tongue of a mimic. It occasionally twitches as if still alive."
-	 }
+      "material_tooth_mimic": {
+        "Name": "Mimic Tooth",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "A jagged tooth torn from a mimic. Still drips with slime and menace."
+      },
+      "material_tongue_mimic": {
+        "Name": "Mimic Tongue",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "The squirming tongue of a mimic. It occasionally twitches as if still alive."
+      },
+      "material_bur": {
+        "Name": "Drill",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "A worn-out drill that can still pierce through rock. It radiates mechanical power."
+      },
+      "material_wheel": {
+        "Name": "Wheel",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "A sturdy wheel that once spun at wild speeds. Now it waits for a new machine."
+      },
+      "material_battery": {
+        "Name": "Battery",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "A mystical battery filled with unstable energy. It hums even when not connected."
+      },
+      "material_fast_engine": {
+        "Name": "Fast Engine",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "A legendary engine built for speed. Starting it up sounds like thunder roaring."
+      },
+      "material_saw_blade": {
+        "Name": "Saw Blade",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "A toothed blade that leaves only dust and splinters behind. Sharp and dangerous."
+      },
+      "material_copper_wires": {
+        "Name": "Copper Wires",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Ordinary copper wires. Flexible, reliable, still fit for conducting energy."
+      },
+      "material_lamp": {
+        "Name": "Lamp",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "A rare lamp that emits a gentle light. As if it illuminates not only the path but also the mind."
+      },
+      "material_wings_fly": {
+        "Name": "Gluttonwing Wings",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Wings torn from the Gluttonwing — a ravenous flying creature. They carry the scent of food."
+      },
+      "material_simple_engine": {
+        "Name": "Simple Engine",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "A simple but reliable engine. It doesn’t shine, but it always gets the job done."
+      }
     },
     "mobs": {
       "daizen_enem": {
@@ -227,16 +281,26 @@
         "TypeMob": "",
         "Description": "This is a really big damn slime, no joke!"
       },
-	  "mimic_enem": {
-		"Name": "Mimic Chest",
-		"TypeMob": "",
-		"Description": "A fast and dangerous chest"
+      "mimic_enem": {
+        "Name": "Mimic Chest",
+        "TypeMob": "",
+        "Description": "A fast and dangerous chest"
       },
-	  "death_car_enem": {
-		"Name": "Death Machine",
-		"TypeMob": "",
-		"Description": "A robotic car with a circular saw, built to exterminate all life in its path"
-}
+      "death_car_enem": {
+        "Name": "Death Machine",
+        "TypeMob": "",
+        "Description": "A robotic car with a circular saw, built to exterminate all life in its path"
+      },
+      "tasty_fly_enem": {
+        "Name": "Gluttonwing",
+        "TypeMob": "",
+        "Description": "A green winged creature with nothing but a mouth and a great sense of smell. Loves to gobble up anything it can find."
+      },
+      "bur_enem": {
+        "Name": "Cave Ripper",
+        "TypeMob": "",
+        "Description": "A relentless drilling machine built for tunnels, tearing through stone and flesh alike as it carves its endless path through the caves."
+      }
     },
     "ui_text": {
       "player_stats_name": {
@@ -254,7 +318,6 @@
         "word_cur_exp": "Current exp",
         "word_nextLvl_exp": "To the next level",
         "word_classPlayer": "Class player",
-
         "word_Damage": "Damage",
         "word_Armor": "Armor",
         "word_Speed": "Speed",
@@ -277,7 +340,6 @@
         "word_count_proj": "Bonus count projectiles",
         "word_Tech_Resis": "Tech Resist",
         "word_Magic_Resis": "Magic Resist"
-
       },
       "slots_name": {
         "word_player": "player",
@@ -321,11 +383,11 @@
         "word_Range": "to Range",
         "word_Projectile_speed": "to Projectile Speed"
       },
-	  "name_location":{
-		  "Game_village": "Village of Tonio the almost wise",
-		  "Level_one": "Level №1 Field of slightly angry sheep",
-		  "Level_two": "Level №2 Shadowfang Hollow"
-	  }
+      "name_location": {
+        "Game_village": "Village of Tonio the almost wise",
+        "Level_one": "Level №1 Field of slightly angry sheep",
+        "Level_two": "Level №2 Shadowfang Hollow"
+      }
     }
   },
   "ru": {
@@ -522,18 +584,72 @@
         "Quality": "",
         "Description": "Загадочное кольцо с вкраплённым глазом. Кажется, оно следит за каждым твоим движением."
       },
-	  "material_tooth_mimic": {
-		"Name": "Зуб мимика",
-		"TypeItem": "",
-		"Quality": "",
-		"Description": "Оскалённый зуб, вырванный из пасти мимика. Всё ещё покрыт слизью и злобой."
-	  },
-	  "material_tongue_mimic": {
-		"Name": "Язык мимика",
-		"TypeItem": "",
-		"Quality": "",
-		"Description": "Извивающийся язык мимика. Порой вздрагивает, будто всё ещё живой."
-	  }
+      "material_tooth_mimic": {
+        "Name": "Зуб мимика",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Оскалённый зуб, вырванный из пасти мимика. Всё ещё покрыт слизью и злобой."
+      },
+      "material_tongue_mimic": {
+        "Name": "Язык мимика",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Извивающийся язык мимика. Порой вздрагивает, будто всё ещё живой."
+      },
+      "material_bur": {
+        "Name": "Бур",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Изношенный бур, всё ещё способный пробурить скалу. В нём чувствуется механическая мощь."
+      },
+      "material_wheel": {
+        "Name": "Колесо",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Прочное колесо, когда-то вращавшееся с бешеной скоростью. Теперь оно ждёт новой машины."
+      },
+      "material_battery": {
+        "Name": "Батарея",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Мистическая батарея, наполненная нестабильной энергией. Гудит, даже когда не подключена."
+      },
+      "material_fast_engine": {
+        "Name": "Быстрый двигатель",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Легендарный двигатель, созданный для скорости. Его запуск — это рёв грома."
+      },
+      "material_saw_blade": {
+        "Name": "Пильный диск",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Зубчатый диск, оставляющий после себя лишь пыль и стружку. Острый и опасный."
+      },
+      "material_copper_wires": {
+        "Name": "Медные провода",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Обычные медные провода. Гибкие, надёжные, всё ещё пригодны для проводки энергии."
+      },
+      "material_lamp": {
+        "Name": "Лампа",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Редкая лампа, излучающая мягкий свет. Будто освещает не только путь, но и мысли."
+      },
+      "material_wings_fly": {
+        "Name": "Крылья Обжирокрыла",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Крылья, сорванные с Обжирокрыла — прожорливого крылатого существа. Источают аромат пищи."
+      },
+      "material_simple_engine": {
+        "Name": "Простой двигатель",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Простой, но надёжный двигатель. Не сверкает, но всегда выполняет свою работу."
+      }
     },
     "mobs": {
       "daizen_enem": {
@@ -556,16 +672,26 @@
         "TypeMob": "",
         "Description": "Этот чертов слизень большой, без шуток!"
       },
-	  "mimic_enem": {
+      "mimic_enem": {
         "Name": "Сундук мимик",
         "TypeMob": "",
         "Description": "Быстрый и опасный сундук"
       },
-	  "death_car_enem": {
-		"Name": "Машина-убийца",
-		"TypeMob": "",
-		"Description": "Роботизированная машина с циркулярной пилой, созданная истреблять всё живое на своём пути"
-}
+      "death_car_enem": {
+        "Name": "Машина-убийца",
+        "TypeMob": "",
+        "Description": "Роботизированная машина с циркулярной пилой, созданная истреблять всё живое на своём пути"
+      },
+      "tasty_fly_enem": {
+        "Name": "Обжирокрыл",
+        "TypeMob": "",
+        "Description": "Зелёное крылатое существо, представляющее собой один большой рот с отличным чутьём. Обожает пожирать всё, что попадётся на пути."
+      },
+      "bur_enem": {
+        "Name": "Пещеродёр",
+        "TypeMob": "",
+        "Description": "Неумолимая бурильная машина, созданная для тоннелей, разрывающая камень и плоть на своём бесконечном пути сквозь пещеры."
+      }
     },
     "ui_text": {
       "player_stats_name": {
@@ -583,7 +709,6 @@
         "word_cur_exp": "Текущий опыт",
         "word_nextLvl_exp": "до след. уровня",
         "word_classPlayer": "Класс игрока",
-
         "word_Damage": "Урона",
         "word_Armor": "Брони",
         "word_Speed": "Скорость",
@@ -649,11 +774,11 @@
         "word_Range": "к дальности",
         "word_Projectile_speed": "к скорости снаряда"
       },
-      "name_location":{
-		  "Game_village": "Деревня Тонио почти-мудрого",
-		  "Level_one": "Уровень №1 — Поле слегка разъярённых овец",
-		  "Level_two": "Уровень №2 — Пещера Тенеклыка"
-	  }
+      "name_location": {
+        "Game_village": "Деревня Тонио почти-мудрого",
+        "Level_one": "Уровень №1 — Поле слегка разъярённых овец",
+        "Level_two": "Уровень №2 — Пещера Тенеклыка"
+      }
     }
   }
 }

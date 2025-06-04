@@ -9,11 +9,13 @@ public class level_logic : MonoBehaviour
     [SerializeField] private List<SpawnMobPortal> spawnEnemy = new List<SpawnMobPortal>();
     [SerializeField] private float timeToBackHome;
     [SerializeField] private GameObject portalHome;
+    [SerializeField] private Transform MobsLogicOBJ;
+    [SerializeField] private Transform SpawnMobsParent;
 
     private float[] cooldownEnemySpawn;
 
     [SerializeField] private Transform[] PosForPortals;
-    private Transform parentPortal;
+    //private Transform parentPortal;
     private SpawnMobs spawnMobsLogic;
 
     private int countMobs;
@@ -21,10 +23,10 @@ public class level_logic : MonoBehaviour
     private void Start()
     {
         cooldownEnemySpawn = new float[spawnEnemy.Count];
-        spawnMobsLogic = GetComponent<SpawnMobs>();
-        parentPortal = spawnMobsLogic.parent;
-
-        foreach(SpawnMobPortal spawnMobPortal in spawnEnemy)
+        spawnMobsLogic = MobsLogicOBJ.GetComponent<SpawnMobs>();
+        //parentPortal = this.transform;
+        
+        foreach (SpawnMobPortal spawnMobPortal in spawnEnemy)
         {
             if(spawnMobPortal.startSpawn)
             {
@@ -32,6 +34,8 @@ public class level_logic : MonoBehaviour
                 SpawnPortal(spawnMobPortal, pos);
             }
         }
+
+        StartCoroutine(ProcessWave());
         //бїИђ ьюсют
         //foreach (SpawnMobPortal mob in spawnEnemy)
         //{
@@ -39,7 +43,7 @@ public class level_logic : MonoBehaviour
         //    mob.endRandomCountSpawn = countTemp;
         //    //countMobs += countTemp;
         //}
-        StartCoroutine(ProcessWave());
+
     }
     private void Update()
     {
@@ -71,7 +75,7 @@ public class level_logic : MonoBehaviour
         spawnEnemy.endRandomCountSpawn = Random.Range(spawnEnemy.minCountSpawn, spawnEnemy.maxCountSpawn + 1);
         GameObject portal = Instantiate(spawnMobsLogic.tech_portal_pref, portalPos);
         PortalLogic portLog = portal.GetComponent<PortalLogic>();
-        portLog.SetDataPortal(spawnEnemy, parentPortal);
+        portLog.SetDataPortal(spawnEnemy, SpawnMobsParent);
     }
 }
 [System.Serializable]

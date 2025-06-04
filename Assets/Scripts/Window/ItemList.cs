@@ -86,10 +86,20 @@ public static class ItemsList
         items.Add(new Item(26, "material_glass",               20, 0, Quality.Common, 15, "_", TypeItem.Material));
         items.Add(new Item(27, "material_someone_eye",         20, 0, Quality.Uncommon, 35, "_", TypeItem.Material));
         items.Add(new Item(28, "material_strange_eye",         20, 0, Quality.Mystical, 350, "_", TypeItem.Material));
-        items.Add(new ArtifactItem(29, "artifact_simple_ring", 1, 0, Quality.Uncommon, 100, "_", TypeItem.Artifact, 1));
-        items.Add(new ArtifactItem(30, "artifact_eye_ring",    1, 0, Quality.Rare, 300, "_", TypeItem.Artifact, 5));
+        items.Add(new ArtifactItem(29, "artifact_simple_ring", 1, 0, Quality.Mystical, 350, "_", TypeItem.Artifact, 1));
+        items.Add(new ArtifactItem(30, "artifact_eye_ring",    1, 0, Quality.Mystical, 800, "_", TypeItem.Artifact, 5));
         items.Add(new Item(31, "material_tooth_mimic",         100, 0, Quality.Uncommon, 50, "_", TypeItem.Material));
         items.Add(new Item(32, "material_tongue_mimic",        20, 0, Quality.Mystical, 1000, "_", TypeItem.Material));
+
+        items.Add(new Item(33, "material_bur",                 10, 0, Quality.Rare, 600, "_", TypeItem.Material));
+        items.Add(new Item(34, "material_wheel",               20, 0, Quality.Uncommon, 200, "_", TypeItem.Material));
+        items.Add(new Item(35, "material_battery",             5, 0, Quality.Mystical, 1200, "_", TypeItem.Material));
+        items.Add(new Item(36, "material_fast_engine",         5, 0, Quality.Legendary, 3000, "_", TypeItem.Material));
+        items.Add(new Item(37, "material_saw_blade",           20, 0, Quality.Rare, 350, "_", TypeItem.Material));
+        items.Add(new Item(38, "material_copper_wires",        40, 0, Quality.Common, 20, "_", TypeItem.Material));
+        items.Add(new Item(39, "material_lamp",                20, 0, Quality.Rare, 400, "_", TypeItem.Material));
+        items.Add(new Item(40, "material_wings_fly",           20, 0, Quality.Uncommon, 150, "_", TypeItem.Material));
+        items.Add(new Item(41, "material_simple_engine",       5, 0, Quality.Legendary, 2000, "_", TypeItem.Material));
         //PrintItemList();
     }
     private static void InitializeSpritesItem()

@@ -1,3 +1,4 @@
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class HealthBar2D
@@ -51,5 +52,11 @@ public class HealthBar2D
     {
         healthBarBG_sp_ren.enabled = active;
         healthBarFill_sp_ren.enabled = active;
+    }
+    public void FlipX(bool flip)
+    {
+        if (healthBarBG_sp_ren.enabled == false) return;
+        healthBarBG_sp_ren.flipX = flip;
+        healthBarFill_sp_ren.flipX = flip;
     }
 }

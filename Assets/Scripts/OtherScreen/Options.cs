@@ -63,6 +63,6 @@ public class Options : MonoBehaviour
         //Debug.Log(db_sounds);
         float db_music = Mathf.Log10(Mathf.Clamp01(GlobalData.VOLUME_MUSICS + 0.001f)) * 20f;
         mixer.SetFloat("Sounds", db_sounds);
-        mixer.SetFloat("Music", db_music);
+        mixer.SetFloat("MusicVol", db_music);
     }
 }

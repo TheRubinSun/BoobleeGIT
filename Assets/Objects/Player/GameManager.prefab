@@ -21,7 +21,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6390547595266312505
 Transform:
   m_ObjectHideFlags: 0
@@ -51,6 +51,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CorpsePref: {fileID: 5489696471320276186, guid: 9eac9080720a30e44ac413cefc17fa83, type: 3}
+  CorpseTempPref: {fileID: 0}
+  AudioManager: {fileID: 0}
+  musics:
+  - {fileID: 8300000, guid: d3200670b742ea749b976beed56121fd, type: 3}
+  - {fileID: 8300000, guid: a1d1691046e2116478bfb08fb1597314, type: 3}
+  - {fileID: 8300000, guid: ca516cda01d7a7345b8f17a386fb5196, type: 3}
+  - {fileID: 8300000, guid: 1247defab8b41344c8953971eefd0620, type: 3}
   dropParent: {fileID: 0}
   PlayerModel: {fileID: 0}
   PlayerPosY: 0
@@ -101,7 +108,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 081e12e0e218ea24bb90835801a926e7, type: 3}
   - {fileID: 8300000, guid: 6b009619ea42feb45ab50d2992dbd0dc, type: 3}
   - {fileID: 8300000, guid: a82e0d998d526d74fbdccf011ac55b79, type: 3}
-  volume: 0.2
 --- !u!82 &1952468105405662101
 AudioSource:
   m_ObjectHideFlags: 0
