@@ -25,8 +25,8 @@ Transform:
   m_GameObject: {fileID: 46219519726913704}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.15, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.275, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3674988265952875727}
@@ -60,7 +60,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3794253683764855951}
@@ -415,7 +415,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2569639633428067833}
@@ -432,10 +432,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3674988265952875727}
   - component: {fileID: 2976625504876060080}
+  - component: {fileID: 2507145932948197912}
   - component: {fileID: 414858852514876534}
   - component: {fileID: 8774356011337476120}
   - component: {fileID: 5737860601278000302}
-  - component: {fileID: 2507145932948197912}
   m_Layer: 14
   m_Name: Daizen
   m_TagString: Enemy
@@ -453,7 +453,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1784190780623767438}
@@ -475,6 +475,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IdMobs: 0
   Name: 
+  EffectsObj: {fileID: 1784190780623767438}
   CenterObject: {fileID: 3794253683764855951}
   player: {fileID: 0}
   mob_object: {fileID: 420888788017792791}
@@ -489,10 +490,24 @@ MonoBehaviour:
   die_sounds:
   - {fileID: 8300000, guid: 3edd2b346d09f334db68d107cee416c2, type: 3}
   abolity_sounds: []
+  damageValuePref: {fileID: 6292013005122663656, guid: cac7b7163f7b90940bb6363f0f51064d, type: 3}
   attackBuffer: 0
   HPBar: {fileID: 6034422211155977361}
   abillities: []
   child_Obj: {fileID: 3794253683764855951}
+--- !u!114 &2507145932948197912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6404689917151662376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08492b67ee78a0646bc237ac09a99783, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentCurEffect: {fileID: 1784190780623767438}
 --- !u!50 &414858852514876534
 Rigidbody2D:
   serializedVersion: 5
@@ -651,22 +666,9 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.08}
-  m_Size: {x: 0.23, y: 0.6}
+  m_Offset: {x: -0.008471146, y: -0.20537293}
+  m_Size: {x: 0.34859607, y: 1.1218226}
   m_Direction: 0
---- !u!114 &2507145932948197912
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6404689917151662376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08492b67ee78a0646bc237ac09a99783, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentCurEffect: {fileID: 1784190780623767438}
 --- !u!1 &9052392510286691382
 GameObject:
   m_ObjectHideFlags: 0

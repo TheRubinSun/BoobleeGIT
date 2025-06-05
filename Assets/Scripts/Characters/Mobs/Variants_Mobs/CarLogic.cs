@@ -66,7 +66,7 @@ public class CarLogic : BaseEnemyLogic
             moveDirection = Vector2.zero;
 
             // Если моб слишком близко, он немного отходит назад
-            if (distanceToPlayer < enum_stat.Att_Range * 0.4f)
+            if (distanceToPlayer < enum_stat.Att_Range * 0.6f)
             {
                 moveDirection = -toPlayer.normalized;
             }
@@ -80,13 +80,6 @@ public class CarLogic : BaseEnemyLogic
         }
         else
         {
-            //if(!audioSource.isPlaying && enum_stat.Cur_Hp > 0)
-            //{
-            //    audioSource.loop = true;
-
-            //}
-
-
             IsNearThePlayer = false;
             moveDirection = toPlayer.normalized;
         }

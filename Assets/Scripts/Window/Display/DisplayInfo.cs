@@ -239,7 +239,7 @@ public class DisplayInfo: MonoBehaviour
         AppendStat(info, word_Proj_Speed, pl_stat.Proj_Speed, false, false, pl_stat.Base_Proj_Speed, pl_stat.Intelligence * 0.1f, pl_stat.classPlayer.Bonus_Class_ProjectileSpeed, eqip_stat.Bonus_Equip_Proj_Speed,
             ($"{word_intelligence} * 0.1"), word_roleClass, word_eqipment);
         AppendStat(info, word_Att_Damage, pl_stat.Att_Damage, false, false, pl_stat.Base_Att_Damage, (pl_stat.Strength * 2 + pl_stat.Intelligence * 2) / 10, pl_stat.classPlayer.Bonus_Class_Damage, eqip_stat.Bonus_Equip_Att_Damage,
-            ($"{pl_stat.Strength * 2} ({word_strength} * 2) + {pl_stat.Intelligence * 2} ({word_intelligence} * 2) / 10"),
+            ($"{pl_stat.Strength * 2} ({word_strength} * 2) + {(pl_stat.Intelligence * 2)} ({word_intelligence} * 2) / 10"),
             word_roleClass, word_eqipment);
         // ƒобавление сопротивлений в статистику
         AppendStat(info, word_Tech_Resis, pl_stat.Tech_Resis, true, false, pl_stat.Base_Tech_Resis, pl_stat.Intelligence, pl_stat.classPlayer.Bonus_Tech_Resis, eqip_stat.Bonus_Tech_Resis,
@@ -367,6 +367,7 @@ public class DisplayInfo: MonoBehaviour
             FormatStat(info, artifactObj.Artif_ExpBust, word_expBonus, GlobalColors.Hh_ExpBust);
             FormatStat(info, artifactObj.Artif_Mage_Resis, word_Magic_Resis, GlobalColors.Hh_Mage_Resis);
             FormatStat(info, artifactObj.Artif_Tech_Resis, word_Tech_Resis, GlobalColors.Hh_Tech_Resis);
+            FormatStat(info, artifactObj.Artif_Damage, word_Damage, GlobalColors.Hh_Damage);
 
         }
         info.AppendLine($"{word_description}: {item.Description}");

@@ -154,6 +154,9 @@ public class Player : MonoBehaviour, ITakeDamage
             case AspectName.Projectile_speed:
                 pl_stats.Base_Proj_Speed += value; // Увеличение скорости снаряда
                 break;
+            case AspectName.Damage:
+                pl_stats.Base_Att_Damage += (int)value;
+                break;
             default:
                 Debug.LogWarning("Неизвестный аспект: " + aspectName);
                 break;

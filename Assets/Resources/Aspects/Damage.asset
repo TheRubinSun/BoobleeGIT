@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d077671a8415a264f886e179146b2c6e, type: 3}
-  m_Name: Range
+  m_Name: Damage
   m_EditorClassIdentifier: 
-  name_asp: 10
+  name_asp: 12
   BG_Color:
     serializedVersion: 2
-    rgba: 4278855740
+    rgba: 4280825168
   icon_color:
     serializedVersion: 2
-    rgba: 4283477192
-  min_value: 0.2
-  max_value: 0.4
-  sprite: {fileID: 457894537, guid: e1e761b1dcd7495459aa40445b4527f8, type: 3}
+    rgba: 4283463112
+  min_value: 1
+  max_value: 1
+  sprite: {fileID: 78323666, guid: e1e761b1dcd7495459aa40445b4527f8, type: 3}

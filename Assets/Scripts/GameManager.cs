@@ -256,7 +256,7 @@ public class GameManager: MonoBehaviour
         EnemyData enemy_Data = new EnemyData(EnemyList.mobs);
         await SaveSystem.SaveDataAsync(enemy_Data, "enemies.json");
 
-        ItemsDropOnEnemy item_drop = new ItemsDropOnEnemy(ItemDropEnemy.enemyAndHisDrop);
+        ItemsDropOnEnemy item_drop = new ItemsDropOnEnemy(ItemDropEnemy.enemyAndHisDropItems);
         await SaveSystem.SaveDataAsync(item_drop, "item_drop.json");
 
         SaveGameInfo saveGameIngo = GenInfoSaves.saveGameFiles[GlobalData.SaveInt];

@@ -414,6 +414,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IdMobs: 5
   Name: 
+  EffectsObj: {fileID: 6146058071365724942}
   CenterObject: {fileID: 5103865891430872179}
   player: {fileID: 0}
   mob_object: {fileID: 5278448938266498526}
@@ -431,7 +432,8 @@ MonoBehaviour:
   abolity_sounds:
   - {fileID: 8300000, guid: 8b034a59b2daf384b833d41329b5f29f, type: 3}
   - {fileID: 8300000, guid: f1903128da6e82d41959a723c2a255e8, type: 3}
-  attackBuffer: 1
+  damageValuePref: {fileID: 6292013005122663656, guid: cac7b7163f7b90940bb6363f0f51064d, type: 3}
+  attackBuffer: 0
   HPBar: {fileID: 4426098493281138801}
   abillities:
   - nameAbility: 

@@ -262,16 +262,16 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         if (slot.Item is Gun gun)
         {
             //Debug.Log($"Gun: {gun.NameKey}: {gun.projectileSpeed}");
-            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(gun.damage, gun.attackSpeedCoof,gun.addAttackSpeed, gun.projectileSpeed, gun.rangeType, gun.range, gun.conut_Projectiles, gun.spreadAngle, gun.typeDamage, PlayerModel,
+            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(gun ,gun.damage, gun.attackSpeedCoof,gun.addAttackSpeed, gun.projectileSpeed, gun.rangeType, gun.range, gun.conut_Projectiles, gun.spreadAngle, gun.typeDamage, PlayerModel,
                 ResourcesData.GetProjectilesPrefab(gun.idBulletPref), gun.projectileSpeedCoof);
         }
         else if (slot.Item is MeleWeapon sword)
         {
-            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(sword.damage, sword.attackSpeedCoof,sword.addAttackSpeed, 0, sword.rangeType, sword.range, sword.conut_Projectiles, 0f, sword.typeDamage, PlayerModel, null, 0);
+            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(sword,sword.damage, sword.attackSpeedCoof,sword.addAttackSpeed, 0, sword.rangeType, sword.range, sword.conut_Projectiles, 0f, sword.typeDamage, PlayerModel, null, 0);
         }
         else if (slot.Item is Weapon weapon)
         {
-            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(weapon.damage, weapon.attackSpeedCoof, weapon.addAttackSpeed, 0, weapon.rangeType, weapon.range, weapon.conut_Projectiles, 0f, weapon.typeDamage, PlayerModel, null,0);
+            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(weapon, weapon.damage, weapon.attackSpeedCoof, weapon.addAttackSpeed, 0, weapon.rangeType, weapon.range, weapon.conut_Projectiles, 0f, weapon.typeDamage, PlayerModel, null,0);
         }
     }
     private void LoadParametersMinion(GameObject minionObj, Slot slot)
@@ -301,6 +301,7 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         equipStats.Bonus_Equip_ExpBust += artifact.Artif_ExpBust;
         equipStats.Bonus_Magic_Resis += artifact.Artif_Mage_Resis;
         equipStats.Bonus_Tech_Resis += artifact.Artif_Tech_Resis;
+        equipStats.Bonus_Equip_Att_Damage += artifact.Artif_Damage;
     }
     private void DeleteAttributeArtifact(int idSlot)
     {
@@ -325,5 +326,6 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         equipStats.Bonus_Equip_ExpBust -= artifact.Artif_ExpBust;
         equipStats.Bonus_Magic_Resis -= artifact.Artif_Mage_Resis;
         equipStats.Bonus_Tech_Resis -= artifact.Artif_Tech_Resis;
+        equipStats.Bonus_Equip_Att_Damage -= artifact.Artif_Damage;
     }
 }

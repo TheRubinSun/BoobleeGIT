@@ -12,4 +12,5 @@ public class ItemDrop:MonoBehaviour
     //    item = newItem;
     //    count = newCount;
     //}
+
 }

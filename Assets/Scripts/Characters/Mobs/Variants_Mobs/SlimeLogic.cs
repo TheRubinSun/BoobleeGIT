@@ -30,7 +30,7 @@ public class SlimeLogic : BaseEnemyLogic, IItemMove
     }
     protected override void Start()
     {
-        string[] nameKeysItem = ItemDropEnemy.enemyAndHisDrop[Name];
+        DropItemEnemy[] nameKeysItem = ItemDropEnemy.enemyAndHisDropItems[Name];
 
         sr_item_one = item_one.GetComponent<SpriteRenderer>();
         sr_item_two = item_two.GetComponent<SpriteRenderer>();
@@ -63,9 +63,9 @@ public class SlimeLogic : BaseEnemyLogic, IItemMove
             sr_item_three.sortingOrder = spr_ren.sortingOrder - 1;
         }
     }
-    private Item GetRandomItem(string[] nameKeysItem)
+    private Item GetRandomItem(DropItemEnemy[] nameKeysItem)
     {
-        string nameItem = nameKeysItem[Random.Range(0, nameKeysItem.Length)];
+        string nameItem = nameKeysItem[Random.Range(0, nameKeysItem.Length)].item_key;
         return ItemsList.GetItemForName(nameItem);
     }
     protected override void LoadParametrs()

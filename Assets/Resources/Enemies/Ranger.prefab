@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 256399650496971137}
@@ -181,8 +181,8 @@ Transform:
   m_GameObject: {fileID: 3371535672543048412}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.15, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.26, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5981082136968568175}
@@ -365,7 +365,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4571109830553865167}
@@ -387,6 +387,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IdMobs: 1
   Name: 
+  EffectsObj: {fileID: 4571109830553865167}
   CenterObject: {fileID: 256399650496971137}
   player: {fileID: 0}
   mob_object: {fileID: 202375288678573708}
@@ -399,6 +400,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d890bdc5c6bc5ed40af71ed409aafd1d, type: 3}
   - {fileID: 8300000, guid: 94f794e742bf7964480c57259a9a3153, type: 3}
   abolity_sounds: []
+  damageValuePref: {fileID: 6292013005122663656, guid: cac7b7163f7b90940bb6363f0f51064d, type: 3}
   attackBuffer: 1
   HPBar: {fileID: 4755589234796842308}
   abillities: []
@@ -562,8 +564,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.08}
-  m_Size: {x: 0.23, y: 0.6}
+  m_Offset: {x: 0, y: -0.19713461}
+  m_Size: {x: 0.37725496, y: 1.1287794}
   m_Direction: 0
 --- !u!114 &8325690937940626755
 MonoBehaviour:
@@ -589,6 +591,14 @@ PrefabInstance:
     - target: {fileID: 1852044187561295959, guid: 20a84c7448816fe45860e17f6bcd4316, type: 3}
       propertyPath: m_Name
       value: HpBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 4161489549784394222, guid: 20a84c7448816fe45860e17f6bcd4316, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4161489549784394222, guid: 20a84c7448816fe45860e17f6bcd4316, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4161489549784394222, guid: 20a84c7448816fe45860e17f6bcd4316, type: 3}
       propertyPath: m_LocalPosition.x

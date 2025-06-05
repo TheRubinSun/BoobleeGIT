@@ -23,6 +23,7 @@ public class ArtifactObj
     public float Artif_ExpBust { get; set; }
     public float Artif_Mage_Resis { get; set; }
     public float Artif_Tech_Resis { get; set; }
+    public int Artif_Damage { get; set; }
 
     public bool StatsGen { get; set; }
     private HashSet<StatType> statTypes = new HashSet<StatType>();
@@ -116,6 +117,9 @@ public class ArtifactObj
             case StatType.Tech_Resis:
                 Artif_Tech_Resis += GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.TECH_RESIS);
                 break;
+            case StatType.Damage:
+                Artif_Damage += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.DAMAGE);
+                break;
         }
 
     }
@@ -143,7 +147,8 @@ public class ArtifactObj
        Artif_Proj_Speed == 0 &&
        Artif_ExpBust == 0f &&
        Artif_Mage_Resis == 0f &&
-       Artif_Tech_Resis == 0f;
+       Artif_Tech_Resis == 0f &&
+       Artif_Damage == 0f;
     }
 }
 public enum StatType
@@ -160,5 +165,6 @@ public enum StatType
     Proj_Speed,
     ExpBust,
     Mage_Resis,
-    Tech_Resis
+    Tech_Resis,
+    Damage
 }

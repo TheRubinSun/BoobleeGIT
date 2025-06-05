@@ -25,8 +25,8 @@ Transform:
   m_GameObject: {fileID: 1098463901228223266}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.268, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7698125448651634489}
@@ -232,8 +232,8 @@ Transform:
   m_GameObject: {fileID: 3078244301296563257}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.06369505, y: 0, z: 0.004348378}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.002, y: 0.264, z: 0.004348378}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2521187228729719601}
@@ -269,7 +269,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 497997331624041011}
@@ -291,6 +291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IdMobs: 2
   Name: 
+  EffectsObj: {fileID: 497997331624041011}
   CenterObject: {fileID: 5186344358335366366}
   player: {fileID: 0}
   mob_object: {fileID: 3878224357203334447}
@@ -302,6 +303,7 @@ MonoBehaviour:
   die_sounds:
   - {fileID: 8300000, guid: a392a1df9f28efc4a94e02bd4c97cb53, type: 3}
   abolity_sounds: []
+  damageValuePref: {fileID: 6292013005122663656, guid: cac7b7163f7b90940bb6363f0f51064d, type: 3}
   attackBuffer: 1
   HPBar: {fileID: 1098463901228223266}
   abillities: []
@@ -371,7 +373,7 @@ CapsuleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0.04}
-  m_Size: {x: 0.41, y: 0.0001}
+  m_Size: {x: 0.82, y: 0.0001}
   m_Direction: 0
 --- !u!82 &6396934167176994779
 AudioSource:
@@ -513,7 +515,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3575310581425249754}

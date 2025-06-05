@@ -439,6 +439,14 @@ PrefabInstance:
       propertyPath: ItemsOnMapLevel
       value: 
       objectReference: {fileID: 4292319139416013166}
+    - target: {fileID: 3909125822130434855, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
+      propertyPath: aspectDatas.Array.size
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 3909125822130434855, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
+      propertyPath: 'aspectDatas.Array.data[12]'
+      value: 
+      objectReference: {fileID: 11400000, guid: f47341bbbff1187439b32bf9ccb3ff98, type: 2}
     - target: {fileID: 4215532371471378292, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: UseItem
@@ -1368,6 +1376,10 @@ PrefabInstance:
       propertyPath: parent
       value: 
       objectReference: {fileID: 8212041181457164205}
+    - target: {fileID: 4927062703946977834, guid: ef7945317dabde14c85b7325307dd327, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 293217885867844315}
     - target: {fileID: 8163569857235264691, guid: ef7945317dabde14c85b7325307dd327, type: 3}
       propertyPath: m_Name
       value: Level

@@ -53,23 +53,24 @@ public class CorpseSetting : MonoBehaviour, ICullableObject
     }
     private List<Slot> ChanceAllDrop()
     {
-        string[] nameKeysItem = ItemDropEnemy.enemyAndHisDrop[NameKey];
+        DropItemEnemy[] nameKeysItem = ItemDropEnemy.enemyAndHisDropItems[NameKey];
         float dropChance;
         List<Slot> dropItems = new List<Slot>();
-        foreach (string nameItem in nameKeysItem)
+        foreach (DropItemEnemy dropItem in nameKeysItem)
         {
-            Item item = ItemsList.GetItemForName(nameItem);
-            dropChance = CalculatingItemDrop(item) / 100f;
+            Item tempItem = ItemsList.GetItemForName(dropItem.item_key);
+            dropChance = CalculatingItemDrop(tempItem) / 100f;
             //Debug.Log($"{item.NameKey}:  Шанс:{dropChance*100}%");
             if (Random.value < dropChance)
             {
-                dropItems.Add(new Slot(item, 1));
+                dropItems.Add(new Slot(tempItem, Random.Range(dropItem.countMin, dropItem.countMax+1)));
                 //Debug.Log($"Выпал предмет: {item.NameKey}");
             }
             
         }
         return dropItems;
     }
+
     private float CalculatingItemDrop(Item item)
     {
         float totalChance = 0;

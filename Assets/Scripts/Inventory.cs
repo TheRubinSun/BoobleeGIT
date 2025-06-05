@@ -47,8 +47,10 @@ public class Inventory:MonoBehaviour, ISlot
     }
     private void Start()
     {
+
         //InitializeSlots();
     }
+
     public void LoadOrCreateInventory(List<SlotTypeSave> invntory_items)
     {
         //Debug.Log("Загрузка инвентаря...");
@@ -70,6 +72,17 @@ public class Inventory:MonoBehaviour, ISlot
         SetSlotsInventoryBar();
         UpdateWholeSlots();//Обновляем целиком инвентарь
 
+        if (!GenInfoSaves.saveGameFiles[GlobalData.SaveInt].isStarted)
+        {
+            Slot slotTemp = slots[slots.Count - 1];
+            GiveItemInSlot(slotTemp, "item_meat", 5);
+            UpdateSlotUI(slotTemp);
+        }
+    }
+    private void GiveItemInSlot(Slot slot, string item_key, int count)
+    {
+        slot.Item = ItemsList.GetItemForNameKey(item_key);
+        slot.Count = 5;
     }
     private bool IsLoadInventory(List<SlotTypeSave> invntory_items)//Просто обновляем знаечния в клетках на новые из сохранения
     {

@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 
 public class WeaponControl : MonoBehaviour
 {
+    protected Weapon baseWeapon;
     protected int Attack_Damage {  get; set; }
     protected float Attack_Speed_Coof { get; set; }
     protected float Add_Attack_Speed { get; set; }
@@ -57,29 +58,45 @@ public class WeaponControl : MonoBehaviour
     {
         //audioSource_Shot.volume = GlobalData.VOLUME_SOUNDS;
     }
-    public virtual void GetStatsWeapon(int damage, float at_speed_coof, float add_at_speed, float att_sp_pr, bool isRang, float attack_ran, int count_proj, float _spreadAngle, damageT _damT, Transform pl_mod, GameObject _Projectile_pref = null, float att_sp_pr_coof = 0)
+    public virtual void GetStatsWeapon(Weapon _weapon,int damage, float at_speed_coof, float add_at_speed, float att_sp_pr, bool isRang, float attack_ran, int count_proj, float _spreadAngle, damageT _damT, Transform pl_mod, GameObject _Projectile_pref = null, float att_sp_pr_coof = 0)
     {
-        Attack_Damage = damage;
+        PlayerStats pl_stat = Player.Instance.GetPlayerStats();
+
+        baseWeapon = _weapon;
+        Attack_Damage = damage + pl_stat.Att_Damage;
 
         Attack_Speed_Coof = at_speed_coof;
         Add_Attack_Speed = add_at_speed;
 
         isRange = isRang;
 
-        if(isRang) Attack_Range = attack_ran + Player.Instance.GetPlayerStats().Att_Range;
-        else Attack_Range = attack_ran + (Player.Instance.GetPlayerStats().Att_Range/2);
+        if(isRang) Attack_Range = attack_ran + pl_stat.Att_Range;
+        else Attack_Range = attack_ran + (pl_stat.Att_Range/2);
 
         damageType = _damT;
 
-        if (Player.Instance.GetPlayerStats().Att_Speed < 1)
+        if (pl_stat.Att_Speed < 1)
             attackInterval = 10f;
         else
-            attackInterval = 60f / ((Add_Attack_Speed + Player.Instance.GetPlayerStats().Att_Speed) * Attack_Speed_Coof);
+            attackInterval = 60f / ((Add_Attack_Speed + pl_stat.Att_Speed) * Attack_Speed_Coof);
 
         PlayerModel = pl_mod;
 
         canBeWeapon.canBeMissed = true;
     }
+    //protected virtual void UpdateStats()
+    //{
+    //    PlayerStats pl_stat = Player.Instance.GetPlayerStats();
+    //    Attack_Damage = baseWeapon.damage + pl_stat.Att_Damage;
+
+    //    if (baseWeapon.rangeType) Attack_Range = baseWeapon.range + pl_stat.Att_Range;
+    //    else Attack_Range = baseWeapon.range + (pl_stat.Att_Range / 2);
+
+    //    if (pl_stat.Att_Speed < 1)
+    //        attackInterval = 10f;
+    //    else
+    //        attackInterval = 60f / ((baseWeapon.addAttackSpeed + pl_stat.Att_Speed) * Attack_Speed_Coof);
+    //}
 
     protected virtual void Update()
     {

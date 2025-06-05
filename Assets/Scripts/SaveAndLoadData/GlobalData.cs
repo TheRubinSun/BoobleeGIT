@@ -44,4 +44,5 @@ public static class BASE_VALUE_STATS_ARTEFACT
     public const float EXPBUST = 0.03f;
     public const float MAGE_RESIS = 0.02f;
     public const float TECH_RESIS = 0.02f;
+    public const float DAMAGE = 1;
 }

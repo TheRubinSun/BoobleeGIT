@@ -8,6 +8,12 @@ public class GlobalColors
     public static readonly Color32 blockTrue = new Color32(100, 255, 100, 30);
     public static readonly Color32 blockFalse = new Color32(255, 40, 0, 200);
 
+    public static readonly Color32 heal = new Color32(255, 70, 140, 255);
+    public static readonly Color32 posion = new Color32(140, 200, 31, 255);
+    public static readonly Color32 magic = new Color32(230, 34, 245, 255);
+    public static readonly Color32 technical = new Color32(35, 245, 241, 255);
+    public static readonly Color32 physycal = new Color32(250, 50, 30, 255);
+
     public static readonly string Hh_Str = "#A62E22";
     public static readonly string Hh_Agi = "#22A64C";
     public static readonly string Hh_Int = "#2273A6";
@@ -23,4 +29,5 @@ public class GlobalColors
     public static readonly string Hh_ExpBust = "#22A673";      // Бонус к опыту
     public static readonly string Hh_Mage_Resis = "#7322A6";   // Сопротивление магии
     public static readonly string Hh_Tech_Resis = "#2273A6";   // Сопротивление техно (такой же, как Int — можно поменять)
+    public static readonly string Hh_Damage = "#C87550";
 }

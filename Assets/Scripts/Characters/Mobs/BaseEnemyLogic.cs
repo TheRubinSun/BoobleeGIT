@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor.Build.Player;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -34,6 +35,8 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     protected Vector2 moveDirection;
     protected RaycastHit2D[] hits;
     protected Collider2D selfCollider;
+
+    [SerializeField] protected Transform EffectsObj;
     [SerializeField] protected Transform CenterObject;
     public Transform player;
 
@@ -63,6 +66,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     [SerializeField] public AudioClip[] die_sounds;
     [SerializeField] protected AudioClip[] abolity_sounds;
 
+    [SerializeField] protected GameObject damageValuePref;
 
 
 
@@ -216,30 +220,37 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
                 return;
             }
         }
+        Color32 colorDamage = Color.white;
         switch (typeAttack)
         {
             case damageT.Physical:
                 {
                     enum_stat.TakePhysicalDamageStat(damage);
+                    colorDamage = GlobalColors.physycal;
                     break;
                 }
             case damageT.Magic:
                 {
                     enum_stat.TakeMagicDamageStat(damage);
+                    colorDamage = GlobalColors.magic;
                     break;
                 }
             case damageT.Technical:
                 {
                     enum_stat.TakeTechDamageStat(damage);
+                    colorDamage = GlobalColors.technical;
                     break;
                 }
             case damageT.Posion:
                 {
                     enum_stat.TakePosionDamageStat(damage);
+                    colorDamage = GlobalColors.posion;
                     break;
                 }
             default: goto case damageT.Physical;
         }
+        StartCoroutine(DisplayDamage(damage, 0.4f, colorDamage));
+
         if (effect != null)
         {
             GetComponent<EffectsManager>().ApplyEffect(effect);
@@ -253,6 +264,40 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
         {
             Death();
         }
+    }
+    private IEnumerator DisplayDamage(int damage, float timeDuration, Color32 newColor)
+    {
+        GameObject damageVal = Instantiate(damageValuePref, EffectsObj);
+        TextMeshPro textComp = damageVal.GetComponent<TextMeshPro>();
+        textComp.text = damage.ToString();
+
+        Vector2 startPos = damageVal.transform.position;
+        Vector2 endPos = startPos + new Vector2(0.1f, 0.4f);
+        textComp.color = newColor;
+        Color startColor = textComp.color;
+
+        float elapsedTime = 0;
+        float updateInterval = 1f / 40f;
+        float nextUpdateTime = 0f;
+
+        while(elapsedTime < timeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+
+            if(elapsedTime >= nextUpdateTime)
+            {
+                float t = elapsedTime / timeDuration;
+
+                damageVal.transform.position = Vector2.Lerp(startPos, endPos, t);
+                startColor.a = Mathf.Lerp(1f, 0f, t);
+                textComp.color = startColor;
+                nextUpdateTime += updateInterval;
+            }
+
+            yield return null;
+        }
+
+        Destroy(damageVal);
     }
     public void TakeHeal(int heal)
     {

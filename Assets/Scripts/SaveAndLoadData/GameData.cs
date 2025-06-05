@@ -130,12 +130,12 @@ public class SlotTypeSave
 }
 public class ItemsDropOnEnemy
 {
-    public Dictionary<string, string[]> namesKeys;
+    public Dictionary<string, DropItemEnemy[]> namesKeys;
     public ItemsDropOnEnemy() 
     {
-        namesKeys = new Dictionary<string, string[]>(); // Инициализация пустым словарем
+        namesKeys = new Dictionary<string, DropItemEnemy[]>(); // Инициализация пустым словарем
     }
-    public ItemsDropOnEnemy(Dictionary<string, string[]> _NameKeys)
+    public ItemsDropOnEnemy(Dictionary<string, DropItemEnemy[]> _NameKeys)
     {
         namesKeys = _NameKeys;
     }

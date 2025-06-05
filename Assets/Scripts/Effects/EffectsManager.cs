@@ -13,9 +13,11 @@ public class EffectsManager : MonoBehaviour
     public static Action<EffectData> OnRemoveEffectUI;
     public static Action<ActionEffect> OnEffectTimerUpdate;
 
-    public List<ActionEffect> activeEffects = new List<ActionEffect>();
+    //public List<ActionEffect> activeEffects = new List<ActionEffect>();
     private CharacterStats stats;
+
     private Dictionary<EffectData, Coroutine> activeCoroutines = new Dictionary<EffectData, Coroutine>();
+    private Dictionary<EffectData, ActionEffect> activeEffectDataMap = new();
 
     private Dictionary<EffectType, GameObject> curEffectsObj = new Dictionary<EffectType, GameObject>();
     [SerializeField] private Transform parentCurEffect;
@@ -47,10 +49,12 @@ public class EffectsManager : MonoBehaviour
             //Debug.LogWarning($"{effect.EffectName} ”же действует");
             if (effect.cooldown > 0)
             {
-                if (activeCoroutines.ContainsKey(existingEffect))
+                if (activeEffectDataMap.TryGetValue(existingEffect, out var existActiveEffect))
                 {
-                    StopCoroutine(activeCoroutines[effect]);
-                    RemoveEffect(effect, false);
+                    existActiveEffect.time_remains = effect.duration;
+                    return true;
+                    //StopCoroutine(activeCoroutines[effect]);
+                    //RemoveEffect(effect, false);
                 }
 
             }
@@ -76,7 +80,8 @@ public class EffectsManager : MonoBehaviour
     private IEnumerator HandleEffect(EffectData effect)
     {
         ActionEffect newEffect = new ActionEffect(effect, effect.duration);
-        activeEffects.Add(newEffect);
+        //activeEffects.Add(newEffect);
+        activeEffectDataMap[effect] = newEffect; //—охран€€ем действущий эффект
         OnEffectTimerUpdate?.Invoke(newEffect);
 
         while (effect.duration == 0 || (newEffect.time_remains > 0))
@@ -101,26 +106,45 @@ public class EffectsManager : MonoBehaviour
             }
             OnEffectTimerUpdate?.Invoke(newEffect);
         }
-        RemoveEffect(effect, true);
+        RemoveEffect(effect);
         activeCoroutines.Remove(effect);
     }
-    private void RemoveEffect(EffectData effect, bool ContinueOrRemoveObj)
+    //private void RemoveEffect(EffectData effect, bool ContinueOrRemoveObj)
+    //{
+    //    OnRemoveEffectUI?.Invoke(effect);
+    //    for (int i = activeEffects.Count - 1; i >= 0; i--)
+    //    {
+    //        if (activeEffects[i].Effect == effect)
+    //        {
+    //            if (ContinueOrRemoveObj && effect.effectObj != null && curEffectsObj.ContainsKey(effect.effectType))
+    //            {
+    //                Destroy(curEffectsObj[effect.effectType]);
+    //                curEffectsObj.Remove(effect.effectType);
+    //            }
+
+    //            UseEffect(effect, false);
+    //            activeEffects.RemoveAt(i);
+    //            break;
+    //        }
+    //    }
+    //}
+    private void RemoveEffect(EffectData effect)
     {
         OnRemoveEffectUI?.Invoke(effect);
-        for (int i = activeEffects.Count - 1; i >= 0; i--)
+        if(activeEffectDataMap.TryGetValue(effect, out var oldEffect))
         {
-            if (activeEffects[i].Effect == effect)
+            if(effect.effectObj != null && curEffectsObj.ContainsKey(effect.effectType))
             {
-                if(ContinueOrRemoveObj && effect.effectObj != null && curEffectsObj.ContainsKey(effect.effectType))
-                {
-                    Destroy(curEffectsObj[effect.effectType]);
-                    curEffectsObj.Remove(effect.effectType);
-                }
-
-                UseEffect(effect, false);
-                activeEffects.RemoveAt(i);
-                break;
+                Destroy(curEffectsObj[effect.effectType]);
+                curEffectsObj.Remove(effect.effectType);
             }
+            UseEffect(effect, false);
+            activeEffectDataMap.Remove(effect);
+        }
+        if(activeCoroutines.TryGetValue(effect, out var oldCoroutine))
+        {
+            StopCoroutine(oldCoroutine);
+            activeCoroutines.Remove(effect);
         }
     }
     public void UseEffect(EffectData effect, bool apply)

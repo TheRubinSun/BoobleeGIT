@@ -112,8 +112,8 @@ Transform:
   m_GameObject: {fileID: 1551683923404142602}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.08, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalPosition: {x: 0, y: 0.467, z: 0}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5809216177552989055}
@@ -321,7 +321,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9074315482117823633}
@@ -450,7 +450,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5381471306354121587}
@@ -472,6 +472,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IdMobs: 3
   Name: 
+  EffectsObj: {fileID: 5381471306354121587}
   CenterObject: {fileID: 2565706179301129303}
   player: {fileID: 0}
   mob_object: {fileID: 3549562018070256771}
@@ -483,6 +484,7 @@ MonoBehaviour:
   die_sounds:
   - {fileID: 8300000, guid: a392a1df9f28efc4a94e02bd4c97cb53, type: 3}
   abolity_sounds: []
+  damageValuePref: {fileID: 6292013005122663656, guid: cac7b7163f7b90940bb6363f0f51064d, type: 3}
   attackBuffer: 1
   HPBar: {fileID: 3479262678630990401}
   abillities: []
@@ -552,7 +554,7 @@ CapsuleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0.04}
-  m_Size: {x: 0.41, y: 0.0001}
+  m_Size: {x: 1.64, y: 0.0001}
   m_Direction: 0
 --- !u!82 &8608461309531259147
 AudioSource:
@@ -708,12 +710,20 @@ PrefabInstance:
       value: HpBar
       objectReference: {fileID: 0}
     - target: {fileID: 4161489549784394222, guid: 20a84c7448816fe45860e17f6bcd4316, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4161489549784394222, guid: 20a84c7448816fe45860e17f6bcd4316, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4161489549784394222, guid: 20a84c7448816fe45860e17f6bcd4316, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4161489549784394222, guid: 20a84c7448816fe45860e17f6bcd4316, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.25
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4161489549784394222, guid: 20a84c7448816fe45860e17f6bcd4316, type: 3}
       propertyPath: m_LocalPosition.z
