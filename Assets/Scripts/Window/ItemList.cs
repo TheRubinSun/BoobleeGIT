@@ -87,7 +87,9 @@ public static class ItemsList
         items.Add(new Item(27, "material_someone_eye",         20, 0, Quality.Uncommon, 35, "_", TypeItem.Material));
         items.Add(new Item(28, "material_strange_eye",         20, 0, Quality.Mystical, 350, "_", TypeItem.Material));
         items.Add(new ArtifactItem(29, "artifact_simple_ring", 1, 0, Quality.Mystical, 350, "_", TypeItem.Artifact, 1));
-        items.Add(new ArtifactItem(30, "artifact_eye_ring",    1, 0, Quality.Mystical, 800, "_", TypeItem.Artifact, 5));
+        items.Add(new ArtifactItem(30, "artifact_eye_ring",    1, 0, Quality.Mystical, 800, "_", TypeItem.Artifact, 2));
+
+
         items.Add(new Item(31, "material_tooth_mimic",         100, 0, Quality.Uncommon, 50, "_", TypeItem.Material));
         items.Add(new Item(32, "material_tongue_mimic",        20, 0, Quality.Mystical, 1000, "_", TypeItem.Material));
 

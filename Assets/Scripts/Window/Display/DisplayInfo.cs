@@ -42,6 +42,9 @@ public class DisplayInfo: MonoBehaviour
     public string word_nextLvl_exp {get; private set;}
     public string word_classPlayer {get; private set;}
 
+    public string word_curse_lvl { get; private set; }
+    public string word_char_lvl { get; private set; }
+    public string word_art_lvl { get; private set; }
     public string word_Damage {get; private set;}
     public string word_Armor {get; private set;}
     public string word_Speed {get; private set;}
@@ -110,6 +113,11 @@ public class DisplayInfo: MonoBehaviour
     {
         InfoItemsObj.SetActive(isActive);
     }
+    public void UpdateSizeWindowItem()
+    {
+        LayoutRebuilder.ForceRebuildLayoutImmediate(InfoItem.GetComponent<RectTransform>());
+        InfoItem.UpdateSizeWindow();
+    }
     public void UpdateItemInfoPanel()
     {
         mousePos = Input.mousePosition;
@@ -151,6 +159,9 @@ public class DisplayInfo: MonoBehaviour
                 word_nextLvl_exp = localized_player_stats_name["word_nextLvl_exp"];
                 word_classPlayer = localized_player_stats_name["word_classPlayer"];
 
+                word_curse_lvl = localized_player_stats_name["word_curse_lvl"];
+                word_char_lvl = localized_player_stats_name["word_char_lvl"];
+                word_art_lvl = localized_player_stats_name["word_art_lvl"];
                 word_Damage = localized_player_stats_name["word_Damage"];
                 word_Armor = localized_player_stats_name["word_Armor"];
                 word_Speed = localized_player_stats_name["word_Speed"];
@@ -354,6 +365,9 @@ public class DisplayInfo: MonoBehaviour
         else if(item is ArtifactItem)
         {
             ArtifactObj artifactObj = Artifacts.Instance.GetArtifact(slot.artifact_id);
+
+            FormatLevel(info, artifactObj.art_level, artifactObj.chars_level, artifactObj.curse_level);
+
             FormatStat(info, artifactObj.Artif_Strength, word_strength, GlobalColors.Hh_Str);
             FormatStat(info, artifactObj.Artif_Agility, word_agility, GlobalColors.Hh_Agi);
             FormatStat(info, artifactObj.Artif_Intelligence, word_intelligence, GlobalColors.Hh_Int);
@@ -370,7 +384,7 @@ public class DisplayInfo: MonoBehaviour
             FormatStat(info, artifactObj.Artif_Damage, word_Damage, GlobalColors.Hh_Damage);
 
         }
-        info.AppendLine($"{word_description}: {item.Description}");
+        info.AppendLine($"\n{word_description}: {item.Description}");
 
         InfoItem.LoadInfo(item.Sprite, nameItem, info.ToString());
     }
@@ -384,6 +398,20 @@ public class DisplayInfo: MonoBehaviour
         {
             sb.AppendLine($"<color={color}>{word}: {(i > 0 ? "+" : "")}{i}</color>");
         }
+    }
+    private void FormatLevel(StringBuilder sb, int lvlart, int lvlcharms, int curselvl)
+    {
+        int tempCharm = Mathf.Abs(lvlcharms);
+        string tempColor = null;
+        if (tempCharm < 1) tempColor = GlobalColors.Common;
+        else if (tempCharm < 5) tempColor = GlobalColors.Uncommon;
+        else if (tempCharm < 15) tempColor = GlobalColors.Rare;
+        else if (tempCharm < 30) tempColor = GlobalColors.Mystical;
+        else if (tempCharm < 50) tempColor = GlobalColors.Legendary;
+        else tempColor = GlobalColors.Interverse;
+
+        sb.AppendLine($"<color={tempColor}>{word_char_lvl}: <b>{lvlcharms}</b></color>");
+        sb.AppendLine($"<color={GlobalColors.Curse}>{word_curse_lvl}: <b>{curselvl}</b></color>\n");
     }
     private string SetStyleLine(string HashColor, int sizeFont, string line)
     {

@@ -542,7 +542,8 @@ public class DragAndDrop:MonoBehaviour
     //================================================ Отпустить предмет и обновить снаряжение, если нужно ====================================================================
     private void DragSuccess()
     {
-        Destroy(tempSlot.SlotObj);
+        if(tempSlot != null && tempSlot.SlotObj != null) Destroy(tempSlot.SlotObj);
+
         dragItem = false; //Отпускаем предмет
         DragZone.SetActive(dragItem);  //Выключить возможность выбросить
 

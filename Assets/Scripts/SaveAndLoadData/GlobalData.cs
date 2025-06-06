@@ -32,17 +32,44 @@ public static class GlobalData
 public static class BASE_VALUE_STATS_ARTEFACT
 {
     public const int STRENGTH = 1;
+    public const float ADD_FOR_CHAR_STRENGTH = 1;
+
     public const int AGILITY = 1;
+    public const float ADD_FOR_CHAR_AGILITY = 1;
+
     public const int INTELLIGENCE = 1;
+    public const float ADD_FOR_CHAR_INTELLIGENCE = 1;
+
     public const int HP = 2;
+    public const float ADD_FOR_CHAR_HP = 2;
+
     public const int ARMOR = 1;
+    public const float ADD_FOR_CHAR_ARMOR = 1f;
+
     public const int EVASION = 1;
+    public const float ADD_FOR_CHAR_EVASION = 1f;
+
     public const float MOV_SPEED = 0.02f;
+    public const float ADD_FOR_CHAR_MOV_SPEED = 0.02f;
+
     public const float ATT_RANGE = 0.3f;
+    public const float ADD_FOR_CHAR_ATT_RANGE = 0.3f;
+
     public const int ATT_SPEED = 5;
+    public const int ADD_FOR_CHAR_ATT_SPEED = 5;
+
     public const float PROJ_SPEED = 0.3f;
+    public const float ADD_FOR_CHAR_PROJ_SPEED = 0.3f;
+
     public const float EXPBUST = 0.03f;
+    public const float ADD_FOR_CHAR_EXPBUST = 0.03f;
+
     public const float MAGE_RESIS = 0.02f;
+    public const float ADD_FOR_CHAR_MAGE_RESIS = 0.02f;
+
     public const float TECH_RESIS = 0.02f;
-    public const float DAMAGE = 1;
+    public const float ADD_FOR_CHAR_TECH_RESIS = 0.02f;
+
+    public const float DAMAGE = 1f;
+    public const float ADD_FOR_CHAR_DAMAGE = 1f;
 }

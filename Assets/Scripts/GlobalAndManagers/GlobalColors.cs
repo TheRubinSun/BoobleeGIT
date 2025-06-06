@@ -30,4 +30,12 @@ public class GlobalColors
     public static readonly string Hh_Mage_Resis = "#7322A6";   // Сопротивление магии
     public static readonly string Hh_Tech_Resis = "#2273A6";   // Сопротивление техно (такой же, как Int — можно поменять)
     public static readonly string Hh_Damage = "#C87550";
+
+    public static readonly string Common = "#D7AD9D";   // Скорость снаряда
+    public static readonly string Uncommon = "#6FA8CC";      // Бонус к опыту
+    public static readonly string Rare = "#52CB65";   // Сопротивление магии
+    public static readonly string Mystical = "#983AE0";   // Сопротивление техно (такой же, как Int — можно поменять)
+    public static readonly string Legendary = "#FF10CD";
+    public static readonly string Interverse = "#10FFB2";
+    public static readonly string Curse = "#639846";
 }

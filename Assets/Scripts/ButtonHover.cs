@@ -1,6 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -23,7 +24,6 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                         dispInfo.SetActiveItemInfo(true);
                         //Inventory.Instance.InfoPanel.gameObject.SetActive(true);
                         dispInfo.UpdateInfoItem(GetNumbSlot(), "Inventory");
-                        
                     }
                     break;
                 }
@@ -69,7 +69,9 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                     }
                     break;
                 }
+
         }
+        dispInfo.UpdateSizeWindowItem();
     }
     public void OnPointerExit(PointerEventData eventData)
     {

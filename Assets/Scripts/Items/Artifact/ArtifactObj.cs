@@ -7,6 +7,8 @@ public class ArtifactObj
 {
     public int ID_Art { get; set; }
     public int art_level { get; set; }
+    public int chars_level {  get; set; }
+    public int curse_level { get; set; }
     public int costMultiply { get; set; }
 
 
@@ -79,58 +81,67 @@ public class ArtifactObj
         switch (stat)
         {
             case StatType.Strength:
-                Artif_Strength += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.STRENGTH);
+                Artif_Strength += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.STRENGTH, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_STRENGTH);
                 break;
             case StatType.Agility:
-                Artif_Agility += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.AGILITY);
+                Artif_Agility += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.AGILITY, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_AGILITY);
                 break;
             case StatType.Intelligence:
-                Artif_Intelligence += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.INTELLIGENCE);
+                Artif_Intelligence += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.INTELLIGENCE, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_INTELLIGENCE);
                 break;
             case StatType.Hp:
-                Artif_Hp += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.HP);
+                Artif_Hp += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.HP, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_HP);
                 break;
             case StatType.Armor:
-                Artif_Armor += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.ARMOR);
+                Artif_Armor += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.ARMOR, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_ARMOR);
                 break;
             case StatType.Evasion:
-                Artif_Evasion += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.EVASION);
+                Artif_Evasion += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.EVASION, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_EVASION);
                 break;
             case StatType.Mov_Speed:
-                Artif_Mov_Speed += GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.MOV_SPEED);
+                Artif_Mov_Speed += GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.MOV_SPEED, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_MOV_SPEED);
                 break;
             case StatType.Att_Range:
-                Artif_Att_Range += GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.ATT_RANGE);
+                Artif_Att_Range += GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.ATT_RANGE, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_ATT_RANGE);
                 break;
             case StatType.Att_Speed:
-                Artif_Att_Speed += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.ATT_SPEED);
+                Artif_Att_Speed += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.ATT_SPEED, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_ATT_SPEED);
                 break;
             case StatType.Proj_Speed:
-                Artif_Proj_Speed += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.PROJ_SPEED);
+                Artif_Proj_Speed += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.PROJ_SPEED, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_PROJ_SPEED);
                 break;
             case StatType.ExpBust:
-                Artif_ExpBust += GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.EXPBUST);
+                Artif_ExpBust += GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.EXPBUST, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_EXPBUST);
                 break;
             case StatType.Mage_Resis:
-                Artif_Mage_Resis += GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.MAGE_RESIS);
+                Artif_Mage_Resis += GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.MAGE_RESIS, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_MAGE_RESIS);
                 break;
             case StatType.Tech_Resis:
-                Artif_Tech_Resis += GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.TECH_RESIS);
+                Artif_Tech_Resis += GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.TECH_RESIS, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_TECH_RESIS);
                 break;
             case StatType.Damage:
-                Artif_Damage += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.DAMAGE);
+                Artif_Damage += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.DAMAGE, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_DAMAGE);
                 break;
         }
 
     }
-    private float GetValueStat(int levelCharm, float baseValue)
+    private float GetValueStat(int levelCharm, float baseValue, float addForChar)
     {
-        float positive = Random.Range(baseValue, (baseValue * levelCharm) + baseValue);
-        float negative = Mathf.Min(-0.01f, Random.Range(-baseValue * levelCharm, -baseValue));
-        float result = Random.value < 0.35 ? negative : positive;
+        float positive = Random.Range(baseValue, (addForChar * levelCharm) + baseValue);
+        float negative = Mathf.Min(-0.01f, Random.Range(-addForChar * levelCharm, -baseValue));
+        //float result = Random.value < 0.35 ? negative : positive;
+        float result = 0;
+        if (Random.value < 0.35)
+        {
+            result = negative;
+            curse_level += levelCharm;
+        }
+        else
+        {
+            result = positive;
+            chars_level += levelCharm;
+        }
 
-
-        costMultiply++;
         return result;
     }
     public bool isAllNull()

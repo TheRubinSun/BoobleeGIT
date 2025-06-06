@@ -206,8 +206,8 @@ AudioMixerController:
   m_EnableSuspend: 1
   m_UpdateMode: 0
   m_ExposedParameters:
-  - guid: 282215690df69504fb1be5eb19ddd717
-    name: Music
+  - guid: 3d2e797f9ab6049478d6bab9ff285d24
+    name: MusicVol
   - guid: cea65cfde71e91445a6ea1a5dab05d69
     name: Sounds
   m_AudioMixerGroupViews:
@@ -278,7 +278,7 @@ AudioMixerSnapshotController:
     0c5237014cb45a74482eea1710044d8d: -10
     a3f3e23579776374baec3e9f2071f082: -10
     3f5d7fd89391fff458a4b9c986da2524: -5
-    282215690df69504fb1be5eb19ddd717: -20
+    282215690df69504fb1be5eb19ddd717: -19.999998
     38c34489e563b2a4bb37801489182647: -25
     f81b6c0a30f8892469297f18c2f65c2a: -8
     4274c4ebc9160ee429c29e75941cdae1: -15
