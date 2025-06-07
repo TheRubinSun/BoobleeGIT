@@ -28,7 +28,8 @@ public class level_logic : MonoBehaviour
         
         foreach (SpawnMobPortal spawnMobPortal in spawnEnemy)
         {
-            if(spawnMobPortal.startSpawn)
+            spawnMobPortal.typeMob = EnemyList.mobs[spawnMobPortal.enemy_prefab.GetComponent<BaseEnemyLogic>().IdMobs].TypeMob;
+            if (spawnMobPortal.startSpawn)
             {
                 Transform pos = PosForPortals[Random.Range(0, PosForPortals.Length)];
                 SpawnPortal(spawnMobPortal, pos);
@@ -73,7 +74,20 @@ public class level_logic : MonoBehaviour
     private void SpawnPortal(SpawnMobPortal spawnEnemy, Transform portalPos)
     {
         spawnEnemy.endRandomCountSpawn = Random.Range(spawnEnemy.minCountSpawn, spawnEnemy.maxCountSpawn + 1);
-        GameObject portal = Instantiate(spawnMobsLogic.tech_portal_pref, portalPos);
+        GameObject portal = null;
+        if (spawnEnemy.typeMob == TypeMob.Technology)
+        {
+            portal = Instantiate(spawnMobsLogic.tech_portal_pref, portalPos);
+        }
+        else if(spawnEnemy.typeMob == TypeMob.Magic)
+        {
+            portal = Instantiate(spawnMobsLogic.mage_portal_pref, portalPos);
+        }
+        else
+        {
+            Debug.LogError("M001: Error spawn mobs. Use TypeMob");
+            return;
+        }
         PortalLogic portLog = portal.GetComponent<PortalLogic>();
         portLog.SetDataPortal(spawnEnemy, SpawnMobsParent);
     }
@@ -83,6 +97,7 @@ public class SpawnMobPortal
 {
     public int minCountSpawn;
     public int maxCountSpawn;
+    public TypeMob typeMob;
     [System.NonSerialized] public int endRandomCountSpawn;
     public float timeDurationSpawn;
     public float coolDown;

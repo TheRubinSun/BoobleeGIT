@@ -58,12 +58,12 @@ public static class ItemsList
         if (items.Count == 0) items.Add(new Item(0, "item_none", 0, 0, Quality.None, 0, ""));
         items.Add(new MeleWeapon(1, "sword_gods_slayer", 1, 0, Quality.Mystical, 1000, "_", false, 1f, damageT.Physical,    5, 0.8f,    30, 1));
         items.Add(new MeleWeapon(20, "axe_woodcutter",   1, 0, Quality.Common, 250, "_",     false, 0.2f, damageT.Physical,  1, 1f,      40, 1));
-        items.Add(new MeleWeapon(16, "soldier_spear",    1, 0, Quality.Uncommon, 200, "_",       false, 0.55f, damageT.Physical,  2, 0.75f,  40, 1));
-        items.Add(new MeleWeapon(17, "simple_knife",     1, 0, Quality.Common, 100, "_",   false, 0.32f, damageT.Physical, 2, 0.7f,    50, 1));
+        items.Add(new MeleWeapon(16, "soldier_spear",    1, 0, Quality.Uncommon, 120, "_",       false, 0.55f, damageT.Physical,  2, 0.75f,  40, 1));
+        items.Add(new MeleWeapon(17, "simple_knife",     1, 0, Quality.Common, 65, "_",   false, 0.32f, damageT.Physical, 2, 0.7f,    50, 1));
 
-        items.Add(new Gun(2,  "gun_makarov",  1, 0, Quality.Rare, 100, "_",     true, 4f, damageT.Physical, 2,  0.7f, 40, 1, 12f, 1.0f, 5f, 0));
+        items.Add(new Gun(2,  "gun_makarov",  1, 0, Quality.Rare, 400, "_",     true, 4f, damageT.Physical, 2,  0.7f, 40, 1, 12f, 1.0f, 5f, 0));
         items.Add(new Gun(13, "bow_simple",   1, 0, Quality.Mystical, 600, "_", true, 6f, damageT.Physical, 10, 0.7f, 30, 1, 8f,  0.5f, 5f, 2));
-        items.Add(new Gun(14, "shotgun_pump", 1, 0, Quality.Rare, 400, "_",     true, 2f, damageT.Physical, 3,  0.6f, 40, 4, 10f, 1f,  15f, 1));
+        items.Add(new Gun(14, "shotgun_pump", 1, 0, Quality.Rare, 550, "_",     true, 2f, damageT.Physical, 3,  0.6f, 40, 4, 10f, 1f,  15f, 1));
 
         items.Add(new Food(3, "item_meat",                     20, 0, Quality.Common, 1, "_", 1, 15, 5, "Heal", 1));
         items.Add(new HealPotion(4, "item_potion_hp",          20, 0, Quality.Uncommon, 30, "_", 8));

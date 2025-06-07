@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 7174445961996323040}
   - component: {fileID: 8890623665527314790}
   - component: {fileID: 7070129578145521679}
+  - component: {fileID: 5474588751349231872}
   m_Layer: 0
   m_Name: Portal_Mages
   m_TagString: Untagged
@@ -143,6 +144,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5474588751349231872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804365559361293287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c17bf56fbe09c454ca044fbfd650ee90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPoint: {fileID: 6101034655285294254}
+  worlds:
+  - {fileID: 2699507709450089289}
+  anim_child_world: {fileID: 2699507709450089289}
 --- !u!1001 &1583058310909466355
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -216,6 +233,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 050b3e4b9693c2c439dbf0e3325fa743, type: 3}
+--- !u!95 &2699507709450089289 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3498932770024875450, guid: 050b3e4b9693c2c439dbf0e3325fa743, type: 3}
+  m_PrefabInstance: {fileID: 1583058310909466355}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8541882246458185496 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7166066484494860779, guid: 050b3e4b9693c2c439dbf0e3325fa743, type: 3}

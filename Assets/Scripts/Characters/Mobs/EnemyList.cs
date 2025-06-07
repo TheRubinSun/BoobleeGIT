@@ -66,9 +66,9 @@ public static class EnemyList
         if (mobs.Count < 1)
         {
             //             name hp range isRange damage attackSpeed speed
-            mobs.Add(new DaizenMob("daizen_enem", 8, 1.5f, false, 2, 45, 1.2f, 2, TypeMob.Technology, 1, 0, 0.05f));
-            mobs.Add(new RangerMob("rainger_enem", 4, 6f, true, 1, 30, 1f, 10f, 0, 3, TypeMob.Technology, 1, 0, 0.05f));
-            mobs.Add(new Slime("slime_enem", 16, 4f, true, 1, 20, 1.4f, 5f, 1, 5, TypeMob.Magic, 3, 1, 0.05f, 0));
+            mobs.Add(new DaizenMob("daizen_enem", 8, 1.5f, false, 2, 45, 1.2f, 4, TypeMob.Technology, 1, 0, 0.05f));
+            mobs.Add(new RangerMob("rainger_enem", 4, 6f, true, 1, 30, 1f, 10f, 0, 6, TypeMob.Technology, 1, 0, 0.05f));
+            mobs.Add(new Slime("slime_enem", 6, 3f, true, 1, 20, 1f, 3.5f, 1, 5, TypeMob.Magic, 3, 1, 0.05f, 0));
             mobs.Add(new Slime("slime_boss_enem", 50, 5f, true, 2, 30, 1.6f, 6f, 1, 50, TypeMob.Magic, 4, 1, 0.1f, 0));
             mobs.Add(new Mimic("mimic_enem", 12, 2f, false, 3, 25, 2f, 50, TypeMob.Magic, 3, 0.15f, 0f));
             mobs.Add(new Car("death_car_enem", 40, 1.7f, false, 2, 40, 2.5f, 100, TypeMob.Technology, 3, 0f, 0.15f));
