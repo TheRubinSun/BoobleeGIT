@@ -3,12 +3,15 @@ using UnityEngine;
 
 public class OreL : ObjectLBroken
 {
+    [SerializeField] protected AudioClip[] soundsHit;
     public override void Break(CanBeWeapon canBeWeapon)
     {
         if (canBeWeapon.canBePixace == false)
         {
             return;
         }
+        float pitch = Random.Range(0.8f, 1.2f);
+        audioS.PlayOneShot(soundsHit[Random.Range(0, soundsHit.Length)]);
 
         remainsHits--;
         if (remainsHits == 0)
@@ -17,11 +20,17 @@ public class OreL : ObjectLBroken
         }
         else if (remainsHits % toNextStageAnim == 0)
         {
-            PlayeSoundBroken();
-            brokenStage++;
-            anim.SetInteger("broken_stage", brokenStage);
-            DropItems();
+            StartCoroutine(WaitForSound(0.1f));
         }
+
+    }
+    protected IEnumerator WaitForSound(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        PlayeSoundBroken();
+        brokenStage++;
+        anim.SetInteger("broken_stage", brokenStage);
+        DropItems();
     }
     public override void CreateCulling()
     {

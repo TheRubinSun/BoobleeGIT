@@ -103,7 +103,7 @@ public static class ItemsList
         items.Add(new Item(40, "material_wings_fly",           20, 0, Quality.Uncommon, 150, "_", TypeItem.Material));
         items.Add(new Item(41, "material_simple_engine",       5, 0, Quality.Legendary, 2000, "_", TypeItem.Material));
 
-        items.Add(new MeleWeapon(42, "pickaxe_simple", 1, 0, Quality.Rare, 1000, "_", false, 0.1f, damageT.Physical, 1, 0.6f, 60, 1));
+        items.Add(new MeleWeapon(42, "pickaxe_simple", 1, 0, Quality.Rare, 1000, "_", false, 0.1f, damageT.Physical, 1, 0.25f, 100, 1));
         items.Add(new MeleWeapon(43, "bur_t0k6", 1, 0, Quality.Mystical, 3000, "_", false, 0.1f, damageT.Physical, 1, 0.4f, 160, 1));
         //PrintItemList();
     }

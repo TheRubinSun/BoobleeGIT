@@ -103,15 +103,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8030d6996d68bb49b0b2778123f0d45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  remainsHits: 6
-  toNextStageAnim: 1
+  remainsHits: 24
+  toNextStageAnim: 4
   soundsBroken:
-  - {fileID: 8300000, guid: 42d81cf4f34443d4a85b09267b933063, type: 3}
-  fullBroken: {fileID: 8300000, guid: 42d81cf4f34443d4a85b09267b933063, type: 3}
+  - {fileID: 8300000, guid: 09f0b08ed2f336d4995d92f436ae4e9f, type: 3}
+  - {fileID: 8300000, guid: fc2ccae9d7b72684b94a340d464b1a82, type: 3}
+  - {fileID: 8300000, guid: 82fbd31a526d4a141b7efe9cd16d5506, type: 3}
+  fullBroken: {fileID: 8300000, guid: 23fb05d2137480046a9602ce6d1ec73b, type: 3}
   itemsDrop:
   - item_key: material_iron_bar
     min: 1
     max: 2
+  soundsHit:
+  - {fileID: 8300000, guid: 9cd3d93e2eabc1d45b262da5f0f3f159, type: 3}
+  - {fileID: 8300000, guid: db3ab1cd4d00a6541b684fc74099c5be, type: 3}
+  - {fileID: 8300000, guid: c15db90781cb41e4aa0e345a5433d46b, type: 3}
 --- !u!95 &6011870001595232773
 Animator:
   serializedVersion: 7
@@ -168,10 +174,10 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -1.23}
+  m_Offset: {x: 0, y: 1}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0.09375}
     oldSize: {x: 3, y: 5.3333335}
     newSize: {x: 3, y: 5.3333335}
     adaptiveTilingThreshold: 0.5
