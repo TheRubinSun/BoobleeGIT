@@ -24,10 +24,15 @@ public class ResMinControl : MinionControl
     //Звуки
     AudioSource audioSource_Work;
     [SerializeField] private AudioMixerGroup minionWorkGroup;
+
+    [SerializeField]
+    protected AudioClip[] audioWorks;
+    [SerializeField] float pitchWork;
     protected override void Start()
     {
         audioSource_Work = gameObject.AddComponent<AudioSource>();
         audioSource_Work.outputAudioMixerGroup = minionWorkGroup;
+        audioSource_Work.pitch = pitchWork;
 
         base.Start();
 
@@ -218,9 +223,9 @@ public class ResMinControl : MinionControl
         {
             if (!audioSource_Work.isPlaying)
             {
-                int numbSound = Random.Range(1, audioClips.Length);
+                int numbSound = Random.Range(0, audioWorks.Length);
                 Debug.Log($"Sound: {numbSound}");
-                audioSource_Work.clip = audioClips[numbSound];
+                audioSource_Work.clip = audioWorks[numbSound];
                 audioSource_Work.loop = true;
                 audioSource_Work.Play();
             }
@@ -239,7 +244,7 @@ public class ResMinControl : MinionControl
         {
             if (!audioSource_Move.isPlaying)
             {
-                audioSource_Move.clip = audioClips[0];
+                audioSource_Move.clip = audioMove[0];
                 audioSource_Move.loop = true;
                 audioSource_Move.Play();
             }

@@ -16,6 +16,8 @@ public class ResourcesData : MonoBehaviour
         weapons["axe_woodcutter"] = Resources.Load<GameObject>("Weapons/Axe_woodcut_Pref");
         weapons["soldier_spear"] = Resources.Load<GameObject>("Weapons/Soldier's spear");
         weapons["simple_knife"] = Resources.Load<GameObject>("Weapons/Simple_knife");
+        weapons["pickaxe_simple"] = Resources.Load<GameObject>("Weapons/Pickaxe_simple_pref");
+        weapons["bur_t0k6"] = Resources.Load<GameObject>("Weapons/Bur_simple_pref");
 
         weapons["gun_makarov"] = Resources.Load<GameObject>("Weapons/Pistol_Mark_Pref");
         weapons["bow_simple"] = Resources.Load<GameObject>("Weapons/Bow_simple");

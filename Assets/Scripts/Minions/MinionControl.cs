@@ -27,7 +27,7 @@ public class MinionControl : MonoBehaviour
     protected AudioSource audioSource_Move;
 
     [SerializeField] 
-    protected AudioClip[] audioClips;
+    protected AudioClip[] audioMove;
 
     protected virtual void Start()
     {

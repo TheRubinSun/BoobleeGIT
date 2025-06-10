@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 4908589416287458454}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.09, y: -0.01, z: 0}
+  m_LocalPosition: {x: -0.6, y: -0.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -61,7 +61,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.01, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2770646334030511382}
@@ -139,7 +139,6 @@ MonoBehaviour:
   offset: 0
   PlayerModel: {fileID: 0}
   pitchRange: 0.15
-  volumeSounds: 0.1
   audioClips:
   - {fileID: 8300000, guid: e90e4abc85207414a9da380f3ee90c57, type: 3}
   ShootPos: {fileID: 2770646334030511382}

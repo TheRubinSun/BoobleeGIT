@@ -57,7 +57,7 @@ public static class ItemsList
         items.Clear();
         if (items.Count == 0) items.Add(new Item(0, "item_none", 0, 0, Quality.None, 0, ""));
         items.Add(new MeleWeapon(1, "sword_gods_slayer", 1, 0, Quality.Mystical, 1000, "_", false, 1f, damageT.Physical,    5, 0.8f,    30, 1));
-        items.Add(new MeleWeapon(20, "axe_woodcutter",   1, 0, Quality.Common, 250, "_",     false, 0.2f, damageT.Physical,  1, 1f,      40, 1));
+        items.Add(new MeleWeapon(20, "axe_woodcutter",   1, 0, Quality.Common, 250, "_",     false, 0.2f, damageT.Physical,  1, 0.6f,      60, 1));
         items.Add(new MeleWeapon(16, "soldier_spear",    1, 0, Quality.Uncommon, 120, "_",       false, 0.55f, damageT.Physical,  2, 0.75f,  40, 1));
         items.Add(new MeleWeapon(17, "simple_knife",     1, 0, Quality.Common, 65, "_",   false, 0.32f, damageT.Physical, 2, 0.7f,    50, 1));
 
@@ -102,6 +102,9 @@ public static class ItemsList
         items.Add(new Item(39, "material_lamp",                20, 0, Quality.Rare, 400, "_", TypeItem.Material));
         items.Add(new Item(40, "material_wings_fly",           20, 0, Quality.Uncommon, 150, "_", TypeItem.Material));
         items.Add(new Item(41, "material_simple_engine",       5, 0, Quality.Legendary, 2000, "_", TypeItem.Material));
+
+        items.Add(new MeleWeapon(42, "pickaxe_simple", 1, 0, Quality.Rare, 1000, "_", false, 0.1f, damageT.Physical, 1, 0.6f, 60, 1));
+        items.Add(new MeleWeapon(43, "bur_t0k6", 1, 0, Quality.Mystical, 3000, "_", false, 0.1f, damageT.Physical, 1, 0.4f, 160, 1));
         //PrintItemList();
     }
     private static void InitializeSpritesItem()

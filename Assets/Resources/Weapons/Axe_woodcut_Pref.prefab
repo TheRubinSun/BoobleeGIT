@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.92387956, w: 0.38268343}
   m_LocalPosition: {x: 0, y: 0.01, z: 0}
-  m_LocalScale: {x: 7, y: 7, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 877510644002656660}
@@ -108,7 +108,6 @@ MonoBehaviour:
   offset: 135
   PlayerModel: {fileID: 0}
   pitchRange: 0.1
-  volumeSounds: 0.05
   audioClips:
   - {fileID: 8300000, guid: cc9e2d4f2a898794b90bf5d3409cbbbf, type: 3}
   arcHeight: 0.4
@@ -248,17 +247,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.16, y: 0.19}
+  m_Offset: {x: 1.2, y: 1.3}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.36, y: 0.31}
-    oldSize: {x: 0.5, y: 0.5}
+    oldSize: {x: 3.5714285, y: 3.5714285}
     newSize: {x: 0.32, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.26, y: 0.3}
+  m_Size: {x: 1.82, y: 2.1}
   m_EdgeRadius: 0
 --- !u!1 &8370641025233230599
 GameObject:
