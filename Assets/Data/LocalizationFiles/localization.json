@@ -258,6 +258,42 @@
         "TypeItem": "",
         "Quality": "",
         "Description": "A simple but reliable engine. It doesn’t shine, but it always gets the job done."
+      },
+      "pickaxe_simple": {
+        "Name": "Simple Pickaxe",
+        "TypeItem": "Weapon",
+        "Quality": "Rare",
+        "Description": "A basic yet reliable pickaxe. Well-suited for mining ores and minerals."
+      },
+      "bur_t0k6": {
+        "Name": "Drill T0-K6",
+        "TypeItem": "Weapon",
+        "Quality": "Mystical",
+        "Description": "A powerful drill designed for fast and deep mining. Significantly more efficient than a pickaxe, especially on hard surfaces."
+      },
+      "material_slime_acid": {
+        "Name": "Slime Acid",
+        "TypeItem": "Material",
+        "Quality": "Common",
+        "Description": "A corrosive fluid secreted by slimes. Used to dissolve tough minerals like quartzite."
+      },
+      "material_quartzite": {
+        "Name": "Quartzite",
+        "TypeItem": "Material",
+        "Quality": "Common",
+        "Description": "A hard mineral that can be dissolved with slime acid to obtain quartz sand."
+      },
+      "material_quartz_sand": {
+        "Name": "Quartz Sand",
+        "TypeItem": "Material",
+        "Quality": "Common",
+        "Description": "Fine sand obtained from quartzite. Can be smelted into durable and pure glass."
+      },
+      "material_iron_ore": {
+        "Name": "Iron Ore",
+        "TypeItem": "Material",
+        "Quality": "Common",
+        "Description": "A heavy, dense ore that can be smelted into iron ingots."
       }
     },
     "mobs": {
@@ -653,6 +689,42 @@
         "TypeItem": "",
         "Quality": "",
         "Description": "Простой, но надёжный двигатель. Не сверкает, но всегда выполняет свою работу."
+      },
+      "pickaxe_simple": {
+        "Name": "Простая кирка",
+        "TypeItem": "Оружие",
+        "Quality": "Редкое",
+        "Description": "Обычная, но надёжная кирка. Хорошо подходит для добычи руды и минералов."
+      },
+      "bur_t0k6": {
+        "Name": "Бур T0-K6",
+        "TypeItem": "Оружие",
+        "Quality": "Мистическое",
+        "Description": "Мощный бур, разработанный для быстрой и глубокой добычи. Намного эффективнее кирки, особенно против твёрдых пород."
+      },
+      "material_slime_acid": {
+        "Name": "Кислота слайма",
+        "TypeItem": "Материал",
+        "Quality": "Обычное",
+        "Description": "Едкая жидкость, выделяемая слаймами. Используется для растворения минералов, таких как кварцит."
+      },
+      "material_quartzite": {
+        "Name": "Кварцит",
+        "TypeItem": "Материал",
+        "Quality": "Обычное",
+        "Description": "Твёрдый минерал, который можно растворить кислотой слайма, чтобы получить кварцевый песок."
+      },
+      "material_quartz_sand": {
+        "Name": "Кварцевый песок",
+        "TypeItem": "Материал",
+        "Quality": "Обычное",
+        "Description": "Мелкий песок, получаемый из кварцита. Подходит для выплавки прочного и чистого стекла."
+      },
+      "material_iron_ore": {
+        "Name": "Железная руда",
+        "TypeItem": "Материал",
+        "Quality": "Обычное",
+        "Description": "Тяжёлая и плотная руда, из которой можно выплавить железные слитки."
       }
     },
     "mobs": {

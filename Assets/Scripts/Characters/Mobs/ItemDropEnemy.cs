@@ -51,6 +51,7 @@ public class ItemDropEnemy
         };
 
         enemyAndHisDropItems["slime_enem"] = new DropItemEnemy[] {
+            new DropItemEnemy("material_slime_acid", 0, 1),
             new DropItemEnemy("item_meat", 2, 4),
             new DropItemEnemy("item_potion_hp", 1, 2),
             new DropItemEnemy("soldier_spear", 1, 1),
@@ -58,6 +59,7 @@ public class ItemDropEnemy
         };
 
         enemyAndHisDropItems["slime_boss_enem"] = new DropItemEnemy[] {
+            new DropItemEnemy("material_slime_acid", 2, 4),
             new DropItemEnemy("gun_makarov", 1, 1),
             new DropItemEnemy("trap_mine", 2, 6),
             new DropItemEnemy("sword_gods_slayer", 1, 1),

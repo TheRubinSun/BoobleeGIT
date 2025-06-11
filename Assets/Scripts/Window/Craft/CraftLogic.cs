@@ -304,35 +304,66 @@ public class CraftLogic : MonoBehaviour, ISlot
         {
             Inventory.Instance.SubractItem(material.Item, material.Count);
         }
-        int idSounds = 0;
-        switch(SelectSlot.Item.TypeItem)
-        {
-            case TypeItem.Weapon:
-                {
-                    idSounds = 2;
-                    break;
-                }
-            case TypeItem.Food:
-                {
-                    idSounds = 3;
-                    break;
-                }
-            case TypeItem.Trap:
-                {
-                    idSounds = 4;
-                    break;
-                }
-            case TypeItem.Potion:
-                {
-                    idSounds = 1;
-                    break;
-                }
-            case TypeItem.Minion: goto case TypeItem.Weapon;
-            case TypeItem.Armor: goto case TypeItem.Weapon;
-            default: idSounds = 0; break;
-        }
-        SoundsManager.Instance.PlayCraftItemSounds(idSounds);
+        SoundsManager.Instance.PlayCraftItemSounds(GetIDSounds());
         ReloadSelectMaterials();
+    }
+    private int GetIDSounds()
+    {
+        int idSounds = 0;
+        if(SelectSlot.Item.TypeItem == TypeItem.Material)
+        {
+            switch(SelectSlot.Item.NameKey)
+            {
+                case "material_quartz_sand":
+                    idSounds = 5;
+                    break;
+                case "material_iron_bar":
+                    idSounds = 6;
+                    break;
+                case "material_glass":
+                    idSounds = 7;
+                    break;
+                case "material_bottle":
+                    idSounds = 8;
+                    break;
+                default:
+                    {
+                        idSounds = 0;
+                        break;
+                    }
+            }
+        }
+        else
+        {
+            switch (SelectSlot.Item.TypeItem)
+            {
+                case TypeItem.Weapon:
+                    {
+                        idSounds = 2;
+                        break;
+                    }
+                case TypeItem.Food:
+                    {
+                        idSounds = 3;
+                        break;
+                    }
+                case TypeItem.Trap:
+                    {
+                        idSounds = 4;
+                        break;
+                    }
+                case TypeItem.Potion:
+                    {
+                        idSounds = 1;
+                        break;
+                    }
+                case TypeItem.Minion: goto case TypeItem.Weapon;
+                case TypeItem.Armor: goto case TypeItem.Weapon;
+                default: idSounds = 0; break;
+            }
+        }
+
+        return idSounds;
     }
     private void ClearMaterials()
     {

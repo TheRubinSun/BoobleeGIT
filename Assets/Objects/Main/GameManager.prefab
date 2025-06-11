@@ -51,9 +51,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CorpsePref: {fileID: 5489696471320276186, guid: 9eac9080720a30e44ac413cefc17fa83, type: 3}
-  CorpseTempPref: {fileID: 0}
   AudioManager: {fileID: 8856295963450548638}
   musics: []
+  mobsLayer: {fileID: 0}
   dropParent: {fileID: 0}
   PlayerModel: {fileID: 0}
   PlayerPosY: 0
@@ -104,6 +104,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 081e12e0e218ea24bb90835801a926e7, type: 3}
   - {fileID: 8300000, guid: 6b009619ea42feb45ab50d2992dbd0dc, type: 3}
   - {fileID: 8300000, guid: a82e0d998d526d74fbdccf011ac55b79, type: 3}
+  - {fileID: 8300000, guid: 4c64483a00116a24082e73af6c5508e2, type: 3}
 --- !u!114 &8940736866063955456
 MonoBehaviour:
   m_ObjectHideFlags: 0

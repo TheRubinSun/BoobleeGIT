@@ -77,9 +77,9 @@ public static class ItemsList
         items.Add(new Mine(12, "trap_mine",                    10, 0, Quality.Rare, 40, "_", 0, 15, damageT.Technical, 1.5f, 0.5f));
         items.Add(new Minion(15, "minion_mage_es",             1, 0, Quality.Rare, 500, "_", TypeItem.Minion, 4f, 6f, 2f, TypeMob.Magic));
         items.Add(new SpeedUpPotion(18, "item_potion_speed",   20, 0, Quality.Rare, 50, "_", 1, 10, "SpeedUp", 5));
-        items.Add(new Item(19, "material_iron_bar",            20, 0, Quality.Common, 20, "_", TypeItem.Material));
+        items.Add(new Item(19, "material_iron_bar",            20, 0, Quality.Common, 30, "_", TypeItem.Material));
         items.Add(new Item(21, "material_wood",                20, 0, Quality.Common, 3, "_", TypeItem.Material));
-        items.Add(new Item(22, "material_bottle",              20, 0, Quality.Common, 3, "_", TypeItem.Material));
+        items.Add(new Item(22, "material_bottle",              80, 0, Quality.Common, 3, "_", TypeItem.Material));
         items.Add(new Item(23, "material_sunflower",           20, 0, Quality.Common, 3, "_", TypeItem.Material));
         items.Add(new Item(24, "material_rubin",               20, 0, Quality.Rare, 120, "_", TypeItem.Material));
         items.Add(new Item(25, "material_rubin_piece",         200, 0, Quality.Uncommon, 5, "_", TypeItem.Material));
@@ -103,8 +103,13 @@ public static class ItemsList
         items.Add(new Item(40, "material_wings_fly",           20, 0, Quality.Uncommon, 150, "_", TypeItem.Material));
         items.Add(new Item(41, "material_simple_engine",       5, 0, Quality.Legendary, 2000, "_", TypeItem.Material));
 
-        items.Add(new MeleWeapon(42, "pickaxe_simple", 1, 0, Quality.Rare, 1000, "_", false, 0.1f, damageT.Physical, 1, 0.25f, 100, 1));
-        items.Add(new MeleWeapon(43, "bur_t0k6", 1, 0, Quality.Mystical, 3000, "_", false, 0.1f, damageT.Physical, 1, 0.4f, 160, 1));
+        items.Add(new MeleWeapon(42, "pickaxe_simple",         1, 0, Quality.Rare, 350, "_", false, 0.1f, damageT.Physical, 1, 0.25f, 90, 1));
+        items.Add(new MeleWeapon(43, "bur_t0k6",               1, 0, Quality.Mystical, 3500, "_", false, 0.1f, damageT.Physical, 1, 0.5f, 180, 1));
+
+        items.Add(new Item(44, "material_slime_acid",          20, 0, Quality.Common, 10, "_", TypeItem.Material));
+        items.Add(new Item(45, "material_quartzite",           100, 0, Quality.Common, 2, "_", TypeItem.Material));
+        items.Add(new Item(46, "material_quartz_sand",         100, 0, Quality.Common, 3, "_", TypeItem.Material));
+        items.Add(new Item(47, "material_iron_ore",            100, 0, Quality.Common, 6, "_", TypeItem.Material));
         //PrintItemList();
     }
     private static void InitializeSpritesItem()

@@ -111,9 +111,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 82fbd31a526d4a141b7efe9cd16d5506, type: 3}
   fullBroken: {fileID: 8300000, guid: 23fb05d2137480046a9602ce6d1ec73b, type: 3}
   itemsDrop:
-  - item_key: material_iron_bar
+  - item_key: material_iron_ore
     min: 1
     max: 2
+  - item_key: material_quartzite
+    min: 0
+    max: 5
   soundsHit:
   - {fileID: 8300000, guid: 9cd3d93e2eabc1d45b262da5f0f3f159, type: 3}
   - {fileID: 8300000, guid: db3ab1cd4d00a6541b684fc74099c5be, type: 3}
@@ -178,7 +181,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.09375}
-    oldSize: {x: 3, y: 5.3333335}
+    oldSize: {x: 1.8, y: 3.2}
     newSize: {x: 3, y: 5.3333335}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

@@ -26,7 +26,7 @@ public static class RecipesCraft
 
         crafts.Add(new RecipeCraft("item_potion_hp", 1, new Dictionary<string, int> { { "material_rubin_piece", 1 }, { "material_sunflower", 1 }, { "material_bottle", 1 } }, CraftTable.Alchemy_Station));
         crafts.Add(new RecipeCraft("material_rubin_piece", 10, new Dictionary<string, int> { { "material_rubin", 1 }}, CraftTable.Alchemy_Station));
-        crafts.Add(new RecipeCraft("material_bottle", 3, new Dictionary<string, int> { { "material_glass", 1 } }, CraftTable.Smelter));
+        crafts.Add(new RecipeCraft("material_bottle", 4, new Dictionary<string, int> { { "material_glass", 1 } }, CraftTable.Smelter));
         crafts.Add(new RecipeCraft("minion_robot_es", 1, new Dictionary<string, int> { { "material_dif_parts_one", 5 }, { "material_gear_one", 20 }, { "material_chip_one", 10 } }, CraftTable.Workbench));
         crafts.Add(new RecipeCraft("minion_mage_es", 1, new Dictionary<string, int> { { "material_strange_eye", 3 }, { "material_wood", 20 }, { "material_glass", 10 } }, CraftTable.Workbench));
         crafts.Add(new RecipeCraft("axe_woodcutter", 1, new Dictionary<string, int> { { "material_wood", 5 }, { "material_iron_bar", 5 } }, CraftTable.Anvil));
@@ -35,6 +35,12 @@ public static class RecipesCraft
         crafts.Add(new RecipeCraft("trap_mine", 1, new Dictionary<string, int> { { "material_chip_one", 3 }, { "material_gear_one", 6 }, { "material_sunflower", 2 } }, CraftTable.Workbench));
         crafts.Add(new RecipeCraft("simple_knife", 1, new Dictionary<string, int> { { "material_wood", 2 }, { "material_iron_bar", 2 } }, CraftTable.Anvil));
         crafts.Add(new RecipeCraft("soldier_spear", 1, new Dictionary<string, int> { { "material_wood", 15 }, { "material_iron_bar", 6 } }, CraftTable.Anvil));
+        crafts.Add(new RecipeCraft("material_quartz_sand", 5, new Dictionary<string, int> { { "material_slime_acid", 1 }, { "material_quartzite", 5 } }, CraftTable.Alchemy_Station));
+        crafts.Add(new RecipeCraft("material_iron_bar", 1, new Dictionary<string, int> { { "material_iron_ore", 4 }}, CraftTable.Smelter));
+        crafts.Add(new RecipeCraft("pickaxe_simple", 1, new Dictionary<string, int> { { "material_wood", 6 }, { "material_iron_bar", 7 } }, CraftTable.Workbench));
+        crafts.Add(new RecipeCraft("bur_t0k6", 1, new Dictionary<string, int> { { "material_bur", 1 }, { "material_battery", 1 },{ "material_simple_engine", 1 },{ "material_copper_wires", 40 }, { "material_iron_bar", 20} }, CraftTable.Workbench));
+        crafts.Add(new RecipeCraft("material_glass", 1, new Dictionary<string, int> { { "material_quartz_sand", 5 } }, CraftTable.Smelter));
+
 
         recipesCraft = crafts.ToArray();
     }
