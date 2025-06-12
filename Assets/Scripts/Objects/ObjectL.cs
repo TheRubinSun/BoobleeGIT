@@ -13,6 +13,7 @@ public abstract class ObjectL : MonoBehaviour, ICullableObject
     protected CullingObject culling;
     protected bool isVisibleNow = true;
     protected Vector2 startPos;
+    [SerializeField] protected Vector2 ToDropPos;
     public abstract void CreateCulling();
     public abstract Vector2 GetPosition();
     public abstract void UpdateCulling(bool shouldBeVisible);
@@ -39,7 +40,8 @@ public abstract class ObjectLBroken : ObjectL
     protected int brokenStage;
 
     public override Vector2 GetPosition() => startPos;
-
+    public virtual float GetPosX() => startPos.x;
+    public virtual float GetPosY() => startPos.y;
     public abstract void Break(CanBeWeapon canBeWeapon);
     protected virtual void Awake()
     {
@@ -96,10 +98,20 @@ public abstract class ObjectLBroken : ObjectL
         foreach (ItemDropData item in itemsDrop)
         {
             int countItem = Random.Range(item.min, (item.max + 1));
-            if (countItem == 0) return;
+            if (countItem < 1) return;
 
             GameObject dropItem = Instantiate(GlobalPrefabs.ItemDropPref, GameManager.Instance.dropParent);
-            dropItem.transform.position = GetPosition();
+
+            if(ToDropPos.x != 0 && ToDropPos.y != 0)
+            {
+                Vector2 dropPos = new Vector2(GetPosX() + Random.Range(-ToDropPos.x, ToDropPos.x), ToDropPos.y);
+                dropItem.transform.position = dropPos;
+            }
+            else
+            {
+                dropItem.transform.position = GetPosition();
+            }
+
             ItemDrop ItemD = dropItem.GetComponent<ItemDrop>();
 
             Item tempItem = item.Item;

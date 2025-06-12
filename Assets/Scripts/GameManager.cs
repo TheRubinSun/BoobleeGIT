@@ -128,7 +128,8 @@ public class GameManager: MonoBehaviour
         SaveGameInfo saveGameIngo = GenInfoSaves.saveGameFiles[GlobalData.SaveInt];
         if (!saveGameIngo.isStarted) return;
 
-        saveGameIngo.timeHasPassed = totalSecondsPlayed;
+        if(totalSecondsPlayed > saveGameIngo.timeHasPassed) saveGameIngo.timeHasPassed = totalSecondsPlayed;
+
         SavesDataInfo savesDataInfo = new SavesDataInfo(GenInfoSaves.saveGameFiles, GlobalData.SaveInt, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS);
         await SaveSystem.SaveDataAsync(savesDataInfo, "saves_info.json");
     }

@@ -25,6 +25,8 @@ public class Player : MonoBehaviour, ITakeDamage
 
     [SerializeField] 
     private GameObject PlayerModel;
+    //[SerializeField]
+    //private GameObject[] PlayerLegs;
 
     [SerializeField] 
     public Toggle[] TooglesWeapon = new Toggle[4];
@@ -63,7 +65,18 @@ public class Player : MonoBehaviour, ITakeDamage
             pl_stats.FillHp();
             ResetWeaponToggles();
         }
-        if (spawnPoint != null) transform.position = spawnPoint.transform.position;
+        if (spawnPoint != null)
+        {
+            foreach(Transform child in gameObject.transform)
+            {
+                child.position = spawnPoint.transform.position;
+            }
+            //PlayerModel.transform.position = spawnPoint.transform.position;
+            //foreach (GameObject leg in PlayerLegs)
+            //{
+            //    leg.transform.position = spawnPoint.transform.position;
+            //}
+        }
 
         pl_ui.UpdateAllInfo(pl_stats);
         ChangeToggleWeapons();

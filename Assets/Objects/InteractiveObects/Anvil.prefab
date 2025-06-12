@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3147006556499303535}
   - component: {fileID: 1774334520626765816}
   - component: {fileID: 3927433398910332229}
+  - component: {fileID: 6394497244644816241}
   m_Layer: 20
   m_Name: Anvil
   m_TagString: Untagged
@@ -187,6 +188,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.37764335, y: 0.3280754}
   m_EdgeRadius: 0
+--- !u!114 &6394497244644816241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5284850255375091371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6406bfa7ad858f42b81f1c9c4535281, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ToDropPos: {x: 0, y: 0}
 --- !u!1001 &3281907020870317861
 PrefabInstance:
   m_ObjectHideFlags: 0

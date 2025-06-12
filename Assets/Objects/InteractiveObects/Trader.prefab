@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3222545648680348053}
   - component: {fileID: 4570814571881599502}
   - component: {fileID: 2431154463833094585}
+  - component: {fileID: -5827411539738601131}
   m_Layer: 20
   m_Name: Trader
   m_TagString: Untagged
@@ -187,6 +188,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.37764335, y: 0.3280754}
   m_EdgeRadius: 0
+--- !u!114 &-5827411539738601131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4439627500756638222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6406bfa7ad858f42b81f1c9c4535281, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ToDropPos: {x: 0, y: 0}
 --- !u!1001 &1515824142655657698
 PrefabInstance:
   m_ObjectHideFlags: 0
