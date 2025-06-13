@@ -10,8 +10,7 @@ public class PlayerControl : MonoBehaviour
     private Player player;
 
     [SerializeField] private GameObject playerObj;
-    [SerializeField] private Transform cameraObj;
-    [SerializeField] private GameObject hand;
+    private Transform cameraObj;
     [SerializeField] private Transform centerLegs;
     [SerializeField] private LineControle[] legsLines;
     [SerializeField] private LegsControl legsControl;
@@ -119,11 +118,12 @@ public class PlayerControl : MonoBehaviour
     void UseMinions()
     {
         if (minionSlots == null) return;
-        foreach(MinionControl minion in minionSlots.Values)
+        //foreach(MinionControl minion in minionSlots.Values)
+        foreach (KeyValuePair<int, MinionControl> minion in minionSlots)
         {
-            if (minion != null)
+            if (minion.Value != null)
             {
-                minion.UseMinion();
+                minion.Value.UseMinion(minion.Key);
             }
         }
     }

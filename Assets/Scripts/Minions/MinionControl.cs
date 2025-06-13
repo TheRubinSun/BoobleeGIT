@@ -58,7 +58,7 @@ public class MinionControl : MonoBehaviour
         typeDetectMob = _typeDetectMob;
     }
 
-    public virtual void UseMinion()
+    public virtual void UseMinion(int idMin)
     {
         StartCoroutine(DrawAndEraseRange());
     }

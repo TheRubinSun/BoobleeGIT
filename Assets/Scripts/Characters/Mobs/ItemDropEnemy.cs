@@ -6,7 +6,7 @@ using static UnityEditor.Progress;
 public class ItemDropEnemy
 {
     //public static Dictionary<string, string[]> enemyAndHisDrop = new Dictionary<string, string[]>();
-    public static Dictionary<string, DropItemEnemy[]> enemyAndHisDropItems = new Dictionary<string, DropItemEnemy[]> ();
+    public static Dictionary<string, DropItemEnemy[]> enemyAndHisDropItems = new();
 
     public static void LoadOrCreate(Dictionary<string, DropItemEnemy[]> _enemyAndHisDrop)
     {
@@ -37,67 +37,67 @@ public class ItemDropEnemy
         enemyAndHisDropItems.Clear();
 
         enemyAndHisDropItems["daizen_enem"] = new DropItemEnemy[] {
-            new DropItemEnemy("material_chip_one", 1, 2),
-            new DropItemEnemy("material_gear_one", 1, 3),
-            new DropItemEnemy("material_dif_parts_one", 1, 1),
-            new DropItemEnemy("sword_parts_one", 1, 1)
+            new("material_chip_one", 1, 2),
+            new("material_gear_one", 1, 3),
+            new("material_dif_parts_one", 1, 1),
+            new("sword_parts_one", 1, 1)
         };
 
         enemyAndHisDropItems["rainger_enem"] = new DropItemEnemy[] {
-            new DropItemEnemy("material_chip_one", 1, 2),
-            new DropItemEnemy("material_gear_one", 1, 3),
-            new DropItemEnemy("material_dif_parts_one", 1, 1),
-            new DropItemEnemy("bow_parts_one", 1, 1)
+            new("material_chip_one", 1, 2),
+            new("material_gear_one", 1, 3),
+            new("material_dif_parts_one", 1, 1),
+            new("bow_parts_one", 1, 1)
         };
 
         enemyAndHisDropItems["slime_enem"] = new DropItemEnemy[] {
-            new DropItemEnemy("material_slime_acid", 0, 1),
-            new DropItemEnemy("item_meat", 2, 4),
-            new DropItemEnemy("item_potion_hp", 1, 2),
-            new DropItemEnemy("soldier_spear", 1, 1),
-            new DropItemEnemy("simple_knife", 1, 1)
+            new("material_slime_acid", 0, 1),
+            new("item_meat", 2, 4),
+            new("item_potion_hp", 1, 2),
+            new("soldier_spear", 1, 1),
+            new("simple_knife", 1, 1)
         };
 
         enemyAndHisDropItems["slime_boss_enem"] = new DropItemEnemy[] {
-            new DropItemEnemy("material_slime_acid", 2, 4),
-            new DropItemEnemy("gun_makarov", 1, 1),
-            new DropItemEnemy("trap_mine", 2, 6),
-            new DropItemEnemy("sword_gods_slayer", 1, 1),
-            new DropItemEnemy("shotgun_pump", 1, 1)
+            new("material_slime_acid", 2, 4),
+            new("gun_makarov", 1, 1),
+            new("trap_mine", 2, 6),
+            new("sword_gods_slayer", 1, 1),
+            new("shotgun_pump", 1, 1)
         };
 
         enemyAndHisDropItems["mimic_enem"] = new DropItemEnemy[] {
-            new DropItemEnemy("material_tooth_mimic", 2, 4),
-            new DropItemEnemy("material_tongue_mimic", 1, 1),
-            new DropItemEnemy("material_wood", 3, 6),
-            new DropItemEnemy("material_strange_eye", 1, 1),
-            new DropItemEnemy("artifact_eye_ring", 1, 1)
+            new("material_tooth_mimic", 2, 4),
+            new("material_tongue_mimic", 1, 1),
+            new("material_wood", 3, 6),
+            new("material_strange_eye", 1, 1),
+            new("artifact_eye_ring", 1, 1)
         };
 
         enemyAndHisDropItems["death_car_enem"] = new DropItemEnemy[] {
-            new DropItemEnemy("material_copper_wires", 2, 4),
-            new DropItemEnemy("material_iron_bar", 1, 3),
-            new DropItemEnemy("material_saw_blade", 1, 1),
-            new DropItemEnemy("material_wheel", 1, 4),
-            new DropItemEnemy("material_battery", 1, 1),
-            new DropItemEnemy("material_fast_engine", 1, 1)
+            new("material_copper_wires", 2, 4),
+            new("material_iron_bar", 1, 3),
+            new("material_saw_blade", 1, 1),
+            new("material_wheel", 1, 4),
+            new("material_battery", 1, 1),
+            new("material_fast_engine", 1, 1)
         };
 
         enemyAndHisDropItems["tasty_fly_enem"] = new DropItemEnemy[] {
-            new DropItemEnemy("material_wings_fly", 1, 2),
-            new DropItemEnemy("artifact_simple_ring", 1, 1),
-            new DropItemEnemy("material_someone_eye", 1, 2),
-            new DropItemEnemy("material_rubin", 1, 1)
+            new("material_wings_fly", 1, 2),
+            new("artifact_simple_ring", 1, 1),
+            new("material_someone_eye", 1, 2),
+            new("material_rubin", 1, 1)
         };
 
         enemyAndHisDropItems["bur_enem"] = new DropItemEnemy[] {
-            new DropItemEnemy("material_copper_wires", 1, 4),
-            new DropItemEnemy("material_iron_bar", 1, 4),
-            new DropItemEnemy("material_wheel", 1, 4),
-            new DropItemEnemy("material_battery", 1, 1),
-            new DropItemEnemy("material_bur", 1, 1),
-            new DropItemEnemy("material_lamp", 1, 1),
-            new DropItemEnemy("material_simple_engine", 1, 1),
+            new("material_copper_wires", 1, 4),
+            new("material_iron_bar", 1, 4),
+            new("material_wheel", 1, 4),
+            new("material_battery", 1, 1),
+            new("material_bur", 1, 1),
+            new("material_lamp", 1, 1),
+            new("material_simple_engine", 1, 1),
         };
     }
 }

@@ -102,15 +102,17 @@ public abstract class ObjectLBroken : ObjectL
 
             GameObject dropItem = Instantiate(GlobalPrefabs.ItemDropPref, GameManager.Instance.dropParent);
 
-            if(ToDropPos.x != 0 && ToDropPos.y != 0)
+            Vector2 dropPos;
+            if (ToDropPos.x != 0)
             {
-                Vector2 dropPos = new Vector2(GetPosX() + Random.Range(-ToDropPos.x, ToDropPos.x), ToDropPos.y);
-                dropItem.transform.position = dropPos;
+                dropPos = new Vector2(GetPosX() + (int)(Random.Range(-ToDropPos.x, ToDropPos.x) * 10)/10f, GetPosY() + ToDropPos.y);
             }
             else
             {
-                dropItem.transform.position = GetPosition();
+                dropPos = new Vector2(GetPosX() + Random.Range(-1f, 1f), GetPosY() + ToDropPos.y);
             }
+            dropItem.transform.position = dropPos;
+
 
             ItemDrop ItemD = dropItem.GetComponent<ItemDrop>();
 

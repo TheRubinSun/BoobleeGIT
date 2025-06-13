@@ -22,6 +22,7 @@ public class Player : MonoBehaviour, ITakeDamage
     //GameObjects
     private Dictionary<int, WeaponControl> WeaponsObj = new Dictionary<int, WeaponControl>();
     private Dictionary<int, MinionControl> MinionsObj = new Dictionary<int, MinionControl>();
+    private PlayerControl playerControl;
 
     [SerializeField] 
     private GameObject PlayerModel;
@@ -44,6 +45,7 @@ public class Player : MonoBehaviour, ITakeDamage
         pl_stats = new PlayerStats();
         pl_ui = GetComponent<PlayerUI>();
         equip_Stats = GetComponent<EquipStats>();
+        playerControl = transform.GetChild(0).GetComponent<PlayerControl>();
 
         pl_ui.SetComponentUI();
 
@@ -100,7 +102,7 @@ public class Player : MonoBehaviour, ITakeDamage
 
     private void UpdateSlotsInPlayerControl()
     {
-        transform.GetChild(0).GetComponent<PlayerControl>().UpdateSlots(WeaponsObj, MinionsObj);
+        playerControl.UpdateSlots(WeaponsObj, MinionsObj);
     }
     public void SetWeaponsObj(int i, WeaponControl weaponObj)
     {

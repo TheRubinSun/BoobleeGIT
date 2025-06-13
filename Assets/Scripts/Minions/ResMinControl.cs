@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using static UnityEditor.PlayerSettings;
 
 public class ResMinControl : MinionControl
 {
@@ -20,6 +21,8 @@ public class ResMinControl : MinionControl
     Animator body_anim;
     Animator hand_anim;
     Animator indicator_anim;
+
+    private int IDCurMinion;
 
     //Звуки
     AudioSource audioSource_Work;
@@ -49,14 +52,17 @@ public class ResMinControl : MinionControl
         base.SetVolume();
         //audioSource_Work.volume = GlobalData.VOLUME_SOUNDS; 
     }
-    public override void UseMinion()
+    public override void UseMinion(int idMin)
     {
-        base.UseMinion();
+        base.UseMinion(idMin);
         if (!isAlreadyBusyMinion)
         {
             aim = FindAim(SearchTypeTag());
             if (aim != null)
             {
+                IDCurMinion = idMin;
+                EqupmentPlayer.Instance.LockSlot(IDCurMinion);
+
                 isAlreadyBusyMinion = true;
                 transform.SetParent(null);
                 MoveToAim(aim);
@@ -157,6 +163,8 @@ public class ResMinControl : MinionControl
 
         AnimOnOrOffMinion(false);
         AnimTurnAllOff();
+
+        EqupmentPlayer.Instance.UnlockSlot(IDCurMinion);
     }
     public override void GiveItemsToPlayer()
     {

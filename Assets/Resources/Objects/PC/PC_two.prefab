@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f87e9fc3e10e594ebe408756262c7c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ToDropPos: {x: 1, y: -1}
+  ToDropPos: {x: 1, y: -0.5}
   remainsHits: 20
   toNextStageAnim: 4
   soundsBroken:
@@ -120,7 +120,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d955cad5e3a74f341968651b1dee7362, type: 3}
   soundsWork: {fileID: 8300000, guid: 7f289f62459dd6849af1f32844a11364, type: 3}
   PCWorkGroup: {fileID: 5149298087599839304, guid: 1178313d785468941ae1fbfa072bd037, type: 2}
-  SounsOnOrOff: 0
+  SounsOnOrOff: 1
 --- !u!95 &1924684269334543653
 Animator:
   serializedVersion: 7

@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEditor.Experimental;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EqupmentPlayer : MonoBehaviour, ISlot
 {
@@ -62,6 +63,19 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         }
 
     }
+    public void LockSlot(int numbSlot)
+    {
+        GameObject slotObj = GetSlotObj(numbSlot);
+        slotObj.GetComponent<MouseButtonHandler>().enabled = false; //Выкл кнопки перемещения
+        slotObj.GetComponent<Button>().interactable = false;  //В нашем случае эта строка выполняет роль поменть цвет на неактивный
+    }
+    public void UnlockSlot(int numbSlot)
+    {
+        GameObject slotObj = GetSlotObj(numbSlot);
+        slotObj.GetComponent<MouseButtonHandler>().enabled = true; //Вкл кнопки перемещения
+        slotObj.GetComponent<Button>().interactable = true; //В нашем случае эта строка выполняет роль поменть цвет на активный
+    }
+    private GameObject GetSlotObj(int numbSlot) => slotsEqup[numbSlot].SlotObj;
     public void StartDataEquip()
     {
         Item item = ItemsList.GetNoneItem();
@@ -328,4 +342,13 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         equipStats.Bonus_Tech_Resis -= artifact.Artif_Tech_Resis;
         equipStats.Bonus_Equip_Att_Damage -= artifact.Artif_Damage;
     }
+
+}
+public enum TypeEquipSlot
+{
+    None,
+    Weapon,
+    Armor,
+    Minion,
+    Artifact
 }
