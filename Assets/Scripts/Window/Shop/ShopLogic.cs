@@ -274,24 +274,23 @@ public class ShopLogic : MonoBehaviour , ISlot
         {
             case "Sell":
                 {
-                    AddItemToListSlot(sellSlots, item, CountItem, artID);
+                    AddItemToListSlot(sellSlots, item, CountItem, artID, false);
                     return;
                 }
             case "Buy":
                 {
-                    AddItemToListSlot(buySlots, item, CountItem, artID);
+                    AddItemToListSlot(buySlots, item, CountItem, artID, false);
                     return;
                 }
             case "Shop":
                 {
-                    AddItemToListSlot(shopSlots, item, CountItem, artID);
+                    AddItemToListSlot(shopSlots, item, CountItem, artID, false);
                     return;
                 }
         }
     }
-    private void AddItemToListSlot(List<Slot> slots, Item itemAdd, int countItem, int artID)
+    private void AddItemToListSlot(List<Slot> slots, Item itemAdd, int countItem, int artID, bool CanDropRemainder)
     {
-
         foreach (Slot slot in slots)
         {
             if (slot.Item.Id == itemAdd.Id)
@@ -340,6 +339,10 @@ public class ShopLogic : MonoBehaviour , ISlot
                 }
             }
         }
+        if(countItem > 0 && CanDropRemainder)
+        {
+            DragAndDrop.Instance.DropItemThat(itemAdd, countItem, artID);
+        }
     }
     private void IsArtifact(Slot slot, Item itemAdd, int artID)
     {
@@ -365,8 +368,8 @@ public class ShopLogic : MonoBehaviour , ISlot
                 Player.Instance.TradeAddExp(personalProfSum);
                 Player.Instance.TradeAddExp(personalCostSum);
 
-                TradeBeetwenSlots(buySlots, Inventory.Instance.slots);
-                TradeBeetwenSlots(sellSlots, shopSlots);
+                TradeBeetwenSlots(buySlots, Inventory.Instance.slots, true);
+                TradeBeetwenSlots(sellSlots, shopSlots, false);
 
 
                 UpdateGoldInfo();
@@ -383,8 +386,8 @@ public class ShopLogic : MonoBehaviour , ISlot
             Player.Instance.TradeAddExp(personalProfSum);
             Player.Instance.TradeAddExp(personalCostSum);
 
-            TradeBeetwenSlots(buySlots, Inventory.Instance.slots);
-            TradeBeetwenSlots(sellSlots, shopSlots);
+            TradeBeetwenSlots(buySlots, Inventory.Instance.slots, true);
+            TradeBeetwenSlots(sellSlots, shopSlots, false);
 
             UpdateGoldInfo();
             ClearAllSumAndText();
@@ -442,11 +445,11 @@ public class ShopLogic : MonoBehaviour , ISlot
         else 
             totalCostOrProfitText.text = $"{word_will_receive} <color={hashColorGold}>{totalCostOrProfit}</color> {word_gold}";
     }
-    private void TradeBeetwenSlots(List<Slot> slotsOut, List<Slot> slotsIn) //Из слота (покупки/продажи) в слот (игрока/продовца)
+    private void TradeBeetwenSlots(List<Slot> slotsOut, List<Slot> slotsIn, bool CanDropRemainder) //Из слота (покупки/продажи) в слот (игрока/продовца)
     {
         foreach (Slot slot in slotsOut)
         {
-            AddItemToListSlot(slotsIn, slot.Item, slot.Count, slot.artifact_id);
+            AddItemToListSlot(slotsIn, slot.Item, slot.Count, slot.artifact_id, CanDropRemainder);
         }
         ClearSlots(slotsOut);
     }
