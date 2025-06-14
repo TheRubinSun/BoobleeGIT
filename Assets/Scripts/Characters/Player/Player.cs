@@ -334,6 +334,14 @@ public class Player : MonoBehaviour, ITakeDamage
         SoundsManager.Instance.PlayLevelUP();
         StartCoroutine(ShowLevelUPWithDelay());
     }
+    public void TradeAddExp(int add_exp)
+    {
+        pl_stats.AddTradeExp(add_exp);
+    }
+    public void TradeLvlUp()
+    {
+        SoundsManager.Instance.PlayLevelUP();
+    }
     private IEnumerator ShowLevelUPWithDelay()
     {
         yield return new WaitForSeconds(1f);

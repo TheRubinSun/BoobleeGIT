@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.Rendering;
 
 public class SoundsManager : MonoBehaviour
@@ -54,7 +55,9 @@ public class SoundsManager : MonoBehaviour
     public void PlayLevelUP()
     {
         audioSource.pitch = 1f;
-        audioSource.PlayOneShot(LvlUP);
+        audioSource.Stop();
+        audioSource.clip = LvlUP;
+        audioSource.Play();
     } 
     public void PlayOpenWindow()
     {

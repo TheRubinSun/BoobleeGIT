@@ -149,7 +149,7 @@ public class GameManager: MonoBehaviour
     {
         KillsEnemy++;
         enemisRemaining--;
-        Debug.Log($"Убит {enemy.Name} {enemy.enum_stat.Max_Hp}");
+        //Debug.Log($"Убит {enemy.Name} {enemy.enum_stat.Max_Hp}");
         if(Player.Instance.GetHp() > 0)
         {
             Player.Instance.AddExp(enemy.enum_stat.GiveExp);

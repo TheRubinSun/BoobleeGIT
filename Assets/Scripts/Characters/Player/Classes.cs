@@ -28,9 +28,9 @@ public class Classes : MonoBehaviour
         {
             //                    strength agility intell range, damage, at_sp, projSpeed, speed, hp, def
             //                                       s  a  i  r   d  a   p   s  h   d
-            roleClasses.Add("Shooter", new RoleClass(0, 2, 0, 2f, 0, 45, 2f, 0.2f, 2, 0, 0, 0));
-            roleClasses.Add("Mage",    new RoleClass(0, 0, 2, 1f, 0, 40, 1f, 0.2f, 3, 0, 10, 10));
-            roleClasses.Add("Warrior", new RoleClass(2, 0, 0, 1f, 2, 35, 0, 0.4f, 5, 2, 0, 0));
+            roleClasses.Add("Shooter", new RoleClass(1, 2, 1, 2f, 0, 45, 2f, 0.2f, 2, 0, 0, 0));
+            roleClasses.Add("Mage",    new RoleClass(1, 1, 2, 1f, 0, 40, 1f, 0.2f, 3, 0, 10, 10));
+            roleClasses.Add("Warrior", new RoleClass(2, 1, 1, 1f, 2, 35, 0, 0.4f, 5, 2, 0, 0));
         }
     }
     void Start()

@@ -109,7 +109,7 @@ public static class ItemsList
         items.Add(new Item(44, "material_slime_acid",          20, 0, Quality.Common, 10, "_", TypeItem.Material));
         items.Add(new Item(45, "material_quartzite",           100, 0, Quality.Common, 2, "_", TypeItem.Material));
         items.Add(new Item(46, "material_quartz_sand",         100, 0, Quality.Common, 3, "_", TypeItem.Material));
-        items.Add(new Item(47, "material_iron_ore",            100, 0, Quality.Common, 6, "_", TypeItem.Material));
+        items.Add(new Item(47, "material_iron_ore",            10, 0, Quality.Common, 6, "_", TypeItem.Material));
         //PrintItemList();
     }
     private static void InitializeSpritesItem()

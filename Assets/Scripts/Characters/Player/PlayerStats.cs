@@ -4,6 +4,7 @@ using System.Collections;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 
 [System.Serializable]
 public class PlayerStats : CharacterStats
@@ -38,6 +39,11 @@ public class PlayerStats : CharacterStats
     public int freeSkillPoints { get; set; }
     public int cur_exp { get; set; }
     public int nextLvl_exp { get; set; }
+
+    public int trade_level { get; set; }
+    public int trade_cur_exp { get; set; }
+    public int trade_nextLvl_exp { get; set; }
+
     //Knowlange
     public int MagicPoints { get; set; }
     public int TechniquePoints { get; set; }
@@ -75,6 +81,10 @@ public class PlayerStats : CharacterStats
 
         nextLvl_exp = 10;
         level = 0;
+
+        trade_level = 0;
+        trade_nextLvl_exp = 30;
+
         count_Projectile = 0;
         MagicPoints = 1;
         TechniquePoints = 1;
@@ -82,10 +92,10 @@ public class PlayerStats : CharacterStats
 
         freeSkillPoints = 0;
 
-        Gold = 0;
+        Gold = 10;
         TraderSkill = 1;
 
-        classPlayer = Classes.Instance.GetRoleClass("Warrior");
+        classPlayer = Classes.Instance.GetRoleClass("Shooter");
         DirectionOrVectorWeapon = new bool[4];
 
         
@@ -112,6 +122,10 @@ public class PlayerStats : CharacterStats
         nextLvl_exp = playerSaveData.nextLvl_exp;
         cur_exp = playerSaveData.cur_exp;
         level = playerSaveData.level;
+
+        trade_level = playerSaveData.trade_level;
+        trade_cur_exp = playerSaveData.trade_cur_exp;
+        trade_nextLvl_exp = playerSaveData.trade_nextLvl_exp;
 
         count_Projectile = playerSaveData.count_Projectile;
         MagicPoints = playerSaveData.MagicPoints;
@@ -210,6 +224,7 @@ public class PlayerStats : CharacterStats
         }
         return false;
     }
+
     public void AddExpStat(int add_exp)
     {
         int added_exp = Mathf.RoundToInt(add_exp * ExpBust);
@@ -226,7 +241,7 @@ public class PlayerStats : CharacterStats
         if (cur_exp >= nextLvl_exp)
         {
             cur_exp -= nextLvl_exp;
-            nextLvl_exp = (int)((nextLvl_exp + 20) * 1.5f);
+            nextLvl_exp = (int)((nextLvl_exp + 30) * 1.3f);
             return true;
         }
         return false;
@@ -238,5 +253,32 @@ public class PlayerStats : CharacterStats
         AddMaxHPBaseStat(AddHP_PerLvl);
         Player.Instance.LvlUp();
         if (cur_exp >= nextLvl_exp) CheckLevel();
+    }
+    public void AddTradeExp(int add_exp)
+    {
+        trade_cur_exp += add_exp;
+        CheckTradeLevel();
+    }
+    private void CheckTradeLevel()
+    {
+        if (isNewTradeLevel())
+            TradeLvlUp();
+    }
+    private bool isNewTradeLevel()
+    {
+        if (trade_cur_exp >= trade_nextLvl_exp)
+        {
+            trade_cur_exp -= trade_nextLvl_exp;
+            trade_nextLvl_exp = (int)((trade_nextLvl_exp + 30 * trade_level) * 1.2f);
+            return true;
+        }
+        return false;
+    }
+    public void TradeLvlUp()
+    {
+        trade_level++;
+        TraderSkill++;
+        Player.Instance.TradeLvlUp();
+        if (trade_cur_exp >= trade_nextLvl_exp) CheckTradeLevel();
     }
 }

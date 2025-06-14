@@ -38,6 +38,14 @@ public class ShopLogic : MonoBehaviour , ISlot
     [SerializeField] private TextMeshProUGUI Trader_Text;
     [SerializeField] private TextMeshProUGUI Trade_name_Text;
 
+
+    [SerializeField] private Transform trade_exp_bar;
+    private Image trade_cur_exp_image;
+    private TextMeshProUGUI trade_exp_text;
+    private RectTransform trade_expRect;
+
+    private PlayerStats player_stat;
+
     private List<Slot> sellSlots = new List<Slot>();
     private List<Slot> buySlots = new List<Slot>();
     private List<Slot> shopSlots = new List<Slot>();
@@ -60,7 +68,7 @@ public class ShopLogic : MonoBehaviour , ISlot
     private string word_player;
     private string word_trader;
     private string word_trade_name;
-
+    
     //private RectTransform item_info_rect_trans;
 
     private int countSlots = 0;
@@ -76,11 +84,20 @@ public class ShopLogic : MonoBehaviour , ISlot
         Instance = this;
         //item_info_rect_trans = item_info.GetComponent<RectTransform>();
     }
+    private void Start()
+    {
+        trade_cur_exp_image = trade_exp_bar.GetChild(1).GetComponent<Image>();
+        trade_exp_text = trade_exp_bar.GetChild(2).GetComponent<TextMeshProUGUI>();
+        trade_expRect = trade_exp_bar.GetComponent<RectTransform>();
+        player_stat = Player.Instance.GetPlayerStats();
+
+    }
     public void OpenShop()
     {
         DisplayInventory();
         CreateOrOpenSlots();
         UpdateGoldInfo();
+        UpdateTradeExpBar(player_stat);
     }
     public void ClosedShop()
     {
@@ -144,24 +161,44 @@ public class ShopLogic : MonoBehaviour , ISlot
     {
         if (shop_slots_parent.transform.childCount == 0)
         {
-            countSlots = Inventory.Instance.sizeInventory;
+            //countSlots = Inventory.Instance.sizeInventory;
+            countSlots = 100;
 
             Item none_item = ItemsList.items[0];
             for (int i = 0; countSlots > i; i++)
             {
                 Slot slot = CreateSlot("ShopSlot", shop_slots_parent, shopSlots, none_item, i);
                 SlotsManager.UpdateSlotUI(slot);
+                if(i >= Inventory.Instance.sizeInventory && slot.Count < 1) slot.SlotObj.SetActive(false);
             }
             AddTradeItem();
         }
     }
     private void AddTradeItem()
     {
-        int count = 10;
+        int count = 5 + (player_stat.trade_level/2);
         for(int i = 0; i < count; i++)
         {
-            Item item = ItemsList.items[UnityEngine.Random.Range(0, ItemsList.items.Count)];
-            int countItem = UnityEngine.Random.Range(1, item.MaxCount);
+            Item item;
+            int countItem;
+            switch (i)
+            {
+                case 0:
+                    item = ItemsList.GetItemForNameKey("item_meat");
+                    countItem = 5;
+                    break;
+                case 1:
+                    item = ItemsList.GetItemForNameKey("simple_knife");
+                    countItem = 1;
+                    break;
+                default:
+                    {
+                        item = ItemsList.items[UnityEngine.Random.Range(0, ItemsList.items.Count)];
+                        countItem = UnityEngine.Random.Range(1, item.MaxCount);
+                        break;
+                    }
+            }
+
             AddItemToType("Shop", item, countItem, 0);
         }
     }
@@ -281,6 +318,8 @@ public class ShopLogic : MonoBehaviour , ISlot
         {
             if (slot.Item.Id == ItemsList.GetNoneItem().Id)
             {
+                if(!slot.SlotObj.activeSelf) slot.SlotObj.SetActive(true);
+
                 slot.Item = itemAdd;
                 if (itemAdd.MaxCount >= countItem)
                 {
@@ -323,8 +362,12 @@ public class ShopLogic : MonoBehaviour , ISlot
             if ((totalCostOrProfit * -1) <= Player.Instance.GetGold()) //Проверка наличие кол-во денег у игрока
             {
                 Player.Instance.PayGold(totalCostOrProfit);
+                Player.Instance.TradeAddExp(personalProfSum);
+                Player.Instance.TradeAddExp(personalCostSum);
+
                 TradeBeetwenSlots(buySlots, Inventory.Instance.slots);
                 TradeBeetwenSlots(sellSlots, shopSlots);
+
 
                 UpdateGoldInfo();
                 ClearAllSumAndText();
@@ -337,6 +380,9 @@ public class ShopLogic : MonoBehaviour , ISlot
         else //Если игрок зарабатывает на сделке
         {
             Player.Instance.PayGold(totalCostOrProfit);
+            Player.Instance.TradeAddExp(personalProfSum);
+            Player.Instance.TradeAddExp(personalCostSum);
+
             TradeBeetwenSlots(buySlots, Inventory.Instance.slots);
             TradeBeetwenSlots(sellSlots, shopSlots);
 
@@ -344,16 +390,19 @@ public class ShopLogic : MonoBehaviour , ISlot
             ClearAllSumAndText();
         }
 
+        UpdateTradeExpBar(player_stat);
+        SortSlots(shopSlots);
+        HideOtherSlot(shopSlots, Inventory.Instance.sizeInventory);
     }
 
-    public void CountedGoldForSell()
+    public void CountedGoldForSell() //цена за продажу
     {
         int sumCost = 0;
         foreach (Slot slot in sellSlots)
         {
             sumCost += slot.Item.Cost * slot.Count;
         }
-        personalProfSum = (int)((sumCost * 0.3f) + (sumCost * Player.Instance.GetSkillsTrader() * 0.05f));
+        personalProfSum = (int)(sumCost * Math.Min(Player.Instance.GetSkillsTrader() * 0.0125f + 0.20f, 0.7f));
 
         //Разметка и цвет - первый текст
         costWholeValueSell.text = $"{word_total_value}<color={hashColorGold}>{sumCost}</color> {word_gold}";
@@ -361,14 +410,14 @@ public class ShopLogic : MonoBehaviour , ISlot
 
         TotalCostOrProfit();
     }
-    public void CountedGoldForBuy()
+    public void CountedGoldForBuy()  //цена за покупку
     {
         int sumCost = 0;
         foreach (Slot slot in buySlots)
         {
             sumCost += slot.Item.Cost * slot.Count;
         }
-        personalCostSum = (int)(sumCost * (10 - Player.Instance.GetSkillsTrader()) * 0.1f) + sumCost;
+        personalCostSum = (int)(sumCost * (1.7f - (Player.Instance.GetSkillsTrader() * 0.0175f)));
 
         //Разметка и цвет - первый текст
         costWholeValueBuy.text = $"{word_total_value}<color={hashColorGold}>{sumCost}</color> {word_gold}";
@@ -446,7 +495,39 @@ public class ShopLogic : MonoBehaviour , ISlot
             default: return null;
         }
     }
+    private void SortSlots(List<Slot>slots) //Усортировка пустох слотов на непустые
+    {
+        int targetIndex = 0;
+        for(int i  = 0; i < slots.Count; i++)
+        {
+            if (!slots[i].SlotObj.activeSelf) continue;
 
+            if(slots[i].Count > 0) //Если слот не пустой
+            {
+                if(i != targetIndex) //Если слот не тот же, то меняем местами
+                {
+                    slots[targetIndex].Item = slots[i].Item;
+                    slots[targetIndex].Count = slots[i].Count;
+                    slots[targetIndex].artifact_id = slots[i].artifact_id;
+
+                    slots[i].Item = ItemsList.GetNoneItem();
+                    slots[i].Count = 0;
+                    slots[i].artifact_id = slots[targetIndex].artifact_id;
+
+                    SlotsManager.UpdateSlotUI(slots[targetIndex]);
+                    SlotsManager.UpdateSlotUI(slots[i]);
+                }
+                targetIndex++; //Добавляется только когда слот не пустой
+            }
+        }
+    }
+    private void HideOtherSlot(List<Slot> slots, int maxSlot)
+    {
+        for (int i = maxSlot; i < slots.Count; i++)
+        {
+            if (slots[i].Count < 1) slots[i].SlotObj.SetActive(false); 
+        }
+    }
     private void UpdateGoldInfo()
     {
         int goldT = Player.Instance.GetGold();
@@ -469,7 +550,11 @@ public class ShopLogic : MonoBehaviour , ISlot
         costBuyText.text = word_cost + 0;
         totalCostOrProfitText.text = word_trade_success;
     }
-
+    public void UpdateTradeExpBar(PlayerStats pl_stats)
+    {
+        trade_cur_exp_image.fillAmount = (float)pl_stats.trade_cur_exp / pl_stats.trade_nextLvl_exp;
+        trade_exp_text.text = $"{pl_stats.trade_cur_exp} / {pl_stats.trade_nextLvl_exp}";
+    }
     //public void UpdateSlotUITrade(Slot slot)
     //{
     //    SlotsManager.UpdateSlotUI(slot);
