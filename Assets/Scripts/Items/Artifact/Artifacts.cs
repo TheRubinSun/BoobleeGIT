@@ -17,6 +17,11 @@ public class Artifacts : MonoBehaviour
         artifacts.Add(new ArtifactObj(artifacts.Count, levelArtefact));
         return artifacts.Count - 1;
     }
+    public int AddNewArtifact(int levelArtefact, System.Random random)
+    {
+        artifacts.Add(new ArtifactObj(artifacts.Count, levelArtefact, random));
+        return artifacts.Count - 1;
+    }
     public void LoadOrNew(List<ArtifactObj> loadArt)
     {
         loadArt = ClearExstraArtif(loadArt);

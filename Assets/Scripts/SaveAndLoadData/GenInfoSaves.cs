@@ -53,6 +53,7 @@ public class GenInfoSaves : MonoBehaviour
             saveGameFiles[saveInt].godMode = toggle_Saves[saveInt].isOn;
 
             GlobalData.cur_seed = (saveGameFiles[saveInt].seed != 0) ? saveGameFiles[saveInt].seed : saveGameFiles[saveInt].GenNewSeed();
+            GlobalData.cur_lvl_left = saveGameFiles[saveInt].lvl_left;
 
             Debug.Log($"Выбран слот {saveInt}, путь: {GlobalData.SavePath}");
 
@@ -81,6 +82,7 @@ public class GenInfoSaves : MonoBehaviour
         saveGameFiles[id].timeHasPassed = 0;
         saveGameFiles[id].isStarted = false;
         saveGameFiles[id].seed = 0;
+        saveGameFiles[id].lvl_left = 0;
         lastSaveID = 100;
         string path_player_data = Path.Combine(Application.persistentDataPath, saveGameFiles[id].fileName + "player.json");
         string path_artifacts_data = Path.Combine(Application.persistentDataPath, saveGameFiles[id].fileName + "artifacts.json");
@@ -212,6 +214,7 @@ public class SaveGameInfo
     public int timeHasPassed { get; set; }
     public int level { get; set; }
     public int seed { get; set; }
+    public int lvl_left {  get; set; }
     public bool godMode {  get; set; }
     public SaveGameInfo(int ID)
     {
@@ -230,16 +233,18 @@ public class SaveGameInfo
         enemy_kills = 0;
         timeHasPassed = 0;
         level = 0;
+        lvl_left = 0;
         godMode = false;
     }
     [JsonConstructor]
-    public SaveGameInfo(string fileName, int enemu_kills, int timeHasPassed, int level, int seed, bool godMode)
+    public SaveGameInfo(string fileName, int enemu_kills, int timeHasPassed, int level, int seed, int lvl_left, bool godMode)
     {
         this.fileName = fileName;
         this.enemy_kills = enemu_kills;
         this.timeHasPassed = timeHasPassed;
         this.level = level;
         this.seed = seed;
+        this.lvl_left = lvl_left;
         this.godMode = godMode;
     }
     public int GenNewSeed()

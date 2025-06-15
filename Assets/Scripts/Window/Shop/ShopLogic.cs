@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Experimental;
@@ -48,7 +49,9 @@ public class ShopLogic : MonoBehaviour , ISlot
 
     private List<Slot> sellSlots = new List<Slot>();
     private List<Slot> buySlots = new List<Slot>();
-    private List<Slot> shopSlots = new List<Slot>();
+    private Dictionary<string, List<Slot>> traderSlots = new();
+
+    private string lastTrader;
 
     private int personalProfSum;
     private int personalCostSum;
@@ -68,7 +71,11 @@ public class ShopLogic : MonoBehaviour , ISlot
     private string word_player;
     private string word_trader;
     private string word_trade_name;
-    
+
+    private Item none_item;
+    private int sizeInventory;
+
+    private static System.Random random;
     //private RectTransform item_info_rect_trans;
 
     private int countSlots = 0;
@@ -86,14 +93,17 @@ public class ShopLogic : MonoBehaviour , ISlot
     }
     private void Start()
     {
+
         trade_cur_exp_image = trade_exp_bar.GetChild(1).GetComponent<Image>();
         trade_exp_text = trade_exp_bar.GetChild(2).GetComponent<TextMeshProUGUI>();
         trade_expRect = trade_exp_bar.GetComponent<RectTransform>();
         player_stat = Player.Instance.GetPlayerStats();
-
+        none_item = ItemsList.items[0];
     }
-    public void OpenShop()
+    public void OpenShop(string traderName)
     {
+        sizeInventory = Inventory.Instance.sizeInventory;
+        lastTrader = traderName;
         DisplayInventory();
         CreateOrOpenSlots();
         UpdateGoldInfo();
@@ -103,6 +113,7 @@ public class ShopLogic : MonoBehaviour , ISlot
     {
         ReturnSlotsFor(sellSlots, false);
         ReturnSlotsFor(buySlots, true);
+        ClearSlotsItems(traderSlots[lastTrader]);
         EraseText();
         DragAndDrop.Instance.ClearOldSlot();
         //item_info.transform.SetParent(oldParent_item_info);
@@ -159,50 +170,106 @@ public class ShopLogic : MonoBehaviour , ISlot
     }
     private void CreateOrOpenSlots()
     {
-        if (shop_slots_parent.transform.childCount == 0)
+        if (!traderSlots.ContainsKey(lastTrader))
+        {
+            traderSlots[lastTrader] = new List<Slot>();
+        }
+
+        //if (shop_slots_parent.transform.childCount < Inventory.Instance.sizeInventory)
+        if(traderSlots[lastTrader].Count < 1)
         {
             //countSlots = Inventory.Instance.sizeInventory;
             countSlots = 100;
+            int countGoods = 5 + (player_stat.trade_level / 2);
 
-            Item none_item = ItemsList.items[0];
             for (int i = 0; countSlots > i; i++)
             {
-                Slot slot = CreateSlot("ShopSlot", shop_slots_parent, shopSlots, none_item, i);
-                SlotsManager.UpdateSlotUI(slot);
-                if(i >= Inventory.Instance.sizeInventory && slot.Count < 1) slot.SlotObj.SetActive(false);
+                Slot tempSlot = CreateSlot("ShopSlot", shop_slots_parent, traderSlots[lastTrader], none_item, i);
+                if(i < countGoods) AddTradeGoods(i); //Добавляем новые предметы если их нет
+                //if (i < traderSlots[lastTrader].Count) tempSlot = traderSlots[lastTrader][i];
+                //else
+                //{
+                //    tempSlot = new Slot(none_item, 0);
+                //    traderSlots[lastTrader].Add(tempSlot);
+                //}
+
+                //CreateSlotOBJ("ShopSlot", shop_slots_parent, tempSlot, i);
+
+                SlotsManager.UpdateSlotUI(tempSlot);
+                if (i >= sizeInventory && tempSlot.Count < 1) tempSlot.SlotObj.SetActive(false);
             }
-            AddTradeItem();
         }
-    }
-    private void AddTradeItem()
-    {
-        int count = 5 + (player_stat.trade_level/2);
-        for(int i = 0; i < count; i++)
+        else
         {
-            Item item;
-            int countItem;
-            switch (i)
-            {
-                case 0:
-                    item = ItemsList.GetItemForNameKey("item_meat");
-                    countItem = 5;
-                    break;
-                case 1:
-                    item = ItemsList.GetItemForNameKey("simple_knife");
-                    countItem = 1;
-                    break;
-                default:
-                    {
-                        item = ItemsList.items[UnityEngine.Random.Range(0, ItemsList.items.Count)];
-                        countItem = UnityEngine.Random.Range(1, item.MaxCount);
-                        break;
-                    }
-            }
-
-            AddItemToType("Shop", item, countItem, 0);
+            LoadTradeItem(); //Загружаем предметы
         }
     }
+    private void LoadTradeItem()
+    {
+        int id = 0;
+        foreach (Slot slot in traderSlots[lastTrader])
+        {
+            CreateSlotOBJ("ShopSlot", shop_slots_parent, slot, id);
+            if(slot.Count > 0 || id < sizeInventory) SlotsManager.UpdateSlotUI(slot);
+            else slot.SlotObj.SetActive(false);
+            id++;
+        }
+    }
+    private void CreateSlotOBJ(string tagSlot, Transform parent, Slot slot, int index)
+    {
+        GameObject newSlotObj = Instantiate(GlobalPrefabs.SlotPref, parent);
+        newSlotObj.tag = tagSlot;
+        newSlotObj.name = $"{tagSlot} ({index})";
+        slot.SlotObj = newSlotObj;
+        
+    }
+    private void AddTradeGoods(int id)
+    {
+        //int count = 5 + (player_stat.trade_level/2);
+        //for(int i = 0; i < count; i++)
+        //{
 
+        //}
+        int seedRand = GlobalData.cur_seed + (GlobalData.cur_lvl_left * 5) + id + StableHash(lastTrader); // Умножение смещает предметы ранее
+        random = new System.Random(seedRand);
+
+        Item item;
+        int countItem;
+        switch (id)
+        {
+            case 0:
+                item = ItemsList.GetItemForNameKey("item_meat");
+                countItem = 5;
+                break;
+            case 1:
+                item = ItemsList.GetItemForNameKey("simple_knife");
+                countItem = 1;
+                break;
+            //case 2:
+            //    item = ItemsList.GetItemForNameKey("artifact_eye_ring");
+            //    countItem = 1;
+            //    break;
+            default:
+                {
+                    item = ItemsList.items[random.Next(0, ItemsList.items.Count)];
+                    countItem = random.Next(1, item.MaxCount + 1);
+                    break;
+                }
+        }
+        //traderSlots[lastTrader].Add(new Slot(item, count));
+        AddItemToType("Shop", item, countItem, 0);
+    }
+    private int StableHash(string str) //Превращение имя продовца в число, для рандома
+    {
+        int hash = 0;
+        int id = 1;
+        foreach(char c in str)
+        {
+            hash += c * id;
+            id++;
+        }
+        return hash;
+    }
     private void DisplayInventory()
     {
         //countSlots = oldParent_inventory.transform.childCount;
@@ -241,7 +308,7 @@ public class ShopLogic : MonoBehaviour , ISlot
                 {
                     tagSlot = "ShopSlot";
                     parent = shop_slots_parent;
-                    slots = shopSlots;
+                    slots = traderSlots[lastTrader];
                     break;
                 }
         }
@@ -253,7 +320,7 @@ public class ShopLogic : MonoBehaviour , ISlot
         }
         else
         {
-            Item none_item = ItemsList.items[0];
+
             return CreateSlot(tagSlot, parent, slots, none_item, slots.Count);
         }
             
@@ -262,7 +329,6 @@ public class ShopLogic : MonoBehaviour , ISlot
     {
         GameObject newSlotObj = Instantiate(GlobalPrefabs.SlotPref, parent);
         newSlotObj.tag = tagSlot;
-
         newSlotObj.name = $"{tagSlot} ({index})";
         Slot newSlot = new Slot(item, newSlotObj);
         slotList.Add(newSlot);
@@ -284,7 +350,7 @@ public class ShopLogic : MonoBehaviour , ISlot
                 }
             case "Shop":
                 {
-                    AddItemToListSlot(shopSlots, item, CountItem, artID, false);
+                    AddItemToListSlot(traderSlots[lastTrader], item, CountItem, artID, false);
                     return;
                 }
         }
@@ -313,9 +379,10 @@ public class ShopLogic : MonoBehaviour , ISlot
             }
 
         }
+        int noneIDItem = ItemsList.GetNoneItem().Id;
         foreach (Slot slot in slots)
         {
-            if (slot.Item.Id == ItemsList.GetNoneItem().Id)
+            if (slot.Item.Id == noneIDItem)
             {
                 if(!slot.SlotObj.activeSelf) slot.SlotObj.SetActive(true);
 
@@ -348,7 +415,7 @@ public class ShopLogic : MonoBehaviour , ISlot
     {
         if (itemAdd is ArtifactItem artifact)
         {
-            if (artID == 0) slot.artifact_id = Artifacts.Instance.AddNewArtifact(artifact.artifactLevel);
+            if (artID == 0) slot.artifact_id = Artifacts.Instance.AddNewArtifact(artifact.artifactLevel, random);
             else slot.artifact_id = artID;
         }
         
@@ -369,7 +436,7 @@ public class ShopLogic : MonoBehaviour , ISlot
                 Player.Instance.TradeAddExp(personalCostSum);
 
                 TradeBeetwenSlots(buySlots, Inventory.Instance.slots, true);
-                TradeBeetwenSlots(sellSlots, shopSlots, false);
+                TradeBeetwenSlots(sellSlots, traderSlots[lastTrader], false);
 
 
                 UpdateGoldInfo();
@@ -387,15 +454,15 @@ public class ShopLogic : MonoBehaviour , ISlot
             Player.Instance.TradeAddExp(personalCostSum);
 
             TradeBeetwenSlots(buySlots, Inventory.Instance.slots, true);
-            TradeBeetwenSlots(sellSlots, shopSlots, false);
+            TradeBeetwenSlots(sellSlots, traderSlots[lastTrader], false);
 
             UpdateGoldInfo();
             ClearAllSumAndText();
         }
 
         UpdateTradeExpBar(player_stat);
-        SortSlots(shopSlots);
-        HideOtherSlot(shopSlots, Inventory.Instance.sizeInventory);
+        SortSlots(traderSlots[lastTrader]);
+        HideOtherSlot(traderSlots[lastTrader], sizeInventory);
     }
 
     public void CountedGoldForSell() //цена за продажу
@@ -472,6 +539,16 @@ public class ShopLogic : MonoBehaviour , ISlot
         }
         slots.Clear();
     }
+    /// <summary>
+    /// Очистка слотов от предметов, например при закрытии магазина, чтобы можно было загрузить другой
+    /// </summary>
+    private void ClearSlotsItems(List<Slot> slots)
+    {
+        foreach(Slot slot in slots)
+        {
+            Destroy(slot.SlotObj);
+        }
+    }
     private void ClearSlots(List<Slot> slots)
     {
         foreach (Slot slot in slots)
@@ -494,7 +571,7 @@ public class ShopLogic : MonoBehaviour , ISlot
         {
             case "Sell": return sellSlots[request.index];
             case "Buy": return buySlots[request.index];
-            case "Shop": return shopSlots[request.index];
+            case "Shop": return traderSlots[lastTrader][request.index];
             default: return null;
         }
     }

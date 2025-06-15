@@ -267,6 +267,7 @@ public class GameManager: MonoBehaviour
         saveGameIngo.level = Player.Instance.GetLevel();
         saveGameIngo.isStarted = true;
         saveGameIngo.seed = GlobalData.cur_seed;
+        saveGameIngo.lvl_left = GlobalData.cur_lvl_left;
         //saveGameIngo.randomCalls = GlobalData.randomCalls;
         SavesDataInfo savesDataInfo = new SavesDataInfo(GenInfoSaves.saveGameFiles, GlobalData.SaveInt, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS);
         await SaveSystem.SaveDataAsync(savesDataInfo, "saves_info.json");

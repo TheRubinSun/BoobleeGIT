@@ -170,9 +170,9 @@ public class UIControl:MonoBehaviour
     public void OpenShop()
     {
         if (!Player.Instance.godMode) return;
-        OpenShopSurv();
+        OpenShopSurv("God");
     }
-    public void OpenShopSurv()
+    public void OpenShopSurv(string nameTrader)
     {
         if (CraftIsOpened) return;
 
@@ -181,7 +181,7 @@ public class UIControl:MonoBehaviour
         {
             Player.Instance.playerStay = true;
             ShopWindow.SetActive(true);
-            ShopLogic.Instance.OpenShop();
+            ShopLogic.Instance.OpenShop(nameTrader);
         }
         else
         {
@@ -189,6 +189,15 @@ public class UIControl:MonoBehaviour
             ShopLogic.Instance.ClosedShop();
             ShopWindow.SetActive(false);
         }
+    }
+    public void CloseShopSurv()
+    {
+        if (CraftIsOpened) return;
+
+        ShopIsOpened = false;
+        Player.Instance.playerStay = false;
+        ShopLogic.Instance.ClosedShop();
+        ShopWindow.SetActive(false);
     }
     public void OpenInfoPlayer()
     {
@@ -264,10 +273,10 @@ public class UIControl:MonoBehaviour
     }
     public async void LoadMainMenu()
     {
-        Debug.Log($"ShopIsOpened {ShopIsOpened} | CraftIsOpened {CraftIsOpened}");
+        //Debug.Log($"ShopIsOpened {ShopIsOpened} | CraftIsOpened {CraftIsOpened}");
         if(ShopIsOpened)
         {
-            OpenShopSurv();
+            CloseShopSurv();
             return;
         }
         else if(CraftIsOpened)

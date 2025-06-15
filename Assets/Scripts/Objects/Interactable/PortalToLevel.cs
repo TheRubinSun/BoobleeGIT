@@ -7,6 +7,7 @@ public class PortalToLevel : MonoBehaviour
 {
 
     [SerializeField] private string nameNewLocation;
+    [SerializeField] private bool add_lvl_left;
     private async void OnTriggerEnter2D(Collider2D collision)
     {
         if (nameNewLocation == null)
@@ -16,6 +17,8 @@ public class PortalToLevel : MonoBehaviour
         }
         if(collision.gameObject.layer == LayerManager.playerLayer)
         {
+            if(add_lvl_left) GlobalData.cur_lvl_left++;
+
             Dictionary<string, string> localized_nameLoc_text = LocalizationManager.Instance.GetLocalizedValue("ui_text", "name_location");
             GlobalData.NAME_NEW_LOCATION = nameNewLocation;
             GlobalData.NAME_NEW_LOCATION_TEXT = localized_nameLoc_text[nameNewLocation];
