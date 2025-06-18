@@ -44,6 +44,9 @@ public static class BASE_VALUE_STATS_ARTEFACT
     public const int HP = 2;
     public const float ADD_FOR_CHAR_HP = 2;
 
+    public const int MANA = 2;
+    public const float ADD_FOR_CHAR_MANA = 6;
+
     public const int ARMOR = 1;
     public const float ADD_FOR_CHAR_ARMOR = 1f;
 

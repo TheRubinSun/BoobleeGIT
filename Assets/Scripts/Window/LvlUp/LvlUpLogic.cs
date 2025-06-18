@@ -32,6 +32,7 @@ public class LvlUpLogic : MonoBehaviour
     private string word_Range;
     private string word_Projectile_speed;
     private string word_Damage;
+    private string word_Mana;
 
 
     private static readonly HashSet<AspectName> percentageAspects = new HashSet<AspectName>
@@ -70,6 +71,7 @@ public class LvlUpLogic : MonoBehaviour
                 word_Range = localized_player_stats_name["word_Range"];
                 word_Projectile_speed = localized_player_stats_name["word_Projectile_speed"];
                 word_Damage = localized_player_stats_name["word_Damage"];
+                word_Mana = localized_player_stats_name["word_Mana"];
 
                 nameWindow.text = word_nameWindow;
             }
@@ -189,6 +191,8 @@ public class LvlUpLogic : MonoBehaviour
                 return word_Projectile_speed;
             case AspectName.Damage:
                 return word_Damage;
+            case AspectName.Mana:
+                return word_Mana;
             default:
                 return "Unknown Aspect"; // Ќа случай, если что-то пойдет не так
         }
@@ -213,7 +217,7 @@ public class LvlUpLogic : MonoBehaviour
             AspectName.Agillity, AspectName.Strength, AspectName.Intelligence,
             AspectName.Tech_Point, AspectName.Mage_Point, AspectName.Exp_Bust,
             AspectName.Speed, AspectName.Hp,
-            AspectName.Gold, AspectName.AttackSpeed, AspectName.Damage
+            AspectName.Gold, AspectName.AttackSpeed, AspectName.Damage, AspectName.Mana
         };
         //¬ыбираем случайный гарантированный атрибут 
         AspectName guaranteedAttribute = coreAttributes[random.Next(0, coreAttributes.Count)];
@@ -250,7 +254,8 @@ public enum AspectName
     AttackSpeed,
     Range,
     Projectile_speed,
-    Damage
+    Damage,
+    Mana
 }
 public class TempAspect
 {

@@ -65,6 +65,7 @@ public class Player : MonoBehaviour, ITakeDamage
             pl_stats.SetBaseStats();
             pl_stats.UpdateTotalStats();
             pl_stats.FillHp();
+            pl_stats.FillMana();
             ResetWeaponToggles();
         }
         if (spawnPoint != null)
@@ -86,6 +87,10 @@ public class Player : MonoBehaviour, ITakeDamage
     public void UpdateHP()
     {
         pl_ui.UpdateHpBar(pl_stats);
+    }
+    public void UpdateMANA()
+    {
+        pl_ui.UpdateManaBar(pl_stats);
     }
     public PlayerStats GetPlayerStats() => pl_stats;
     public EquipStats GetEquipStats() => equip_Stats;
@@ -172,11 +177,15 @@ public class Player : MonoBehaviour, ITakeDamage
             case AspectName.Damage:
                 pl_stats.Base_Att_Damage += (int)value;
                 break;
+            case AspectName.Mana:
+                AddMaxMana((int)value);
+                break;
             default:
                 Debug.LogWarning("Неизвестный аспект: " + aspectName);
                 break;
         }
         UpdateAllStats();
+        UpdateMANA();
         UpdateHP();
     }
 
@@ -237,6 +246,12 @@ public class Player : MonoBehaviour, ITakeDamage
         pl_ui.UpdateHpBar(pl_stats);
         pl_ui.UpdateSizeHpBar(pl_stats);
     }
+    public void AddMaxMana(int addMaxMana)
+    {
+        pl_stats.AddMaxManaBaseStat(addMaxMana);
+        pl_ui.UpdateManaBar(pl_stats);
+        pl_ui.UpdateSizeManaBar(pl_stats);
+    }
     public void TakeDamage(int damage,  damageT typeAttack, bool canEvade, EffectData effect = null)
     {
         if(canEvade)
@@ -279,6 +294,12 @@ public class Player : MonoBehaviour, ITakeDamage
         StartCoroutine(FlashColor(new Color32(255, 108, 108, 255), 0.1f));
         IsDeath();
     }
+    public bool HaveMana(int spendMana) => pl_stats.HaveMana(spendMana);
+    public void SpendMana(int spendMana)
+    {
+        pl_stats.SpendMana(spendMana);
+        pl_ui.UpdateManaBar(pl_stats);
+    }
     public bool TakeHeal(int heal)
     {
         if (pl_stats.PlayerHealStat(heal))
@@ -290,7 +311,17 @@ public class Player : MonoBehaviour, ITakeDamage
         }
         return false;
     }
-
+    public bool TakeHealMana(int manaHeal)
+    {
+        if (pl_stats.PlayerManaHealStat(manaHeal))
+        {
+            SoundsManager.Instance.PlayItemSounds(4);
+            pl_ui.UpdateManaBar(pl_stats);
+            StartCoroutine(FlashColor(new Color32(84, 160, 210, 255), 0.1f));
+            return true;
+        }
+        return false;
+    }    
     private IEnumerator FlashColor(Color32 color, float time)
     {
         if (player_sprite == null) yield break;
@@ -316,9 +347,18 @@ public class Player : MonoBehaviour, ITakeDamage
         if (pl_stats.Cur_Hp == pl_stats.Max_Hp) return true;
         else return false;
     }
+    public bool IsFullMana()
+    {
+        if (pl_stats.Cur_Mana == pl_stats.Max_Mana) return true;
+        else return false;
+    }
     public int GetHp()
     {
         return GetPlayerStats().Cur_Hp;
+    }
+    public int GetMana()
+    {
+        return GetPlayerStats().Cur_Mana;
     }
     public void AddExp(int add_exp)
     {
@@ -327,9 +367,12 @@ public class Player : MonoBehaviour, ITakeDamage
     }
     public void LvlUp()
     {
-        pl_ui.LvlUIUpdate(pl_stats);
-        pl_ui.UpdateHpBar(pl_stats);
-        pl_ui.UpdateSizeHpBar(pl_stats);
+        //pl_ui.LvlUIUpdate(pl_stats);
+        //pl_ui.UpdateHpBar(pl_stats);
+        //pl_ui.UpdateSizeHpBar(pl_stats);
+        //pl_ui.UpdateManaBar(pl_stats);
+        //pl_ui.UpdateSizeManaBar(pl_stats);
+        pl_ui.UpdateAllInfo(pl_stats);
 
         SoundsManager.Instance.PlayLevelUP();
         StartCoroutine(ShowLevelUPWithDelay());

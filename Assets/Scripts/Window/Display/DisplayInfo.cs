@@ -27,6 +27,8 @@ public class DisplayInfo: MonoBehaviour
     public string word_status_info { get; private set; }
     public string word_Cur_Hp {get; private set;}
     public string word_Max_Hp {get; private set;}
+    public string word_Max_Mana { get; private set; }
+    public string word_Mana { get; private set; }
     public string word_Armor_Hp {get; private set;}
 
     public string word_Mov_Speed {get; private set;}
@@ -144,6 +146,8 @@ public class DisplayInfo: MonoBehaviour
                 word_status_info = localized_player_stats_name["word_status_info"];
                 word_Cur_Hp = localized_player_stats_name["word_Cur_Hp"];
                 word_Max_Hp = localized_player_stats_name["word_Max_Hp"];
+                word_Max_Mana = localized_player_stats_name["word_Max_Mana"];
+                word_Mana = localized_player_stats_name["word_Mana"];
                 word_Armor_Hp = localized_player_stats_name["word_Armor_Hp"];
 
                 word_Mov_Speed = localized_player_stats_name["word_Mov_Speed"];
@@ -228,6 +232,7 @@ public class DisplayInfo: MonoBehaviour
         string intel = $"<color={GlobalColors.Hh_Int}>{pl_stat.Intelligence} {word_intelligence}</color>";
         string intelB = $"<color={GlobalColors.Hh_Bonus}>" +
             $"{word_AttRange} + {(pl_stat.Intelligence * 0.1f).ToString("F2")}\n" +
+            $"{word_Mana} + {(pl_stat.Intelligence * 4).ToString()}\n" +
             $"{word_ProjSpeed} + {(pl_stat.Intelligence * 0.1f).ToString("F2")}\n" +
             $"{word_Damage} + {(pl_stat.Intelligence * 2 / 10).ToString("F2")}";
 
@@ -237,6 +242,8 @@ public class DisplayInfo: MonoBehaviour
         info.Append($"{word_gold}: {pl_stat.Gold}\n");
         AppendStat(info, word_Max_Hp, pl_stat.Max_Hp, false, false, pl_stat.Base_Max_Hp, pl_stat.Strength * 2, pl_stat.classPlayer.Bonus_Class_Hp, eqip_stat.Bonus_Equip_Hp,
             ($"{word_strength} * 2"), word_roleClass, word_eqipment);
+        AppendStat(info, word_Max_Mana, pl_stat.Max_Mana, false, false, pl_stat.Base_Max_Mana, pl_stat.Intelligence * 4, pl_stat.classPlayer.Bonus_Class_Mana, eqip_stat.Bonus_Equip_Mana,
+            ($"{word_intelligence} * 4"), word_roleClass, word_eqipment);
         AppendStat(info, word_Armor_Hp, pl_stat.Armor, false, false, pl_stat.Base_Armor, pl_stat.Strength / 10, pl_stat.classPlayer.Bonus_Class_Armor, eqip_stat.Bonus_Equip_Armor,
             ($"{word_strength} / 10"), word_roleClass, word_eqipment);
         AppendStat(info, word_Mov_Speed, pl_stat.Mov_Speed, false, false, pl_stat.Base_Mov_Speed, pl_stat.Agility * 0.015f, pl_stat.classPlayer.Bonus_Class_SpeedMove, eqip_stat.Bonus_Equip_Mov_Speed,
@@ -245,10 +252,10 @@ public class DisplayInfo: MonoBehaviour
             ($"{word_for + word_agility}"), word_roleClass, word_eqipment);
         AppendStat(info, word_Att_Speed, pl_stat.Att_Speed, false, false, pl_stat.Base_Att_Speed, pl_stat.Agility * 2, pl_stat.classPlayer.Bonus_Class_AttackSpeed, eqip_stat.Bonus_Equip_Att_Speed,
             ($"{word_agility}"), word_roleClass, word_eqipment);
-        AppendStat(info, word_Att_Range, pl_stat.Att_Range, false, false, pl_stat.Base_Att_Range, pl_stat.Intelligence * 0.1f, pl_stat.classPlayer.Bonus_Class_Range, eqip_stat.Bonus_Equip_Att_Range,
-            ($"{word_intelligence} * 0.1"), word_roleClass, word_eqipment);
-        AppendStat(info, word_Proj_Speed, pl_stat.Proj_Speed, false, false, pl_stat.Base_Proj_Speed, pl_stat.Intelligence * 0.1f, pl_stat.classPlayer.Bonus_Class_ProjectileSpeed, eqip_stat.Bonus_Equip_Proj_Speed,
-            ($"{word_intelligence} * 0.1"), word_roleClass, word_eqipment);
+        AppendStat(info, word_Att_Range, pl_stat.Att_Range, false, false, pl_stat.Base_Att_Range, pl_stat.Intelligence * 0.05f, pl_stat.classPlayer.Bonus_Class_Range, eqip_stat.Bonus_Equip_Att_Range,
+            ($"{word_intelligence} * 0.05"), word_roleClass, word_eqipment);
+        AppendStat(info, word_Proj_Speed, pl_stat.Proj_Speed, false, false, pl_stat.Base_Proj_Speed, pl_stat.Intelligence * 0.05f, pl_stat.classPlayer.Bonus_Class_ProjectileSpeed, eqip_stat.Bonus_Equip_Proj_Speed,
+            ($"{word_intelligence} * 0.05"), word_roleClass, word_eqipment);
         AppendStat(info, word_Att_Damage, pl_stat.Att_Damage, false, false, pl_stat.Base_Att_Damage, (pl_stat.Strength * 2 + pl_stat.Intelligence * 2) / 10, pl_stat.classPlayer.Bonus_Class_Damage, eqip_stat.Bonus_Equip_Att_Damage,
             ($"{pl_stat.Strength * 2} ({word_strength} * 2) + {(pl_stat.Intelligence * 2)} ({word_intelligence} * 2) / 10"),
             word_roleClass, word_eqipment);
@@ -382,6 +389,7 @@ public class DisplayInfo: MonoBehaviour
             FormatStat(info, artifactObj.Artif_Mage_Resis, word_Magic_Resis, GlobalColors.Hh_Mage_Resis);
             FormatStat(info, artifactObj.Artif_Tech_Resis, word_Tech_Resis, GlobalColors.Hh_Tech_Resis);
             FormatStat(info, artifactObj.Artif_Damage, word_Damage, GlobalColors.Hh_Damage);
+            FormatStat(info, artifactObj.Artif_Mana, word_Mana, GlobalColors.Hh_Mana);
 
         }
         info.AppendLine($"\n{word_description}: {item.Description}");

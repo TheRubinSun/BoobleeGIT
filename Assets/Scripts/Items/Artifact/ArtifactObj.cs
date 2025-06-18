@@ -16,6 +16,7 @@ public class ArtifactObj
     public int Artif_Agility { get; set; }
     public int Artif_Intelligence { get; set; }
     public int Artif_Hp { get; set; }
+    public int Artif_Mana { get; set; }
     public int Artif_Armor { get; set; }
     public int Artif_Evasion { get; set; }
     public float Artif_Mov_Speed { get; set; }
@@ -157,6 +158,9 @@ public class ArtifactObj
             case StatType.Damage:
                 Artif_Damage += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.DAMAGE, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_DAMAGE, random);
                 break;
+            case StatType.Mana:
+                Artif_Mana += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.MANA, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_MANA, random);
+                break;
         }
 
     }
@@ -212,7 +216,8 @@ public class ArtifactObj
        Artif_ExpBust == 0f &&
        Artif_Mage_Resis == 0f &&
        Artif_Tech_Resis == 0f &&
-       Artif_Damage == 0f;
+       Artif_Damage == 0f &&
+       Artif_Mana == 0f;
     }
 }
 public enum StatType
@@ -230,5 +235,6 @@ public enum StatType
     ExpBust,
     Mage_Resis,
     Tech_Resis,
-    Damage
+    Damage,
+    Mana
 }

@@ -157,6 +157,7 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     {
         Player.Instance.UpdateAllStats();
         Player.Instance.UpdateHP();
+        Player.Instance.UpdateMANA();
 
         DisplayInfo.Instance.UpdateInfoStatus();
         UpdateAllWeaponsStats();
@@ -316,6 +317,7 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         equipStats.Bonus_Magic_Resis += artifact.Artif_Mage_Resis;
         equipStats.Bonus_Tech_Resis += artifact.Artif_Tech_Resis;
         equipStats.Bonus_Equip_Att_Damage += artifact.Artif_Damage;
+        equipStats.Bonus_Equip_Mana += artifact.Artif_Mana;
     }
     private void DeleteAttributeArtifact(int idSlot)
     {
@@ -341,6 +343,7 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         equipStats.Bonus_Magic_Resis -= artifact.Artif_Mage_Resis;
         equipStats.Bonus_Tech_Resis -= artifact.Artif_Tech_Resis;
         equipStats.Bonus_Equip_Att_Damage -= artifact.Artif_Damage;
+        equipStats.Bonus_Equip_Mana -= artifact.Artif_Mana;
     }
 
 }

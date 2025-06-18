@@ -71,6 +71,14 @@ public class PlayerControl : MonoBehaviour
         {
             UseMinions();
         }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            if (player.HaveMana(2)) player.SpendMana(2);
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            if (player.TakeHealMana(2)) { }
+        }
     }
     private void FixedUpdate()
     {

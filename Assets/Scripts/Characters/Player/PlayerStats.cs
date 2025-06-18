@@ -15,6 +15,7 @@ public class PlayerStats : CharacterStats
     public int Base_Agility { get; set; }
     public int Base_Intelligence { get; set; }
     public int Base_Max_Hp { get; set;}
+    public int Base_Max_Mana { get; set; }
     public int Base_Armor { get; set; }
     public int Base_Evasion {  get; set; }
     public float Base_Mov_Speed { get; set; }
@@ -57,6 +58,7 @@ public class PlayerStats : CharacterStats
     public int count_Projectile { get; set; }
 
     private const int AddHP_PerLvl = 2;
+    private const int AddMana_PerLvl = 4;
 
     public bool[] DirectionOrVectorWeapon { get; set; }
     public PlayerStats() { }
@@ -66,6 +68,7 @@ public class PlayerStats : CharacterStats
         Base_Agility = 0;
         Base_Intelligence = 0;
         Base_Max_Hp = 2;
+        Base_Max_Mana = 6;
         Base_Armor = 0;
         Base_Evasion = 0;
         Base_Mov_Speed = 1f;
@@ -106,6 +109,7 @@ public class PlayerStats : CharacterStats
         Base_Agility = playerSaveData.Base_Agility;
         Base_Intelligence = playerSaveData.Base_Intelligence;
         Base_Max_Hp = playerSaveData.Base_Max_Hp;
+        Base_Max_Mana = playerSaveData.Base_Max_Mana;
         Base_Armor = playerSaveData.Base_Armor;
         Base_Evasion = playerSaveData.Base_Evasion;
         Base_Mov_Speed = playerSaveData.Base_Mov_Speed;
@@ -141,6 +145,7 @@ public class PlayerStats : CharacterStats
         DirectionOrVectorWeapon = playerSaveData.DirectionOrVectorWeapon;
 
         Cur_Hp = playerSaveData.Cur_Hp;
+        Cur_Mana = playerSaveData.Cur_Mana;
     }
     public void UpdateTotalStats()
     {
@@ -151,12 +156,13 @@ public class PlayerStats : CharacterStats
         Intelligence = Base_Intelligence + classPlayer.Bonus_Class_Intelligence + equipStats.Bonus_Equip_Intelligence;
 
         Max_Hp = (Strength * 2) + Base_Max_Hp + classPlayer.Bonus_Class_Hp + equipStats.Bonus_Equip_Hp;
+        Max_Mana = (Intelligence * 4) + Base_Max_Mana + classPlayer.Bonus_Class_Mana + equipStats.Bonus_Equip_Mana;
         Armor = (int)(Strength / 10) + Base_Armor + classPlayer.Bonus_Class_Armor + equipStats.Bonus_Equip_Armor;
         Mov_Speed = (Agility * 0.015f) + Base_Mov_Speed + classPlayer.Bonus_Class_SpeedMove + equipStats.Bonus_Equip_Mov_Speed;
         Evasion = (Agility) + Base_Evasion + equipStats.Bonus_Equip_Evasion;
         Att_Speed = (Agility * 2) + Base_Att_Speed + classPlayer.Bonus_Class_AttackSpeed + equipStats.Bonus_Equip_Att_Speed;
-        Att_Range = (Intelligence * 0.1f) + Base_Att_Range + classPlayer.Bonus_Class_Range + equipStats.Bonus_Equip_Att_Range;
-        Proj_Speed = (Intelligence * 0.1f) + Base_Proj_Speed + classPlayer.Bonus_Class_ProjectileSpeed + equipStats.Bonus_Equip_Proj_Speed;
+        Att_Range = (Intelligence * 0.05f) + Base_Att_Range + classPlayer.Bonus_Class_Range + equipStats.Bonus_Equip_Att_Range;
+        Proj_Speed = (Intelligence * 0.05f) + Base_Proj_Speed + classPlayer.Bonus_Class_ProjectileSpeed + equipStats.Bonus_Equip_Proj_Speed;
         Att_Damage = (int)(((Strength * 2) + (Intelligence * 2)) / 10) + Base_Att_Damage + classPlayer.Bonus_Class_Damage + equipStats.Bonus_Equip_Att_Damage;
 
         ExpBust = Base_ExpBust + equipStats.Bonus_Equip_ExpBust;
@@ -169,11 +175,21 @@ public class PlayerStats : CharacterStats
     {
         Cur_Hp = Max_Hp;
     }
+    public void FillMana()
+    {
+        Cur_Mana = Max_Mana;
+    }
     public void AddMaxHPBaseStat(int addMaxHp)
     {
         Base_Max_Hp += addMaxHp;
         Max_Hp = (Strength * 2) + Base_Max_Hp + classPlayer.Bonus_Class_Hp + EquipStats.Instance.Bonus_Equip_Hp;
         Cur_Hp += addMaxHp;
+    }
+    public void AddMaxManaBaseStat(int addMaxMana)
+    {
+        Base_Max_Mana += addMaxMana;
+        Max_Mana = (Intelligence * 4) + Base_Max_Mana + classPlayer.Bonus_Class_Mana + EquipStats.Instance.Bonus_Equip_Mana;
+        Cur_Mana += addMaxMana;
     }
     public bool isEvasion()
     {
@@ -208,6 +224,14 @@ public class PlayerStats : CharacterStats
         Cur_Hp -= damage;
         return true;
     }
+    public bool HaveMana(int spendMana) => spendMana <= Cur_Mana ? true : false;
+
+    public bool SpendMana(int spendMana)
+    {
+        Cur_Mana -= spendMana;
+        return true;
+    }
+
     public bool PlayerHealStat(int count_heal)
     {
         if (Cur_Hp < Max_Hp)
@@ -219,6 +243,22 @@ public class PlayerStats : CharacterStats
             else
             {
                 Cur_Hp += count_heal;
+            }
+            return true;
+        }
+        return false;
+    }
+    public bool PlayerManaHealStat(int count_mana_heal)
+    {
+        if (Cur_Mana < Max_Mana)
+        {
+            if (Cur_Mana + count_mana_heal >= Max_Mana)
+            {
+                Cur_Mana = Max_Mana;
+            }
+            else
+            {
+                Cur_Mana += count_mana_heal;
             }
             return true;
         }
@@ -251,6 +291,7 @@ public class PlayerStats : CharacterStats
         level++;
         freeSkillPoints++;
         AddMaxHPBaseStat(AddHP_PerLvl);
+        AddMaxManaBaseStat(AddMana_PerLvl);
         Player.Instance.LvlUp();
         if (cur_exp >= nextLvl_exp) CheckLevel();
     }
