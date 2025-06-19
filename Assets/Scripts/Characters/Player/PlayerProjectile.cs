@@ -77,6 +77,7 @@ public class PlayerProjectile : MonoBehaviour, UBullet
             if (objectL != null)
             {
                 objectL.Break(canBeWeapon);
+                Destroy(gameObject);
             }
         }
         else if (collider.gameObject.layer == LayerManager.obstaclesLayer)

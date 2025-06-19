@@ -277,16 +277,22 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         if (slot.Item is Gun gun)
         {
             //Debug.Log($"Gun: {gun.NameKey}: {gun.projectileSpeed}");
-            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(gun ,gun.damage, gun.attackSpeedCoof,gun.addAttackSpeed, gun.projectileSpeed, gun.rangeType, gun.range, gun.conut_Projectiles, gun.spreadAngle, gun.typeDamage, PlayerModel,
+            weaponObj.GetComponent<RangeWeaponLogic>().GetStatsWeapon(gun ,gun.damage, gun.attackSpeedCoof,gun.addAttackSpeed, gun.projectileSpeed, gun.rangeType, gun.range, gun.conut_Projectiles, gun.spreadAngle, gun.typeDamage, PlayerModel,
                 ResourcesData.GetProjectilesPrefab(gun.idBulletPref), gun.projectileSpeedCoof);
         }
         else if (slot.Item is MeleWeapon sword)
         {
-            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(sword,sword.damage, sword.attackSpeedCoof,sword.addAttackSpeed, 0, sword.rangeType, sword.range, sword.conut_Projectiles, 0f, sword.typeDamage, PlayerModel, null, 0);
+            weaponObj.GetComponent<MeleWeaponLogic>().GetStatsWeapon(sword,sword.damage, sword.attackSpeedCoof,sword.addAttackSpeed, 0, sword.rangeType, sword.range, sword.conut_Projectiles, 0f, sword.typeDamage, PlayerModel, null, 0);
+        }
+        else if (slot.Item is Staff staff)
+        {
+            weaponObj.GetComponent<StaffLogic>().GetStatsStaff(staff, staff.damage, staff.attackSpeedCoof, staff.addAttackSpeed, staff.projectileSpeed, staff.rangeType, staff.range, staff.conut_Projectiles, staff.spreadAngle, staff.typeDamage, PlayerModel, 2,
+                ResourcesData.GetProjectilesPrefab(staff.idBulletPref), staff.projectileSpeedCoof);
+            
         }
         else if (slot.Item is Weapon weapon)
         {
-            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(weapon, weapon.damage, weapon.attackSpeedCoof, weapon.addAttackSpeed, 0, weapon.rangeType, weapon.range, weapon.conut_Projectiles, 0f, weapon.typeDamage, PlayerModel, null,0);
+            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(weapon, weapon.damage, weapon.attackSpeedCoof, weapon.addAttackSpeed, 0, weapon.rangeType, weapon.range, weapon.conut_Projectiles, 0f, weapon.typeDamage, PlayerModel, null, 0);
         }
     }
     private void LoadParametersMinion(GameObject minionObj, Slot slot)

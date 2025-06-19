@@ -41,14 +41,15 @@ public class RangeWeaponLogic : WeaponControl
             ShootLogic(offset);
             offset += 0.1f;
         }
+    }
+    protected override void ShootLogic(float offsetProj)
+    {
         if (audioClips.Length > 0)
         {
             audioSource_Shot.pitch = 1f + Random.Range(-pitchRange, pitchRange);
             audioSource_Shot.PlayOneShot(audioClips[0]); //Звук выстрела
         }
-    }
-    protected override void ShootLogic(float offsetProj)
-    {
+
         projectile = Instantiate(Projectile_pref, ShootPos);    //Создаем снаряд по префабу
         projectile.transform.position += new Vector3(0, offsetProj);
         proj_set = projectile.GetComponent<PlayerProjectile>();

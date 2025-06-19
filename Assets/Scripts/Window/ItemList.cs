@@ -64,6 +64,7 @@ public static class ItemsList
         items.Add(new Gun(2,  "gun_makarov",  1, 0, Quality.Rare, 400, "_",     true, 4f, damageT.Physical, 2,  0.7f, 40, 1, 12f, 1.0f, 5f, 0));
         items.Add(new Gun(13, "bow_simple",   1, 0, Quality.Mystical, 600, "_", true, 6f, damageT.Physical, 10, 0.7f, 30, 1, 8f,  0.5f, 5f, 2));
         items.Add(new Gun(14, "shotgun_pump", 1, 0, Quality.Rare, 550, "_",     true, 2f, damageT.Physical, 3,  0.6f, 40, 4, 10f, 1f,  15f, 1));
+        items.Add(new Staff(48, "staff_forest", 1, 0, Quality.Rare, 550, "_",     true, 4f, damageT.Magic,    2,  0.7f, 30, 1, 0.5f, 1f, 5f, 3, 2));
 
         items.Add(new Food(3, "item_meat",                     20, 0, Quality.Common, 1, "_", 1, 15, 5, "Heal", 1));
         items.Add(new HealPotion(4, "item_potion_hp",          20, 0, Quality.Uncommon, 30, "_", 8));
@@ -110,6 +111,7 @@ public static class ItemsList
         items.Add(new Item(45, "material_quartzite",           100, 0, Quality.Common, 2, "_", TypeItem.Material));
         items.Add(new Item(46, "material_quartz_sand",         100, 0, Quality.Common, 3, "_", TypeItem.Material));
         items.Add(new Item(47, "material_iron_ore",            10, 0, Quality.Common, 6, "_", TypeItem.Material));
+
         //PrintItemList();
     }
     private static void InitializeSpritesItem()

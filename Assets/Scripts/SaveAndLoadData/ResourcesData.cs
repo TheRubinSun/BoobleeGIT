@@ -22,13 +22,14 @@ public class ResourcesData : MonoBehaviour
         weapons["gun_makarov"] = Resources.Load<GameObject>("Weapons/Pistol_Mark_Pref");
         weapons["bow_simple"] = Resources.Load<GameObject>("Weapons/Bow_simple");
         weapons["shotgun_pump"] = Resources.Load<GameObject>("Weapons/ShotGun_pump");
+        weapons["staff_forest"] = Resources.Load<GameObject>("Weapons/Staff_forest");
 
-
-
+        
 
         projectiles[0] = Resources.Load<GameObject>("Projectiles/Pistol_Bullet");
         projectiles[1] = Resources.Load<GameObject>("Projectiles/Shotgun_Bullet");
         projectiles[2] = Resources.Load<GameObject>("Projectiles/Arrow");
+        projectiles[3] = Resources.Load<GameObject>("Projectiles/Forest_mag");
 
         mobsProjectiles[0] = Resources.Load<GameObject>("Mob_Projectiles/BulletMobOne");
         mobsProjectiles[1] = Resources.Load<GameObject>("Mob_Projectiles/Slime_arrow");

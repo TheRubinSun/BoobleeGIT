@@ -35,7 +35,8 @@ public class WeaponControl : MonoBehaviour
     protected Vector2 mousePos;
     protected Animator animator;
 
-
+    protected PlayerStats playerStats;
+    protected Player player;
     protected Vector2 direction;
     protected float distance;
     //[SerializeField]  protected float volumeSounds;
@@ -49,7 +50,8 @@ public class WeaponControl : MonoBehaviour
         audioSource_Shot = GetComponent<AudioSource>();
 
         //SoundsControl();
-
+        player = Player.Instance;
+        playerStats = player.GetPlayerStats();
         sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         col_weap = GetComponent<Collider2D>();
