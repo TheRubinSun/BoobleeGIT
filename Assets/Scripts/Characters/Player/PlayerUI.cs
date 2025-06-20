@@ -17,6 +17,7 @@ public class PlayerUI : MonoBehaviour
     private Image cur_mana_image;
     private TextMeshProUGUI mana_text;
     private RectTransform manaRect;
+    private TextMeshProUGUI mana_regen_text;
 
     [SerializeField]
     private Transform exp_bar;
@@ -42,6 +43,7 @@ public class PlayerUI : MonoBehaviour
         cur_mana_image = mana_bar.GetChild(1).GetComponent<Image>();
         mana_text = mana_bar.GetChild(2).GetComponent<TextMeshProUGUI>();
         manaRect = mana_bar.GetComponent<RectTransform>();
+        mana_regen_text = mana_bar.GetChild(3).GetComponent<TextMeshProUGUI>();
 
         cur_exp_image = exp_bar.GetChild(1).GetComponent<Image>();
         exp_text = exp_bar.GetChild(2).GetComponent<TextMeshProUGUI>();
@@ -56,7 +58,11 @@ public class PlayerUI : MonoBehaviour
     public void UpdateManaBar(PlayerStats pl_stats)
     {
         cur_mana_image.fillAmount = (float)pl_stats.Cur_Mana / pl_stats.Max_Mana;
-        mana_text.text = $"{pl_stats.Cur_Mana} / {pl_stats.Max_Mana}";
+        mana_text.text = $"{(int)pl_stats.Cur_Mana} / {(int)pl_stats.Max_Mana}";
+    }
+    public void UpdateRegenMana(PlayerStats pl_stats)
+    {
+        mana_regen_text.text = $"+{pl_stats.Regen_Mana.ToString("F2")}";
     }
     public void UpdateExpBar(PlayerStats pl_stats)
     {
@@ -105,6 +111,7 @@ public class PlayerUI : MonoBehaviour
         UpdateSizeManaBar(pl_stats);
         UpdateExpBar(pl_stats);
         LvlUIUpdate(pl_stats);
+        UpdateRegenMana(pl_stats);
     }
     public void LvlUIUpdate(PlayerStats pl_stats)
     {

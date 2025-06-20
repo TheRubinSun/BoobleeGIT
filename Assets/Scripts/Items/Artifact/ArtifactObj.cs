@@ -6,6 +6,7 @@ using UnityEngine;
 public class ArtifactObj
 {
     public int ID_Art { get; set; }
+    public int SEED_Art { get; set; }
     public int art_level { get; set; }
     public int chars_level {  get; set; }
     public int curse_level { get; set; }
@@ -17,16 +18,18 @@ public class ArtifactObj
     public int Artif_Intelligence { get; set; }
     public int Artif_Hp { get; set; }
     public int Artif_Mana { get; set; }
+    public float Artif_ManaRegen { get; set; }
     public int Artif_Armor { get; set; }
     public int Artif_Evasion { get; set; }
     public float Artif_Mov_Speed { get; set; }
     public float Artif_Att_Range { get; set; }
     public int Artif_Att_Speed { get; set; }
-    public int Artif_Proj_Speed { get; set; }
+    public float Artif_Proj_Speed { get; set; }
     public float Artif_ExpBust { get; set; }
     public float Artif_Mage_Resis { get; set; }
     public float Artif_Tech_Resis { get; set; }
     public int Artif_Damage { get; set; }
+    
 
 
     private int statCount;
@@ -39,11 +42,14 @@ public class ArtifactObj
 
         SetRandomAttributes();
     }
-    public ArtifactObj(int id, int _art_level, System.Random random)
+    public ArtifactObj(int id, int _art_level, System.Random random, int seed)
     {
         art_level = _art_level;
         ID_Art = id;
+        SEED_Art = seed;
 
+        chars_level = 0;
+        curse_level = 0;
         SetRandomAttributes(random);
     }
     public ArtifactObj(int id)
@@ -61,11 +67,12 @@ public class ArtifactObj
 
         int precentNewCharm = 0;
         int levelCharm = 0;
-        CheckLevel(out precentNewCharm, out levelCharm, random);
+        
 
         while (true)
         {
-            if(random != null)
+            CheckLevel(out precentNewCharm, out levelCharm, random);
+            if (random != null)
             {
                 if (random.Next(0, 101) <= precentNewCharm)
                 {
@@ -89,7 +96,7 @@ public class ArtifactObj
         int baseChance = 50;
 
         // Рассчитываем шанс
-        int minLevel = 1;
+        int minLevel = 0;
         int maxLevel = art_level + 1;
         
         if(random != null)
@@ -144,7 +151,7 @@ public class ArtifactObj
                 Artif_Att_Speed += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.ATT_SPEED, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_ATT_SPEED, random);
                 break;
             case StatType.Proj_Speed:
-                Artif_Proj_Speed += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.PROJ_SPEED, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_PROJ_SPEED, random);
+                Artif_Proj_Speed += GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.PROJ_SPEED, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_PROJ_SPEED, random);
                 break;
             case StatType.ExpBust:
                 Artif_ExpBust += GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.EXPBUST, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_EXPBUST, random);
@@ -161,6 +168,9 @@ public class ArtifactObj
             case StatType.Mana:
                 Artif_Mana += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.MANA, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_MANA, random);
                 break;
+            case StatType.ManaRegen:
+                Artif_ManaRegen += GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.MANA_REGEN, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_MANA_REGEN, random);
+                break;
         }
 
     }
@@ -168,22 +178,35 @@ public class ArtifactObj
     {
         float positive, negative, randValue;
 
-        //float result = Random.value < 0.35 ? negative : positive;
-        if(random != null)
+        if(levelCharm > 1)
         {
-            positive = (float)(random.NextDouble() * ((addForChar * levelCharm))) + baseValue;
+            positive = (addForChar * (levelCharm - 1)) + baseValue;
+            negative = -((addForChar * (levelCharm - 1)) + baseValue);
+        }
+        else if(levelCharm == 1)
+        {
+            positive = baseValue;
+            negative = -baseValue;
+        }
+        else
+        {
+            positive = 0;
+            negative = 0;
+        }
 
-            float negMin = -addForChar * levelCharm;
-            float negMax = -baseValue;
-            float negRange = negMax - negMin;
+        //float result = Random.value < 0.35 ? negative : positive;
+        if (random != null)
+        {
+            //positive = (float)(random.NextDouble() * ((addForChar * levelCharm))) + baseValue;
+            //float negMin = -addForChar * levelCharm;
+            //float negMax = -baseValue;
+            //float negRange = negMax - negMin;
+            //negative = Mathf.Min(-0.01f, (float)(random.NextDouble() * negRange + negMin));
 
-            negative = Mathf.Min(-0.01f, (float)(random.NextDouble() * negRange + negMin));
             randValue = (float)random.NextDouble(); // от 0 до 1
         }
         else
         {
-            positive = Random.Range(baseValue, (addForChar * levelCharm) + baseValue);
-            negative = Mathf.Min(-0.01f, Random.Range(-addForChar * levelCharm, -baseValue));
             randValue = Random.value;
         }
 
@@ -217,7 +240,8 @@ public class ArtifactObj
        Artif_Mage_Resis == 0f &&
        Artif_Tech_Resis == 0f &&
        Artif_Damage == 0f &&
-       Artif_Mana == 0f;
+       Artif_Mana == 0f &&
+       Artif_ManaRegen == 0f;
     }
 }
 public enum StatType
@@ -236,5 +260,6 @@ public enum StatType
     Mage_Resis,
     Tech_Resis,
     Damage,
-    Mana
+    Mana,
+    ManaRegen
 }

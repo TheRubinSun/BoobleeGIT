@@ -50,6 +50,8 @@ public class Player : MonoBehaviour, ITakeDamage
         pl_ui.SetComponentUI();
 
         player_sprite = PlayerModel.GetComponent<SpriteRenderer>();
+
+        StartCoroutine(AddManaForRegen());
     }
     public void LoadOrCreateNew(PlayerStats playerSaveData)
     {
@@ -84,6 +86,7 @@ public class Player : MonoBehaviour, ITakeDamage
         pl_ui.UpdateAllInfo(pl_stats);
         ChangeToggleWeapons();
     }
+    
     public void UpdateHP()
     {
         pl_ui.UpdateHpBar(pl_stats);
@@ -91,6 +94,19 @@ public class Player : MonoBehaviour, ITakeDamage
     public void UpdateMANA()
     {
         pl_ui.UpdateManaBar(pl_stats);
+    }
+    public void UpdateRegenMANA()
+    {
+        pl_ui.UpdateRegenMana(pl_stats);
+    }
+    public IEnumerator AddManaForRegen()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.1f);
+            UpdateMANA();
+            pl_stats.RegenMana();
+        }
     }
     public PlayerStats GetPlayerStats() => pl_stats;
     public EquipStats GetEquipStats() => equip_Stats;
@@ -180,6 +196,9 @@ public class Player : MonoBehaviour, ITakeDamage
             case AspectName.Mana:
                 AddMaxMana((int)value);
                 break;
+            case AspectName.ManaRegen:
+                pl_stats.Base_Regen_Mana += value;
+                break;
             default:
                 Debug.LogWarning("Неизвестный аспект: " + aspectName);
                 break;
@@ -187,6 +206,7 @@ public class Player : MonoBehaviour, ITakeDamage
         UpdateAllStats();
         UpdateMANA();
         UpdateHP();
+        UpdateRegenMANA();
     }
 
     private void IsDeath()
@@ -356,7 +376,7 @@ public class Player : MonoBehaviour, ITakeDamage
     {
         return GetPlayerStats().Cur_Hp;
     }
-    public int GetMana()
+    public float GetMana()
     {
         return GetPlayerStats().Cur_Mana;
     }

@@ -8,7 +8,7 @@ public class NameLocation : MonoBehaviour
     [SerializeField] private TextMeshProUGUI nameLocationName;
     [SerializeField] private float TimeToStart;
     [SerializeField] private float TimeToEnd;
-    [SerializeField] private float TimeTimeLoad;
+    [SerializeField] private float TimeDisplayText;
     [SerializeField] private CanvasGroup wholeObject;
     [SerializeField] private string nameLoc;
     [SerializeField] private AudioClip[] fade_sound;
@@ -18,7 +18,7 @@ public class NameLocation : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         GlobalData.NAME_NEW_LOCATION_TEXT = LocalizationManager.Instance.GetLocalizedValue("ui_text", "name_location")[GlobalData.NAME_NEW_LOCATION];
-        StartCoroutine(ShowAndHideName(TimeToStart, TimeToEnd, TimeTimeLoad, GlobalData.NAME_NEW_LOCATION_TEXT));
+        StartCoroutine(ShowAndHideName(TimeToStart, TimeToEnd, TimeDisplayText, GlobalData.NAME_NEW_LOCATION_TEXT));
     }
     private IEnumerator ShowAndHideName(float timeToStart, float timeToEnd, float timeLoad, string name)
     {

@@ -27,6 +27,8 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     public Slot slotArtefFour { get; set; }
     public Slot[] slotsEqup {  get; set; }
 
+    private Player player;
+    private DisplayInfo dispInfo;
 
     [SerializeField] GameObject [] slotsObjEquip; //Массив слотов
     [SerializeField] Transform [] EquipSlotPrefab; //Префабы рук как родителя
@@ -52,6 +54,8 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     }
     public void Start()
     {
+        player = Player.Instance;
+        dispInfo = DisplayInfo.Instance;
         if (!GenInfoSaves.saveGameFiles[GlobalData.SaveInt].isStarted)
         {
 
@@ -155,11 +159,12 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     }
     public void UpdateAttribute()
     {
-        Player.Instance.UpdateAllStats();
-        Player.Instance.UpdateHP();
-        Player.Instance.UpdateMANA();
+        player.UpdateAllStats();
+        player.UpdateHP();
+        player.UpdateMANA();
+        player.UpdateRegenMANA();
 
-        DisplayInfo.Instance.UpdateInfoStatus();
+        dispInfo.UpdateInfoStatus();
         UpdateAllWeaponsStats();
     }
     public void PutOnEquip(Slot slot) //Проверить префаб
@@ -215,9 +220,9 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
             {
                 GameObject weaponObj = Instantiate(ResourcesData.GetWeaponPrefab(slotsEqup[id].Item.NameKey), EquipSlotPrefab[id]);  //Создаем оружие в слот 
                 LoadParametersWeapon(weaponObj, slotsEqup[id]); //Загружаем параметры с слолта в оружие
-                Player.Instance.SetWeaponsObj(id, weaponObj.GetComponent<WeaponControl>()); //Передаем в словарь у игрока в список оружия
+                player.SetWeaponsObj(id, weaponObj.GetComponent<WeaponControl>()); //Передаем в словарь у игрока в список оружия
                 slots_Weapon[id] = weaponObj; //Словарь в этом классе, пока не используется 
-                Player.Instance.ChangeToggleWeapon(id);
+                player.ChangeToggleWeapon(id);
             }
             else
             {
@@ -231,7 +236,7 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
             {
                 GameObject minionObj = Instantiate(ResourcesData.GetMinionPrefab(idPref), EquipSlotPrefab[id]);
                 LoadParametersMinion(minionObj, slotsEqup[id]);
-                Player.Instance.SetMinionsObj(id, minionObj.GetComponent<MinionControl>());
+                player.SetMinionsObj(id, minionObj.GetComponent<MinionControl>());
                 slots_minions[id] = minionObj; //Словарь в этом классе, пока не используется 
             }
             else
@@ -324,6 +329,7 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         equipStats.Bonus_Tech_Resis += artifact.Artif_Tech_Resis;
         equipStats.Bonus_Equip_Att_Damage += artifact.Artif_Damage;
         equipStats.Bonus_Equip_Mana += artifact.Artif_Mana;
+        equipStats.Bonus_Equip_Regen_Mana += artifact.Artif_ManaRegen;
     }
     private void DeleteAttributeArtifact(int idSlot)
     {
@@ -350,6 +356,7 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         equipStats.Bonus_Tech_Resis -= artifact.Artif_Tech_Resis;
         equipStats.Bonus_Equip_Att_Damage -= artifact.Artif_Damage;
         equipStats.Bonus_Equip_Mana -= artifact.Artif_Mana;
+        equipStats.Bonus_Equip_Regen_Mana -= artifact.Artif_ManaRegen;
     }
 
 }

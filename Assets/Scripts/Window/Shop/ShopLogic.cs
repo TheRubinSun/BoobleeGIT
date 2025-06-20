@@ -245,10 +245,18 @@ public class ShopLogic : MonoBehaviour , ISlot
                 item = ItemsList.GetItemForNameKey("simple_knife");
                 countItem = 1;
                 break;
-            //case 2:
-            //    item = ItemsList.GetItemForNameKey("artifact_eye_ring");
-            //    countItem = 1;
-            //    break;
+            case 2:
+                item = ItemsList.GetItemForNameKey("artifact_eye_ring");
+                countItem = 1;
+                break;
+            case 3:
+                item = ItemsList.GetItemForNameKey("artifact_eye_ring");
+                countItem = 1;
+                break;
+            case 4:
+                item = ItemsList.GetItemForNameKey("artifact_eye_ring");
+                countItem = 1;
+                break;
             default:
                 {
                     item = ItemsList.items[random.Next(0, ItemsList.items.Count)];

@@ -31,6 +31,7 @@ public class GlobalColors
     public static readonly string Hh_Tech_Resis = "#2273A6";   // Сопротивление техно (такой же, как Int — можно поменять)
     public static readonly string Hh_Damage = "#C87550";
     public static readonly string Hh_Mana = "#2395C8";
+    public static readonly string Hh_ManaReg = "#347FC8";
 
     public static readonly string Common = "#D7AD9D";   // Скорость снаряда
     public static readonly string Uncommon = "#6FA8CC";      // Бонус к опыту

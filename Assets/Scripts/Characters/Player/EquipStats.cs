@@ -7,7 +7,8 @@ public class EquipStats : MonoBehaviour
     public int Bonus_Equip_Agility { get; set; }
     public int Bonus_Equip_Intelligence { get; set; }
     public int Bonus_Equip_Hp { get; set; }
-    public int Bonus_Equip_Mana { get; set; }
+    public float Bonus_Equip_Mana { get; set; }
+    public float Bonus_Equip_Regen_Mana { get; set; }
     public int Bonus_Equip_Armor { get; set; }
     public int Bonus_Equip_Evasion { get; set; }
     public float Bonus_Equip_Mov_Speed { get; set; }
@@ -35,6 +36,7 @@ public class EquipStats : MonoBehaviour
         Bonus_Equip_Intelligence = 0;
         Bonus_Equip_Hp = 0;
         Bonus_Equip_Mana = 0;
+        Bonus_Equip_Regen_Mana = 0;
         Bonus_Equip_Armor = 0;
         Bonus_Equip_Evasion = 0;
         Bonus_Equip_Mov_Speed = 0f;

@@ -28,9 +28,9 @@ public class Classes : MonoBehaviour
         {
             //                    strength agility intell range, damage, at_sp, projSpeed, speed, hp, def
             //                                       s  a  i  r   d  a   p   s  h   d
-            roleClasses.Add("Shooter", new RoleClass(1, 2, 1, 2f, 0, 45, 2f, 0.2f, 2, 0, 0, 0, 0));
-            roleClasses.Add("Mage", new RoleClass(1, 1, 2, 1f, 0, 40, 1f, 0.2f, 3, 10, 0, 10, 10));
-            roleClasses.Add("Warrior", new RoleClass(2, 1, 1, 1f, 2, 35, 0, 0.4f, 5, 0, 2, 0, 0));
+            roleClasses.Add("Shooter", new RoleClass(1, 2, 1, 2f, 0, 45, 2f, 0.2f, 2, 0f, 0, 0, 0, 0));
+            roleClasses.Add("Mage", new RoleClass(1, 1, 2, 1f, 0, 40, 1f, 0.2f, 3, 10, 0.5f, 0, 10, 10));
+            roleClasses.Add("Warrior", new RoleClass(2, 1, 1, 1f, 2, 35, 0, 0.4f, 5, 0f, 0, 2, 0, 0));
         }
     }
     void Start()
@@ -58,13 +58,14 @@ public class RoleClass
     public float Bonus_Class_ProjectileSpeed { get; set; }
     public float Bonus_Class_SpeedMove { get; set; }
     public int Bonus_Class_Hp { get; set; }
-    public int Bonus_Class_Mana { get; set; }
+    public float Bonus_Class_Mana { get; set; }
+    public float Bonus_Class_Regen_Mana { get; set; }
     public int Bonus_Class_Armor { get; set; }
     public float Bonus_Magic_Resis { get; set; }
     public float Bonus_Tech_Resis { get; set; }
 
     public RoleClass(int bonusStrength, int bonusAgility, int bonisIntelligence ,float bonusRange, int bonusDamage, 
-        int bonusAttackSpeed, float bonusProjectileSpeed, float bonusSpeedMove, int bonusHp, int bonusMana, int bonusDeffence, 
+        int bonusAttackSpeed, float bonusProjectileSpeed, float bonusSpeedMove, int bonusHp, float bonusMana, float regenMana, int bonusDeffence, 
         float bonus_Magic_Resis,float bonus_Tech_Resis)
     {
         Bonus_Class_Strength = bonusStrength;
@@ -78,6 +79,7 @@ public class RoleClass
         Bonus_Class_SpeedMove = bonusSpeedMove;
         Bonus_Class_Hp = bonusHp;
         Bonus_Class_Mana = bonusMana;
+        Bonus_Class_Regen_Mana = regenMana;
         Bonus_Class_Armor = bonusDeffence;
         Bonus_Magic_Resis = bonus_Magic_Resis;
         Bonus_Tech_Resis = bonus_Tech_Resis;

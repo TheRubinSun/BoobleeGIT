@@ -29,6 +29,7 @@ public class DisplayInfo: MonoBehaviour
     public string word_Max_Hp {get; private set;}
     public string word_Max_Mana { get; private set; }
     public string word_Mana { get; private set; }
+    public string word_Mana_Regen { get; private set; }
     public string word_Armor_Hp {get; private set;}
 
     public string word_Mov_Speed {get; private set;}
@@ -148,6 +149,7 @@ public class DisplayInfo: MonoBehaviour
                 word_Max_Hp = localized_player_stats_name["word_Max_Hp"];
                 word_Max_Mana = localized_player_stats_name["word_Max_Mana"];
                 word_Mana = localized_player_stats_name["word_Mana"];
+                word_Mana_Regen = localized_player_stats_name["word_Mana_Regen"];
                 word_Armor_Hp = localized_player_stats_name["word_Armor_Hp"];
 
                 word_Mov_Speed = localized_player_stats_name["word_Mov_Speed"];
@@ -231,9 +233,10 @@ public class DisplayInfo: MonoBehaviour
             $"{word_AttSpeed} + {(pl_stat.Agility * 2)}";
         string intel = $"<color={GlobalColors.Hh_Int}>{pl_stat.Intelligence} {word_intelligence}</color>";
         string intelB = $"<color={GlobalColors.Hh_Bonus}>" +
-            $"{word_AttRange} + {(pl_stat.Intelligence * 0.1f).ToString("F2")}\n" +
+            //$"{word_AttRange} + {(pl_stat.Intelligence * 0.1f).ToString("F2")}\n" +
             $"{word_Mana} + {(pl_stat.Intelligence * 4).ToString()}\n" +
-            $"{word_ProjSpeed} + {(pl_stat.Intelligence * 0.1f).ToString("F2")}\n" +
+            $"{word_Mana_Regen} + {(pl_stat.Intelligence * 0.125f).ToString("F2")}\n" +
+            //$"{word_ProjSpeed} + {(pl_stat.Intelligence * 0.1f).ToString("F2")}\n" +
             $"{word_Damage} + {(pl_stat.Intelligence * 2 / 10).ToString("F2")}";
 
         InfoStatus.UpdateAttribute(str, strB, agil, agilB, intel, intelB);
@@ -390,6 +393,7 @@ public class DisplayInfo: MonoBehaviour
             FormatStat(info, artifactObj.Artif_Tech_Resis, word_Tech_Resis, GlobalColors.Hh_Tech_Resis);
             FormatStat(info, artifactObj.Artif_Damage, word_Damage, GlobalColors.Hh_Damage);
             FormatStat(info, artifactObj.Artif_Mana, word_Mana, GlobalColors.Hh_Mana);
+            FormatStat(info, artifactObj.Artif_ManaRegen, word_Mana_Regen, GlobalColors.Hh_ManaReg);
 
         }
         info.AppendLine($"\n{word_description}: {item.Description}");

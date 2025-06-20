@@ -33,10 +33,11 @@ public class LvlUpLogic : MonoBehaviour
     private string word_Projectile_speed;
     private string word_Damage;
     private string word_Mana;
+    private string word_Mana_Regen;
 
 
     private static readonly HashSet<AspectName> percentageAspects = new HashSet<AspectName>
-    { AspectName.Range, AspectName.Speed, AspectName.Projectile_speed, AspectName.Exp_Bust}; //те что в процентах
+    { AspectName.Exp_Bust}; //те что в процентах
     private static System.Random random;
 
 
@@ -72,7 +73,7 @@ public class LvlUpLogic : MonoBehaviour
                 word_Projectile_speed = localized_player_stats_name["word_Projectile_speed"];
                 word_Damage = localized_player_stats_name["word_Damage"];
                 word_Mana = localized_player_stats_name["word_Mana"];
-
+                word_Mana_Regen = localized_player_stats_name["word_Mana_Regen"];
                 nameWindow.text = word_nameWindow;
             }
 
@@ -193,6 +194,8 @@ public class LvlUpLogic : MonoBehaviour
                 return word_Damage;
             case AspectName.Mana:
                 return word_Mana;
+            case AspectName.ManaRegen:
+                return word_Mana_Regen;
             default:
                 return "Unknown Aspect"; // На случай, если что-то пойдет не так
         }
@@ -216,8 +219,8 @@ public class LvlUpLogic : MonoBehaviour
         {
             AspectName.Agillity, AspectName.Strength, AspectName.Intelligence,
             AspectName.Tech_Point, AspectName.Mage_Point, AspectName.Exp_Bust,
-            AspectName.Speed, AspectName.Hp,
-            AspectName.Gold, AspectName.AttackSpeed, AspectName.Damage, AspectName.Mana
+            AspectName.Speed, AspectName.Hp,AspectName.Range, AspectName.Projectile_speed,
+            AspectName.Gold, AspectName.AttackSpeed, AspectName.Damage, AspectName.Mana, AspectName.ManaRegen
         };
         //Выбираем случайный гарантированный атрибут 
         AspectName guaranteedAttribute = coreAttributes[random.Next(0, coreAttributes.Count)];
@@ -255,7 +258,8 @@ public enum AspectName
     Range,
     Projectile_speed,
     Damage,
-    Mana
+    Mana,
+    ManaRegen
 }
 public class TempAspect
 {

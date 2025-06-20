@@ -15,7 +15,8 @@ public class PlayerStats : CharacterStats
     public int Base_Agility { get; set; }
     public int Base_Intelligence { get; set; }
     public int Base_Max_Hp { get; set;}
-    public int Base_Max_Mana { get; set; }
+    public float Base_Max_Mana { get; set; }
+    public float Base_Regen_Mana { get; set; }
     public int Base_Armor { get; set; }
     public int Base_Evasion {  get; set; }
     public float Base_Mov_Speed { get; set; }
@@ -69,6 +70,7 @@ public class PlayerStats : CharacterStats
         Base_Intelligence = 0;
         Base_Max_Hp = 2;
         Base_Max_Mana = 6;
+        Base_Regen_Mana = 0.25f;
         Base_Armor = 0;
         Base_Evasion = 0;
         Base_Mov_Speed = 1f;
@@ -110,6 +112,7 @@ public class PlayerStats : CharacterStats
         Base_Intelligence = playerSaveData.Base_Intelligence;
         Base_Max_Hp = playerSaveData.Base_Max_Hp;
         Base_Max_Mana = playerSaveData.Base_Max_Mana;
+        Base_Regen_Mana = playerSaveData.Base_Regen_Mana;
         Base_Armor = playerSaveData.Base_Armor;
         Base_Evasion = playerSaveData.Base_Evasion;
         Base_Mov_Speed = playerSaveData.Base_Mov_Speed;
@@ -157,12 +160,14 @@ public class PlayerStats : CharacterStats
 
         Max_Hp = (Strength * 2) + Base_Max_Hp + classPlayer.Bonus_Class_Hp + equipStats.Bonus_Equip_Hp;
         Max_Mana = (Intelligence * 4) + Base_Max_Mana + classPlayer.Bonus_Class_Mana + equipStats.Bonus_Equip_Mana;
+        Regen_Mana = (Intelligence * 0.125f) + Base_Regen_Mana + classPlayer.Bonus_Class_Regen_Mana + equipStats.Bonus_Equip_Regen_Mana;
+
         Armor = (int)(Strength / 10) + Base_Armor + classPlayer.Bonus_Class_Armor + equipStats.Bonus_Equip_Armor;
         Mov_Speed = (Agility * 0.015f) + Base_Mov_Speed + classPlayer.Bonus_Class_SpeedMove + equipStats.Bonus_Equip_Mov_Speed;
         Evasion = (Agility) + Base_Evasion + equipStats.Bonus_Equip_Evasion;
         Att_Speed = (Agility * 2) + Base_Att_Speed + classPlayer.Bonus_Class_AttackSpeed + equipStats.Bonus_Equip_Att_Speed;
-        Att_Range = (Intelligence * 0.05f) + Base_Att_Range + classPlayer.Bonus_Class_Range + equipStats.Bonus_Equip_Att_Range;
-        Proj_Speed = (Intelligence * 0.05f) + Base_Proj_Speed + classPlayer.Bonus_Class_ProjectileSpeed + equipStats.Bonus_Equip_Proj_Speed;
+        Att_Range = Base_Att_Range + classPlayer.Bonus_Class_Range + equipStats.Bonus_Equip_Att_Range;
+        Proj_Speed = Base_Proj_Speed + classPlayer.Bonus_Class_ProjectileSpeed + equipStats.Bonus_Equip_Proj_Speed;
         Att_Damage = (int)(((Strength * 2) + (Intelligence * 2)) / 10) + Base_Att_Damage + classPlayer.Bonus_Class_Damage + equipStats.Bonus_Equip_Att_Damage;
 
         ExpBust = Base_ExpBust + equipStats.Bonus_Equip_ExpBust;
@@ -170,6 +175,14 @@ public class PlayerStats : CharacterStats
         float Int_Resis = Intelligence / (Intelligence + 100f);
         Tech_Resis = 1 - ((1 - Int_Resis) * (1 - Base_Tech_Resis) * (1 - classPlayer.Bonus_Tech_Resis) * (1 - equipStats.Bonus_Tech_Resis));
         Magic_Resis = 1 - ((1 - Int_Resis) * (1 - Base_Magic_Resis) * (1 - classPlayer.Bonus_Magic_Resis) * (1 - equipStats.Bonus_Magic_Resis));
+    }
+    public void RegenMana()
+    {
+        if(Cur_Mana < Max_Mana)
+        {
+            if (Cur_Mana + (Regen_Mana/10) < Max_Mana) Cur_Mana += (Regen_Mana/10);
+            else Cur_Mana = Max_Mana;
+        }
     }
     public void FillHp()
     {
