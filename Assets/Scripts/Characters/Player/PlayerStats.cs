@@ -14,19 +14,8 @@ public class PlayerStats : CharacterStats
     public int Base_Strength {  get; set; }
     public int Base_Agility { get; set; }
     public int Base_Intelligence { get; set; }
-    public int Base_Max_Hp { get; set;}
-    public float Base_Max_Mana { get; set; }
-    public float Base_Regen_Mana { get; set; }
-    public int Base_Armor { get; set; }
-    public int Base_Evasion {  get; set; }
-    public float Base_Mov_Speed { get; set; }
-    public float Base_Att_Range { get; set; }
-    public int Base_Att_Damage { get; set; }
-    public int Base_Att_Speed { get; set; }
-    public float Base_Proj_Speed { get; set; }
     public float Base_ExpBust {  get; set; }
-    public float Base_Magic_Resis { get; set; }
-    public float Base_Tech_Resis { get; set; }
+
     public float Int_Resis;
 
     //Итоговые Характеристики
@@ -61,8 +50,10 @@ public class PlayerStats : CharacterStats
     private const int AddHP_PerLvl = 2;
     private const int AddMana_PerLvl = 4;
 
+    private EquipStats equipStats;
     public bool[] DirectionOrVectorWeapon { get; set; }
     public PlayerStats() { }
+
     public void SetBaseStats()
     {
         Base_Strength = 0;
@@ -103,7 +94,8 @@ public class PlayerStats : CharacterStats
         classPlayer = Classes.Instance.GetRoleClass("Shooter");
         DirectionOrVectorWeapon = new bool[4];
 
-        
+        equipStats = Player.Instance.GetEquipStats();
+        buffsStats = Player.Instance.GetBuffStatsPlayer();
     }
     public void LoadStats(PlayerStats playerSaveData)
     {
@@ -149,32 +141,94 @@ public class PlayerStats : CharacterStats
 
         Cur_Hp = playerSaveData.Cur_Hp;
         Cur_Mana = playerSaveData.Cur_Mana;
+
+        equipStats = Player.Instance.GetEquipStats();
+        buffsStats = Player.Instance.GetBuffStatsPlayer();
     }
-    public void UpdateTotalStats()
+    public override void UpdateTotalStats()
     {
-        EquipStats equipStats = Player.Instance.GetEquipStats();
 
-        Strength = Base_Strength + classPlayer.Bonus_Class_Strength + equipStats.Bonus_Equip_Strength;
-        Agility = Base_Agility + classPlayer.Bonus_Class_Agility + equipStats.Bonus_Equip_Agility;
-        Intelligence = Base_Intelligence + classPlayer.Bonus_Class_Intelligence + equipStats.Bonus_Equip_Intelligence;
+        Strength = Base_Strength + classPlayer.Bonus_Class_Strength + equipStats.Bonus_Equip_Strength + buffsStats.Buff_Strength;
+        Agility = Base_Agility + classPlayer.Bonus_Class_Agility + equipStats.Bonus_Equip_Agility + buffsStats.Buff_Agility;
+        Intelligence = Base_Intelligence + classPlayer.Bonus_Class_Intelligence + equipStats.Bonus_Equip_Intelligence + buffsStats.Buff_Intelligence;
 
-        Max_Hp = (Strength * 2) + Base_Max_Hp + classPlayer.Bonus_Class_Hp + equipStats.Bonus_Equip_Hp;
-        Max_Mana = (Intelligence * 4) + Base_Max_Mana + classPlayer.Bonus_Class_Mana + equipStats.Bonus_Equip_Mana;
-        Regen_Mana = (Intelligence * 0.125f) + Base_Regen_Mana + classPlayer.Bonus_Class_Regen_Mana + equipStats.Bonus_Equip_Regen_Mana;
+        Max_Hp = (Strength * 2) + Base_Max_Hp + classPlayer.Bonus_Class_Hp + equipStats.Bonus_Equip_Hp + buffsStats.Buff_Max_Hp;
+        Max_Mana = (Intelligence * 4) + Base_Max_Mana + classPlayer.Bonus_Class_Mana + equipStats.Bonus_Equip_Mana + buffsStats.Buff_Max_Mana;
+        Regen_Mana = (Intelligence * 0.125f) + Base_Regen_Mana + classPlayer.Bonus_Class_Regen_Mana + equipStats.Bonus_Equip_Regen_Mana + buffsStats.Buff_Regen_Mana;
 
-        Armor = (int)(Strength / 10) + Base_Armor + classPlayer.Bonus_Class_Armor + equipStats.Bonus_Equip_Armor;
-        Mov_Speed = (Agility * 0.015f) + Base_Mov_Speed + classPlayer.Bonus_Class_SpeedMove + equipStats.Bonus_Equip_Mov_Speed;
-        Evasion = (Agility) + Base_Evasion + equipStats.Bonus_Equip_Evasion;
-        Att_Speed = (Agility * 2) + Base_Att_Speed + classPlayer.Bonus_Class_AttackSpeed + equipStats.Bonus_Equip_Att_Speed;
-        Att_Range = Base_Att_Range + classPlayer.Bonus_Class_Range + equipStats.Bonus_Equip_Att_Range;
-        Proj_Speed = Base_Proj_Speed + classPlayer.Bonus_Class_ProjectileSpeed + equipStats.Bonus_Equip_Proj_Speed;
-        Att_Damage = (int)(((Strength * 2) + (Intelligence * 2)) / 10) + Base_Att_Damage + classPlayer.Bonus_Class_Damage + equipStats.Bonus_Equip_Att_Damage;
+        Armor = (int)(Strength / 10) + Base_Armor + classPlayer.Bonus_Class_Armor + equipStats.Bonus_Equip_Armor + buffsStats.Buff_Armor;
+        Mov_Speed = (Agility * 0.015f) + Base_Mov_Speed + classPlayer.Bonus_Class_SpeedMove + equipStats.Bonus_Equip_Mov_Speed + buffsStats.Buff_Mov_Speed;
+        Evasion = (Agility) + Base_Evasion + equipStats.Bonus_Equip_Evasion + buffsStats.Buff_Evasion;
+        Att_Speed = (Agility * 2) + Base_Att_Speed + classPlayer.Bonus_Class_AttackSpeed + equipStats.Bonus_Equip_Att_Speed + buffsStats.Buff_Att_Speed;
+        Att_Range = Base_Att_Range + classPlayer.Bonus_Class_Range + equipStats.Bonus_Equip_Att_Range + buffsStats.Buff_Att_Range;
+        Proj_Speed = Base_Proj_Speed + classPlayer.Bonus_Class_ProjectileSpeed + equipStats.Bonus_Equip_Proj_Speed + buffsStats.Buff_Proj_Speed;
+        Att_Damage = (int)(((Strength * 2) + (Intelligence * 2)) / 10) + Base_Att_Damage + classPlayer.Bonus_Class_Damage + equipStats.Bonus_Equip_Att_Damage + buffsStats.Buff_Att_Damage;
 
         ExpBust = Base_ExpBust + equipStats.Bonus_Equip_ExpBust;
 
         float Int_Resis = Intelligence / (Intelligence + 100f);
-        Tech_Resis = 1 - ((1 - Int_Resis) * (1 - Base_Tech_Resis) * (1 - classPlayer.Bonus_Tech_Resis) * (1 - equipStats.Bonus_Tech_Resis));
-        Magic_Resis = 1 - ((1 - Int_Resis) * (1 - Base_Magic_Resis) * (1 - classPlayer.Bonus_Magic_Resis) * (1 - equipStats.Bonus_Magic_Resis));
+        Tech_Resis = 1 - ((1 - Int_Resis) * (1 - Base_Tech_Resis) * (1 - classPlayer.Bonus_Tech_Resis) * (1 - equipStats.Bonus_Tech_Resis)) + buffsStats.Buff_Tech_Resis;
+        Magic_Resis = 1 - ((1 - Int_Resis) * (1 - Base_Magic_Resis) * (1 - classPlayer.Bonus_Magic_Resis) * (1 - equipStats.Bonus_Magic_Resis)) + buffsStats.Buff_Magic_Resis;
+    }
+    public override void ApplyStat(AllParametrs param, int multiplier)
+    {
+        switch (param)
+        {
+            case AllParametrs.Strength:
+                Strength = Base_Strength + classPlayer.Bonus_Class_Strength + equipStats.Bonus_Equip_Strength + buffsStats.Buff_Strength * multiplier;
+                break;
+            case AllParametrs.Agility:
+                Agility = Base_Agility + classPlayer.Bonus_Class_Agility + equipStats.Bonus_Equip_Agility + buffsStats.Buff_Agility * multiplier;
+                break;
+            case AllParametrs.Intelligence:
+                Intelligence = Base_Intelligence + classPlayer.Bonus_Class_Intelligence + equipStats.Bonus_Equip_Intelligence + buffsStats.Buff_Intelligence * multiplier;
+                break;
+            case AllParametrs.Max_Hp:
+                Max_Hp = (Strength * 2) + Base_Max_Hp + classPlayer.Bonus_Class_Hp + equipStats.Bonus_Equip_Hp + buffsStats.Buff_Max_Hp * multiplier;
+                break;
+            case AllParametrs.Max_Mana:
+                Max_Mana = (Intelligence * 4) + Base_Max_Mana + classPlayer.Bonus_Class_Mana + equipStats.Bonus_Equip_Mana + buffsStats.Buff_Max_Mana * multiplier;
+                break;
+            case AllParametrs.Regen_Mana:
+                Regen_Mana = (Intelligence * 0.125f) + Base_Regen_Mana + classPlayer.Bonus_Class_Regen_Mana + equipStats.Bonus_Equip_Regen_Mana + buffsStats.Buff_Regen_Mana * multiplier;
+                break;
+            case AllParametrs.Armor:
+                Armor = (int)(Strength / 10f) + Base_Armor + classPlayer.Bonus_Class_Armor + equipStats.Bonus_Equip_Armor + buffsStats.Buff_Armor * multiplier;
+                break;
+            case AllParametrs.Mov_Speed:
+                Mov_Speed = (Agility * 0.015f) + Base_Mov_Speed + classPlayer.Bonus_Class_SpeedMove + equipStats.Bonus_Equip_Mov_Speed + buffsStats.Buff_Mov_Speed * multiplier;
+                break;
+            case AllParametrs.Evasion:
+                Evasion = Agility + Base_Evasion + equipStats.Bonus_Equip_Evasion + buffsStats.Buff_Evasion * multiplier;
+                break;
+            case AllParametrs.Att_Speed:
+                Att_Speed = (int)((Agility * 2) + Base_Att_Speed + classPlayer.Bonus_Class_AttackSpeed + equipStats.Bonus_Equip_Att_Speed + buffsStats.Buff_Att_Speed * multiplier);
+                break;
+            case AllParametrs.Att_Range:
+                Att_Range = Base_Att_Range + classPlayer.Bonus_Class_Range + equipStats.Bonus_Equip_Att_Range + buffsStats.Buff_Att_Range * multiplier;
+                break;
+            case AllParametrs.Proj_Speed:
+                Proj_Speed = Base_Proj_Speed + classPlayer.Bonus_Class_ProjectileSpeed + equipStats.Bonus_Equip_Proj_Speed + buffsStats.Buff_Proj_Speed * multiplier;
+                break;
+            case AllParametrs.Att_Damage:
+                Att_Damage = (int)(((Strength * 2) + (Intelligence * 2)) / 10f) + Base_Att_Damage + classPlayer.Bonus_Class_Damage + equipStats.Bonus_Equip_Att_Damage + buffsStats.Buff_Att_Damage * multiplier;
+                break;
+            case AllParametrs.ExpBust:
+                ExpBust = Base_ExpBust + equipStats.Bonus_Equip_ExpBust + buffsStats.Buff_ExpBust * multiplier;
+                break;
+            case AllParametrs.Tech_Resis:
+                {
+                    float Int_Resis = Intelligence / (Intelligence + 100f);
+                    Tech_Resis = 1 - ((1 - Int_Resis) * (1 - Base_Tech_Resis) * (1 - classPlayer.Bonus_Tech_Resis) * (1 - equipStats.Bonus_Tech_Resis)) + buffsStats.Buff_Tech_Resis * multiplier;
+                }
+                break;
+            case AllParametrs.Magic_Resis:
+                {
+                    float Int_Resis = Intelligence / (Intelligence + 100f);
+                    Magic_Resis = 1 - ((1 - Int_Resis) * (1 - Base_Magic_Resis) * (1 - classPlayer.Bonus_Magic_Resis) * (1 - equipStats.Bonus_Magic_Resis)) + buffsStats.Buff_Magic_Resis * multiplier;
+                }
+                break;
+        }
     }
     public void RegenMana()
     {

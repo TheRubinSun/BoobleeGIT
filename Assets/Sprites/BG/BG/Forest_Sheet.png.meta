@@ -100,9 +100,9 @@ TextureImporter:
     filterMode: 0
     aniso: 1
     mipBias: 0
-    wrapU: 1
-    wrapV: 1
-    wrapW: 1
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -191,7 +191,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 2264
-        width: 440
+        width: 500
         height: 283
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -213,7 +213,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 1981
-        width: 440
+        width: 500
         height: 283
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -235,7 +235,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 1698
-        width: 440
+        width: 500
         height: 283
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -257,7 +257,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 1415
-        width: 440
+        width: 500
         height: 283
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -279,7 +279,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 1132
-        width: 440
+        width: 500
         height: 283
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -301,7 +301,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 849
-        width: 440
+        width: 500
         height: 283
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -323,7 +323,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 566
-        width: 440
+        width: 500
         height: 283
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -345,7 +345,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 283
-        width: 440
+        width: 500
         height: 283
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -367,7 +367,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 440
+        width: 500
         height: 283
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -375,10 +375,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 57322675c8f4f4e10800000000000000
-      internalID: 2184051808478045045
+      spriteID: 001204a5b78756f4d812858f88ad08c5
+      internalID: 1547761922
       vertices: []
       indices: 
       edges: []
@@ -405,7 +405,7 @@ TextureImporter:
       Forest_Sheet_5: 5635833144201640498
       Forest_Sheet_6: 1601790667748684797
       Forest_Sheet_7: 7190952773243563718
-      Forest_Sheet_8: 2184051808478045045
+      Forest_Sheet_8: 1547761922
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -146,6 +146,12 @@ public class EffectsManager : MonoBehaviour
             StopCoroutine(oldCoroutine);
             activeCoroutines.Remove(effect);
         }
+        if (activeCoroutines.Count == 0)
+        {
+            Debug.Log("Áאפפמג במכüרו םוע");
+            stats.buffsStats.AllNull();
+            stats.UpdateTotalStats();
+        }
     }
     public void UseEffect(EffectData effect, bool apply)
     {
@@ -154,12 +160,15 @@ public class EffectsManager : MonoBehaviour
         {
             case EffectData.EffectType.SpeedBoost:
                 {
-                    stats.Mov_Speed += effect.value * multiply;
+                    stats.buffsStats.Buff_Mov_Speed += effect.value * multiply;
+                    stats.ApplyStat(AllParametrs.Mov_Speed, 1);
                     break;
                 }
             case EffectData.EffectType.SpeedSlow:
                 {
-                    stats.Mov_Speed -= effect.value * multiply;
+                    stats.buffsStats.Buff_Mov_Speed -= effect.value * multiply;
+                    stats.ApplyStat(AllParametrs.Mov_Speed, 1);
+                    //stats.Mov_Speed -= effect.value * multiply;
                     break;
                 }
             case EffectData.EffectType.HpRegenBoost:

@@ -14,9 +14,10 @@ public class Player : MonoBehaviour, ITakeDamage
     public bool playerStay {  get; set; }
     [SerializeField] private Transform spawnPoint;
     private PlayerStats pl_stats;
-    
+    private BuffsStats bf_stats;
     [SerializeField] 
     private EquipStats equip_Stats;
+
     private PlayerUI pl_ui;
 
     //GameObjects
@@ -43,6 +44,7 @@ public class Player : MonoBehaviour, ITakeDamage
         Instance = this;
 
         pl_stats = new PlayerStats();
+        bf_stats = new BuffsStats();
         pl_ui = GetComponent<PlayerUI>();
         equip_Stats = GetComponent<EquipStats>();
         playerControl = transform.GetChild(0).GetComponent<PlayerControl>();
@@ -99,6 +101,10 @@ public class Player : MonoBehaviour, ITakeDamage
     {
         pl_ui.UpdateRegenMana(pl_stats);
     }
+    public void UpdateNeededStat(AllParametrs parametrs, int multiply)
+    {
+        pl_stats.ApplyStat(parametrs, multiply);
+    }
     public IEnumerator AddManaForRegen()
     {
         while (true)
@@ -109,6 +115,7 @@ public class Player : MonoBehaviour, ITakeDamage
         }
     }
     public PlayerStats GetPlayerStats() => pl_stats;
+    public BuffsStats GetBuffStatsPlayer() => bf_stats;
     public EquipStats GetEquipStats() => equip_Stats;
     public int GetGold() => pl_stats.Gold;
     public int GetSkillsTrader() => pl_stats.TraderSkill;

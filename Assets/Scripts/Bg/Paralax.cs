@@ -11,7 +11,18 @@ public class Paralax : MonoBehaviour
         {
             layer.part1 = layer.layerObj.transform.GetChild(0);
             layer.part2 = layer.layerObj.transform.GetChild(1);
-            layer.spriteWidth = layer.part1.GetComponent<SpriteRenderer>().bounds.size.x;
+            layer.part3 = layer.layerObj.transform.GetChild(2);
+
+            var sprite = layer.part1.GetComponent<SpriteRenderer>().sprite;
+            layer.spriteWidth = sprite.rect.width / sprite.pixelsPerUnit * layer.part1.localScale.x;
+
+            // Устанавливаем начальные позиции
+            layer.part1.localPosition = new Vector3(0f, -1f, 0f);
+            layer.part2.localPosition = new Vector3(layer.spriteWidth, -1f, 0f);
+            layer.part3.localPosition = new Vector3(layer.spriteWidth * 2f, -1f, 0f);
+
+            // Храним слои в массиве для удобной работы
+            layer.parts = new Transform[] { layer.part1, layer.part2, layer.part3 };
         }
     }
 
@@ -19,31 +30,34 @@ public class Paralax : MonoBehaviour
     {
         foreach (ParalaxLayer layer in layers)
         {
-            // Двигаем оба фона влево
-            layer.part1.Translate(Vector3.left * layer.speed * Time.deltaTime);
-            layer.part2.Translate(Vector3.left * layer.speed * Time.deltaTime);
+            layer.layerObj.transform.Translate(Vector3.left * layer.speed * Time.deltaTime);
 
-            // Проверка и зацикливание
-            if (layer.part1.position.x <= -layer.spriteWidth)
+            float leftEdge = Camera.main.ViewportToWorldPoint(Vector3.zero).x;
+
+            foreach (Transform part in layer.parts)
             {
-                layer.part1.position = new Vector3(layer.part2.position.x + layer.spriteWidth, layer.part1.position.y, layer.part1.position.z);
-                SwapParts(layer);
-            }
-            else if (layer.part2.position.x <= -layer.spriteWidth)
-            {
-                layer.part2.position = new Vector3(layer.part1.position.x + layer.spriteWidth, layer.part2.position.y, layer.part2.position.z);
-                SwapParts(layer);
+                if (part.position.x + layer.spriteWidth < leftEdge)
+                {
+                    // Найдём самый правый элемент
+                    Transform rightMost = GetRightMost(layer.parts);
+                    float newX = rightMost.localPosition.x + layer.spriteWidth;
+
+                    // Переместим "ушедший" слой в конец
+                    part.localPosition = new Vector3(newX, part.localPosition.y, part.localPosition.z);
+                }
             }
         }
-
     }
 
-    // Меняет местами ссылки, чтобы всегда первый был "левее"
-    void SwapParts(ParalaxLayer layer)
+    Transform GetRightMost(Transform[] parts)
     {
-        Transform temp = layer.part1;
-        layer.part1 = layer.part2;
-        layer.part2 = temp;
+        Transform rightMost = parts[0];
+        foreach (Transform t in parts)
+        {
+            if (t.localPosition.x > rightMost.localPosition.x)
+                rightMost = t;
+        }
+        return rightMost;
     }
 }
 [System.Serializable]
@@ -53,5 +67,7 @@ public class ParalaxLayer
     public float speed = 1f;
     public Transform part1 { get; set; }
     public Transform part2 { get; set; }
+    public Transform part3 { get; set; }
+    public Transform[] parts { get; set; }
     public float spriteWidth { get; set; }
 }
