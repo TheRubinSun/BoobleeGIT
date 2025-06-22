@@ -4,9 +4,12 @@ using UnityEngine;
 public class Paralax : MonoBehaviour
 {
     public ParalaxLayer[] layers;
-
+    private float leftEdge;
+    private float rightEdge;
     void Start()
     {
+        leftEdge = Camera.main.ViewportToWorldPoint(Vector3.zero).x;
+        rightEdge = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0)).x;
         foreach (ParalaxLayer layer in layers)
         {
             layer.part1 = layer.layerObj.transform.GetChild(0);
@@ -16,10 +19,11 @@ public class Paralax : MonoBehaviour
             var sprite = layer.part1.GetComponent<SpriteRenderer>().sprite;
             layer.spriteWidth = sprite.rect.width / sprite.pixelsPerUnit * layer.part1.localScale.x;
 
+            Vector2 localPosStart = layer.layerObj.transform.InverseTransformPoint(new Vector2(leftEdge, 0f)); 
             // Устанавливаем начальные позиции
-            layer.part1.localPosition = new Vector3(0f, -1f, 0f);
-            layer.part2.localPosition = new Vector3(layer.spriteWidth, -1f, 0f);
-            layer.part3.localPosition = new Vector3(layer.spriteWidth * 2f, -1f, 0f);
+            layer.part1.localPosition = new Vector3(localPosStart.x, -1f, 0f);
+            layer.part2.localPosition = new Vector3(localPosStart.x + layer.spriteWidth, -1f, 0f);
+            layer.part3.localPosition = new Vector3(localPosStart.x + layer.spriteWidth * 2f, -1f, 0f);
 
             // Храним слои в массиве для удобной работы
             layer.parts = new Transform[] { layer.part1, layer.part2, layer.part3 };
@@ -31,8 +35,6 @@ public class Paralax : MonoBehaviour
         foreach (ParalaxLayer layer in layers)
         {
             layer.layerObj.transform.Translate(Vector3.left * layer.speed * Time.deltaTime);
-
-            float leftEdge = Camera.main.ViewportToWorldPoint(Vector3.zero).x;
 
             foreach (Transform part in layer.parts)
             {

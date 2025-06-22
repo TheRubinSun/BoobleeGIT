@@ -6737,6 +6737,14 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: -18
       objectReference: {fileID: 0}
+    - target: {fileID: 6542101884539494017, guid: 53190ba6a7088ad4982d05e54ec9876c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6878881026518912452, guid: 53190ba6a7088ad4982d05e54ec9876c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 6966575891368758016, guid: 53190ba6a7088ad4982d05e54ec9876c, type: 3}
       propertyPath: m_SortingOrder
       value: -20
