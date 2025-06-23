@@ -11,7 +11,8 @@ public class UIControl:MonoBehaviour
 {
     public static UIControl Instance { get; private set; }
     private Dictionary<KeyCode, System.Action> keyActions;
-    
+
+    [SerializeField] GameObject GameMenuWindow;
     [SerializeField] GameObject inventoryWindow;
     [SerializeField] GameObject allItemsWindow;
     [SerializeField] GameObject allMobsWindow;
@@ -80,7 +81,7 @@ public class UIControl:MonoBehaviour
             {KeyCode.C, OpenCreatePortal},
             {KeyCode.R, OpenShop},
             {KeyCode.Q, OpenCraftWindow},
-            {KeyCode.Escape, LoadMainMenu},
+            {KeyCode.Escape, OpenGameMenu},
             {KeyCode.E, DragAndDrop.Instance.PickUp}
 
         };
@@ -99,9 +100,18 @@ public class UIControl:MonoBehaviour
     }
     private void Update()
     {
-        foreach(KeyValuePair<KeyCode, System.Action> keyAction in keyActions)
+        if (GameMenuWindow.activeSelf)
         {
-            if(Input.GetKeyDown(keyAction.Key))
+            if(Input.GetKeyDown(KeyCode.Escape))
+            {
+                keyActions[KeyCode.Escape]?.Invoke();
+            }
+            return;
+        }
+        foreach (KeyValuePair<KeyCode, System.Action> keyAction in keyActions)
+        {
+
+            if (Input.GetKeyDown(keyAction.Key))
             {
                 keyAction.Value.Invoke();
                 break;
@@ -212,7 +222,6 @@ public class UIControl:MonoBehaviour
             DisplayInfo.Instance.SetActiveItemInfo(false);
             infoPlayerWindow.SetActive(false);
         }
-        TogglePause();
     }
     public void LvlUpWindow()
     {
@@ -271,20 +280,20 @@ public class UIControl:MonoBehaviour
         LvlUpIsOpen = false;
         LvlUPWindow.SetActive(false);
     }
-    public async void LoadMainMenu()
+    public void OpenGameMenu()
     {
-        //Debug.Log($"ShopIsOpened {ShopIsOpened} | CraftIsOpened {CraftIsOpened}");
-        if(ShopIsOpened)
+        bool CloseWindow = GameMenuWindow.activeSelf;
+        if (ShopIsOpened)
         {
             CloseShopSurv();
             return;
         }
-        else if(CraftIsOpened)
+        else if (CraftIsOpened)
         {
             OpenCraftWindowSurv(CraftTable.None);
             return;
         }
-        else if(LvlUpIsOpen)
+        else if (LvlUpIsOpen)
         {
             OpenLvlUPWindow(false);
             return;
@@ -305,17 +314,22 @@ public class UIControl:MonoBehaviour
             return;
         }
 
-
-        // Уничтожаем объект только перед загрузкой главного меню
-        if (isPaused) Time.timeScale = 1;
-        if (Instance != null)
+        if (CloseWindow)
         {
-            Destroy(gameObject); // Удаляем объект вручную
+            if (GameMenuLog.Instance.CheckOpenSettings()) return;
+            TogglePause(false);
+            GameMenuWindow.SetActive(false);
         }
-        GlobalData.NAME_NEW_LOCATION = "Game_village";
-        await GameManager.Instance.SavePlayTime();
-        await SceneManager.LoadSceneAsync("Menu");
+        else
+        {
+            
+            GameMenuLog.Instance.HideSaveZone();
+            GameMenuWindow.SetActive(true);
+            TogglePause(true);
+        }
+        
     }
+
     public void UpdateWeaponStats()
     {
         EqupmentPlayer.Instance.UpdateAllWeaponsStats();
@@ -354,13 +368,17 @@ public class UIControl:MonoBehaviour
     {
         await GameManager.Instance.SaveDataGame();
     }
-    public void TogglePause()
+    public void TogglePause(bool pause)
     {
-        isPaused = !isPaused;
+        isPaused = pause;
         Time.timeScale = isPaused ? 0 : 1;  // 0 - пауза, 1 - нормальное время
         AudioListener.pause = isPaused;     // Останавливаем все звуки
     }
-
+    public void OffPause()
+    {
+        isPaused = false;
+        Time.timeScale = 1;
+    }
     public void RetrunSlotsToInventory(Transform fromParent)
     {
         int countSlots = Inventory.Instance.sizeInventory;

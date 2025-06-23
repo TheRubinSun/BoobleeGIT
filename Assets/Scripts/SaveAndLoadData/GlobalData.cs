@@ -10,6 +10,7 @@ public static class GlobalData
     public static int cur_lvl_left;
     public static Vector2 center;
     public static int chunkSize;
+   
 
     //public static bool GOD_MODE;
     public static float VOLUME_SOUNDS = 0.5f;
@@ -17,6 +18,7 @@ public static class GlobalData
 
 
     public static bool isVisibleHpBarEnemy = true;
+    public static bool saveZone;
     public static string NAME_NEW_LOCATION = "Game_village";
     public static string NAME_NEW_LOCATION_TEXT;
 

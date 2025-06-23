@@ -454,6 +454,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 6827644378235901405}
     m_Modifications:
     - target: {fileID: 6254327746043298659, guid: a36b31a8792b21046aa57c9dd1697404, type: 3}
+      propertyPath: saveZone
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6254327746043298659, guid: a36b31a8792b21046aa57c9dd1697404, type: 3}
       propertyPath: nameNewLocation
       value: Level_two
       objectReference: {fileID: 0}
@@ -1803,6 +1807,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6827644378235901405}
     m_Modifications:
+    - target: {fileID: 6254327746043298659, guid: a36b31a8792b21046aa57c9dd1697404, type: 3}
+      propertyPath: saveZone
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6891393086149645662, guid: a36b31a8792b21046aa57c9dd1697404, type: 3}
       propertyPath: m_Name
       value: PortalToLevel

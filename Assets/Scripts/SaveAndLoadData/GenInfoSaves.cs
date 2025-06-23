@@ -12,6 +12,8 @@ using System.Runtime.CompilerServices;
 
 public class GenInfoSaves : MonoBehaviour 
 {
+    public static GenInfoSaves instance;
+
     public static string language;
     public static int lastSaveID;
 
@@ -29,6 +31,15 @@ public class GenInfoSaves : MonoBehaviour
     [SerializeField] Sprite[] spritesPlayer;
     private void Awake()
     {
+        if(instance != null && instance != this)
+        {
+            Destroy(gameObject);
+        }
+        instance = this;
+        DontDestroyOnLoad(instance);
+
+        GlobalData.saveZone = true;
+
         toggle_Saves = new Toggle[SavesBut.Length];
         icon_Player_Saves = new Image[SavesBut.Length];
         text_Player_info_saves = new TextMeshProUGUI[SavesBut.Length];
@@ -184,6 +195,10 @@ public class GenInfoSaves : MonoBehaviour
     {
         //SavesDataInfo saveDataInfo = await SaveSystem.LoadDataAsync<SavesDataInfo>("saves_info.json");
         SavesDataInfo saveDataInfo = GameDataHolder.savesDataInfo;
+        GlobalData.VOLUME_MUSICS = saveDataInfo.volume_musics;
+        GlobalData.VOLUME_SOUNDS = saveDataInfo.volume_sounds;
+        Options.instance.SetMusicVolume();
+
         if (saveDataInfo != null && saveDataInfo.saveGameFiles != null)
         {
             saveGameFiles = saveDataInfo.saveGameFiles;

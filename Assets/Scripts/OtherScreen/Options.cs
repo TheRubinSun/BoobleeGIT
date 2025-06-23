@@ -4,22 +4,38 @@ using UnityEngine.Audio;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
+using static Unity.VisualScripting.Icons;
 
 
 
 public class Options : MonoBehaviour
 {
+    public static Options instance;
+
     [SerializeField] private Button[] SwitchLanguageButtons;
     [SerializeField] Color32 yesGreenColor;
     [SerializeField] Color32 noRedColor;
     [SerializeField] Slider sounds_volume_sli;
     [SerializeField] Slider music_volume_sli;
     [SerializeField] AudioMixer mixer;
+
+    private string language;
+    private void Awake()
+    {
+        instance = this;
+    }
     private void Start()
     {
         sounds_volume_sli.value = GlobalData.VOLUME_SOUNDS;
         music_volume_sli.value = GlobalData.VOLUME_MUSICS;
         LoadSavedLanguage();
+    }
+    public async void SaveChange()
+    {
+        if(language != null)
+            await GenInfoSaves.instance.SavedChanged(GenInfoSaves.saveGameFiles, GenInfoSaves.lastSaveID, language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS);
+        else
+            await GenInfoSaves.instance.SavedChanged(GenInfoSaves.saveGameFiles, GenInfoSaves.lastSaveID, GenInfoSaves.language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS);
     }
     public async void SwitchLanguage(string localeCode)
     {
@@ -31,7 +47,7 @@ public class Options : MonoBehaviour
         GameObject obj = EventSystem.current.currentSelectedGameObject;
         obj.transform.GetChild(2).GetComponent<Image>().color = yesGreenColor;
 
-        await GetComponent<GenInfoSaves>().SavedChanged(GenInfoSaves.saveGameFiles, GenInfoSaves.lastSaveID, localeCode, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS);
+        language = localeCode;
     }
     private void LoadSavedLanguage()
     {
