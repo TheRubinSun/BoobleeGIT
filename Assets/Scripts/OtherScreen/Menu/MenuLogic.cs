@@ -7,10 +7,12 @@ public class MenuLogic : MonoBehaviour
     private Options options;
     [SerializeField] GameObject SavesWindow;
     [SerializeField] GameObject OptionsWindow;
-
+    [SerializeField] GameObject[] Bgs;
+    private GameObject curGB;
     private void Awake()
     {
         options = GetComponent<Options>();
+        curGB = Instantiate(Bgs[Random.Range(0, Bgs.Length)]);
     }
     public void OpenCloseSaves()
     {
