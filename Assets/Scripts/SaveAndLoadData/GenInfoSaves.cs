@@ -31,12 +31,15 @@ public class GenInfoSaves : MonoBehaviour
     [SerializeField] Sprite[] spritesPlayer;
     private void Awake()
     {
-        if(instance != null && instance != this)
+
+        if (instance != null && instance != this)
         {
             Destroy(gameObject);
+            return;
         }
         instance = this;
         DontDestroyOnLoad(instance);
+
 
         GlobalData.saveZone = true;
 
@@ -44,17 +47,25 @@ public class GenInfoSaves : MonoBehaviour
         icon_Player_Saves = new Image[SavesBut.Length];
         text_Player_info_saves = new TextMeshProUGUI[SavesBut.Length];
 
-        LoadSaveFiles();
-        if (saveGameFiles.Count == 0)
+        if (saveGameFiles.Count == 0) //Проверка, если вход в меню был из игры а файлы уже загруженны
         {
-            CreateNullSaves();
-        }
-        else if (saveGameFiles.Count < 3)
-        {
-            CreateSaveEmpty();
+            if (GameDataHolder.savesDataInfo == null || GameDataHolder.savesDataInfo.saveGameFiles.Count == 0)
+            {
+                CreateNullSaves();
+            }
+            else
+            {
+                LoadSaveFiles(); //Если файлы уже не загруужены, если вход был из игры в меню
+
+                if (saveGameFiles.Count < 3)
+                {
+                    CreateSaveEmpty();
+                }
+            }
         }
         UpdateAllTextInfo();
     }
+
     public void LoadSave(int saveInt)
     {
         if (saveGameFiles.ContainsKey(saveInt))
@@ -176,10 +187,22 @@ public class GenInfoSaves : MonoBehaviour
     }
     private void CreateNullSaves()
     {
+        if(GameDataHolder.savesDataInfo == null)
+        {
+            SetVolume(0.5f, 0.5f);
+            Options.instance.SetMusicVolume();
+        }
         for (int i = 0; i < 3; i++)
         {
             saveGameFiles[i] = new SaveGameInfo(i);
         }
+    }
+    private void SetVolume(float musicVOL, float soundsVOL)
+    {
+        volume_musics = musicVOL;
+        volume_sounds = soundsVOL;
+        GlobalData.VOLUME_MUSICS = musicVOL;
+        GlobalData.VOLUME_SOUNDS = soundsVOL;
     }
     private void CreateSaveEmpty()
     {

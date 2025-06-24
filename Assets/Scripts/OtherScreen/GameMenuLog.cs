@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -37,7 +38,7 @@ public class GameMenuLog : MonoBehaviour
     }
     public bool CheckSaveZone()
     {
-        if (GlobalData.saveZone) return true;
+        if (GlobalData.saveZone && (Player.Instance.GetHp() > 0)) return true;
         return false;
     }
     public void ApplySettings()
@@ -57,14 +58,21 @@ public class GameMenuLog : MonoBehaviour
     public async void LoadMainMenu()
     {
         // Уничтожаем объект только перед загрузкой главного меню
-        if (CheckSaveZone()) await UIControl.SaveData();
 
         if (UIControl != null)
         {
+            if (CheckSaveZone()) 
+                await UIControl.SaveData();
+
             UIControl.TogglePause(false);
-            Destroy(GenInfoSaves.instance);
-            Destroy(UIControl); // Удаляем объект вручную
+            Destroy(GenInfoSaves.instance.gameObject);
+            GenInfoSaves.instance = null;
+            Destroy(UIControl.gameObject); // Удаляем объект вручную
         }
+        await GoToMenu();
+    }
+    private async Task GoToMenu()
+    {
         GlobalData.NAME_NEW_LOCATION = "Game_village";
         await GameManager.Instance.SavePlayTime();
         await SceneManager.LoadSceneAsync("Menu");
