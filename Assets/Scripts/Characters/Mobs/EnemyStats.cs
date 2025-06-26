@@ -10,6 +10,7 @@ public class EnemyStats : CharacterStats
 
     public bool isEvasion()
     {
+        if (Evasion <= 0) return false;
         int random = UnityEngine.Random.Range(0, 100);
         if (Evasion >= random && random < 90)
         {

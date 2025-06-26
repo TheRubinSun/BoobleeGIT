@@ -41,6 +41,9 @@ public class MeleWeaponLogic : WeaponControl
         else if (collision.gameObject.layer == LayerManager.enemyLayer)
         {
             BaseEnemyLogic enemy = collision.GetComponent<BaseEnemyLogic>();
+            if (enemy == null)
+                enemy = collision.transform.parent.GetComponent<BaseEnemyLogic>();
+
             if (enemy != null)
             {
                 enemy.TakeDamage(Attack_Damage, damageType, canBeWeapon.canBeMissed);

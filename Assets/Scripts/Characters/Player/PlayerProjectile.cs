@@ -64,14 +64,7 @@ public class PlayerProjectile : MonoBehaviour, UBullet
     // Если используется триггер, то используйте OnTriggerEnter2D
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.layer == LayerManager.enemyLayer)
-        {
-            collider.GetComponent<BaseEnemyLogic>().TakeDamage(damage, typeDamage, canBeWeapon.canBeMissed, effectBul);
-            Destroy(gameObject);
-
-            //Debug.Log(collider.GetComponent<BaseEnemyLogic>().enum_stat.Cur_Hp+" "+ collider.GetComponent<BaseEnemyLogic>().enum_stat.Max_Hp);
-        }
-        else if(collider.gameObject.layer == LayerManager.touchObjectsLayer)
+        if (collider.gameObject.layer == LayerManager.touchObjectsLayer)
         {
             ObjectLBroken objectL = collider.gameObject.GetComponent<ObjectLBroken>();
             if (objectL != null)
@@ -79,10 +72,23 @@ public class PlayerProjectile : MonoBehaviour, UBullet
                 objectL.Break(canBeWeapon);
                 Destroy(gameObject);
             }
+            return;
+        }
+        else if (collider.gameObject.layer == LayerManager.enemyLayer)
+        {
+            BaseEnemyLogic baseEnemyLogic = collider.GetComponent<BaseEnemyLogic>();
+            if(baseEnemyLogic == null) 
+                baseEnemyLogic = collider.transform.parent.GetComponent<BaseEnemyLogic>();
+
+            baseEnemyLogic.TakeDamage(damage, typeDamage, canBeWeapon.canBeMissed, effectBul);
+            Destroy(gameObject);
+            return;
+            //Debug.Log(collider.GetComponent<BaseEnemyLogic>().enum_stat.Cur_Hp+" "+ collider.GetComponent<BaseEnemyLogic>().enum_stat.Max_Hp);
         }
         else if (collider.gameObject.layer == LayerManager.obstaclesLayer)
         {
             Destroy(gameObject);
+            return;
         }
     }
 }

@@ -6160,6 +6160,18 @@ PrefabInstance:
       propertyPath: mage_portal_pref
       value: 
       objectReference: {fileID: 1804365559361293287, guid: 1272870115dee3540a1fb03cbd881b3f, type: 3}
+    - target: {fileID: 4927062703946977834, guid: ef7945317dabde14c85b7325307dd327, type: 3}
+      propertyPath: mobs_prefab.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4927062703946977834, guid: ef7945317dabde14c85b7325307dd327, type: 3}
+      propertyPath: 'mobs_prefab.Array.data[8]'
+      value: 
+      objectReference: {fileID: 8981633818693366904, guid: 62cd849975590c54ea2561a88f981cef, type: 3}
+    - target: {fileID: 4927062703946977834, guid: ef7945317dabde14c85b7325307dd327, type: 3}
+      propertyPath: 'mobs_prefab.Array.data[9]'
+      value: 
+      objectReference: {fileID: 8981633818693366904, guid: 0ba6ce2df76c8fc419f49b3559aac37d, type: 3}
     - target: {fileID: 8163569857235264691, guid: ef7945317dabde14c85b7325307dd327, type: 3}
       propertyPath: m_Name
       value: Level

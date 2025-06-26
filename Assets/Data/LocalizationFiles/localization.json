@@ -294,6 +294,12 @@
         "TypeItem": "Material",
         "Quality": "Common",
         "Description": "A heavy, dense ore that can be smelted into iron ingots."
+      },
+      "staff_forest": {
+        "Name": "Forest Staff",
+        "TypeItem": "Staff",
+        "Quality": "Rare",
+        "Description": "A magical staff imbued with the essence of the forest. Its strikes unleash bursts of natural energy that bend foes to nature’s will."
       }
     },
     "mobs": {
@@ -336,6 +342,16 @@
         "Name": "Cave Ripper",
         "TypeMob": "",
         "Description": "A relentless drilling machine built for tunnels, tearing through stone and flesh alike as it carves its endless path through the caves."
+      },
+      "bug_skull_enem": {
+        "Name": "Skullroller",
+        "TypeMob": "",
+        "Description": "A strange beetle from a magical realm that rolls a giant skull of an ancient titan. It hurls the skull at enemies with crushing force."
+      },
+      "bug_enem": {
+        "Name": "Field Beetle",
+        "TypeMob": "",
+        "Description": "A small but fast beetle from enchanted lands. Without its deadly skull, it charges straight at its target with raw momentum."
       }
     },
     "ui_text": {
@@ -731,6 +747,12 @@
         "TypeItem": "Материал",
         "Quality": "Обычное",
         "Description": "Тяжёлая и плотная руда, из которой можно выплавить железные слитки."
+      },
+      "staff_forest": {
+        "Name": "Лесной Посох",
+        "TypeItem": "Посох",
+        "Quality": "Редкий",
+        "Description": "Магический посох, наполненный силой леса. Его удары вызывают всплеск природной энергии, подчиняя врагов воле природы."
       }
     },
     "mobs": {
@@ -773,6 +795,16 @@
         "Name": "Пещеродёр",
         "TypeMob": "",
         "Description": "Неумолимая бурильная машина, созданная для тоннелей, разрывающая камень и плоть на своём бесконечном пути сквозь пещеры."
+      },
+      "bug_skull_enem": {
+        "Name": "Черепокрут",
+        "TypeMob": "",
+        "Description": "Необычный жук из магического мира, катающий гигантский череп древнего титана. Использует его как смертоносное оружие, запуская во врагов с сокрушительной силой."
+      },
+      "bug_enem": {
+        "Name": "Полевик",
+        "TypeMob": "",
+        "Description": "Малый, но стремительный жук из волшебных земель. Без своего шара он просто несётся вперёд, пытаясь сбить врага напором."
       }
     },
     "ui_text": {

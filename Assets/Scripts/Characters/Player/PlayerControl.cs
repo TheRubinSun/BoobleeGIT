@@ -21,7 +21,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private Vector2 inputDirection;
 
 
-
+    private GameManager g_m;
     private Vector2 mousePos;
     private Vector2 movement;
     //Vector2 mousePos;
@@ -43,6 +43,7 @@ public class PlayerControl : MonoBehaviour
 
     void Start()
     {
+        g_m = GameManager.Instance;
         if (cameraObj == null) cameraObj =  GameObject.Find("Main Camera").transform;
         player = GetComponentInParent<Player>();
         rb = GetComponent<Rigidbody2D>();
@@ -147,7 +148,7 @@ public class PlayerControl : MonoBehaviour
     public void Move()
     {
         movement = inputDirection.normalized * player.GetPlayerStats().Mov_Speed;
-        GameManager.Instance.PlayerPosY = transform.position.y;
+        g_m.PlayerPosY = transform.position.y;
 
         rb.linearVelocity = movement;
 

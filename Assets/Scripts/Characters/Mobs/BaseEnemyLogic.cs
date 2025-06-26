@@ -45,7 +45,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     protected bool IsNearThePlayer = false;
 
     protected bool CanBeMissedAttack = true;
-
+    protected GameManager g_m = GameManager.Instance;
 
     //[SerializeField]
     //protected LayerMask obstacleLayer; // Слой для препятствий (стены и игрок)
@@ -75,7 +75,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     //Таймеры
     protected float updateRate = 0.25f; // Интервал обновления (5 раза в секунду)
     protected float nextUpdateTime = 0f;
-
+    protected int layerMob;
     //[SerializeField] protected float attack_volume;
     //[SerializeField] protected float touch_volume;
     //[SerializeField] protected float die_volume;
@@ -98,15 +98,20 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
         LoadParametrs();//Загружаем параметры моба
 
         audioSource = GetComponent<AudioSource>(); //Берем звук 
-        selfCollider = GetComponent<Collider2D>(); //Берем колайдер - форму касания
+        Get2DPhysics();
         spr_ren = mob_object.GetComponent<SpriteRenderer>(); //Берем спрайт моба
-        rb = GetComponent<Rigidbody2D>();
         animator_main = mob_object.GetComponent<Animator>();
+        layerMob = gameObject.layer;
 
-        if(HPBar != null)
+        if (HPBar != null)
         {
             healthBar = new HealthBar2D(HPBar.transform.GetChild(0).gameObject, HPBar.transform.GetChild(1).gameObject);
         }
+    }
+    protected virtual void Get2DPhysics()
+    {
+        selfCollider = GetComponent<Collider2D>();
+        rb = GetComponent<Rigidbody2D>();
     }
     protected virtual void Start()
     {
@@ -196,12 +201,12 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
         if (!isVisibleNow) return;
 
         float mobPosY = transform.position.y;
-        float PlayerPosY = GameManager.Instance.PlayerPosY;
+        float PlayerPosY = g_m.PlayerPosY;
 
         spr_ren.sortingOrder = Mathf.RoundToInt((mobPosY - PlayerPosY - 2) * -5);
     }
 
-    public void TakeDamage(int damage, damageT typeAttack, bool canEvade, EffectData effect = null)
+    public virtual void TakeDamage(int damage, damageT typeAttack, bool canEvade, EffectData effect = null)
     {
         audioSource.Stop();
         //audioSource.volume = touch_volume;
@@ -265,7 +270,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
             Death();
         }
     }
-    private IEnumerator DisplayDamage(int damage, float timeDuration, Color32 newColor)
+    protected IEnumerator DisplayDamage(int damage, float timeDuration, Color32 newColor)
     {
         GameObject damageVal = Instantiate(damageValuePref, EffectsObj);
         TextMeshPro textComp = damageVal.GetComponent<TextMeshPro>();
@@ -487,7 +492,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     public virtual void RangeAttack() {; }
     public virtual void MeleeAttack() {; }
 
-    public Animator GetAnimator()
+    public virtual Animator GetAnimator()
     {
         if (animator_main != null)
         {

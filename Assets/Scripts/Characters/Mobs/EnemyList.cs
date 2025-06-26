@@ -74,6 +74,8 @@ public static class EnemyList
             mobs.Add(new Car("death_car_enem", 40, 1.7f, false, 2, 40, 2.5f, 100, TypeMob.Technology, 3, 0f, 0.15f));
             mobs.Add(new TastyFly("tasty_fly_enem", 9, 4f, false, 2, 30, 1.7f, 30, 12f, TypeMob.Magic, 3, 0.15f, 0f));
             mobs.Add(new Bur("bur_enem", 20, 2f, false, 4, 15, 1.5f, 45, 4f, TypeMob.Technology, 3, 0f, 0.15f));
+            mobs.Add(new Bug_poop("bug_skull_enem", 10, 1.4f, false, 1, 15, 1f, 20, 5, 4f, 3, 2.5f, TypeMob.Magic, 2, 0.15f, 0));
+            mobs.Add(new Bug("bug_enem", 10, 1.4f, false, 1, 15, 2.5f, 20, TypeMob.Magic, 2, 0.15f, 0));
             //DisplayMobsList.Instance.DisplayLinesMobs(mobs);
             //CreatePortalUI.Instance.DisplayLinesMobs(mobs);
         }
@@ -257,6 +259,33 @@ public class Bur : Mob
     : base(_name, _hp, _rangeAt, _isranged, _damage, _attackspeed, _speed, giveExp, typeMob, _Armor, _Mag_Resis, _Tech_Resis)
     {
         attack_move_speed = _attack_move_speed;
+    }
+}
+[Serializable]
+public class Bug_poop : Mob
+{
+    public int hp_ball { get; set; }
+    public int damage_ball { get; set; }
+    public float speed_ball { get; set; }
+    public float speed_withoutBall { get; set; }
+    public Bug_poop(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed, int giveExp, int _hp_ball, float _speed_ball, int _damage_ball, float _speed_withoutBall, TypeMob typeMob,
+    int _Armor = 0, float _Mag_Resis = 0, float _Tech_Resis = 0)
+    : base(_name, _hp, _rangeAt, _isranged, _damage, _attackspeed, _speed, giveExp, typeMob, _Armor, _Mag_Resis, _Tech_Resis)
+    {
+        hp_ball = _hp_ball;
+        speed_ball = _speed_ball;
+        damage_ball = _damage_ball;
+        speed_withoutBall = _speed_withoutBall;
+    }
+}
+[Serializable]
+public class Bug : Mob
+{
+    public Bug(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed, int giveExp,TypeMob typeMob,
+    int _Armor = 0, float _Mag_Resis = 0, float _Tech_Resis = 0)
+    : base(_name, _hp, _rangeAt, _isranged, _damage, _attackspeed, _speed, giveExp, typeMob, _Armor, _Mag_Resis, _Tech_Resis)
+    {
+
     }
 }
 

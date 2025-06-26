@@ -149,8 +149,12 @@ public class EffectsManager : MonoBehaviour
         if (activeCoroutines.Count == 0)
         {
             Debug.Log("Áאפפמג במכüרו םוע");
-            stats.buffsStats.AllNull();
-            stats.UpdateTotalStats();
+            if (stats?.buffsStats != null)
+            {
+                stats.buffsStats.AllNull();
+                stats.UpdateTotalStats();
+            }
+
         }
     }
     public void UseEffect(EffectData effect, bool apply)

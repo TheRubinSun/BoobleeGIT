@@ -174,11 +174,16 @@ public class GameManager: MonoBehaviour
         GameObject corpseEnemy = Instantiate(CorpsePref, mob_logic.transform.parent);
 
         //Назначаем позицию
-        corpseEnemy.transform.position = enemy.transform.position;      
+        corpseEnemy.transform.position = enemy.transform.position;
 
+        AudioClip die_sound = null;
         //Звук
-        AudioClip die_sound = mob_logic.die_sounds[Random.Range(0, mob_logic.die_sounds.Length)];
-        corpseEnemy.GetComponent<AudioSource>().PlayOneShot(die_sound); //Звук смерти моба
+        if (mob_logic.die_sounds.Length > 0)
+        {
+            die_sound = mob_logic.die_sounds[Random.Range(0, mob_logic.die_sounds.Length)];
+            corpseEnemy.GetComponent<AudioSource>().PlayOneShot(die_sound); //Звук смерти моба
+        }
+
 
         //Спрайт
         corpseEnemy.GetComponent<SpriteRenderer>().flipX = enemy.GetComponent<SpriteRenderer>().flipX; //Отразить  как нужно
@@ -187,9 +192,7 @@ public class GameManager: MonoBehaviour
         //Анимация
         Animator corpseAnim = corpseEnemy.GetComponent<Animator>();//Берем аниматор трупа
         Animator enemyAnim = mob_logic.GetAnimator(); //Берем аниматор моба
-        corpseAnim.runtimeAnimatorController = enemyAnim.runtimeAnimatorController;//Коприруем анимации
-        corpseAnim.fireEvents = false;  // Выключает все Animation Events
-        corpseAnim.SetTrigger("Death"); // Включаем анимацию смерти
+        CopyAnim(enemyAnim, corpseAnim);
 
         yield return null;
 
@@ -215,6 +218,12 @@ public class GameManager: MonoBehaviour
         yield return null;
 
         Destroy(mob_logic.gameObject);
+    }
+    private void CopyAnim(Animator from, Animator to)
+    {
+        to.runtimeAnimatorController = from.runtimeAnimatorController;//Коприруем анимации
+        to.fireEvents = false;  // Выключает все Animation Events
+        to.SetTrigger("Death"); // Включаем анимацию смерти
     }
     private IEnumerator WaitToDie(GameObject corpse, float time)
     {

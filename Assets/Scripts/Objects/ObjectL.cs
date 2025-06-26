@@ -69,9 +69,17 @@ public abstract class ObjectLBroken : ObjectL
 
     protected virtual IEnumerator PlayeSoundFullBroken()
     {
-        float pitch = Random.Range(0.8f, 1.2f);
-        audioS.pitch = pitch;
-        audioS.PlayOneShot(fullBroken);
+        if(fullBroken == null)
+        {
+            Debug.LogWarning("Нет звуков");
+        }
+        else
+        {
+            float pitch = Random.Range(0.8f, 1.2f);
+            audioS.pitch = pitch;
+            audioS.PlayOneShot(fullBroken);
+        }
+
         spr_ren.enabled = false;
         Collider2D collider2D = GetComponent<Collider2D>();
         collider2D.enabled = false;
@@ -83,6 +91,11 @@ public abstract class ObjectLBroken : ObjectL
     }
     protected virtual void PlayeSoundBroken()
     {
+        if(soundsBroken.Length == 0)
+        {
+            Debug.LogWarning("Нет звуков");
+            return;
+        }
         AudioClip audioClip = soundsBroken[Random.Range(0, soundsBroken.Length)];
         float pitch = Random.Range(0.8f, 1.2f);
         audioS.pitch = pitch;
