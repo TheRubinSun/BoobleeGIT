@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -48,6 +49,20 @@ public class Bug_poop_Logic : BaseEnemyLogic
         selfCollider = mob_object.GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
     }
+    public override void SetTrapped(float time)
+    {
+        selfCollider.isTrigger = true;
+        IsTrapped = true;
+        col_ball.isTrigger = true;
+        StartCoroutine(OffPhysics(time));
+    }
+    protected override IEnumerator OffPhysics(float time)
+    {
+        yield return new WaitForSeconds(time);
+        selfCollider.isTrigger = false;
+        IsTrapped = false;
+        col_ball.isTrigger = false;
+    }
     public override void Move()
     {
         if (haveBall && ball_logic.IsDestroyed())
@@ -64,9 +79,12 @@ public class Bug_poop_Logic : BaseEnemyLogic
         }
         else
         {
-            animator_main.SetBool("Move", true);
-            Vector2 newPosition = rb.position + moveDirection * enum_stat.Mov_Speed * Time.fixedDeltaTime;
-            rb.MovePosition(newPosition);
+            if (enum_stat.Mov_Speed > 0)
+            {
+                animator_main.SetBool("Move", true);
+                Vector2 newPosition = rb.position + moveDirection * (enum_stat.Mov_Speed) * Time.fixedDeltaTime;
+                rb.MovePosition(newPosition);
+            }
         }
 
     }

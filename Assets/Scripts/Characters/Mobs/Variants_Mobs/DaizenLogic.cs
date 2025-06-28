@@ -8,12 +8,27 @@ public class DaizenLogic : BaseEnemyLogic
     //Объекты
     [SerializeField]
     private Transform child_Obj; //Дочерний объект
-
+    private Collider2D child_col;
     protected override void Start()
     {
         spr_ren_ch = child_Obj.GetComponent<SpriteRenderer>();//Берем доч спрайт моба, если есть
+        child_col = child_Obj.GetComponent<Collider2D>();
 
         base.Start();
+    }
+    public override void SetTrapped(float time)
+    {
+        selfCollider.isTrigger = true;
+        IsTrapped = true;
+        child_col.isTrigger = true;
+        StartCoroutine(OffPhysics(time));
+    }
+    protected override IEnumerator OffPhysics(float time)
+    {
+        yield return new WaitForSeconds(time);
+        selfCollider.isTrigger = false;
+        IsTrapped = false;
+        child_col.isTrigger = false;
     }
     public override void UpdateSortingOrder()
     {

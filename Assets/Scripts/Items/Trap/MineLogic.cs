@@ -12,33 +12,12 @@ public class MineLogic : TrapLogic
     [SerializeField] private GameObject Explosion_Pref;
     [SerializeField] private AudioClip explosion_sound;
 
-    private AudioSource audioSource;
-
-    private Animator anim;
-
-    private bool isActivate = false;
-
-    private void Start()
-    {
-        anim = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
-        //audioSource.volume = GlobalData.VOLUME_SOUNDS;
-    }
-
     public void SetParameters(int _damageTrap, damageT _damageT, float _radiusExp, float _delayTime)
     {
         damageTrap = _damageTrap;
         damageT = _damageT;
         radiusExp = _radiusExp;
         delayTime = _delayTime;
-    }
-    public override void CreateTrap()
-    {
-
-    }
-    public override void DestroyTrap()
-    {
-
     }
     public override void Activate()
     {

@@ -8,6 +8,10 @@ public class EnemyStats : CharacterStats
     public float Attack_Interval { get; set;}
     public int GiveExp { get; set;}
 
+    public void SetBuff(BuffsStats bf)
+    {
+        buffsStats = bf;
+    }
     public bool isEvasion()
     {
         if (Evasion <= 0) return false;

@@ -24,8 +24,6 @@ public class ResourcesData : MonoBehaviour
         weapons["shotgun_pump"] = Resources.Load<GameObject>("Weapons/ShotGun_pump");
         weapons["staff_forest"] = Resources.Load<GameObject>("Weapons/Staff_forest");
 
-        
-
         projectiles[0] = Resources.Load<GameObject>("Projectiles/Pistol_Bullet");
         projectiles[1] = Resources.Load<GameObject>("Projectiles/Shotgun_Bullet");
         projectiles[2] = Resources.Load<GameObject>("Projectiles/Arrow");
@@ -39,15 +37,18 @@ public class ResourcesData : MonoBehaviour
         minions[2] = Resources.Load<GameObject>("Minions/Minion_Mixed");
 
         traps[0] = Resources.Load<GameObject>("Traps/Mine");
+        traps[1] = Resources.Load<GameObject>("Traps/FootTrap");
 
         portals[0] = Resources.Load<GameObject>("Portals/Portal_Tech");
-        portals[0] = Resources.Load<GameObject>("Portals/Portal_Mages");
+        portals[1] = Resources.Load<GameObject>("Portals/Portal_Mages");
 
         effects[0] = Resources.Load<EffectData>("Effects/Heal");
         effects[1] = Resources.Load<EffectData>("Effects/Posion_Pistol");
         effects[2] = Resources.Load<EffectData>("Effects/SpeedUp");
         effects[3] = Resources.Load<EffectData>("Effects/Posion_SmallSlime");
         effects[4] = Resources.Load<EffectData>("Effects/Posion_BossSlime");
+        effects[5] = Resources.Load<EffectData>("Effects/Trapped");
+        
 
         if (weapons["sword_gods_slayer"] == null)
             Debug.LogError("Не удалось загрузить префаб Sword_God_Pref!");

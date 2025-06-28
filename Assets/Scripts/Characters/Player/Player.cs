@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
@@ -34,6 +35,10 @@ public class Player : MonoBehaviour, ITakeDamage
     public Toggle[] TooglesWeapon = new Toggle[4];
 
     SpriteRenderer player_sprite;
+
+    //Abillity
+    private bool canForce = true;
+    private float cooldownForce = 0.3f;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -257,6 +262,22 @@ public class Player : MonoBehaviour, ITakeDamage
             pl_stats.DirectionOrVectorWeapon[i] = false;
             TooglesWeapon[i].isOn = pl_stats.DirectionOrVectorWeapon[i];
         }
+    }
+
+    public bool ForcePlayer(float force)
+    {
+        if (!canForce) return false;
+
+        canForce = false;
+        playerControl.Jump(force);
+        StartCoroutine(ColdDown(cooldownForce, value => canForce = value));
+
+        return true;
+    }
+    private IEnumerator ColdDown(float cooldown, System.Action<bool> setValue)
+    {
+        yield return new WaitForSeconds(cooldown);
+        setValue(true);
     }
     public GameObject CreateTrap(GameObject trap)
     {

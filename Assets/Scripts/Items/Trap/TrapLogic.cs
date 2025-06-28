@@ -1,32 +1,30 @@
 using UnityEngine;
 
-public class TrapLogic : MonoBehaviour 
+public abstract class TrapLogic : MonoBehaviour 
 {
+    protected AudioSource audioSource;
 
-    public virtual void SetParameters()
+    protected Animator anim;
+
+    protected bool isActivate = false;
+
+    protected virtual void Start()
     {
-
-    }
-    public virtual void CreateTrap()
-    {
-
-    }
-    public virtual void DestroyTrap()
-    {
-
+        anim = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
+        //audioSource.volume = GlobalData.VOLUME_SOUNDS;
     }
     public virtual void Activate()
     {
 
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    public virtual void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("Trigger");
         if (collision!= null)
         {
-            if(collision.CompareTag("Enemy"))
+            if (collision.gameObject.layer == LayerManager.enemyLayer)
             {
-                Debug.Log("Enemy");
                 Activate();
             }
         }

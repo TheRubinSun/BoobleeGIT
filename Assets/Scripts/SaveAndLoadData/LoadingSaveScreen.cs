@@ -22,6 +22,7 @@ public class LoadingSaveScreen : MonoBehaviour
         // Загружаем данные и сохраняем в GameDataHolder
         yield return LoadData(savePath);
         yield return LoadArtifact(savePath);
+        yield return LoadWorldData(savePath);
 
         // Загружаем игровую сцену асинхронно
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(GlobalData.NAME_NEW_LOCATION);
@@ -51,5 +52,9 @@ public class LoadingSaveScreen : MonoBehaviour
     private async Task LoadArtifact(string savePath)
     {
         GameDataHolder.ArtifactsData = await SaveSystem.LoadDataAsync<ArtifactsData>(savePath + "artifacts.json");
+    }
+    private async Task LoadWorldData(string savePath)
+    {
+        GameDataHolder.WorldData = await SaveSystem.LoadDataAsync<WorldData>(savePath + "world_data.json");
     }
 }

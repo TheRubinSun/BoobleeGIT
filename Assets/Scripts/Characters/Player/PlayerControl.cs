@@ -80,6 +80,10 @@ public class PlayerControl : MonoBehaviour
         {
             if (player.TakeHealMana(2)) { }
         }
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            Jump(1f);
+        }
     }
     private void FixedUpdate()
     {
@@ -112,6 +116,7 @@ public class PlayerControl : MonoBehaviour
         weaponsAndArms = weaponObj;
         minionSlots = minionObj;
     }
+
     void Attack()
     {
         if (weaponsAndArms == null) return;
@@ -144,6 +149,15 @@ public class PlayerControl : MonoBehaviour
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         WeaponSlots.rotation = Quaternion.Euler(0, 0, angle);
+    }
+    public void Jump(float distance)
+    {
+        transform.position += (Vector3)inputDirection.normalized * distance;
+
+        foreach (LineControle legsLine in legsLines)
+        {
+            legsLine.transform.position += (Vector3)inputDirection.normalized * distance;
+        }
     }
     public void Move()
     {

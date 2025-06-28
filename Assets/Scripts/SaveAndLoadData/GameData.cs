@@ -28,6 +28,18 @@ public class SavesDataInfo
         this.volume_musics = volume_musics;
     }
 }
+public class WorldData
+{
+    public List<FarmPoint> farmPoints;
+    public WorldData(List<FarmPoint> _farmPoints)
+    {
+        farmPoints = _farmPoints;
+    }
+    public WorldData()
+    {
+        farmPoints = new List<FarmPoint>();
+    }
+}
 public class CraftsRecipesData
 {
     public RecipeCraft[] craftsRecipesData;

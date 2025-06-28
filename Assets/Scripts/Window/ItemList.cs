@@ -111,7 +111,8 @@ public static class ItemsList
         items.Add(new Item(45, "material_quartzite",           100, 0, Quality.Common, 2, "_", TypeItem.Material));
         items.Add(new Item(46, "material_quartz_sand",         100, 0, Quality.Common, 3, "_", TypeItem.Material));
         items.Add(new Item(47, "material_iron_ore",            10, 0, Quality.Common, 6, "_", TypeItem.Material));
-
+        items.Add(new FootTrap(49, "trap_foottrap",            10, 12, Quality.Common, 6, "_", 1, 2, damageT.Technical, 2f));
+        items.Add(new ForseItem(50, "item_force_air", 10, 12, Quality.Common, 6, "_", 1f, TypeItem.Other, true));
         //PrintItemList();
     }
     private static void InitializeSpritesItem()

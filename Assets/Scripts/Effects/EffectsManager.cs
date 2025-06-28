@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEditor.Rendering;
 using UnityEngine;
 using static EffectData;
@@ -37,6 +38,7 @@ public class EffectsManager : MonoBehaviour
     }
     public bool ApplyEffect(EffectData effect)
     {
+
         EffectData existingEffect = activeCoroutines.Keys.FirstOrDefault(e => e.EffectName == effect.EffectName);
 
         if(!curEffectsObj.ContainsKey(effect.effectType) && parentCurEffect != null && effect.effectObj != null)
@@ -148,7 +150,8 @@ public class EffectsManager : MonoBehaviour
         }
         if (activeCoroutines.Count == 0)
         {
-            Debug.Log("Áאפפמג במכüרו םוע");
+            Debug.Log("Áאפפמג במכüרו םוע" + $"stats.Mov_Speed{stats.Mov_Speed}/{stats.Base_Mov_Speed}/{stats.buffsStats.Buff_Mov_Speed}");
+            
             if (stats?.buffsStats != null)
             {
                 stats.buffsStats.AllNull();

@@ -20,11 +20,12 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     public string Name; //Имя
 
     public EnemyStats enum_stat;
+    protected BuffsStats bf_stats;
     public TypeMob typeMob { get; protected set; }
 
     //Состояния
     protected bool IsDead { get; set; }
-
+    public bool IsFly;
 
 
     protected Color32 original_color; //Цвет
@@ -72,13 +73,13 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
 
     [SerializeField]
     protected float attackBuffer; // Можно настроить
+
+    //Скорость
+    public bool IsTrapped { get; protected set; }
     //Таймеры
     protected float updateRate = 0.25f; // Интервал обновления (5 раза в секунду)
     protected float nextUpdateTime = 0f;
     protected int layerMob;
-    //[SerializeField] protected float attack_volume;
-    //[SerializeField] protected float touch_volume;
-    //[SerializeField] protected float die_volume;
 
     //Hp Bar
     [SerializeField] private GameObject HPBar;
@@ -91,10 +92,12 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
 
     protected bool isVisibleNow = true;
 
+
     [SerializeField] protected Abillity[] abillities;
 
     protected virtual void Awake()
     {
+        bf_stats = new BuffsStats();
         LoadParametrs();//Загружаем параметры моба
 
         audioSource = GetComponent<AudioSource>(); //Берем звук 
@@ -107,6 +110,43 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
         {
             healthBar = new HealthBar2D(HPBar.transform.GetChild(0).gameObject, HPBar.transform.GetChild(1).gameObject);
         }
+    }
+    protected virtual void LoadParametrs()
+    {
+        mob = EnemyList.mobs[IdMobs];
+        Name = mob.NameKey;
+        typeMob = mob.TypeMob;
+
+        enum_stat = new EnemyStats();
+        enum_stat.SetBuff(bf_stats);
+        enum_stat.Base_Max_Hp = mob.Hp;
+        enum_stat.Cur_Hp = mob.Hp;
+        enum_stat.Base_Att_Range = mob.rangeAttack;
+        enum_stat.Base_Mov_Speed = mob.speed;
+        enum_stat.isRanged = mob.isRanged;
+        enum_stat.Base_Att_Damage = mob.damage;
+        enum_stat.Base_Att_Speed = mob.attackSpeed;
+        
+        enum_stat.GiveExp = mob.GiveExp;
+
+        enum_stat.Base_Armor = mob.Armor;
+        enum_stat.Base_Magic_Resis = mob.Mag_Resis;
+        enum_stat.Base_Tech_Resis = mob.Tech_Resis;
+        enum_stat.UpdateTotalStats();
+
+        enum_stat.Attack_Interval = 60f / enum_stat.Att_Speed;
+    }
+    public virtual void SetTrapped(float time)
+    {
+        selfCollider.isTrigger = true;
+        IsTrapped = true;
+        StartCoroutine(OffPhysics(time));
+    }
+    protected virtual IEnumerator OffPhysics(float time)
+    {
+        yield return new WaitForSeconds(time);
+        selfCollider.isTrigger = false;
+        IsTrapped = false;
     }
     protected virtual void Get2DPhysics()
     {
@@ -131,6 +171,14 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
         if (abillities.Length > 0) StartCoroutine(LoadAbilities());
         //SetVolume();
     }
+    //public void SetSpeedCoof(float newCoofSpeed)
+    //{
+    //    coofMoveSpeed = newCoofSpeed;
+    //}
+    //public void ToBaseSpeed()
+    //{
+    //    coofMoveSpeed = baseCoofMove;
+    //}
     protected virtual IEnumerator LoadAbilities()
     {
         for (int i = 0; i < abillities.Length; i++)
@@ -157,31 +205,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     {
         //audioSource.volume = GlobalData.VOLUME_SOUNDS;
     }
-    protected virtual void LoadParametrs()
-    {
-        mob = EnemyList.mobs[IdMobs];
-        Name = mob.NameKey;
-        typeMob = mob.TypeMob;
 
-        enum_stat = new EnemyStats();
-        enum_stat.Max_Hp = mob.Hp;
-        enum_stat.Cur_Hp = enum_stat.Max_Hp;
-        enum_stat.Att_Range = mob.rangeAttack;
-        enum_stat.Mov_Speed = mob.speed;
-        enum_stat.isRanged = mob.isRanged;
-        enum_stat.Att_Damage = mob.damage;
-        enum_stat.Att_Speed = mob.attackSpeed;
-        enum_stat.Attack_Interval = 60f / enum_stat.Att_Speed;
-        enum_stat.GiveExp = mob.GiveExp;
-
-        enum_stat.Armor = mob.Armor;
-        enum_stat.Magic_Resis = mob.Mag_Resis;
-        enum_stat.Tech_Resis = mob.Tech_Resis;
-    }
-    protected virtual void Update()
-    {
-        //UpdateSortingOrder();
-    }
 
     protected int fixedUpdateCounter = 0;
     public virtual void FixedUpdate()
@@ -366,8 +390,17 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     public virtual void Move()
     {
         Flipface();
-        Vector2 newPosition = rb.position + moveDirection * enum_stat.Mov_Speed * Time.fixedDeltaTime;
-        rb.MovePosition(newPosition);
+
+        if(enum_stat.Mov_Speed > 0)
+        {
+            Vector2 newPosition = rb.position + moveDirection * (enum_stat.Mov_Speed) * Time.fixedDeltaTime;
+            rb.MovePosition(newPosition);
+        }
+        else
+        {
+            rb.linearVelocity = Vector2.zero;
+        }
+
     }
     public virtual void Flipface() //Разворачиваем моба 
     {

@@ -387,6 +387,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IdMobs: 1
   Name: 
+  IsFly: 0
   EffectsObj: {fileID: 4571109830553865167}
   CenterObject: {fileID: 256399650496971137}
   player: {fileID: 0}
@@ -402,6 +403,7 @@ MonoBehaviour:
   abolity_sounds: []
   damageValuePref: {fileID: 6292013005122663656, guid: cac7b7163f7b90940bb6363f0f51064d, type: 3}
   attackBuffer: 1
+  baseCoofMove: 1
   HPBar: {fileID: 4755589234796842308}
   abillities: []
   child_Obj: {fileID: 256399650496971137}
