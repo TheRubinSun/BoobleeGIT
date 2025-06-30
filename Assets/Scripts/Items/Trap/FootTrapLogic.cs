@@ -6,12 +6,25 @@ public class FootTrapLogic : TrapLogic
     public int damageTrap { get; set; }
     public damageT damageT { get; set; }
     public float timeDuration { get; set; }
+    [SerializeField] private AudioClip trapped_sound;
 
-    private float coofMove = 0;
-    private bool isCaught;
+    //private bool isCaught = false;
+
+    public void SetParameters(int _damageTrap, damageT _damageT, float _timeDuration)
+    {
+        damageTrap = _damageTrap;
+        damageT = _damageT;
+        timeDuration = _timeDuration;
+    }
     public void Activate(BaseEnemyLogic baseEnemyLogic, EffectsManager eff_man)
     {
         if (baseEnemyLogic.IsTrapped || baseEnemyLogic.IsFly) return;
+
+        //isCaught = true;
+        sr.enabled = false;
+        cold.enabled = false;
+
+
 
         baseEnemyLogic.SetTrapped(timeDuration);
 
@@ -30,17 +43,17 @@ public class FootTrapLogic : TrapLogic
         eff_man.ApplyEffect(trapped);
 
         baseEnemyLogic.TakeDamage(damageTrap, damageT, false);
-        Destroy(gameObject);
+        StartCoroutine(PlaySoundsAndDestroy());
         //isCaught = false;
         //baseEnemyLogic.SetSpeedCoof(coofMove);
         //baseEnemyLogic.TakeDamage(damageTrap, damageT, false);
         //StartCoroutine(DurationAndDestroy(baseEnemyLogic));
     }
-    public void SetParameters(int _damageTrap, damageT _damageT, float _timeDuration)
+    private IEnumerator PlaySoundsAndDestroy()
     {
-        damageTrap = _damageTrap;
-        damageT = _damageT;
-        timeDuration = _timeDuration;
+        audioSource.PlayOneShot(trapped_sound);
+        yield return new WaitForSeconds(trapped_sound.length);
+        Destroy(gameObject);
     }
     //private IEnumerator DurationAndDestroy(BaseEnemyLogic baseEnemyLogic)
     //{
@@ -51,6 +64,7 @@ public class FootTrapLogic : TrapLogic
     //}
     public override void OnTriggerEnter2D(Collider2D collision)
     {
+        //if (isCaught) return;
         //Debug.Log("Trigger");
         if (collision != null)
         {

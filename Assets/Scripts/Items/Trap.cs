@@ -58,7 +58,7 @@ public class FootTrap : Trap
     public int damageTrap;
     public damageT damageT;
     public float timeDuration;
-    private static int soundID = 3;
+    private static int soundID = 6;
 
     public FootTrap(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, int _id_trap_prefab, int _damageTrap, damageT _damageT, float _timeDuration) : base(id, name, maxCount, spriteID, quality, cost, description, _id_trap_prefab)
     {

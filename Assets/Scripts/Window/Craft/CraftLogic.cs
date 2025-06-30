@@ -326,6 +326,8 @@ public class CraftLogic : MonoBehaviour, ISlot
                 case "material_bottle":
                     idSounds = 8;
                     break;
+                case "item_force_air":
+                    goto case "material_quartz_sand";
                 default:
                     {
                         idSounds = 0;

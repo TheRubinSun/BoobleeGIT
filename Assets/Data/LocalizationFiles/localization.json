@@ -300,6 +300,30 @@
         "TypeItem": "Staff",
         "Quality": "Rare",
         "Description": "A magical staff imbued with the essence of the forest. Its strikes unleash bursts of natural energy that bend foes to nature’s will."
+      },
+      "trap_foottrap": {
+        "Name": "Contact Trap",
+        "TypeItem": "Trap",
+        "Quality": "Uncommon",
+        "Description": "Activates upon surface contact. Reliably halts ground-based targets — from living creatures to machines and mechanisms."
+      },
+      "item_force_air": {
+        "Name": "Essence of Flight",
+        "TypeItem": "Consumable",
+        "Quality": "Uncommon",
+        "Description": "A vessel containing sealed flight energy. Releases a strong impulse when activated, briefly propelling or pushing the user."
+      },
+      "material_beetle_shell": {
+        "Name": "Beetle Shell",
+        "TypeItem": "Material",
+        "Quality": "Uncommon",
+        "Description": "A sturdy, smooth fragment of shell harvested from the Skullroller and Field Beetle. Currently has no use, but shows great potential."
+      },
+      "material_beetle_sludge": {
+        "Name": "Beetle Sludge",
+        "TypeItem": "Material",
+        "Quality": "Common",
+        "Description": "A sticky substance left behind by magical beetles. Used as an organic adhesive in contact-based traps."
       }
     },
     "mobs": {
@@ -753,6 +777,30 @@
         "TypeItem": "Посох",
         "Quality": "Редкий",
         "Description": "Магический посох, наполненный силой леса. Его удары вызывают всплеск природной энергии, подчиняя врагов воле природы."
+      },
+      "trap_foottrap": {
+        "Name": "Контакт-ловушка",
+        "TypeItem": "Ловушка",
+        "Quality": "Необычное",
+        "Description": "Активируется при касании с поверхностью. Надёжно блокирует движение наземных целей — от живых существ до машин и механизмов."
+      },
+      "item_force_air": {
+        "Name": "Эссенция полёта",
+        "TypeItem": "Расходник",
+        "Quality": "Необычное",
+        "Description": "Сосуд с запечатанной энергией полёта. При активации высвобождает мощный импульс, на мгновение подбрасывая или отталкивая владельца."
+      },
+      "material_beetle_shell": {
+        "Name": "Панцирь жука",
+        "TypeItem": "Материал",
+        "Quality": "Необычное",
+        "Description": "Крепкий и гладкий фрагмент панциря, добытый с Черепокрута и Полевика. Пока не нашёл применения, но выглядит многообещающе."
+      },
+      "material_beetle_sludge": {
+        "Name": "Жучья слизь",
+        "TypeItem": "Материал",
+        "Quality": "Обычное",
+        "Description": "Липкая субстанция, остающаяся после волшебных жуков. Используется как органический клей в контактных ловушках."
       }
     },
     "mobs": {

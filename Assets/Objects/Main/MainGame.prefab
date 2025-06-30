@@ -6218,6 +6218,10 @@ PrefabInstance:
       value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 3683355731360068652, guid: eb2b32d240596954699ca99d90df4b01, type: 3}
+      propertyPath: items_sounds.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3683355731360068652, guid: eb2b32d240596954699ca99d90df4b01, type: 3}
       propertyPath: 'craftItems.Array.data[6]'
       value: 
       objectReference: {fileID: 8300000, guid: daef4c5997b0b044683564fa6909fdea, type: 3}
@@ -6229,6 +6233,14 @@ PrefabInstance:
       propertyPath: 'craftItems.Array.data[8]'
       value: 
       objectReference: {fileID: 8300000, guid: 321c17bcdc23669438043e6a5c2c9d85, type: 3}
+    - target: {fileID: 3683355731360068652, guid: eb2b32d240596954699ca99d90df4b01, type: 3}
+      propertyPath: 'items_sounds.Array.data[5]'
+      value: 
+      objectReference: {fileID: 8300000, guid: e708afa3f151c714e8cb165772a1d1c8, type: 3}
+    - target: {fileID: 3683355731360068652, guid: eb2b32d240596954699ca99d90df4b01, type: 3}
+      propertyPath: 'items_sounds.Array.data[6]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 06d84030b7b18f744b785093134a818c, type: 3}
     - target: {fileID: 6149228089426540374, guid: eb2b32d240596954699ca99d90df4b01, type: 3}
       propertyPath: m_Name
       value: GameManager

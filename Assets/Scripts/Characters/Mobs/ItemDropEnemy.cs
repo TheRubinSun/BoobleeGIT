@@ -99,6 +99,18 @@ public class ItemDropEnemy
             new("material_lamp", 1, 1),
             new("material_simple_engine", 1, 1),
         };
+
+        enemyAndHisDropItems["bug_skull_enem"] = new DropItemEnemy[] {
+            new("material_wood", 1, 2),
+            new("material_beetle_sludge", 1, 6),
+            new("material_beetle_shell", 1, 2),
+        };
+
+        enemyAndHisDropItems["bug_enem"] = new DropItemEnemy[] {
+            new("material_wood", 1, 2),
+            new("material_beetle_sludge", 1, 6),
+            new("material_beetle_shell", 1, 2),
+        };
     }
 }
 public class DropItemEnemy

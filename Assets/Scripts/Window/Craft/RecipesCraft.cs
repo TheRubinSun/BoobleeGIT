@@ -40,8 +40,9 @@ public static class RecipesCraft
         crafts.Add(new RecipeCraft("pickaxe_simple", 1, new Dictionary<string, int> { { "material_wood", 6 }, { "material_iron_bar", 7 } }, CraftTable.Workbench));
         crafts.Add(new RecipeCraft("bur_t0k6", 1, new Dictionary<string, int> { { "material_bur", 1 }, { "material_battery", 1 },{ "material_simple_engine", 1 },{ "material_copper_wires", 40 }, { "material_iron_bar", 20} }, CraftTable.Workbench));
         crafts.Add(new RecipeCraft("material_glass", 1, new Dictionary<string, int> { { "material_quartz_sand", 5 } }, CraftTable.Smelter));
-
-
+        crafts.Add(new RecipeCraft("trap_foottrap", 2, new Dictionary<string, int> { { "material_beetle_sludge", 4 }, { "material_iron_bar", 1} }, CraftTable.Workbench));
+        crafts.Add(new RecipeCraft("item_force_air", 5, new Dictionary<string, int> { { "material_wings_fly", 1 }, { "material_slime_acid", 1 }, { "material_rubin_piece", 5 } }, CraftTable.Alchemy_Station));
+        crafts.Add(new RecipeCraft("staff_forest", 1, new Dictionary<string, int> { { "material_strange_eye", 1 }, { "material_wood", 5 }, { "material_sunflower", 10 } }, CraftTable.Workbench));
         recipesCraft = crafts.ToArray();
     }
 }

@@ -75,7 +75,7 @@ public static class ItemsList
         items.Add(new Item(9, "material_dif_parts_one",        20, 0, Quality.Rare, 50, "_", TypeItem.Material));
         items.Add(new Item(10, "sword_parts_one",              20, 0, Quality.Mystical, 200, "_", TypeItem.Material));
         items.Add(new Item(11, "bow_parts_one",                20, 0, Quality.Mystical, 200, "_", TypeItem.Material));
-        items.Add(new Mine(12, "trap_mine",                    10, 0, Quality.Rare, 40, "_", 0, 15, damageT.Technical, 1.5f, 0.5f));
+        items.Add(new Mine(12, "trap_mine",                    10, 0, Quality.Rare, 120, "_", 0, 15, damageT.Technical, 1.5f, 0.5f));
         items.Add(new Minion(15, "minion_mage_es",             1, 0, Quality.Rare, 500, "_", TypeItem.Minion, 4f, 6f, 2f, TypeMob.Magic));
         items.Add(new SpeedUpPotion(18, "item_potion_speed",   20, 0, Quality.Rare, 50, "_", 1, 10, "SpeedUp", 5));
         items.Add(new Item(19, "material_iron_bar",            20, 0, Quality.Common, 30, "_", TypeItem.Material));
@@ -101,7 +101,7 @@ public static class ItemsList
         items.Add(new Item(37, "material_saw_blade",           20, 0, Quality.Rare, 350, "_", TypeItem.Material));
         items.Add(new Item(38, "material_copper_wires",        40, 0, Quality.Common, 20, "_", TypeItem.Material));
         items.Add(new Item(39, "material_lamp",                20, 0, Quality.Rare, 400, "_", TypeItem.Material));
-        items.Add(new Item(40, "material_wings_fly",           20, 0, Quality.Uncommon, 150, "_", TypeItem.Material));
+        items.Add(new Item(40, "material_wings_fly",           20, 0, Quality.Uncommon, 60, "_", TypeItem.Material));
         items.Add(new Item(41, "material_simple_engine",       5, 0, Quality.Legendary, 2000, "_", TypeItem.Material));
 
         items.Add(new MeleWeapon(42, "pickaxe_simple",         1, 0, Quality.Rare, 350, "_", false, 0.1f, damageT.Physical, 1, 0.25f, 90, 1));
@@ -111,8 +111,10 @@ public static class ItemsList
         items.Add(new Item(45, "material_quartzite",           100, 0, Quality.Common, 2, "_", TypeItem.Material));
         items.Add(new Item(46, "material_quartz_sand",         100, 0, Quality.Common, 3, "_", TypeItem.Material));
         items.Add(new Item(47, "material_iron_ore",            10, 0, Quality.Common, 6, "_", TypeItem.Material));
-        items.Add(new FootTrap(49, "trap_foottrap",            10, 12, Quality.Common, 6, "_", 1, 2, damageT.Technical, 2f));
-        items.Add(new ForseItem(50, "item_force_air", 10, 12, Quality.Common, 6, "_", 1f, TypeItem.Other, true));
+        items.Add(new FootTrap(49, "trap_foottrap",            20, 0, Quality.Uncommon, 25, "_", 1, 2, damageT.Technical, 2f));
+        items.Add(new ForseItem(50, "item_force_air",          20, 0, Quality.Uncommon, 22, "_", 1f, TypeItem.Other, true));
+        items.Add(new Item(51, "material_beetle_shell",        20, 0, Quality.Uncommon, 30, "_", TypeItem.Material));
+        items.Add(new Item(52, "material_beetle_sludge",       40, 0, Quality.Common,   4, "_", TypeItem.Material));
         //PrintItemList();
     }
     private static void InitializeSpritesItem()
