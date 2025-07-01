@@ -30,14 +30,17 @@ public class SavesDataInfo
 }
 public class WorldData
 {
-    public List<FarmPoint> farmPoints;
-    public WorldData(List<FarmPoint> _farmPoints)
+    public int numbTotalPoints;
+    public Dictionary<int, FarmPoint> farmPoints;
+    public WorldData(int _numbTotalPoints, Dictionary<int, FarmPoint> _farmPoints)
     {
+        numbTotalPoints = _numbTotalPoints;
         farmPoints = _farmPoints;
     }
     public WorldData()
     {
-        farmPoints = new List<FarmPoint>();
+        numbTotalPoints = 0;
+        farmPoints = new Dictionary<int, FarmPoint>();
     }
 }
 public class CraftsRecipesData

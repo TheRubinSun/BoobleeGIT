@@ -546,6 +546,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 220399904}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &472964583 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1492500469206082917, guid: afdf47f5b8678e546bf74f4eb46fcd7f, type: 3}
+  m_PrefabInstance: {fileID: 6827644378235901404}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &499995423
 GameObject:
   m_ObjectHideFlags: 0
@@ -832,6 +837,72 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1075017645054765957, guid: 86cc63d423d399e49a05908a9ea046f9, type: 3}
   m_PrefabInstance: {fileID: 823223980}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &926711216
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 926711217}
+  - component: {fileID: 926711218}
+  m_Layer: 0
+  m_Name: GardenManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &926711217
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 926711216}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 472964583}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &926711218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 926711216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3286b37a3208e834a9510162f7bc6513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentGarden: {fileID: 1924234519}
+  flowers:
+  - id: 0
+    key_name: sunflower
+    flower_finals:
+    - {fileID: 294128056547279690, guid: 79b05e1565315e94aa7db48455b98a7d, type: 3}
+    - {fileID: 294128056547279690, guid: fac16cce37308434e82f7774be6b459b, type: 3}
+    - {fileID: 294128056547279690, guid: 466ae3d8cb5204641937fe7d3dcb2005, type: 3}
+    flower_seed: {fileID: 294128056547279690, guid: f63b9f2ca5933a045b8b50f34fcd7291, type: 3}
+    flower_sprout: {fileID: 294128056547279690, guid: 5c4c1bf2251217c41888622da19fe7b8, type: 3}
+  - id: 1
+    key_name: tolania
+    flower_finals:
+    - {fileID: 294128056547279690, guid: 96c8f79d98189b045bf2ba7dfaa02196, type: 3}
+    flower_seed: {fileID: 294128056547279690, guid: 6e2d9cdb9bcb55849a181b5825a69dae, type: 3}
+    flower_sprout: {fileID: 294128056547279690, guid: e4998ace75f1e4f418b0ff028d258356, type: 3}
+  - id: 2
+    key_name: tallflower
+    flower_finals:
+    - {fileID: 294128056547279690, guid: 33084b806077ed341a12c780bf28f185, type: 3}
+    flower_seed: {fileID: 294128056547279690, guid: 3a5f84748cd88234e901e2f54c751d7c, type: 3}
+    flower_sprout: {fileID: 294128056547279690, guid: d398fd623a38f2d42881c95e4287a561, type: 3}
 --- !u!4 &1073895868 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8910037595120832437, guid: a36b31a8792b21046aa57c9dd1697404, type: 3}
@@ -1636,6 +1707,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1924234518
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1924234519}
+  m_Layer: 0
+  m_Name: Garden
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1924234519
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1924234518}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6827644378235901405}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1983580975
 GameObject:
@@ -2459,6 +2561,12 @@ PrefabInstance:
     - {fileID: 1279916016914330496, guid: afdf47f5b8678e546bf74f4eb46fcd7f, type: 3}
     - {fileID: 774156488734100994, guid: afdf47f5b8678e546bf74f4eb46fcd7f, type: 3}
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1492500469206082917, guid: afdf47f5b8678e546bf74f4eb46fcd7f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 926711217}
+    - targetCorrespondingSourceObject: {fileID: 2003559924632734958, guid: afdf47f5b8678e546bf74f4eb46fcd7f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1924234519}
     - targetCorrespondingSourceObject: {fileID: 2003559924632734958, guid: afdf47f5b8678e546bf74f4eb46fcd7f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1789058360}

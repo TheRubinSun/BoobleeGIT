@@ -9,6 +9,7 @@ public class ResourcesData : MonoBehaviour
     public static Dictionary<int, GameObject> minions = new Dictionary<int, GameObject>();
     public static Dictionary<int, GameObject> traps = new Dictionary<int, GameObject>();
     public static Dictionary<int, GameObject> portals = new Dictionary<int, GameObject>();
+    public static Dictionary<int, GameObject> flowers_seed = new Dictionary<int, GameObject>();
     public static Dictionary<int, EffectData> effects = new Dictionary<int, EffectData>();
     public static void LoadWeapons()
     {
@@ -41,6 +42,10 @@ public class ResourcesData : MonoBehaviour
 
         portals[0] = Resources.Load<GameObject>("Portals/Portal_Tech");
         portals[1] = Resources.Load<GameObject>("Portals/Portal_Mages");
+
+        flowers_seed[0] = Resources.Load<GameObject>("Objects/Flowers/Sunflower_seed");
+        flowers_seed[1] = Resources.Load<GameObject>("Objects/Flowers/Tolania_seed");
+        flowers_seed[2] = Resources.Load<GameObject>("Objects/Flowers/Tall_seed");
 
         effects[0] = Resources.Load<EffectData>("Effects/Heal");
         effects[1] = Resources.Load<EffectData>("Effects/Posion_Pistol");
@@ -79,6 +84,10 @@ public class ResourcesData : MonoBehaviour
     public static GameObject GetPortalPrefab(int id)
     {
         return portals.ContainsKey(id) ? portals[id] : null;
+    }
+    public static GameObject GetFlowerSeedPrefab(int id)
+    {
+        return flowers_seed.ContainsKey(id) ? flowers_seed[id] : null;
     }
     public static EffectData GetEffectsPrefab(int id)
     {

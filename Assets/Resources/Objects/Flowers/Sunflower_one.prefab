@@ -80,12 +80,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -4116469796477514449, guid: 8b861be830c023c47a8525a6a1b2db34, type: 3}
+  m_Sprite: {fileID: -4116469796477514449, guid: 31a15f8915c87cc43893054963164b43, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.4, y: 1.2}
+  m_Size: {x: 0.45, y: 0.76666665}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -103,6 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 390089f32b7c0994c986cddb87e052df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ToDropPos: {x: 0, y: 0}
   remainsHits: 3
   toNextStageAnim: 1
   soundsBroken:
@@ -148,17 +149,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.024120525, y: -0.028021693}
+  m_Offset: {x: -0.024120525, y: -0.010870412}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 0.4, y: 1.2}
+    oldSize: {x: 0.45, y: 0.76666665}
+    newSize: {x: 0.45, y: 0.76666665}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.2128104, y: 0.75216913}
+  m_Size: {x: 0.2128104, y: 0.71786654}
   m_EdgeRadius: 0
 --- !u!82 &863736202380144601
 AudioSource:

@@ -77,7 +77,7 @@ public class GameManager: MonoBehaviour
             Artifacts.Instance.LoadOrNew(GameDataHolder.ArtifactsData.artifacts);
 
 
-            GlobalWorld.LoadData(GameDataHolder.WorldData.farmPoints);
+            GlobalWorld.LoadData(GameDataHolder.WorldData.numbTotalPoints, GameDataHolder.WorldData.farmPoints);
 
 
             Player.Instance.LoadOrCreateNew(GameDataHolder.PlayerData.player_data);
@@ -267,7 +267,7 @@ public class GameManager: MonoBehaviour
         ArtifactsData artifacts_Data = new ArtifactsData(Artifacts.Instance.artifacts);
         await SaveSystem.SaveDataAsync(artifacts_Data, savePath + "artifacts.json");
 
-        WorldData world_data = new WorldData(GlobalWorld.FarmsPoint);
+        WorldData world_data = new WorldData(GlobalWorld.numbTotalPoints, GlobalWorld.FarmsPoints);
         await SaveSystem.SaveDataAsync(world_data, savePath + "world_data.json");
 
         EnemyData enemy_Data = new EnemyData(EnemyList.mobs);

@@ -15,6 +15,7 @@ public enum TypeItem
     Minion,
     Trap,
     Other,
+    Seed,
     True,
     False
 }

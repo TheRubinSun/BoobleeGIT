@@ -16,7 +16,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private LegsControl legsControl;
     [SerializeField] private Transform WeaponSlots;
 
-    [SerializeField] private float radiusCenterLegs = 0.4f;        
+    [SerializeField] private float radiusCenterLegs = 0.23f;        
 
     [SerializeField] private Vector2 inputDirection;
 
@@ -36,7 +36,8 @@ public class PlayerControl : MonoBehaviour
     AudioSource audioSource_Move;
 
     //Таймеры
-    private float updateRate = 0.2f;
+    [SerializeField] private float updateRateLegsMove = 0.13f;
+    [SerializeField] private float updateRateLegsStop = 0.3f;
     private float nextUpdateTime = 0f;
 
     [SerializeField] AudioClip audioClips;
@@ -96,8 +97,9 @@ public class PlayerControl : MonoBehaviour
             rb.linearVelocity = Vector2.zero;
             if (Time.time >= nextUpdateTime)
             {
-                MoveLegs();
-                nextUpdateTime = Time.time + updateRate;
+                speed = player.GetPlayerStats().Mov_Speed;
+                MoveLegs(speed);
+                nextUpdateTime = Time.time + updateRateLegsStop;
             }
         }
     }
@@ -159,28 +161,38 @@ public class PlayerControl : MonoBehaviour
             legsLine.transform.position += (Vector3)inputDirection.normalized * distance;
         }
     }
+    private float speed;
     public void Move()
     {
-        movement = inputDirection.normalized * player.GetPlayerStats().Mov_Speed;
+        speed = player.GetPlayerStats().Mov_Speed;
+        movement = inputDirection.normalized * speed;
         g_m.PlayerPosY = transform.position.y;
 
         rb.linearVelocity = movement;
 
-        MoveLegs();
-        MoveCenterLegs(inputDirection);
+        if (Time.time >= nextUpdateTime)
+        {
+            MoveLegs(speed);
+            nextUpdateTime = Time.time + updateRateLegsMove;
+        }
+
+        MoveCenterLegs(inputDirection, speed);
     }
-    private void MoveLegs()
+    //int i = 0;
+    private void MoveLegs(float speed)
     {
-        legsControl.MoveLegs(player.GetPlayerStats().Mov_Speed);
+        //i++;
+        //Debug.Log(i);
+        legsControl.MoveLegs(speed);
     }
-    void MoveCenterLegs(Vector2 inputDirection)
+    void MoveCenterLegs(Vector2 inputDirection, float speed)
     {
         // ������������ �������� ��� ������ ���
         Vector2 currentPos = centerLegs.localPosition;
-        Vector2 newPos = currentPos + inputDirection.normalized * (player.GetPlayerStats().Mov_Speed/2) * Time.deltaTime;
+        Vector2 newPos = currentPos + inputDirection * (speed / 2) * Time.deltaTime;
 
 
-        if (newPos.magnitude > radiusCenterLegs)
+        if (newPos.sqrMagnitude > radiusCenterLegs * radiusCenterLegs)
         {
             centerLegs.localPosition = newPos.normalized * radiusCenterLegs;
         }

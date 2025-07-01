@@ -1,7 +1,9 @@
 using UnityEngine;
 
-public class FlowerLogic : ObjectLBroken
+public class FlowerLogic : ObjectLBroken , IPointFarm
 {
+    public int ID { get;  set; }
+
     protected override void Awake()
     {
         base.Awake();
@@ -15,6 +17,11 @@ public class FlowerLogic : ObjectLBroken
             remainsHits--;
             if (remainsHits == 0)
             {
+                if (gameObject.tag == "Planted")
+                {
+                    Debug.Log($"remove Flower in {ID}");
+                    GlobalWorld.RemoveFarmPoint(ID);
+                }
                 StartCoroutine(PlayeSoundFullBroken());
             }
             else if (remainsHits % toNextStageAnim == 0)

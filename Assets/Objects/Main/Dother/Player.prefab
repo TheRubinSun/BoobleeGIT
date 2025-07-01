@@ -432,8 +432,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerObj: {fileID: 1310100157017385104}
-  cameraObj: {fileID: 0}
-  hand: {fileID: 0}
   centerLegs: {fileID: 2529579196438403198}
   legsLines:
   - {fileID: 3441991390040645784}
@@ -938,7 +936,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2107531679857683326}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.093736, y: 4.484617, z: -0.5190743}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -965,11 +963,6 @@ MonoBehaviour:
   spawnPoint: {fileID: 0}
   equip_Stats: {fileID: 5505010375173175000}
   PlayerModel: {fileID: 1310100157017385104}
-  PlayerLegs:
-  - {fileID: 1547402269623379393}
-  - {fileID: 3103727830701174867}
-  - {fileID: 7118415867076080543}
-  - {fileID: 8034504931853900717}
   TooglesWeapon:
   - {fileID: 0}
   - {fileID: 0}
@@ -1000,6 +993,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp_bar: {fileID: 0}
+  mana_bar: {fileID: 0}
   exp_bar: {fileID: 0}
   player_info_panel: {fileID: 0}
 --- !u!114 &5505010375173175000
@@ -1615,6 +1609,7 @@ MonoBehaviour:
   - {fileID: 7053427301267442738}
   - {fileID: 5221329232697223199}
   range: 1
+  maxTeleportDistanceSqr: 1.7
   time_move_legs: 0.12
   soundTop:
   - {fileID: 8300000, guid: 23d4636d0f8647944aac156d5768d736, type: 3}

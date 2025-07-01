@@ -115,6 +115,9 @@ public static class ItemsList
         items.Add(new ForseItem(50, "item_force_air",          20, 0, Quality.Uncommon, 22, "_", 1f, TypeItem.Other, true));
         items.Add(new Item(51, "material_beetle_shell",        20, 0, Quality.Uncommon, 30, "_", TypeItem.Material));
         items.Add(new Item(52, "material_beetle_sludge",       40, 0, Quality.Common,   4, "_", TypeItem.Material));
+        items.Add(new Seed(53, "seed_sunflower",               100, 0, Quality.Common, 2, "_", 0, "sunflower", TypeItem.Seed));
+        items.Add(new Seed(54, "seed_tall",                    100, 0, Quality.Common, 2, "_", 1, "tolania", TypeItem.Seed));
+        items.Add(new Seed(55, "seed_tonalia",                 100, 0, Quality.Common, 2, "_", 2, "tallflower", TypeItem.Seed));
         //PrintItemList();
     }
     private static void InitializeSpritesItem()

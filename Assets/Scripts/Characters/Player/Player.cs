@@ -93,7 +93,7 @@ public class Player : MonoBehaviour, ITakeDamage
         pl_ui.UpdateAllInfo(pl_stats);
         ChangeToggleWeapons();
     }
-    
+    public Vector2 GetPosPlayer() => playerControl.transform.position;
     public void UpdateHP()
     {
         pl_ui.UpdateHpBar(pl_stats);

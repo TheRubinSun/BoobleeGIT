@@ -3,24 +3,53 @@ using UnityEngine;
 
 public static class GlobalWorld
 {
-    public static List<FarmPoint> FarmsPoint = new List<FarmPoint>();
+    public static int numbTotalPoints;
+    public static Dictionary<int, FarmPoint> FarmsPoints = new Dictionary<int, FarmPoint>();
 
-    public static void LoadData(List<FarmPoint> _FarmsPoint)
+    public static void LoadData(int _numbTotalPoints, Dictionary<int, FarmPoint> _FarmsPoint)
     {
-        FarmsPoint = _FarmsPoint;
+        numbTotalPoints = _numbTotalPoints;
+        FarmsPoints = _FarmsPoint;
+    }
+    public static void AddStageGround()
+    {
+        foreach (FarmPoint point in FarmsPoints.Values)
+        {
+            if (point.stage_ground == 3) continue;
+            point.stage_ground++;
+        }
+    }
+    public static int AddFarmPoint(FarmPoint point)
+    {
+        numbTotalPoints++;
+        FarmsPoints[numbTotalPoints] = point;
+        return numbTotalPoints;
+    }
+    public static void RemoveFarmPoint(int id)
+    {
+        FarmsPoints.Remove(id);
     }
 }
 public class FarmPoint
 {
     public float X {  get; set; }
     public float Y { get; set; }
-    public int seed_type { get; set; }
+    public string seed_type { get; set; }
     public int stage_ground {  get; set; }
-    public FarmPoint(float x, float y, int seed_type, int stage_ground)
+    public FarmPoint() { }
+    public FarmPoint(float x, float y, string seed_type, int stage_ground)
     {
         X = x;
         Y = y;
         this.seed_type = seed_type;
         this.stage_ground = stage_ground;
     }
+    public FarmPoint(Vector2 pos, string seed_type, int stage_ground)
+    {
+        X = pos.x;
+        Y = pos.y;
+        this.seed_type = seed_type;
+        this.stage_ground = stage_ground;
+    }
+    public Vector2 GetPos() => new Vector2(X, Y);
 }

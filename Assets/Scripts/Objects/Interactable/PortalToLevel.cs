@@ -18,7 +18,11 @@ public class PortalToLevel : MonoBehaviour
         }
         if(collision.gameObject.layer == LayerManager.playerLayer)
         {
-            if(add_lvl_left) GlobalData.cur_lvl_left++;
+            if(add_lvl_left)
+            {
+                GlobalData.cur_lvl_left++;
+                GlobalWorld.AddStageGround();
+            }
 
             Dictionary<string, string> localized_nameLoc_text = LocalizationManager.Instance.GetLocalizedValue("ui_text", "name_location");
             GlobalData.NAME_NEW_LOCATION = nameNewLocation;
