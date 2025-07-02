@@ -1,8 +1,10 @@
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 
 public class FlowerLogic : ObjectLBroken , IPointFarm
 {
     public int ID { get;  set; }
+    public int IdDirtBed { get; set; }
 
     protected override void Awake()
     {
@@ -17,10 +19,17 @@ public class FlowerLogic : ObjectLBroken , IPointFarm
             remainsHits--;
             if (remainsHits == 0)
             {
+                GardenManager gr = GardenManager.instance;
                 if (gameObject.tag == "Planted")
                 {
-                    Debug.Log($"remove Flower in {ID}");
+                    
                     GlobalWorld.RemoveFarmPoint(ID);
+                    if (gr != null)
+                    {
+                        Debug.Log($"remove Flower in {ID}");
+                        gr.RemoveSeed(IdDirtBed);
+                    }
+                        
                 }
                 StartCoroutine(PlayeSoundFullBroken());
             }

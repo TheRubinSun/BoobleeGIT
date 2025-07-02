@@ -72,7 +72,7 @@ public static class EnemyList
             mobs.Add(new Slime("slime_boss_enem", 50, 5f, true, 2, 30, 1.6f, 6f, 1, 50, TypeMob.Magic, 4, 1, 0.1f, 0));
             mobs.Add(new Mimic("mimic_enem", 12, 2f, false, 3, 25, 2f, 50, TypeMob.Magic, 3, 0.15f, 0f));
             mobs.Add(new Car("death_car_enem", 40, 1.7f, false, 2, 40, 2.5f, 100, TypeMob.Technology, 3, 0f, 0.15f));
-            mobs.Add(new TastyFly("tasty_fly_enem", 9, 4f, false, 2, 30, 1.7f, 30, 12f, TypeMob.Magic, 3, 0.15f, 0f));
+            mobs.Add(new TastyFly("tasty_fly_enem", 9, 4f, false, 2, 30, 1.7f, 30, 10f, TypeMob.Magic, 3, 0.15f, 0f));
             mobs.Add(new Bur("bur_enem", 20, 2f, false, 4, 15, 1.5f, 45, 4f, TypeMob.Technology, 3, 0f, 0.15f));
             mobs.Add(new Bug_poop("bug_skull_enem", 10, 1.4f, false, 1, 15, 1f, 20, 5, 4f, 3, 2.5f, TypeMob.Magic, 2, 0.15f, 0));
             mobs.Add(new Bug("bug_enem", 10, 1.4f, false, 1, 15, 2.5f, 20, TypeMob.Magic, 2, 0.15f, 0));

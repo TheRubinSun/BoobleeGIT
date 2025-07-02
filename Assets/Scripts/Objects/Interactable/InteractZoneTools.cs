@@ -21,16 +21,17 @@ public class DrawOutline : MonoBehaviour
     public void DrawOutlineObj()
     {
         mat.SetFloat("_OutlineSize", outlineSize);
-        e_icon.SetActive(true);
+        if (e_icon != null) e_icon.SetActive(true);
     }
     public void EarseOutlineObj()
     {
         mat.SetFloat("_OutlineSize", 0);
-        e_icon.SetActive(false);
+        if(e_icon!=null) e_icon.SetActive(false);
     }
 }
 public class InteractZoneTools : MonoBehaviour
 {
+    public static InteractZoneTools instance;
     private Collider2D playerCol;
 
     //private IInteractable old_interactable;
@@ -39,7 +40,10 @@ public class InteractZoneTools : MonoBehaviour
 
     private float interval = 1f / 6f;
     private float timer = 0f;
-
+    private void Awake()
+    {
+        instance = this;
+    }
     private void Start()
     {
         playerCol = GetComponent<Collider2D>();

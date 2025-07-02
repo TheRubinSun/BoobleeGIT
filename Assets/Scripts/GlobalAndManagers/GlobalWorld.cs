@@ -32,20 +32,23 @@ public static class GlobalWorld
 }
 public class FarmPoint
 {
+    public int IdDirtBed {  get; set; }
     public float X {  get; set; }
     public float Y { get; set; }
     public string seed_type { get; set; }
     public int stage_ground {  get; set; }
     public FarmPoint() { }
-    public FarmPoint(float x, float y, string seed_type, int stage_ground)
+    public FarmPoint(int _IdDirtBed, float x, float y, string seed_type, int stage_ground)
     {
+        IdDirtBed = _IdDirtBed;
         X = x;
         Y = y;
         this.seed_type = seed_type;
         this.stage_ground = stage_ground;
     }
-    public FarmPoint(Vector2 pos, string seed_type, int stage_ground)
+    public FarmPoint(int _IdDirtBed, Vector2 pos, string seed_type, int stage_ground)
     {
+        IdDirtBed = _IdDirtBed;
         X = pos.x;
         Y = pos.y;
         this.seed_type = seed_type;

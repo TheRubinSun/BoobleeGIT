@@ -7,7 +7,7 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class Seed : Item, IUsable
 {
-    public static int soundID = 5;
+    public static int soundID = 7;
     public int id_seed_pref;
     public string flower_type;
     private GameObject flower_pref {  get; set; }
@@ -23,10 +23,20 @@ public class Seed : Item, IUsable
 
     public bool Use()
     {
-        if (GardenManager.instance == null) return false;
+        if (GardenManager.instance == null || InteractZoneTools.instance == null) return false;
 
-        flower_pref = ResourcesData.GetFlowerSeedPrefab(id_seed_pref);
-        
-        return GardenManager.instance.PlantSeed(flower_pref, flower_type);
+        if (InteractZoneTools.instance.cur_interactable is DirtBed dirtBed)
+        {
+            if(dirtBed.Busy) 
+                return false;
+
+            flower_pref = ResourcesData.GetFlowerSeedPrefab(id_seed_pref);
+            dirtBed.Busy = true;
+
+            return GardenManager.instance.PlantSeed(flower_pref, flower_type, dirtBed.ID, dirtBed.transform.position);
+        }
+        else return false;
+
+
     }
 }

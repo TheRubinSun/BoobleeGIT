@@ -7,6 +7,7 @@ using UnityEngine;
 public interface IPointFarm
 {
     public int ID { get; set; }
+    public int IdDirtBed {  get; set; }
 }
 public class GardenManager : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class GardenManager : MonoBehaviour
 
     [SerializeField] private Transform parentGarden;
     [SerializeField] private Flower[] flowers;
+    [SerializeField] private Transform parentDirtBedsOBJ;
+    private List<DirtBed> dirtBeds = new();
 
     private List<GameObject> flowersSpawn = new();
 
@@ -22,8 +25,17 @@ public class GardenManager : MonoBehaviour
     {
         instance = this;
     }
+   
     private void Start()
     {
+        int id = 0;
+        foreach(Transform child in parentDirtBedsOBJ)
+        {
+            DirtBed dirtbed = child.GetComponent<DirtBed>();
+            dirtbed.ID = id;
+            dirtBeds.Add(dirtbed);
+            id++;
+        }
         if(GlobalWorld.FarmsPoints.Count > 0 && flowers.Length > 0)
         {
             FarmsPoints_local = GlobalWorld.FarmsPoints;
@@ -46,30 +58,48 @@ public class GardenManager : MonoBehaviour
                         goto case 1;
                 }
                 GameObject flower = Instantiate(GetGaObj, parentGarden);
-                flower.transform.position = point.Value.GetPos();
+
+                if(dirtBeds[point.Value.IdDirtBed] != null) 
+                    flower.transform.position = dirtBeds[point.Value.IdDirtBed].transform.position;
+                else
+                    flower.transform.position = point.Value.GetPos();
+
                 flower.tag = "Planted";
-                flower.GetComponent<IPointFarm>().ID = point.Key;
+                IPointFarm flowerData = flower.GetComponent<IPointFarm>();
+                flowerData.ID = point.Key;
+                flowerData.IdDirtBed = point.Value.IdDirtBed;
                 flowersSpawn.Add(flower);
+
+                dirtBeds[point.Value.IdDirtBed].Busy = true;
             }
         }
         else
         {
             //Debug.LogError("Garden Error - empty ¹400");
         }
+
     }
-    public bool PlantSeed(GameObject pref, string flower_type)
+    public bool PlantSeed(GameObject pref, string flower_type, int idDirt, Vector2 pos)
     {
         GameObject flower = Instantiate(pref, parentGarden);
         flower.tag = "Planted";
-        Vector2 plantFlower = Player.Instance.GetPosPlayer();
+        Vector2 plantFlower = pos;
         flower.transform.position = plantFlower;
         flowersSpawn.Add(flower);
 
-        int id = GlobalWorld.AddFarmPoint(new FarmPoint(plantFlower, flower_type, 1));
-        flower.GetComponent<IPointFarm>().ID = id;
-        Debug.Log($"add Flower in {id}");
+        int id = GlobalWorld.AddFarmPoint(new FarmPoint(idDirt, plantFlower, flower_type, 1));
+
+        IPointFarm flowerData = flower.GetComponent<IPointFarm>();
+        flowerData.ID = id;
+        flowerData.IdDirtBed = idDirt;
 
         return true;
+    }
+    public void RemoveSeed(int idDirtBed)
+    {
+        Debug.Log($"Remove seed idDirtBed: {idDirtBed}  {dirtBeds[idDirtBed].name}");
+
+        dirtBeds[idDirtBed].Busy = false;
     }
     public GameObject GetSeedForKey(string key) => flowers.FirstOrDefault(f => f.key_name == key)?.flower_seed;
     public GameObject GetSproutForKey(string key) => flowers.FirstOrDefault(f => f.key_name == key)?.flower_sprout;

@@ -81,7 +81,7 @@ public static class ItemsList
         items.Add(new Item(19, "material_iron_bar",            20, 0, Quality.Common, 30, "_", TypeItem.Material));
         items.Add(new Item(21, "material_wood",                20, 0, Quality.Common, 3, "_", TypeItem.Material));
         items.Add(new Item(22, "material_bottle",              80, 0, Quality.Common, 3, "_", TypeItem.Material));
-        items.Add(new Item(23, "material_sunflower",           20, 0, Quality.Common, 3, "_", TypeItem.Material));
+        items.Add(new Item(23, "material_sunflower",           20, 0, Quality.Common, 7, "_", TypeItem.Material));
         items.Add(new Item(24, "material_rubin",               20, 0, Quality.Rare, 120, "_", TypeItem.Material));
         items.Add(new Item(25, "material_rubin_piece",         200, 0, Quality.Uncommon, 5, "_", TypeItem.Material));
         items.Add(new Item(26, "material_glass",               20, 0, Quality.Common, 15, "_", TypeItem.Material));
@@ -116,8 +116,10 @@ public static class ItemsList
         items.Add(new Item(51, "material_beetle_shell",        20, 0, Quality.Uncommon, 30, "_", TypeItem.Material));
         items.Add(new Item(52, "material_beetle_sludge",       40, 0, Quality.Common,   4, "_", TypeItem.Material));
         items.Add(new Seed(53, "seed_sunflower",               100, 0, Quality.Common, 2, "_", 0, "sunflower", TypeItem.Seed));
-        items.Add(new Seed(54, "seed_tall",                    100, 0, Quality.Common, 2, "_", 1, "tolania", TypeItem.Seed));
+        items.Add(new Seed(54, "seed_tallsha",                 100, 0, Quality.Common, 2, "_", 1, "tolania", TypeItem.Seed));
         items.Add(new Seed(55, "seed_tonalia",                 100, 0, Quality.Common, 2, "_", 2, "tallflower", TypeItem.Seed));
+        items.Add(new Item(56, "material_tolania_leaves",      20, 0, Quality.Common, 8, "_", TypeItem.Material));
+        items.Add(new Item(57, "material_tallsha",             20, 0, Quality.Common, 6, "_", TypeItem.Material));
         //PrintItemList();
     }
     private static void InitializeSpritesItem()

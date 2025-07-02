@@ -1,25 +1,10 @@
 fileFormatVersion: 2
-guid: 7097690ddc8f6cd4fa99fcb70e5f3455
+guid: c2cec4ca67d8ff940afb56033fa4ed32
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3064098373982928753
-    second: Stantions_Sheets_0
-  - first:
-      213: 2569054452176909711
-    second: Stantions_Sheets_1
-  - first:
-      213: -2871665623440857591
-    second: Stantions_Sheets_2
-  - first:
-      213: 2222790264544727237
-    second: Stantions_Sheets_3
-  - first:
-      213: -1930561628202101759
-    second: Stantions_Sheets_4
-  - first:
-      213: 4184075844398433310
-    second: Stantions_Sheets_5
+      213: 7047753648234079105
+    second: DirtBed_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -61,12 +46,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 0
-  alignment: 0
-  spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 150
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.35}
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -87,9 +72,9 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 256
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -141,89 +126,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Stantions_Sheets_0
+      name: DirtBed_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 150
-        height: 150
+        x: 4
+        y: 5
+        width: 24
+        height: 18
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 17fba12ac3dd58a20800000000000000
-      internalID: 3064098373982928753
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Stantions_Sheets_1
-      rect:
-        serializedVersion: 2
-        x: 150
-        y: 0
-        width: 150
-        height: 150
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f85f3aea96d17a320800000000000000
-      internalID: 2569054452176909711
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Stantions_Sheets_2
-      rect:
-        serializedVersion: 2
-        x: 300
-        y: 0
-        width: 150
-        height: 150
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 9066b19845bc528d0800000000000000
-      internalID: -2871665623440857591
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Stantions_Sheets_3
-      rect:
-        serializedVersion: 2
-        x: 450
-        y: 0
-        width: 150
-        height: 150
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 5c0926008ffe8de10800000000000000
-      internalID: 2222790264544727237
+      spriteID: 183a47b3a96aec160800000000000000
+      internalID: 7047753648234079105
       vertices: []
       indices: 
       edges: []
@@ -232,8 +151,8 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 241640a8d1588404aa8f117abcb6fdba
-    internalID: 0
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 1537655665
     vertices: []
     indices: 
     edges: []
@@ -242,10 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Stantions_Sheets_0: 3064098373982928753
-      Stantions_Sheets_1: 2569054452176909711
-      Stantions_Sheets_2: -2871665623440857591
-      Stantions_Sheets_3: 2222790264544727237
+      DirtBed_0: 7047753648234079105
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

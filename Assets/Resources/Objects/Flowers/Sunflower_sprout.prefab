@@ -112,9 +112,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6cddb74011dd4074cb0ba5eff1798a40, type: 3}
   fullBroken: {fileID: 8300000, guid: f35ab162af0412b4495d87fc28894a8d, type: 3}
   itemsDrop:
-  - item_key: material_sunflower
+  - item_key: seed_sunflower
     min: 1
-    max: 3
+    max: 1
 --- !u!61 &537814440007233801
 BoxCollider2D:
   m_ObjectHideFlags: 0
