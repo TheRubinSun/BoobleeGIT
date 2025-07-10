@@ -111,17 +111,45 @@ public class SpeedUpPotion : Potion
         return soundID;
     }
 }
-public class Food : Item, IUsable
+public class ManaHealPotion : Potion
 {
     public int countHeal;
+    private static int soundID = 1;
+    public ManaHealPotion(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, int _countHeal) : base(id, name, maxCount, spriteID, quality, cost, description)
+    {
+        countHeal = _countHeal;
+    }
+    public override bool Use()
+    {
+        if (Player.Instance.TakeHealMana(countHeal))
+        {
+            Debug.Log("Пытаюсь отхилить");
+            return true;
+        }
+        else
+        {
+            Debug.Log("Немогу отхилить");
+            return false;
+        }
+    }
+    public override int GetSoundID()
+    {
+        return soundID;
+    }
+}
+public class Food : Item, IUsable
+{
+    public int countHealHP;
+    public int countHealMana;
     public float duration;
     public float cooldown;
     public int idSpriteEffect;
     public string nameEffect { get; set; }
     private static int soundID = 0;
-    public Food(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, int _countHeal, float _duration, float _cooldown, string _nameEffect, int _idSpriteEffect) : base(id, name, maxCount, spriteID, quality, cost, description)
+    public Food(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, int _countHealHP, int _countHealMana, float _duration, float _cooldown, string _nameEffect, int _idSpriteEffect) : base(id, name, maxCount, spriteID, quality, cost, description)
     {
-        countHeal = _countHeal;
+        countHealHP = _countHealHP;
+        countHealMana = _countHealMana;
         duration = _duration;
         nameEffect = _nameEffect;
         cooldown = _cooldown;
@@ -130,13 +158,21 @@ public class Food : Item, IUsable
     public bool Use()
     {
         Debug.Log("Пытаюсь использовать");
-        if(countHeal > 0)
+        Player pl = Player.Instance;
+        if(countHealHP > 0 && countHealMana > 0)
         {
-            if (Player.Instance.IsFullHP()) return false;
+            if (pl.IsFullHP() && pl.IsFullMana()) return false;
+        }
+        else if(countHealHP > 0)
+        {
+            if (pl.IsFullHP()) return false;
+        }
+        else if (countHealMana > 0)
+        {
+            if (pl.IsFullMana()) return false;
         }
 
-
-        EffectsManager eff_man = Player.Instance.GetComponent<EffectsManager>();
+        EffectsManager eff_man = pl.GetComponent<EffectsManager>();
         if (eff_man != null)
         {
             //EffectData regenEffect = new EffectData();
@@ -155,7 +191,8 @@ public class Food : Item, IUsable
 
             regenEffect.EffectName = "Food Regen";
             regenEffect.effectType = EffectData.EffectType.HpRegenBoost;
-            regenEffect.value = countHeal;
+            regenEffect.value = countHealHP;
+            regenEffect.valueTwo = countHealMana;
             regenEffect.idSprite = idSpriteEffect;
             regenEffect.duration = duration;
             regenEffect.cooldown = cooldown;

@@ -354,6 +354,30 @@
         "TypeItem": "",
         "Quality": "",
         "Description": "A tall, dense plant resembling dry brush. Commonly used in potion brewing and crafting."
+      },
+      "item_potion_mana": {
+        "Name": "Mana Potion",
+        "TypeItem": "Potion",
+        "Quality": "Uncommon",
+        "Description": "A murky blue-violet liquid, concentrated magical energy. Restores mana when consumed."
+      },
+      "item_moonana": {
+        "Name": "Moonana",
+        "TypeItem": "Food",
+        "Quality": "Uncommon",
+        "Description": "A rare lunar fruit that glows in the dark. Sweet and juicy, it restores health and a bit of mana."
+      },
+      "item_pepper": {
+        "Name": "Hot Pepper",
+        "TypeItem": "Food",
+        "Quality": "Common",
+        "Description": "Small but extremely spicy. Used in cooking and alchemy to craft enhanced meals."
+      },
+      "item_spicy_meat": {
+        "Name": "Spicy Meat",
+        "TypeItem": "Food",
+        "Quality": "Uncommon",
+        "Description": "A dish made from meat, pepper, and tallsha. Fills you with energy, restores health, and warms you up from within."
       }
     },
     "mobs": {
@@ -861,6 +885,30 @@
         "TypeItem": "",
         "Quality": "",
         "Description": "Высокое густое растение, напоминающее хабку. Часто применяется в зелеварении и ремёслах."
+      },
+      "item_potion_mana": {
+        "Name": "Зелье маны",
+        "TypeItem": "Зелье",
+        "Quality": "Необычное",
+        "Description": "Мутная сине-фиолетовая жидкость, концентрат магической энергии. Восстанавливает ману при использовании."
+      },
+      "item_moonana": {
+        "Name": "Бананолун",
+        "TypeItem": "Еда",
+        "Quality": "Необычное",
+        "Description": "Редкий лунный плод, светящийся в темноте. Сладкий, восстанавливает здоровье и немного магической энергии."
+      },
+      "item_pepper": {
+        "Name": "Жгучий перец",
+        "TypeItem": "Еда",
+        "Quality": "Обычное",
+        "Description": "Маленький, но очень острый. Используется в кулинарии и алхимии для приготовления усиленных блюд."
+      },
+      "item_spicy_meat": {
+        "Name": "Острое мясо",
+        "TypeItem": "Еда",
+        "Quality": "Необычное",
+        "Description": "Блюдо из мяса, перца и тальшы. Заряжает энергией, отлично восстанавливает здоровье и разогревает изнутри."
       }
     },
     "mobs": {

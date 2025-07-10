@@ -1,10 +1,25 @@
 fileFormatVersion: 2
-guid: c2cec4ca67d8ff940afb56033fa4ed32
+guid: 661b3aedc8ca82d489872f0e531ff6df
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7047753648234079105
-    second: DirtBed_0
+      213: 6310497918723096498
+    second: Gun_Sheet_0
+  - first:
+      213: 5393676826492388886
+    second: Gun_Sheet_1
+  - first:
+      213: -2983163850884955300
+    second: Gun_Sheet_2
+  - first:
+      213: 6537302695715828035
+    second: Gun_Sheet_3
+  - first:
+      213: -281784695221639421
+    second: Gun_Sheet_4
+  - first:
+      213: -4462019348261514961
+    second: Gun_Sheet_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,12 +61,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 0
   alignment: 0
-  spritePivot: {x: 0.5, y: 0.35}
-  spritePixelsToUnits: 32
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 15
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -126,23 +141,133 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DirtBed_0
+      name: Gun_Sheet_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 5
-        width: 24
-        height: 18
+        x: 0
+        y: 32
+        width: 37
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 183a47b3a96aec160800000000000000
-      internalID: 7047753648234079105
+      spriteID: 2bff4513c64639750800000000000000
+      internalID: 6310497918723096498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gun_Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 32
+        width: 37
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 616c55c2f703ada40800000000000000
+      internalID: 5393676826492388886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gun_Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 32
+        width: 37
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c534739784ca996d0800000000000000
+      internalID: -2983163850884955300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gun_Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 37
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34178576a2a29ba50800000000000000
+      internalID: 6537302695715828035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gun_Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 0
+        width: 37
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3072c2a0056e61cf0800000000000000
+      internalID: -281784695221639421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gun_Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 0
+        width: 37
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f21d3f52b09b312c0800000000000000
+      internalID: -4462019348261514961
       vertices: []
       indices: 
       edges: []
@@ -151,8 +276,8 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    spriteID: 4020d848cd8e76845b0b1e2e8f31ea11
+    internalID: 0
     vertices: []
     indices: 
     edges: []
@@ -161,7 +286,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      DirtBed_0: 7047753648234079105
+      Gun_Sheet_0: 6310497918723096498
+      Gun_Sheet_1: 5393676826492388886
+      Gun_Sheet_2: -2983163850884955300
+      Gun_Sheet_3: 6537302695715828035
+      Gun_Sheet_4: -281784695221639421
+      Gun_Sheet_5: -4462019348261514961
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

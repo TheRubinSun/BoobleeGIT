@@ -11,6 +11,7 @@ public class EffectData : ScriptableObject
     public float duration;
     public float cooldown;
     public float value;
+    public float valueTwo;
     public EffectType effectType;
     public GameObject effectObj;
 
@@ -19,6 +20,7 @@ public class EffectData : ScriptableObject
         this.EffectName = original.EffectName;
         this.effectType = original.effectType;
         this.value = original.value;
+        this.valueTwo = original.valueTwo;
         this.idSprite = original.idSprite;
         this.duration = original.duration;
         this.effectObj = original.effectObj;

@@ -60,7 +60,7 @@ public class GardenManager : MonoBehaviour
                 GameObject flower = Instantiate(GetGaObj, parentGarden);
 
                 if(dirtBeds[point.Value.IdDirtBed] != null) 
-                    flower.transform.position = dirtBeds[point.Value.IdDirtBed].transform.position;
+                    flower.transform.position = (new Vector2(0, -0.15f) + (Vector2)dirtBeds[point.Value.IdDirtBed].transform.position);
                 else
                     flower.transform.position = point.Value.GetPos();
 
@@ -83,7 +83,7 @@ public class GardenManager : MonoBehaviour
     {
         GameObject flower = Instantiate(pref, parentGarden);
         flower.tag = "Planted";
-        Vector2 plantFlower = pos;
+        Vector2 plantFlower = (new Vector2(0, -0.15f) + pos);
         flower.transform.position = plantFlower;
         flowersSpawn.Add(flower);
 

@@ -196,11 +196,16 @@ public class EffectsManager : MonoBehaviour
         {
             if (gameObject.layer == LayerManager.playerManagerLayer)
             {
-                Player.Instance.TakeHeal((int)effect.value);
+                Player pl = Player.Instance;
+                pl.TakeHeal((int)effect.value);
+                if(effect.valueTwo != 0) pl.TakeHealMana((int)effect.valueTwo);
+                
             }
             else if (gameObject.layer == LayerManager.enemyLayer)
             {
-                gameObject.GetComponent<BaseEnemyLogic>().TakeHeal((int)effect.value);
+                BaseEnemyLogic enemy = gameObject.GetComponent<BaseEnemyLogic>();
+                enemy.TakeHeal((int)effect.value);
+                //if (effect.valueTwo != 0) enemy.TakeHealMana((int)effect.valueTwo);
             }
         }
     }

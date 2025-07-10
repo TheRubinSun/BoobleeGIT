@@ -59,7 +59,10 @@ public class RangeWeaponLogic : WeaponControl
 
         projectile.transform.SetParent(transform.root); //Подять в иерархии объекта пули/стрелы
 
-
+        if(animator != null)
+        {
+            animator.SetTrigger("Shoot");
+        }
         if (AttackDirectionOrVector)
         {
             direction = GetDirection(ShootPos.position, transform.position).normalized;

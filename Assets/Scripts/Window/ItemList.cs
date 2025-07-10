@@ -66,7 +66,7 @@ public static class ItemsList
         items.Add(new Gun(14, "shotgun_pump", 1, 0, Quality.Rare, 550, "_",     true, 2f, damageT.Physical, 3,  0.6f, 40, 4, 10f, 1f,  15f, 1));
         items.Add(new Staff(48, "staff_forest", 1, 0, Quality.Rare, 550, "_",     true, 4f, damageT.Magic,    2,  0.7f, 30, 1, 0.5f, 1f, 5f, 3, 2));
 
-        items.Add(new Food(3, "item_meat",                     20, 0, Quality.Common, 1, "_", 1, 15, 5, "Heal", 1));
+        items.Add(new Food(3, "item_meat", 20, 0, Quality.Common, 1, "_", 1, 0, 15, 5, "Heal", 1));
         items.Add(new HealPotion(4, "item_potion_hp",          20, 0, Quality.Uncommon, 30, "_", 8));
         items.Add(new Item(5, "armor_armor",                   1, 0, Quality.Common, 300, "_", TypeItem.Armor));
         items.Add(new Minion(6, "minion_robot_es",             1, 0, Quality.Rare, 500, "_", TypeItem.Minion, 5f, 6f, 2f, TypeMob.Technology));
@@ -118,8 +118,12 @@ public static class ItemsList
         items.Add(new Seed(53, "seed_sunflower",               100, 0, Quality.Common, 2, "_", 0, "sunflower", TypeItem.Seed));
         items.Add(new Seed(54, "seed_tallsha",                 100, 0, Quality.Common, 2, "_", 1, "tolania", TypeItem.Seed));
         items.Add(new Seed(55, "seed_tonalia",                 100, 0, Quality.Common, 2, "_", 2, "tallflower", TypeItem.Seed));
-        items.Add(new Item(56, "material_tolania_leaves",      20, 0, Quality.Common, 8, "_", TypeItem.Material));
-        items.Add(new Item(57, "material_tallsha",             20, 0, Quality.Common, 6, "_", TypeItem.Material));
+        items.Add(new Item(56, "material_tolania_leaves",      20, 0, Quality.Common, 6, "_", TypeItem.Material));
+        items.Add(new Item(57, "material_tallsha",             20, 0, Quality.Common, 3, "_", TypeItem.Material));
+        items.Add(new ManaHealPotion(58, "item_potion_mana",   20, 0, Quality.Uncommon, 32, "_", 20));
+        items.Add(new Food(59, "item_moonana",                 20, 0, Quality.Uncommon, 15, "_", 1, 2, 12, 3, "Heal", 1));
+        items.Add(new Food(60, "item_pepper",                  20, 0, Quality.Common, 3, "_", 1, 0, 10, 2, "Heal", 1));
+        items.Add(new Food(61, "item_spicy_meat",              20, 0, Quality.Uncommon, 10, "_", 2, 0, 15, 3, "Heal", 1));
         //PrintItemList();
     }
     private static void InitializeSpritesItem()

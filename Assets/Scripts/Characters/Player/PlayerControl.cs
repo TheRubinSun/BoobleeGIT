@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class PlayerControl : MonoBehaviour 
 {
+    public static PlayerControl Instance;
     //public event System.Action Switch_volume;
 
     private Player player;
@@ -24,6 +25,7 @@ public class PlayerControl : MonoBehaviour
     private GameManager g_m;
     private Vector2 mousePos;
     private Vector2 movement;
+    public Vector2 currentPosCenterLegs;
     //Vector2 mousePos;
     public Vector2 direction;
 
@@ -44,6 +46,7 @@ public class PlayerControl : MonoBehaviour
 
     void Start()
     {
+        Instance = this;
         g_m = GameManager.Instance;
         if (cameraObj == null) cameraObj =  GameObject.Find("Main Camera").transform;
         player = GetComponentInParent<Player>();
@@ -185,11 +188,12 @@ public class PlayerControl : MonoBehaviour
         //Debug.Log(i);
         legsControl.MoveLegs(speed);
     }
+
     void MoveCenterLegs(Vector2 inputDirection, float speed)
     {
         // ������������ �������� ��� ������ ���
-        Vector2 currentPos = centerLegs.localPosition;
-        Vector2 newPos = currentPos + inputDirection * (speed / 2) * Time.deltaTime;
+        currentPosCenterLegs = centerLegs.localPosition;
+        Vector2 newPos = currentPosCenterLegs + inputDirection * (speed / 2) * Time.deltaTime;
 
 
         if (newPos.sqrMagnitude > radiusCenterLegs * radiusCenterLegs)
