@@ -146,7 +146,7 @@ public class Food : Item, IUsable
     public int idSpriteEffect;
     public string nameEffect { get; set; }
     private static int soundID = 0;
-    public Food(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, int _countHealHP, int _countHealMana, float _duration, float _cooldown, string _nameEffect, int _idSpriteEffect) : base(id, name, maxCount, spriteID, quality, cost, description)
+    public Food(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description , int _countHealHP, int _countHealMana, float _duration, float _cooldown, string _nameEffect, int _idSpriteEffect) : base(id, name, maxCount, spriteID, quality, cost, description, TypeItem.Food)
     {
         countHealHP = _countHealHP;
         countHealMana = _countHealMana;

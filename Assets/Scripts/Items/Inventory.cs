@@ -254,6 +254,73 @@ public class Inventory:MonoBehaviour, ISlot
 
         return count;
     }
+    public void SortInventory()
+    {
+        SumItems();
+        SwapItems();
+    }
+    public void SumItems()
+    {
+        for (int i = 0; i < slots.Count; i++)
+        {
+            Slot targetSlot = slots[i];
+            if (targetSlot.Item.Id == 0) continue;
+
+            for (int j = i + 1; j < slots.Count; j++)
+            {
+                Slot sourceSlot = slots[j];
+                if(sourceSlot.Item.Id == 0) continue;
+
+                if (sourceSlot.Item == targetSlot.Item && targetSlot.Count < targetSlot.Item.MaxCount)
+                {
+                    int spaceTargetSlot = targetSlot.Item.MaxCount - targetSlot.Count;
+                    int toTransfer = Mathf.Min(spaceTargetSlot, sourceSlot.Count);
+
+                    targetSlot.Count += toTransfer;
+                    sourceSlot.Count -= toTransfer;
+
+                    if (sourceSlot.Count == 0)
+                    {
+                        sourceSlot.Item = ItemsList.GetNoneItem();
+                        sourceSlot.Count = 0;
+                        sourceSlot.artifact_id = 0;
+                    }
+                    UpdateSlotUI(sourceSlot);
+                    UpdateSlotUI(targetSlot);
+
+                    if (targetSlot.Count == targetSlot.Item.MaxCount)
+                        break;
+                }
+            }
+
+        }
+    }
+    private void SwapItems()
+    {
+        int targetIndex = 0;
+        for (int i = 0; i < slots.Count; i++)
+        {
+            if (!slots[i].SlotObj.activeSelf) continue;
+
+            if (slots[i].Count > 0) //Если слот не пустой
+            {
+                if (i != targetIndex) //Если слот не тот же, то меняем местами
+                {
+                    slots[targetIndex].Item = slots[i].Item;
+                    slots[targetIndex].Count = slots[i].Count;
+                    slots[targetIndex].artifact_id = slots[i].artifact_id;
+
+                    slots[i].Item = ItemsList.GetNoneItem();
+                    slots[i].Count = 0;
+                    slots[i].artifact_id = 0;
+
+                    UpdateSlotUI(slots[targetIndex]);
+                    UpdateSlotUI(slots[i]);
+                }
+                targetIndex++; //Добавляется только когда слот не пустой
+            }
+        }
+    }
     //public int AddItem(Item itemAdd, int count, Slot slot)
     //{
     //    foreach(Slot slot in slots)
