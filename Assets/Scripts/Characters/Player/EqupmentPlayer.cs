@@ -304,7 +304,15 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     {
         if(slot.Item is Minion minion)
         {
-            minionObj.GetComponent<MinionControl>().GetStatsMinion(minion.radius_search, minion.time_red, minion.move_speed, minion.typeMob);
+            if(minion is GunMinion gunMinion)
+            {
+                minionObj.GetComponent<GunMinCon>().GetStatsGunMinion(minion.radius_search, minion.time_red, minion.move_speed, minion.typeMob, gunMinion.bulletId, gunMinion.effectId, gunMinion.damage, gunMinion.speedProj);
+            }
+            else
+            {
+                minionObj.GetComponent<MinionControl>().GetStatsMinion(minion.radius_search, minion.time_red, minion.move_speed, minion.typeMob);
+            }
+
         }
     }
     private void LoadAttributeArtifact(int idArt)

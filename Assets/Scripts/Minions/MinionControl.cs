@@ -12,7 +12,7 @@ public class MinionControl : MonoBehaviour
 
     protected bool isAlreadyBusyMinion = false;
 
-    protected Transform SpawnerCropse;
+    protected Transform MobsParent;
 
     protected int segments = 50; // Количество точек круга
     public Transform MinionSlots;
@@ -22,7 +22,7 @@ public class MinionControl : MonoBehaviour
     protected List<Slot> dropItems = new List<Slot>();
     protected GameObject[] itemsFly;
     protected const float timeDrawRange = 0.05f;
-
+        protected PlayerProjectile proj_set;
     //Звуки
     protected AudioSource audioSource_Move;
 
@@ -38,7 +38,7 @@ public class MinionControl : MonoBehaviour
         lineRenderer.endWidth = 0.05f;
         lineRenderer.enabled = false; // По умолчанию круг скрыт
 
-        SpawnerCropse = GameManager.Instance.mobsLayer;
+        MobsParent = GameManager.Instance.mobsLayer;
         //SpawnerCropse = GameObject.Find("MobsLayer").transform;
         MinionSlots = transform.parent.parent;
         MinionSlotParent = transform.parent;
@@ -68,7 +68,7 @@ public class MinionControl : MonoBehaviour
     }
     protected virtual Transform FindAim(string findTag)
     {
-        foreach(Transform child in SpawnerCropse.transform)
+        foreach(Transform child in MobsParent.transform)
         {
             if(child.tag.Contains(findTag) && Vector2.Distance(MinionSlots.position, child.position) <= radiusVision)
             {

@@ -298,7 +298,7 @@ public class Inventory:MonoBehaviour, ISlot
     private void SwapItems()
     {
         int targetIndex = 0;
-        for (int i = 0; i < slots.Count; i++)
+        for (int i = 0; i < (slots.Count - 5); i++)
         {
             if (!slots[i].SlotObj.activeSelf) continue;
 

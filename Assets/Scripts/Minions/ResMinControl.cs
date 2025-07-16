@@ -10,27 +10,27 @@ public class ResMinControl : MinionControl
     [SerializeField] Transform slotHand;
 
     //Объекты для анимации
-    [SerializeField] Transform Rotate_Obj;
-    [SerializeField] Transform Body_Obj;
-    [SerializeField] Transform Hand_Obj;
-    [SerializeField] Transform Indicator_Obj;
-    [SerializeField] Color32 colorTakeItem;
-    [SerializeField] GameObject resource_pref;
+    [SerializeField] private Transform Rotate_Obj;
+    [SerializeField] private Transform Body_Obj;
+    [SerializeField] private Transform Hand_Obj;
+    [SerializeField] private Transform Indicator_Obj;
+    [SerializeField] private Color32 colorTakeItem;
+    [SerializeField] private GameObject resource_pref;
+    [SerializeField] private AudioMixerGroup minionWorkGroup;
+    [SerializeField] private float pitchWork;
+    [SerializeField] private protected AudioClip[] audioWorks;
     //Компоненты анимаций
-    Animator rotate_anim;
-    Animator body_anim;
-    Animator hand_anim;
-    Animator indicator_anim;
+    private Animator rotate_anim;
+    private Animator body_anim;
+    private Animator hand_anim;
+    private Animator indicator_anim;
 
     private int IDCurMinion;
 
     //Звуки
-    AudioSource audioSource_Work;
-    [SerializeField] private AudioMixerGroup minionWorkGroup;
+    private AudioSource audioSource_Work;
 
-    [SerializeField]
-    protected AudioClip[] audioWorks;
-    [SerializeField] float pitchWork;
+
     protected override void Start()
     {
         audioSource_Work = gameObject.AddComponent<AudioSource>();
@@ -91,7 +91,7 @@ public class ResMinControl : MinionControl
     }
     protected override Transform FindAim(string findTag)
     {
-        foreach (Transform child in SpawnerCropse.transform)
+        foreach (Transform child in MobsParent.transform)
         {
             if (child.tag.Contains(findTag) && Vector2.Distance(MinionSlots.position, child.position) <= radiusVision)
             {
