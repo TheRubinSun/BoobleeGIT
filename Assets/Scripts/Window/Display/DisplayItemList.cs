@@ -97,6 +97,9 @@ public class DisplayItemList:MonoBehaviour
             case "Material":
                 tempFilter = TypeItem.Material;
                 break;
+            case "Minion":
+                tempFilter = TypeItem.Minion;
+                break;
             case "None":
                 tempFilter = TypeItem.None; 
                 break;

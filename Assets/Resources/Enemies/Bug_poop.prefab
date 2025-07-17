@@ -677,7 +677,7 @@ GameObject:
   - component: {fileID: 2465009672477220326}
   - component: {fileID: 3624426093968928982}
   - component: {fileID: 1356632647765957271}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Bug_poop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -735,7 +735,6 @@ MonoBehaviour:
   abolity_sounds: []
   damageValuePref: {fileID: 6292013005122663656, guid: cac7b7163f7b90940bb6363f0f51064d, type: 3}
   attackBuffer: 0
-  baseCoofMove: 1
   HPBar: {fileID: 8081081011683111393}
   abillities: []
   ball: {fileID: 4039394062910905871}

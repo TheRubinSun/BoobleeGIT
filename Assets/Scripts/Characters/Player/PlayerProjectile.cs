@@ -62,7 +62,7 @@ public class PlayerProjectile : MonoBehaviour, UBullet
 
 
     // Если используется триггер, то используйте OnTriggerEnter2D
-    private void OnTriggerEnter2D(Collider2D collider)
+    protected virtual void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.gameObject.layer == LayerManager.touchObjectsLayer)
         {

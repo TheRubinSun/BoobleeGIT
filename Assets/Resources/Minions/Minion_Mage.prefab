@@ -374,7 +374,7 @@ GameObject:
   - component: {fileID: -359069369305256782}
   - component: {fileID: 6263482503261731448}
   - component: {fileID: 679959085890104010}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Minion_Mage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -587,12 +587,12 @@ MonoBehaviour:
     rgba: 4287493887
   resource_pref: {fileID: 575613384968941261, guid: 9b134c502680b034099eba698b662f4b, type: 3}
   minionWorkGroup: {fileID: -1265481740701449322, guid: 1178313d785468941ae1fbfa072bd037, type: 2}
+  pitchWork: 1.4
   audioWorks:
   - {fileID: 8300000, guid: 6ec8982a643e2c04b8e044f32ba1516c, type: 3}
   - {fileID: 8300000, guid: 210b4f40db4452c4cba49d69f5737886, type: 3}
   - {fileID: 8300000, guid: 3862c7ce68973ea4dabbf2cdad136481, type: 3}
   - {fileID: 8300000, guid: bc7fe0dbf969d5f46ab095e8c5c992da, type: 3}
-  pitchWork: 1.4
 --- !u!82 &679959085890104010
 AudioSource:
   m_ObjectHideFlags: 0

@@ -150,7 +150,7 @@ public class EffectsManager : MonoBehaviour
         }
         if (activeCoroutines.Count == 0)
         {
-            Debug.Log("Áאפפמג במכüרו םוע" + $"stats.Mov_Speed{stats.Mov_Speed}/{stats.Base_Mov_Speed}/{stats.buffsStats.Buff_Mov_Speed}");
+            Debug.Log("Áאפפמג במכüרו םוע");
             
             if (stats?.buffsStats != null)
             {

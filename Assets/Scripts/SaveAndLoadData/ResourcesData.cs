@@ -30,7 +30,8 @@ public class ResourcesData : MonoBehaviour
         projectiles[2] = Resources.Load<GameObject>("Projectiles/Arrow");
         projectiles[3] = Resources.Load<GameObject>("Projectiles/Forest_mag");
         projectiles[4] = Resources.Load<GameObject>("Projectiles/GunMinion");
-
+        projectiles[5] = Resources.Load<GameObject>("Projectiles/HealMin");
+        
         mobsProjectiles[0] = Resources.Load<GameObject>("Mob_Projectiles/BulletMobOne");
         mobsProjectiles[1] = Resources.Load<GameObject>("Mob_Projectiles/Slime_arrow");
 
@@ -38,7 +39,8 @@ public class ResourcesData : MonoBehaviour
         minions[1] = Resources.Load<GameObject>("Minions/Minion_Mage");
         //minions[2] = Resources.Load<GameObject>("Minions/Minion_Mixed");
         minions[2] = Resources.Load<GameObject>("Minions/Minion_GunTech");
-
+        minions[3] = Resources.Load<GameObject>("Minions/Minion_HealMag");
+        
         traps[0] = Resources.Load<GameObject>("Traps/Mine");
         traps[1] = Resources.Load<GameObject>("Traps/FootTrap");
 

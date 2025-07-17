@@ -375,7 +375,7 @@ GameObject:
   - component: {fileID: 7834764898014289888}
   - component: {fileID: -359069369305256782}
   - component: {fileID: -2035699516260845728}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Minion_Mixed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -478,8 +478,8 @@ MonoBehaviour:
     rgba: 4287496092
   resource_pref: {fileID: 575613384968941261, guid: 9b134c502680b034099eba698b662f4b, type: 3}
   minionWorkGroup: {fileID: -1265481740701449322, guid: 1178313d785468941ae1fbfa072bd037, type: 2}
-  audioWorks: []
   pitchWork: 0
+  audioWorks: []
 --- !u!120 &-359069369305256782
 LineRenderer:
   serializedVersion: 2

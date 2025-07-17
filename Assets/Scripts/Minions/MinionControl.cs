@@ -12,7 +12,7 @@ public class MinionControl : MonoBehaviour
 
     protected bool isAlreadyBusyMinion = false;
 
-    protected Transform MobsParent;
+    protected Transform TargetParent;
 
     protected int segments = 50; // Количество точек круга
     public Transform MinionSlots;
@@ -25,7 +25,7 @@ public class MinionControl : MonoBehaviour
         protected PlayerProjectile proj_set;
     //Звуки
     protected AudioSource audioSource_Move;
-
+    protected private int IDCurMinion;
     [SerializeField] 
     protected AudioClip[] audioMove;
 
@@ -38,7 +38,6 @@ public class MinionControl : MonoBehaviour
         lineRenderer.endWidth = 0.05f;
         lineRenderer.enabled = false; // По умолчанию круг скрыт
 
-        MobsParent = GameManager.Instance.mobsLayer;
         //SpawnerCropse = GameObject.Find("MobsLayer").transform;
         MinionSlots = transform.parent.parent;
         MinionSlotParent = transform.parent;
@@ -60,6 +59,8 @@ public class MinionControl : MonoBehaviour
 
     public virtual void UseMinion(int idMin)
     {
+        IDCurMinion = idMin;
+        EqupmentPlayer.Instance.LockSlot(IDCurMinion);
         StartCoroutine(DrawAndEraseRange());
     }
     protected virtual string SearchTypeTag()
@@ -68,7 +69,7 @@ public class MinionControl : MonoBehaviour
     }
     protected virtual Transform FindAim(string findTag)
     {
-        foreach(Transform child in MobsParent.transform)
+        foreach(Transform child in TargetParent.transform)
         {
             if(child.tag.Contains(findTag) && Vector2.Distance(MinionSlots.position, child.position) <= radiusVision)
             {
@@ -120,6 +121,7 @@ public class MinionControl : MonoBehaviour
     }
     protected virtual void AttachToPlayer() //Прикрепление к игроку
     {
+        EqupmentPlayer.Instance.UnlockSlot(IDCurMinion);
         transform.SetParent(MinionSlotParent);
         transform.localPosition = Vector3.zero;
         isAlreadyBusyMinion = false;

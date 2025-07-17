@@ -1,34 +1,37 @@
 fileFormatVersion: 2
-guid: 327579adb7c183241aaf0052d10d5c95
+guid: 13d3cb569b9c8794a800cf1260611ca6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3563273614879801569
-    second: Gunny-Sheet_0
+      213: -4266873738866429609
+    second: HealMin_0
   - first:
-      213: 7677544490538454283
-    second: Gunny-Sheet_1
+      213: -4014651443346506236
+    second: HealMin_1
   - first:
-      213: -6323193434174071618
-    second: Gunny-Sheet_2
+      213: -4430241102116625025
+    second: HealMin_2
   - first:
-      213: -5233262106349543538
-    second: Gunny-Sheet_3
+      213: -6039226920637107515
+    second: HealMin_3
   - first:
-      213: -9057481694624464763
-    second: Gunny-Sheet_4
+      213: -2635239877851894994
+    second: HealMin_4
   - first:
-      213: -1236559643972305042
-    second: Gunny-Sheet_5
+      213: 5584331187509677761
+    second: HealMin_5
   - first:
-      213: 5383370601380960426
-    second: Gunny-Sheet_6
+      213: -985472155730747998
+    second: HealMin_6
   - first:
-      213: -8106281627401343120
-    second: Gunny-Sheet_7
+      213: -5727198559755995193
+    second: HealMin_7
   - first:
-      213: -3941734000719787869
-    second: Gunny-Sheet_8
+      213: 4611801228890746815
+    second: HealMin_8
+  - first:
+      213: 6020340369252844913
+    second: HealMin_9
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -150,7 +153,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Gunny-Sheet_0
+      name: HealMin_0
       rect:
         serializedVersion: 2
         x: 0
@@ -158,21 +161,21 @@ TextureImporter:
         width: 60
         height: 60
       alignment: 9
-      pivot: {x: 0.5, y: 0.33333334}
+      pivot: {x: 0.5, y: 0.3333333}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1e0ce64497a437130800000000000000
-      internalID: 3563273614879801569
+      spriteID: 7517c6df0f409c4c0800000000000000
+      internalID: -4266873738866429609
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gunny-Sheet_1
+      name: HealMin_1
       rect:
         serializedVersion: 2
         x: 60
@@ -180,21 +183,21 @@ TextureImporter:
         width: 60
         height: 60
       alignment: 9
-      pivot: {x: 0.5, y: 0.33333334}
+      pivot: {x: 0.5, y: 0.3333333}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b0d4dc9690e1c8a60800000000000000
-      internalID: 7677544490538454283
+      spriteID: 40e725668c71948c0800000000000000
+      internalID: -4014651443346506236
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gunny-Sheet_2
+      name: HealMin_2
       rect:
         serializedVersion: 2
         x: 120
@@ -202,21 +205,21 @@ TextureImporter:
         width: 60
         height: 60
       alignment: 9
-      pivot: {x: 0.5, y: 0.33333334}
+      pivot: {x: 0.5, y: 0.3333333}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ebcd8f5c2118f38a0800000000000000
-      internalID: -6323193434174071618
+      spriteID: f75e007a03f9482c0800000000000000
+      internalID: -4430241102116625025
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gunny-Sheet_3
+      name: HealMin_3
       rect:
         serializedVersion: 2
         x: 180
@@ -224,21 +227,21 @@ TextureImporter:
         width: 60
         height: 60
       alignment: 9
-      pivot: {x: 0.5, y: 0.33333334}
+      pivot: {x: 0.5, y: 0.3333333}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e8fd58e57d7bf57b0800000000000000
-      internalID: -5233262106349543538
+      spriteID: 5c2f275ec1b503ca0800000000000000
+      internalID: -6039226920637107515
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gunny-Sheet_4
+      name: HealMin_4
       rect:
         serializedVersion: 2
         x: 240
@@ -246,21 +249,21 @@ TextureImporter:
         width: 60
         height: 60
       alignment: 9
-      pivot: {x: 0.5, y: 0.33333334}
+      pivot: {x: 0.5, y: 0.3333333}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5804e48236c5d4280800000000000000
-      internalID: -9057481694624464763
+      spriteID: e2ba1be0b4fbd6bd0800000000000000
+      internalID: -2635239877851894994
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gunny-Sheet_5
+      name: HealMin_5
       rect:
         serializedVersion: 2
         x: 300
@@ -268,21 +271,21 @@ TextureImporter:
         width: 60
         height: 60
       alignment: 9
-      pivot: {x: 0.5, y: 0.33333334}
+      pivot: {x: 0.5, y: 0.3333333}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e6f727d2e8bd6dee0800000000000000
-      internalID: -1236559643972305042
+      spriteID: 1ce46a3c0a78f7d40800000000000000
+      internalID: 5584331187509677761
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gunny-Sheet_6
+      name: HealMin_6
       rect:
         serializedVersion: 2
         x: 360
@@ -290,21 +293,21 @@ TextureImporter:
         width: 60
         height: 60
       alignment: 9
-      pivot: {x: 0.5, y: 0.33333334}
+      pivot: {x: 0.5, y: 0.3333333}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: aa8d7952a0395ba40800000000000000
-      internalID: 5383370601380960426
+      spriteID: 2ad51adab46e252f0800000000000000
+      internalID: -985472155730747998
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gunny-Sheet_7
+      name: HealMin_7
       rect:
         serializedVersion: 2
         x: 420
@@ -312,21 +315,21 @@ TextureImporter:
         width: 60
         height: 60
       alignment: 9
-      pivot: {x: 0.5, y: 0.33333334}
+      pivot: {x: 0.5, y: 0.3333333}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 07fa77d0fc3b08f80800000000000000
-      internalID: -8106281627401343120
+      spriteID: 7c77d9ff047e480b0800000000000000
+      internalID: -5727198559755995193
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gunny-Sheet_8
+      name: HealMin_8
       rect:
         serializedVersion: 2
         x: 480
@@ -334,21 +337,21 @@ TextureImporter:
         width: 60
         height: 60
       alignment: 9
-      pivot: {x: 0.5, y: 0.33333334}
+      pivot: {x: 0.5, y: 0.3333333}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3a884008fc52c49c0800000000000000
-      internalID: -3941734000719787869
+      spriteID: fbf2eb688c8600040800000000000000
+      internalID: 4611801228890746815
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Gunny-Sheet_9
+      name: HealMin_9
       rect:
         serializedVersion: 2
         x: 540
@@ -356,15 +359,15 @@ TextureImporter:
         width: 60
         height: 60
       alignment: 9
-      pivot: {x: 0.5, y: 0.33}
+      pivot: {x: 0.5, y: 0.3333333}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 0b51fb2a94c1cef40a1f4c8da9f532ea
-      internalID: 2055612059
+      spriteID: 17582403bab8c8350800000000000000
+      internalID: 6020340369252844913
       vertices: []
       indices: 
       edges: []
@@ -373,7 +376,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 66545713b484d4a4d974a79e7626d4b0
+    spriteID: f19a54403aa5d7a4a8a40a9820ea6508
     internalID: 0
     vertices: []
     indices: 
@@ -383,16 +386,16 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Gunny-Sheet_0: 3563273614879801569
-      Gunny-Sheet_1: 7677544490538454283
-      Gunny-Sheet_2: -6323193434174071618
-      Gunny-Sheet_3: -5233262106349543538
-      Gunny-Sheet_4: -9057481694624464763
-      Gunny-Sheet_5: -1236559643972305042
-      Gunny-Sheet_6: 5383370601380960426
-      Gunny-Sheet_7: -8106281627401343120
-      Gunny-Sheet_8: -3941734000719787869
-      Gunny-Sheet_9: 2055612059
+      HealMin_0: -4266873738866429609
+      HealMin_1: -4014651443346506236
+      HealMin_2: -4430241102116625025
+      HealMin_3: -6039226920637107515
+      HealMin_4: -2635239877851894994
+      HealMin_5: 5584331187509677761
+      HealMin_6: -985472155730747998
+      HealMin_7: -5727198559755995193
+      HealMin_8: 4611801228890746815
+      HealMin_9: 6020340369252844913
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

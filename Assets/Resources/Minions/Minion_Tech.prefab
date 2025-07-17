@@ -375,7 +375,7 @@ GameObject:
   - component: {fileID: 5721736077740033652}
   - component: {fileID: -359069369305256782}
   - component: {fileID: 7503566295892239785}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Minion_Tech
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -479,10 +479,10 @@ MonoBehaviour:
     rgba: 4294115213
   resource_pref: {fileID: 575613384968941261, guid: 9b134c502680b034099eba698b662f4b, type: 3}
   minionWorkGroup: {fileID: -1265481740701449322, guid: 1178313d785468941ae1fbfa072bd037, type: 2}
+  pitchWork: 1.2
   audioWorks:
   - {fileID: 8300000, guid: 61d5ee2ff4f7ed1469f015a90cc53e49, type: 3}
   - {fileID: 8300000, guid: 3d4608e2f89aeba4f89e13505482c733, type: 3}
-  pitchWork: 1.2
 --- !u!120 &-359069369305256782
 LineRenderer:
   serializedVersion: 2

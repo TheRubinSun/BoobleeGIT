@@ -25,7 +25,7 @@ public class ResMinControl : MinionControl
     private Animator hand_anim;
     private Animator indicator_anim;
 
-    private int IDCurMinion;
+    //private int IDCurMinion;
 
     //Звуки
     private AudioSource audioSource_Work;
@@ -37,15 +37,13 @@ public class ResMinControl : MinionControl
         audioSource_Work.outputAudioMixerGroup = minionWorkGroup;
         audioSource_Work.pitch = pitchWork;
 
+        TargetParent = GameManager.Instance.mobsLayer;
         base.Start();
 
         rotate_anim = Rotate_Obj.GetComponent<Animator>();
         body_anim = Body_Obj.GetComponent<Animator>();
         hand_anim = Hand_Obj.GetComponent<Animator>();
         indicator_anim = Indicator_Obj.GetComponent<Animator>();
-
-
-
     }
     protected override void SetVolume()
     {
@@ -60,14 +58,19 @@ public class ResMinControl : MinionControl
             aim = FindAim(SearchTypeTag());
             if (aim != null)
             {
-                IDCurMinion = idMin;
-                EqupmentPlayer.Instance.LockSlot(IDCurMinion);
+                //IDCurMinion = idMin;
+                //EqupmentPlayer.Instance.LockSlot(IDCurMinion);
 
                 isAlreadyBusyMinion = true;
                 transform.SetParent(null);
                 MoveToAim(aim);
             }
-            else Debug.Log("Не найдена цель");
+            else
+            {
+                EqupmentPlayer.Instance.UnlockSlot(IDCurMinion);
+                Debug.Log("Не найдена цель");
+            }
+
         }
         else
         {
@@ -91,7 +94,7 @@ public class ResMinControl : MinionControl
     }
     protected override Transform FindAim(string findTag)
     {
-        foreach (Transform child in MobsParent.transform)
+        foreach (Transform child in TargetParent.transform)
         {
             if (child.tag.Contains(findTag) && Vector2.Distance(MinionSlots.position, child.position) <= radiusVision)
             {
@@ -164,7 +167,7 @@ public class ResMinControl : MinionControl
         AnimOnOrOffMinion(false);
         AnimTurnAllOff();
 
-        EqupmentPlayer.Instance.UnlockSlot(IDCurMinion);
+
     }
     public override void GiveItemsToPlayer()
     {
