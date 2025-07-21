@@ -22,8 +22,6 @@ public class GameManager: MonoBehaviour
 
     public float PlayerPosY;
 
-    bool BuildingMode;
-
     public int KillsEnemy;
 
     private int totalSecondsPlayed;
@@ -250,7 +248,7 @@ public class GameManager: MonoBehaviour
             inventory_slots_list.Add(new SlotTypeSave(slot.IdSlot,slot.Item.NameKey, slot.Count, slot.artifact_id));
         }
 
-        foreach (Slot slot in EqupmentPlayer.Instance.slotsEqup)
+        foreach (Slot slot in EqupmentPlayer.Instance.SlotsEqup)
         {
             equipment_item_list.Add(new SlotTypeSave(slot.Item.NameKey, slot.Count, slot.artifact_id));
         }

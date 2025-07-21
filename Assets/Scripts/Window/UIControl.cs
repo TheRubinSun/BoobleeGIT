@@ -57,7 +57,7 @@ public class UIControl:MonoBehaviour
     }
     public void LoadButtons()
     {
-        if (!Player.Instance.godMode) return;
+        if (!Player.Instance.GodMode) return;
 
         Button[] buttonsUI = allUIButtonsParent.GetComponentsInChildren<Button>(true);
         HashSet<string> targetNames = new HashSet<string>() { "ButListItems", "ButListMobs", "ButListCreatePortal", "ButUpdateWeaponStats", "ButCrafts", "ButShop" };
@@ -134,7 +134,7 @@ public class UIControl:MonoBehaviour
     }
     public void OpenListItems()
     {
-        if (!Player.Instance.godMode) return;
+        if (!Player.Instance.GodMode) return;
 
         itemsIsOpened = !itemsIsOpened;
         if (itemsIsOpened)
@@ -149,7 +149,7 @@ public class UIControl:MonoBehaviour
     }
     public void OpenListMobs()
     {
-        if (!Player.Instance.godMode) return;
+        if (!Player.Instance.GodMode) return;
 
         mobsIsOpened = !mobsIsOpened;
         if (mobsIsOpened)
@@ -164,7 +164,7 @@ public class UIControl:MonoBehaviour
     }
     public void OpenCreatePortal()
     {
-        if (!Player.Instance.godMode) return;
+        if (!Player.Instance.GodMode) return;
 
         createPortalIsOpened = !createPortalIsOpened;
         if (createPortalIsOpened)
@@ -179,7 +179,7 @@ public class UIControl:MonoBehaviour
     }
     public void OpenShop()
     {
-        if (!Player.Instance.godMode) return;
+        if (!Player.Instance.GodMode) return;
         OpenShopSurv("God");
     }
     public void OpenShopSurv(string nameTrader)
@@ -189,13 +189,13 @@ public class UIControl:MonoBehaviour
         ShopIsOpened = !ShopIsOpened;
         if (ShopIsOpened)
         {
-            Player.Instance.playerStay = true;
+            Player.Instance.PlayerStay = true;
             ShopWindow.SetActive(true);
             ShopLogic.Instance.OpenShop(nameTrader);
         }
         else
         {
-            Player.Instance.playerStay = false;
+            Player.Instance.PlayerStay = false;
             ShopLogic.Instance.ClosedShop();
             ShopWindow.SetActive(false);
         }
@@ -205,7 +205,7 @@ public class UIControl:MonoBehaviour
         if (CraftIsOpened) return;
 
         ShopIsOpened = false;
-        Player.Instance.playerStay = false;
+        Player.Instance.PlayerStay = false;
         ShopLogic.Instance.ClosedShop();
         ShopWindow.SetActive(false);
     }
@@ -249,7 +249,7 @@ public class UIControl:MonoBehaviour
     }
     public void OpenCraftWindow()
     {
-        if (!Player.Instance.godMode) return;
+        if (!Player.Instance.GodMode) return;
         OpenCraftWindowSurv(CraftTable.God);
     }
     public void OpenCraftWindowSurv(CraftTable craftTable)
@@ -260,13 +260,13 @@ public class UIControl:MonoBehaviour
         CraftIsOpened = !CraftIsOpened;
         if (CraftIsOpened && craftTable != CraftTable.None)
         {
-            Player.Instance.playerStay = true;
+            Player.Instance.PlayerStay = true;
             CraftWindow.SetActive(true);
             CraftLogic.Instance.OpenSelectCrafts(craftTable);
         }
         else
         {
-            Player.Instance.playerStay = false;
+            Player.Instance.PlayerStay = false;
             CraftWindow.SetActive(false);
             CraftLogic.Instance.CloseCrafts();
         }

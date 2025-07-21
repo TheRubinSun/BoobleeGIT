@@ -371,8 +371,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5474354063514761166}
   - component: {fileID: 4066475854404503577}
-  - component: {fileID: -359069369305256782}
   - component: {fileID: 6263482503261731448}
+  - component: {fileID: -359069369305256782}
   - component: {fileID: 679959085890104010}
   m_Layer: 0
   m_Name: Minion_Mage
@@ -455,6 +455,38 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6263482503261731448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6245254297269809354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 557dc7198ce761742b8ba2a6685b97d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attachSound: {fileID: 8300000, guid: 7c10f79409b3fd049bfd251c26a48ed1, type: 3}
+  audioMove:
+  - {fileID: 8300000, guid: c6654f1e309cc8d4d932ebc042678887, type: 3}
+  MinionSlots: {fileID: 0}
+  slotHand: {fileID: 5710650095865819719}
+  Rotate_Obj: {fileID: 5500005018856370692}
+  Body_Obj: {fileID: 397049028878963008}
+  Hand_Obj: {fileID: 1125266123132453485}
+  Indicator_Obj: {fileID: 6316606306376807765}
+  colorTakeItem:
+    serializedVersion: 2
+    rgba: 4287493887
+  resource_pref: {fileID: 575613384968941261, guid: 9b134c502680b034099eba698b662f4b, type: 3}
+  minionWorkGroup: {fileID: -1265481740701449322, guid: 1178313d785468941ae1fbfa072bd037, type: 2}
+  pitchWork: 1.4
+  audioWorks:
+  - {fileID: 8300000, guid: 6ec8982a643e2c04b8e044f32ba1516c, type: 3}
+  - {fileID: 8300000, guid: 210b4f40db4452c4cba49d69f5737886, type: 3}
+  - {fileID: 8300000, guid: 3862c7ce68973ea4dabbf2cdad136481, type: 3}
+  - {fileID: 8300000, guid: bc7fe0dbf969d5f46ab095e8c5c992da, type: 3}
 --- !u!120 &-359069369305256782
 LineRenderer:
   serializedVersion: 2
@@ -562,37 +594,6 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &6263482503261731448
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6245254297269809354}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 557dc7198ce761742b8ba2a6685b97d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MinionSlots: {fileID: 0}
-  audioMove:
-  - {fileID: 8300000, guid: c6654f1e309cc8d4d932ebc042678887, type: 3}
-  slotHand: {fileID: 5710650095865819719}
-  Rotate_Obj: {fileID: 5500005018856370692}
-  Body_Obj: {fileID: 397049028878963008}
-  Hand_Obj: {fileID: 1125266123132453485}
-  Indicator_Obj: {fileID: 6316606306376807765}
-  colorTakeItem:
-    serializedVersion: 2
-    rgba: 4287493887
-  resource_pref: {fileID: 575613384968941261, guid: 9b134c502680b034099eba698b662f4b, type: 3}
-  minionWorkGroup: {fileID: -1265481740701449322, guid: 1178313d785468941ae1fbfa072bd037, type: 2}
-  pitchWork: 1.4
-  audioWorks:
-  - {fileID: 8300000, guid: 6ec8982a643e2c04b8e044f32ba1516c, type: 3}
-  - {fileID: 8300000, guid: 210b4f40db4452c4cba49d69f5737886, type: 3}
-  - {fileID: 8300000, guid: 3862c7ce68973ea4dabbf2cdad136481, type: 3}
-  - {fileID: 8300000, guid: bc7fe0dbf969d5f46ab095e8c5c992da, type: 3}
 --- !u!82 &679959085890104010
 AudioSource:
   m_ObjectHideFlags: 0

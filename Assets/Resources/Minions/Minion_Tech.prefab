@@ -466,9 +466,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 557dc7198ce761742b8ba2a6685b97d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinionSlots: {fileID: 0}
+  attachSound: {fileID: 8300000, guid: 7c10f79409b3fd049bfd251c26a48ed1, type: 3}
   audioMove:
   - {fileID: 8300000, guid: 40f93ac68db657740b89430d35805b18, type: 3}
+  MinionSlots: {fileID: 0}
   slotHand: {fileID: 5710650095865819719}
   Rotate_Obj: {fileID: 5500005018856370692}
   Body_Obj: {fileID: 397049028878963008}

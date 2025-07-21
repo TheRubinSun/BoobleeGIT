@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using TMPro;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEditor.Experimental;
@@ -9,23 +10,23 @@ using UnityEngine.UI;
 public class EqupmentPlayer : MonoBehaviour, ISlot
 {
     public static EqupmentPlayer Instance { get; private set; }
-    public Slot slotWeaponOne { get; set; }
-    public Slot slotWeaponTwo { get; set; }
-    public Slot slotWeaponThree { get; set; }
-    public Slot slotWeaponFour { get; set; }
+    public Slot SlotWeaponOne { get; set; }
+    public Slot SlotWeaponTwo { get; set; }
+    public Slot SlotWeaponThree { get; set; }
+    public Slot SlotWeaponFour { get; set; }
 
-    public Slot slotArrmorOne { get; set; }
+    public Slot SlotArrmorOne { get; set; }
 
-    public Slot slotMinionOne { get; set; }
-    public Slot slotMinionTwo { get; set; }
-    public Slot slotMinionThree { get; set; }
-    public Slot slotMinionFour { get; set; }
+    public Slot SlotMinionOne { get; set; }
+    public Slot SlotMinionTwo { get; set; }
+    public Slot SlotMinionThree { get; set; }
+    public Slot SlotMinionFour { get; set; }
 
-    public Slot slotArtefOne { get; set; }
-    public Slot slotArtefTwo { get; set; }
-    public Slot slotArtefThree { get; set; }
-    public Slot slotArtefFour { get; set; }
-    public Slot[] slotsEqup {  get; set; }
+    public Slot SlotArtefOne { get; set; }
+    public Slot SlotArtefTwo { get; set; }
+    public Slot SlotArtefThree { get; set; }
+    public Slot SlotArtefFour { get; set; }
+    public Slot[] SlotsEqup {  get; set; }
 
     private Player player;
     private DisplayInfo dispInfo;
@@ -34,9 +35,9 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     [SerializeField] Transform [] EquipSlotPrefab; //Префабы рук как родителя
     [SerializeField] Transform PlayerModel;
 
-    Dictionary<int, GameObject> slots_Weapon = new Dictionary<int, GameObject>(); //В ячейки рук по порядку префабы оружия 
-    Dictionary<int, GameObject> slots_minions= new Dictionary<int, GameObject>(); //В ячейки рук по порядку префабы миньонс 
-    Dictionary<int, int> slots_artifacts = new Dictionary<int, int>(); //В ячейки рук по порядку префабы миньонс 
+    readonly Dictionary<int, GameObject> slots_Weapon = new (); //В ячейки рук по порядку префабы оружия 
+    readonly Dictionary<int, GameObject> slots_minions= new (); //В ячейки рук по порядку префабы миньонс 
+    readonly Dictionary<int, int> slots_artifacts = new (); //В ячейки рук по порядку префабы миньонс 
     private void Awake()
     {
         // Проверка на существование другого экземпляра
@@ -59,48 +60,52 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         if (!GenInfoSaves.saveGameFiles[GlobalData.SaveInt].isStarted)
         {
 
-            slotWeaponFour.Item = ItemsList.GetItemForNameKey("simple_knife");
+            SlotWeaponFour.Item = ItemsList.GetItemForNameKey("simple_knife");
             //Debug.LogWarning($"Item: {slotWeaponFour.Item.NameKey} {slotWeaponFour.Item.SpriteID} {ItemsList.items.Count}");
-            slotWeaponFour.Count = 1;
+            SlotWeaponFour.Count = 1;
 
-            SlotsManager.UpdateSlotUI(slotWeaponFour);
+            SlotsManager.UpdateSlotUI(SlotWeaponFour);
         }
 
     }
     public void LockSlot(int numbSlot)
     {
         GameObject slotObj = GetSlotObj(numbSlot);
+        SlotsEqup[numbSlot].enable = false;
+
         slotObj.GetComponent<MouseButtonHandler>().enabled = false; //Выкл кнопки перемещения
         slotObj.GetComponent<Button>().interactable = false;  //В нашем случае эта строка выполняет роль поменть цвет на неактивный
     }
     public void UnlockSlot(int numbSlot)
     {
         GameObject slotObj = GetSlotObj(numbSlot);
+        SlotsEqup[numbSlot].enable = true;
+
         slotObj.GetComponent<MouseButtonHandler>().enabled = true; //Вкл кнопки перемещения
         slotObj.GetComponent<Button>().interactable = true; //В нашем случае эта строка выполняет роль поменть цвет на активный
     }
-    private GameObject GetSlotObj(int numbSlot) => slotsEqup[numbSlot].SlotObj;
+    private GameObject GetSlotObj(int numbSlot) => SlotsEqup[numbSlot].SlotObj;
     public void StartDataEquip()
     {
         Item item = ItemsList.GetNoneItem();
-        slotWeaponOne = new Slot(item, slotsObjEquip[0], TypeItem.Weapon);
-        slotWeaponTwo = new Slot(item, slotsObjEquip[1], TypeItem.Weapon);
-        slotWeaponThree = new Slot(item, slotsObjEquip[2], TypeItem.Weapon);
-        slotWeaponFour = new Slot(item, slotsObjEquip[3], TypeItem.Weapon);
-        slotArrmorOne = new Slot(item, slotsObjEquip[4], TypeItem.Armor);
-        slotMinionOne = new Slot(item, slotsObjEquip[5], TypeItem.Minion);
-        slotMinionTwo = new Slot(item, slotsObjEquip[6], TypeItem.Minion);
-        slotMinionThree = new Slot(item, slotsObjEquip[7], TypeItem.Minion);
-        slotMinionFour = new Slot(item, slotsObjEquip[8], TypeItem.Minion);
-        slotArtefOne = new Slot(item, slotsObjEquip[9], TypeItem.Artifact);
-        slotArtefTwo = new Slot(item, slotsObjEquip[10], TypeItem.Artifact);
-        slotArtefThree = new Slot(item, slotsObjEquip[11], TypeItem.Artifact);
-        slotArtefFour = new Slot(item, slotsObjEquip[12], TypeItem.Artifact);
-        slotsEqup = new Slot[] { slotWeaponOne, slotWeaponTwo, slotWeaponThree, slotWeaponFour, slotArrmorOne, slotMinionOne, slotMinionTwo, slotMinionThree, slotMinionFour,
-        slotArtefOne, slotArtefTwo, slotArtefThree, slotArtefFour};
-        for (int i = 0; i < slotsEqup.Length; i++)
+        SlotWeaponOne = new Slot(item, slotsObjEquip[0], TypeItem.Weapon);
+        SlotWeaponTwo = new Slot(item, slotsObjEquip[1], TypeItem.Weapon);
+        SlotWeaponThree = new Slot(item, slotsObjEquip[2], TypeItem.Weapon);
+        SlotWeaponFour = new Slot(item, slotsObjEquip[3], TypeItem.Weapon);
+        SlotArrmorOne = new Slot(item, slotsObjEquip[4], TypeItem.Armor);
+        SlotMinionOne = new Slot(item, slotsObjEquip[5], TypeItem.Minion);
+        SlotMinionTwo = new Slot(item, slotsObjEquip[6], TypeItem.Minion);
+        SlotMinionThree = new Slot(item, slotsObjEquip[7], TypeItem.Minion);
+        SlotMinionFour = new Slot(item, slotsObjEquip[8], TypeItem.Minion);
+        SlotArtefOne = new Slot(item, slotsObjEquip[9], TypeItem.Artifact);
+        SlotArtefTwo = new Slot(item, slotsObjEquip[10], TypeItem.Artifact);
+        SlotArtefThree = new Slot(item, slotsObjEquip[11], TypeItem.Artifact);
+        SlotArtefFour = new Slot(item, slotsObjEquip[12], TypeItem.Artifact);
+        SlotsEqup = new Slot[] { SlotWeaponOne, SlotWeaponTwo, SlotWeaponThree, SlotWeaponFour, SlotArrmorOne, SlotMinionOne, SlotMinionTwo, SlotMinionThree, SlotMinionFour,
+        SlotArtefOne, SlotArtefTwo, SlotArtefThree, SlotArtefFour};
+        for (int i = 0; i < SlotsEqup.Length; i++)
         {
-            SlotsManager.UpdateSlotUI(slotsEqup[i]);
+            SlotsManager.UpdateSlotUI(SlotsEqup[i]);
             //Inventory.Instance.UpdateSlotUI(slotsEqup[i]);
         }
     }
@@ -117,10 +122,10 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         {
             for(int i = 0; i < equipment_items.Count; i++)
             {
-                slotsEqup[i].Item = ItemsList.GetItemForNameKey(equipment_items[i].NameKey);
-                slotsEqup[i].Count = equipment_items[i].count;
-                slotsEqup[i].artifact_id = equipment_items[i].artefact_id;
-                Inventory.Instance.UpdateSlotUI(slotsEqup[i]);
+                SlotsEqup[i].Item = ItemsList.GetItemForNameKey(equipment_items[i].NameKey);
+                SlotsEqup[i].Count = equipment_items[i].count;
+                SlotsEqup[i].artifact_id = equipment_items[i].artefact_id;
+                Inventory.Instance.UpdateSlotUI(SlotsEqup[i]);
             }
             return true;
         }
@@ -130,12 +135,12 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     public Slot GetSlot(SlotRequest request)
     {
         //Debug.Log($"Слот: {numbSlot} {slotsEqup.Length}");
-        return slotsEqup[request.index];
+        return SlotsEqup[request.index];
     }
     public void UpdateAllSlots()
     {
         int id = 0;
-        foreach (Slot slot in slotsEqup)
+        foreach (Slot slot in SlotsEqup)
         {
             PutOnEquip(slot, id);
             id++;
@@ -169,9 +174,11 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     }
     public void PutOnEquip(Slot slot) //Проверить префаб
     {
+        //if (!slot.SlotObj.GetComponent<MouseButtonHandler>().enabled) return;
+
         if (slot.SlotObj.CompareTag("SlotEquip"))
         {
-            int id = Array.IndexOf(slotsEqup, slot);
+            int id = Array.IndexOf(SlotsEqup, slot);
             PutOnEquip(slot, id);
         }
     }
@@ -215,11 +222,11 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     {
         if (id < 4) // Проверяем, существует ли Prefab перед инстанциированием и id до 4, так как 0 1 2 3 это слоты для оружия
         {
-            int idPref = ItemsList.GetIdWeaponForItem(slotsEqup[id].Item);  //Получаем номер оружия из списка всех предметов (нужен порядковый номер оржия чтобы создать подходящий префаб)
-            if(ResourcesData.GetWeaponPrefab(slotsEqup[id].Item.NameKey) != null)
+            int idPref = ItemsList.GetIdWeaponForItem(SlotsEqup[id].Item);  //Получаем номер оружия из списка всех предметов (нужен порядковый номер оржия чтобы создать подходящий префаб)
+            if(ResourcesData.GetWeaponPrefab(SlotsEqup[id].Item.NameKey) != null)
             {
-                GameObject weaponObj = Instantiate(ResourcesData.GetWeaponPrefab(slotsEqup[id].Item.NameKey), EquipSlotPrefab[id]);  //Создаем оружие в слот 
-                LoadParametersWeapon(weaponObj, slotsEqup[id]); //Загружаем параметры с слолта в оружие
+                GameObject weaponObj = Instantiate(ResourcesData.GetWeaponPrefab(SlotsEqup[id].Item.NameKey), EquipSlotPrefab[id]);  //Создаем оружие в слот 
+                LoadParametersWeapon(weaponObj, SlotsEqup[id]); //Загружаем параметры с слолта в оружие
                 player.SetWeaponsObj(id, weaponObj.GetComponent<WeaponControl>()); //Передаем в словарь у игрока в список оружия
                 slots_Weapon[id] = weaponObj; //Словарь в этом классе, пока не используется 
                 player.ChangeToggleWeapon(id);
@@ -231,11 +238,11 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         }
         else if(id > 4 && id < 9) //Для слотов миньон
         {
-            int idPref = ItemsList.GetIdMinoinForItem(slotsEqup[id].Item);  //Получаем номер миньона из списка всех предметов (нужен порядковый номер миньоена чтобы создать подходящий префаб)
+            int idPref = ItemsList.GetIdMinoinForItem(SlotsEqup[id].Item);  //Получаем номер миньона из списка всех предметов (нужен порядковый номер миньоена чтобы создать подходящий префаб)
             if (ResourcesData.GetMinionPrefab(idPref) != null)
             {
                 GameObject minionObj = Instantiate(ResourcesData.GetMinionPrefab(idPref), EquipSlotPrefab[id]);
-                LoadParametersMinion(minionObj, slotsEqup[id]);
+                LoadParametersMinion(minionObj, SlotsEqup[id]);
                 player.SetMinionsObj(id, minionObj.GetComponent<MinionControl>());
                 slots_minions[id] = minionObj; //Словарь в этом классе, пока не используется 
             }
@@ -247,7 +254,7 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         else if (id > 8 && id < 13) //Для слотов артифакты
         {
             //LoadAttributeArtifact(slotsEqup[id].artifact_id);
-            slots_artifacts[id] = slotsEqup[id].artifact_id;
+            slots_artifacts[id] = SlotsEqup[id].artifact_id;
             UpdateAllArtifactsAtribute();
         }
         else
@@ -259,14 +266,14 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     {
         foreach(KeyValuePair<int, GameObject> slotsWeapon in slots_Weapon)
         {
-            LoadParametersWeapon(slotsWeapon.Value, slotsEqup[slotsWeapon.Key]); //Загружаем параметры с слолта в оружие
+            LoadParametersWeapon(slotsWeapon.Value, SlotsEqup[slotsWeapon.Key]); //Загружаем параметры с слолта в оружие
         }
     }
     public void UpdateAllMinionsStats()
     {
         foreach (KeyValuePair<int, GameObject> slotsMinions in slots_minions)
         {
-            LoadParametersMinion(slotsMinions.Value, slotsEqup[slotsMinions.Key]); //Загружаем параметры с слота в миньона
+            LoadParametersMinion(slotsMinions.Value, SlotsEqup[slotsMinions.Key]); //Загружаем параметры с слота в миньона
         }
     }
     public void UpdateAllArtifactsAtribute()

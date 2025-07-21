@@ -74,6 +74,11 @@ public class SoundsManager : MonoBehaviour
         audioSource.pitch = 1f;
         audioSource.PlayOneShot(items_sounds[id]);
     }
+    public void PlayItemSoundsWithRandomPitch(float min, float max, int id)
+    {
+        audioSource.pitch = Random.Range(min, max);
+        audioSource.PlayOneShot(items_sounds[id]);
+    }
     public void PlayCraftItemSounds(int id)
     {
         audioSource.pitch = Random.Range(0.8f, 1.2f);

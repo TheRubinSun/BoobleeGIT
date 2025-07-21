@@ -124,8 +124,8 @@ public static class ItemsList
         items.Add(new Food(59, "item_moonana",                 20, 0, Quality.Uncommon, 15, "_", 1, 2, 12, 3, "Heal", 1));
         items.Add(new Food(60, "item_pepper",                  20, 0, Quality.Common, 3, "_", 1, 0, 10, 2, "Heal", 1));
         items.Add(new Food(61, "item_spicy_meat",              20, 0, Quality.Uncommon, 10, "_", 2, 0, 15, 3, "Heal", 1));
-        items.Add(new GunMinion(62, "minion_gunmin_tech",       1, 0, Quality.Rare, 1500, "_", TypeItem.Minion, 6.5f, 6f, 1.7f, TypeMob.Technology, 4, 5, 1, 35f));
-        items.Add(new GunMinion(63, "minion_heal", 1, 0, Quality.Rare, 1500, "_", TypeItem.Minion, 6.5f, 6f, 1.7f, TypeMob.Technology, 5, -1, 1, 35f));
+        items.Add(new GunMinion(62, "minion_gunmin_tech",       1, 0, Quality.Rare, 1500, "_", TypeItem.Minion, 6.5f, 6f, 1.7f, TypeMob.Technology, 4, 6, 1, 28f));
+        items.Add(new GunMinion(63, "minion_heal", 1, 0, Quality.Rare, 1500, "_", TypeItem.Minion, 6.5f, 6f, 1.7f, TypeMob.Technology, 5, -1, 1, 20f));
         //PrintItemList();
     }
     private static void InitializeSpritesItem()

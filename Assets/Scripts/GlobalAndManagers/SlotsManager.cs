@@ -67,6 +67,7 @@ public class Slot
     public Item Item { get; set; }
     public int Count { get; set; }
     public int artifact_id { get; set; }
+    public bool enable { get; set; }
     //public int MaxCount { get; set; }
     [JsonIgnore] public GameObject SlotObj { get; set; }
     public TypeItem itemFilter { get; set; }
@@ -83,23 +84,27 @@ public class Slot
         Item = item;
         Count = 0;
         SlotObj = slotObject;
+        enable = true;
     }
     public Slot(Item item, int count)
     {
         Item = item;
         Count = count;
+        enable = true;
     }
     public Slot(Item item, GameObject slotObject, TypeItem _itemFilter)
     {
         Item = item;
         SlotObj = slotObject;
         itemFilter = _itemFilter;
+        enable = true;
     }
     public Slot(Item item, GameObject slotObject, int _count)
     {
         Item = item;
         SlotObj = slotObject;
         Count = _count;
+        enable = true;
     }
     public Slot(int _IdSlot, Item item, GameObject slotObject, int _count)
     {
@@ -107,12 +112,14 @@ public class Slot
         Item = item;
         SlotObj = slotObject;
         Count = _count;
+        enable = true;
     }
     public Slot(int _IdSlot, Item item, int _count)
     {
         IdSlot = _IdSlot;
         Item = item;
         Count = _count;
+        enable = true;
     }
     public Slot(Item item, GameObject slotObject, int _count, TypeItem _itemFilter)
     {
@@ -120,6 +127,7 @@ public class Slot
         SlotObj = slotObject;
         Count = _count;
         itemFilter = _itemFilter;
+        enable = true;
     }
     public Slot(int _IdSlot, Item item, GameObject slotObject, int _count, int _artifact_id)
     {
@@ -128,6 +136,7 @@ public class Slot
         SlotObj = slotObject;
         Count = _count;
         artifact_id = _artifact_id;
+        enable = true;
     }
     public Slot(Item item, GameObject slotObject, int _count, TypeItem _itemFilter, int _artifact_id)
     {
@@ -136,12 +145,14 @@ public class Slot
         Count = _count;
         itemFilter = _itemFilter;
         artifact_id = _artifact_id;
+        enable = true;
     }
     public Slot(Item item, int _count, int _artifact_id)
     {
         Item = item;
         Count = _count;
         artifact_id = _artifact_id;
+        enable = true;
     }
     public void NullSLot()
     {

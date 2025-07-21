@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class HealMin : GunMinCon
@@ -18,5 +19,16 @@ public class HealMin : GunMinCon
             return player;
         }
         return null;
+    }
+    protected override IEnumerator CycleActions()
+    {
+        yield return StartCoroutine(MoveArround(GetRandomVector(), 0.85f));
+        yield return StartCoroutine(FindAndShoot(0.6f));
+        yield return StartCoroutine(MoveArround(GetRandomVector(), 0.85f));
+        yield return StartCoroutine(FindAndShoot(0.6f));
+        yield return StartCoroutine(MoveArround(GetRandomVector(), 0.85f));
+        yield return StartCoroutine(FindAndShoot(0.6f));
+
+        MoveToHome(MinionSlotParent.transform);
     }
 }

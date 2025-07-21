@@ -135,9 +135,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 019a8c7142b92d4409535eca958bb6b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attachSound: {fileID: 8300000, guid: 7c10f79409b3fd049bfd251c26a48ed1, type: 3}
+  audioMove:
+  - {fileID: 8300000, guid: 4c3059481665e8443bc2fd1843674cb1, type: 3}
+  - {fileID: 8300000, guid: aa6534b3a6f7ba946a74c1cc0cdc08b0, type: 3}
   MinionSlots: {fileID: 0}
-  audioMove: []
   ShotPos: {fileID: 2183825844582870546}
+  shootSounds:
+  - {fileID: 8300000, guid: 2782ca8b445dd5b44ade6c00db7f34b1, type: 3}
+  - {fileID: 8300000, guid: 20030e342b53326429f6b9ccfc4363b5, type: 3}
 --- !u!120 &-359069369305256782
 LineRenderer:
   serializedVersion: 2
@@ -254,7 +260,7 @@ AudioSource:
   m_GameObject: {fileID: 6245254297269809354}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -8617723141230464818, guid: 1178313d785468941ae1fbfa072bd037, type: 2}
+  OutputAudioMixerGroup: {fileID: 5023654492103293302, guid: 1178313d785468941ae1fbfa072bd037, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1

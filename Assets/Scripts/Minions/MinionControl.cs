@@ -2,32 +2,33 @@ using Unity.VisualScripting;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Audio;
 
 public class MinionControl : MonoBehaviour 
 {
-    protected float radiusVision { get; set; }
-    protected float timeResourceGat { get; set; }
-    protected float speed { get; set; }
-    public TypeMob typeDetectMob { get; set; }
+    //Звуки
+    [SerializeField] protected AudioClip attachSound;
+    [SerializeField] protected AudioClip[] audioMove;
+    protected AudioSource audioSource;
 
-    protected bool isAlreadyBusyMinion = false;
-
-    protected Transform TargetParent;
-
-    protected int segments = 50; // Количество точек круга
     public Transform MinionSlots;
     protected Transform MinionSlotParent;
     protected LineRenderer lineRenderer;
     protected Transform aim;
     protected List<Slot> dropItems = new List<Slot>();
+    protected Transform TargetParent;
+    protected PlayerProjectile proj_set;
     protected GameObject[] itemsFly;
+
+    protected float radiusVision { get; set; }
+    protected float timeResourceGat { get; set; }
+    protected float speed { get; set; }
+    public TypeMob typeDetectMob { get; set; }
+    protected bool isAlreadyBusyMinion = false;
+    protected int segments = 50; // Количество точек круга
     protected const float timeDrawRange = 0.05f;
-        protected PlayerProjectile proj_set;
-    //Звуки
-    protected AudioSource audioSource_Move;
     protected private int IDCurMinion;
-    [SerializeField] 
-    protected AudioClip[] audioMove;
+
 
     protected virtual void Start()
     {
@@ -42,7 +43,7 @@ public class MinionControl : MonoBehaviour
         MinionSlots = transform.parent.parent;
         MinionSlotParent = transform.parent;
 
-        audioSource_Move = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
         //SetVolume();
     }
     protected virtual void SetVolume()
@@ -121,11 +122,13 @@ public class MinionControl : MonoBehaviour
     }
     protected virtual void AttachToPlayer() //Прикрепление к игроку
     {
+        audioSource.pitch = Random.Range(0.7f, 1.2f);
+        audioSource.PlayOneShot(attachSound);
+
         EqupmentPlayer.Instance.UnlockSlot(IDCurMinion);
         transform.SetParent(MinionSlotParent);
         transform.localPosition = Vector3.zero;
         isAlreadyBusyMinion = false;
-        GiveItemsToPlayer();
     }
     public virtual void GiveItemsToPlayer()
     {

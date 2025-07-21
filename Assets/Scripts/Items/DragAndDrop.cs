@@ -211,6 +211,7 @@ public class DragAndDrop:MonoBehaviour
         else //Если предмет взят
         {
             if (PutItem()) SoundsManager.Instance.PlayPutItem();
+
         }
     }
     private bool TakeItem()
@@ -225,8 +226,8 @@ public class DragAndDrop:MonoBehaviour
         dragItem = true; //Взяли предмет + в Update тащем за курсором
         DragZone.SetActive(dragItem); //Включить возможность выбросить
 
-        if (newSlot != null && newSlot.SlotObj != null && newSlot.SlotObj.CompareTag("SlotEquip")) EqupmentPlayer.Instance.PutOnEquip(newSlot);
-        if (oldSlot != null && oldSlot.SlotObj != null && oldSlot.SlotObj.CompareTag("SlotEquip")) EqupmentPlayer.Instance.PutOnEquip(oldSlot);
+        if (newSlot != null && newSlot.enable && newSlot.SlotObj != null && newSlot.SlotObj.CompareTag("SlotEquip")) EqupmentPlayer.Instance.PutOnEquip(newSlot);
+        if (oldSlot != null && oldSlot.enable && oldSlot.SlotObj != null && oldSlot.SlotObj.CompareTag("SlotEquip")) EqupmentPlayer.Instance.PutOnEquip(oldSlot);
 
         return true;
     }

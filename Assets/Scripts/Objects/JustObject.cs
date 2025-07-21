@@ -4,6 +4,7 @@ public class JustObject : ObjectL
 {
     protected Animator anim;
     public override Vector2 GetPosition() => startPos;
+    [SerializeField] protected float layer;
     protected virtual void Awake()
     {
         spr_ren = GetComponent<SpriteRenderer>();
@@ -23,10 +24,10 @@ public class JustObject : ObjectL
     {
         if (!isVisibleNow) return;
 
-        float treePosY = transform.position.y;
+        float PosY = transform.position.y;
         float PlayerPosY = GameManager.Instance.PlayerPosY;
 
-        spr_ren.sortingOrder = Mathf.RoundToInt(((treePosY - 2f) - PlayerPosY - 2) * -5);
+        spr_ren.sortingOrder = Mathf.RoundToInt(((PosY - layer) - PlayerPosY - 2) * -5);
     }
     public override void CreateCulling()
     {

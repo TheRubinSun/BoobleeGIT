@@ -91,7 +91,7 @@ public class PlayerControl : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (inputDirection.sqrMagnitude > 0 && !player.playerStay)
+        if (inputDirection.sqrMagnitude > 0 && !player.PlayerStay)
         {
             Move();
         }

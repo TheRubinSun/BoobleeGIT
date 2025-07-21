@@ -1,9 +1,11 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class GunMinCon : MinionControl
 {
     [SerializeField] protected Transform ShotPos;
+    [SerializeField] protected AudioClip[] shootSounds;
     protected SpriteRenderer sr;
     protected GameObject bulletPref { get; set; }
     protected EffectData effect { get; set; }
@@ -19,7 +21,9 @@ public class GunMinCon : MinionControl
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         TargetParent = GameManager.Instance.mobsLayer;
+
         base.Start();
+        audioSource.loop = true;
     }
     public virtual void GetStatsGunMinion(float _radiusVision, float _timeResourceGat, float _speed, TypeMob _typeDetectMob, int idPrefBullet, int idEffect, int _damage, float _proj_speed)
     {
@@ -50,35 +54,40 @@ public class GunMinCon : MinionControl
     }
     protected virtual IEnumerator CycleActions()
     {
-        yield return StartCoroutine(MoveArround(GetRandomVector()));
-        yield return StartCoroutine(FindAndShoot());
-        yield return StartCoroutine(MoveArround(GetRandomVector()));
-        yield return StartCoroutine(FindAndShoot());
-        yield return StartCoroutine(MoveArround(GetRandomVector()));
-        yield return StartCoroutine(FindAndShoot());
-        yield return StartCoroutine(MoveArround(GetRandomVector()));
-        yield return StartCoroutine(FindAndShoot());
+        yield return StartCoroutine(MoveArround(GetRandomVector(), 0.8f));
+        yield return StartCoroutine(FindAndShoot(0.4f));
+        yield return StartCoroutine(MoveArround(GetRandomVector(), 0.8f));
+        yield return StartCoroutine(FindAndShoot(0.4f));
+        yield return StartCoroutine(MoveArround(GetRandomVector(), 0.8f));
+        yield return StartCoroutine(FindAndShoot(0.4f));
+        yield return StartCoroutine(MoveArround(GetRandomVector(), 0.8f));
+        yield return StartCoroutine(FindAndShoot(0.4f));
 
         MoveToHome(MinionSlotParent.transform);
     }
-    protected virtual IEnumerator MoveArround(Vector2 vector)
+    protected virtual IEnumerator MoveArround(Vector2 vector, float moveTime)
     {
+        audioSource.pitch = Random.Range(0.9f, 1.05f);
+        audioSource.clip = audioMove[Random.Range(0, audioMove.Length)];
+        audioSource.Play();
+
         anim.SetTrigger("Move");
-        float moveTime = 0.8f;
         float elapsed = 0f;
 
         while(elapsed < moveTime)
         {
             transform.position += (Vector3)vector.normalized * speed * Time.deltaTime;
             elapsed += Time.deltaTime;
+
             yield return null;
         }
+        audioSource.Stop();
     }
-    protected virtual IEnumerator FindAndShoot()
+    protected virtual IEnumerator FindAndShoot(float wait)
     {
         Transform ToShopPos = FindAim();
         anim.SetTrigger("Stay");
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(wait);
 
         if (ToShopPos != null)
         {
@@ -89,7 +98,7 @@ public class GunMinCon : MinionControl
             FlipX();
         yield return null;
 
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(wait);
     }
     protected virtual Transform FindAim()
     {
@@ -122,6 +131,8 @@ public class GunMinCon : MinionControl
         {
             anim.SetTrigger("Shoot");
         }
+        audioSource.pitch = Random.Range(0.8f, 1.2f);
+        audioSource.PlayOneShot(shootSounds[Random.Range(0, shootSounds.Length)]);
 
         GameObject bullet = Instantiate(bulletPref, ShotPos);
         bullet.transform.SetParent(transform.root);
@@ -141,11 +152,16 @@ public class GunMinCon : MinionControl
     }
     protected override void MoveToHome(Transform target) //Идем в слот для миньёна
     {
+        audioSource.pitch = Random.Range(0.9f, 1.05f);
+        audioSource.clip = audioMove[Random.Range(0, audioMove.Length)];
+        audioSource.Play();
+
         anim.SetTrigger("Move");
         base.MoveToHome(target);
     }
     protected override void AttachToPlayer() //Прикрепление к игроку
     {
+        audioSource.Stop();
         anim.SetTrigger("Fixed");
         base.AttachToPlayer();
     }

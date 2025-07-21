@@ -11,8 +11,8 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour, ITakeDamage
 {
     public static Player Instance { get; set; }
-    public bool godMode { get; private set; }
-    public bool playerStay {  get; set; }
+    public bool GodMode { get; private set; }
+    public bool PlayerStay {  get; set; }
     [SerializeField] private Transform spawnPoint;
     private PlayerStats pl_stats;
     private BuffsStats bf_stats;
@@ -22,8 +22,8 @@ public class Player : MonoBehaviour, ITakeDamage
     private PlayerUI pl_ui;
 
     //GameObjects
-    private Dictionary<int, WeaponControl> WeaponsObj = new Dictionary<int, WeaponControl>();
-    private Dictionary<int, MinionControl> MinionsObj = new Dictionary<int, MinionControl>();
+    private readonly Dictionary<int, WeaponControl> WeaponsObj = new();
+    private readonly Dictionary<int, MinionControl> MinionsObj = new();
     private PlayerControl playerControl;
 
     [SerializeField] 
@@ -352,7 +352,7 @@ public class Player : MonoBehaviour, ITakeDamage
     {
         if (pl_stats.PlayerHealStat(heal))
         {
-            SoundsManager.Instance.PlayItemSounds(4);
+            SoundsManager.Instance.PlayItemSoundsWithRandomPitch(0.7f, 1.2f, 4);
             pl_ui.UpdateHpBar(pl_stats);
             StartCoroutine(FlashColor(new Color32(110, 255, 93, 255), 0.1f));
             return true;
@@ -442,10 +442,10 @@ public class Player : MonoBehaviour, ITakeDamage
     }
     public void SetGodMode()
     {
-        godMode = true;
+        GodMode = true;
     }
     public void SetSurvaveMode()
     {
-        godMode = false;
+        GodMode = false;
     }
 }

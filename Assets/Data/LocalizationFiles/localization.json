@@ -378,6 +378,18 @@
         "TypeItem": "Food",
         "Quality": "Uncommon",
         "Description": "A dish made from meat, pepper, and tallsha. Fills you with energy, restores health, and warms you up from within."
+      },
+      "minion_gunmin_tech": {
+        "Name": "Tech-Tar Minion",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "This minion attacks enemies and temporarily immobilizes them."
+      },
+      "minion_heal": {
+        "Name": "Healing Minion",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "This minion heals the player, restoring health during combat."
       }
     },
     "mobs": {
@@ -909,6 +921,18 @@
         "TypeItem": "Еда",
         "Quality": "Необычное",
         "Description": "Блюдо из мяса, перца и тальшы. Заряжает энергией, отлично восстанавливает здоровье и разогревает изнутри."
+      },
+      "minion_gunmin_tech": {
+        "Name": "Техно-смоловой миньон",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Этот миньон атакует врагов и кратковременно их обездвиживает."
+      },
+      "minion_heal": {
+        "Name": "Целительный миньон",
+        "TypeItem": "",
+        "Quality": "",
+        "Description": "Этот миньон лечит игрока, восстанавливая его здоровье в бою."
       }
     },
     "mobs": {

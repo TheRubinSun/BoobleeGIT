@@ -159,16 +159,13 @@ public class ResMinControl : MinionControl
     }
     protected override void AttachToPlayer() //Прикрепление к игроку
     {
-        transform.SetParent(MinionSlotParent);
-        transform.localPosition = Vector3.zero;
-        isAlreadyBusyMinion = false;
+        base.AttachToPlayer();
         GiveItemsToPlayer();
 
         AnimOnOrOffMinion(false);
         AnimTurnAllOff();
-
-
     }
+
     public override void GiveItemsToPlayer()
     {
         base.GiveItemsToPlayer();
@@ -219,7 +216,7 @@ public class ResMinControl : MinionControl
         rotate_anim.SetBool("Move", false);
         body_anim.SetBool("Move", false);
 
-        audioSource_Move.Stop();
+        audioSource.Stop();
         audioSource_Work.Stop();
     }
     private void AnimHandMove(bool MoveOn)
@@ -253,18 +250,18 @@ public class ResMinControl : MinionControl
         rotate_anim.SetBool("Move", active);
         if (active)
         {
-            if (!audioSource_Move.isPlaying)
+            if (!audioSource.isPlaying)
             {
-                audioSource_Move.clip = audioMove[0];
-                audioSource_Move.loop = true;
-                audioSource_Move.Play();
+                audioSource.clip = audioMove[0];
+                audioSource.loop = true;
+                audioSource.Play();
             }
 
         }
         else
         {
             Debug.Log("Попытка остановки звука");
-            audioSource_Move.Stop();
+            audioSource.Stop();
         }
     }
     private void AnimMoveBody(bool active)
