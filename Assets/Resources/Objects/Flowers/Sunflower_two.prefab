@@ -113,6 +113,9 @@ MonoBehaviour:
   fullBroken: {fileID: 8300000, guid: f35ab162af0412b4495d87fc28894a8d, type: 3}
   itemsDrop:
   - item_key: material_sunflower
+    min: 1
+    max: 2
+  - item_key: seed_sunflower
     min: 0
     max: 2
 --- !u!61 &537814440007233801
@@ -152,7 +155,7 @@ BoxCollider2D:
   m_Offset: {x: -0.026024744, y: -0.008351803}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0}
     oldSize: {x: 0.4, y: 0.6666667}
     newSize: {x: 0.4, y: 0.6666667}
     adaptiveTilingThreshold: 0.5

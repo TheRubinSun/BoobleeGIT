@@ -20,9 +20,9 @@ public class RangeWeaponLogic : WeaponControl
         base.Start();
         defaultShootPos = ShootPos.localPosition;
     }
-    public override void GetStatsWeapon(Weapon gun,int damage, float at_speed_coof,float add_attack_speed, float att_sp_pr, bool isRang, float attack_ran, int count_proj, float _spreadAngle, damageT _damT, Transform pl_mod, GameObject _Projectile_pref = null, float att_sp_pr_coof = 0)
+    public override void GetStatsWeapon(Weapon gun,int damage, float at_speed_coof,float add_attack_speed, float att_sp_pr, bool isRang, float attack_ran, int count_proj, float _spreadAngle, damageT _damT, Transform pl_mod, GameObject _Projectile_pref = null, float att_sp_pr_coof = 0, int _effectID = -1)
     {
-        base.GetStatsWeapon(gun, damage, at_speed_coof, add_attack_speed, att_sp_pr, isRang, attack_ran, count_proj, _spreadAngle, _damT, pl_mod, Projectile_pref, att_sp_pr_coof);
+        base.GetStatsWeapon(gun, damage, at_speed_coof, add_attack_speed, att_sp_pr, isRang, attack_ran, count_proj, _spreadAngle, _damT, pl_mod, Projectile_pref, att_sp_pr_coof, _effectID);
         attack_Speed_Projectile = (att_sp_pr + Player.Instance.GetPlayerStats().Proj_Speed) * att_sp_pr_coof;
         Projectile_pref = _Projectile_pref;
         CountProjectiles = Player.Instance.GetPlayerStats().count_Projectile + count_proj;
@@ -76,6 +76,7 @@ public class RangeWeaponLogic : WeaponControl
         
         float randomAngle = Random.Range(-spreadAngle, spreadAngle);
         direction = Quaternion.Euler(0, 0, randomAngle) * direction; //Добавляем разброс снарядам
+        proj_set.effectBul = EffectAttack;
     }
     protected override void FlipWeapon(float dirX)
     {

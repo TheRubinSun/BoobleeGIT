@@ -14,6 +14,7 @@ public class WeaponControl : MonoBehaviour
     protected bool isRange {  get;  set; }
     protected float Attack_Range {  get; set; }
     protected damageT damageType {  get; set; }
+    protected EffectData EffectAttack { get; set; }
 
     protected CanBeWeapon canBeWeapon = new CanBeWeapon();
 
@@ -60,7 +61,7 @@ public class WeaponControl : MonoBehaviour
     {
         //audioSource_Shot.volume = GlobalData.VOLUME_SOUNDS;
     }
-    public virtual void GetStatsWeapon(Weapon _weapon,int damage, float at_speed_coof, float add_at_speed, float att_sp_pr, bool isRang, float attack_ran, int count_proj, float _spreadAngle, damageT _damT, Transform pl_mod, GameObject _Projectile_pref = null, float att_sp_pr_coof = 0)
+    public virtual void GetStatsWeapon(Weapon _weapon,int damage, float at_speed_coof, float add_at_speed, float att_sp_pr, bool isRang, float attack_ran, int count_proj, float _spreadAngle, damageT _damT, Transform pl_mod, GameObject _Projectile_pref = null, float att_sp_pr_coof = 0, int _effectID = -1)
     {
         PlayerStats pl_stat = Player.Instance.GetPlayerStats();
 
@@ -85,6 +86,11 @@ public class WeaponControl : MonoBehaviour
         PlayerModel = pl_mod;
 
         canBeWeapon.canBeMissed = true;
+
+        if (_effectID == -1) EffectAttack = null;
+        else
+            EffectAttack = ResourcesData.GetEffectsPrefab(_effectID);
+
     }
     //protected virtual void UpdateStats()
     //{

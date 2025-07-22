@@ -2,11 +2,10 @@ using UnityEngine;
 
 public class PistolLogic : RangeWeaponLogic
 {
-    EffectData posionNewEff;
+
     protected override void Start()
     {
         base.Start();
-        posionNewEff = ResourcesData.effects[1];
     }
     protected override void RotateWeaponOnCursor()
     {
@@ -19,7 +18,6 @@ public class PistolLogic : RangeWeaponLogic
     protected override void ShootLogic(float offsetProj)
     {
         base.ShootLogic(offsetProj);
-        proj_set.effectBul = posionNewEff;
         ShootVelocity(projectile, direction); //Сам выстрел
     }
 }

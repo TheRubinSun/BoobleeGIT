@@ -46,7 +46,7 @@ public class MeleWeaponLogic : WeaponControl
 
             if (enemy != null)
             {
-                enemy.TakeDamage(Attack_Damage, damageType, canBeWeapon.canBeMissed);
+                enemy.TakeDamage(Attack_Damage, damageType, canBeWeapon.canBeMissed, EffectAttack);
             }
         }
         else

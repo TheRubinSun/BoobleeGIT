@@ -23,7 +23,6 @@ public class LineControle: MonoBehaviour
     }
     public void AnimMove()
     {
-        
         fpsCounter += Time.deltaTime;
         if (fpsCounter >= 1f / fps)
         {

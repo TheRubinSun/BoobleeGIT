@@ -24,6 +24,7 @@ public class ResourcesData : MonoBehaviour
         weapons["bow_simple"] = Resources.Load<GameObject>("Weapons/Bow_simple");
         weapons["shotgun_pump"] = Resources.Load<GameObject>("Weapons/ShotGun_pump");
         weapons["staff_forest"] = Resources.Load<GameObject>("Weapons/Staff_forest");
+        weapons["lazergun_tra"] = Resources.Load<GameObject>("Weapons/LazerGun");
 
         projectiles[0] = Resources.Load<GameObject>("Projectiles/Pistol_Bullet");
         projectiles[1] = Resources.Load<GameObject>("Projectiles/Shotgun_Bullet");

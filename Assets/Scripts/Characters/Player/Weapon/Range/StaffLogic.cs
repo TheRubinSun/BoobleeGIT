@@ -9,9 +9,9 @@ public class StaffLogic : RangeWeaponLogic
         base.Start();
         posionNewEff = ResourcesData.effects[3];
     }
-    public virtual void GetStatsStaff(Weapon staff, int damage, float at_speed_coof, float add_attack_speed, float att_sp_pr, bool isRang, float attack_ran, int count_proj, float _spreadAngle, damageT _damT, Transform pl_mod, int _manaCost, GameObject _Projectile_pref = null, float att_sp_pr_coof = 0)
+    public virtual void GetStatsStaff(Weapon staff, int damage, float at_speed_coof, float add_attack_speed, float att_sp_pr, bool isRang, float attack_ran, int count_proj, float _spreadAngle, damageT _damT, Transform pl_mod, int _manaCost, GameObject _Projectile_pref = null, float att_sp_pr_coof = 0, int _effectID = -1)
     {
-        base.GetStatsWeapon(staff, damage, at_speed_coof, add_attack_speed, att_sp_pr, isRang, attack_ran, count_proj, _spreadAngle, _damT, pl_mod, _Projectile_pref, att_sp_pr_coof);
+        base.GetStatsWeapon(staff, damage, at_speed_coof, add_attack_speed, att_sp_pr, isRang, attack_ran, count_proj, _spreadAngle, _damT, pl_mod, _Projectile_pref, att_sp_pr_coof, _effectID);
         manaCost = _manaCost;
     }
 

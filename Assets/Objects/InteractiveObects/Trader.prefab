@@ -106,6 +106,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineSize: 1.5
   e_icon: {fileID: 2527288272687486117}
+  nameTrader: 
 --- !u!58 &4570814571881599502
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -201,6 +202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ToDropPos: {x: 0, y: 0}
+  layer: 2
 --- !u!1001 &1515824142655657698
 PrefabInstance:
   m_ObjectHideFlags: 0

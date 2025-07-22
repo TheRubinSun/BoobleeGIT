@@ -22,8 +22,9 @@ public abstract class Weapon : Item
     public float attackSpeedCoof { get; set; }
     public int addAttackSpeed {  get; set; }
     public int conut_Projectiles { get; set; }
+    public int effectID { get; set; }
 
-    public Weapon(int id, string name, int maxCount, int spriteID, Quality quality,int cost, string decription, bool rangeType, float range, damageT typeDamage, int damage, float _attackSpeedCoof,  int _addAttackSpeed, int conut_Projectiles) :base(id, name, maxCount, spriteID, quality, cost, decription)
+    public Weapon(int id, string name, int maxCount, int spriteID, Quality quality,int cost, string decription, bool rangeType, float range, damageT typeDamage, int damage, float _attackSpeedCoof,  int _addAttackSpeed, int conut_Projectiles, int effectID = -1) :base(id, name, maxCount, spriteID, quality, cost, decription)
     {
         this.rangeType = rangeType;
         this.range = range;
@@ -34,6 +35,7 @@ public abstract class Weapon : Item
 
         this.TypeItem = TypeItem.Weapon;
         this.conut_Projectiles = conut_Projectiles;
+        this.effectID = effectID;
     }
 }
 [Serializable]
@@ -43,12 +45,21 @@ public class Gun : Weapon
     public float projectileSpeedCoof { get; set; }
     public int idBulletPref {  get; set; }
     public float spreadAngle { get; set; }
-    public Gun(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string decription, bool rangeType, float range, damageT typeDamage, int damage, float _attackSpeedCoof, int _addAttackSpeed, int conut_Projectiles, float _projectileSpeed, float _projectileSpeedCoof, float _spreadAngle, int _idBulletPref) : base(id, name, maxCount, spriteID, quality, cost, decription, rangeType, range, typeDamage, damage, _attackSpeedCoof, _addAttackSpeed, conut_Projectiles)
+    public Gun(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string decription, bool rangeType, float range, damageT typeDamage, int damage, float _attackSpeedCoof, int _addAttackSpeed, int conut_Projectiles, float _projectileSpeed, float _projectileSpeedCoof, float _spreadAngle, int _idBulletPref, int effectID = -1) : base(id, name, maxCount, spriteID, quality, cost, decription, rangeType, range, typeDamage, damage, _attackSpeedCoof, _addAttackSpeed, conut_Projectiles, effectID)
     {
         projectileSpeed = _projectileSpeed;
         idBulletPref = _idBulletPref;
         projectileSpeedCoof = _projectileSpeedCoof;
         spreadAngle = _spreadAngle;
+    }
+}
+[Serializable]
+public class LazerGun : Weapon
+{
+    public int CountPenetration { get; set; }
+    public LazerGun(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string decription, bool rangeType, float range, damageT typeDamage, int damage, float _attackSpeedCoof, int _addAttackSpeed, int conut_Projectiles, int CountPenetration, int effectID = -1) : base(id, name, maxCount, spriteID, quality, cost, decription, rangeType, range, typeDamage, damage, _attackSpeedCoof, _addAttackSpeed, conut_Projectiles, effectID)
+    {
+        this.CountPenetration = CountPenetration;
 
     }
 }
@@ -60,7 +71,7 @@ public class Staff : Weapon
     public int idBulletPref { get; set; }
     public float spreadAngle { get; set; }
     public int manaCost {  get; set; }
-    public Staff(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string decription, bool rangeType, float range, damageT typeDamage, int damage, float _attackSpeedCoof, int _addAttackSpeed, int conut_Projectiles, float _projectileSpeed, float _projectileSpeedCoof, float _spreadAngle, int _idBulletPref, int manaCost) : base(id, name, maxCount, spriteID, quality, cost, decription, rangeType, range, typeDamage, damage, _attackSpeedCoof, _addAttackSpeed, conut_Projectiles)
+    public Staff(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string decription, bool rangeType, float range, damageT typeDamage, int damage, float _attackSpeedCoof, int _addAttackSpeed, int conut_Projectiles, float _projectileSpeed, float _projectileSpeedCoof, float _spreadAngle, int _idBulletPref, int manaCost, int effectID = -1) : base(id, name, maxCount, spriteID, quality, cost, decription, rangeType, range, typeDamage, damage, _attackSpeedCoof, _addAttackSpeed, conut_Projectiles, effectID)
     {
         projectileSpeed = _projectileSpeed;
         idBulletPref = _idBulletPref;
@@ -72,7 +83,7 @@ public class Staff : Weapon
 [Serializable]
 public class MeleWeapon: Weapon
 {
-    public MeleWeapon(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string decription, bool rangeType, float range, damageT typeDamage, int damage, float _attackSpeedCoof, int _addAttackSpeed, int conut_Projectiles) : base(id, name, maxCount, spriteID, quality, cost, decription, rangeType, range, typeDamage, damage, _attackSpeedCoof, _addAttackSpeed, conut_Projectiles)
+    public MeleWeapon(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string decription, bool rangeType, float range, damageT typeDamage, int damage, float _attackSpeedCoof, int _addAttackSpeed, int conut_Projectiles, int effectID = -1) : base(id, name, maxCount, spriteID, quality, cost, decription, rangeType, range, typeDamage, damage, _attackSpeedCoof, _addAttackSpeed, conut_Projectiles, effectID)
     {
 
     }

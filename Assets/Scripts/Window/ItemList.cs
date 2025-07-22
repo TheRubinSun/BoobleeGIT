@@ -56,12 +56,12 @@ public static class ItemsList
     {
         items.Clear();
         if (items.Count == 0) items.Add(new Item(0, "item_none", 0, 0, Quality.None, 0, ""));
-        items.Add(new MeleWeapon(1, "sword_gods_slayer", 1, 0, Quality.Mystical, 1000, "_", false, 1f, damageT.Physical,    5, 0.8f,    30, 1));
+        items.Add(new MeleWeapon(1, "sword_gods_slayer", 1, 0, Quality.Mystical, 1000, "_", false, 1f, damageT.Physical,    5, 0.8f,    30, 1 , 1));
         items.Add(new MeleWeapon(20, "axe_woodcutter",   1, 0, Quality.Common, 250, "_",     false, 0.2f, damageT.Physical,  1, 0.6f,      60, 1));
         items.Add(new MeleWeapon(16, "soldier_spear",    1, 0, Quality.Uncommon, 120, "_",       false, 0.55f, damageT.Physical,  2, 0.75f,  40, 1));
         items.Add(new MeleWeapon(17, "simple_knife",     1, 0, Quality.Common, 65, "_",   false, 0.32f, damageT.Physical, 2, 0.7f,    50, 1));
 
-        items.Add(new Gun(2,  "gun_makarov",                   1, 0, Quality.Rare, 400, "_",     true, 4f, damageT.Physical, 2,  0.7f, 40, 1, 12f, 1.0f, 5f, 0));
+        items.Add(new Gun(2,  "gun_makarov",                   1, 0, Quality.Rare, 400, "_",     true, 4f, damageT.Physical, 2,  0.7f, 40, 1, 12f, 1.0f, 5f, 0, 1));
         items.Add(new Gun(13, "bow_simple",                    1, 0, Quality.Mystical, 600, "_", true, 6f, damageT.Physical, 10, 0.7f, 30, 1, 8f,  0.5f, 5f, 2));
         items.Add(new Gun(14, "shotgun_pump",                  1, 0, Quality.Rare, 550, "_",     true, 2f, damageT.Physical, 3,  0.6f, 40, 4, 10f, 1f,  15f, 1));
         items.Add(new Staff(48, "staff_forest",                1, 0, Quality.Rare, 550, "_",     true, 4f, damageT.Magic,    2,  0.7f, 30, 1, 0.5f, 1f, 5f, 3, 2));
@@ -126,6 +126,7 @@ public static class ItemsList
         items.Add(new Food(61, "item_spicy_meat",              20, 0, Quality.Uncommon, 10, "_", 2, 0, 15, 3, "Heal", 1));
         items.Add(new GunMinion(62, "minion_gunmin_tech",       1, 0, Quality.Rare, 1500, "_", TypeItem.Minion, 6.5f, 6f, 1.7f, TypeMob.Technology, 4, 6, 1, 28f));
         items.Add(new GunMinion(63, "minion_heal", 1, 0, Quality.Rare, 1500, "_", TypeItem.Minion, 6.5f, 6f, 1.7f, TypeMob.Technology, 5, -1, 1, 20f));
+        items.Add(new LazerGun(64, "lazergun_tra", 1, 0, Quality.Rare, 550, "_", true, 2f, damageT.Technical, 1, 1f, 10, 1, 2));
         //PrintItemList();
     }
     private static void InitializeSpritesItem()
