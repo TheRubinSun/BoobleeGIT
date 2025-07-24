@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public class RayWeaponLogic : WeaponControl
 {
@@ -9,10 +10,12 @@ public class RayWeaponLogic : WeaponControl
 
     protected int countPenetrations;
     protected Vector2 defaultShootPos;
+    protected float startWidthLine;
     protected override void Start()
     {
         base.Start();
         lR = GetComponent<LineRenderer>();
+        startWidthLine = lR.startWidth;
         defaultShootPos = ShootPos.localPosition;
     }
     public virtual void GetStatsLazerGun(Weapon _weapon, int damage, float at_speed_coof, float add_at_speed, float att_sp_pr, bool isRang, float attack_ran, int count_proj, float _spreadAngle, damageT _damT, int _countPenetr, Transform pl_mod, GameObject _Projectile_pref = null, float att_sp_pr_coof = 0, int effectID = -1)
@@ -28,7 +31,6 @@ public class RayWeaponLogic : WeaponControl
         lastAttackTime = Time.time;
 
 
-
         if (animator != null)
         {
             animator.SetTrigger("Shoot");
@@ -40,6 +42,13 @@ public class RayWeaponLogic : WeaponControl
     }
     protected void ShootLazer()
     {
+
+        if (audioClips.Length > 0)
+        {
+            audioSource_Shot.pitch = 1f + Random.Range(-pitchRange, pitchRange);
+            audioSource_Shot.PlayOneShot(audioClips[0]); //Звук выстрела
+        }
+
         ShootLogic(0);
     }
     protected override void ShootLogic(float offset)
@@ -63,51 +72,82 @@ public class RayWeaponLogic : WeaponControl
         StartCoroutine(HideRay());
 
         RaycastHit2D[] hits = Physics2D.RaycastAll(originPos, direction, Attack_Range);
+
+        ProcessMainHit(hits, originPos, endPos);
+    }
+    protected void ProcessMainHit(RaycastHit2D[] hits, Vector2 originPos, Vector2 endPos)
+    {
         int countPen = countPenetrations;
-
-
-
+        int cointProj = CountProjectiles;
         foreach (RaycastHit2D hit in hits)
         {
-            if (hit.collider != null)
+            if (hit.collider == null) 
+                continue;
+
+            int hitLayer = hit.collider.gameObject.layer;
+
+            if (hitLayer != LayerManager.touchObjectsLayer && hitLayer != LayerManager.enemyLayer)
+                continue;
+
+            DrawRay(0, originPos);
+            DrawRay(1, hit.point);
+
+            if (hitLayer == LayerManager.touchObjectsLayer)
             {
-                int hitLayer = hit.collider.gameObject.layer;
-                if (hitLayer == LayerManager.touchObjectsLayer)
+                ObjectLBroken objectL = hit.collider.gameObject.GetComponent<ObjectLBroken>();
+                if (objectL != null)
                 {
-                    DrawRay(originPos, hit.point);
-                    ObjectLBroken objectL = hit.collider.gameObject.GetComponent<ObjectLBroken>();
-                    if (objectL != null)
-                    {
-                        objectL.Break(canBeWeapon);
-                    }
-                    countPen--;
-                    if (countPen <= 0) return;
-                    else continue;
-                }
-                else if (hitLayer == LayerManager.enemyLayer)
-                {
-                    DrawRay(originPos, hit.point);
-                    BaseEnemyLogic baseEnemyLogic = hit.collider.GetComponent<BaseEnemyLogic>();
-                    if (baseEnemyLogic == null)
-                        baseEnemyLogic = hit.collider.transform.parent.GetComponent<BaseEnemyLogic>();
-
-                    baseEnemyLogic.TakeDamage(Attack_Damage, damageType, canBeWeapon.canBeMissed, EffectAttack);
-
-                    countPen--;
-                    if (countPen <= 0) return;
-                    else continue;
-                    //Debug.Log(collider.GetComponent<BaseEnemyLogic>().enum_stat.Cur_Hp+" "+ collider.GetComponent<BaseEnemyLogic>().enum_stat.Max_Hp);
+                    objectL.Break(canBeWeapon);
                 }
             }
-        }
+            else if (hitLayer == LayerManager.enemyLayer)
+            {
+                BaseEnemyLogic baseEnemyLogic = hit.collider.GetComponent<BaseEnemyLogic>();
+                if (baseEnemyLogic == null)
+                    baseEnemyLogic = hit.collider.transform.parent.GetComponent<BaseEnemyLogic>();
 
-        DrawRay(originPos, endPos);
+                baseEnemyLogic.TakeDamage(Attack_Damage, damageType, canBeWeapon.canBeMissed, EffectAttack);
+            }
+            if (cointProj > 1) 
+                ProcessOtherHits(hit);
+
+            countPen--;
+
+            if (countPen <= 0) 
+                return;
+
+            else continue;
+        }
+        DrawRay(0, originPos);
+        DrawRay(1, endPos);
         return;
     }
-    protected void DrawRay(Vector2 origin, Vector2 endPos)
+    protected void ProcessOtherHits(RaycastHit2D hit)
     {
-        lR.SetPosition(0, origin);
-        lR.SetPosition(1, endPos);
+        
+        int countHits = 1;
+        Collider2D[] arroundHits = Physics2D.OverlapCircleAll(hit.transform.position, Attack_Range / 2);
+        foreach (Collider2D arHit in arroundHits)
+        {
+            if (arHit.transform == hit.transform) 
+                continue;
+
+            if (arHit.gameObject.layer == LayerManager.enemyLayer)
+            {
+                countHits++;
+                DrawRay(countHits, arHit.transform.position);
+                BaseEnemyLogic enemy = arHit.gameObject.GetComponent<BaseEnemyLogic>();
+                if (enemy == null)
+                    enemy = arHit.transform.parent.GetComponent<BaseEnemyLogic>();
+                enemy.TakeDamage(Attack_Damage, damageType, canBeWeapon.canBeMissed, EffectAttack);
+                continue;
+            }
+        }
+    }
+    protected void DrawRay(int numbPoint, Vector2 coord)
+    {
+        lR.positionCount = numbPoint + 1;
+        lR.SetPosition(numbPoint, coord);
     }
     protected IEnumerator HideRay()
     {

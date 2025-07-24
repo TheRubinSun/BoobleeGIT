@@ -62,7 +62,7 @@ Transform:
   m_GameObject: {fileID: 6980527794144593444}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.24, z: 0}
+  m_LocalPosition: {x: 0, y: 0.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -141,7 +141,11 @@ MonoBehaviour:
   offset: 0
   PlayerModel: {fileID: 0}
   pitchRange: 0.1
-  audioClips: []
+  audioClips:
+  - {fileID: 8300000, guid: bfebdb12c335b7f43aac1362f374d2ae, type: 3}
+  - {fileID: 8300000, guid: 24f1f8b76eb5c2345aee36dff1ebe560, type: 3}
+  - {fileID: 8300000, guid: 03a004582bfbfb64881be02d15af2fd1, type: 3}
+  - {fileID: 8300000, guid: a492b98288b4695458e57a75f072d7fd, type: 3}
   timeLizer: 0.05
   ShootPos: {fileID: 388603152793888765}
 --- !u!114 &1566065434293634381
@@ -207,7 +211,7 @@ LineRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 30
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}

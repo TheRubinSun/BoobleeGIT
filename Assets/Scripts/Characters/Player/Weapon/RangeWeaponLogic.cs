@@ -5,7 +5,6 @@ public class RangeWeaponLogic : WeaponControl
 {
     protected float attack_Speed_Projectile { get; set; }
     protected GameObject Projectile_pref { get; set; }
-    protected int CountProjectiles { get; set; }
 
     protected GameObject projectile;
     protected PlayerProjectile proj_set;
@@ -24,7 +23,6 @@ public class RangeWeaponLogic : WeaponControl
         base.GetStatsWeapon(gun, damage, at_speed_coof, add_attack_speed, att_sp_pr, isRang, attack_ran, count_proj, _spreadAngle, _damT, pl_mod, Projectile_pref, att_sp_pr_coof, _effectID);
         attack_Speed_Projectile = (att_sp_pr + Player.Instance.GetPlayerStats().Proj_Speed) * att_sp_pr_coof;
         Projectile_pref = _Projectile_pref;
-        CountProjectiles = Player.Instance.GetPlayerStats().count_Projectile + count_proj;
         spreadAngle = _spreadAngle;
     }
     public override void Attack()

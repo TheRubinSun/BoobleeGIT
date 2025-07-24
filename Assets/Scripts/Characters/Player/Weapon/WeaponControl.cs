@@ -15,6 +15,7 @@ public class WeaponControl : MonoBehaviour
     protected float Attack_Range {  get; set; }
     protected damageT damageType {  get; set; }
     protected EffectData EffectAttack { get; set; }
+    protected int CountProjectiles { get; set; }
 
     protected CanBeWeapon canBeWeapon = new CanBeWeapon();
 
@@ -90,6 +91,8 @@ public class WeaponControl : MonoBehaviour
         if (_effectID == -1) EffectAttack = null;
         else
             EffectAttack = ResourcesData.GetEffectsPrefab(_effectID);
+
+        CountProjectiles = Player.Instance.GetPlayerStats().count_Projectile + count_proj;
 
     }
     //protected virtual void UpdateStats()
