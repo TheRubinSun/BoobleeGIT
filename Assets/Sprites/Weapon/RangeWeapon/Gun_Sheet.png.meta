@@ -145,11 +145,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 32
-        width: 37
+        y: 96
+        width: 45
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6666667, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -166,12 +166,12 @@ TextureImporter:
       name: Gun_Sheet_1
       rect:
         serializedVersion: 2
-        x: 37
-        y: 32
-        width: 37
+        x: 45
+        y: 96
+        width: 45
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6666667, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -188,12 +188,12 @@ TextureImporter:
       name: Gun_Sheet_2
       rect:
         serializedVersion: 2
-        x: 74
-        y: 32
-        width: 37
+        x: 90
+        y: 96
+        width: 45
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6666667, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -211,11 +211,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 37
+        y: 64
+        width: 45
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.82222223, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -232,12 +232,12 @@ TextureImporter:
       name: Gun_Sheet_4
       rect:
         serializedVersion: 2
-        x: 37
-        y: 0
-        width: 37
+        x: 45
+        y: 64
+        width: 45
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.82222223, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -254,12 +254,12 @@ TextureImporter:
       name: Gun_Sheet_5
       rect:
         serializedVersion: 2
-        x: 74
-        y: 0
-        width: 37
+        x: 90
+        y: 64
+        width: 45
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.82222223, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -268,6 +268,138 @@ TextureImporter:
       bones: []
       spriteID: f21d3f52b09b312c0800000000000000
       internalID: -4462019348261514961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gun_Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 45
+        height: 32
+      alignment: 9
+      pivot: {x: 0.73333335, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26dc94bf946821f4f8012e56e99cb9a8
+      internalID: 643347878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gun_Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 32
+        width: 45
+        height: 32
+      alignment: 9
+      pivot: {x: 0.73333335, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e67ded277bc99804ca135c1f95398153
+      internalID: 995008084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gun_Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 32
+        width: 45
+        height: 32
+      alignment: 9
+      pivot: {x: 0.73333335, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ac4fdaaad04f604e8ddc7863c18f9fb
+      internalID: -515591810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gun_Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 45
+        height: 32
+      alignment: 9
+      pivot: {x: 0.6, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73547376714249d4996a8b8f7bc0fe43
+      internalID: -768723834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gun_Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 0
+        width: 45
+        height: 32
+      alignment: 9
+      pivot: {x: 0.6, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d552aa77a8850da4b8f72f5067711c40
+      internalID: -1579750630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gun_Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 0
+        width: 45
+        height: 32
+      alignment: 9
+      pivot: {x: 0.6, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a531c0475b8367442b7948dbf45b145e
+      internalID: 1760274938
       vertices: []
       indices: 
       edges: []
@@ -288,10 +420,16 @@ TextureImporter:
     nameFileIdTable:
       Gun_Sheet_0: 6310497918723096498
       Gun_Sheet_1: 5393676826492388886
+      Gun_Sheet_10: -1579750630
+      Gun_Sheet_11: 1760274938
       Gun_Sheet_2: -2983163850884955300
       Gun_Sheet_3: 6537302695715828035
       Gun_Sheet_4: -281784695221639421
       Gun_Sheet_5: -4462019348261514961
+      Gun_Sheet_6: 643347878
+      Gun_Sheet_7: 995008084
+      Gun_Sheet_8: -515591810
+      Gun_Sheet_9: -768723834
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

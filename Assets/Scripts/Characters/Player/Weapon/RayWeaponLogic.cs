@@ -6,6 +6,7 @@ public class RayWeaponLogic : WeaponControl
     protected LineRenderer lR;
     [SerializeField] protected float timeLizer;
     [SerializeField] protected Transform ShootPos;
+
     protected int countPenetrations;
     protected Vector2 defaultShootPos;
     protected override void Start()
@@ -23,19 +24,48 @@ public class RayWeaponLogic : WeaponControl
     }
     public override void Attack()
     {
-        Vector2 originPos = ShootPos.position;
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 direction = (mousePos - originPos).normalized;
-        Vector2 endPos = originPos + direction * Attack_Range;
-
         if (Time.time - lastAttackTime < attackInterval) return;
         lastAttackTime = Time.time;
+
+
+
+        if (animator != null)
+        {
+            animator.SetTrigger("Shoot");
+        }
+
+
+
+        
+    }
+    protected void ShootLazer()
+    {
+        ShootLogic(0);
+    }
+    protected override void ShootLogic(float offset)
+    {
+        Vector2 originPos = ShootPos.position;
+        Vector2 direction;
+        Vector2 endPos;
+
+        if (AttackDirectionOrVector)
+        {
+            direction = GetDirection(originPos, centerPl.position).normalized;
+        }
+        else
+        {
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            direction = (mousePos - originPos).normalized;
+        }
+        endPos = originPos + direction * Attack_Range;
 
         lR.enabled = true;
         StartCoroutine(HideRay());
 
         RaycastHit2D[] hits = Physics2D.RaycastAll(originPos, direction, Attack_Range);
         int countPen = countPenetrations;
+
+
 
         foreach (RaycastHit2D hit in hits)
         {
@@ -70,7 +100,7 @@ public class RayWeaponLogic : WeaponControl
                 }
             }
         }
-       
+
         DrawRay(originPos, endPos);
         return;
     }

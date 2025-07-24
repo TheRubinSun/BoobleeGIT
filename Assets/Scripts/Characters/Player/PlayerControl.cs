@@ -13,7 +13,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private GameObject playerObj;
     private Transform cameraObj;
     [SerializeField] private Transform centerLegs;
-    [SerializeField] private LineControle[] legsLines;
+    [SerializeField] private LegControl[] legsLines;
     [SerializeField] private LegsControl legsControl;
     [SerializeField] private Transform WeaponSlots;
 
@@ -111,7 +111,7 @@ public class PlayerControl : MonoBehaviour
         Vector3 targerPos = new Vector3(transform.position.x, transform.position.y, -10f);
         cameraObj.position = Vector3.Lerp(cameraObj.position, targerPos, Time.deltaTime * 7f);
 
-        foreach (LineControle legsLine in legsLines)
+        foreach (LegControl legsLine in legsLines)
         {
             legsLine.MoveLinesLegs();
         }
@@ -152,8 +152,9 @@ public class PlayerControl : MonoBehaviour
         Vector2 direction = mousePos - (Vector2)transform.position;
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        float roundedAngle = (int)(angle * 10f) / 10f;
 
-        WeaponSlots.rotation = Quaternion.Euler(0, 0, angle);
+        WeaponSlots.rotation = Quaternion.Euler(0, 0, roundedAngle);
     }
     public void Jump(float distance)
     {

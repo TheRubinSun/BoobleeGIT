@@ -10,7 +10,7 @@ public class LegsControl : MonoBehaviour
     [SerializeField] Transform[] centerFootsPos;
     [SerializeField] Transform[] lines;
     [SerializeField] Transform[] minionsSlots;
-    private LineControle[] lineControles;
+    private LegControl[] lineControles;
 
     private bool[] isMoving;
 
@@ -32,11 +32,11 @@ public class LegsControl : MonoBehaviour
         footStandartLocalPos = new Vector2[foots.Length];
         isMoving = new bool[foots.Length];
 
-        lineControles = new LineControle[foots.Length];
+        lineControles = new LegControl[foots.Length];
         for (int i = 0; i < foots.Length; i++)
         {
             isMoving[i] = false;
-            lineControles[i] = lines[i].GetComponent<LineControle>();
+            lineControles[i] = lines[i].GetComponent<LegControl>();
             footStandartLocalPos[i] = centerFootsPos[i].localPosition;
         }
         audioSource_Move = GetComponent<AudioSource>();

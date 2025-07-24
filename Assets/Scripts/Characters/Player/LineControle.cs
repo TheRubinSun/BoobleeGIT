@@ -4,22 +4,21 @@ using UnityEngine.U2D;
 
 public class LineControle: MonoBehaviour
 {
-    LineRenderer lineRenderer;
+    
     [SerializeField] private Texture[] textures;
-    private int animStep;
-
     [SerializeField] private float fps = 30f;
-    [SerializeField] Transform body;
-    [SerializeField] Transform leg;
-    [SerializeField] bool anim_need;
+    [SerializeField] protected bool anim_need;
 
+    protected LineRenderer lineRenderer;
     private float fpsCounter;
-
+    protected int animStep;
     private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
+    }
+    private void Update()
+    {
         if(anim_need) AnimMove();
-
     }
     public void AnimMove()
     {
@@ -33,12 +32,5 @@ public class LineControle: MonoBehaviour
             lineRenderer.material.SetTexture("_MainTex", textures[animStep]);
             fpsCounter = 0f;
         }
-    }
-    public void MoveLinesLegs()
-    {
-        if (anim_need) AnimMove();
-        lineRenderer.positionCount = 2;
-        lineRenderer.SetPosition(0, body.position);
-        lineRenderer.SetPosition(1, leg.position);
     }
 }

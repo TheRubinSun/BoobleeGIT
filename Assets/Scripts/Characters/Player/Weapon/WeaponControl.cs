@@ -22,7 +22,7 @@ public class WeaponControl : MonoBehaviour
 
     protected bool IsAttack;
     protected float attackInterval { get; set; }
-
+    protected Transform centerPl;
 
     [SerializeField] protected float minDistance = 0.3f; // Минимальный радиус, в котором оружие НЕ должно крутиться
     [SerializeField] protected int offset; // Смещение для установки правильной позиции, если нужно
@@ -49,7 +49,7 @@ public class WeaponControl : MonoBehaviour
     protected virtual void Start()
     {
         audioSource_Shot = GetComponent<AudioSource>();
-
+        centerPl = transform.parent.parent;
         //SoundsControl();
         player = Player.Instance;
         playerStats = player.GetPlayerStats();
@@ -120,7 +120,7 @@ public class WeaponControl : MonoBehaviour
             transform.localRotation = Quaternion.Euler(0, 0, offset);
             if (isRange)
             {
-                direction = GetDirection(transform.position, transform.parent.position);
+                direction = GetDirection(transform.position, centerPl.position);
                 FlipWeapon(direction.y);
             }
         }

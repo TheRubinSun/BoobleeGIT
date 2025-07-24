@@ -11,9 +11,8 @@ public class RangeWeaponLogic : WeaponControl
     protected PlayerProjectile proj_set;
     protected Vector2 direction_Proj;
     protected float spreadAngle;
-
-    [SerializeField]
-    protected Transform ShootPos;
+    [SerializeField] protected bool ShootAfterAnim;
+    [SerializeField] protected Transform ShootPos;
     protected Vector2 defaultShootPos;
     protected override void Start()
     {
@@ -59,7 +58,7 @@ public class RangeWeaponLogic : WeaponControl
 
         projectile.transform.SetParent(transform.root); //Подять в иерархии объекта пули/стрелы
 
-        if(animator != null)
+        if(animator != null && !ShootAfterAnim)
         {
             animator.SetTrigger("Shoot");
         }
