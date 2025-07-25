@@ -3,11 +3,9 @@ using UnityEngine;
 public class StaffLogic : RangeWeaponLogic
 {
     int manaCost;
-    EffectData posionNewEff;
     protected override void Start()
     {
         base.Start();
-        posionNewEff = ResourcesData.effects[3];
     }
     public virtual void GetStatsStaff(Weapon staff, int damage, float at_speed_coof, float add_attack_speed, float att_sp_pr, bool isRang, float attack_ran, int count_proj, float _spreadAngle, damageT _damT, Transform pl_mod, int _manaCost, GameObject _Projectile_pref = null, float att_sp_pr_coof = 0, int _effectID = -1)
     {
@@ -22,8 +20,6 @@ public class StaffLogic : RangeWeaponLogic
     public override void Attack()
     {
         base.Attack();
-
-        
     }
     protected override void ShootLogic(float offsetProj)
     {
@@ -32,7 +28,7 @@ public class StaffLogic : RangeWeaponLogic
             player.SpendMana(manaCost);
 
             base.ShootLogic(offsetProj);
-            proj_set.effectBul = posionNewEff;
+            proj_set.effectBul = EffectAttack;
             ShootVelocity(projectile, direction); //Сам выстрел
 
         }

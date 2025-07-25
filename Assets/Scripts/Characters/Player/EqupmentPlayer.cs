@@ -302,10 +302,13 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
                 ResourcesData.GetProjectilesPrefab(staff.idBulletPref), staff.projectileSpeedCoof, staff.effectID);
             
         }
+        else if(slot.Item is LazerStaffGun stuffLGun)
+        {
+            weaponObj.GetComponent<RayStaffLogic>().GetStatsRayStaff(stuffLGun, stuffLGun.damage, stuffLGun.attackSpeedCoof, stuffLGun.addAttackSpeed, 0, stuffLGun.rangeType, stuffLGun.range, stuffLGun.conut_Projectiles, 0f, stuffLGun.typeDamage, stuffLGun.CountPenetration, stuffLGun.manaCost, PlayerModel, null, 0, stuffLGun.effectID);
+        }
         else if (slot.Item is LazerGun lGun)
         {
             weaponObj.GetComponent<RayWeaponLogic>().GetStatsLazerGun(lGun, lGun.damage, lGun.attackSpeedCoof, lGun.addAttackSpeed, 0, lGun.rangeType, lGun.range, lGun.conut_Projectiles, 0f, lGun.typeDamage, lGun.CountPenetration, PlayerModel, null, 0, lGun.effectID);
-
         }
         else if (slot.Item is Weapon weapon)
         {

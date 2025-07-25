@@ -128,6 +128,7 @@ public static class ItemsList
         items.Add(new GunMinion(63, "minion_heal",              1, 0, Quality.Rare, 1500, "_", TypeItem.Minion, 6.5f, 6f, 1.7f, TypeMob.Technology, 5, -1, 1, 20f));
         items.Add(new LazerGun(64, "lazergun_tra",              1, 0, Quality.Legendary, 3550, "_", true, 4f, damageT.Technical, 1, 1.2f, 0, 1, 2));
         items.Add(new LazerGun(65, "thunder_gun",               1, 0, Quality.Mystical, 1550, "_", true, 2f, damageT.Technical, 1, 1f, 20, 2, 1));
+        items.Add(new LazerStaffGun(66, "thunder_stuff",          1, 0, Quality.Mystical, 1550, "_", true, 4f, damageT.Magic, 1, 1f, 20, 2, 1, 3, 4));
         //PrintItemList();
     }
     private static void InitializeSpritesItem()

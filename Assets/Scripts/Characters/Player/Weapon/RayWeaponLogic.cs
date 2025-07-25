@@ -30,15 +30,10 @@ public class RayWeaponLogic : WeaponControl
         if (Time.time - lastAttackTime < attackInterval) return;
         lastAttackTime = Time.time;
 
-
         if (animator != null)
         {
             animator.SetTrigger("Shoot");
         }
-
-
-
-        
     }
     protected void ShootLazer()
     {

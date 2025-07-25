@@ -81,6 +81,22 @@ public class Staff : Weapon
     }
 }
 [Serializable]
+public class LazerStaffGun : Weapon
+{
+    public float projectileSpeed { get; set; }
+    public float projectileSpeedCoof { get; set; }
+    public int idBulletPref { get; set; }
+    public float spreadAngle { get; set; }
+    public int manaCost { get; set; }
+    public int CountPenetration { get; set; }
+    public LazerStaffGun(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string decription, bool rangeType, float range, damageT typeDamage, int damage, float _attackSpeedCoof, int _addAttackSpeed, int conut_Projectiles, int CountPenetration, float _spreadAngle,  int manaCost, int effectID = -1) : base(id, name, maxCount, spriteID, quality, cost, decription, rangeType, range, typeDamage, damage, _attackSpeedCoof, _addAttackSpeed, conut_Projectiles, effectID)
+    {
+        this.CountPenetration = CountPenetration;
+        spreadAngle = _spreadAngle;
+        this.manaCost = manaCost;
+    }
+}
+[Serializable]
 public class MeleWeapon: Weapon
 {
     public MeleWeapon(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string decription, bool rangeType, float range, damageT typeDamage, int damage, float _attackSpeedCoof, int _addAttackSpeed, int conut_Projectiles, int effectID = -1) : base(id, name, maxCount, spriteID, quality, cost, decription, rangeType, range, typeDamage, damage, _attackSpeedCoof, _addAttackSpeed, conut_Projectiles, effectID)
