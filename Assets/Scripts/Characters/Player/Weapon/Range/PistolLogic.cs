@@ -15,7 +15,7 @@ public class PistolLogic : RangeWeaponLogic
     {
         base.Attack();
     }
-    public void ShootLogic(float offsetProj)
+    protected override void ShootLogic(float offsetProj)
     {
         base.ShootLogic(offsetProj);
         ShootVelocity(projectile, direction); //Сам выстрел

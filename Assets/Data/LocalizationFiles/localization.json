@@ -390,6 +390,24 @@
         "TypeItem": "",
         "Quality": "",
         "Description": "This minion heals the player, restoring health during combat."
+      },
+      "lazergun_tra": {
+        "Name": "Laser-TRA2000",
+        "TypeItem": "Weapon",
+        "Quality": "Legendary",
+        "Description": "The flagship weapon of the TRA series. Fires a powerful piercing laser beam that vaporizes enemies in seconds. Reliability, power, and style in one sleek package."
+      },
+      "thunder_gun": {
+        "Name": "Thunder Blaster",
+        "TypeItem": "Weapon",
+        "Quality": "Mystical",
+        "Description": "A gun that fires chaining lightning bolts, bouncing from one enemy to another. Perfect for dealing with groups — electricity always finds a way."
+      },
+      "thunder_stuff": {
+        "Name": "Storm Staff",
+        "TypeItem": "Weapon",
+        "Quality": "Mystical",
+        "Description": "A magical staff that unleashes chaining lightning bolts, jumping between enemies. Consumes mana and excels at battling multiple foes at once."
       }
     },
     "mobs": {
@@ -933,6 +951,24 @@
         "TypeItem": "",
         "Quality": "",
         "Description": "Этот миньон лечит игрока, восстанавливая его здоровье в бою."
+      },
+      "lazergun_tra": {
+        "Name": "Лазер-TRA2000",
+        "TypeItem": "Оружие",
+        "Quality": "Легендарное",
+        "Description": "Флагманское оружие серии TRA. Генерирует мощный сквозной лазерный луч, испаряющий врагов за доли секунды. Надёжность, мощь и стиль в одном корпусе."
+      },
+      "thunder_gun": {
+        "Name": "Молниемёт",
+        "TypeItem": "Оружие",
+        "Quality": "Мистическое",
+        "Description": "Пушка, стреляющая цепными молниями, отскакивающими от врага к врагу. Идеальна для борьбы с группами целей — электричество найдёт путь."
+      },
+      "thunder_stuff": {
+        "Name": "Грозовой Посох",
+        "TypeItem": "Оружие",
+        "Quality": "Мистическое",
+        "Description": "Магический посох, стреляющий цепными молниями, отскакивающими от врага к врагу. Требует ману для использования и идеально подходит для ведения боя с группами противников."
       }
     },
     "mobs": {
