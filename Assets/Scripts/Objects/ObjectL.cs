@@ -107,11 +107,20 @@ public abstract class ObjectLBroken : ObjectL
     }
     protected virtual void DropItems()
     {
-        int id = 0;
         foreach (ItemDropData item in itemsDrop)
         {
-            int countItem = Random.Range(item.min, (item.max + 1));
-            if (countItem < 1) return;
+            int countItem = 0;
+            if (item.max > 0)
+            {
+                for(int i = 0; i < item.max; i++)
+                {
+                    int chance = Random.Range(0, 10000); //Рандомный шанс до 100.00
+                    if (chance >= item.chance * 100f) break; 
+                    countItem++;
+                }
+            }
+            if (countItem < 1 && item.min < 1) continue;
+            if (countItem < 1) countItem = item.min;
 
             GameObject dropItem = Instantiate(GlobalPrefabs.ItemDropPref, GameManager.Instance.dropParent);
 
@@ -126,11 +135,11 @@ public abstract class ObjectLBroken : ObjectL
             }
             dropItem.transform.position = dropPos;
 
-
+            //Debug.Log($"[Drop] {item.Item.NameKey}: шанс {item.chance}%, выпало {countItem}");
             ItemDrop ItemD = dropItem.GetComponent<ItemDrop>();
 
             Item tempItem = item.Item;
-            //Debug.Log($"tempItem.Name: {tempItem.Name} tempItem.Name {tempItem.NameKey} sprite {tempItem.Sprite.name}");
+
             ItemD.sprite = tempItem.GetSprite();
             ItemD.item = tempItem;
             ItemD.count = countItem;
@@ -138,7 +147,6 @@ public abstract class ObjectLBroken : ObjectL
 
             dropItem.GetComponent<SpriteRenderer>().sprite = ItemD.sprite;
             dropItem.GetComponentInChildren<TextMeshPro>().text = $"{ItemD.item.Name} ({ItemD.count})";
-            id++;
         }
     }
 }
@@ -147,14 +155,16 @@ public class ItemDropData
 {
     public string item_key;
     public Item Item { get; set; }
+    public float chance;
     public int min;
     public int max;
 
-    public ItemDropData(string item_name, int min, int max)
+    public ItemDropData(string item_name,  int min, int max, float chance)
     {
         this.item_key = item_name;
         this.min = min;
         this.max = max;
+        this.chance = chance;
     }
 }
 

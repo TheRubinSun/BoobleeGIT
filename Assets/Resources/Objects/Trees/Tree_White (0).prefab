@@ -104,6 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee2dff40fbcd5b143ad6732876ce7620, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ToDropPos: {x: 0, y: 0}
   remainsHits: 8
   toNextStageAnim: 1
   soundsBroken:
@@ -113,6 +114,7 @@ MonoBehaviour:
   fullBroken: {fileID: 8300000, guid: bf002cdde924afa4d85e72115a025606, type: 3}
   itemsDrop:
   - item_key: material_wood
+    chance: 50
     min: 1
     max: 3
 --- !u!61 &537814440007233801

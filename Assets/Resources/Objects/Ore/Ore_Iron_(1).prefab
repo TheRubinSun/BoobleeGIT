@@ -103,6 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8030d6996d68bb49b0b2778123f0d45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ToDropPos: {x: 0, y: 0}
   remainsHits: 24
   toNextStageAnim: 4
   soundsBroken:
@@ -112,10 +113,12 @@ MonoBehaviour:
   fullBroken: {fileID: 8300000, guid: 23fb05d2137480046a9602ce6d1ec73b, type: 3}
   itemsDrop:
   - item_key: material_iron_ore
+    chance: 33
     min: 1
-    max: 2
+    max: 3
   - item_key: material_quartzite
-    min: 0
+    chance: 60
+    min: 1
     max: 5
   soundsHit:
   - {fileID: 8300000, guid: 9cd3d93e2eabc1d45b262da5f0f3f159, type: 3}

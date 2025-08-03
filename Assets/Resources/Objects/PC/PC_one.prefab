@@ -114,8 +114,9 @@ MonoBehaviour:
   fullBroken: {fileID: 8300000, guid: 4354b90dc7177fd448e12767b2ff0915, type: 3}
   itemsDrop:
   - item_key: material_chip_one
-    min: -5
-    max: 1
+    chance: 25
+    min: 1
+    max: 3
   soundsHit:
   - {fileID: 8300000, guid: d955cad5e3a74f341968651b1dee7362, type: 3}
   soundsWork: {fileID: 8300000, guid: 52275833d2edca7458bad6bd9f198241, type: 3}

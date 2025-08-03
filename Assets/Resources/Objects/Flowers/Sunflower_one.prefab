@@ -113,9 +113,11 @@ MonoBehaviour:
   fullBroken: {fileID: 8300000, guid: f35ab162af0412b4495d87fc28894a8d, type: 3}
   itemsDrop:
   - item_key: material_sunflower
+    chance: 50
     min: 1
-    max: 3
+    max: 4
   - item_key: seed_sunflower
+    chance: 35
     min: 1
     max: 3
 --- !u!61 &537814440007233801

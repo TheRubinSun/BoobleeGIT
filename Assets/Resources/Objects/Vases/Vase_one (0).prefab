@@ -103,6 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10517414469b2524797834ad952d2ad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ToDropPos: {x: 0, y: 0}
   remainsHits: 4
   toNextStageAnim: 1
   soundsBroken:
@@ -111,6 +112,35 @@ MonoBehaviour:
   fullBroken: {fileID: 8300000, guid: eade12cd5b5038046925a883864d679b, type: 3}
   itemsDrop:
   - item_key: material_iron_bar
+    chance: 15
+    min: 0
+    max: 3
+  - item_key: item_potion_hp
+    chance: 10
+    min: 0
+    max: 1
+  - item_key: item_potion_speed
+    chance: 10
+    min: 0
+    max: 1
+  - item_key: item_potion_mana
+    chance: 10
+    min: 0
+    max: 1
+  - item_key: material_bottle
+    chance: 10
+    min: 0
+    max: 1
+  - item_key: trap_foottrap
+    chance: 8
+    min: 0
+    max: 1
+  - item_key: item_force_air
+    chance: 5
+    min: 0
+    max: 1
+  - item_key: material_rubin
+    chance: 1
     min: 0
     max: 1
 --- !u!61 &3098389959272517242
