@@ -10,7 +10,7 @@ using static System.Runtime.CompilerServices.RuntimeHelpers;
 public class UIControl:MonoBehaviour
 {
     public static UIControl Instance { get; private set; }
-    private Dictionary<KeyCode, System.Action> keyActions;
+    //private Dictionary<KeyCode, System.Action> keyActions;
 
     [SerializeField] GameObject GameMenuWindow;
     [SerializeField] GameObject inventoryWindow;
@@ -52,7 +52,7 @@ public class UIControl:MonoBehaviour
     }
     private void Start()
     {
-        InitializeKeyActions();
+        //InitializeKeyActions();
         LoadButtonsHud();
     }
     public void LoadButtons()
@@ -69,54 +69,54 @@ public class UIControl:MonoBehaviour
             }
         }
     }
-    private void InitializeKeyActions()
-    {
-        keyActions = new Dictionary<KeyCode, System.Action>()
-        {
-            {KeyCode.I, OpenInventory},
-            {KeyCode.L, OpenListItems},
-            {KeyCode.M, OpenListMobs},
-            {KeyCode.P, OpenInfoPlayer},
-            {KeyCode.T, LocalizationTranslate},
-            {KeyCode.C, OpenCreatePortal},
-            {KeyCode.R, OpenShop},
-            {KeyCode.Q, OpenCraftWindow},
-            {KeyCode.Escape, OpenGameMenu},
-            {KeyCode.E, DragAndDrop.Instance.PickUp}
+    //private void InitializeKeyActions()
+    //{
+    //    keyActions = new Dictionary<KeyCode, System.Action>()
+    //    {
+    //        {KeyCode.I, OpenInventory},
+    //        {KeyCode.L, OpenListItems},
+    //        {KeyCode.M, OpenListMobs},
+    //        {KeyCode.P, OpenInfoPlayer},
+    //        {KeyCode.T, LocalizationTranslate},
+    //        {KeyCode.C, OpenCreatePortal},
+    //        {KeyCode.R, OpenShop},
+    //        {KeyCode.Q, OpenCraftWindow},
+    //        {KeyCode.Escape, OpenGameMenu},
+    //        {KeyCode.E, DragAndDrop.Instance.PickUp}
 
-        };
-        for (int i = 0; i < 10; i++)
-        {
-            KeyCode keyCode = (KeyCode)((int)KeyCode.Alpha1 + i);
-            int index = i;
-            keyActions[keyCode] = () => ButtonsInventoryBar(index);
-        }
-        // Отдельно добавляем Alpha0 (индекс 10)
-        keyActions[KeyCode.Alpha0] = () => ButtonsInventoryBar(9);
-    }
+    //    };
+    //    for (int i = 0; i < 10; i++)
+    //    {
+    //        KeyCode keyCode = (KeyCode)((int)KeyCode.Alpha1 + i);
+    //        int index = i;
+    //        keyActions[keyCode] = () => ButtonsInventoryBar(index);
+    //    }
+    //    // Отдельно добавляем Alpha0 (индекс 10)
+    //    keyActions[KeyCode.Alpha0] = () => ButtonsInventoryBar(9);
+    //}
     private void LoadButtonsHud()
     {
         buttonsInventoryHud = inventoryBar.GetComponentsInChildren<ButInventoryBar>().ToList();
     }
     private void Update()
     {
-        if (GameMenuWindow.activeSelf)
-        {
-            if(Input.GetKeyDown(KeyCode.Escape))
-            {
-                keyActions[KeyCode.Escape]?.Invoke();
-            }
-            return;
-        }
-        foreach (KeyValuePair<KeyCode, System.Action> keyAction in keyActions)
-        {
+        //if (GameMenuWindow.activeSelf)
+        //{
+        //    if(Input.GetKeyDown(KeyCode.Escape))
+        //    {
+        //        keyActions[KeyCode.Escape]?.Invoke();
+        //    }
+        //    return;
+        //}
+        //foreach (KeyValuePair<KeyCode, System.Action> keyAction in keyActions)
+        //{
 
-            if (Input.GetKeyDown(keyAction.Key))
-            {
-                keyAction.Value.Invoke();
-                break;
-            }
-        }
+        //    if (Input.GetKeyDown(keyAction.Key))
+        //    {
+        //        keyAction.Value.Invoke();
+        //        break;
+        //    }
+        //}
     }
     public void OpenInventory()
     {

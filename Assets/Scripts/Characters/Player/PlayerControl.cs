@@ -19,7 +19,7 @@ public class PlayerControl : MonoBehaviour
 
     [SerializeField] private float radiusCenterLegs = 0.23f;        
 
-    [SerializeField] private Vector2 inputDirection;
+    private Vector2 inputDirection;
 
 
     private GameManager g_m;
@@ -49,7 +49,10 @@ public class PlayerControl : MonoBehaviour
         Instance = this;
         g_m = GameManager.Instance;
         if (cameraObj == null) cameraObj =  GameObject.Find("Main Camera").transform;
-        player = GetComponentInParent<Player>();
+        //player = GetComponentInParent<Player>();
+
+        player = Player.Instance;
+
         rb = GetComponent<Rigidbody2D>();
         SetVolume();
     }
@@ -58,36 +61,15 @@ public class PlayerControl : MonoBehaviour
         //legsControl.GetComponent<AudioSource>().volume = GlobalData.VOLUME_SOUNDS;
     }
     // ������� ��� ��������, ��������� �� ��������� ���� ��� UI
-    private bool IsPointerOverUI()
-    {
-        return EventSystem.current.IsPointerOverGameObject();
-    }
+    //private bool IsPointerOverUI()
+    //{
+    //    return EventSystem.current.IsPointerOverGameObject();
+    //}
     private void Update()
     {
-        inputDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        //inputDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        inputDirection = PlayerInputHandler.InputDirection;
         RotateWeaponSlots();
-
-        if (!IsPointerOverUI())
-        {
-            if(Input.GetMouseButton(0))
-            Attack();
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            UseMinions();
-        }
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            if (player.HaveMana(2)) player.SpendMana(2);
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            if (player.TakeHealMana(2)) { }
-        }
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            Jump(1f);
-        }
     }
     private void FixedUpdate()
     {
@@ -122,7 +104,7 @@ public class PlayerControl : MonoBehaviour
         minionSlots = minionObj;
     }
 
-    void Attack()
+    public void Attack()
     {
         if (weaponsAndArms == null) return;
         foreach (WeaponControl child in weaponsAndArms.Values)
@@ -134,7 +116,7 @@ public class PlayerControl : MonoBehaviour
             
         }
     }
-    void UseMinions()
+    public void UseMinions()
     {
         if (minionSlots == null) return;
         //foreach(MinionControl minion in minionSlots.Values)
