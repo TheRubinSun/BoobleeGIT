@@ -103,32 +103,32 @@ public class CorpseSetting : MonoBehaviour, ICullableObject
         {
             case Quality.Common:
                 {
-                    multiplyChance = 40 * MultiplyChancePlayerPoint(countTypePoint);
+                    multiplyChance = 56 * MultiplyChancePlayerPoint(countTypePoint);
                     break;
                 }
             case Quality.Uncommon:
                 {
-                    multiplyChance = 15 * MultiplyChancePlayerPoint(countTypePoint);
+                    multiplyChance = 16 * MultiplyChancePlayerPoint(countTypePoint);
                     break;
                 }
             case Quality.Rare:
                 {
-                    multiplyChance = 4 * MultiplyChancePlayerPoint(countTypePoint);
+                    multiplyChance = 4f * MultiplyChancePlayerPoint(countTypePoint);
                     break;
                 }
             case Quality.Mystical:
                 {
-                    multiplyChance = 1 * MultiplyChancePlayerPoint(countTypePoint);
+                    multiplyChance = 0.8f * MultiplyChancePlayerPoint(countTypePoint);
                     break;
                 }
             case Quality.Legendary:
                 {
-                    multiplyChance = 0.2f * MultiplyChancePlayerPoint(countTypePoint);
+                    multiplyChance = 0.15f * MultiplyChancePlayerPoint(countTypePoint);
                     break;
                 }
             case Quality.Interverse:
                 {
-                    multiplyChance = 0.05f * MultiplyChancePlayerPoint(countTypePoint);
+                    multiplyChance = 0.025f * MultiplyChancePlayerPoint(countTypePoint);
                     break;
                 }
                 default:
@@ -143,7 +143,7 @@ public class CorpseSetting : MonoBehaviour, ICullableObject
         float chance = 0;
         if(countTypePoint > 0)
         {
-            chance = 1 + ((float)countTypePoint * 0.1f);
+            chance = ((float)countTypePoint * countTypePoint * 0.07f);
         }
         return chance;
     }

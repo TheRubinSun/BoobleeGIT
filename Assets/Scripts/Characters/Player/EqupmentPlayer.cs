@@ -209,6 +209,10 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     //        }
     //    }
     //}
+    public void ChangeVectorOrNotWeapon(int idSlot)
+    {
+        player.ChangeToggleWeapon(idSlot);
+    }
     private void DeleteEquipOnSlot(int id,Transform deleteAllChild)
     {
         foreach (Transform child in deleteAllChild)

@@ -175,10 +175,10 @@ public class ResMinControl : MinionControl
     {
         itemsFly = new GameObject[dropItems.Count];
         int countDifItems = dropItems.Count;
-        float offset = 0;
+        float offset = 2f;
         for (int i = 0; i < dropItems.Count; i++)
         {
-            offset -= 0.13f;
+            offset -= 2f;
             itemsFly[i] = CreateGameObjItem(dropItems[i].Item, offset);
         }
     }
@@ -232,7 +232,7 @@ public class ResMinControl : MinionControl
             if (!audioSource_Work.isPlaying)
             {
                 int numbSound = Random.Range(0, audioWorks.Length);
-                Debug.Log($"Sound: {numbSound}");
+
                 audioSource_Work.clip = audioWorks[numbSound];
                 audioSource_Work.loop = true;
                 audioSource_Work.Play();
