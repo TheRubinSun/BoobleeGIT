@@ -18,6 +18,8 @@ public class Options : MonoBehaviour
     [SerializeField] Slider sounds_volume_sli;
     [SerializeField] Slider music_volume_sli;
     [SerializeField] AudioMixer mixer;
+    [SerializeField] private GameObject WindowControlsSet;
+    private bool OpenContolSet = false;
 
     private string language;
     private void Awake()
@@ -80,5 +82,15 @@ public class Options : MonoBehaviour
         float db_music = Mathf.Log10(Mathf.Clamp01(GlobalData.VOLUME_MUSICS + 0.001f)) * 20f;
         mixer.SetFloat("Sounds", db_sounds);
         mixer.SetFloat("MusicVol", db_music);
+    }
+    public void OpenControlSet()
+    {
+        WindowControlsSet.SetActive(true);
+        OpenContolSet = true;
+    }
+    public void CloseControlSet()
+    {
+        WindowControlsSet.SetActive(false);
+        OpenContolSet = false;
     }
 }

@@ -27,8 +27,8 @@ public class PlayerInputHandler : MonoBehaviour
     private Player player;
     private PlayerControl playerControl;
     private UIControl ui_Control;
-
     public Dictionary<KeyCode, PlayerAction> keyBindings = new Dictionary<KeyCode, PlayerAction>();
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -36,7 +36,8 @@ public class PlayerInputHandler : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        SetDefaultKeys();
+        Instance = this;
+        keyBindings = Hotkeys.keyBindings;
     }
     private void Start()
     {

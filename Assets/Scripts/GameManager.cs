@@ -262,6 +262,9 @@ public class GameManager: MonoBehaviour
         PlayerData player_Data = new PlayerData(Player.Instance.GetPlayerStats() , inventory_slots_list, equipment_item_list);
         await SaveSystem.SaveDataAsync(player_Data, savePath + "player.json");
 
+        SaveDataBinds saveBinds = new SaveDataBinds(PlayerInputHandler.Instance.keyBindings);
+        await SaveSystem.SaveDataAsync(saveBinds, "keyBinds.json");
+
         ArtifactsData artifacts_Data = new ArtifactsData(Artifacts.Instance.artifacts);
         await SaveSystem.SaveDataAsync(artifacts_Data, savePath + "artifacts.json");
 

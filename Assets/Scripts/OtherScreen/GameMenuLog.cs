@@ -10,6 +10,9 @@ public class GameMenuLog : MonoBehaviour
     [SerializeField] private GameObject SettingsWindow;
     [SerializeField] private GameObject GameMenuOBJ;
     [SerializeField] private Button SaveButton;
+    [SerializeField] private GameObject WindowControlsSet;
+    private bool OpenContolSet = false;
+
     private UIControl UIControl;
     private void Start()
     {
@@ -46,10 +49,27 @@ public class GameMenuLog : MonoBehaviour
         Options.instance.SaveChange();
         UIControl.LocalizationTranslate();
         SettingsWindow.SetActive(false);
+
+        if (OpenContolSet)
+        {
+            Debug.Log("Рытаюсь отменить");
+            SwitchKey.Instance.ExitSettings();
+            WindowControlsSet.SetActive(false);
+        }
     }
     public void OpenSettings()
     {
         SettingsWindow.SetActive(true);
+    }
+    public void OpenControlSet()
+    {
+        WindowControlsSet.SetActive(true);
+        OpenContolSet = true;
+    }
+    public void CloseControlSet()
+    {
+        WindowControlsSet.SetActive(false);
+        OpenContolSet = false;
     }
     public async void SaveGame()
     {

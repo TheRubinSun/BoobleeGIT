@@ -72,6 +72,8 @@ public class LoadingMenu : MonoBehaviour
     {
         GameDataHolder.savesDataInfo = await SaveSystem.LoadDataAsync<SavesDataInfo>("saves_info.json");
 
+        Hotkeys.LoadBind((await SaveSystem.LoadDataAsync<SaveDataBinds>("keyBinds.json")).saveKeyBindings);
+
         GameDataHolder.ItemsData = await SaveSystem.LoadDataAsync<ItemsData>("items.json");
 
         GameDataHolder.EnemyData = await SaveSystem.LoadDataAsync<EnemyData>("enemies.json");

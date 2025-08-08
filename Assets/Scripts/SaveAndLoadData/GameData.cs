@@ -17,7 +17,7 @@ public class SavesDataInfo
     public float volume_musics;
     public SavesDataInfo()
     {
-        saveGameFiles = new Dictionary<int, SaveGameInfo>();
+        saveGameFiles = new();
     }
     public SavesDataInfo(Dictionary<int, SaveGameInfo> _saveGameFiles, int _lastSaveID, string language, float volume_sounds, float volume_musics)
     {
@@ -27,6 +27,19 @@ public class SavesDataInfo
         this.volume_sounds = volume_sounds;
         this.volume_musics = volume_musics;
     }
+}
+public class SaveDataBinds
+{
+    public Dictionary<KeyCode, PlayerAction> saveKeyBindings;
+    public SaveDataBinds(Dictionary<KeyCode, PlayerAction> _saveKeyBindings)
+    {
+        saveKeyBindings = _saveKeyBindings;
+    }
+    public SaveDataBinds()
+    {
+        saveKeyBindings = new();
+    }
+
 }
 public class WorldData
 {
@@ -40,7 +53,7 @@ public class WorldData
     public WorldData()
     {
         numbTotalPoints = 0;
-        farmPoints = new Dictionary<int, FarmPoint>();
+        farmPoints = new();
     }
 }
 public class CraftsRecipesData
