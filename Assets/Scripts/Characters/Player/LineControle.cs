@@ -10,6 +10,7 @@ public class LineControle: MonoBehaviour
     [SerializeField] protected bool anim_need;
 
     protected LineRenderer lineRenderer;
+
     private float fpsCounter;
     protected int animStep;
     private void Awake()

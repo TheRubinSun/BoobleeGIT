@@ -1,28 +1,34 @@
 using System.Collections;
+using System.Drawing;
 using UnityEngine;
 using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public class RayWeaponLogic : WeaponControl
 {
-    protected LineRenderer lR;
     [SerializeField] protected float timeLizer;
     [SerializeField] protected Transform ShootPos;
 
+    [Header("Делится ли лазер")]
+    [SerializeField] bool isDivideRay;
     protected int countPenetrations;
     protected Vector2 defaultShootPos;
     protected float startWidthLine;
+    protected LaserBatchRenderer laserBatchRenderer;
+    private Coroutine hideLaserCoroutine;
+    private void Awake()
+    {
+        laserBatchRenderer = ShootPos.GetComponent<LaserBatchRenderer>();
+    }
     protected override void Start()
     {
         base.Start();
-        lR = GetComponent<LineRenderer>();
-        startWidthLine = lR.startWidth;
+
         defaultShootPos = ShootPos.localPosition;
     }
     public virtual void GetStatsLazerGun(Weapon _weapon, int damage, float at_speed_coof, float add_at_speed, float att_sp_pr, bool isRang, float attack_ran, int count_proj, float _spreadAngle, damageT _damT, int _countPenetr, Transform pl_mod, GameObject _Projectile_pref = null, float att_sp_pr_coof = 0, int effectID = -1)
     {
         base.GetStatsWeapon(_weapon, damage, at_speed_coof, add_at_speed, att_sp_pr, isRang, attack_ran, count_proj, _spreadAngle, _damT, pl_mod, _Projectile_pref, att_sp_pr_coof, effectID);
         countPenetrations = _countPenetr;
-        PlayerStats pl_stat = Player.Instance.GetPlayerStats();
 
     }
     public override void Attack()
@@ -45,6 +51,11 @@ public class RayWeaponLogic : WeaponControl
         }
 
         ShootLogic(0);
+
+        if (hideLaserCoroutine != null)
+            StopCoroutine(hideLaserCoroutine);
+
+        hideLaserCoroutine = StartCoroutine(HideRay());
     }
     protected override void ShootLogic(float offset)
     {
@@ -63,7 +74,6 @@ public class RayWeaponLogic : WeaponControl
         }
         endPos = originPos + direction * Attack_Range;
 
-        lR.enabled = true;
         StartCoroutine(HideRay());
 
         RaycastHit2D[] hits = Physics2D.RaycastAll(originPos, direction, Attack_Range);
@@ -73,7 +83,7 @@ public class RayWeaponLogic : WeaponControl
     protected void ProcessMainHit(RaycastHit2D[] hits, Vector2 originPos, Vector2 endPos)
     {
         int countPen = countPenetrations;
-        int cointProj = CountProjectiles;
+
         foreach (RaycastHit2D hit in hits)
         {
             if (hit.collider == null) 
@@ -84,8 +94,7 @@ public class RayWeaponLogic : WeaponControl
             if (hitLayer != LayerManager.touchObjectsLayer && hitLayer != LayerManager.enemyLayer)
                 continue;
 
-            DrawRay(0, originPos);
-            DrawRay(1, hit.point);
+            laserBatchRenderer.AddLaser(originPos, hit.point);
 
             if (hitLayer == LayerManager.touchObjectsLayer)
             {
@@ -103,8 +112,12 @@ public class RayWeaponLogic : WeaponControl
 
                 baseEnemyLogic.TakeDamage(Attack_Damage, damageType, canBeWeapon.canBeMissed, EffectAttack);
             }
-            if (cointProj > 1) 
-                ProcessOtherHits(hit);
+            if (CountProjectiles > 1 && isDivideRay)
+            {
+                StartCoroutine(WaitForDivideRay(hit, timeLizer));
+                //ProcessOtherHits(hit);
+            }
+                
 
             countPen--;
 
@@ -113,15 +126,15 @@ public class RayWeaponLogic : WeaponControl
 
             else continue;
         }
-        DrawRay(0, originPos);
-        DrawRay(1, endPos);
+        laserBatchRenderer.AddLaser(originPos, endPos);
         return;
     }
     protected void ProcessOtherHits(RaycastHit2D hit)
     {
-        
         int countHits = 1;
+        if(hit.transform == null) return;
         Collider2D[] arroundHits = Physics2D.OverlapCircleAll(hit.transform.position, Attack_Range / 2);
+        int countToch = 0;
         foreach (Collider2D arHit in arroundHits)
         {
             if (arHit.transform == hit.transform) 
@@ -130,24 +143,37 @@ public class RayWeaponLogic : WeaponControl
             if (arHit.gameObject.layer == LayerManager.enemyLayer)
             {
                 countHits++;
-                DrawRay(countHits, arHit.transform.position);
+                laserBatchRenderer.AddLaser(hit.point, arHit.transform.position);
                 BaseEnemyLogic enemy = arHit.gameObject.GetComponent<BaseEnemyLogic>();
                 if (enemy == null)
                     enemy = arHit.transform.parent.GetComponent<BaseEnemyLogic>();
-                enemy.TakeDamage(Attack_Damage, damageType, canBeWeapon.canBeMissed, EffectAttack);
+
+                if(enemy != null)
+                    enemy.TakeDamage(Attack_Damage/2, damageType, canBeWeapon.canBeMissed, EffectAttack);
+
+                countToch++;
+                if (countToch == CountProjectiles) break;
+
                 continue;
             }
+
         }
     }
-    protected void DrawRay(int numbPoint, Vector2 coord)
+    private IEnumerator WaitForDivideRay(RaycastHit2D hit, float time)
     {
-        lR.positionCount = numbPoint + 1;
-        lR.SetPosition(numbPoint, coord);
+        yield return new WaitForSeconds(time/3);
+
+        ProcessOtherHits(hit);
+
+        yield return new WaitForSeconds(time/3);
+
+        laserBatchRenderer.RemoveLaser(0);
     }
+
     protected IEnumerator HideRay()
     {
         yield return new WaitForSeconds(timeLizer);
-        lR.enabled = false;
+        laserBatchRenderer.ClearLasers();
     }
     protected override void FlipWeapon(float dirX)
     {
