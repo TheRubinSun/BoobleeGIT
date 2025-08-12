@@ -21,6 +21,7 @@ public class EffectsUI : MonoBehaviour
     private void Awake()
     {
         effectSprites = Resources.LoadAll<Sprite>("Effects/Effects_Sheet");
+        if (player == null) player = GameManager.Instance.PlayerModel;
         playerEffects_manager = player?.GetComponent<EffectsManager>();
     }
     private void OnEnable()

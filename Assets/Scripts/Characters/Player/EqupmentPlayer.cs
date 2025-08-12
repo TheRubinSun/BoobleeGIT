@@ -57,6 +57,7 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     {
         player = Player.Instance;
         dispInfo = DisplayInfo.Instance;
+        if (PlayerModel == null) PlayerModel = GameManager.Instance.PlayerModel;
         if (!GenInfoSaves.saveGameFiles[GlobalData.SaveInt].isStarted)
         {
 
