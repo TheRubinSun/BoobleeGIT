@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,10 +17,10 @@ public class LaserBatchRenderer : MonoBehaviour
     private List<int> indices = new List<int>();
     private List<Vector2> uvs = new List<Vector2>();
 
-    [SerializeField] private Color32 colorLazer;
-    [SerializeField] private int SortOrder;
-    [SerializeField] private float tilingFactor = 1f; // сколько раз повтор€ть текстуру на длине лазера
-    public float laserWidth = 500f;
+    public Color32 ColorLazer;
+    public int SortOrder;
+    public float TilingFactor { get; set; } // сколько раз повтор€ть текстуру на длине лазера
+    public float LaserWidth { get; set; }
 
     void Awake()
     {
@@ -28,7 +29,7 @@ public class LaserBatchRenderer : MonoBehaviour
         meshRenderer.sortingOrder = SortOrder;
         meshRenderer.material = Instantiate(meshRenderer.material);
         GetComponent<MaterialControl>().SetMaterial(meshRenderer.material);
-        meshRenderer.material.color = colorLazer;
+        meshRenderer.material.color = ColorLazer;
         GetComponent<MeshFilter>().mesh = mesh;
     }
 
@@ -70,7 +71,7 @@ public class LaserBatchRenderer : MonoBehaviour
             Vector3 localEnd = transform.InverseTransformPoint(lasers[i].end);
 
             Vector3 dir = (localEnd - localStart).normalized;
-            Vector3 normal = Vector3.Cross(dir, Vector3.forward) * laserWidth * 0.5f;
+            Vector3 normal = Vector3.Cross(dir, Vector3.forward) * LaserWidth * 0.5f;
 
             int indexStart = vertices.Count;
             float length = Vector3.Distance(localStart, localEnd);
@@ -83,8 +84,8 @@ public class LaserBatchRenderer : MonoBehaviour
             // UV с учЄтом длины и tilingFactor дл€ повторени€ текстуры
             uvs.Add(new Vector2(0, 0));
             uvs.Add(new Vector2(0, 1));
-            uvs.Add(new Vector2(length * tilingFactor, 0));
-            uvs.Add(new Vector2(length * tilingFactor, 1));
+            uvs.Add(new Vector2(length * TilingFactor, 0));
+            uvs.Add(new Vector2(length * TilingFactor, 1));
 
             // “реугольники
             indices.Add(indexStart + 0);

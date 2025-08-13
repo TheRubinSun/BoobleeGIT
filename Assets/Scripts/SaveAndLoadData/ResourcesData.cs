@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class ResourcesData : MonoBehaviour 
 {
@@ -11,6 +12,7 @@ public class ResourcesData : MonoBehaviour
     public static Dictionary<int, GameObject> portals = new Dictionary<int, GameObject>();
     public static Dictionary<int, GameObject> flowers_seed = new Dictionary<int, GameObject>();
     public static Dictionary<int, EffectData> effects = new Dictionary<int, EffectData>();
+    public static Dictionary<int, GameObject> lazers = new Dictionary<int, GameObject>();
     public static void LoadWeapons()
     {
         weapons["sword_gods_slayer"] = Resources.Load<GameObject>("Weapons/Sword_God_Pref");
@@ -34,7 +36,11 @@ public class ResourcesData : MonoBehaviour
         projectiles[3] = Resources.Load<GameObject>("Projectiles/Forest_mag");
         projectiles[4] = Resources.Load<GameObject>("Projectiles/GunMinion");
         projectiles[5] = Resources.Load<GameObject>("Projectiles/HealMin");
-        
+
+        lazers[0] = Resources.Load<GameObject>("Lazers/Blue_Thunder");
+        lazers[1] = Resources.Load<GameObject>("Lazers/Yellow_Thunder");
+        lazers[2] = Resources.Load<GameObject>("Lazers/Red_lazer");
+
         mobsProjectiles[0] = Resources.Load<GameObject>("Mob_Projectiles/BulletMobOne");
         mobsProjectiles[1] = Resources.Load<GameObject>("Mob_Projectiles/Slime_arrow");
 
@@ -76,6 +82,10 @@ public class ResourcesData : MonoBehaviour
     public static GameObject GetProjectilesPrefab(int id)
     {
         return projectiles.ContainsKey(id) ? projectiles[id] : null;
+    }
+    public static GameObject GetLazerPrefab(int id)
+    {
+        return lazers.ContainsKey(id) ? lazers[id] : null;
     }
     public static GameObject GetMobProjectilesPrefab(int id)
     {

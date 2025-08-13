@@ -64,7 +64,7 @@ public static class ItemsList
         items.Add(new Gun(2,  "gun_makarov",                   1, 0, Quality.Rare, 400, "_",     true, 4f, damageT.Physical, 2,  0.7f, 40, 1, 12f, 1.0f, 5f, 0, 1));
         items.Add(new Gun(13, "bow_simple",                    1, 0, Quality.Mystical, 600, "_", true, 6f, damageT.Physical, 10, 0.7f, 30, 1, 8f,  0.5f, 5f, 2));
         items.Add(new Gun(14, "shotgun_pump",                  1, 0, Quality.Rare, 550, "_",     true, 2f, damageT.Physical, 3,  0.6f, 40, 4, 10f, 1f,  15f, 1));
-        items.Add(new Staff(48, "staff_forest",                1, 0, Quality.Rare, 550, "_",     true, 4f, damageT.Magic,    2,  0.7f, 30, 1, 0.5f, 1f, 5f, 3, 2));
+        items.Add(new StaffBullet(48, "staff_forest",                1, 0, Quality.Rare, 550, "_",     true, 4f, damageT.Magic,    2,  0.7f, 30, 1, 0.5f, 1f, 5f, 3, 2));
 
         items.Add(new Food(3, "item_meat", 20, 0, Quality.Common, 1, "_", 1, 0, 15, 5, "Heal", 1));
         items.Add(new HealPotion(4, "item_potion_hp",         20, 0, Quality.Uncommon, 30, "_", 8));
@@ -126,9 +126,9 @@ public static class ItemsList
         items.Add(new Food(61, "item_spicy_meat",              20, 0, Quality.Uncommon, 10, "_", 2, 0, 15, 3, "Heal", 1));
         items.Add(new GunMinion(62, "minion_gunmin_tech",       1, 0, Quality.Rare, 1500, "_", TypeItem.Minion, 6.5f, 6f, 1.7f, TypeMob.Technology, 4, 6, 1, 28f));
         items.Add(new GunMinion(63, "minion_heal",              1, 0, Quality.Rare, 1500, "_", TypeItem.Minion, 6.5f, 6f, 1.7f, TypeMob.Technology, 5, -1, 1, 20f));
-        items.Add(new LazerGun(64, "lazergun_tra",              1, 0, Quality.Legendary, 3550, "_", true, 4f, damageT.Technical, 1, 1.2f, 0, 1, 2));
-        items.Add(new LazerGun(65, "thunder_gun",               1, 0, Quality.Mystical, 1550, "_", true, 2f, damageT.Technical, 1, 1f, 20, 2, 1));
-        items.Add(new LazerStaffGun(66, "thunder_stuff",          1, 0, Quality.Mystical, 1550, "_", true, 4f, damageT.Magic, 1, 1f, 20, 2, 1, 3, 4));
+        items.Add(new LazerGun(64, "lazergun_tra", 1, 0, Quality.Legendary, 3550, "_", true, 4f, damageT.Technical, 1, 1.2f, 0, 1, 0f, 2, 2));
+        items.Add(new LazerGun(65, "thunder_gun", 1, 0, Quality.Mystical, 1550, "_", true, 2f, damageT.Technical, 1, 1f, 20, 2, 0f, 0, 1));
+        items.Add(new LazerStaffGun(66, "thunder_stuff", 1, 0, Quality.Mystical, 1550, "_", true, 4f, damageT.Magic, 1, 1f, 20, 2, 0f, 1, 0, 4));
         //PrintItemList();
     }
     private static void InitializeSpritesItem()
