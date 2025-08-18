@@ -423,8 +423,10 @@ public class ShopLogic : MonoBehaviour , ISlot
     {
         if (itemAdd is ArtifactItem artifact)
         {
-            if (artID == 0) slot.artifact_id = Artifacts.Instance.AddNewArtifact(artifact.artifactLevel, random);
-            else slot.artifact_id = artID;
+            if (artID == 0) 
+                slot.artifact_id = Artifacts.Instance.AddNewArtifact(artifact.artifactLevel, random);
+            else 
+                slot.artifact_id = artID;
         }
         
     }

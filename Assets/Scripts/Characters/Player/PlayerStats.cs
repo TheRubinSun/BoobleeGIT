@@ -147,6 +147,8 @@ public class PlayerStats : CharacterStats
     }
     public override void UpdateTotalStats()
     {
+        bool isFullyHp = Max_Hp == Cur_Hp ? true : false;
+        bool isFullyMana = Max_Mana == Cur_Mana ? true : false;
 
         Strength = Base_Strength + classPlayer.Bonus_Class_Strength + equipStats.Bonus_Equip_Strength + buffsStats.Buff_Strength;
         Agility = Base_Agility + classPlayer.Bonus_Class_Agility + equipStats.Bonus_Equip_Agility + buffsStats.Buff_Agility;
@@ -169,6 +171,16 @@ public class PlayerStats : CharacterStats
         float Int_Resis = Intelligence / (Intelligence + 100f);
         Tech_Resis = 1 - ((1 - Int_Resis) * (1 - Base_Tech_Resis) * (1 - classPlayer.Bonus_Tech_Resis) * (1 - equipStats.Bonus_Tech_Resis)) + buffsStats.Buff_Tech_Resis;
         Magic_Resis = 1 - ((1 - Int_Resis) * (1 - Base_Magic_Resis) * (1 - classPlayer.Bonus_Magic_Resis) * (1 - equipStats.Bonus_Magic_Resis)) + buffsStats.Buff_Magic_Resis;
+
+        if (isFullyHp)
+            Cur_Hp = Max_Hp;
+        if (isFullyMana)
+            Cur_Mana = Max_Mana;
+
+        if (Cur_Hp > Max_Hp)
+            Cur_Hp = Max_Hp;
+        if (Cur_Mana > Max_Mana)
+            Cur_Mana = Max_Mana;
     }
     public override void ApplyStat(AllParametrs param, int multiplier)
     {

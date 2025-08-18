@@ -11,7 +11,6 @@ using static UnityEditor.Progress;
 public class DragAndDrop:MonoBehaviour
 {
     public static DragAndDrop Instance { get; private set; }
-
     public Transform parentUI;
 
     private Slot tempSlot; // Перетаскиваемый слот
@@ -281,6 +280,7 @@ public class DragAndDrop:MonoBehaviour
                 {
                     Inventory.Instance.SwapSlots(newSlot, tempSlot); //Меняем местами слоты, если старого нет
                 }
+                newSlot.SlotObj.GetComponent<ButtonHover>().UpdateInfo();
             }
         }
         else //Если один и тот же слот, возвращаем предмет обратно

@@ -372,7 +372,7 @@ public class DisplayInfo: MonoBehaviour
             info.AppendLine($"{word_range}: {weapon.range}  {SetStyleLine(GlobalColors.Hh_AddInfo, 10, $"= {weapon.range} + {pl_stat.Att_Range} {word_AttRange} {word_player}")}");
             //attack_ran + (Player.Instance.GetPlayerStats().Att_Range/2)
         }
-        else if(item is ArtifactItem)
+        if(item is IArtifact && slot.artifact_id > 0)
         {
             ArtifactObj artifactObj = Artifacts.Instance.GetArtifact(slot.artifact_id);
 

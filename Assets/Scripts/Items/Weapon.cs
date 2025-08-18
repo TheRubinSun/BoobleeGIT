@@ -29,7 +29,7 @@ public interface IManaCost
     public int manaCost { get; set; }
 }
 [Serializable]
-public abstract class Weapon : Item
+public abstract class Weapon : Item, IArtifact
 {
     public bool rangeType { get; set; }
     public float range { get; set; }
@@ -40,6 +40,7 @@ public abstract class Weapon : Item
     public int addAttackSpeed {  get; set; }
     public int conut_Projectiles { get; set; }
     public int effectID { get; set; }
+    public int artifactLevel { get; set; }
 
     public Weapon(int id, string name, int maxCount, int spriteID, Quality quality,int cost, string decription, bool rangeType, float range, damageT typeDamage, int damage, float _attackSpeedCoof,  int _addAttackSpeed, int conut_Projectiles, int effectID = -1) :base(id, name, maxCount, spriteID, quality, cost, decription)
     {

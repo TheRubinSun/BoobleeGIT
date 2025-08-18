@@ -25,7 +25,7 @@ public static class GlobalData
     public static int difficulty = 1;
     public static int add_mobs = 1;
 
-    
+    public static float ChanceCharOnWeapon = 0.10f;
     //public static void SwitchVolume()
     //{
 

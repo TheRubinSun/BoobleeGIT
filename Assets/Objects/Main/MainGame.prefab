@@ -479,6 +479,10 @@ PrefabInstance:
       propertyPath: 'EquipSlotPrefab.Array.data[8]'
       value: 
       objectReference: {fileID: 5036328545986504045}
+    - target: {fileID: 3353422995079257286, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 293217885867844315}
     - target: {fileID: 4343390806650640723, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0

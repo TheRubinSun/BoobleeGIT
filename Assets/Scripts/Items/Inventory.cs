@@ -227,9 +227,27 @@ public class Inventory:MonoBehaviour, ISlot
                    //Полностью размещаем
                    slot.Count = count;
 
-                    if (itemAdd is ArtifactItem artifact)
+                    if (itemAdd is IArtifact artifact)
                     {
-                        if (artID == 0) artID = Artifacts.Instance.AddNewArtifact(artifact.artifactLevel);
+                        if (artID == 0)
+                        {
+                            if(itemAdd is ArtifactItem artifactItem)
+                            {
+                                artID = Artifacts.Instance.AddNewArtifact(artifact.artifactLevel);
+                            }
+                            else if(itemAdd is Weapon)
+                            {
+                                if(UnityEngine.Random.value <= GlobalData.ChanceCharOnWeapon)
+                                {
+                                    artID = Artifacts.Instance.AddNewArtifact(artifact.artifactLevel);
+                                }
+                                else
+                                {
+                                    artID = -1;
+                                }
+                            }
+                        }
+                           
                         slot.artifact_id = artID;
                     }
                     UpdateSlotUI(slot);

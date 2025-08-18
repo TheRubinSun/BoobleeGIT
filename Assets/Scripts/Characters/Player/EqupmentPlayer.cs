@@ -30,6 +30,8 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
 
     private Player player;
     private DisplayInfo dispInfo;
+    private EquipStats equipStats;
+    private Artifacts allArtifacts;
 
     [SerializeField] GameObject [] slotsObjEquip; //Массив слотов
     [SerializeField] Transform [] EquipSlotPrefab; //Префабы рук как родителя
@@ -57,6 +59,9 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     {
         player = Player.Instance;
         dispInfo = DisplayInfo.Instance;
+        equipStats = EquipStats.Instance;
+        allArtifacts = Artifacts.Instance;
+
         if (PlayerModel == null) PlayerModel = GameManager.Instance.PlayerModel;
         if (!GenInfoSaves.saveGameFiles[GlobalData.SaveInt].isStarted)
         {
@@ -149,13 +154,10 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     }
     public void PutOnEquip(Slot slot, int id) //Проверить префаб
     {
+        DeleteAttributeArtifact(id);
         if (id < 9)
         {
             DeleteEquipOnSlot(id, EquipSlotPrefab[id]);
-        }
-        else if(id < 13)
-        {
-            DeleteAttributeArtifact(id);
         }
         if (slot.Item.NameKey != "item_none")
         {
@@ -218,8 +220,10 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     {
         foreach (Transform child in deleteAllChild)
         {
-            if (slots_Weapon.ContainsKey(id)) slots_Weapon.Remove(id);
-            else if (slots_minions.ContainsKey(id)) slots_minions.Remove(id);
+            if (slots_Weapon.ContainsKey(id)) 
+                slots_Weapon.Remove(id);
+            else if (slots_minions.ContainsKey(id))
+                slots_minions.Remove(id);
             Destroy(child.gameObject);  // Удаляем дочерний объект
         }
     }
@@ -234,7 +238,15 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
                 LoadParametersWeapon(weaponObj, SlotsEqup[id]); //Загружаем параметры с слолта в оружие
                 player.SetWeaponsObj(id, weaponObj.GetComponent<WeaponControl>()); //Передаем в словарь у игрока в список оружия
                 slots_Weapon[id] = weaponObj; //Словарь в этом классе, пока не используется 
+                slots_artifacts[id] = SlotsEqup[id].artifact_id; //Оружия тоже артефакты
                 player.ChangeToggleWeapon(id);
+
+
+                UpdateAllArtifactsAtribute();
+                //if (SlotsEqup[id].artifact_id > 0)
+                //{
+                //    LoadAttributeArtifact(SlotsEqup[id].artifact_id); //Загружаем параметры с слота артефакта
+                //}
             }
             else
             {
@@ -272,6 +284,11 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         foreach(KeyValuePair<int, GameObject> slotsWeapon in slots_Weapon)
         {
             LoadParametersWeapon(slotsWeapon.Value, SlotsEqup[slotsWeapon.Key]); //Загружаем параметры с слолта в оружие
+
+            //if (SlotsEqup[slotsWeapon.Key].artifact_id > 0)
+            //{
+            //    LoadAttributeArtifact(SlotsEqup[slotsWeapon.Key].artifact_id); //Загружаем параметры с слота артефакта
+            //}
         }
     }
     public void UpdateAllMinionsStats()
@@ -283,7 +300,7 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     }
     public void UpdateAllArtifactsAtribute()
     {
-        EquipStats.Instance.AllNull();
+        equipStats.AllNull();
         foreach (KeyValuePair<int, int> slot_artifact in slots_artifacts)
         {
             LoadAttributeArtifact(slot_artifact.Value); //Загружаем параметры с слота артефакта
@@ -337,8 +354,8 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     }
     private void LoadAttributeArtifact(int idArt)
     {
-        EquipStats equipStats = EquipStats.Instance;
-        Artifacts allArtifacts = Artifacts.Instance;
+        //EquipStats equipStats = EquipStats.Instance;
+        //Artifacts allArtifacts = Artifacts.Instance;
         ArtifactObj artifact = allArtifacts.GetArtifact(idArt); // Получаем артефакт по ID
 
         // Загружаем атрибуты артефакта в EquipStats
@@ -361,12 +378,15 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     }
     private void DeleteAttributeArtifact(int idSlot)
     {
+        //if (SlotsEqup[idSlot].artifact_id < 1) return;
+
         if (!slots_artifacts.ContainsKey(idSlot)) return;
+
         int artId = slots_artifacts[idSlot];
         slots_artifacts.Remove(idSlot);
 
-        ArtifactObj artifact = Artifacts.Instance.GetArtifact(artId);
-        EquipStats equipStats = EquipStats.Instance;
+        ArtifactObj artifact = allArtifacts.GetArtifact(artId);
+        //EquipStats equipStats = EquipStats.Instance;
 
         // Вычитаем атрибуты артефакта из EquipStats
         equipStats.Bonus_Equip_Strength -= artifact.Artif_Strength;

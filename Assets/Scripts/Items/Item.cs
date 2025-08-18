@@ -48,6 +48,7 @@ public class Item
     public int Cost { get; set; }
     public string Description { get; set; }
     public bool IsUse {  get; set; }
+    
     [JsonIgnore] public Sprite Sprite { get; set; }
     public Item(int id, string name, int maxCount, int spriteID, Quality quality,int cost, string description, TypeItem typeItem = TypeItem.Other, bool isUse = false)
     {
