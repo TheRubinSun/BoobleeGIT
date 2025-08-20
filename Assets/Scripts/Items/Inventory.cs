@@ -22,6 +22,7 @@ public class Inventory:MonoBehaviour, ISlot
 
     public List<Slot> slots = new List<Slot>();
     private List<Slot> inventoryBarSlots = new List<Slot>();
+    private ButInventoryBar[] butInventoryBars = new ButInventoryBar[10];
     private int countSlotsInBar { get; set; }//Количество слотов в InventoryBar
     private int startIdInventoryBar { get; set; }//Начало ID inventoryBar
     [SerializeField] private Transform slotsParent;
@@ -69,7 +70,9 @@ public class Inventory:MonoBehaviour, ISlot
             //Debug.Log("Загрузка инвентаря третим условием");
             IsLoadInventory(invntory_items);
         }
+
         SetSlotsInventoryBar();
+
         UpdateWholeSlots();//Обновляем целиком инвентарь
 
         if (!GenInfoSaves.saveGameFiles[GlobalData.SaveInt].isStarted)
@@ -505,8 +508,9 @@ public class Inventory:MonoBehaviour, ISlot
         {
             Slot newSlot = new Slot(slots[i].Item, child.gameObject, slots[i].Count);
             inventoryBarSlots.Add(newSlot);
-            child.GetComponent<ButInventoryBar>().setNumbBut(slots[i]);
-            child.GetComponent<ButInventoryBar>().UpdateText_numb(numb);
+            butInventoryBars[numb - 1] = child.GetComponent<ButInventoryBar>();
+            butInventoryBars[numb - 1].setNumbBut(slots[i]);
+            butInventoryBars[numb - 1].UpdateText_numb(numb);
             if(sprite_inventory_bar != null)
             {
                 slots[i].SlotObj.GetComponent<Image>().sprite = sprite_inventory_bar;
@@ -514,7 +518,23 @@ public class Inventory:MonoBehaviour, ISlot
             i++;
             numb++;
         }
+    } 
+    public void RenameKeyNames(KeyCode[] keysNames)
+    {
+        for (int i = 0; i < butInventoryBars.Length; i++)
+        {
+            if(butInventoryBars[i] == null)
+                continue;
+
+            string nameKey = keysNames[i].ToString();
+
+            if (nameKey.StartsWith("Alpha"))
+                nameKey = nameKey.Substring("Alpha".Length);
+
+            butInventoryBars[i].UpdateText_numb(nameKey);
+        }
     }
+
     public void SetNone(Slot slot)
     {
         slot.Item = ItemsList.GetItemForId(0);

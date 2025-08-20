@@ -26,4 +26,8 @@ public class ButInventoryBar : MonoBehaviour
         if(numb == 10) numb = 0;
         text_numb.text = numb.ToString();
     }
+    public void UpdateText_numb(string numb)
+    {
+        text_numb.text = numb;
+    }
 }

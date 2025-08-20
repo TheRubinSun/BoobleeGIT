@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
 using Unity.VisualScripting;
@@ -27,7 +28,11 @@ public class SwitchKey : MonoBehaviour
     PlayerInputHandler playerInputHandler;
     private void Awake()
     {
-        Instance = this;
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+
     }
     private void Start()
     {
@@ -151,7 +156,10 @@ public class SwitchKey : MonoBehaviour
         Hotkeys.keyBindings = new Dictionary<KeyCode, PlayerAction>(tempBindings);
 
         if (playerInputHandler != null)
+        {
             playerInputHandler.keyBindings = Hotkeys.keyBindings;
+            playerInputHandler.RenameKeys();
+        }
 
         try
         {

@@ -28,7 +28,7 @@ public enum PlayerAction
     UseItem7,
     UseItem8,
     UseItem9,
-    UseItem10
+    UseItem0
 }
 
 public class PlayerInputHandler : MonoBehaviour 
@@ -54,6 +54,21 @@ public class PlayerInputHandler : MonoBehaviour
         player = Player.Instance;
         playerControl = PlayerControl.Instance;
         ui_Control = UIControl.Instance;
+        RenameKeys();
+    }
+    public void RenameKeys()
+    {
+        KeyCode[] namesKeys = new KeyCode[10];
+        foreach (KeyValuePair<KeyCode, PlayerAction> hotKey in keyBindings)
+        {
+            string action = hotKey.Value.ToString();
+            if (action.StartsWith("UseItem"))
+            {
+                int index = int.Parse(action.Substring("UseItem".Length));
+                namesKeys[index] = hotKey.Key;
+            }
+        }
+        Inventory.Instance.RenameKeyNames(namesKeys);
     }
     //private void SetDefaultKeys()
     //{
@@ -187,7 +202,7 @@ public class PlayerInputHandler : MonoBehaviour
                     case PlayerAction.UseItem9:
                         ui_Control.ButtonsInventoryBar(8);
                         break;
-                    case PlayerAction.UseItem10:
+                    case PlayerAction.UseItem0:
                         ui_Control.ButtonsInventoryBar(9);
                         break;
 

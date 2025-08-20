@@ -339,7 +339,6 @@ public class UIControl:MonoBehaviour
     }
     public void ButtonsInventoryBar(int index)
     {
-        Debug.Log(index);
         if (buttonsInventoryHud.Count > index)
             buttonsInventoryHud[index].UseItem();
     }
