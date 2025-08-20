@@ -303,7 +303,8 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         equipStats.AllNull();
         foreach (KeyValuePair<int, int> slot_artifact in slots_artifacts)
         {
-            LoadAttributeArtifact(slot_artifact.Value); //Загружаем параметры с слота артефакта
+            if(slot_artifact.Value > 0)
+                LoadAttributeArtifact(slot_artifact.Value); //Загружаем параметры с слота артефакта
         }
     }
     private void LoadParametersWeapon(GameObject weaponObj, Slot slot)
@@ -380,7 +381,7 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     {
         //if (SlotsEqup[idSlot].artifact_id < 1) return;
 
-        if (!slots_artifacts.ContainsKey(idSlot)) return;
+        if (!slots_artifacts.ContainsKey(idSlot) || slots_artifacts[idSlot] < 1) return;
 
         int artId = slots_artifacts[idSlot];
         slots_artifacts.Remove(idSlot);

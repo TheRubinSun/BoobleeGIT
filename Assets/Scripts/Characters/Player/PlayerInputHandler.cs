@@ -18,7 +18,17 @@ public enum PlayerAction
     OpenCreatePortal,
     OpenShop,
     OpenCraftWindow,
-    OpenGameMenu
+    OpenGameMenu,
+    UseItem1,
+    UseItem2,
+    UseItem3,
+    UseItem4,
+    UseItem5,
+    UseItem6,
+    UseItem7,
+    UseItem8,
+    UseItem9,
+    UseItem10
 }
 
 public class PlayerInputHandler : MonoBehaviour 
@@ -45,24 +55,34 @@ public class PlayerInputHandler : MonoBehaviour
         playerControl = PlayerControl.Instance;
         ui_Control = UIControl.Instance;
     }
-    private void SetDefaultKeys()
-    {
-        keyBindings[KeyCode.Mouse0] = PlayerAction.Attack;
-        keyBindings[KeyCode.Mouse1] = PlayerAction.PickUp;
-        keyBindings[KeyCode.E] = PlayerAction.Open;
-        keyBindings[KeyCode.Q] = PlayerAction.UseMinions;
-        keyBindings[KeyCode.G] = PlayerAction.SpendMana;
-        keyBindings[KeyCode.H] = PlayerAction.HealMana;
-        keyBindings[KeyCode.J] = PlayerAction.Jump;
-        keyBindings[KeyCode.Tab] = PlayerAction.OpenInventory;
-        keyBindings[KeyCode.BackQuote] = PlayerAction.OpenListItems;
-        keyBindings[KeyCode.M] = PlayerAction.OpenListMobs;
-        keyBindings[KeyCode.T] = PlayerAction.OpenCreatePortal;
-        keyBindings[KeyCode.R] = PlayerAction.OpenCraftWindow;
-        keyBindings[KeyCode.I] = PlayerAction.OpenShop;
-        keyBindings[KeyCode.P] = PlayerAction.OpenInfoPlayer;
-        keyBindings[KeyCode.Escape] = PlayerAction.OpenGameMenu;
-    }
+    //private void SetDefaultKeys()
+    //{
+    //    keyBindings[KeyCode.Mouse0] = PlayerAction.Attack;
+    //    keyBindings[KeyCode.Mouse1] = PlayerAction.PickUp;
+    //    keyBindings[KeyCode.E] = PlayerAction.Open;
+    //    keyBindings[KeyCode.Q] = PlayerAction.UseMinions;
+    //    keyBindings[KeyCode.G] = PlayerAction.SpendMana;
+    //    keyBindings[KeyCode.H] = PlayerAction.HealMana;
+    //    keyBindings[KeyCode.J] = PlayerAction.Jump;
+    //    keyBindings[KeyCode.Tab] = PlayerAction.OpenInventory;
+    //    keyBindings[KeyCode.BackQuote] = PlayerAction.OpenListItems;
+    //    keyBindings[KeyCode.M] = PlayerAction.OpenListMobs;
+    //    keyBindings[KeyCode.T] = PlayerAction.OpenCreatePortal;
+    //    keyBindings[KeyCode.R] = PlayerAction.OpenCraftWindow;
+    //    keyBindings[KeyCode.I] = PlayerAction.OpenShop;
+    //    keyBindings[KeyCode.P] = PlayerAction.OpenInfoPlayer;
+    //    keyBindings[KeyCode.Escape] = PlayerAction.OpenGameMenu;
+    //    keyBindings[KeyCode.Alpha1] = PlayerAction.UseItem1;
+    //    keyBindings[KeyCode.Alpha2] = PlayerAction.UseItem2;
+    //    keyBindings[KeyCode.Alpha3] = PlayerAction.UseItem3;
+    //    keyBindings[KeyCode.Alpha4] = PlayerAction.UseItem4;
+    //    keyBindings[KeyCode.Alpha5] = PlayerAction.UseItem5;
+    //    keyBindings[KeyCode.Alpha6] = PlayerAction.UseItem6;
+    //    keyBindings[KeyCode.Alpha7] = PlayerAction.UseItem7;
+    //    keyBindings[KeyCode.Alpha8] = PlayerAction.UseItem8;
+    //    keyBindings[KeyCode.Alpha9] = PlayerAction.UseItem9;
+    //    keyBindings[KeyCode.Alpha0] = PlayerAction.UseItem10;
+    //}
     //private void SetDefaultKeys()
     //{
     //    keyBindings[PlayerAction.Attack] = KeyCode.Mouse0;
@@ -139,6 +159,36 @@ public class PlayerInputHandler : MonoBehaviour
                         break;
                     case PlayerAction.PickUp:
                         DragAndDrop.Instance.PickUp();
+                        break;
+                    case PlayerAction.UseItem1:
+                        ui_Control.ButtonsInventoryBar(0);
+                        break;
+                    case PlayerAction.UseItem2:
+                        ui_Control.ButtonsInventoryBar(1);
+                        break;
+                    case PlayerAction.UseItem3:
+                        ui_Control.ButtonsInventoryBar(2);
+                        break;
+                    case PlayerAction.UseItem4:
+                        ui_Control.ButtonsInventoryBar(3);
+                        break;
+                    case PlayerAction.UseItem5:
+                        ui_Control.ButtonsInventoryBar(4);
+                        break;
+                    case PlayerAction.UseItem6:
+                        ui_Control.ButtonsInventoryBar(5);
+                        break;
+                    case PlayerAction.UseItem7:
+                        ui_Control.ButtonsInventoryBar(6);
+                        break;
+                    case PlayerAction.UseItem8:
+                        ui_Control.ButtonsInventoryBar(7);
+                        break;
+                    case PlayerAction.UseItem9:
+                        ui_Control.ButtonsInventoryBar(8);
+                        break;
+                    case PlayerAction.UseItem10:
+                        ui_Control.ButtonsInventoryBar(9);
                         break;
 
                 }

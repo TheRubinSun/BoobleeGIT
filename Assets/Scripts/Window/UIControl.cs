@@ -38,7 +38,7 @@ public class UIControl:MonoBehaviour
     private bool isPaused = false;
 
     private List<ButInventoryBar> buttonsInventoryHud = new List<ButInventoryBar>();
-
+    //Dictionary<KeyCode, System.Action> keyActions;
     [SerializeField] GameObject allUIButtonsParent;
     private void Awake()
     {
@@ -71,20 +71,7 @@ public class UIControl:MonoBehaviour
     }
     //private void InitializeKeyActions()
     //{
-    //    keyActions = new Dictionary<KeyCode, System.Action>()
-    //    {
-    //        {KeyCode.I, OpenInventory},
-    //        {KeyCode.L, OpenListItems},
-    //        {KeyCode.M, OpenListMobs},
-    //        {KeyCode.P, OpenInfoPlayer},
-    //        {KeyCode.T, LocalizationTranslate},
-    //        {KeyCode.C, OpenCreatePortal},
-    //        {KeyCode.R, OpenShop},
-    //        {KeyCode.Q, OpenCraftWindow},
-    //        {KeyCode.Escape, OpenGameMenu},
-    //        {KeyCode.E, DragAndDrop.Instance.PickUp}
-
-    //    };
+    //    keyActions = new Dictionary<KeyCode, System.Action>();
     //    for (int i = 0; i < 10; i++)
     //    {
     //        KeyCode keyCode = (KeyCode)((int)KeyCode.Alpha1 + i);
@@ -352,6 +339,7 @@ public class UIControl:MonoBehaviour
     }
     public void ButtonsInventoryBar(int index)
     {
+        Debug.Log(index);
         if (buttonsInventoryHud.Count > index)
             buttonsInventoryHud[index].UseItem();
     }

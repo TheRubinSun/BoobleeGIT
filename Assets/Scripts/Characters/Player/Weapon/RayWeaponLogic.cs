@@ -76,7 +76,7 @@ public class RayWeaponLogic : WeaponControl
         }
         endPos = originPos + direction * Attack_Range;
 
-        int layerMask = (1 << LayerManager.touchObjectsLayer) | (1 << LayerManager.enemyLayer);
+        int layerMask = (1 << LayerManager.touchObjectsLayer) | (1 << LayerManager.touchTriggObjLayer) | (1 << LayerManager.enemyLayer);
         RaycastHit2D[] hits = new RaycastHit2D[countPenetrations + 1]; // заранее выделенный массив
         int hitCount = Physics2D.RaycastNonAlloc(originPos, direction, hits, Attack_Range, layerMask);
 

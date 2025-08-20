@@ -476,6 +476,7 @@ MonoBehaviour:
   IdMobs: 0
   Name: 
   IsFly: 0
+  mobRadius: 0
   EffectsObj: {fileID: 1784190780623767438}
   CenterObject: {fileID: 3794253683764855951}
   player: {fileID: 0}
@@ -494,6 +495,7 @@ MonoBehaviour:
   damageValuePref: {fileID: 6292013005122663656, guid: cac7b7163f7b90940bb6363f0f51064d, type: 3}
   attackBuffer: 0
   HPBar: {fileID: 6034422211155977361}
+  nextWaypointDistance: 0.1
   abillities: []
   child_Obj: {fileID: 3794253683764855951}
 --- !u!114 &2507145932948197912

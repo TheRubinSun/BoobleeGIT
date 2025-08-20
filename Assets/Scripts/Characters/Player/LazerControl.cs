@@ -47,12 +47,12 @@ public class LazerControl : MonoBehaviour
 
             int hitLayer = hit.collider.gameObject.layer;
 
-            if (hitLayer != LayerManager.touchObjectsLayer && hitLayer != LayerManager.enemyLayer)
+            if (hitLayer != LayerManager.touchObjectsLayer && hitLayer != LayerManager.touchTriggObjLayer && hitLayer != LayerManager.enemyLayer)
                 continue;
 
             laserRend.AddLaser(originPos, hit.point);
 
-            if (hitLayer == LayerManager.touchObjectsLayer)
+            if (hitLayer == LayerManager.touchObjectsLayer || hitLayer == LayerManager.touchTriggObjLayer)
             {
                 ObjectLBroken objectL = hit.collider.gameObject.GetComponent<ObjectLBroken>();
                 if (objectL != null)

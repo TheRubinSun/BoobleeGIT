@@ -9,7 +9,7 @@ public class LayerManager : MonoBehaviour
     public static int enemyLayer = -1;
     public static int touchObjectsLayer = -1;
     public static int interactableLayer = -1;
-
+    public static int touchTriggObjLayer = -1;
     private void Awake()
     {
         if (obstaclesLayer == -1) // Проверяем, чтобы не переинициализировать слои
@@ -20,10 +20,10 @@ public class LayerManager : MonoBehaviour
             enemyLayer = LayerMask.NameToLayer("Enemy");
             touchObjectsLayer = LayerMask.NameToLayer("TouchObjects");
             interactableLayer = LayerMask.NameToLayer("Interactable");
+            touchTriggObjLayer = LayerMask.NameToLayer("TouchTriggObj");
             //Debug.Log($"Obstacles {obstaclesLayer}");
             //Debug.Log($"Player {playerLayer}");
             //Debug.Log($"Player Man{playerManegerLayer}");
-            //Debug.Log($"Enemy {enemyLayer}");
         }
     }
 }

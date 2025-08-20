@@ -48,6 +48,10 @@ public class Bug_poop_Logic : BaseEnemyLogic
     {
         selfCollider = mob_object.GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
+        if(haveBall)
+            mobRadius = col_ball.bounds.extents.magnitude;
+        else
+            mobRadius = selfCollider.bounds.extents.magnitude + 0.1f;
     }
     public override void SetTrapped(float time)
     {
@@ -56,6 +60,7 @@ public class Bug_poop_Logic : BaseEnemyLogic
         col_ball.isTrigger = true;
         StartCoroutine(OffPhysics(time));
     }
+
     protected override IEnumerator OffPhysics(float time)
     {
         yield return new WaitForSeconds(time);
@@ -70,6 +75,9 @@ public class Bug_poop_Logic : BaseEnemyLogic
             haveBall = false;
             enum_stat.Mov_Speed = speed_without_ball;
             animator_main.SetBool("HaveBall", false);
+            CenterObject = mob_object.transform;
+            mob_object.GetComponent<Collider2D>().isTrigger = false;
+            mobRadius = selfCollider.bounds.extents.magnitude + 0.1f;
         }
         Flipface();
 
@@ -87,6 +95,42 @@ public class Bug_poop_Logic : BaseEnemyLogic
             }
         }
 
+    }
+    protected override void PlayerDetected(Vector2 toPlayer, float distanceToPlayer)
+    {
+        // Проверяем перед атакой, есть ли стена перед врагом
+        // Финальная проверка: есть ли прямая видимость игрока
+        RaycastHit2D visionHit = Physics2D.Raycast(CenterObject.position, toPlayer.normalized, distanceToPlayer, combinedLayerMask);
+
+        // Дополнительный буфер для ренджа атаки
+
+        float effectiveRange = enum_stat.Att_Range - attackBuffer;
+
+        bool canSeePlayer = visionHit.collider != null && visionHit.collider.gameObject.layer == LayerManager.playerLayer;
+
+
+        if (distanceToPlayer < effectiveRange && canSeePlayer)
+        {
+            //moveDirection = Vector2.zero;
+
+            // Если моб слишком близко, он немного отходит назад
+            if (distanceToPlayer < enum_stat.Att_Range)
+            {
+                moveDirection = -toPlayer.normalized;
+            }
+            IsNearThePlayer = true;
+            Attack(distanceToPlayer);
+        }
+        else if (distanceToPlayer < enum_stat.Att_Range && canSeePlayer && IsNearThePlayer)
+        {
+            //moveDirection = Vector2.zero;
+            Attack(distanceToPlayer);
+        }
+        else
+        {
+            IsNearThePlayer = false;
+            moveDirection = toPlayer.normalized;
+        }
     }
     public override void UpdateSortingOrder()
     {

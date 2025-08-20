@@ -33,7 +33,7 @@ public class Ball_logic : ObjectLBroken
     public override Vector2 GetPosition() => transform.position;
     public override void Break(CanBeWeapon canBeWeapon)
     {
-        Debug.Log($"remainsHits: {remainsHits}");
+        //Debug.Log($"remainsHits: {remainsHits}");
         remainsHits--;
         if (remainsHits <= 0 && !isDestroyed)
         {
@@ -97,9 +97,21 @@ public class Ball_logic : ObjectLBroken
 
         spr_ren.sortingOrder = Mathf.RoundToInt(((mobPosY - PlayerPosY - 2) * -5) -1f);
     }
-
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        int layerCol = collision.gameObject.layer;
+        if (layerCol == LayerManager.playerLayer)
+        {
+            Player.Instance.TakeDamage(damage_ball, damageT.Magic, false);
+        }
+        if (isRun && (layerCol == LayerManager.obstaclesLayer || layerCol == LayerManager.playerLayer))
+        {
+            StartCoroutine(PlayeSoundFullBroken());
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
         int layerCol = collision.gameObject.layer;
         if(layerCol == LayerManager.playerLayer)
         {

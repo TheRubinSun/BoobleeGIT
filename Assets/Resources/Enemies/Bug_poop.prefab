@@ -142,7 +142,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -718,8 +718,9 @@ MonoBehaviour:
   IdMobs: 8
   Name: 
   IsFly: 0
+  mobRadius: 0
   EffectsObj: {fileID: 3728983346688498400}
-  CenterObject: {fileID: 1504947471745933170}
+  CenterObject: {fileID: 5944837130779221187}
   player: {fileID: 0}
   mob_object: {fileID: 802024983914837707}
   audioSource: {fileID: 0}
@@ -734,7 +735,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6604ec430b5e8f84382f189442b252b5, type: 3}
   abolity_sounds: []
   damageValuePref: {fileID: 6292013005122663656, guid: cac7b7163f7b90940bb6363f0f51064d, type: 3}
-  attackBuffer: 0
+  attackBuffer: 0.4
   HPBar: {fileID: 8081081011683111393}
   abillities: []
   ball: {fileID: 4039394062910905871}

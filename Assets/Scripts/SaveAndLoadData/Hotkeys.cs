@@ -32,6 +32,16 @@ public static class Hotkeys
         keyBindings[KeyCode.I] = PlayerAction.OpenShop;
         keyBindings[KeyCode.P] = PlayerAction.OpenInfoPlayer;
         keyBindings[KeyCode.Escape] = PlayerAction.OpenGameMenu;
+        keyBindings[KeyCode.Alpha1] = PlayerAction.UseItem1;
+        keyBindings[KeyCode.Alpha2] = PlayerAction.UseItem2;
+        keyBindings[KeyCode.Alpha3] = PlayerAction.UseItem3;
+        keyBindings[KeyCode.Alpha4] = PlayerAction.UseItem4;
+        keyBindings[KeyCode.Alpha5] = PlayerAction.UseItem5;
+        keyBindings[KeyCode.Alpha6] = PlayerAction.UseItem6;
+        keyBindings[KeyCode.Alpha7] = PlayerAction.UseItem7;
+        keyBindings[KeyCode.Alpha8] = PlayerAction.UseItem8;
+        keyBindings[KeyCode.Alpha9] = PlayerAction.UseItem9;
+        keyBindings[KeyCode.Alpha0] = PlayerAction.UseItem10;
     }
     
 }

@@ -45,34 +45,16 @@ public class BurLogic : BaseEnemyLogic
         moveSoundSource.Stop();
         base.Death();
     }
-    public override void AvoidWall(bool wallDetected, Vector2 toPlayer, float distanceToPlayer)
+    protected override void PlayerDetected(Vector2 toPlayer, float distanceToPlayer)
     {
-        if (wallDetected)
-        {
-            Vector2 avoidDir = Vector2.Perpendicular(toPlayer).normalized;
-
-            bool canLeft = !Physics2D.Raycast(CenterObject.position, avoidDir, avoidDistance, combinedLayerMask);
-            bool canRight = !Physics2D.Raycast(CenterObject.position, -avoidDir, avoidDistance, combinedLayerMask);
-            if (canLeft)
-                moveDirection = avoidDir;
-            else if (canRight)
-                moveDirection = -avoidDir;
-            else
-            {
-                moveDirection = -toPlayer.normalized;
-            }
-            IsNearThePlayer = false;
-            return;
-        }
-
         // Проверяем перед атакой, есть ли стена перед врагом
-        RaycastHit2D finalCheck = Physics2D.Raycast(CenterObject.position, toPlayer.normalized, distanceToPlayer, combinedLayerMask);
+        RaycastHit2D visionHit = Physics2D.Raycast(CenterObject.position, toPlayer.normalized, distanceToPlayer, combinedLayerMask);
 
         // Дополнительный буфер для ренджа атаки
 
         float effectiveRange = enum_stat.Att_Range - attackBuffer;
 
-        bool canSeePlayer = finalCheck.collider != null && finalCheck.collider.gameObject.layer == LayerManager.playerLayer;
+        bool canSeePlayer = visionHit.collider != null && visionHit.collider.gameObject.layer == LayerManager.playerLayer;
 
 
         if (distanceToPlayer < effectiveRange && canSeePlayer)

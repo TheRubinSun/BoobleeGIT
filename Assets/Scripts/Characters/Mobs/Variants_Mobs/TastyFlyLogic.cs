@@ -36,7 +36,6 @@ public class TastyFlyLogic : BaseEnemyLogic
             shadow_sprite.flipX = shouldFaceLeft;
         }
     }
-    public override void AvoidWall(bool wallDetected, Vector2 toPlayer, float distanceToPlayer) { }
     public override void DetectDirection() //Вычисляем направление
     {
         Vector2 toPlayer = player.position - CenterObject.position;

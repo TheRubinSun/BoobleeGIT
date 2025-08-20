@@ -104,7 +104,7 @@ public class LegsControl : MonoBehaviour
             if (hitEnd != null)
             {
                 int colLayer = hitEnd.gameObject.layer;
-                if (colLayer == LayerManager.obstaclesLayer || colLayer == LayerManager.touchObjectsLayer)
+                if (colLayer == LayerManager.obstaclesLayer || colLayer == LayerManager.touchObjectsLayer || colLayer == LayerManager.touchTriggObjLayer)
                 {
                     SetMoveToEndPoint(minionsSlots[i].position, out moveToEnd);
                 }

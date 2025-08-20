@@ -30,7 +30,8 @@ public class MeleWeaponLogic : WeaponControl
 
         hitObjAndEnemies.Add(collision);
 
-        if (collision.gameObject.layer == LayerManager.touchObjectsLayer) //Столкновение в врагов или объектом
+        int colLayer = collision.gameObject.layer;
+        if (colLayer == LayerManager.touchObjectsLayer || colLayer == LayerManager.touchTriggObjLayer) //Столкновение в врагов или объектом
         {
             ObjectLBroken objectL = collision.gameObject.GetComponent<ObjectLBroken>();
             if (objectL != null)
