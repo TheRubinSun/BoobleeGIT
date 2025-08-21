@@ -111,7 +111,6 @@ public class SwitchKey : MonoBehaviour
         Enum.TryParse(curLabel.text, out oldBind);
         curLabel.text = "...";
         waitForKey = true;
-        //KeyCode key = Event.current.keyCode;
     }
     private void OnGUI()
     {
@@ -182,13 +181,14 @@ public class SwitchKey : MonoBehaviour
         if (playerInputHandler != null)
             playerInputHandler.keyBindings = Hotkeys.keyBindings;
 
+        playerInputHandler.RenameKeys();
         try
         {
             await SaveBindsT();
         }
         catch
         {
-            Debug.Log("Ошибка сохранения биндов");
+            Debug.LogError("Ошибка сохранения биндов");
         }
     }
     public void ExitSettings()
@@ -198,7 +198,7 @@ public class SwitchKey : MonoBehaviour
     }
     public async Task SaveBindsT()
     {
-        SaveDataBinds saveBinds = new SaveDataBinds(PlayerInputHandler.Instance.keyBindings);
+        SaveDataBinds saveBinds = new SaveDataBinds(tempBindings);
         await SaveSystem.SaveDataAsync(saveBinds, "keyBinds.json");
     }
 }

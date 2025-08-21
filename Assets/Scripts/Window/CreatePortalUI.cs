@@ -13,7 +13,7 @@ public class CreatePortalUI : MonoBehaviour
     [SerializeField] private GameObject prefabLine;
     [SerializeField] List<GameObject> lines = new List<GameObject>();
     private List<EnemyLine> enemyLines = new List<EnemyLine>();
-
+    private SpawnMobs spawnMobsLogic;
     [SerializeField] private TextMeshProUGUI TimeText;
     
     private void Awake()
@@ -24,6 +24,7 @@ public class CreatePortalUI : MonoBehaviour
             return;
         }
         Instance = this;
+        spawnMobsLogic = SpawnMobs.Instance;
     }
    
     public void DisplayLinesMobs(List<Mob> mobs)
@@ -89,7 +90,7 @@ public class CreatePortalUI : MonoBehaviour
         }
         if(idPref.Count > 0)
         {
-            SpawnMobs.Instance.SpawnPortal(idPref.ToArray(), countSpawn.ToArray(), time);
+            spawnMobsLogic.SpawnPortal(idPref.ToArray(), countSpawn.ToArray(), time);
         }
         
     }

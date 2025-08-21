@@ -1,6 +1,11 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public enum PlayerAction
 {
@@ -18,27 +23,31 @@ public enum PlayerAction
     OpenCreatePortal,
     OpenShop,
     OpenCraftWindow,
-    OpenGameMenu,
-    UseItem1,
-    UseItem2,
-    UseItem3,
-    UseItem4,
-    UseItem5,
-    UseItem6,
-    UseItem7,
-    UseItem8,
-    UseItem9,
-    UseItem0
+    OpenLvlUpWindow,
+    OpenGameMenu = 100,
+    UseItem1 = 51,
+    UseItem2 = 52,
+    UseItem3 = 53,
+    UseItem4 = 54,
+    UseItem5 = 55,
+    UseItem6 = 56,
+    UseItem7 = 57,
+    UseItem8 = 58,
+    UseItem9 = 59,
+    UseItem10 = 60
 }
 
 public class PlayerInputHandler : MonoBehaviour 
 {
     public static PlayerInputHandler Instance;
+    public bool InputEnabled { get; set; } = true;
+
     private Player player;
     private PlayerControl playerControl;
     private UIControl ui_Control;
     public Dictionary<KeyCode, PlayerAction> keyBindings = new Dictionary<KeyCode, PlayerAction>();
-
+    Inventory iventoryLog;
+    UIControl uiLog;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -47,7 +56,10 @@ public class PlayerInputHandler : MonoBehaviour
             return;
         }
         Instance = this;
-        keyBindings = Hotkeys.keyBindings;
+        keyBindings = new Dictionary<KeyCode, PlayerAction>();
+
+        iventoryLog = Inventory.Instance;
+        uiLog = UIControl.Instance;
     }
     private void Start()
     {
@@ -68,7 +80,36 @@ public class PlayerInputHandler : MonoBehaviour
                 namesKeys[index] = hotKey.Key;
             }
         }
-        Inventory.Instance.RenameKeyNames(namesKeys);
+        iventoryLog.RenameKeyNames(namesKeys);
+        uiLog.RenameAllButtons();
+    }
+    public void RenameKeysButtins(Dictionary<string, TextMeshProUGUI> nameButtons)
+    {
+        foreach (var button in nameButtons)
+        {
+            string actionName = button.Key;
+
+            if(Enum.TryParse(actionName, out PlayerAction action))
+            {
+                var keyBind = Hotkeys.keyBindings.FirstOrDefault(kb => kb.Value == action);
+                if(keyBind.Key != KeyCode.None)
+                {
+                    string cleanText = RemoveTextInBrackets(button.Value.text);
+                    button.Value.text = $"{cleanText} [{keyBind.Key}]";
+                }
+                else
+                {
+                    button.Value.text = $"{RemoveTextInBrackets(button.Value.text)}";
+                }
+            }
+
+        }
+    }
+    private string RemoveTextInBrackets(string input)
+    {
+        string pattern = @"\[.*?\]";
+        string result = Regex.Replace(input, pattern, string.Empty);
+        return result.Trim();
     }
     //private void SetDefaultKeys()
     //{
@@ -112,6 +153,13 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ui_Control.OpenGameMenu();
+        }
+
+        if (!InputEnabled) return;
+
         foreach(KeyValuePair<KeyCode, PlayerAction> item in keyBindings)
         {
             KeyCode key = item.Key;
@@ -156,15 +204,12 @@ public class PlayerInputHandler : MonoBehaviour
                     case PlayerAction.OpenCraftWindow:
                         ui_Control.OpenCraftWindow();
                         break;
-
+                    case PlayerAction.OpenLvlUpWindow:
+                        ui_Control.LvlUpWindow();
+                        break;
                     case PlayerAction.OpenShop:
                         ui_Control.OpenShop();
                         break;
-
-                    case PlayerAction.OpenGameMenu:
-                        ui_Control.OpenGameMenu();
-                        break;
-
                     case PlayerAction.OpenListItems:
                         ui_Control.OpenListItems();
                         break;
@@ -202,7 +247,7 @@ public class PlayerInputHandler : MonoBehaviour
                     case PlayerAction.UseItem9:
                         ui_Control.ButtonsInventoryBar(8);
                         break;
-                    case PlayerAction.UseItem0:
+                    case PlayerAction.UseItem10:
                         ui_Control.ButtonsInventoryBar(9);
                         break;
 

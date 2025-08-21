@@ -231,6 +231,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.48235294
       objectReference: {fileID: 0}
+    - target: {fileID: 173420714746952990, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
+      propertyPath: m_Name
+      value: OpenInventory
+      objectReference: {fileID: 0}
     - target: {fileID: 289451176431012649, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -270,6 +274,10 @@ PrefabInstance:
     - target: {fileID: 566626838785357596, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
       propertyPath: m_Color.r
       value: 0.48235294
+      objectReference: {fileID: 0}
+    - target: {fileID: 773708792209554836, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
+      propertyPath: m_Name
+      value: OpenInfoPlayer
       objectReference: {fileID: 0}
     - target: {fileID: 908557592691043722, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
       propertyPath: m_Color.b
@@ -395,6 +403,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1884412521504723558, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
+      propertyPath: m_Name
+      value: OpenLvlUpWindow
+      objectReference: {fileID: 0}
     - target: {fileID: 2235289048855529535, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -486,6 +498,10 @@ PrefabInstance:
     - target: {fileID: 2896934972792837524, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2907296533864109753, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
+      propertyPath: m_Name
+      value: OpenListItems
       objectReference: {fileID: 0}
     - target: {fileID: 2930830563564279168, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
       propertyPath: m_Name
@@ -639,6 +655,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5079397926699369499, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
+      propertyPath: m_Name
+      value: OpenCreatePortal
+      objectReference: {fileID: 0}
     - target: {fileID: 5510192048605661943, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -771,6 +791,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.48235294
       objectReference: {fileID: 0}
+    - target: {fileID: 6496232655941515562, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
+      propertyPath: m_Name
+      value: OpenShop
+      objectReference: {fileID: 0}
     - target: {fileID: 6791365412858283016, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
       propertyPath: m_Color.b
       value: 0.79607844
@@ -782,6 +806,10 @@ PrefabInstance:
     - target: {fileID: 6791365412858283016, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
       propertyPath: m_Color.r
       value: 0.48235294
+      objectReference: {fileID: 0}
+    - target: {fileID: 7011641862897027167, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
+      propertyPath: m_Name
+      value: OpenListMobs
       objectReference: {fileID: 0}
     - target: {fileID: 7184087616321531002, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
       propertyPath: m_Color.b
@@ -878,6 +906,10 @@ PrefabInstance:
     - target: {fileID: 7503308347704507721, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
       propertyPath: m_Color.r
       value: 0.48235294
+      objectReference: {fileID: 0}
+    - target: {fileID: 7523973076790390959, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
+      propertyPath: m_Name
+      value: OpenCraftWindow
       objectReference: {fileID: 0}
     - target: {fileID: 7543204527999542425, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
       propertyPath: m_Color.b
@@ -1447,6 +1479,10 @@ PrefabInstance:
     - target: {fileID: 8163569857235264691, guid: ef7945317dabde14c85b7325307dd327, type: 3}
       propertyPath: m_Name
       value: Level
+      objectReference: {fileID: 0}
+    - target: {fileID: 9219030761423311223, guid: ef7945317dabde14c85b7325307dd327, type: 3}
+      propertyPath: m_Layer
+      value: 19
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

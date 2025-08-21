@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEditor.ShaderGraph;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,6 +11,8 @@ using static System.Runtime.CompilerServices.RuntimeHelpers;
 public class UIControl:MonoBehaviour
 {
     public static UIControl Instance { get; private set; }
+
+
     //private Dictionary<KeyCode, System.Action> keyActions;
 
     [SerializeField] GameObject GameMenuWindow;
@@ -40,6 +43,9 @@ public class UIControl:MonoBehaviour
     private List<ButInventoryBar> buttonsInventoryHud = new List<ButInventoryBar>();
     //Dictionary<KeyCode, System.Action> keyActions;
     [SerializeField] GameObject allUIButtonsParent;
+    Dictionary<string, TextMeshProUGUI> nameButtons = new();
+
+    private PlayerInputHandler playerInputHandler;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -49,6 +55,7 @@ public class UIControl:MonoBehaviour
         }
         Instance = this;
         ResourcesData.LoadWeapons();
+
     }
     private void Start()
     {
@@ -58,16 +65,24 @@ public class UIControl:MonoBehaviour
     public void LoadButtons()
     {
         if (!Player.Instance.GodMode) return;
+        nameButtons.Clear();
 
         Button[] buttonsUI = allUIButtonsParent.GetComponentsInChildren<Button>(true);
-        HashSet<string> targetNames = new HashSet<string>() { "ButListItems", "ButListMobs", "ButListCreatePortal", "ButUpdateWeaponStats", "ButCrafts", "ButShop" };
+        HashSet<string> targetNames = new HashSet<string>() { "OpenListItems", "OpenListMobs", "OpenCreatePortal", "ButUpdateWeaponStats", "OpenCraftWindow", "OpenShop" };
         foreach (Button buttonUI in buttonsUI)
         {
             if (targetNames.Contains(buttonUI.name))
             {
                 buttonUI.gameObject.SetActive(true);
             }
+            TextMeshProUGUI textComp = buttonUI.GetComponentInChildren<TextMeshProUGUI>();
+            nameButtons.Add(buttonUI.gameObject.name, textComp);
         }
+        RenameAllButtons();
+    }
+    public void RenameAllButtons()
+    {
+        PlayerInputHandler.Instance.RenameKeysButtins(nameButtons);
     }
     //private void InitializeKeyActions()
     //{
@@ -189,7 +204,7 @@ public class UIControl:MonoBehaviour
     }
     public void CloseShopSurv()
     {
-        if (CraftIsOpened) return;
+        if ( CraftIsOpened) return;
 
         ShopIsOpened = false;
         Player.Instance.PlayerStay = false;
@@ -198,6 +213,7 @@ public class UIControl:MonoBehaviour
     }
     public void OpenInfoPlayer()
     {
+
         infoPlayerIsOpened = !infoPlayerIsOpened;
         if (infoPlayerIsOpened)
         {
@@ -212,6 +228,7 @@ public class UIControl:MonoBehaviour
     }
     public void LvlUpWindow()
     {
+
         LvlUpIsOpen = !LvlUpIsOpen;
         if (LvlUpIsOpen && (Player.Instance.GetFreeSkillPoint() > 0))
         {
@@ -226,6 +243,7 @@ public class UIControl:MonoBehaviour
     }
     public void OpenLvlUPWindow(bool isOpen)
     {
+
         LvlUpIsOpen = isOpen;
         LvlUPWindow.SetActive(isOpen);
 
@@ -241,7 +259,6 @@ public class UIControl:MonoBehaviour
     }
     public void OpenCraftWindowSurv(CraftTable craftTable)
     {
-
         if (ShopIsOpened) return;
 
         CraftIsOpened = !CraftIsOpened;
@@ -301,15 +318,19 @@ public class UIControl:MonoBehaviour
             return;
         }
 
+        if(playerInputHandler == null) playerInputHandler = PlayerInputHandler.Instance;
+
         if (CloseWindow)
         {
             if (GameMenuLog.Instance.CheckOpenSettings()) return;
+
+            playerInputHandler.InputEnabled = true;
             TogglePause(false);
             GameMenuWindow.SetActive(false);
         }
         else
         {
-            
+            playerInputHandler.InputEnabled = false;
             GameMenuLog.Instance.HideSaveZone();
             GameMenuWindow.SetActive(true);
             TogglePause(true);

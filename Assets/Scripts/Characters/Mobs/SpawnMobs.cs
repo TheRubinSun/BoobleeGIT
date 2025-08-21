@@ -64,8 +64,28 @@ public class SpawnMobs : MonoBehaviour
         {
             prefEnemies[i] = mobs_prefab[idPrefabs[i]];
         }
+        GameObject portalType;
 
-        GameObject portal = Instantiate(tech_portal_pref, portals_pos[Random.Range(0, portals_pos.Length)]);
+        BaseEnemyLogic enemy = prefEnemies[0].GetComponent<BaseEnemyLogic>();
+        switch(EnemyList.mobs[enemy.IdMobs].TypeMob)
+        {
+            case (TypeMob.Magic):
+                {
+                    portalType = mage_portal_pref;
+                    break;
+                }
+            case (TypeMob.Technology):
+                {
+                    portalType = tech_portal_pref;
+                    break;
+                }
+            default:
+                {
+                    goto case TypeMob.Magic;
+                }
+
+        }
+        GameObject portal = Instantiate(portalType, portals_pos[Random.Range(0, portals_pos.Length)]);
         portal.GetComponent<PortalLogic>().CreateEnemy(prefEnemies, countsSpawn, time, parent);
     }
 }

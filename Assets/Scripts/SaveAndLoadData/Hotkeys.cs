@@ -1,18 +1,22 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-[Serializable]
 public static class Hotkeys
 {
     public static Dictionary<KeyCode, PlayerAction> keyBindings = new Dictionary<KeyCode, PlayerAction>();
-    public static void LoadBind(Dictionary<KeyCode, PlayerAction> _keyBind)
+    public static void LoadBind(Dictionary<KeyCode, PlayerAction> loadedBindings)
     {
-        if (_keyBind.Count < 1) 
-            SetDefaultKeys();
-        else
-            keyBindings = _keyBind;
+        SetDefaultKeys();
 
+        if (loadedBindings != null && loadedBindings.Count > 0) //Просто создаем новые бинды 
+        {
+            foreach(var kvp in loadedBindings)
+            {
+                keyBindings[kvp.Key] = kvp.Value;
+            }
+        }
     }
     public static void SetDefaultKeys()
     {
@@ -29,6 +33,7 @@ public static class Hotkeys
         keyBindings[KeyCode.M] = PlayerAction.OpenListMobs;
         keyBindings[KeyCode.T] = PlayerAction.OpenCreatePortal;
         keyBindings[KeyCode.R] = PlayerAction.OpenCraftWindow;
+        keyBindings[KeyCode.L] = PlayerAction.OpenLvlUpWindow;
         keyBindings[KeyCode.I] = PlayerAction.OpenShop;
         keyBindings[KeyCode.P] = PlayerAction.OpenInfoPlayer;
         keyBindings[KeyCode.Escape] = PlayerAction.OpenGameMenu;
@@ -41,7 +46,7 @@ public static class Hotkeys
         keyBindings[KeyCode.Alpha7] = PlayerAction.UseItem7;
         keyBindings[KeyCode.Alpha8] = PlayerAction.UseItem8;
         keyBindings[KeyCode.Alpha9] = PlayerAction.UseItem9;
-        keyBindings[KeyCode.Alpha0] = PlayerAction.UseItem0;
+        keyBindings[KeyCode.Alpha0] = PlayerAction.UseItem10;
     }
     
 }
