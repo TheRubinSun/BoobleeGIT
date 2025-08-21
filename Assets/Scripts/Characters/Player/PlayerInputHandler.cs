@@ -34,7 +34,11 @@ public enum PlayerAction
     UseItem7 = 57,
     UseItem8 = 58,
     UseItem9 = 59,
-    UseItem10 = 60
+    UseItem10 = 60,
+    MoveUp = 81,
+    MoveDown = 82,
+    MoveLeft = 83,
+    MoveRight = 84
 }
 
 public class PlayerInputHandler : MonoBehaviour 
@@ -56,7 +60,7 @@ public class PlayerInputHandler : MonoBehaviour
             return;
         }
         Instance = this;
-        keyBindings = new Dictionary<KeyCode, PlayerAction>();
+        keyBindings = Hotkeys.keyBindings;
 
         iventoryLog = Inventory.Instance;
         uiLog = UIControl.Instance;
@@ -77,7 +81,14 @@ public class PlayerInputHandler : MonoBehaviour
             if (action.StartsWith("UseItem"))
             {
                 int index = int.Parse(action.Substring("UseItem".Length));
-                namesKeys[index] = hotKey.Key;
+                if (index == 10) //„тобы пор€док был как на клавиатуре 1-9 потом 0
+                {
+                    namesKeys[9] = hotKey.Key;
+                }
+                else
+                {
+                    namesKeys[index-1] = hotKey.Key;
+                }
             }
         }
         iventoryLog.RenameKeyNames(namesKeys);
@@ -148,8 +159,9 @@ public class PlayerInputHandler : MonoBehaviour
     //    keyBindings[PlayerAction.HealMana] = KeyCode.L;
     //    keyBindings[PlayerAction.Jump] = KeyCode.J;
     //}
-    public static Vector2 InputDirection =>
-        new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+    //public static Vector2 InputDirection =>
+    //    new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+    public static Vector2 CurInputDirection { get; private set; }
 
     private void Update()
     {
@@ -160,15 +172,16 @@ public class PlayerInputHandler : MonoBehaviour
 
         if (!InputEnabled) return;
 
-        foreach(KeyValuePair<KeyCode, PlayerAction> item in keyBindings)
+        CurInputDirection = Vector2.zero;
+
+        foreach (KeyValuePair<KeyCode, PlayerAction> item in keyBindings)
         {
             KeyCode key = item.Key;
             PlayerAction action = item.Value;
 
-
             if (Input.GetKeyDown(key))
             {
-                switch(action)
+                switch (action)
                 {
                     case PlayerAction.UseMinions:
                         playerControl.UseMinions();
@@ -261,9 +274,24 @@ public class PlayerInputHandler : MonoBehaviour
                     {
                         playerControl.Attack();
                     }
+                    switch (action)
+                    {
+                        case PlayerAction.MoveUp:
+                            CurInputDirection += Vector2.up;
+                            break;
+                        case PlayerAction.MoveDown:
+                            CurInputDirection += Vector2.down;
+                            break;
+                        case PlayerAction.MoveLeft:
+                            CurInputDirection += Vector2.left;
+                            break;
+                        case PlayerAction.MoveRight:
+                            CurInputDirection += Vector2.right;
+                            break;
+                    }
                 }
             }
-
+            CurInputDirection.Normalize();
         }
         //if (!IsPointerOverUI())
         //{

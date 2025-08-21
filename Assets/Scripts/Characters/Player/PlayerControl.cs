@@ -68,7 +68,7 @@ public class PlayerControl : MonoBehaviour
     private void Update()
     {
         //inputDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        inputDirection = PlayerInputHandler.InputDirection;
+        inputDirection = PlayerInputHandler.CurInputDirection;
         RotateWeaponSlots();
     }
     private void FixedUpdate()

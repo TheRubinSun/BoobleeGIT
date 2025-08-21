@@ -22,7 +22,7 @@ public class Inventory:MonoBehaviour, ISlot
 
     public List<Slot> slots = new List<Slot>();
     private List<Slot> inventoryBarSlots = new List<Slot>();
-    private ButInventoryBar[] butInventoryBars = new ButInventoryBar[10];
+    private ButInventoryBar[] butInventoryBars = new ButInventoryBar[11];
     private int countSlotsInBar { get; set; }//Количество слотов в InventoryBar
     private int startIdInventoryBar { get; set; }//Начало ID inventoryBar
     [SerializeField] private Transform slotsParent;

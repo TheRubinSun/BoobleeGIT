@@ -47,6 +47,10 @@ public static class Hotkeys
         keyBindings[KeyCode.Alpha8] = PlayerAction.UseItem8;
         keyBindings[KeyCode.Alpha9] = PlayerAction.UseItem9;
         keyBindings[KeyCode.Alpha0] = PlayerAction.UseItem10;
+        keyBindings[KeyCode.W] = PlayerAction.MoveUp;
+        keyBindings[KeyCode.S] = PlayerAction.MoveDown;
+        keyBindings[KeyCode.A] = PlayerAction.MoveLeft;
+        keyBindings[KeyCode.D] = PlayerAction.MoveRight;
     }
     
 }

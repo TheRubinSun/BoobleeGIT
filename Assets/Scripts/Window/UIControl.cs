@@ -68,7 +68,7 @@ public class UIControl:MonoBehaviour
         nameButtons.Clear();
 
         Button[] buttonsUI = allUIButtonsParent.GetComponentsInChildren<Button>(true);
-        HashSet<string> targetNames = new HashSet<string>() { "OpenListItems", "OpenListMobs", "OpenCreatePortal", "ButUpdateWeaponStats", "OpenCraftWindow", "OpenShop" };
+        HashSet<string> targetNames = new HashSet<string>() { "OpenListItems", "OpenListMobs", "OpenCreatePortal", "ButUpdateWeaponStats", "OpenCraftWindow", "OpenShop", "OpenLvlUpWindow" };
         foreach (Button buttonUI in buttonsUI)
         {
             if (targetNames.Contains(buttonUI.name))
@@ -228,7 +228,6 @@ public class UIControl:MonoBehaviour
     }
     public void LvlUpWindow()
     {
-
         LvlUpIsOpen = !LvlUpIsOpen;
         if (LvlUpIsOpen && (Player.Instance.GetFreeSkillPoint() > 0))
         {

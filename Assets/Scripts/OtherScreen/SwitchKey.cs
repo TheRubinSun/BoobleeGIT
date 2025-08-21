@@ -179,9 +179,11 @@ public class SwitchKey : MonoBehaviour
         DisplayKeys();
 
         if (playerInputHandler != null)
+        {
             playerInputHandler.keyBindings = Hotkeys.keyBindings;
+            playerInputHandler.RenameKeys();
+        }
 
-        playerInputHandler.RenameKeys();
         try
         {
             await SaveBindsT();

@@ -22,7 +22,8 @@ public class GameMenuLog : MonoBehaviour
     public void Continue()
     {
         UIControl.TogglePause(false);
-        GameMenuOBJ.SetActive(false);
+        UIControl.OpenGameMenu();
+        //GameMenuOBJ.SetActive(false);
     }
 
     public bool CheckOpenSettings()
