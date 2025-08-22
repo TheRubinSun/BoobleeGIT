@@ -46,6 +46,7 @@ public class UIControl:MonoBehaviour
     Dictionary<string, TextMeshProUGUI> nameButtons = new();
 
     private PlayerInputHandler playerInputHandler;
+    private GameManager gameManager;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -55,7 +56,7 @@ public class UIControl:MonoBehaviour
         }
         Instance = this;
         ResourcesData.LoadWeapons();
-
+        gameManager = GameManager.Instance;
     }
     private void Start()
     {
@@ -373,7 +374,9 @@ public class UIControl:MonoBehaviour
     }
     public async Task SaveData()
     {
-        await GameManager.Instance.SaveDataGame();
+        if(gameManager == null) gameManager = GameManager.Instance;
+
+        await gameManager.SaveDataGame();
     }
     public void TogglePause(bool pause)
     {

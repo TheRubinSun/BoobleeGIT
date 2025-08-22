@@ -25,12 +25,14 @@ public class GameManager: MonoBehaviour
     public int KillsEnemy;
 
     private int totalSecondsPlayed;
-    private float lastRealTime;
+    private float sessionStartTime;
 
     public int enemisRemaining;
     public TextMeshProUGUI InfoReaminingEnemy;
 
     private string savePath;
+
+    private bool isPaused = false;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -89,10 +91,10 @@ public class GameManager: MonoBehaviour
             UIControl.Instance.LocalizationTranslate();
 
             SaveGameInfo dataInfo = GenInfoSaves.saveGameFiles[GlobalData.SaveInt];
-            KillsEnemy = dataInfo.enemy_kills;
-            totalSecondsPlayed = dataInfo.timeHasPassed;
+            KillsEnemy = 0;
+            //totalSecondsPlayed = dataInfo.timeHasPassed;
 
-            lastRealTime = Time.realtimeSinceStartup; //Сохраняем настоящее время входа в игру
+            sessionStartTime = Time.realtimeSinceStartup; //Сохраняем настоящее время входа в игру
 
             if (dataInfo.godMode == true) Player.Instance.SetGodMode();
             else Player.Instance.SetSurvaveMode();
@@ -104,36 +106,47 @@ public class GameManager: MonoBehaviour
         {
             Debug.LogError("Ошибка: данные из GameDataHolder не были загружены!");
         }
-
-        StartCoroutine(TrackPlayTime(5));
+        SaveGameInfo saveGameInfo = GenInfoSaves.saveGameFiles[GlobalData.SaveInt];
+        Debug.LogWarning($"Passed time: {saveGameInfo.timeHasPassed}");
+        //StartCoroutine(TrackPlayTime(5));
         //InvokeRepeating(nameof(UpdatePlayTime), 1f, 1f);
     }
-    private IEnumerator TrackPlayTime(int timer)
-    {
-        //float lastTime = Time.realtimeSinceStartup;
-        while (true)
-        {
-            yield return new WaitForSecondsRealtime(timer);
+    //private IEnumerator TrackPlayTime(int timer)
+    //{
+    //    //float lastTime = Time.realtimeSinceStartup;
+    //    while (true)
+    //    {
+    //        yield return new WaitForSecondsRealtime(timer);
 
-            //float currentTime = Time.realtimeSinceStartup;
-            //float delta = currentTime - lastTime;
-            //lastTime = currentTime;
-            totalSecondsPlayed += timer;
+    //        //float currentTime = Time.realtimeSinceStartup;
+    //        //float delta = currentTime - lastTime;
+    //        //lastTime = currentTime;
+    //        totalSecondsPlayed += timer;
+    //    }
+    //}
+    private async void OnApplicationPause(bool pauseStatus)
+    {
+        if (pauseStatus) // Игра уходит в фон
+        {
+            if (!isPaused)
+            {
+                await SaveOnlyPlayTime();
+                isPaused = true;
+            }
+        }
+        else // Игра возвращается из фона
+        {
+            sessionStartTime = Time.realtimeSinceStartup;
+            isPaused = false;
         }
     }
     private async void OnApplicationQuit()
     {
-        await SavePlayTime();
-    }
-    public async Task SavePlayTime()
-    {
-        SaveGameInfo saveGameIngo = GenInfoSaves.saveGameFiles[GlobalData.SaveInt];
-        if (!saveGameIngo.isStarted) return;
-
-        if(totalSecondsPlayed > saveGameIngo.timeHasPassed) saveGameIngo.timeHasPassed = totalSecondsPlayed;
-
-        SavesDataInfo savesDataInfo = new SavesDataInfo(GenInfoSaves.saveGameFiles, GlobalData.SaveInt, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS);
-        await SaveSystem.SaveDataAsync(savesDataInfo, "saves_info.json");
+        // Сохранение при выходе, если игра не была в паузе
+        if (!isPaused)
+        {
+            await SaveOnlyPlayTime();
+        }
     }
     //private void UpdatePlayTime()
     //{
@@ -232,7 +245,13 @@ public class GameManager: MonoBehaviour
         yield return new WaitForSeconds(time);
         Destroy(corpse);
     }
-    public async Task SaveDataGame()
+    public async Task SaveAllData()
+    {
+        SaveGameInfo saveGameInfo = GenInfoSaves.saveGameFiles[GlobalData.SaveInt];
+        WritePlayTime(saveGameInfo);
+        await SaveDataGame(saveGameInfo);
+    }
+    public async Task SaveDataGame(SaveGameInfo saveGameInfo = null)
     {
         string fullPath = Path.Combine(Application.persistentDataPath, savePath);
         if (!Directory.Exists(fullPath))
@@ -254,43 +273,79 @@ public class GameManager: MonoBehaviour
         }
 
         ItemsData items_Data = new ItemsData(ItemsList.items);
-        await SaveSystem.SaveDataAsync(items_Data, "items.json");
+        //await SaveSystem.SaveDataAsync(items_Data, "items.json");
 
         RoleClassesData role_classes_data = new RoleClassesData(Classes.Instance.GetClasses());
-        await SaveSystem.SaveDataAsync(role_classes_data, "role_classes_data.json");
+        //await SaveSystem.SaveDataAsync(role_classes_data, "role_classes_data.json");
 
         PlayerData player_Data = new PlayerData(Player.Instance.GetPlayerStats() , inventory_slots_list, equipment_item_list);
-        await SaveSystem.SaveDataAsync(player_Data, savePath + "player.json");
+        //await SaveSystem.SaveDataAsync(player_Data, savePath + "player.json");
 
         SaveDataBinds saveBinds = new SaveDataBinds(PlayerInputHandler.Instance.keyBindings);
-        await SaveSystem.SaveDataAsync(saveBinds, "keyBinds.json");
+        //await SaveSystem.SaveDataAsync(saveBinds, "keyBinds.json");
 
         ArtifactsData artifacts_Data = new ArtifactsData(Artifacts.Instance.artifacts);
-        await SaveSystem.SaveDataAsync(artifacts_Data, savePath + "artifacts.json");
+        //await SaveSystem.SaveDataAsync(artifacts_Data, savePath + "artifacts.json");
 
         WorldData world_data = new WorldData(GlobalWorld.numbTotalPoints, GlobalWorld.FarmsPoints);
-        await SaveSystem.SaveDataAsync(world_data, savePath + "world_data.json");
+        //await SaveSystem.SaveDataAsync(world_data, savePath + "world_data.json");
 
         EnemyData enemy_Data = new EnemyData(EnemyList.mobs);
-        await SaveSystem.SaveDataAsync(enemy_Data, "enemies.json");
+        //await SaveSystem.SaveDataAsync(enemy_Data, "enemies.json");
 
         ItemsDropOnEnemy item_drop = new ItemsDropOnEnemy(ItemDropEnemy.enemyAndHisDropItems);
-        await SaveSystem.SaveDataAsync(item_drop, "item_drop.json");
+        //await SaveSystem.SaveDataAsync(item_drop, "item_drop.json");
 
-        SaveGameInfo saveGameIngo = GenInfoSaves.saveGameFiles[GlobalData.SaveInt];
 
-        saveGameIngo.timeHasPassed = totalSecondsPlayed;
-        saveGameIngo.enemy_kills = KillsEnemy;
-        saveGameIngo.level = Player.Instance.GetLevel();
-        saveGameIngo.isStarted = true;
-        saveGameIngo.seed = GlobalData.cur_seed;
-        saveGameIngo.lvl_left = GlobalData.cur_lvl_left;
+        if (saveGameInfo == null)
+            saveGameInfo = GenInfoSaves.saveGameFiles[GlobalData.SaveInt];
+
+        //float sessionsDuration = Time.realtimeSinceStartup - sessionStartTime;
+        //saveGameInfo.timeHasPassed += (int)sessionsDuration;
+        saveGameInfo.enemy_kills += KillsEnemy;
+        saveGameInfo.level = Player.Instance.GetLevel();
+        saveGameInfo.isStarted = true;
+        saveGameInfo.seed = GlobalData.cur_seed;
+        saveGameInfo.lvl_left = GlobalData.cur_lvl_left;
+
         //saveGameIngo.randomCalls = GlobalData.randomCalls;
         SavesDataInfo savesDataInfo = new SavesDataInfo(GenInfoSaves.saveGameFiles, GlobalData.SaveInt, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS);
-        await SaveSystem.SaveDataAsync(savesDataInfo, "saves_info.json");
+        //await SaveSystem.SaveDataAsync(savesDataInfo, "saves_info.json");
 
         CraftsRecipesData savesDataRecipesCrafts = new CraftsRecipesData(RecipesCraft.recipesCraft);
-        await SaveSystem.SaveDataAsync(savesDataRecipesCrafts, "recipes_crafts_data.json");
+        //await SaveSystem.SaveDataAsync(savesDataRecipesCrafts, "recipes_crafts_data.json");
+
+        var tasks = new List<Task>
+        {
+            SaveSystem.SaveDataAsync(items_Data, "items.json"),
+            SaveSystem.SaveDataAsync(role_classes_data, "role_classes_data.json"),
+            SaveSystem.SaveDataAsync(player_Data, savePath + "player.json"),
+            SaveSystem.SaveDataAsync(saveBinds, "keyBinds.json"),
+            SaveSystem.SaveDataAsync(artifacts_Data, savePath + "artifacts.json"),
+            SaveSystem.SaveDataAsync(world_data, savePath + "world_data.json"),
+            SaveSystem.SaveDataAsync(enemy_Data, "enemies.json"),
+            SaveSystem.SaveDataAsync(item_drop, "item_drop.json"),
+            SaveSystem.SaveDataAsync(savesDataInfo, "saves_info.json"),
+            SaveSystem.SaveDataAsync(savesDataRecipesCrafts, "recipes_crafts_data.json"),
+        };
+        await Task.WhenAll(tasks);
+    }
+    public void WritePlayTime(SaveGameInfo saveGameInfo = null)
+    {
+        if(saveGameInfo == null)
+             saveGameInfo = GenInfoSaves.saveGameFiles[GlobalData.SaveInt];
+
+        if (!saveGameInfo.isStarted) return;
+
+        float sessionsDuration = Time.realtimeSinceStartup - sessionStartTime;
+        saveGameInfo.timeHasPassed += (int)sessionsDuration;
+        sessionStartTime = Time.realtimeSinceStartup;
+    }
+    public async Task SaveOnlyPlayTime()
+    {
+        WritePlayTime();
+        SavesDataInfo savesDataInfo = new SavesDataInfo(GenInfoSaves.saveGameFiles, GlobalData.SaveInt, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS);
+        await SaveSystem.SaveDataAsync(savesDataInfo, "saves_info.json");
     }
     //public async void LoadDataGame()
     //{

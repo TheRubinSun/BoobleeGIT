@@ -274,21 +274,21 @@ public class PlayerInputHandler : MonoBehaviour
                     {
                         playerControl.Attack();
                     }
-                    switch (action)
-                    {
-                        case PlayerAction.MoveUp:
-                            CurInputDirection += Vector2.up;
-                            break;
-                        case PlayerAction.MoveDown:
-                            CurInputDirection += Vector2.down;
-                            break;
-                        case PlayerAction.MoveLeft:
-                            CurInputDirection += Vector2.left;
-                            break;
-                        case PlayerAction.MoveRight:
-                            CurInputDirection += Vector2.right;
-                            break;
-                    }
+                }
+                switch (action)
+                {
+                    case PlayerAction.MoveUp:
+                        CurInputDirection += Vector2.up;
+                        break;
+                    case PlayerAction.MoveDown:
+                        CurInputDirection += Vector2.down;
+                        break;
+                    case PlayerAction.MoveLeft:
+                        CurInputDirection += Vector2.left;
+                        break;
+                    case PlayerAction.MoveRight:
+                        CurInputDirection += Vector2.right;
+                        break;
                 }
             }
             CurInputDirection.Normalize();
