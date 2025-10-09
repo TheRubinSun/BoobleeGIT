@@ -59,6 +59,26 @@ public static class SlotsManager
             }
         }
     }
+    public static void SwapSlots(Slot oldSlot, Slot newSlot)
+    {
+        //Slot tempSlot = new Slot(oldSlot.Item, oldSlot.Count);
+
+        Item tempItem = oldSlot.Item;
+        int tempCount = oldSlot.Count;
+        int tempArtifactId = oldSlot.artifact_id;
+
+        oldSlot.Item = newSlot.Item;
+        oldSlot.Count = newSlot.Count;
+        oldSlot.artifact_id = newSlot.artifact_id;
+
+        newSlot.Item = tempItem;
+        newSlot.Count = tempCount;
+        newSlot.artifact_id = tempArtifactId;
+
+        //Destroy(tempSlot);
+        UpdateSlotUI(oldSlot);
+        UpdateSlotUI(newSlot); ;
+    }
 }
 [Serializable]
 public class Slot
