@@ -310,7 +310,28 @@ public class PlayerStats : CharacterStats
         Cur_Mana -= spendMana;
         return true;
     }
+    public void AddAttribute(BoosterType bosterType, int count)
+    {
+        switch(bosterType)
+        {
+            case BoosterType.Strength:
+                {
+                    Base_Strength += count;
+                    break;
+                }
+            case BoosterType.Agillity:
+                {
+                    Base_Agility += count;
+                    break;
+                }
+            case BoosterType.Intelligence:
+                {
+                    Base_Intelligence += count;
+                    break;
+                }
 
+        }
+    }
     public bool PlayerHealStat(int count_heal)
     {
         if (Cur_Hp < Max_Hp)

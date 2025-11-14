@@ -1,13 +1,16 @@
+using System.Collections;
 using UnityEngine;
 
 public class TreeLogic : ObjectLBroken
 {
+    private GameObject shadow_obj;
     private SpriteRenderer spr_Child_ren;
     protected override void Awake()
     {
         base.Awake();
 
-        spr_Child_ren = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        shadow_obj = transform.GetChild(0).gameObject;
+        spr_Child_ren = shadow_obj.GetComponent<SpriteRenderer>();
         anim.speed = Random.Range(0.9f, 1.1f);
     }
     public override void Break(CanBeWeapon canBeWeapon)
@@ -50,4 +53,11 @@ public class TreeLogic : ObjectLBroken
             culling.SetVisible(shouldBeVisible);
         }
     }
+    protected override void HideBeforeDestroy()
+    {
+        base.HideBeforeDestroy();
+        Destroy(shadow_obj);
+
+    }
+
 }

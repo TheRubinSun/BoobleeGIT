@@ -215,10 +215,8 @@ public class Player : MonoBehaviour, ITakeDamage
                 Debug.LogWarning("Неизвестный аспект: " + aspectName);
                 break;
         }
-        UpdateAllStats();
-        UpdateMANA();
-        UpdateHP();
-        UpdateRegenMANA();
+
+        UpdateAllUiInfo();
     }
 
     private void IsDeath()
@@ -263,7 +261,11 @@ public class Player : MonoBehaviour, ITakeDamage
             TooglesWeapon[i].isOn = pl_stats.DirectionOrVectorWeapon[i];
         }
     }
-
+    public void AddAttribute(BoosterType boosterType, int count)
+    {
+        pl_stats.AddAttribute(boosterType, count);
+        UpdateAllUiInfo();
+    }
     public bool ForcePlayer(float force)
     {
         if (!canForce) return false;
@@ -285,7 +287,15 @@ public class Player : MonoBehaviour, ITakeDamage
         trapObj.transform.position = PlayerModel.transform.position;
         return trapObj;
     }
+    public void UpdateAllUiInfo()
+    {
+        UpdateAllStats();
+        UpdateHP();
+        UpdateMANA();
+        UpdateRegenMANA();
 
+        pl_ui.UpdateInfoPlayerStatus();
+    }
 
     ///Player stats and player UI
     public void AddMaxHP(int addMaxHp)

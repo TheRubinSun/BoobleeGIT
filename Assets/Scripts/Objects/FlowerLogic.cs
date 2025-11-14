@@ -14,8 +14,11 @@ public class FlowerLogic : ObjectLBroken , IPointFarm
     }
     public override void Break(CanBeWeapon canBeWeapon)
     {
+        Debug.Log("sssss");
+
         if (canBeWeapon.canBeCut == true)
         {
+            Debug.Log("QQQQQWWWW");
             remainsHits--;
             if (remainsHits == 0)
             {

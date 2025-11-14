@@ -29,6 +29,7 @@ public class PlayerUI : MonoBehaviour
     private Transform player_info_panel;
     private TextMeshProUGUI text_player_info;
 
+    private DisplayInfo displayInfo;
 
     public void FindUI(Transform GameUI)
     {
@@ -116,5 +117,12 @@ public class PlayerUI : MonoBehaviour
     public void LvlUIUpdate(PlayerStats pl_stats)
     {
         text_player_info.text = $"{pl_stats.level} lvl";
+    }
+    public void UpdateInfoPlayerStatus()
+    {
+        if(displayInfo == null)
+            displayInfo = DisplayInfo.Instance;
+
+        displayInfo.UpdateInfoStatus();
     }
 }

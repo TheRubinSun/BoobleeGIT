@@ -69,25 +69,33 @@ public abstract class ObjectLBroken : ObjectL
 
     protected virtual IEnumerator PlayeSoundFullBroken()
     {
-        if(fullBroken == null)
+        HideBeforeDestroy();
+
+        DropItems();
+
+        if (fullBroken == null)
         {
             Debug.LogWarning("Нет звуков");
         }
         else
         {
-            float pitch = Random.Range(0.8f, 1.2f);
-            audioS.pitch = pitch;
-            audioS.PlayOneShot(fullBroken);
+            yield return PlayFullBroken();
         }
-
+        
+        DestroyObject();
+    }
+    protected virtual void HideBeforeDestroy()
+    {
         spr_ren.enabled = false;
         Collider2D collider2D = GetComponent<Collider2D>();
         collider2D.enabled = false;
-        DropItems();
-
+    }
+    protected virtual IEnumerator PlayFullBroken()
+    {
+        float pitch = Random.Range(0.8f, 1.2f);
+        audioS.pitch = pitch;
+        audioS.PlayOneShot(fullBroken);
         yield return new WaitForSeconds(fullBroken.length);
-        
-        DestroyObject();
     }
     protected virtual void PlayeSoundBroken()
     {

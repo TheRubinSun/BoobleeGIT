@@ -408,6 +408,36 @@
         "TypeItem": "Weapon",
         "Quality": "Mystical",
         "Description": "A magical staff that unleashes chaining lightning bolts, jumping between enemies. Consumes mana and excels at battling multiple foes at once."
+      },
+      "material_book": {
+        "Name": "Book of Knowledge",
+        "TypeItem": "Material",
+        "Quality": "Common",
+        "Description": "A simple book filled with basic notes. Used in crafting and research."
+      },
+      "booster_intelligence": {
+        "Name": "Tome of Intelligence",
+        "TypeItem": "Material",
+        "Quality": "Rare",
+        "Description": "An ancient tome covered in arcane symbols. Increases intelligence by 2 when used."
+      },
+      "material_syringe": {
+        "Name": "Empty Syringe",
+        "TypeItem": "Material",
+        "Quality": "Common",
+        "Description": "A standard sterile syringe. Used for crafting various enhancement injectors."
+      },
+      "booster_strength": {
+        "Name": "Strength Booster Syringe",
+        "TypeItem": "Material",
+        "Quality": "Rare",
+        "Description": "A syringe filled with a concentrated stimulant. Increases strength by 2."
+      },
+      "booster_agillity": {
+        "Name": "Agility Booster Syringe",
+        "TypeItem": "Material",
+        "Quality": "Rare",
+        "Description": "A syringe containing a fast-acting formula. Increases agility by 2."
       }
     },
     "mobs": {
@@ -969,6 +999,36 @@
         "TypeItem": "Оружие",
         "Quality": "Мистическое",
         "Description": "Магический посох, стреляющий цепными молниями, отскакивающими от врага к врагу. Требует ману для использования и идеально подходит для ведения боя с группами противников."
+      },
+      "material_book": {
+        "Name": "Книга знаний",
+        "TypeItem": "Материал",
+        "Quality": "Обычное",
+        "Description": "Обычная книга с базовыми записями. Используется в ремесле и исследованиях."
+      },
+      "booster_intelligence": {
+        "Name": "Том интеллекта",
+        "TypeItem": "Материал",
+        "Quality": "Редкое",
+        "Description": "Древний том с магическими символами. Повышает интеллект на 2 единицы при использовании."
+      },
+      "material_syringe": {
+        "Name": "Пустой шприц",
+        "TypeItem": "Материал",
+        "Quality": "Обычное",
+        "Description": "Стандартный стерильный шприц. Используется в создании различных усиливающих препаратов."
+      },
+      "booster_strength": {
+        "Name": "Усиляющий шприц силы",
+        "TypeItem": "Материал",
+        "Quality": "Редкое",
+        "Description": "Шприц с концентрированным стимулятором. Повышает силу на 2 единицы."
+      },
+      "booster_agillity": {
+        "Name": "Усиляющий шприц ловкости",
+        "TypeItem": "Материал",
+        "Quality": "Редкое",
+        "Description": "Шприц с быстродействующим препаратом. Повышает ловкость на 2 единицы."
       }
     },
     "mobs": {
