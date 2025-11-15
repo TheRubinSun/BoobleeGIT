@@ -55,7 +55,7 @@ public class GameMenuLog : MonoBehaviour
 
         if (OpenContolSet)
         {
-            Debug.Log("Рытаюсь отменить");
+            Debug.Log("Пытаюсь отменить");
             SwitchKey.Instance.ExitSettings();
             WindowControlsSet.SetActive(false);
         }

@@ -100,6 +100,9 @@ public class DisplayItemList:MonoBehaviour
             case "Minion":
                 tempFilter = TypeItem.Minion;
                 break;
+            case "Booster":
+                tempFilter = TypeItem.Booster;
+                break;
             case "None":
                 tempFilter = TypeItem.None; 
                 break;

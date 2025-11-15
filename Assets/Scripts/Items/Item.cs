@@ -14,6 +14,7 @@ public enum TypeItem
     Material,
     Minion,
     Trap,
+    Booster,
     Other,
     Seed,
     True,

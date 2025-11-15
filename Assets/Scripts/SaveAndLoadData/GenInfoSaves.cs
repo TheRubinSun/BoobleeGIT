@@ -76,6 +76,7 @@ public class GenInfoSaves : MonoBehaviour
 
             GlobalData.cur_seed = (saveGameFiles[saveInt].seed != 0) ? saveGameFiles[saveInt].seed : saveGameFiles[saveInt].GenNewSeed();
             GlobalData.cur_lvl_left = saveGameFiles[saveInt].lvl_left;
+            lastSaveID = saveInt;
 
             Debug.Log($"Выбран слот {saveInt}, путь: {GlobalData.SavePath}");
 

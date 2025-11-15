@@ -131,10 +131,10 @@ public static class ItemsList
         items.Add(new LazerStaffGun(66, "thunder_stuff", 1, 0, Quality.Mystical, 1550, "_", true, 4f, damageT.Magic, 1, 1f, 20, 2, 0f, 1, 0, 4));
 
         items.Add(new Item(67, "material_book", 20, 0, Quality.Common, 20, "_", TypeItem.Material));
-        items.Add(new Boster(68, "booster_intelligence", 100, 0, Quality.Rare, 500, "_", BoosterType.Intelligence, 2, TypeItem.Material));
+        items.Add(new Boster(68, "booster_intelligence", 100, 0, Quality.Rare, 500, "_", BoosterType.Intelligence, 2, TypeItem.Booster));
         items.Add(new Item(69, "material_syringe", 40, 0, Quality.Common, 12, "_", TypeItem.Material));
-        items.Add(new Boster(70, "booster_strength", 100, 0, Quality.Rare, 500, "_", BoosterType.Strength, 2, TypeItem.Material));
-        items.Add(new Boster(71, "booster_agillity", 100, 0, Quality.Rare, 500, "_", BoosterType.Agillity, 2, TypeItem.Material));
+        items.Add(new Boster(70, "booster_strength", 100, 0, Quality.Rare, 500, "_", BoosterType.Strength, 2, TypeItem.Booster));
+        items.Add(new Boster(71, "booster_agillity", 100, 0, Quality.Rare, 500, "_", BoosterType.Agillity, 2, TypeItem.Booster));
         //PrintItemList();
     }
     private static void InitializeSpritesItem()
