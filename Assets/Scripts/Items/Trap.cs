@@ -43,7 +43,7 @@ public class Mine: Trap
             Debug.Log("Ошибка, отсутствует префаб");
             return false;
         }
-        GameObject mine = Player.Instance.CreateTrap(prefab_trap);
+        GameObject mine = GlobalData.Player.CreateTrap(prefab_trap);
         mine.GetComponent<MineLogic>().SetParameters(damageMine, damageT, radiusExp, delayTime);
         return true;
 
@@ -76,7 +76,7 @@ public class FootTrap : Trap
             Debug.Log("Ошибка, отсутствует префаб");
             return false;
         }
-        GameObject foottrap = Player.Instance.CreateTrap(prefab_trap);
+        GameObject foottrap = GlobalData.Player.CreateTrap(prefab_trap);
         foottrap.GetComponent<FootTrapLogic>().SetParameters(damageTrap, damageT, timeDuration);
         return true;
 

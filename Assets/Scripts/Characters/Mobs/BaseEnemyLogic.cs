@@ -50,7 +50,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     protected bool IsNearThePlayer = false;
 
     protected bool CanBeMissedAttack = true;
-    protected GameManager g_m = GameManager.Instance;
+    //protected GameManager g_m = GameManager.Instance;
 
     //[SerializeField]
     //protected LayerMask obstacleLayer; // Слой для препятствий (стены и игрок)
@@ -162,8 +162,8 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     }
     protected virtual void Start()
     {
-        if (player == null && GameManager.Instance.PlayerModel != null)
-            player = GameManager.Instance.PlayerModel;
+        if (player == null && GlobalData.GameManager.PlayerModel != null)
+            player = GlobalData.GameManager.PlayerModel;
 
         original_color = spr_ren.color;
         moveDirection = (player.position - CenterObject.position).normalized; //Вычисление направление к игроку
@@ -174,7 +174,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
 
         CreateCulling();
         UpdateCulling(false);
-        CullingManager.Instance.RegisterObject(this);
+        GlobalData.CullingManager.RegisterObject(this);
 
         if (abillities.Length > 0) StartCoroutine(LoadAbilities());
         //SetVolume();
@@ -233,7 +233,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
         if (!isVisibleNow) return;
 
         float mobPosY = transform.position.y;
-        float PlayerPosY = g_m.PlayerPosY;
+        float PlayerPosY = GlobalData.GameManager.PlayerPosY;
 
         spr_ren.sortingOrder = Mathf.RoundToInt((mobPosY - PlayerPosY - 2) * -5);
     }
@@ -628,8 +628,8 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     }
     private void OnDisable()
     {
-        if (CullingManager.Instance != null)
-            CullingManager.Instance.UnregisterObject(this);
+        if (GlobalData.CullingManager != null)
+            GlobalData.CullingManager.UnregisterObject(this);
     }
     public void UpdateCulling(bool shouldBeVisible)
     {

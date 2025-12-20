@@ -15,6 +15,6 @@ public class MimicLogic : BaseEnemyLogic
             audioSource.PlayOneShot(attack_sounds[UnityEngine.Random.Range(0, attack_sounds.Length)]); //Звук выстрела
         }
 
-        Player.Instance.TakeDamage(enum_stat.Att_Damage, damageT.Physical, true);
+        GlobalData.Player.TakeDamage(enum_stat.Att_Damage, damageT.Physical, true);
     }
 }

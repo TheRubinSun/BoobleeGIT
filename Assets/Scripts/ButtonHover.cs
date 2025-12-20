@@ -5,10 +5,9 @@ using UnityEngine.UI;
 
 public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    private DisplayInfo dispInfo;
     private void Awake()
     {
-        dispInfo = DisplayInfo.Instance;
+
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -21,65 +20,65 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         {
             case "InvSlot":
                 {
-                    if (Inventory.Instance.GetSlot(new SlotRequest { index = GetNumbSlot() }).Item.Id != 0)
+                    if (GlobalData.Inventory.GetSlot(new SlotRequest { index = GetNumbSlot() }).Item.Id != 0)
                     {
-                        dispInfo.SetActiveItemInfo(true);
+                        GlobalData.DisplayInfo.SetActiveItemInfo(true);
                         //Inventory.Instance.InfoPanel.gameObject.SetActive(true);
-                        dispInfo.UpdateInfoItem(GetNumbSlot(), "Inventory");
+                        GlobalData.DisplayInfo.UpdateInfoItem(GetNumbSlot(), "Inventory");
                     }
                     break;
                 }
             case "SlotEquip":
                 {
-                    if (EqupmentPlayer.Instance.GetSlot(new SlotRequest { index = GetNumbSlot() }).Item.Id != 0)
+                    if (GlobalData.EqupmentPlayer.GetSlot(new SlotRequest { index = GetNumbSlot() }).Item.Id != 0)
                     {
                         //Inventory.Instance.InfoPanel.gameObject.SetActive(true);
-                        dispInfo.SetActiveItemInfo(true);
-                        dispInfo.UpdateInfoItem(GetNumbSlot(), "Equip");
+                        GlobalData.DisplayInfo.SetActiveItemInfo(true);
+                        GlobalData.DisplayInfo.UpdateInfoItem(GetNumbSlot(), "Equip");
                     }
                     break;
                 }
             case "SellSlot":
                 {
-                    if (ShopLogic.Instance.GetSlot(new SlotRequest { index = GetNumbSlot(), Type = "Sell" }).Item.Id != 0)
+                    if (GlobalData.ShopLogic.GetSlot(new SlotRequest { index = GetNumbSlot(), Type = "Sell" }).Item.Id != 0)
                     {
                         //Inventory.Instance.InfoPanel.gameObject.SetActive(true);
-                        dispInfo.SetActiveItemInfo(true);
-                        dispInfo.UpdateInfoItem(GetNumbSlot(), "Sell");
+                        GlobalData.DisplayInfo.SetActiveItemInfo(true);
+                        GlobalData.DisplayInfo.UpdateInfoItem(GetNumbSlot(), "Sell");
                     }
                     break;
                 }
             case "BuySlot":
                 {
-                    if (ShopLogic.Instance.GetSlot(new SlotRequest { index = GetNumbSlot(), Type = "Buy" }).Item.Id != 0)
+                    if (GlobalData.ShopLogic.GetSlot(new SlotRequest { index = GetNumbSlot(), Type = "Buy" }).Item.Id != 0)
                     {
                         //Inventory.Instance.InfoPanel.gameObject.SetActive(true);
 
-                        dispInfo.SetActiveItemInfo(true);
-                        dispInfo.UpdateInfoItem(GetNumbSlot(), "Buy");
+                        GlobalData.DisplayInfo.SetActiveItemInfo(true);
+                        GlobalData.DisplayInfo.UpdateInfoItem(GetNumbSlot(), "Buy");
                     }
                     break;
                 }
             case "ShopSlot":
                 {
-                    if (ShopLogic.Instance.GetSlot(new SlotRequest { index = GetNumbSlot(), Type = "Shop" }).Item.Id != 0)
+                    if (GlobalData.ShopLogic.GetSlot(new SlotRequest { index = GetNumbSlot(), Type = "Shop" }).Item.Id != 0)
                     {
                         //Inventory.Instance.InfoPanel.gameObject.SetActive(true);
-                        dispInfo.SetActiveItemInfo(true);
-                        dispInfo.UpdateInfoItem(GetNumbSlot(), "Shop");
+                        GlobalData.DisplayInfo.SetActiveItemInfo(true);
+                        GlobalData.DisplayInfo.UpdateInfoItem(GetNumbSlot(), "Shop");
 
                     }
                     break;
                 }
 
         }
-        dispInfo.UpdateSizeWindowItem();
+        GlobalData.DisplayInfo.UpdateSizeWindowItem();
     }
     public void OnPointerExit(PointerEventData eventData)
     {
         //Debug.Log("Мышь ушла с кнопки!");
-        dispInfo.SetActiveItemInfo(false);
-        dispInfo.moveInfo = false;
+        GlobalData.DisplayInfo.SetActiveItemInfo(false);
+        GlobalData.DisplayInfo.moveInfo = false;
 
         //DisplayInfo.Instance.ClearInfo();
         //Inventory.Instance.InfoPanel.gameObject.SetActive(false);

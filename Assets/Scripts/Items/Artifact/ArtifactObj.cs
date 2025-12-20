@@ -34,7 +34,7 @@ public class ArtifactObj
 
     private int statCount;
     public bool StatsGen { get; set; }
-    private HashSet<StatType> statTypes = new HashSet<StatType>();
+    private HashSet<AllStats> statTypes = new HashSet<AllStats>();
     public ArtifactObj(int id,  int _art_level)
     {
         art_level = _art_level;
@@ -63,7 +63,7 @@ public class ArtifactObj
     }
     public void SetRandomAttributes(System.Random random = null)
     {
-        statCount = System.Enum.GetValues(typeof(StatType)).Length;
+        statCount = System.Enum.GetValues(typeof(AllStats)).Length;
 
         int precentNewCharm = 0;
         int levelCharm = 0;
@@ -114,61 +114,61 @@ public class ArtifactObj
     }
     private void GetStat(int levelCharm, System.Random random = null)
     {
-        StatType stat;
+        AllStats stat;
 
         if (random != null) 
-            stat = (StatType)random.Next(0, statCount);
+            stat = (AllStats)random.Next(0, statCount);
         else 
-            stat = (StatType)Random.Range(0, statCount);
+            stat = (AllStats)Random.Range(0, statCount);
 
         switch (stat)
         {
-            case StatType.Strength:
+            case AllStats.Strength:
                 Artif_Strength += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.STRENGTH, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_STRENGTH, random);
                 break;
-            case StatType.Agility:
+            case AllStats.Agility:
                 Artif_Agility += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.AGILITY, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_AGILITY, random);
                 break;
-            case StatType.Intelligence:
+            case AllStats.Intelligence:
                 Artif_Intelligence += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.INTELLIGENCE, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_INTELLIGENCE, random);
                 break;
-            case StatType.Hp:
+            case AllStats.Max_Hp:
                 Artif_Hp += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.HP, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_HP, random);
                 break;
-            case StatType.Armor:
+            case AllStats.Armor:
                 Artif_Armor += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.ARMOR, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_ARMOR, random);
                 break;
-            case StatType.Evasion:
+            case AllStats.Evasion:
                 Artif_Evasion += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.EVASION, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_EVASION, random);
                 break;
-            case StatType.Mov_Speed:
+            case AllStats.Mov_Speed:
                 Artif_Mov_Speed += GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.MOV_SPEED, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_MOV_SPEED, random);
                 break;
-            case StatType.Att_Range:
+            case AllStats.Att_Range:
                 Artif_Att_Range += GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.ATT_RANGE, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_ATT_RANGE, random);
                 break;
-            case StatType.Att_Speed:
+            case AllStats.Att_Speed:
                 Artif_Att_Speed += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.ATT_SPEED, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_ATT_SPEED, random);
                 break;
-            case StatType.Proj_Speed:
+            case AllStats.Proj_Speed:
                 Artif_Proj_Speed += GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.PROJ_SPEED, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_PROJ_SPEED, random);
                 break;
-            case StatType.ExpBust:
+            case AllStats.ExpBust:
                 Artif_ExpBust += GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.EXPBUST, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_EXPBUST, random);
                 break;
-            case StatType.Mage_Resis:
+            case AllStats.Magic_Resis:
                 Artif_Mage_Resis += GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.MAGE_RESIS, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_MAGE_RESIS, random);
                 break;
-            case StatType.Tech_Resis:
+            case AllStats.Tech_Resis:
                 Artif_Tech_Resis += GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.TECH_RESIS, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_TECH_RESIS, random);
                 break;
-            case StatType.Damage:
+            case AllStats.Att_Damage:
                 Artif_Damage += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.DAMAGE, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_DAMAGE, random);
                 break;
-            case StatType.Mana:
+            case AllStats.Max_Mana:
                 Artif_Mana += (int)GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.MANA, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_MANA, random);
                 break;
-            case StatType.ManaRegen:
+            case AllStats.Regen_Mana:
                 Artif_ManaRegen += GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.MANA_REGEN, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_MANA_REGEN, random);
                 break;
         }
@@ -244,22 +244,22 @@ public class ArtifactObj
        Artif_ManaRegen == 0f;
     }
 }
-public enum StatType
-{
-    Strength,
-    Agility,
-    Intelligence,
-    Hp,
-    Armor,
-    Evasion,
-    Mov_Speed,
-    Att_Range,
-    Att_Speed,
-    Proj_Speed,
-    ExpBust,
-    Mage_Resis,
-    Tech_Resis,
-    Damage,
-    Mana,
-    ManaRegen
-}
+//public enum StatType
+//{
+//    Strength,
+//    Agility,
+//    Intelligence,
+//    Hp,
+//    Armor,
+//    Evasion,
+//    Mov_Speed,
+//    Att_Range,
+//    Att_Speed,
+//    Proj_Speed,
+//    ExpBust,
+//    Mage_Resis,
+//    Tech_Resis,
+//    Damage,
+//    Mana,
+//    ManaRegen
+//}

@@ -64,7 +64,7 @@ public class WeaponControl : MonoBehaviour
     }
     public virtual void GetStatsWeapon(Weapon _weapon,int damage, float at_speed_coof, float add_at_speed, float att_sp_pr, bool isRang, float attack_ran, int count_proj, float _spreadAngle, damageT _damT, Transform pl_mod, GameObject _Projectile_pref = null, float att_sp_pr_coof = 0, int _effectID = -1)
     {
-        PlayerStats pl_stat = Player.Instance.GetPlayerStats();
+        PlayerStats pl_stat = GlobalData.Player.GetPlayerStats();
 
         baseWeapon = _weapon;
         Attack_Damage = damage + pl_stat.Att_Damage;
@@ -92,7 +92,7 @@ public class WeaponControl : MonoBehaviour
         else
             EffectAttack = ResourcesData.GetEffectsPrefab(_effectID);
 
-        CountProjectiles = Player.Instance.GetPlayerStats().count_Projectile + count_proj;
+        CountProjectiles = GlobalData.Player.GetPlayerStats().count_Projectile + count_proj;
 
     }
     //protected virtual void UpdateStats()

@@ -61,7 +61,7 @@ public class MinionControl : MonoBehaviour
     public virtual void UseMinion(int idMin)
     {
         IDCurMinion = idMin;
-        EqupmentPlayer.Instance.LockSlot(IDCurMinion);
+        GlobalData.EqupmentPlayer.LockSlot(IDCurMinion);
         StartCoroutine(DrawAndEraseRange());
     }
     protected virtual string SearchTypeTag()
@@ -125,7 +125,7 @@ public class MinionControl : MonoBehaviour
         audioSource.pitch = Random.Range(0.7f, 1.2f);
         audioSource.PlayOneShot(attachSound);
 
-        EqupmentPlayer.Instance.UnlockSlot(IDCurMinion);
+        GlobalData.EqupmentPlayer.UnlockSlot(IDCurMinion);
         transform.SetParent(MinionSlotParent);
         transform.localPosition = Vector3.zero;
         isAlreadyBusyMinion = false;
@@ -136,11 +136,11 @@ public class MinionControl : MonoBehaviour
         if (dropItems.Count > 0)
         {
             Debug.Log("Попытка произвести звук");
-            SoundsManager.Instance.PlayTakeDropItem();
+            GlobalData.SoundsManager.PlayTakeDropItem();
         }
         foreach (Slot slot in dropItems)
         {
-            Inventory.Instance.FindSlotAndAdd(slot.Item, slot.Count, true, slot.artifact_id);
+            GlobalData.Inventory.FindSlotAndAdd(slot.Item, slot.Count, true, slot.artifact_id);
         }
         dropItems.Clear();
     }

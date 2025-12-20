@@ -53,7 +53,7 @@ public class SlimeLogic : BaseEnemyLogic, IItemMove
         if (!isVisibleNow) return;
 
         float mobPosY = transform.position.y;
-        float PlayerPosY = g_m.PlayerPosY;
+        float PlayerPosY = GlobalData.GameManager.PlayerPosY;
 
         spr_ren.sortingOrder = Mathf.RoundToInt((mobPosY - PlayerPosY - 2) * -5);
 
@@ -218,7 +218,7 @@ public class SlimeLogic : BaseEnemyLogic, IItemMove
         //audioSource.volume = attack_volume;
         audioSource.Stop();
         audioSource.PlayOneShot(attack_sounds[UnityEngine.Random.Range(0, attack_sounds.Length)]); //Звук выстрела
-        Player.Instance.TakeDamage(enum_stat.Att_Damage, damageT.Magic, true, posionNewEff);
+        GlobalData.Player.TakeDamage(enum_stat.Att_Damage, damageT.Magic, true, posionNewEff);
     }
     public void SetItemsPosIdle(int frame)
     {

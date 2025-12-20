@@ -13,19 +13,19 @@ public class MouseButtonHandler : MonoBehaviour, IPointerClickHandler
                 {
                     if (eventData.button == PointerEventData.InputButton.Left) // Левая кнопка
                     {
-                        DragAndDrop.Instance.DragInventorySlot(GetNumbSlot());
+                        GlobalData.DragAndDrop.DragInventorySlot(GetNumbSlot());
                     }
                     else if (eventData.button == PointerEventData.InputButton.Right) // Правая кнопка
                     {
-                        DragAndDrop.Instance.DragPieceInventorySlot(GetNumbSlot());
+                        GlobalData.DragAndDrop.DragPieceInventorySlot(GetNumbSlot());
                     }
                     break;
                 }
             case "DropZone":
                 {
-                    if (DragAndDrop.Instance.dragItem && eventData.button == PointerEventData.InputButton.Left) // Левая кнопка
+                    if (GlobalData.DragAndDrop.dragItem && eventData.button == PointerEventData.InputButton.Left) // Левая кнопка
                     {
-                        DragAndDrop.Instance.DropItem();
+                        GlobalData.DragAndDrop.DropItem();
                     }
                     break;
                 }
@@ -33,11 +33,11 @@ public class MouseButtonHandler : MonoBehaviour, IPointerClickHandler
                 {
                     if (eventData.button == PointerEventData.InputButton.Left) // Левая кнопка
                     {
-                        DragAndDrop.Instance.DragEquipmentSlot(GetNumbSlot());
+                        GlobalData.DragAndDrop.DragEquipmentSlot(GetNumbSlot());
                     }
                     else if (eventData.button == PointerEventData.InputButton.Right) // Правая кнопка
                     {
-                        DragAndDrop.Instance.DragPieceEquipmentSlot(GetNumbSlot());
+                        GlobalData.DragAndDrop.DragPieceEquipmentSlot(GetNumbSlot());
                     }
                     break;
                 }
@@ -45,11 +45,11 @@ public class MouseButtonHandler : MonoBehaviour, IPointerClickHandler
                 {
                     if (eventData.button == PointerEventData.InputButton.Left) // Левая кнопка
                     {
-                        DragAndDrop.Instance.DragSellSlot(GetNumbSlot());
+                        GlobalData.DragAndDrop.DragSellSlot(GetNumbSlot());
                     }
                     else if (eventData.button == PointerEventData.InputButton.Right) // Правая кнопка
                     {
-                        DragAndDrop.Instance.DragPieceSellSlot(GetNumbSlot());
+                        GlobalData.DragAndDrop.DragPieceSellSlot(GetNumbSlot());
                     }
                     
                     break;
@@ -58,11 +58,11 @@ public class MouseButtonHandler : MonoBehaviour, IPointerClickHandler
                 {
                     if (eventData.button == PointerEventData.InputButton.Left) // Левая кнопка
                     {
-                        DragAndDrop.Instance.DragBuySlot(GetNumbSlot());
+                        GlobalData.DragAndDrop.DragBuySlot(GetNumbSlot());
                     }
                     else if (eventData.button == PointerEventData.InputButton.Right) // Правая кнопка
                     {
-                        DragAndDrop.Instance.DragPieceBuySlot(GetNumbSlot());
+                        GlobalData.DragAndDrop.DragPieceBuySlot(GetNumbSlot());
                     }
                     break;
                 }
@@ -70,11 +70,11 @@ public class MouseButtonHandler : MonoBehaviour, IPointerClickHandler
                 {
                     if (eventData.button == PointerEventData.InputButton.Left) // Левая кнопка
                     {
-                        DragAndDrop.Instance.DragShopSlot(GetNumbSlot());
+                        GlobalData.DragAndDrop.DragShopSlot(GetNumbSlot());
                     }
                     else if (eventData.button == PointerEventData.InputButton.Right) // Правая кнопка
                     {
-                        DragAndDrop.Instance.DragPieceShopSlot(GetNumbSlot());
+                        GlobalData.DragAndDrop.DragPieceShopSlot(GetNumbSlot());
                     }
                     break;
                 }
@@ -82,11 +82,11 @@ public class MouseButtonHandler : MonoBehaviour, IPointerClickHandler
                 {
                     if (eventData.button == PointerEventData.InputButton.Left) // Левая кнопка
                     {
-                        DragAndDrop.Instance.DragSellArea();
+                        GlobalData.DragAndDrop.DragSellArea();
                     }
                     else if (eventData.button == PointerEventData.InputButton.Right) // Правая кнопка
                     {
-                        DragAndDrop.Instance.DragPieceSellArea();
+                        GlobalData.DragAndDrop.DragPieceSellArea();
                     }
                     break;
                 }
@@ -94,9 +94,9 @@ public class MouseButtonHandler : MonoBehaviour, IPointerClickHandler
                 {
                     if (eventData.button == PointerEventData.InputButton.Left) // Левая кнопка
                     {
-                        if (CraftLogic.Instance.isEnoughResourse())
+                        if (GlobalData.CraftLogic.isEnoughResourse())
                         {
-                            DragAndDrop.Instance.DragCraftSlot(GetNumbSlot());
+                            GlobalData.DragAndDrop.DragCraftSlot(GetNumbSlot());
                         }
                         else
                         {
@@ -118,7 +118,7 @@ public class MouseButtonHandler : MonoBehaviour, IPointerClickHandler
         //{
 
         //}
-        //else if(gameObject.tag == "DropZone" && DragAndDrop.Instance.dragItem)
+        //else if(gameObject.tag == "DropZone" && DragAndDrop.dragItem)
         //{
 
         //}

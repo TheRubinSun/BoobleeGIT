@@ -7,6 +7,24 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+public enum AspectName
+{
+    Agillity,
+    Strength,
+    Intelligence,
+    Tech_Point,
+    Mage_Point,
+    Exp_Bust,
+    Speed,
+    Hp,
+    Gold,
+    AttackSpeed,
+    Range,
+    Projectile_speed,
+    Damage,
+    Mana,
+    ManaRegen
+}
 public class LvlUpLogic : MonoBehaviour
 {
     public static LvlUpLogic Instance { get; set; }
@@ -52,9 +70,9 @@ public class LvlUpLogic : MonoBehaviour
     }
     public void LocalizationText()
     {
-        if(LocalizationManager.Instance != null)
+        if(GlobalData.LocalizationManager != null)
         {
-            Dictionary<string, string> localized_player_stats_name = LocalizationManager.Instance.GetLocalizedValue("ui_text", "aspects_name");
+            Dictionary<string, string> localized_player_stats_name = GlobalData.LocalizationManager.GetLocalizedValue("ui_text", "aspects_name");
             if(localized_player_stats_name != null)
             {
                 word_nameWindow = localized_player_stats_name["word_nameWindow"];
@@ -92,8 +110,8 @@ public class LvlUpLogic : MonoBehaviour
     public void GenAspects()
     {
         
-        //Debug.Log(GlobalData.cur_seed + " " + GlobalData.cur_seed + (Player.Instance.GetLevel() - Player.Instance.GetFreeSkillPoint()));
-        random = new System.Random(GlobalData.cur_seed + (Player.Instance.GetLevel() - Player.Instance.GetFreeSkillPoint()));
+        //Debug.Log(GlobalData.cur_seed + " " + GlobalData.cur_seed + (Player.GetLevel() - Player.GetFreeSkillPoint()));
+        random = new System.Random(GlobalData.cur_seed + (GlobalData.Player.GetLevel() - GlobalData.Player.GetFreeSkillPoint()));
         if (tempAspects.Count > 0)
         {
             RemoveObj();
@@ -144,23 +162,23 @@ public class LvlUpLogic : MonoBehaviour
     }
     public void AcceptAspect(int id)
     {
-        Player.Instance.SetAspect(tempAspects[id].aspectName, tempAspects[id].value);
+        GlobalData.Player.SetAspect(tempAspects[id].aspectName, tempAspects[id].value);
         RemoveObj();
 
-        if(Player.Instance.GetFreeSkillPoint() > 0)
+        if(GlobalData.Player.GetFreeSkillPoint() > 0)
         {
-            UIControl.Instance.OpenLvlUPWindow(false);
+            GlobalData.UIControl.OpenLvlUPWindow(false);
             StartCoroutine(StartNewAspectChoose());
         }
         else
         {
-            UIControl.Instance.CloseWindowLvlUP();
-            UIControl.Instance.ShowHideLvlUP(false);
+            GlobalData.UIControl.CloseWindowLvlUP();
+            GlobalData.UIControl.ShowHideLvlUP(false);
         }
-        SoundsManager.Instance.PlayAcceptAspect();
+        GlobalData.SoundsManager.PlayAcceptAspect();
 
-        DisplayInfo.Instance.UpdateInfoStatus();
-        EqupmentPlayer.Instance.UpdateAllWeaponsStats();
+        GlobalData.DisplayInfo.UpdateInfoStatus();
+        GlobalData.EqupmentPlayer.UpdateAllWeaponsStats();
     }
     private string TranslateWord(AspectName aspect)
     {
@@ -203,10 +221,10 @@ public class LvlUpLogic : MonoBehaviour
     private IEnumerator StartNewAspectChoose()
     {
         yield return new WaitForSeconds(0.6f);
-        
-        UIControl.Instance.ShowHideLvlUP(true);
+
+        GlobalData.UIControl.ShowHideLvlUP(true);
         GenAspects();
-        UIControl.Instance.OpenLvlUPWindow(true);
+        GlobalData.UIControl.OpenLvlUPWindow(true);
     }
     public static List<AspectName> GetRandomAspects()
     {
@@ -243,24 +261,7 @@ public class LvlUpLogic : MonoBehaviour
         return choosenAspects;
     }
 }
-public enum AspectName
-{
-    Agillity,
-    Strength,
-    Intelligence,
-    Tech_Point,
-    Mage_Point,
-    Exp_Bust,
-    Speed,
-    Hp,
-    Gold,
-    AttackSpeed,
-    Range,
-    Projectile_speed,
-    Damage,
-    Mana,
-    ManaRegen
-}
+
 public class TempAspect
 {
     public AspectName aspectName;

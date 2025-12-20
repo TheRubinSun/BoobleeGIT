@@ -18,14 +18,14 @@ public class JustObject : ObjectL
 
         CreateCulling();
         UpdateCulling(true);
-        CullingManager.Instance.RegisterObject(this);
+        GlobalData.CullingManager.RegisterObject(this);
     }
     public override void UpdateSortingOrder()
     {
         if (!isVisibleNow) return;
 
         float PosY = transform.position.y;
-        float PlayerPosY = GameManager.Instance.PlayerPosY;
+        float PlayerPosY = GlobalData.GameManager.PlayerPosY;
 
         spr_ren.sortingOrder = Mathf.RoundToInt(((PosY - layer) - PlayerPosY - 2) * -5);
     }

@@ -33,7 +33,7 @@ public class VasaLogic : ObjectLBroken
         if (!isVisibleNow) return;
 
         float treePosY = transform.position.y;
-        float PlayerPosY = GameManager.Instance.PlayerPosY;
+        float PlayerPosY = GlobalData.GameManager.PlayerPosY;
 
         spr_ren.sortingOrder = Mathf.RoundToInt((treePosY - PlayerPosY - 2) * -5);
     }

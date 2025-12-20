@@ -24,7 +24,7 @@ public class HealPotion : Potion
     }
     public override bool Use()
     {
-        if(Player.Instance.TakeHeal(countHeal))
+        if(GlobalData.Player.TakeHeal(countHeal))
         {
             Debug.Log("ѕытаюсь отхилить");
             return true;
@@ -57,7 +57,7 @@ public class SpeedUpPotion : Potion
     public override bool Use()
     {
         Debug.Log("ѕытаюсь использовать");
-        EffectsManager eff_man = Player.Instance.GetComponent<EffectsManager>();
+        EffectsManager eff_man = GlobalData.Player.GetComponent<EffectsManager>();
 
 
 
@@ -121,7 +121,7 @@ public class ManaHealPotion : Potion
     }
     public override bool Use()
     {
-        if (Player.Instance.TakeHealMana(countHeal))
+        if (GlobalData.Player.TakeHealMana(countHeal))
         {
             Debug.Log("ѕытаюсь отхилить");
             return true;

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7123768956162174422}
   - component: {fileID: 6254327746043298659}
   - component: {fileID: -4149001753689017521}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: PortalToLevel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,3 +164,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ToDropPos: {x: 0, y: 0}
+  layer: 0

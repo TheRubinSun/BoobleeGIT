@@ -17,7 +17,7 @@ public class NameLocation : MonoBehaviour
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        GlobalData.NAME_NEW_LOCATION_TEXT = LocalizationManager.Instance.GetLocalizedValue("ui_text", "name_location")[GlobalData.NAME_NEW_LOCATION];
+        GlobalData.NAME_NEW_LOCATION_TEXT = GlobalData.LocalizationManager.GetLocalizedValue("ui_text", "name_location")[GlobalData.NAME_NEW_LOCATION];
         StartCoroutine(ShowAndHideName(TimeToStart, TimeToEnd, TimeDisplayText, GlobalData.NAME_NEW_LOCATION_TEXT));
     }
     private IEnumerator ShowAndHideName(float timeToStart, float timeToEnd, float timeLoad, string name)

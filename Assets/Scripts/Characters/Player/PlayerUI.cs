@@ -121,8 +121,6 @@ public class PlayerUI : MonoBehaviour
     public void UpdateInfoPlayerStatus()
     {
         if(displayInfo == null)
-            displayInfo = DisplayInfo.Instance;
-
-        displayInfo.UpdateInfoStatus();
+            GlobalData.DisplayInfo.UpdateInfoStatus();
     }
 }

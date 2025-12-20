@@ -37,7 +37,7 @@ public class ResMinControl : MinionControl
         audioSource_Work.outputAudioMixerGroup = minionWorkGroup;
         audioSource_Work.pitch = pitchWork;
 
-        TargetParent = GameManager.Instance.mobsLayer;
+        TargetParent = GlobalData.GameManager.mobsLayer;
         base.Start();
 
         rotate_anim = Rotate_Obj.GetComponent<Animator>();
@@ -67,7 +67,7 @@ public class ResMinControl : MinionControl
             }
             else
             {
-                EqupmentPlayer.Instance.UnlockSlot(IDCurMinion);
+                GlobalData.EqupmentPlayer.UnlockSlot(IDCurMinion);
                 Debug.Log("Не найдена цель");
             }
 

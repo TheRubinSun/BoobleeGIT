@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class GlobalData
@@ -26,11 +28,34 @@ public static class GlobalData
     public static int add_mobs = 1;
 
     public static float ChanceCharOnWeapon = 0.10f;
-    //public static void SwitchVolume()
-    //{
 
-    //}
 
+    public static Inventory Inventory => Inventory.Instance;
+    public static EqupmentPlayer EqupmentPlayer => EqupmentPlayer.Instance;
+    public static EquipStats EquipStats =>  EquipStats.Instance;
+    public static ShopLogic ShopLogic => ShopLogic.Instance;
+    public static Player Player => Player.Instance;
+    public static DisplayInfo DisplayInfo => DisplayInfo.Instance;
+    public static GameManager GameManager => GameManager.Instance;
+    public static CullingManager CullingManager => CullingManager.Instance;
+    public static LocalizationManager LocalizationManager => LocalizationManager.Instance;
+    public static Artifacts Artifacts => Artifacts.Instance;
+    public static SoundsManager SoundsManager => SoundsManager.Instance;
+    public static UIControl UIControl => UIControl.Instance;
+    public static PlayerControl PlayerControl => PlayerControl.Instance;
+    public static Classes Classes => Classes.Instance;
+    public static PlayerInputHandler PlayerInputHandler => PlayerInputHandler.Instance;
+    public static CraftLogic CraftLogic => CraftLogic.Instance;
+    public static DragAndDrop DragAndDrop => DragAndDrop.Instance;
+    public static LvlUpLogic LvlUpLogic => LvlUpLogic.Instance;
+    public static DisplayMobsList DisplayMobsList => DisplayMobsList.Instance;
+    public static CreatePortalUI CreatePortalUI => CreatePortalUI.Instance;
+    public static GameMenuLog GameMenuLog => GameMenuLog.Instance;
+    public static Options Options => Options.Instance;
+    public static SwitchKey SwitchKey => SwitchKey.Instance;
+    public static GenInfoSaves GenInfoSaves => GenInfoSaves.Instance;
+    public static SpawnMobs SpawnMobs => SpawnMobs.Instance;
+    
 }
 public static class BASE_VALUE_STATS_ARTEFACT
 {

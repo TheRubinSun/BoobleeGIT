@@ -59,7 +59,7 @@ public class GameManager: MonoBehaviour
 
         if (LocalizationManager.Instance != null)
         {
-            UIControl.Instance.LocalizationTranslate();
+            GlobalData.UIControl.LocalizationTranslate();
             Debug.Log("Локализация применена.");
         }
         else
@@ -71,24 +71,24 @@ public class GameManager: MonoBehaviour
         if (GameDataHolder.PlayerData != null)
         {
             //ItemsList.LoadOrCreateItemList(GameDataHolder.ItemsData.item_List_data);
-            Classes.Instance.LoadOrCreateClasses(GameDataHolder.RoleClassesData.role_Classes_data);
+            GlobalData.Classes.LoadOrCreateClasses(GameDataHolder.RoleClassesData.role_Classes_data);
 
 
-            Artifacts.Instance.LoadOrNew(GameDataHolder.ArtifactsData.artifacts);
+            GlobalData.Artifacts.LoadOrNew(GameDataHolder.ArtifactsData.artifacts);
 
 
             GlobalWorld.LoadData(GameDataHolder.WorldData.numbTotalPoints, GameDataHolder.WorldData.farmPoints);
 
 
-            Player.Instance.LoadOrCreateNew(GameDataHolder.PlayerData.player_data);
+            GlobalData.Player.LoadOrCreateNew(GameDataHolder.PlayerData.player_data);
 
-            Inventory.Instance.LoadOrCreateInventory(GameDataHolder.PlayerData.inventory_items_data);
-            EqupmentPlayer.Instance.LoadOrCreateEquipment(GameDataHolder.PlayerData.equip_item_data);
+            GlobalData.Inventory.LoadOrCreateInventory(GameDataHolder.PlayerData.inventory_items_data);
+            GlobalData.EqupmentPlayer.LoadOrCreateEquipment(GameDataHolder.PlayerData.equip_item_data);
 
             //EnemyList.LoadOrCreateMobsList(GameDataHolder.EnemyData.mob_list_data);
             ItemDropEnemy.LoadOrCreate(GameDataHolder.ItemsDropOnEnemy.namesKeys);
 
-            UIControl.Instance.LocalizationTranslate();
+            GlobalData.UIControl.LocalizationTranslate();
 
             SaveGameInfo dataInfo = GenInfoSaves.saveGameFiles[GlobalData.SaveInt];
             KillsEnemy = 0;
@@ -96,10 +96,10 @@ public class GameManager: MonoBehaviour
 
             sessionStartTime = Time.realtimeSinceStartup; //Сохраняем настоящее время входа в игру
 
-            if (dataInfo.godMode == true) Player.Instance.SetGodMode();
-            else Player.Instance.SetSurvaveMode();
+            if (dataInfo.godMode == true) GlobalData.Player.SetGodMode();
+            else GlobalData.Player.SetSurvaveMode();
 
-            UIControl.Instance.LoadButtons();
+            GlobalData.UIControl.LoadButtons();
             Debug.Log("Игра загружена.");
         }
         else
@@ -165,9 +165,9 @@ public class GameManager: MonoBehaviour
         KillsEnemy++;
         enemisRemaining--;
         //Debug.Log($"Убит {enemy.Name} {enemy.enum_stat.Max_Hp}");
-        if(Player.Instance.GetHp() > 0)
+        if(GlobalData.Player.GetHp() > 0)
         {
-            Player.Instance.AddExp(enemy.enum_stat.GiveExp);
+            GlobalData.Player.AddExp(enemy.enum_stat.GiveExp);
         }
         
 
@@ -262,12 +262,12 @@ public class GameManager: MonoBehaviour
         List<SlotTypeSave> inventory_slots_list = new List<SlotTypeSave>();
         List<SlotTypeSave> equipment_item_list = new List<SlotTypeSave>();
 
-        foreach (Slot slot in Inventory.Instance.slots)
+        foreach (Slot slot in GlobalData.Inventory.slots)
         {
             inventory_slots_list.Add(new SlotTypeSave(slot.IdSlot,slot.Item.NameKey, slot.Count, slot.artifact_id));
         }
 
-        foreach (Slot slot in EqupmentPlayer.Instance.SlotsEqup)
+        foreach (Slot slot in GlobalData.EqupmentPlayer.SlotsEqup)
         {
             equipment_item_list.Add(new SlotTypeSave(slot.Item.NameKey, slot.Count, slot.artifact_id));
         }
@@ -275,16 +275,16 @@ public class GameManager: MonoBehaviour
         ItemsData items_Data = new ItemsData(ItemsList.items);
         //await SaveSystem.SaveDataAsync(items_Data, "items.json");
 
-        RoleClassesData role_classes_data = new RoleClassesData(Classes.Instance.GetClasses());
+        RoleClassesData role_classes_data = new RoleClassesData(GlobalData.Classes.GetClasses());
         //await SaveSystem.SaveDataAsync(role_classes_data, "role_classes_data.json");
 
-        PlayerData player_Data = new PlayerData(Player.Instance.GetPlayerStats() , inventory_slots_list, equipment_item_list);
+        PlayerData player_Data = new PlayerData(GlobalData.Player.GetPlayerStats() , inventory_slots_list, equipment_item_list);
         //await SaveSystem.SaveDataAsync(player_Data, savePath + "player.json");
 
-        SaveDataBinds saveBinds = new SaveDataBinds(PlayerInputHandler.Instance.keyBindings);
+        SaveDataBinds saveBinds = new SaveDataBinds(GlobalData.PlayerInputHandler.keyBindings);
         //await SaveSystem.SaveDataAsync(saveBinds, "keyBinds.json");
 
-        ArtifactsData artifacts_Data = new ArtifactsData(Artifacts.Instance.artifacts);
+        ArtifactsData artifacts_Data = new ArtifactsData(GlobalData.Artifacts.artifacts);
         //await SaveSystem.SaveDataAsync(artifacts_Data, savePath + "artifacts.json");
 
         WorldData world_data = new WorldData(GlobalWorld.numbTotalPoints, GlobalWorld.FarmsPoints);
@@ -303,7 +303,7 @@ public class GameManager: MonoBehaviour
         //float sessionsDuration = Time.realtimeSinceStartup - sessionStartTime;
         //saveGameInfo.timeHasPassed += (int)sessionsDuration;
         saveGameInfo.enemy_kills += KillsEnemy;
-        saveGameInfo.level = Player.Instance.GetLevel();
+        saveGameInfo.level = GlobalData.Player.GetLevel();
         saveGameInfo.isStarted = true;
         saveGameInfo.seed = GlobalData.cur_seed;
         saveGameInfo.lvl_left = GlobalData.cur_lvl_left;

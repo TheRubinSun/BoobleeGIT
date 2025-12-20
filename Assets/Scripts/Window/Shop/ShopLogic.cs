@@ -97,12 +97,12 @@ public class ShopLogic : MonoBehaviour , ISlot
         trade_cur_exp_image = trade_exp_bar.GetChild(1).GetComponent<Image>();
         trade_exp_text = trade_exp_bar.GetChild(2).GetComponent<TextMeshProUGUI>();
         trade_expRect = trade_exp_bar.GetComponent<RectTransform>();
-        player_stat = Player.Instance.GetPlayerStats();
+        player_stat = GlobalData.Player.GetPlayerStats();
         none_item = ItemsList.items[0];
     }
     public void OpenShop(string traderName)
     {
-        sizeInventory = Inventory.Instance.sizeInventory;
+        sizeInventory = GlobalData.Inventory.sizeInventory;
         lastTrader = traderName;
         DisplayInventory();
         CreateOrOpenSlots();
@@ -115,11 +115,11 @@ public class ShopLogic : MonoBehaviour , ISlot
         ReturnSlotsFor(buySlots, true);
         ClearSlotsItems(traderSlots[lastTrader]);
         EraseText();
-        DragAndDrop.Instance.ClearOldSlot();
+        GlobalData.DragAndDrop.ClearOldSlot();
         //item_info.transform.SetParent(oldParent_item_info);
         //item_info_rect_trans.anchoredPosition = new Vector2(-140, 0);
 
-        UIControl.Instance.RetrunSlotsToInventory(parentInventSlots);
+        GlobalData.UIControl.RetrunSlotsToInventory(parentInventSlots);
         //for (int i = countSlots; i > 0; i--)
         //{
         //    newParent_inventory.transform.GetChild(0).SetParent(oldParent_inventory);
@@ -129,13 +129,13 @@ public class ShopLogic : MonoBehaviour , ISlot
         personalProfSum = 0;
         personalCostSum = 0;
 
-        DisplayInfo.Instance.SetActiveItemInfo(false);
+        GlobalData.DisplayInfo.SetActiveItemInfo(false);
     }
     public void LocalizationText()
     {
-        if (LocalizationManager.Instance != null)
+        if (GlobalData.LocalizationManager != null)
         {
-            Dictionary<string, string> localized_shop_text = LocalizationManager.Instance.GetLocalizedValue("ui_text", "shop_text");
+            Dictionary<string, string> localized_shop_text = GlobalData.LocalizationManager.GetLocalizedValue("ui_text", "shop_text");
             if(localized_shop_text != null)
             {
                 word_gold = localized_shop_text["word_gold"];
@@ -284,7 +284,7 @@ public class ShopLogic : MonoBehaviour , ISlot
         //item_info.transform.SetParent(newParent_item_info);
         //item_info_rect_trans.anchoredPosition = new Vector2(855, -270);
 
-        UIControl.Instance.TransfromSlotsFromInventory(parentInventSlots);
+        GlobalData.UIControl.TransfromSlotsFromInventory(parentInventSlots);
         //for (int i = countSlots; i > 0; i--)
         //{
         //    oldParent_inventory.transform.GetChild(0).SetParent(newParent_inventory);
@@ -416,7 +416,7 @@ public class ShopLogic : MonoBehaviour , ISlot
         }
         if(countItem > 0 && CanDropRemainder)
         {
-            DragAndDrop.Instance.DropItemThat(itemAdd, countItem, artID);
+            GlobalData.DragAndDrop.DropItemThat(itemAdd, countItem, artID);
         }
     }
     private void IsArtifact(Slot slot, Item itemAdd, int artID)
@@ -424,7 +424,7 @@ public class ShopLogic : MonoBehaviour , ISlot
         if (itemAdd is ArtifactItem artifact)
         {
             if (artID == 0) 
-                slot.artifact_id = Artifacts.Instance.AddNewArtifact(artifact.artifactLevel, random);
+                slot.artifact_id = GlobalData.Artifacts.AddNewArtifact(artifact.artifactLevel, random);
             else 
                 slot.artifact_id = artID;
         }
@@ -439,13 +439,13 @@ public class ShopLogic : MonoBehaviour , ISlot
         }
         if(totalCostOrProfit < 0) //Если число с минусом, то игрок доленж заплатить
         {
-            if ((totalCostOrProfit * -1) <= Player.Instance.GetGold()) //Проверка наличие кол-во денег у игрока
+            if ((totalCostOrProfit * -1) <= GlobalData.Player.GetGold()) //Проверка наличие кол-во денег у игрока
             {
-                Player.Instance.PayGold(totalCostOrProfit);
-                Player.Instance.TradeAddExp(personalProfSum);
-                Player.Instance.TradeAddExp(personalCostSum);
+                GlobalData.Player.PayGold(totalCostOrProfit);
+                GlobalData.Player.TradeAddExp(personalProfSum);
+                GlobalData.Player.TradeAddExp(personalCostSum);
 
-                TradeBeetwenSlots(buySlots, Inventory.Instance.slots, true);
+                TradeBeetwenSlots(buySlots, GlobalData.Inventory.slots, true);
                 TradeBeetwenSlots(sellSlots, traderSlots[lastTrader], false);
 
 
@@ -459,11 +459,11 @@ public class ShopLogic : MonoBehaviour , ISlot
         }
         else //Если игрок зарабатывает на сделке
         {
-            Player.Instance.PayGold(totalCostOrProfit);
-            Player.Instance.TradeAddExp(personalProfSum);
-            Player.Instance.TradeAddExp(personalCostSum);
+            GlobalData.Player.PayGold(totalCostOrProfit);
+            GlobalData.Player.TradeAddExp(personalProfSum);
+            GlobalData.Player.TradeAddExp(personalCostSum);
 
-            TradeBeetwenSlots(buySlots, Inventory.Instance.slots, true);
+            TradeBeetwenSlots(buySlots, GlobalData.Inventory.slots, true);
             TradeBeetwenSlots(sellSlots, traderSlots[lastTrader], false);
 
             UpdateGoldInfo();
@@ -482,7 +482,7 @@ public class ShopLogic : MonoBehaviour , ISlot
         {
             sumCost += slot.Item.Cost * slot.Count;
         }
-        personalProfSum = (int)(sumCost * Math.Min(Player.Instance.GetSkillsTrader() * 0.0125f + 0.20f, 0.7f));
+        personalProfSum = (int)(sumCost * Math.Min(GlobalData.Player.GetSkillsTrader() * 0.0125f + 0.20f, 0.7f));
 
         //Разметка и цвет - первый текст
         costWholeValueSell.text = $"{word_total_value}<color={hashColorGold}>{sumCost}</color> {word_gold}";
@@ -497,7 +497,7 @@ public class ShopLogic : MonoBehaviour , ISlot
         {
             sumCost += slot.Item.Cost * slot.Count;
         }
-        personalCostSum = (int)(sumCost * (1.7f - (Player.Instance.GetSkillsTrader() * 0.0175f)));
+        personalCostSum = (int)(sumCost * (1.7f - (GlobalData.Player.GetSkillsTrader() * 0.0175f)));
 
         //Разметка и цвет - первый текст
         costWholeValueBuy.text = $"{word_total_value}<color={hashColorGold}>{sumCost}</color> {word_gold}";
@@ -543,7 +543,7 @@ public class ShopLogic : MonoBehaviour , ISlot
             }
             else
             {
-                Inventory.Instance.FindSlotAndAdd(slot.Item, slot.Count, true, slot.artifact_id);
+                GlobalData.Inventory.FindSlotAndAdd(slot.Item, slot.Count, true, slot.artifact_id);
             }
 
         }
@@ -620,8 +620,8 @@ public class ShopLogic : MonoBehaviour , ISlot
     }
     private void UpdateGoldInfo()
     {
-        int goldT = Player.Instance.GetGold();
-        int tradeSkill = Player.Instance.GetSkillsTrader();
+        int goldT = GlobalData.Player.GetGold();
+        int tradeSkill = GlobalData.Player.GetSkillsTrader();
         goldPlayerText.text = $"{word_your_gold}<color={hashColorGold}>{goldT}</color> g\n{word_your_trade_skill}{tradeSkill}";
     }
     private void ClearAllSumAndText()

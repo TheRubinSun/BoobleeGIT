@@ -137,7 +137,7 @@ public class Bug_poop_Logic : BaseEnemyLogic
         if (!isVisibleNow) return;
 
         float mobPosY = transform.position.y;
-        float PlayerPosY = g_m.PlayerPosY;
+        float PlayerPosY = GlobalData.GameManager.PlayerPosY;
 
         spr_ren.sortingOrder = Mathf.RoundToInt((mobPosY - PlayerPosY - 2) * -5);
 
@@ -173,7 +173,7 @@ public class Bug_poop_Logic : BaseEnemyLogic
         }
 
 
-        Player.Instance.TakeDamage(enum_stat.Att_Damage, damageT.Physical, true);
+        GlobalData.Player.TakeDamage(enum_stat.Att_Damage, damageT.Physical, true);
     }
     public override void Death()
     {

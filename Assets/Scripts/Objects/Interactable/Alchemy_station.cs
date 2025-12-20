@@ -4,6 +4,6 @@ public class Alchemy_station : DrawOutline, IInteractable
 {
     public void Interact()
     {
-        UIControl.Instance.OpenCraftWindowSurv(CraftTable.Alchemy_Station);
+        GlobalData.UIControl.OpenCraftWindowSurv(CraftTable.Alchemy_Station);
     }
 }

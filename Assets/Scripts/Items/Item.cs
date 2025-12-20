@@ -159,7 +159,7 @@ public class Item
     {
         if (LocalizationManager.Instance != null)
         {
-            Dictionary<string, string> localized = LocalizationManager.Instance.GetLocalizedValue("items", NameKey);
+            Dictionary<string, string> localized = GlobalData.LocalizationManager.GetLocalizedValue("items", NameKey);
             if (localized!=null)
             {
                 Name = localized["Name"];

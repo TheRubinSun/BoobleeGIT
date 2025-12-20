@@ -16,8 +16,7 @@ public class PlayerHealProj : PlayerProjectile
         }
         else if (collider.gameObject.layer == LayerManager.playerLayer)
         {
-            Player player = Player.Instance;
-            player.TakeHeal(damage);
+            GlobalData.Player.TakeHeal(damage);
             Destroy(gameObject);
             return;
             //Debug.Log(collider.GetComponent<BaseEnemyLogic>().enum_stat.Cur_Hp+" "+ collider.GetComponent<BaseEnemyLogic>().enum_stat.Max_Hp);

@@ -96,13 +96,13 @@ public class LoadingMenu : MonoBehaviour
     {
         if (GameDataHolder.savesDataInfo.language != null)
         {
-            await LocalizationManager.Instance.LoadLocalization(GameDataHolder.savesDataInfo.language);
+            await GlobalData.LocalizationManager.LoadLocalization(GameDataHolder.savesDataInfo.language);
             GlobalData.cur_language = GameDataHolder.savesDataInfo.language;
             Debug.Log($"Загружен язык {GameDataHolder.savesDataInfo.language}");
         }
         else
         {
-            await LocalizationManager.Instance.LoadLocalization("en");
+            await GlobalData.LocalizationManager.LoadLocalization("en");
             GlobalData.cur_language = "en";
             Debug.Log($"Загружен стандартный en");
         }

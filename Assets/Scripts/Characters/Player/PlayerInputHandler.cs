@@ -46,12 +46,11 @@ public class PlayerInputHandler : MonoBehaviour
     public static PlayerInputHandler Instance;
     public bool InputEnabled { get; set; } = true;
 
-    private Player player;
-    private PlayerControl playerControl;
-    private UIControl ui_Control;
+    //private Player player;
+    //private PlayerControl playerControl;
+    //private UIControl ui_Control;
     public Dictionary<KeyCode, PlayerAction> keyBindings = new Dictionary<KeyCode, PlayerAction>();
-    Inventory iventoryLog;
-    UIControl uiLog;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -61,15 +60,9 @@ public class PlayerInputHandler : MonoBehaviour
         }
         Instance = this;
         keyBindings = Hotkeys.keyBindings;
-
-        iventoryLog = Inventory.Instance;
-        uiLog = UIControl.Instance;
     }
     private void Start()
     {
-        player = Player.Instance;
-        playerControl = PlayerControl.Instance;
-        ui_Control = UIControl.Instance;
         RenameKeys();
     }
     public void RenameKeys()
@@ -91,8 +84,8 @@ public class PlayerInputHandler : MonoBehaviour
                 }
             }
         }
-        iventoryLog.RenameKeyNames(namesKeys);
-        uiLog.RenameAllButtons();
+        GlobalData.Inventory.RenameKeyNames(namesKeys);
+        GlobalData.UIControl.RenameAllButtons();
     }
     public void RenameKeysButtins(Dictionary<string, TextMeshProUGUI> nameButtons)
     {
@@ -167,7 +160,7 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            ui_Control.OpenGameMenu();
+            GlobalData.UIControl.OpenGameMenu();
         }
 
         if (!InputEnabled) return;
@@ -184,84 +177,84 @@ public class PlayerInputHandler : MonoBehaviour
                 switch (action)
                 {
                     case PlayerAction.UseMinions:
-                        playerControl.UseMinions();
+                        GlobalData.PlayerControl.UseMinions();
                         break;
                     case PlayerAction.SpendMana:
-                        if (player.GodMode && player.HaveMana(2))
-                            player.SpendMana(2);
+                        if (GlobalData.Player.GodMode && GlobalData.Player.HaveMana(2))
+                            GlobalData.Player.SpendMana(2);
                         break;
 
                     case PlayerAction.HealMana:
-                        if (player.GodMode && player.TakeHealMana(2)) { }
+                        if (GlobalData.Player.GodMode && GlobalData.Player.TakeHealMana(2)) { }
                         break;
 
                     case PlayerAction.Jump:
-                        playerControl.Jump(1f);
+                        GlobalData.PlayerControl.Jump(1f);
                         break;
 
                     case PlayerAction.Open:
 
                         break;
                     case PlayerAction.OpenInventory:
-                        ui_Control.OpenInventory();
+                        GlobalData.UIControl.OpenInventory();
                         break;
 
                     case PlayerAction.OpenListMobs:
-                        ui_Control.OpenListMobs();
+                        GlobalData.UIControl.OpenListMobs();
                         break;
 
                     case PlayerAction.OpenCreatePortal:
-                        ui_Control.OpenCreatePortal();
+                        GlobalData.UIControl.OpenCreatePortal();
                         break;
 
                     case PlayerAction.OpenCraftWindow:
-                        ui_Control.OpenCraftWindow();
+                        GlobalData.UIControl.OpenCraftWindow();
                         break;
                     case PlayerAction.OpenLvlUpWindow:
-                        ui_Control.LvlUpWindow();
+                        GlobalData.UIControl.LvlUpWindow();
                         break;
                     case PlayerAction.OpenShop:
-                        ui_Control.OpenShop();
+                        GlobalData.UIControl.OpenShop();
                         break;
                     case PlayerAction.OpenListItems:
-                        ui_Control.OpenListItems();
+                        GlobalData.UIControl.OpenListItems();
                         break;
 
                     case PlayerAction.OpenInfoPlayer:
-                        ui_Control.OpenInfoPlayer();
+                        GlobalData.UIControl.OpenInfoPlayer();
                         break;
                     case PlayerAction.PickUp:
-                        DragAndDrop.Instance.PickUp();
+                        GlobalData.DragAndDrop.PickUp();
                         break;
                     case PlayerAction.UseItem1:
-                        ui_Control.ButtonsInventoryBar(0);
+                        GlobalData.UIControl.ButtonsInventoryBar(0);
                         break;
                     case PlayerAction.UseItem2:
-                        ui_Control.ButtonsInventoryBar(1);
+                        GlobalData.UIControl.ButtonsInventoryBar(1);
                         break;
                     case PlayerAction.UseItem3:
-                        ui_Control.ButtonsInventoryBar(2);
+                        GlobalData.UIControl.ButtonsInventoryBar(2);
                         break;
                     case PlayerAction.UseItem4:
-                        ui_Control.ButtonsInventoryBar(3);
+                        GlobalData.UIControl.ButtonsInventoryBar(3);
                         break;
                     case PlayerAction.UseItem5:
-                        ui_Control.ButtonsInventoryBar(4);
+                        GlobalData.UIControl.ButtonsInventoryBar(4);
                         break;
                     case PlayerAction.UseItem6:
-                        ui_Control.ButtonsInventoryBar(5);
+                        GlobalData.UIControl.ButtonsInventoryBar(5);
                         break;
                     case PlayerAction.UseItem7:
-                        ui_Control.ButtonsInventoryBar(6);
+                        GlobalData.UIControl.ButtonsInventoryBar(6);
                         break;
                     case PlayerAction.UseItem8:
-                        ui_Control.ButtonsInventoryBar(7);
+                        GlobalData.UIControl.ButtonsInventoryBar(7);
                         break;
                     case PlayerAction.UseItem9:
-                        ui_Control.ButtonsInventoryBar(8);
+                        GlobalData.UIControl.ButtonsInventoryBar(8);
                         break;
                     case PlayerAction.UseItem10:
-                        ui_Control.ButtonsInventoryBar(9);
+                        GlobalData.UIControl.ButtonsInventoryBar(9);
                         break;
 
                 }
@@ -272,7 +265,7 @@ public class PlayerInputHandler : MonoBehaviour
                 {
                     if (action == PlayerAction.Attack)
                     {
-                        playerControl.Attack();
+                        GlobalData.PlayerControl.Attack();
                     }
                 }
                 switch (action)

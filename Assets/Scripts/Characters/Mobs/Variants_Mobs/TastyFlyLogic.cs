@@ -104,7 +104,7 @@ public class TastyFlyLogic : BaseEnemyLogic
     {
         if(collision.gameObject.layer == LayerManager.playerLayer)
         {
-            Player.Instance.TakeDamage(enum_stat.Att_Damage, damageT.Magic, true);
+            GlobalData.Player.TakeDamage(enum_stat.Att_Damage, damageT.Magic, true);
             audioSource.PlayOneShot(attack_sounds[UnityEngine.Random.Range(0, attack_sounds.Length)]); //Звук выстрела
         }
     }

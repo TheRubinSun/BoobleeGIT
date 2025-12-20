@@ -271,9 +271,9 @@ public class DisplayItemList:MonoBehaviour
             // Добавляем один экземпляр предмета в инвентарь
             if(item is ArtifactItem artifact)
             {
-                Inventory.Instance.FindSlotAndAdd(item, item.MaxCount, false, Artifacts.Instance.AddNewArtifact(artifact.artifactLevel));
+                GlobalData.Inventory.FindSlotAndAdd(item, item.MaxCount, false, GlobalData.Artifacts.AddNewArtifact(artifact.artifactLevel));
             }
-            else Inventory.Instance.FindSlotAndAdd(item, item.MaxCount, false, 0);
+            else GlobalData.Inventory.FindSlotAndAdd(item, item.MaxCount, false, 0);
 
             Debug.Log($"Добавлен предмет: {item.NameKey} в количестве 1");
         }
@@ -293,7 +293,7 @@ public class DisplayItemList:MonoBehaviour
     //public void RefreshBut()
     //{
     //    // Отображаем предметы в начале работы
-    //    DisplayItems(ItemsList.Instance.items);
+    //    DisplayItems(ItemsList.items);
     //}
 
 }

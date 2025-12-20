@@ -21,8 +21,8 @@ public abstract class ObjectL : MonoBehaviour, ICullableObject
 
     protected void OnDisable()
     {
-        if (CullingManager.Instance != null)
-            CullingManager.Instance.UnregisterObject(this);
+        if (GlobalData.CullingManager != null)
+            GlobalData.CullingManager.UnregisterObject(this);
     }
 }
 public abstract class ObjectLBroken : ObjectL
@@ -57,7 +57,7 @@ public abstract class ObjectLBroken : ObjectL
         AddDropItem();
         CreateCulling();
         UpdateCulling(false);
-        CullingManager.Instance.RegisterObject(this);
+        GlobalData.CullingManager.RegisterObject(this);
     }
     protected virtual void AddDropItem()
     {
@@ -130,7 +130,7 @@ public abstract class ObjectLBroken : ObjectL
             if (countItem < 1 && item.min < 1) continue;
             if (countItem < 1) countItem = item.min;
 
-            GameObject dropItem = Instantiate(GlobalPrefabs.ItemDropPref, GameManager.Instance.dropParent);
+            GameObject dropItem = Instantiate(GlobalPrefabs.ItemDropPref, GlobalData.GameManager.dropParent);
 
             Vector2 dropPos;
             if (ToDropPos.x != 0)

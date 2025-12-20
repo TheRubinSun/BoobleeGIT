@@ -28,11 +28,6 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     public Slot SlotArtefFour { get; set; }
     public Slot[] SlotsEqup {  get; set; }
 
-    private Player player;
-    private DisplayInfo dispInfo;
-    private EquipStats equipStats;
-    private Artifacts allArtifacts;
-
     [SerializeField] GameObject [] slotsObjEquip; //Массив слотов
     [SerializeField] Transform [] EquipSlotPrefab; //Префабы рук как родителя
     [SerializeField] Transform PlayerModel;
@@ -57,12 +52,8 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     }
     public void Start()
     {
-        player = Player.Instance;
-        dispInfo = DisplayInfo.Instance;
-        equipStats = EquipStats.Instance;
-        allArtifacts = Artifacts.Instance;
 
-        if (PlayerModel == null) PlayerModel = GameManager.Instance.PlayerModel;
+        if (PlayerModel == null) PlayerModel = GlobalData.GameManager.PlayerModel;
         if (!GenInfoSaves.saveGameFiles[GlobalData.SaveInt].isStarted)
         {
 
@@ -131,7 +122,7 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
                 SlotsEqup[i].Item = ItemsList.GetItemForNameKey(equipment_items[i].NameKey);
                 SlotsEqup[i].Count = equipment_items[i].count;
                 SlotsEqup[i].artifact_id = equipment_items[i].artefact_id;
-                Inventory.Instance.UpdateSlotUI(SlotsEqup[i]);
+                GlobalData.Inventory.UpdateSlotUI(SlotsEqup[i]);
             }
             return true;
         }
@@ -167,12 +158,12 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     }
     public void UpdateAttribute()
     {
-        player.UpdateAllStats();
-        player.UpdateHP();
-        player.UpdateMANA();
-        player.UpdateRegenMANA();
+        GlobalData.Player.UpdateAllStats();
+        GlobalData.Player.UpdateHP();
+        GlobalData.Player.UpdateMANA();
+        GlobalData.Player.UpdateRegenMANA();
 
-        dispInfo.UpdateInfoStatus();
+        GlobalData.DisplayInfo.UpdateInfoStatus();
         UpdateAllWeaponsStats();
     }
     public void PutOnEquip(Slot slot) //Проверить префаб
@@ -214,7 +205,7 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     //}
     public void ChangeVectorOrNotWeapon(int idSlot)
     {
-        player.ChangeToggleWeapon(idSlot);
+        GlobalData.Player.ChangeToggleWeapon(idSlot);
     }
     private void DeleteEquipOnSlot(int id,Transform deleteAllChild)
     {
@@ -236,10 +227,10 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
             {
                 GameObject weaponObj = Instantiate(ResourcesData.GetWeaponPrefab(SlotsEqup[id].Item.NameKey), EquipSlotPrefab[id]);  //Создаем оружие в слот 
                 LoadParametersWeapon(weaponObj, SlotsEqup[id]); //Загружаем параметры с слолта в оружие
-                player.SetWeaponsObj(id, weaponObj.GetComponent<WeaponControl>()); //Передаем в словарь у игрока в список оружия
+                GlobalData.Player.SetWeaponsObj(id, weaponObj.GetComponent<WeaponControl>()); //Передаем в словарь у игрока в список оружия
                 slots_Weapon[id] = weaponObj; //Словарь в этом классе, пока не используется 
                 slots_artifacts[id] = SlotsEqup[id].artifact_id; //Оружия тоже артефакты
-                player.ChangeToggleWeapon(id);
+                GlobalData.Player.ChangeToggleWeapon(id);
 
 
                 UpdateAllArtifactsAtribute();
@@ -260,7 +251,7 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
             {
                 GameObject minionObj = Instantiate(ResourcesData.GetMinionPrefab(idPref), EquipSlotPrefab[id]);
                 LoadParametersMinion(minionObj, SlotsEqup[id]);
-                player.SetMinionsObj(id, minionObj.GetComponent<MinionControl>());
+                GlobalData.Player.SetMinionsObj(id, minionObj.GetComponent<MinionControl>());
                 slots_minions[id] = minionObj; //Словарь в этом классе, пока не используется 
             }
             else
@@ -300,7 +291,7 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     }
     public void UpdateAllArtifactsAtribute()
     {
-        equipStats.AllNull();
+        GlobalData.EquipStats.AllNull();
         foreach (KeyValuePair<int, int> slot_artifact in slots_artifacts)
         {
             if(slot_artifact.Value > 0)
@@ -357,55 +348,64 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     {
         //EquipStats equipStats = EquipStats.Instance;
         //Artifacts allArtifacts = Artifacts.Instance;
-        ArtifactObj artifact = allArtifacts.GetArtifact(idArt); // Получаем артефакт по ID
+        ArtifactObj artifact = GlobalData.Artifacts.GetArtifact(idArt); // Получаем артефакт по ID
 
         // Загружаем атрибуты артефакта в EquipStats
-        equipStats.Bonus_Equip_Strength += artifact.Artif_Strength;
-        equipStats.Bonus_Equip_Agility += artifact.Artif_Agility;
-        equipStats.Bonus_Equip_Intelligence += artifact.Artif_Intelligence;
-        equipStats.Bonus_Equip_Hp += artifact.Artif_Hp;
-        equipStats.Bonus_Equip_Armor += artifact.Artif_Armor;
-        equipStats.Bonus_Equip_Evasion += artifact.Artif_Evasion;
-        equipStats.Bonus_Equip_Mov_Speed += artifact.Artif_Mov_Speed;
-        equipStats.Bonus_Equip_Att_Range += artifact.Artif_Att_Range;
-        equipStats.Bonus_Equip_Att_Speed += artifact.Artif_Att_Speed;
-        equipStats.Bonus_Equip_Proj_Speed += artifact.Artif_Proj_Speed;
-        equipStats.Bonus_Equip_ExpBust += artifact.Artif_ExpBust;
-        equipStats.Bonus_Magic_Resis += artifact.Artif_Mage_Resis;
-        equipStats.Bonus_Tech_Resis += artifact.Artif_Tech_Resis;
-        equipStats.Bonus_Equip_Att_Damage += artifact.Artif_Damage;
-        equipStats.Bonus_Equip_Mana += artifact.Artif_Mana;
-        equipStats.Bonus_Equip_Regen_Mana += artifact.Artif_ManaRegen;
+        if(artifact != null)
+        {
+            GlobalData.EquipStats?.ApplyArtifact(artifact);
+        }
+        //GlobalData.EquipStats.Bonus_Equip_Strength += artifact.Artif_Strength;
+        //GlobalData.EquipStats.Bonus_Equip_Agility += artifact.Artif_Agility;
+        //GlobalData.EquipStats.Bonus_Equip_Intelligence += artifact.Artif_Intelligence;
+        //GlobalData.EquipStats.Bonus_Equip_Hp += artifact.Artif_Hp;
+        //GlobalData.EquipStats.Bonus_Equip_Armor += artifact.Artif_Armor;
+        //GlobalData.EquipStats.Bonus_Equip_Evasion += artifact.Artif_Evasion;
+        //GlobalData.EquipStats.Bonus_Equip_Mov_Speed += artifact.Artif_Mov_Speed;
+        //GlobalData.EquipStats.Bonus_Equip_Att_Range += artifact.Artif_Att_Range;
+        //GlobalData.EquipStats.Bonus_Equip_Att_Speed += artifact.Artif_Att_Speed;
+        //GlobalData.EquipStats.Bonus_Equip_Proj_Speed += artifact.Artif_Proj_Speed;
+        //GlobalData.EquipStats.Bonus_Equip_ExpBust += artifact.Artif_ExpBust;
+        //GlobalData.EquipStats.Bonus_Magic_Resis += artifact.Artif_Mage_Resis;
+        //GlobalData.EquipStats.Bonus_Tech_Resis += artifact.Artif_Tech_Resis;
+        //GlobalData.EquipStats.Bonus_Equip_Att_Damage += artifact.Artif_Damage;
+        //GlobalData.EquipStats.Bonus_Equip_Mana += artifact.Artif_Mana;
+        //GlobalData.EquipStats.Bonus_Equip_Regen_Mana += artifact.Artif_ManaRegen;
     }
     private void DeleteAttributeArtifact(int idSlot)
     {
-        //if (SlotsEqup[idSlot].artifact_id < 1) return;
-
         if (!slots_artifacts.ContainsKey(idSlot) || slots_artifacts[idSlot] < 1) return;
 
         int artId = slots_artifacts[idSlot];
         slots_artifacts.Remove(idSlot);
 
-        ArtifactObj artifact = allArtifacts.GetArtifact(artId);
+        ArtifactObj artifact = GlobalData.Artifacts.GetArtifact(artId);
+
+
         //EquipStats equipStats = EquipStats.Instance;
 
         // Вычитаем атрибуты артефакта из EquipStats
-        equipStats.Bonus_Equip_Strength -= artifact.Artif_Strength;
-        equipStats.Bonus_Equip_Agility -= artifact.Artif_Agility;
-        equipStats.Bonus_Equip_Intelligence -= artifact.Artif_Intelligence;
-        equipStats.Bonus_Equip_Hp -= artifact.Artif_Hp;
-        equipStats.Bonus_Equip_Armor -= artifact.Artif_Armor;
-        equipStats.Bonus_Equip_Evasion -= artifact.Artif_Evasion;
-        equipStats.Bonus_Equip_Mov_Speed -= artifact.Artif_Mov_Speed;
-        equipStats.Bonus_Equip_Att_Range -= artifact.Artif_Att_Range;
-        equipStats.Bonus_Equip_Att_Speed -= artifact.Artif_Att_Speed;
-        equipStats.Bonus_Equip_Proj_Speed -= artifact.Artif_Proj_Speed;
-        equipStats.Bonus_Equip_ExpBust -= artifact.Artif_ExpBust;
-        equipStats.Bonus_Magic_Resis -= artifact.Artif_Mage_Resis;
-        equipStats.Bonus_Tech_Resis -= artifact.Artif_Tech_Resis;
-        equipStats.Bonus_Equip_Att_Damage -= artifact.Artif_Damage;
-        equipStats.Bonus_Equip_Mana -= artifact.Artif_Mana;
-        equipStats.Bonus_Equip_Regen_Mana -= artifact.Artif_ManaRegen;
+        if (artifact != null)
+        {
+            GlobalData.EquipStats?.RemoveArtifact(artifact);
+        }
+
+        //equipStats.Bonus_Equip_Strength -= artifact.Artif_Strength;
+        //equipStats.Bonus_Equip_Agility -= artifact.Artif_Agility;
+        //equipStats.Bonus_Equip_Intelligence -= artifact.Artif_Intelligence;
+        //equipStats.Bonus_Equip_Hp -= artifact.Artif_Hp;
+        //equipStats.Bonus_Equip_Armor -= artifact.Artif_Armor;
+        //equipStats.Bonus_Equip_Evasion -= artifact.Artif_Evasion;
+        //equipStats.Bonus_Equip_Mov_Speed -= artifact.Artif_Mov_Speed;
+        //equipStats.Bonus_Equip_Att_Range -= artifact.Artif_Att_Range;
+        //equipStats.Bonus_Equip_Att_Speed -= artifact.Artif_Att_Speed;
+        //equipStats.Bonus_Equip_Proj_Speed -= artifact.Artif_Proj_Speed;
+        //equipStats.Bonus_Equip_ExpBust -= artifact.Artif_ExpBust;
+        //equipStats.Bonus_Magic_Resis -= artifact.Artif_Mage_Resis;
+        //equipStats.Bonus_Tech_Resis -= artifact.Artif_Tech_Resis;
+        //equipStats.Bonus_Equip_Att_Damage -= artifact.Artif_Damage;
+        //equipStats.Bonus_Equip_Mana -= artifact.Artif_Mana;
+        //equipStats.Bonus_Equip_Regen_Mana -= artifact.Artif_ManaRegen;
     }
 
 }

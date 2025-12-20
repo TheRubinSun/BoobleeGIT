@@ -52,7 +52,7 @@ public class SwitchKey : MonoBehaviour
         }
 
         if (Player.Instance == null) return;
-        bool haveGodMode = Player.Instance.GodMode;
+        bool haveGodMode = GlobalData.Player.GodMode;
         if (!haveGodMode)
         {
             HideNotGodActions();

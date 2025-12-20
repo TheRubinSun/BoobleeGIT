@@ -10,7 +10,7 @@ using static Unity.VisualScripting.Icons;
 
 public class Options : MonoBehaviour
 {
-    public static Options instance;
+    public static Options Instance;
 
     [SerializeField] private Button[] SwitchLanguageButtons;
     [SerializeField] Color32 yesGreenColor;
@@ -24,7 +24,7 @@ public class Options : MonoBehaviour
     private string language;
     private void Awake()
     {
-        instance = this;
+        Instance = this;
     }
     private void Start()
     {
@@ -35,13 +35,13 @@ public class Options : MonoBehaviour
     public async void SaveChange()
     {
         if(language != null)
-            await GenInfoSaves.instance.SavedChanged(GenInfoSaves.saveGameFiles, GenInfoSaves.lastSaveID, language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS);
+            await GlobalData.GenInfoSaves.SavedChanged(GenInfoSaves.saveGameFiles, GenInfoSaves.lastSaveID, language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS);
         else
-            await GenInfoSaves.instance.SavedChanged(GenInfoSaves.saveGameFiles, GenInfoSaves.lastSaveID, GenInfoSaves.language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS);
+            await GlobalData.GenInfoSaves.SavedChanged(GenInfoSaves.saveGameFiles, GenInfoSaves.lastSaveID, GenInfoSaves.language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS);
     }
     public async void SwitchLanguage(string localeCode)
     {
-        await LocalizationManager.Instance.SwitchLanguage(localeCode);
+        await GlobalData.LocalizationManager.SwitchLanguage(localeCode);
         for (int i = 0; i < SwitchLanguageButtons.Length; i++)
         {
             SwitchLanguageButtons[i].transform.GetChild(2).GetComponent<Image>().color = noRedColor;

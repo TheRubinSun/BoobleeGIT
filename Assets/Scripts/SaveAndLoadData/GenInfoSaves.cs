@@ -12,7 +12,7 @@ using System.Runtime.CompilerServices;
 
 public class GenInfoSaves : MonoBehaviour 
 {
-    public static GenInfoSaves instance;
+    public static GenInfoSaves Instance;
 
     public static string language;
     public static int lastSaveID;
@@ -32,13 +32,13 @@ public class GenInfoSaves : MonoBehaviour
     private void Awake()
     {
 
-        if (instance != null && instance != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
-        instance = this;
-        DontDestroyOnLoad(instance);
+        Instance = this;
+        DontDestroyOnLoad(Instance);
 
 
         GlobalData.saveZone = true;
@@ -191,7 +191,7 @@ public class GenInfoSaves : MonoBehaviour
         if(GameDataHolder.savesDataInfo == null)
         {
             SetVolume(0.5f, 0.5f);
-            Options.instance.SetMusicVolume();
+            GlobalData.Options.SetMusicVolume();
         }
         for (int i = 0; i < 3; i++)
         {
@@ -221,7 +221,7 @@ public class GenInfoSaves : MonoBehaviour
         SavesDataInfo saveDataInfo = GameDataHolder.savesDataInfo;
         GlobalData.VOLUME_MUSICS = saveDataInfo.volume_musics;
         GlobalData.VOLUME_SOUNDS = saveDataInfo.volume_sounds;
-        Options.instance.SetMusicVolume();
+        GlobalData.Options.SetMusicVolume();
 
         if (saveDataInfo != null && saveDataInfo.saveGameFiles != null)
         {

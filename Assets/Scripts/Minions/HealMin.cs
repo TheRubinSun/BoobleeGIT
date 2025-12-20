@@ -11,7 +11,7 @@ public class HealMin : GunMinCon
     }
     protected override Transform FindAim()
     {
-        Transform player = GameManager.Instance.PlayerModel.transform;
+        Transform player = GlobalData.GameManager.PlayerModel.transform;
         if (Vector2.Distance(transform.position, player.position) <= radiusVision)
         {
             Debug.Log("Объект в радиусе: " + player.name);

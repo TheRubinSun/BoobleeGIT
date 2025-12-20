@@ -40,15 +40,15 @@ public class CraftLogic : MonoBehaviour, ISlot
     }
     public void OpenSelectCrafts(CraftTable craftTable)
     {
-        UIControl.Instance.TransfromSlotsFromInventory(parentInventSlots);
+        GlobalData.UIControl.TransfromSlotsFromInventory(parentInventSlots);
 
         LoadSelectTableCrafts(craftTable);
     }
     public void CloseCrafts()
     {
-        UIControl.Instance.RetrunSlotsToInventory(parentInventSlots);
+        GlobalData.UIControl.RetrunSlotsToInventory(parentInventSlots);
         ClearCrafts();
-        DisplayInfo.Instance.SetActiveItemInfo(false);
+        GlobalData.DisplayInfo.SetActiveItemInfo(false);
         idCrafts.Clear();
     }
     //private void LoadAllCrafts()
@@ -267,7 +267,7 @@ public class CraftLogic : MonoBehaviour, ISlot
 
                 TypeItem typeItem;
                 
-                if (Inventory.Instance.FindItem(material.Key, material.Value))
+                if (GlobalData.Inventory.FindItem(material.Key, material.Value))
                 {
                     typeItem = TypeItem.True;
                 }
@@ -302,9 +302,9 @@ public class CraftLogic : MonoBehaviour, ISlot
     {
         foreach (Slot material in materialsSelectSlot)
         {
-            Inventory.Instance.SubractItem(material.Item, material.Count);
+            GlobalData.Inventory.SubractItem(material.Item, material.Count);
         }
-        SoundsManager.Instance.PlayCraftItemSounds(GetIDSounds());
+        GlobalData.SoundsManager.PlayCraftItemSounds(GetIDSounds());
         ReloadSelectMaterials();
     }
     private int GetIDSounds()

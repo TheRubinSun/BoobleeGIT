@@ -83,7 +83,6 @@ public class DisplayInfo: MonoBehaviour
     public string word_range {get; private set;}
     public string word_description {get; private set;}
 
-
     private void Awake()
     {
         // Проверка на существование другого экземпляра
@@ -140,8 +139,8 @@ public class DisplayInfo: MonoBehaviour
     {
         if (LocalizationManager.Instance != null)
         {
-            Dictionary<string, string> localized_player_stats_name = LocalizationManager.Instance.GetLocalizedValue("ui_text", "player_stats_name");
-            Dictionary<string, string> localized_slots_name = LocalizationManager.Instance.GetLocalizedValue("ui_text", "slots_name");
+            Dictionary<string, string> localized_player_stats_name = GlobalData.LocalizationManager.GetLocalizedValue("ui_text", "player_stats_name");
+            Dictionary<string, string> localized_slots_name = GlobalData.LocalizationManager.GetLocalizedValue("ui_text", "slots_name");
             if (localized_player_stats_name != null)
             {
                 word_status_info = localized_player_stats_name["word_status_info"];
@@ -217,8 +216,8 @@ public class DisplayInfo: MonoBehaviour
     {
         StringBuilder info = new StringBuilder();
 
-        pl_stat = Player.Instance.GetPlayerStats();
-        eqip_stat = Player.Instance.GetEquipStats();
+        pl_stat = GlobalData.Player.GetPlayerStats();
+        eqip_stat = GlobalData.Player.GetEquipStats();
 
         string str = $"<color={GlobalColors.Hh_Str}>{pl_stat.Strength} {word_strength}</color>";
         string strB = $"<color={GlobalColors.Hh_Bonus}>" +
@@ -322,22 +321,22 @@ public class DisplayInfo: MonoBehaviour
         {
             case "Inventory":
                 {
-                    slot = Inventory.Instance.GetSlot(new SlotRequest { index = numbSlot });
+                    slot = GlobalData.Inventory.GetSlot(new SlotRequest { index = numbSlot });
                     break;
                 }
             case "Equip":
                 {
-                    slot = EqupmentPlayer.Instance.GetSlot(new SlotRequest { index = numbSlot });
+                    slot = GlobalData.EqupmentPlayer.GetSlot(new SlotRequest { index = numbSlot });
                     break;
                 }
             case "Sell":
-                slot = ShopLogic.Instance.GetSlot(new SlotRequest { index = numbSlot, Type = TypeSlot });
+                slot = GlobalData.ShopLogic.GetSlot(new SlotRequest { index = numbSlot, Type = TypeSlot });
                 break;
             case "Buy":
-                slot = ShopLogic.Instance.GetSlot(new SlotRequest { index = numbSlot, Type = TypeSlot });
+                slot = GlobalData.ShopLogic.GetSlot(new SlotRequest { index = numbSlot, Type = TypeSlot });
                 break;
             case "Shop":
-                slot = ShopLogic.Instance.GetSlot(new SlotRequest { index = numbSlot, Type = TypeSlot });
+                slot = GlobalData.ShopLogic.GetSlot(new SlotRequest { index = numbSlot, Type = TypeSlot });
                 break;
             default:
                 return;
@@ -347,7 +346,7 @@ public class DisplayInfo: MonoBehaviour
 
 
 
-        pl_stat = Player.Instance.GetPlayerStats();
+        pl_stat = GlobalData.Player.GetPlayerStats();
         moveInfo = true;
 
 
@@ -370,11 +369,11 @@ public class DisplayInfo: MonoBehaviour
 
             info.AppendLine($"{word_attacks_intervals}: {(60f / ((finally_AttackSpeed) * weapon.attackSpeedCoof)).ToString("F2")} {SetStyleLine(GlobalColors.Hh_AddInfo, 10, $"= 60 / {word_attacks_speed} * {pl_stat.Att_Speed} {word_AttSpeed} {word_player}")}");
             info.AppendLine($"{word_range}: {weapon.range}  {SetStyleLine(GlobalColors.Hh_AddInfo, 10, $"= {weapon.range} + {pl_stat.Att_Range} {word_AttRange} {word_player}")}");
-            //attack_ran + (Player.Instance.GetPlayerStats().Att_Range/2)
+            //attack_ran + (Player.GetPlayerStats().Att_Range/2)
         }
         if(item is IArtifact && slot.artifact_id > 0)
         {
-            ArtifactObj artifactObj = Artifacts.Instance.GetArtifact(slot.artifact_id);
+            ArtifactObj artifactObj = GlobalData.Artifacts.GetArtifact(slot.artifact_id);
 
             FormatLevel(info, artifactObj.art_level, artifactObj.chars_level, artifactObj.curse_level);
 

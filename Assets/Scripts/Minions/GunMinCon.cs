@@ -20,7 +20,7 @@ public class GunMinCon : MinionControl
     {
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-        TargetParent = GameManager.Instance.mobsLayer;
+        TargetParent = GlobalData.GameManager.mobsLayer;
 
         base.Start();
         audioSource.loop = true;

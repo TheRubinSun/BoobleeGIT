@@ -2,6 +2,42 @@ using System;
 using UnityEditor.Playables;
 using UnityEngine;
 
+public enum AllStats
+{
+    Strength,
+    Agility,
+    Intelligence,
+    Max_Hp,
+    Max_Mana,
+    Regen_Mana,
+    Armor,
+    Mov_Speed,
+    Evasion,
+    Att_Speed,
+    Att_Range,
+    Proj_Speed,
+    Att_Damage,
+    ExpBust,
+    Tech_Resis,
+    Magic_Resis
+}
+public interface ITakeDamage
+{
+    public void TakeDamage(int damage, damageT typeAttack, bool canEvade, EffectData effect);
+}
+public interface IAttack
+{
+    public void RangeAttack();
+    public void MeleeAttack();
+}
+public interface IItemMove
+{
+    public void SetItemsPosIdle(int frame);
+    public void SetItemsPosMove(int frame);
+    public void SetItemsPosShoot(int frame);
+    public void SetItemsPosMeleAttack(int frame);
+}
+
 public class CharacterStats
 {
     public int Base_Max_Hp { get; set; }
@@ -51,84 +87,48 @@ public class CharacterStats
         Magic_Resis = Base_Magic_Resis + buffsStats.Buff_Magic_Resis;
         Tech_Resis = Base_Tech_Resis + buffsStats.Buff_Tech_Resis;
     }
-    public virtual void ApplyStat(AllParametrs param, int multiplier)
+    public virtual void ApplyStat(AllStats stat, int multiplier)
     {
-        switch (param)
+        switch (stat)
         {
-            case AllParametrs.Max_Hp:
+            case AllStats.Max_Hp:
                 Max_Hp = Base_Max_Hp + buffsStats.Buff_Max_Hp * multiplier;
                 break;
-            case AllParametrs.Max_Mana:
+            case AllStats.Max_Mana:
                 Max_Mana = Base_Max_Mana + buffsStats.Buff_Max_Mana * multiplier;
                 break;
-            case AllParametrs.Regen_Mana:
+            case AllStats.Regen_Mana:
                 Regen_Mana = Base_Regen_Mana + buffsStats.Buff_Regen_Mana * multiplier;
                 break;
-            case AllParametrs.Armor:
+            case AllStats.Armor:
                 Armor = Base_Armor + buffsStats.Buff_Armor * multiplier;
                 break;
-            case AllParametrs.Evasion:
+            case AllStats.Evasion:
                 Evasion = Base_Evasion + buffsStats.Buff_Evasion * multiplier;
                 break;
-            case AllParametrs.Mov_Speed:
+            case AllStats.Mov_Speed:
                 Mov_Speed = Base_Mov_Speed + buffsStats.Buff_Mov_Speed * multiplier;
                 break;
-            case AllParametrs.Att_Range:
+            case AllStats.Att_Range:
                 Att_Range = Base_Att_Range + buffsStats.Buff_Att_Range * multiplier;
                 break;
-            case AllParametrs.Att_Damage:
+            case AllStats.Att_Damage:
                 Att_Damage = Base_Att_Damage + buffsStats.Buff_Att_Damage * multiplier;
                 break;
-            case AllParametrs.Att_Speed:
+            case AllStats.Att_Speed:
                 Att_Speed = Base_Att_Speed + buffsStats.Buff_Att_Speed * multiplier;
                 break;
-            case AllParametrs.Proj_Speed:
+            case AllStats.Proj_Speed:
                 Proj_Speed = Base_Proj_Speed + buffsStats.Buff_Proj_Speed * multiplier;
                 break;
-            case AllParametrs.Magic_Resis:
+            case AllStats.Magic_Resis:
                 Magic_Resis = Base_Magic_Resis + buffsStats.Buff_Magic_Resis * multiplier;
                 break;
-            case AllParametrs.Tech_Resis:
+            case AllStats.Tech_Resis:
                 Tech_Resis = Base_Tech_Resis + buffsStats.Buff_Tech_Resis * multiplier;
                 break;
 
         }
     }
-}
-public enum AllParametrs
-{
-    Strength,
-    Agility,
-    Intelligence,
-    Max_Hp,
-    Max_Mana,
-    Regen_Mana,
-    Armor,
-    Mov_Speed,
-    Evasion,
-    Att_Speed,
-    Att_Range,
-    Proj_Speed,
-    Att_Damage,
-    ExpBust,
-    Tech_Resis,
-    Magic_Resis
-}
-
-public interface ITakeDamage
-{
-    public void TakeDamage(int damage, damageT typeAttack, bool canEvade, EffectData effect);
-}
-public interface IAttack
-{
-    public void RangeAttack();
-    public void MeleeAttack();
-}
-public interface IItemMove
-{
-    public void SetItemsPosIdle(int frame);
-    public void SetItemsPosMove(int frame);
-    public void SetItemsPosShoot(int frame);
-    public void SetItemsPosMeleAttack(int frame);
 }
 

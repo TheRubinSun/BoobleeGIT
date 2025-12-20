@@ -12,19 +12,14 @@ public class GameMenuLog : MonoBehaviour
     [SerializeField] private Button SaveButton;
     [SerializeField] private GameObject WindowControlsSet;
     private bool OpenContolSet = false;
-
-    private UIControl UIControl;
-    private GameManager gameManager;
     private void Start()
     {
         Instance = this;
-        UIControl = UIControl.Instance;
-        gameManager = GameManager.Instance;
     }
     public void Continue()
     {
-        UIControl.TogglePause(false);
-        UIControl.OpenGameMenu();
+        GlobalData.UIControl.TogglePause(false);
+        GlobalData.UIControl.OpenGameMenu();
         //GameMenuOBJ.SetActive(false);
     }
 
@@ -44,19 +39,19 @@ public class GameMenuLog : MonoBehaviour
     }
     public bool CheckSaveZone()
     {
-        if (GlobalData.saveZone && (Player.Instance.GetHp() > 0)) return true;
+        if (GlobalData.saveZone && (GlobalData.Player.GetHp() > 0)) return true;
         return false;
     }
     public void ApplySettings()
     {
-        Options.instance.SaveChange();
-        UIControl.LocalizationTranslate();
+        GlobalData.Options.SaveChange();
+        GlobalData.UIControl.LocalizationTranslate();
         SettingsWindow.SetActive(false);
 
         if (OpenContolSet)
         {
             Debug.Log("Пытаюсь отменить");
-            SwitchKey.Instance.ExitSettings();
+            GlobalData.SwitchKey.ExitSettings();
             WindowControlsSet.SetActive(false);
         }
     }
@@ -76,30 +71,26 @@ public class GameMenuLog : MonoBehaviour
     }
     public async void SaveGame() //Кнопка сохранить
     {
-        if (gameManager == null) gameManager = GameManager.Instance;
-
         if (CheckSaveZone())
-            await gameManager.SaveAllData();
+            await GlobalData.GameManager.SaveAllData();
         else
-            await gameManager.SaveOnlyPlayTime();
+            await GlobalData.GameManager.SaveOnlyPlayTime();
     }
     public async void LoadMainMenu()//В главное меню
     {
         // Уничтожаем объект только перед загрузкой главного меню
         
-        if (UIControl != null)
+        if (GlobalData.UIControl != null)
         {
-            if(gameManager == null) gameManager = GameManager.Instance;
-
             if (CheckSaveZone())
-                await gameManager.SaveAllData();
+                await GlobalData.GameManager.SaveAllData();
             else
-                await gameManager.SaveOnlyPlayTime();
+                await GlobalData.GameManager.SaveOnlyPlayTime();
 
-            UIControl.TogglePause(false);
-            Destroy(GenInfoSaves.instance.gameObject);
-            GenInfoSaves.instance = null;
-            Destroy(UIControl.gameObject); // Удаляем объект вручную
+            GlobalData.UIControl.TogglePause(false);
+            Destroy(GlobalData.GenInfoSaves.gameObject);
+            GenInfoSaves.Instance = null;
+            Destroy(GlobalData.UIControl.gameObject); // Удаляем объект вручную
         }
         await GoToMenu();
     }
@@ -111,14 +102,12 @@ public class GameMenuLog : MonoBehaviour
     }
     public async void ExitGame()//Выйти из игры
     {
-        if (gameManager == null) gameManager = GameManager.Instance;
-
         // Уничтожаем объект только перед загрузкой главного меню
 
         if (CheckSaveZone())
-            await gameManager.SaveAllData();
+            await GlobalData.GameManager.SaveAllData();
         else
-            await gameManager.SaveOnlyPlayTime();
+            await GlobalData.GameManager.SaveOnlyPlayTime();
 
 
         #if UNITY_EDITOR

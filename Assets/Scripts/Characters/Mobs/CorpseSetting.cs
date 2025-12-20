@@ -31,14 +31,14 @@ public class CorpseSetting : MonoBehaviour, ICullableObject
         startPosition = transform.position;
         CreateCulling();
         UpdateCulling(false);
-        CullingManager.Instance.RegisterObject(this);
+        GlobalData.CullingManager.RegisterObject(this);
     }
     public virtual void UpdateSortingOrder()
     {
         if (!isVisibleNow) return;
 
         float corpsePosY = transform.position.y;
-        float PlayerPosY = GameManager.Instance.PlayerPosY;
+        float PlayerPosY = GlobalData.GameManager.PlayerPosY;
 
         spr_ren.sortingOrder = (Mathf.RoundToInt((corpsePosY - PlayerPosY) * -10));
     }
@@ -79,12 +79,12 @@ public class CorpseSetting : MonoBehaviour, ICullableObject
         {
             case TypeMob.Technology:
                 {
-                    totalChance = MultiplyChanceRared(Player.Instance.GetPlayerStats().TechniquePoints, item.quality);
+                    totalChance = MultiplyChanceRared(GlobalData.Player.GetPlayerStats().TechniquePoints, item.quality);
                     break;
                 }
             case TypeMob.Magic:
                 {
-                    totalChance = MultiplyChanceRared(Player.Instance.GetPlayerStats().MagicPoints, item.quality);
+                    totalChance = MultiplyChanceRared(GlobalData.Player.GetPlayerStats().MagicPoints, item.quality);
                     break;
                 }
             default:
@@ -154,8 +154,8 @@ public class CorpseSetting : MonoBehaviour, ICullableObject
     }
     private void OnDisable()
     {
-        if (CullingManager.Instance != null)
-            CullingManager.Instance.UnregisterObject(this);
+        if (GlobalData.CullingManager != null)
+            GlobalData.CullingManager.UnregisterObject(this);
 
     }
     public Vector2 GetPosition() => startPosition;

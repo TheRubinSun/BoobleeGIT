@@ -34,7 +34,7 @@ public class ForseItem : UsebleItem
     }
     public override bool Use()
     {
-        if (Player.Instance.ForcePlayer(value))
+        if (GlobalData.Player.ForcePlayer(value))
         {
             return true;
         }

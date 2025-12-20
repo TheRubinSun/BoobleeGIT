@@ -63,7 +63,7 @@ public class FlowerLogic : ObjectLBroken , IPointFarm
         if (!isVisibleNow) return;
 
         float PosY = transform.position.y;
-        float PlayerPosY = GameManager.Instance.PlayerPosY;
+        float PlayerPosY = GlobalData.GameManager.PlayerPosY;
 
         spr_ren.sortingOrder = Mathf.RoundToInt(((PosY - 1.6f) - PlayerPosY - 2) * -5);
     }

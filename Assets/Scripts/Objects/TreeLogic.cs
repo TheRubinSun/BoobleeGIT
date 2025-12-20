@@ -35,7 +35,7 @@ public class TreeLogic : ObjectLBroken
         if (!isVisibleNow) return;
 
         float treePosY = transform.position.y;
-        float PlayerPosY = GameManager.Instance.PlayerPosY;
+        float PlayerPosY = GlobalData.GameManager.PlayerPosY;
 
         spr_ren.sortingOrder = Mathf.RoundToInt(((treePosY - 2f) - PlayerPosY - 2) * -5);
         spr_Child_ren.sortingOrder = spr_ren.sortingOrder - 1;

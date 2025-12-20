@@ -38,7 +38,7 @@ public class BulletMob : MonoBehaviour, UBullet
         //if (collider.CompareTag("Player"))
         if (collider.gameObject.layer == LayerManager.playerLayer)
         {
-            Player.Instance.TakeDamage(damage, typeDamage, CanBeMissed, effectBul);
+            GlobalData.Player.TakeDamage(damage, typeDamage, CanBeMissed, effectBul);
             Destroy(gameObject);
         }
         //else if(collider.CompareTag("Wall"))

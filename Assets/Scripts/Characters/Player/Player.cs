@@ -67,7 +67,7 @@ public class Player : MonoBehaviour, ITakeDamage
             pl_stats.LoadStats(playerSaveData);
             LoadWeaponToggles();
             pl_stats.UpdateTotalStats();
-            if (GetFreeSkillPoint() > 0) UIControl.Instance.ShowHideLvlUP(true);
+            if (GetFreeSkillPoint() > 0) GlobalData.UIControl.ShowHideLvlUP(true);
         }
         else
         {
@@ -106,9 +106,9 @@ public class Player : MonoBehaviour, ITakeDamage
     {
         pl_ui.UpdateRegenMana(pl_stats);
     }
-    public void UpdateNeededStat(AllParametrs parametrs, int multiply)
+    public void UpdateNeededStat(AllStats stat, int multiply)
     {
-        pl_stats.ApplyStat(parametrs, multiply);
+        pl_stats.ApplyStat(stat, multiply);
     }
     public IEnumerator AddManaForRegen()
     {
@@ -261,7 +261,7 @@ public class Player : MonoBehaviour, ITakeDamage
             TooglesWeapon[i].isOn = pl_stats.DirectionOrVectorWeapon[i];
         }
     }
-    public void AddAttribute(BoosterType boosterType, int count)
+    public void AddAttribute(AllStats boosterType, int count)
     {
         pl_stats.AddAttribute(boosterType, count);
         UpdateAllUiInfo();
@@ -362,7 +362,7 @@ public class Player : MonoBehaviour, ITakeDamage
     {
         if (pl_stats.PlayerHealStat(heal))
         {
-            SoundsManager.Instance.PlayItemSoundsWithRandomPitch(0.7f, 1.2f, 4);
+            GlobalData.SoundsManager.PlayItemSoundsWithRandomPitch(0.7f, 1.2f, 4);
             pl_ui.UpdateHpBar(pl_stats);
             StartCoroutine(FlashColor(new Color32(110, 255, 93, 255), 0.1f));
             return true;
@@ -373,7 +373,7 @@ public class Player : MonoBehaviour, ITakeDamage
     {
         if (pl_stats.PlayerManaHealStat(manaHeal))
         {
-            SoundsManager.Instance.PlayItemSounds(4);
+            GlobalData.SoundsManager.PlayItemSounds(4);
             pl_ui.UpdateManaBar(pl_stats);
             StartCoroutine(FlashColor(new Color32(84, 160, 210, 255), 0.1f));
             return true;
@@ -432,7 +432,7 @@ public class Player : MonoBehaviour, ITakeDamage
         //pl_ui.UpdateSizeManaBar(pl_stats);
         pl_ui.UpdateAllInfo(pl_stats);
 
-        SoundsManager.Instance.PlayLevelUP();
+        GlobalData.SoundsManager.PlayLevelUP();
         StartCoroutine(ShowLevelUPWithDelay());
     }
     public void TradeAddExp(int add_exp)
@@ -441,14 +441,14 @@ public class Player : MonoBehaviour, ITakeDamage
     }
     public void TradeLvlUp()
     {
-        SoundsManager.Instance.PlayLevelUP();
+        GlobalData.SoundsManager.PlayLevelUP();
     }
     private IEnumerator ShowLevelUPWithDelay()
     {
         yield return new WaitForSeconds(1f);
-        
-        UIControl.Instance.ShowHideLvlUP(true);
-        UIControl.Instance.OpenLvlUPWindow(true);
+
+        GlobalData.UIControl.ShowHideLvlUP(true);
+        GlobalData.UIControl.OpenLvlUPWindow(true);
     }
     public void SetGodMode()
     {

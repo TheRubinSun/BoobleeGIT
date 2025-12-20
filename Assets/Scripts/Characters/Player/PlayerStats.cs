@@ -91,11 +91,11 @@ public class PlayerStats : CharacterStats
         Gold = 10;
         TraderSkill = 1;
 
-        classPlayer = Classes.Instance.GetRoleClass("Shooter");
+        classPlayer = GlobalData.Classes.GetRoleClass("Shooter");
         DirectionOrVectorWeapon = new bool[4];
 
-        equipStats = Player.Instance.GetEquipStats();
-        buffsStats = Player.Instance.GetBuffStatsPlayer();
+        equipStats = GlobalData.Player.GetEquipStats();
+        buffsStats = GlobalData.Player.GetBuffStatsPlayer();
     }
     public void LoadStats(PlayerStats playerSaveData)
     {
@@ -142,8 +142,8 @@ public class PlayerStats : CharacterStats
         Cur_Hp = playerSaveData.Cur_Hp;
         Cur_Mana = playerSaveData.Cur_Mana;
 
-        equipStats = Player.Instance.GetEquipStats();
-        buffsStats = Player.Instance.GetBuffStatsPlayer();
+        equipStats = GlobalData.Player.GetEquipStats();
+        buffsStats = GlobalData.Player.GetBuffStatsPlayer();
     }
     public override void UpdateTotalStats()
     {
@@ -182,59 +182,59 @@ public class PlayerStats : CharacterStats
         if (Cur_Mana > Max_Mana)
             Cur_Mana = Max_Mana;
     }
-    public override void ApplyStat(AllParametrs param, int multiplier)
+    public override void ApplyStat(AllStats stat, int multiplier)
     {
-        switch (param)
+        switch (stat)
         {
-            case AllParametrs.Strength:
+            case AllStats.Strength:
                 Strength = Base_Strength + classPlayer.Bonus_Class_Strength + equipStats.Bonus_Equip_Strength + buffsStats.Buff_Strength * multiplier;
                 break;
-            case AllParametrs.Agility:
+            case AllStats.Agility:
                 Agility = Base_Agility + classPlayer.Bonus_Class_Agility + equipStats.Bonus_Equip_Agility + buffsStats.Buff_Agility * multiplier;
                 break;
-            case AllParametrs.Intelligence:
+            case AllStats.Intelligence:
                 Intelligence = Base_Intelligence + classPlayer.Bonus_Class_Intelligence + equipStats.Bonus_Equip_Intelligence + buffsStats.Buff_Intelligence * multiplier;
                 break;
-            case AllParametrs.Max_Hp:
+            case AllStats.Max_Hp:
                 Max_Hp = (Strength * 2) + Base_Max_Hp + classPlayer.Bonus_Class_Hp + equipStats.Bonus_Equip_Hp + buffsStats.Buff_Max_Hp * multiplier;
                 break;
-            case AllParametrs.Max_Mana:
+            case AllStats.Max_Mana:
                 Max_Mana = (Intelligence * 4) + Base_Max_Mana + classPlayer.Bonus_Class_Mana + equipStats.Bonus_Equip_Mana + buffsStats.Buff_Max_Mana * multiplier;
                 break;
-            case AllParametrs.Regen_Mana:
+            case AllStats.Regen_Mana:
                 Regen_Mana = (Intelligence * 0.125f) + Base_Regen_Mana + classPlayer.Bonus_Class_Regen_Mana + equipStats.Bonus_Equip_Regen_Mana + buffsStats.Buff_Regen_Mana * multiplier;
                 break;
-            case AllParametrs.Armor:
+            case AllStats.Armor:
                 Armor = (int)(Strength / 10f) + Base_Armor + classPlayer.Bonus_Class_Armor + equipStats.Bonus_Equip_Armor + buffsStats.Buff_Armor * multiplier;
                 break;
-            case AllParametrs.Mov_Speed:
+            case AllStats.Mov_Speed:
                 Mov_Speed = (Agility * 0.015f) + Base_Mov_Speed + classPlayer.Bonus_Class_SpeedMove + equipStats.Bonus_Equip_Mov_Speed + buffsStats.Buff_Mov_Speed * multiplier;
                 break;
-            case AllParametrs.Evasion:
+            case AllStats.Evasion:
                 Evasion = Agility + Base_Evasion + equipStats.Bonus_Equip_Evasion + buffsStats.Buff_Evasion * multiplier;
                 break;
-            case AllParametrs.Att_Speed:
+            case AllStats.Att_Speed:
                 Att_Speed = (int)((Agility * 2) + Base_Att_Speed + classPlayer.Bonus_Class_AttackSpeed + equipStats.Bonus_Equip_Att_Speed + buffsStats.Buff_Att_Speed * multiplier);
                 break;
-            case AllParametrs.Att_Range:
+            case AllStats.Att_Range:
                 Att_Range = Base_Att_Range + classPlayer.Bonus_Class_Range + equipStats.Bonus_Equip_Att_Range + buffsStats.Buff_Att_Range * multiplier;
                 break;
-            case AllParametrs.Proj_Speed:
+            case AllStats.Proj_Speed:
                 Proj_Speed = Base_Proj_Speed + classPlayer.Bonus_Class_ProjectileSpeed + equipStats.Bonus_Equip_Proj_Speed + buffsStats.Buff_Proj_Speed * multiplier;
                 break;
-            case AllParametrs.Att_Damage:
+            case AllStats.Att_Damage:
                 Att_Damage = (int)(((Strength * 2) + (Intelligence * 2)) / 10f) + Base_Att_Damage + classPlayer.Bonus_Class_Damage + equipStats.Bonus_Equip_Att_Damage + buffsStats.Buff_Att_Damage * multiplier;
                 break;
-            case AllParametrs.ExpBust:
+            case AllStats.ExpBust:
                 ExpBust = Base_ExpBust + equipStats.Bonus_Equip_ExpBust + buffsStats.Buff_ExpBust * multiplier;
                 break;
-            case AllParametrs.Tech_Resis:
+            case AllStats.Tech_Resis:
                 {
                     float Int_Resis = Intelligence / (Intelligence + 100f);
                     Tech_Resis = 1 - ((1 - Int_Resis) * (1 - Base_Tech_Resis) * (1 - classPlayer.Bonus_Tech_Resis) * (1 - equipStats.Bonus_Tech_Resis)) + buffsStats.Buff_Tech_Resis * multiplier;
                 }
                 break;
-            case AllParametrs.Magic_Resis:
+            case AllStats.Magic_Resis:
                 {
                     float Int_Resis = Intelligence / (Intelligence + 100f);
                     Magic_Resis = 1 - ((1 - Int_Resis) * (1 - Base_Magic_Resis) * (1 - classPlayer.Bonus_Magic_Resis) * (1 - equipStats.Bonus_Magic_Resis)) + buffsStats.Buff_Magic_Resis * multiplier;
@@ -261,13 +261,13 @@ public class PlayerStats : CharacterStats
     public void AddMaxHPBaseStat(int addMaxHp)
     {
         Base_Max_Hp += addMaxHp;
-        Max_Hp = (Strength * 2) + Base_Max_Hp + classPlayer.Bonus_Class_Hp + EquipStats.Instance.Bonus_Equip_Hp;
+        Max_Hp = (Strength * 2) + Base_Max_Hp + classPlayer.Bonus_Class_Hp + GlobalData.EquipStats.Bonus_Equip_Hp;
         Cur_Hp += addMaxHp;
     }
     public void AddMaxManaBaseStat(int addMaxMana)
     {
         Base_Max_Mana += addMaxMana;
-        Max_Mana = (Intelligence * 4) + Base_Max_Mana + classPlayer.Bonus_Class_Mana + EquipStats.Instance.Bonus_Equip_Mana;
+        Max_Mana = (Intelligence * 4) + Base_Max_Mana + classPlayer.Bonus_Class_Mana + GlobalData.EquipStats.Bonus_Equip_Mana;
         Cur_Mana += addMaxMana;
     }
     public bool isEvasion()
@@ -310,23 +310,28 @@ public class PlayerStats : CharacterStats
         Cur_Mana -= spendMana;
         return true;
     }
-    public void AddAttribute(BoosterType bosterType, int count)
+    public void AddAttribute(AllStats bosterType, int count)
     {
         switch(bosterType)
         {
-            case BoosterType.Strength:
+            case AllStats.Strength:
                 {
                     Base_Strength += count;
                     break;
                 }
-            case BoosterType.Agillity:
+            case AllStats.Agility:
                 {
                     Base_Agility += count;
                     break;
                 }
-            case BoosterType.Intelligence:
+            case AllStats.Intelligence:
                 {
                     Base_Intelligence += count;
+                    break;
+                }
+            default:
+                {
+                    Debug.LogError("Такого бустера нет!");
                     break;
                 }
 
@@ -392,7 +397,7 @@ public class PlayerStats : CharacterStats
         freeSkillPoints++;
         AddMaxHPBaseStat(AddHP_PerLvl);
         AddMaxManaBaseStat(AddMana_PerLvl);
-        Player.Instance.LvlUp();
+        GlobalData.Player.LvlUp();
         if (cur_exp >= nextLvl_exp) CheckLevel();
     }
     public void AddTradeExp(int add_exp)
@@ -419,7 +424,7 @@ public class PlayerStats : CharacterStats
     {
         trade_level++;
         TraderSkill++;
-        Player.Instance.TradeLvlUp();
+        GlobalData.Player.TradeLvlUp();
         if (trade_cur_exp >= trade_nextLvl_exp) CheckTradeLevel();
     }
 }

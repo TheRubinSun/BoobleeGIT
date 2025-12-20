@@ -48,9 +48,9 @@ public class LocalizationManager : MonoBehaviour
                 localizedText = allLanguages["en"];
                 SetLanguage("en");
             }
-            if (UIControl.Instance != null)
+            if (GlobalData.UIControl != null)
             {
-                UIControl.Instance.LocalizationTranslate();
+                GlobalData.UIControl.LocalizationTranslate();
             }
         }
         else

@@ -9,7 +9,7 @@ public class Ball_logic : ObjectLBroken
     public bool isDestroyed { get; private set; }
     protected int layerOBJ;
 
-    protected GameManager g_m = GameManager.Instance;
+    //protected GameManager g_m = GameManager.Instance;
     protected Rigidbody2D rb;
 
     protected override void Awake()
@@ -93,7 +93,7 @@ public class Ball_logic : ObjectLBroken
         if (!isVisibleNow) return;
 
         float mobPosY = transform.position.y;
-        float PlayerPosY = g_m.PlayerPosY;
+        float PlayerPosY = GlobalData.GameManager.PlayerPosY;
 
         spr_ren.sortingOrder = Mathf.RoundToInt(((mobPosY - PlayerPosY - 2) * -5) -1f);
     }
@@ -102,7 +102,7 @@ public class Ball_logic : ObjectLBroken
         int layerCol = collision.gameObject.layer;
         if (layerCol == LayerManager.playerLayer)
         {
-            Player.Instance.TakeDamage(damage_ball, damageT.Magic, false);
+            GlobalData.Player.TakeDamage(damage_ball, damageT.Magic, false);
         }
         if (isRun && (layerCol == LayerManager.obstaclesLayer || layerCol == LayerManager.playerLayer))
         {
@@ -115,7 +115,7 @@ public class Ball_logic : ObjectLBroken
         int layerCol = collision.gameObject.layer;
         if(layerCol == LayerManager.playerLayer)
         {
-            Player.Instance.TakeDamage(damage_ball, damageT.Magic, false);
+            GlobalData.Player.TakeDamage(damage_ball, damageT.Magic, false);
         }
         if(isRun && (layerCol == LayerManager.obstaclesLayer || layerCol == LayerManager.playerLayer))
         {

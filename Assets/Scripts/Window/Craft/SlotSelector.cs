@@ -51,7 +51,7 @@ public class SlotSelector : MonoBehaviour
             {
                 SelectSlot(currentSlotIndex - 1);
                 MoveContentToSlot(currentSlotIndex);
-                SoundsManager.Instance.PlaySwitchItemSounds();
+                GlobalData.SoundsManager.PlaySwitchItemSounds();
             }
         }
         else if (scroll < 0f) // Прокрутка вниз
@@ -60,7 +60,7 @@ public class SlotSelector : MonoBehaviour
             {
                 SelectSlot(currentSlotIndex + 1);
                 MoveContentToSlot(currentSlotIndex);
-                SoundsManager.Instance.PlaySwitchItemSounds();
+                GlobalData.SoundsManager.PlaySwitchItemSounds();
             }
         }
     }
@@ -69,7 +69,7 @@ public class SlotSelector : MonoBehaviour
     {
         SelectSlot(index);
         MoveContentToSlot(index);
-        SoundsManager.Instance.PlaySwitchItemSounds();
+        GlobalData.SoundsManager.PlaySwitchItemSounds();
     }
 
     void SelectSlot(int newIndex)
@@ -83,7 +83,7 @@ public class SlotSelector : MonoBehaviour
         oldIndex = currentSlotIndex;
         currentSlotIndex = newIndex;
         HighlightSlot(newIndex, oldIndex);
-        CraftLogic.Instance.LoadMaterialsForIdSelect(newIndex);
+        GlobalData.CraftLogic.LoadMaterialsForIdSelect(newIndex);
         //CraftLogic.Instance.ReloadSelectMaterials(newIndex);
     }
 

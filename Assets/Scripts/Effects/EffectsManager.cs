@@ -168,13 +168,13 @@ public class EffectsManager : MonoBehaviour
             case EffectData.EffectType.SpeedBoost:
                 {
                     stats.buffsStats.Buff_Mov_Speed += effect.value * multiply;
-                    stats.ApplyStat(AllParametrs.Mov_Speed, 1);
+                    stats.ApplyStat(AllStats.Mov_Speed, 1);
                     break;
                 }
             case EffectData.EffectType.SpeedSlow:
                 {
                     stats.buffsStats.Buff_Mov_Speed -= effect.value * multiply;
-                    stats.ApplyStat(AllParametrs.Mov_Speed, 1);
+                    stats.ApplyStat(AllStats.Mov_Speed, 1);
                     //stats.Mov_Speed -= effect.value * multiply;
                     break;
                 }
@@ -215,7 +215,7 @@ public class EffectsManager : MonoBehaviour
         {
             if (this.gameObject.layer == LayerManager.playerManagerLayer)
             {
-                Player.Instance.TakeDamage((int)effect.value, damageT.Posion, false);
+                GlobalData.Player.TakeDamage((int)effect.value, damageT.Posion, false);
             }
             else if (this.gameObject.layer == LayerManager.enemyLayer)
             {

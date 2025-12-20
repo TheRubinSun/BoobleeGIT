@@ -42,7 +42,7 @@ public class DisplayMobsList : MonoBehaviour
     }
     private void OnLineClick(Mob mob)
     {
-        SpawnMobs.Instance.SpawnMobsBut(EnemyList.GetIdByMob(mob));
+        GlobalData.SpawnMobs.SpawnMobsBut(EnemyList.GetIdByMob(mob));
     }
     void ClearLines()
     {

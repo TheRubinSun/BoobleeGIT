@@ -65,7 +65,7 @@ public class UIControl:MonoBehaviour
     }
     public void LoadButtons()
     {
-        if (!Player.Instance.GodMode) return;
+        if (!GlobalData.Player.GodMode) return;
         nameButtons.Clear();
 
         Button[] buttonsUI = allUIButtonsParent.GetComponentsInChildren<Button>(true);
@@ -83,7 +83,7 @@ public class UIControl:MonoBehaviour
     }
     public void RenameAllButtons()
     {
-        PlayerInputHandler.Instance.RenameKeysButtins(nameButtons);
+        GlobalData.PlayerInputHandler.RenameKeysButtins(nameButtons);
     }
     //private void InitializeKeyActions()
     //{
@@ -131,13 +131,13 @@ public class UIControl:MonoBehaviour
         else
         {
             inventoryWindow.SetActive(false);
-            Inventory.Instance.InfoPanel.gameObject.SetActive(false);
+            GlobalData.Inventory.InfoPanel.gameObject.SetActive(false);
         }
 
     }
     public void OpenListItems()
     {
-        if (!Player.Instance.GodMode) return;
+        if (!GlobalData.Player.GodMode) return;
 
         itemsIsOpened = !itemsIsOpened;
         if (itemsIsOpened)
@@ -152,13 +152,13 @@ public class UIControl:MonoBehaviour
     }
     public void OpenListMobs()
     {
-        if (!Player.Instance.GodMode) return;
+        if (!GlobalData.Player.GodMode) return;
 
         mobsIsOpened = !mobsIsOpened;
         if (mobsIsOpened)
         {
             allMobsWindow.SetActive(true);
-            DisplayMobsList.Instance.DisplayLinesMobs(EnemyList.mobs);
+            GlobalData.DisplayMobsList.DisplayLinesMobs(EnemyList.mobs);
         }
         else
         {
@@ -167,13 +167,13 @@ public class UIControl:MonoBehaviour
     }
     public void OpenCreatePortal()
     {
-        if (!Player.Instance.GodMode) return;
+        if (!GlobalData.Player.GodMode) return;
 
         createPortalIsOpened = !createPortalIsOpened;
         if (createPortalIsOpened)
         {
             CreatePortalWindow.SetActive(true);
-            CreatePortalUI.Instance.DisplayLinesMobs(EnemyList.mobs);
+            GlobalData.CreatePortalUI.DisplayLinesMobs(EnemyList.mobs);
         }
         else
         {
@@ -182,7 +182,7 @@ public class UIControl:MonoBehaviour
     }
     public void OpenShop()
     {
-        if (!Player.Instance.GodMode) return;
+        if (!GlobalData.Player.GodMode) return;
         OpenShopSurv("God");
     }
     public void OpenShopSurv(string nameTrader)
@@ -192,14 +192,14 @@ public class UIControl:MonoBehaviour
         ShopIsOpened = !ShopIsOpened;
         if (ShopIsOpened)
         {
-            Player.Instance.PlayerStay = true;
+            GlobalData.Player.PlayerStay = true;
             ShopWindow.SetActive(true);
-            ShopLogic.Instance.OpenShop(nameTrader);
+            GlobalData.ShopLogic.OpenShop(nameTrader);
         }
         else
         {
-            Player.Instance.PlayerStay = false;
-            ShopLogic.Instance.ClosedShop();
+            GlobalData.Player.PlayerStay = false;
+            GlobalData.ShopLogic.ClosedShop();
             ShopWindow.SetActive(false);
         }
     }
@@ -208,8 +208,8 @@ public class UIControl:MonoBehaviour
         if ( CraftIsOpened) return;
 
         ShopIsOpened = false;
-        Player.Instance.PlayerStay = false;
-        ShopLogic.Instance.ClosedShop();
+        GlobalData.Player.PlayerStay = false;
+        GlobalData.ShopLogic.ClosedShop();
         ShopWindow.SetActive(false);
     }
     public void OpenInfoPlayer()
@@ -219,22 +219,22 @@ public class UIControl:MonoBehaviour
         if (infoPlayerIsOpened)
         {
             infoPlayerWindow.SetActive(true);
-            DisplayInfo.Instance.UpdateInfoStatus();
+            GlobalData.DisplayInfo.UpdateInfoStatus();
         }
         else
         {
-            DisplayInfo.Instance.SetActiveItemInfo(false);
+            GlobalData.DisplayInfo.SetActiveItemInfo(false);
             infoPlayerWindow.SetActive(false);
         }
     }
     public void LvlUpWindow()
     {
         LvlUpIsOpen = !LvlUpIsOpen;
-        if (LvlUpIsOpen && (Player.Instance.GetFreeSkillPoint() > 0))
+        if (LvlUpIsOpen && (GlobalData.Player.GetFreeSkillPoint() > 0))
         {
             LvlUPWindow.SetActive(true);
-            LvlUpLogic.Instance.GenAspects();
-            SoundsManager.Instance.PlayOpenWindow();
+            GlobalData.LvlUpLogic.GenAspects();
+            GlobalData.SoundsManager.PlayOpenWindow();
         }
         else
         {
@@ -249,12 +249,12 @@ public class UIControl:MonoBehaviour
 
         if (!isOpen) return;
 
-        LvlUpLogic.Instance.GenAspects();
-        SoundsManager.Instance.PlayOpenWindow();
+        GlobalData.LvlUpLogic.GenAspects();
+        GlobalData.SoundsManager.PlayOpenWindow();
     }
     public void OpenCraftWindow()
     {
-        if (!Player.Instance.GodMode) return;
+        if (!GlobalData.Player.GodMode) return;
         OpenCraftWindowSurv(CraftTable.God);
     }
     public void OpenCraftWindowSurv(CraftTable craftTable)
@@ -264,15 +264,15 @@ public class UIControl:MonoBehaviour
         CraftIsOpened = !CraftIsOpened;
         if (CraftIsOpened && craftTable != CraftTable.None)
         {
-            Player.Instance.PlayerStay = true;
+            GlobalData.Player.PlayerStay = true;
             CraftWindow.SetActive(true);
-            CraftLogic.Instance.OpenSelectCrafts(craftTable);
+            GlobalData.CraftLogic.OpenSelectCrafts(craftTable);
         }
         else
         {
-            Player.Instance.PlayerStay = false;
+            GlobalData.Player.PlayerStay = false;
             CraftWindow.SetActive(false);
-            CraftLogic.Instance.CloseCrafts();
+            GlobalData.CraftLogic.CloseCrafts();
         }
     }
     public void ShowHideLvlUP(bool showOrHide)
@@ -322,7 +322,7 @@ public class UIControl:MonoBehaviour
 
         if (CloseWindow)
         {
-            if (GameMenuLog.Instance.CheckOpenSettings()) return;
+            if (GlobalData.GameMenuLog.CheckOpenSettings()) return;
 
             playerInputHandler.InputEnabled = true;
             TogglePause(false);
@@ -331,7 +331,7 @@ public class UIControl:MonoBehaviour
         else
         {
             playerInputHandler.InputEnabled = false;
-            GameMenuLog.Instance.HideSaveZone();
+            GlobalData.GameMenuLog.HideSaveZone();
             GameMenuWindow.SetActive(true);
             TogglePause(true);
         }
@@ -340,7 +340,7 @@ public class UIControl:MonoBehaviour
 
     public void UpdateWeaponStats()
     {
-        EqupmentPlayer.Instance.UpdateAllWeaponsStats();
+        GlobalData.EqupmentPlayer.UpdateAllWeaponsStats();
     }
     public void LocalizationTranslate()
     {
@@ -348,9 +348,9 @@ public class UIControl:MonoBehaviour
         {
             ItemsList.LocalizaitedItems();
             EnemyList.LocalizaitedMobs();
-            DisplayInfo.Instance.LocalizationText();
-            ShopLogic.Instance.LocalizationText();
-            LvlUpLogic.Instance.LocalizationText();
+            GlobalData.DisplayInfo.LocalizationText();
+            GlobalData.ShopLogic.LocalizationText();
+            GlobalData.LvlUpLogic.LocalizationText();
         }
         else
         {
@@ -366,7 +366,7 @@ public class UIControl:MonoBehaviour
 
     public void LoadData()
     {
-        //GameManager.Instance.LoadDataGame();
+        //GameManager.LoadDataGame();
     }
     public async void SaveDataButton()
     {
@@ -391,7 +391,7 @@ public class UIControl:MonoBehaviour
     }
     public void RetrunSlotsToInventory(Transform fromParent)
     {
-        int countSlots = Inventory.Instance.sizeInventory;
+        int countSlots = GlobalData.Inventory.sizeInventory;
         for (int i = countSlots; i > 0; i--)
         {
             fromParent.transform.GetChild(0).SetParent(mainParentInventory);
@@ -399,7 +399,7 @@ public class UIControl:MonoBehaviour
     }
     public void TransfromSlotsFromInventory(Transform newParent)
     {
-        int countSlots = Inventory.Instance.sizeInventory;
+        int countSlots = GlobalData.Inventory.sizeInventory;
         for (int i = countSlots; i > 0; i--)
         {
             mainParentInventory.transform.GetChild(0).SetParent(newParent);

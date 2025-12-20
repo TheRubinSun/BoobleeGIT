@@ -54,19 +54,19 @@ public class DragAndDrop:MonoBehaviour
         //Debug.LogWarning($"oldSlot {oldSlot} {oldSlot.Item.NameKey}");
         if (!dragItem)
         {
-            oldSlot = Inventory.Instance.GetSlot(new SlotRequest{index = numbSlot });
+            oldSlot = GlobalData.Inventory.GetSlot(new SlotRequest{index = numbSlot });
         }
         else
         {
             //if (oldSlot.SlotObj.CompareTag("ShopSlot")) return; //Не дать возможность перекладывать от торговца в инвентарь игрока
 
-            newSlot = Inventory.Instance.GetSlot(new SlotRequest { index = numbSlot }); //Сохранем значения слота 
+            newSlot = GlobalData.Inventory.GetSlot(new SlotRequest { index = numbSlot }); //Сохранем значения слота 
             if (oldSlot != null && newSlot.Item.NameKey != "item_none" && oldSlot.SlotObj.CompareTag("SlotEquip")) //Если не пустой и не экипировка
             {
                 if (oldSlot.itemFilter == newSlot.Item.TypeItem) //Если из слота оружия поменять с оружием из инвенторя
                 {
-                    Inventory.Instance.SwapSlots(oldSlot, tempSlot); //Меняем местами слоты
-                    Inventory.Instance.SwapSlots(newSlot, oldSlot); //Меняем местами слоты
+                    GlobalData.Inventory.SwapSlots(oldSlot, tempSlot); //Меняем местами слоты
+                    GlobalData.Inventory.SwapSlots(newSlot, oldSlot); //Меняем местами слоты
                     DragSuccess();
                     return;
                 }
@@ -81,18 +81,18 @@ public class DragAndDrop:MonoBehaviour
         Drag();
         if (oldSlot != null && oldSlot.SlotObj.CompareTag("SellSlot"))
         {
-            ShopLogic.Instance.CountedGoldForSell();
+            GlobalData.ShopLogic.CountedGoldForSell();
         }
     }
     public void DragEquipmentSlot(int numbEquipmentSlot)
     {
         if (!dragItem)
         {
-            oldSlot = EqupmentPlayer.Instance.GetSlot(new SlotRequest{index = numbEquipmentSlot}); //Сохранем значения слота 
+            oldSlot = GlobalData.EqupmentPlayer.GetSlot(new SlotRequest{index = numbEquipmentSlot}); //Сохранем значения слота 
         }
         else
         {
-            newSlot = EqupmentPlayer.Instance.GetSlot(new SlotRequest { index = numbEquipmentSlot }); //Сохранем значения слота 
+            newSlot = GlobalData.EqupmentPlayer.GetSlot(new SlotRequest { index = numbEquipmentSlot }); //Сохранем значения слота 
             if (tempSlot.Item.TypeItem != newSlot.itemFilter) //Если фильтры разные, то не менять
             {
                 Debug.LogWarning("В тот слот не положить предмет этого типа");
@@ -105,15 +105,15 @@ public class DragAndDrop:MonoBehaviour
     {
         if (dragItem)
         {
-            Slot craftSlot = CraftLogic.Instance.GetSlot(new SlotRequest { index = numbCraftSlot });
+            Slot craftSlot = GlobalData.CraftLogic.GetSlot(new SlotRequest { index = numbCraftSlot });
             if (tempSlot.Item == craftSlot.Item)
             {
                 int freeCount = (tempSlot.Item.MaxCount - tempSlot.Count);
                 if (freeCount >= craftSlot.Count)
                 {
-                    CraftLogic.Instance.SpendResource();
+                    GlobalData.CraftLogic.SpendResource();
                     tempSlot.Count += craftSlot.Count;
-                    Inventory.Instance.UpdateSlotUI(tempSlot);  //Обновляем картинку в UI
+                    GlobalData.Inventory.UpdateSlotUI(tempSlot);  //Обновляем картинку в UI
                 }
                 else
                 {
@@ -125,14 +125,14 @@ public class DragAndDrop:MonoBehaviour
         }
         else
         {
-            CraftLogic.Instance.SpendResource();
+            GlobalData.CraftLogic.SpendResource();
 
-            Slot craftSlot = CraftLogic.Instance.GetSlot(new SlotRequest { index = numbCraftSlot });
+            Slot craftSlot = GlobalData.CraftLogic.GetSlot(new SlotRequest { index = numbCraftSlot });
             tempSlot = new Slot(craftSlot.Item, craftSlot.Count); //Копируем данные клетки
 
             tempSlot.SlotObj = Instantiate(GlobalPrefabs.SlotPref, parentUI); //Определяем картинку и текст в объекте
 
-            Inventory.Instance.UpdateSlotUI(tempSlot);  //Обновляем картинку в UI
+            GlobalData.Inventory.UpdateSlotUI(tempSlot);  //Обновляем картинку в UI
 
             dragItem = true;
             DragZone.SetActive(dragItem);  //Включить возможность выбросить
@@ -144,28 +144,28 @@ public class DragAndDrop:MonoBehaviour
     {
         if (!dragItem)
         {
-            oldSlot = ShopLogic.Instance.GetSlot(new SlotRequest { index = numbSellSlot, Type = "Sell" }); //Сохранем значения слота 
+            oldSlot = GlobalData.ShopLogic.GetSlot(new SlotRequest { index = numbSellSlot, Type = "Sell" }); //Сохранем значения слота 
         }
         else
         {
-            newSlot = ShopLogic.Instance.GetSlot(new SlotRequest { index = numbSellSlot, Type = "Sell" }); //Сохранем значения слота 
+            newSlot = GlobalData.ShopLogic.GetSlot(new SlotRequest { index = numbSellSlot, Type = "Sell" }); //Сохранем значения слота 
         }
         Drag();
-        ShopLogic.Instance.CountedGoldForSell();
+        GlobalData.ShopLogic.CountedGoldForSell();
     }
     public void DragSellArea()
     {
         if (dragItem)
         {
-            ShopLogic.Instance.CreateEmptySlot("Sell"); //Сохранем значения слота 
-            ShopLogic.Instance.AddItemToType("Sell", tempSlot.Item, tempSlot.Count, tempSlot.artifact_id);
+            GlobalData.ShopLogic.CreateEmptySlot("Sell"); //Сохранем значения слота 
+            GlobalData.ShopLogic.AddItemToType("Sell", tempSlot.Item, tempSlot.Count, tempSlot.artifact_id);
 
             Destroy(tempSlot.SlotObj);
             dragItem = false; //Отпускаем предмет
             DragZone.SetActive(dragItem);  //Выключить возможность выбросить
-            ShopLogic.Instance.CountedGoldForSell();
+            GlobalData.ShopLogic.CountedGoldForSell();
 
-            SoundsManager.Instance.PlayPutItem();
+            GlobalData.SoundsManager.PlayPutItem();
         }
         
     }
@@ -173,43 +173,43 @@ public class DragAndDrop:MonoBehaviour
     {
         if (!dragItem)
         {
-            oldSlot = ShopLogic.Instance.GetSlot(new SlotRequest { index = numbBuySlot, Type = "Buy" }); //Сохранем значения слота 
+            oldSlot = GlobalData.ShopLogic.GetSlot(new SlotRequest { index = numbBuySlot, Type = "Buy" }); //Сохранем значения слота 
             if (oldSlot.Count == 0) return;
 
-            ShopLogic.Instance.AddItemToType("Shop", oldSlot.Item, oldSlot.Count, oldSlot.artifact_id);
+            GlobalData.ShopLogic.AddItemToType("Shop", oldSlot.Item, oldSlot.Count, oldSlot.artifact_id);
             oldSlot.NullSLot();
             SlotsManager.UpdateSlotUI(oldSlot);
-            ShopLogic.Instance.CountedGoldForBuy();
+            GlobalData.ShopLogic.CountedGoldForBuy();
 
-            SoundsManager.Instance.PlayPutItem();
+            GlobalData.SoundsManager.PlayPutItem();
         }
     }
     public void DragShopSlot(int numbShopSlot)
     {
         if (!dragItem)
         {
-            oldSlot = ShopLogic.Instance.GetSlot(new SlotRequest { index = numbShopSlot, Type = "Shop" }); //Сохранем значения слота 
+            oldSlot = GlobalData.ShopLogic.GetSlot(new SlotRequest { index = numbShopSlot, Type = "Shop" }); //Сохранем значения слота 
             if (oldSlot.Count == 0) return;
 
-            ShopLogic.Instance.CreateEmptySlot("Buy"); //Сохранем значения слота 
-            ShopLogic.Instance.AddItemToType("Buy", oldSlot.Item, oldSlot.Count, oldSlot.artifact_id);
+            GlobalData.ShopLogic.CreateEmptySlot("Buy"); //Сохранем значения слота 
+            GlobalData.ShopLogic.AddItemToType("Buy", oldSlot.Item, oldSlot.Count, oldSlot.artifact_id);
 
             oldSlot.NullSLot();
             SlotsManager.UpdateSlotUI(oldSlot);
-            ShopLogic.Instance.CountedGoldForBuy();
+            GlobalData.ShopLogic.CountedGoldForBuy();
 
-            SoundsManager.Instance.PlayTakeItem();
+            GlobalData.SoundsManager.PlayTakeItem();
         }
     }
     public void Drag()
     {
         if (!dragItem) //Если нужно взять предмет
         {
-            if(TakeItem()) SoundsManager.Instance.PlayTakeItem();
+            if(TakeItem()) GlobalData.SoundsManager.PlayTakeItem();
         }
         else //Если предмет взят
         {
-            if (PutItem()) SoundsManager.Instance.PlayPutItem();
+            if (PutItem()) GlobalData.SoundsManager.PlayPutItem();
 
         }
     }
@@ -219,14 +219,14 @@ public class DragAndDrop:MonoBehaviour
         tempSlot = new Slot(oldSlot.Item, oldSlot.Count, oldSlot.artifact_id); //Копируем данные клетки
         tempSlot.SlotObj = Instantiate(GlobalPrefabs.SlotPref, parentUI); //Определяем картинку и текст в объекте
 
-        Inventory.Instance.UpdateSlotUI(tempSlot);  //Обновляем картинку в UI
-        Inventory.Instance.SetNone(oldSlot); //Очищаем клетку 
+        GlobalData.Inventory.UpdateSlotUI(tempSlot);  //Обновляем картинку в UI
+        GlobalData.Inventory.SetNone(oldSlot); //Очищаем клетку 
 
         dragItem = true; //Взяли предмет + в Update тащем за курсором
         DragZone.SetActive(dragItem); //Включить возможность выбросить
 
-        if (newSlot != null && newSlot.enable && newSlot.SlotObj != null && newSlot.SlotObj.CompareTag("SlotEquip")) EqupmentPlayer.Instance.PutOnEquip(newSlot);
-        if (oldSlot != null && oldSlot.enable && oldSlot.SlotObj != null && oldSlot.SlotObj.CompareTag("SlotEquip")) EqupmentPlayer.Instance.PutOnEquip(oldSlot);
+        if (newSlot != null && newSlot.enable && newSlot.SlotObj != null && newSlot.SlotObj.CompareTag("SlotEquip")) GlobalData.EqupmentPlayer.PutOnEquip(newSlot);
+        if (oldSlot != null && oldSlot.enable && oldSlot.SlotObj != null && oldSlot.SlotObj.CompareTag("SlotEquip")) GlobalData.EqupmentPlayer.PutOnEquip(oldSlot);
 
         return true;
     }
@@ -252,7 +252,7 @@ public class DragAndDrop:MonoBehaviour
                     tempSlot.Count = 0;
                     dragItem = false; //Отпускаем предмет
                     DragZone.SetActive(dragItem);  //Выкл возможность выбросить
-                    Inventory.Instance.UpdateSlotUI(newSlot);  //Обновляем картинку в UI
+                    GlobalData.Inventory.UpdateSlotUI(newSlot);  //Обновляем картинку в UI
                     Destroy(tempSlot.SlotObj);
                     oldSlot = null;
                     return true;
@@ -262,8 +262,8 @@ public class DragAndDrop:MonoBehaviour
                     //Debug.LogWarning("2212");
                     tempSlot.Count = newSlot.Count + tempSlot.Count - newSlot.Item.MaxCount;
                     newSlot.Count = newSlot.Item.MaxCount;
-                    Inventory.Instance.UpdateSlotUI(tempSlot);  //Обновляем картинку в UI
-                    Inventory.Instance.UpdateSlotUI(newSlot);  //Обновляем картинку в UI
+                    GlobalData.Inventory.UpdateSlotUI(tempSlot);  //Обновляем картинку в UI
+                    GlobalData.Inventory.UpdateSlotUI(newSlot);  //Обновляем картинку в UI
                     return false;
                 }
             }
@@ -300,14 +300,14 @@ public class DragAndDrop:MonoBehaviour
                 else if(oldSlot.Count == 0) //Если слоты просто разные, то меняем их местами
                 {
                     //Debug.LogWarning("1111");
-                    Inventory.Instance.SwapSlots(oldSlot, tempSlot); //Меняем местами слоты
-                    Inventory.Instance.SwapSlots(newSlot, oldSlot); //Меняем местами слоты
+                    GlobalData.Inventory.SwapSlots(oldSlot, tempSlot); //Меняем местами слоты
+                    GlobalData.Inventory.SwapSlots(newSlot, oldSlot); //Меняем местами слоты
                     oldSlot = null;
                 }
                 else
                 {
                     //Debug.LogWarning("2222");
-                    Inventory.Instance.SwapSlots(newSlot, tempSlot); //Меняем местами слоты, если старого нет
+                    GlobalData.Inventory.SwapSlots(newSlot, tempSlot); //Меняем местами слоты, если старого нет
                     oldSlot = null;
                 }
                 newSlot.SlotObj.GetComponent<ButtonHover>().UpdateInfo();
@@ -323,13 +323,13 @@ public class DragAndDrop:MonoBehaviour
             if (oldSlot.Count == 0)
             {
                 //Debug.LogWarning("333");
-                Inventory.Instance.SwapSlots(oldSlot, tempSlot); //Меняем местами слоты
+                GlobalData.Inventory.SwapSlots(oldSlot, tempSlot); //Меняем местами слоты
             }
             else
             {
                 //Debug.LogWarning("555");
                 oldSlot.Count += tempSlot.Count;
-                Inventory.Instance.UpdateSlotUI(oldSlot);
+                GlobalData.Inventory.UpdateSlotUI(oldSlot);
             }
         }
         DragSuccess();
@@ -342,11 +342,11 @@ public class DragAndDrop:MonoBehaviour
     {
         if (!dragItem)
         {
-            oldSlot = Inventory.Instance.GetSlot(new SlotRequest { index = numbSlot }); //Сохранем значения слота 
+            oldSlot = GlobalData.Inventory.GetSlot(new SlotRequest { index = numbSlot }); //Сохранем значения слота 
         }
         else
         {
-            newSlot = Inventory.Instance.GetSlot(new SlotRequest { index = numbSlot });//Сохранем значения еще одного слота
+            newSlot = GlobalData.Inventory.GetSlot(new SlotRequest { index = numbSlot });//Сохранем значения еще одного слота
         }
         DragHalfOrPutOne();
     }
@@ -354,11 +354,11 @@ public class DragAndDrop:MonoBehaviour
     {
         if (!dragItem)
         {
-            oldSlot = EqupmentPlayer.Instance.GetSlot(new SlotRequest { index = numbEquipmentSlot}); //Сохранем значения слота 
+            oldSlot = GlobalData.EqupmentPlayer.GetSlot(new SlotRequest { index = numbEquipmentSlot}); //Сохранем значения слота 
         }
         else
         {
-            newSlot = EqupmentPlayer.Instance.GetSlot(new SlotRequest { index = numbEquipmentSlot }); //Сохранем значения еще одного слота
+            newSlot = GlobalData.EqupmentPlayer.GetSlot(new SlotRequest { index = numbEquipmentSlot }); //Сохранем значения еще одного слота
             if (newSlot.itemFilter != tempSlot.Item.TypeItem)
             {
                 Debug.LogWarning("В тот слот не положить предмет этого типа");
@@ -371,22 +371,22 @@ public class DragAndDrop:MonoBehaviour
     {
         if (!dragItem)
         {
-            oldSlot = ShopLogic.Instance.GetSlot(new SlotRequest { index = numbSellSlot, Type = "Sell" }); //Сохранем значения слота 
+            oldSlot = GlobalData.ShopLogic.GetSlot(new SlotRequest { index = numbSellSlot, Type = "Sell" }); //Сохранем значения слота 
         }
         else
         {
-            newSlot = ShopLogic.Instance.GetSlot(new SlotRequest { index = numbSellSlot, Type = "Sell" }); //Сохранем значения слота 
+            newSlot = GlobalData.ShopLogic.GetSlot(new SlotRequest { index = numbSellSlot, Type = "Sell" }); //Сохранем значения слота 
         }
         DragHalfOrPutOne();
-        ShopLogic.Instance.CountedGoldForSell();
+        GlobalData.ShopLogic.CountedGoldForSell();
 
     }
     public void DragPieceSellArea()
     {
         if (dragItem)
         {
-            ShopLogic.Instance.CreateEmptySlot("Sell"); //Сохранем значения слота 
-            ShopLogic.Instance.AddItemToType("Sell", tempSlot.Item, 1, tempSlot.artifact_id);
+            GlobalData.ShopLogic.CreateEmptySlot("Sell"); //Сохранем значения слота 
+            GlobalData.ShopLogic.AddItemToType("Sell", tempSlot.Item, 1, tempSlot.artifact_id);
             tempSlot.Count--;
             SlotsManager.UpdateSlotUI(tempSlot);
 
@@ -396,19 +396,19 @@ public class DragAndDrop:MonoBehaviour
                 dragItem = false; //Отпускаем предмет
                 DragZone.SetActive(dragItem);  //Выключить возможность выбросить
             }
-            ShopLogic.Instance.CountedGoldForSell();
+            GlobalData.ShopLogic.CountedGoldForSell();
 
-            SoundsManager.Instance.PlayTakeItem();
+            GlobalData.SoundsManager.PlayTakeItem();
         }
     }
     public void DragPieceBuySlot(int numbBuySlot)
     {
         if (!dragItem)
         {
-            oldSlot = ShopLogic.Instance.GetSlot(new SlotRequest { index = numbBuySlot, Type = "Buy" }); //Сохранем значения слота 
+            oldSlot = GlobalData.ShopLogic.GetSlot(new SlotRequest { index = numbBuySlot, Type = "Buy" }); //Сохранем значения слота 
             if (oldSlot.Count == 0) return;
 
-            ShopLogic.Instance.AddItemToType("Shop", oldSlot.Item, 1, oldSlot.artifact_id);
+            GlobalData.ShopLogic.AddItemToType("Shop", oldSlot.Item, 1, oldSlot.artifact_id);
             oldSlot.Count--;
 
             if (oldSlot.Count == 0)
@@ -417,20 +417,20 @@ public class DragAndDrop:MonoBehaviour
             }
 
             SlotsManager.UpdateSlotUI(oldSlot);
-            ShopLogic.Instance.CountedGoldForBuy();
+            GlobalData.ShopLogic.CountedGoldForBuy();
 
-            SoundsManager.Instance.PlayPutItem();
+            GlobalData.SoundsManager.PlayPutItem();
         }
     }
     public void DragPieceShopSlot(int numbShopSlot)
     {
         if (!dragItem)
         {
-            oldSlot = ShopLogic.Instance.GetSlot(new SlotRequest { index = numbShopSlot, Type = "Shop" }); //Сохранем значения слота 
+            oldSlot = GlobalData.ShopLogic.GetSlot(new SlotRequest { index = numbShopSlot, Type = "Shop" }); //Сохранем значения слота 
             if (oldSlot.Count == 0) return;
 
-            ShopLogic.Instance.CreateEmptySlot("Buy"); //Сохранем значения слота 
-            ShopLogic.Instance.AddItemToType("Buy", oldSlot.Item, 1, oldSlot.artifact_id);
+            GlobalData.ShopLogic.CreateEmptySlot("Buy"); //Сохранем значения слота 
+            GlobalData.ShopLogic.AddItemToType("Buy", oldSlot.Item, 1, oldSlot.artifact_id);
             oldSlot.Count--;
             if (oldSlot.Count == 0)
             {
@@ -438,9 +438,9 @@ public class DragAndDrop:MonoBehaviour
             }
 
             SlotsManager.UpdateSlotUI(oldSlot);
-            ShopLogic.Instance.CountedGoldForBuy();
+            GlobalData.ShopLogic.CountedGoldForBuy();
 
-            SoundsManager.Instance.PlayTakeItem();
+            GlobalData.SoundsManager.PlayTakeItem();
         }
     }
     //==============================================
@@ -448,11 +448,11 @@ public class DragAndDrop:MonoBehaviour
     {
         if (!dragItem)
         {
-            if(TakeHalfItem()) SoundsManager.Instance.PlayTakeItem();
+            if(TakeHalfItem()) GlobalData.SoundsManager.PlayTakeItem();
         }
         else if (dragItem)
         {
-            if(PutOneItem()) SoundsManager.Instance.PlayPutItem();
+            if(PutOneItem()) GlobalData.SoundsManager.PlayPutItem();
         }
     }
     private bool TakeHalfItem()
@@ -464,8 +464,8 @@ public class DragAndDrop:MonoBehaviour
         tempSlot = new Slot(oldSlot.Item, oldSlot.Count - dragCountItem); //Копируем данные клетки
         oldSlot.Count = dragCountItem;   //Оставляем вторую половину на старом слоте
         tempSlot.SlotObj = Instantiate(GlobalPrefabs.SlotPref, parentUI); //Определяем картинку и текст в объекте
-        Inventory.Instance.UpdateSlotUI(tempSlot);  //Обновляем картинку в UI
-        Inventory.Instance.UpdateSlotUI(oldSlot);  //Обновляем картинку в UI
+        GlobalData.Inventory.UpdateSlotUI(tempSlot);  //Обновляем картинку в UI
+        GlobalData.Inventory.UpdateSlotUI(oldSlot);  //Обновляем картинку в UI
 
         //newSlot = null;
         dragItem = true;
@@ -494,8 +494,8 @@ public class DragAndDrop:MonoBehaviour
         {
             DragSuccess();
         }
-        Inventory.Instance.UpdateSlotUI(tempSlot);  //Обновляем картинку в UI
-        Inventory.Instance.UpdateSlotUI(newSlot);  //Обновляем картинку в UI
+        GlobalData.Inventory.UpdateSlotUI(tempSlot);  //Обновляем картинку в UI
+        GlobalData.Inventory.UpdateSlotUI(newSlot);  //Обновляем картинку в UI
         return true;
     }
     public void ClearOldSlot()
@@ -506,7 +506,7 @@ public class DragAndDrop:MonoBehaviour
     //================================================ Блок бросить предмет ====================================================================
     public void DropItem()
     {
-        SoundsManager.Instance.PlayPutDropItem();
+        GlobalData.SoundsManager.PlayPutDropItem();
         GameObject gameObject = Instantiate(GlobalPrefabs.ItemDropPref, ItemsOnMapLevel);
 
         gameObject.transform.position = player.position;
@@ -525,7 +525,7 @@ public class DragAndDrop:MonoBehaviour
     }
     public void DropItemThat(Item itemAdd, int count, int artID)
     {
-        SoundsManager.Instance.PlayPutDropItem();
+        GlobalData.SoundsManager.PlayPutDropItem();
         GameObject dropItem = Instantiate(GlobalPrefabs.ItemDropPref, ItemsOnMapLevel);
         dropItem.transform.position = player.position;
         ItemDrop ItemD = dropItem.GetComponent<ItemDrop>();
@@ -552,10 +552,10 @@ public class DragAndDrop:MonoBehaviour
             {
                 Debug.Log($"Объект в радиусе: {child.gameObject.name}");
                 ItemDrop ItemD = child.GetComponent<ItemDrop>();
-                int remains = Inventory.Instance.FindSlotAndAdd(ItemD.item, ItemD.count, false, ItemD.artId);
+                int remains = GlobalData.Inventory.FindSlotAndAdd(ItemD.item, ItemD.count, false, ItemD.artId);
                 if(remains > 0)
                 {
-                    SoundsManager.Instance.PlayTakeDropItem();
+                    GlobalData.SoundsManager.PlayTakeDropItem();
                     ItemD.count = remains;
                     TextMeshPro textMeshPro = child.gameObject.GetComponentInChildren<TextMeshPro>();
                     if (textMeshPro != null)
@@ -569,7 +569,7 @@ public class DragAndDrop:MonoBehaviour
                 }
                 else
                 {
-                    SoundsManager.Instance.PlayTakeDropItem();
+                    GlobalData.SoundsManager.PlayTakeDropItem();
                     Destroy(child.gameObject);
                 }
             }
@@ -584,8 +584,8 @@ public class DragAndDrop:MonoBehaviour
         dragItem = false; //Отпускаем предмет
         DragZone.SetActive(dragItem);  //Выключить возможность выбросить
 
-        if (newSlot != null && newSlot.SlotObj != null && newSlot.SlotObj.CompareTag("SlotEquip")) EqupmentPlayer.Instance.PutOnEquip(newSlot);
-        if (oldSlot != null && oldSlot.SlotObj != null && oldSlot.SlotObj.CompareTag("SlotEquip")) EqupmentPlayer.Instance.PutOnEquip(oldSlot);
+        if (newSlot != null && newSlot.SlotObj != null && newSlot.SlotObj.CompareTag("SlotEquip")) GlobalData.EqupmentPlayer.PutOnEquip(newSlot);
+        if (oldSlot != null && oldSlot.SlotObj != null && oldSlot.SlotObj.CompareTag("SlotEquip")) GlobalData.EqupmentPlayer.PutOnEquip(oldSlot);
     }
     //==========================================================================================================================================
     void Update()

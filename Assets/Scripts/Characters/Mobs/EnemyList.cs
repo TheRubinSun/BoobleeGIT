@@ -15,14 +15,14 @@ public enum TypeMob
     Technology,
     Mixed
 }
-public enum AllEnemy
-{
-    Daizen,
-    Rainger,
-    Slime,
-    Slime_boss,
-    Mimic
-}
+//public enum AllEnemy
+//{
+//    Daizen,
+//    Rainger,
+//    Slime,
+//    Slime_boss,
+//    Mimic
+//}
 
 public static class EnemyList 
 {
@@ -162,9 +162,9 @@ public class Mob
     }
     public void LocalizationMobs()
     {
-        if (LocalizationManager.Instance != null)
+        if (GlobalData.LocalizationManager != null)
         {
-            Dictionary<string, string> localized = LocalizationManager.Instance.GetLocalizedValue("mobs", NameKey);
+            Dictionary<string, string> localized = GlobalData.LocalizationManager.GetLocalizedValue("mobs", NameKey);
             if (localized != null)
             {
                 Name = localized["Name"];

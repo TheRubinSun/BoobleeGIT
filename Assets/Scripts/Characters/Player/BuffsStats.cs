@@ -38,71 +38,71 @@ public class BuffsStats
         Buff_Magic_Resis = 0f;
         Buff_Tech_Resis = 0f;
     }
-    public void BuffNull(AllParametrs parametrs)
+    public void BuffNull(AllStats parametrs)
     {
         switch (parametrs)
         {
-            case AllParametrs.Strength:
+            case AllStats.Strength:
                 Buff_Strength = 0;
                 break;
 
-            case AllParametrs.Agility:
+            case AllStats.Agility:
                 Buff_Agility = 0;
                 break;
 
-            case AllParametrs.Intelligence:
+            case AllStats.Intelligence:
                 Buff_Intelligence = 0;
                 break;
 
-            case AllParametrs.Max_Hp:
+            case AllStats.Max_Hp:
                 Buff_Max_Hp = 0;
                 break;
 
-            case AllParametrs.Max_Mana:
+            case AllStats.Max_Mana:
                 Buff_Max_Mana = 0f;
                 break;
 
-            case AllParametrs.Regen_Mana:
+            case AllStats.Regen_Mana:
                 Buff_Regen_Mana = 0f;
                 break;
 
-            case AllParametrs.Armor:
+            case AllStats.Armor:
                 Buff_Armor = 0;
                 break;
 
-            case AllParametrs.Evasion:
+            case AllStats.Evasion:
                 Buff_Evasion = 0;
                 break;
 
-            case AllParametrs.Mov_Speed:
+            case AllStats.Mov_Speed:
                 Buff_Mov_Speed = 0f;
                 break;
 
-            case AllParametrs.Att_Range:
+            case AllStats.Att_Range:
                 Buff_Att_Range = 0f;
                 break;
 
-            case AllParametrs.Att_Damage:
+            case AllStats.Att_Damage:
                 Buff_Att_Damage = 0;
                 break;
 
-            case AllParametrs.Att_Speed:
+            case AllStats.Att_Speed:
                 Buff_Att_Speed = 0;
                 break;
 
-            case AllParametrs.Proj_Speed:
+            case AllStats.Proj_Speed:
                 Buff_Proj_Speed = 0f;
                 break;
 
-            case AllParametrs.ExpBust:
+            case AllStats.ExpBust:
                 Buff_ExpBust = 0f;
                 break;
 
-            case AllParametrs.Magic_Resis:
+            case AllStats.Magic_Resis:
                 Buff_Magic_Resis = 0f;
                 break;
 
-            case AllParametrs.Tech_Resis:
+            case AllStats.Tech_Resis:
                 Buff_Tech_Resis = 0f;
                 break;
         }

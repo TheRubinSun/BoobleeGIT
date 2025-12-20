@@ -8,8 +8,6 @@ public class PlayerControl : MonoBehaviour
     public static PlayerControl Instance;
     //public event System.Action Switch_volume;
 
-    private Player player;
-
     [SerializeField] private GameObject playerObj;
     private Transform cameraObj;
     [SerializeField] private Transform centerLegs;
@@ -21,8 +19,6 @@ public class PlayerControl : MonoBehaviour
 
     private Vector2 inputDirection;
 
-
-    private GameManager g_m;
     private Vector2 mousePos;
     private Vector2 movement;
     public Vector2 currentPosCenterLegs;
@@ -47,11 +43,8 @@ public class PlayerControl : MonoBehaviour
     void Start()
     {
         Instance = this;
-        g_m = GameManager.Instance;
         if (cameraObj == null) cameraObj =  GameObject.Find("Main Camera").transform;
         //player = GetComponentInParent<Player>();
-
-        player = Player.Instance;
 
         rb = GetComponent<Rigidbody2D>();
         SetVolume();
@@ -73,7 +66,7 @@ public class PlayerControl : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (inputDirection.sqrMagnitude > 0 && !player.PlayerStay)
+        if (inputDirection.sqrMagnitude > 0 && !GlobalData.Player.PlayerStay)
         {
             Move();
         }
@@ -82,7 +75,7 @@ public class PlayerControl : MonoBehaviour
             rb.linearVelocity = Vector2.zero;
             if (Time.time >= nextUpdateTime)
             {
-                speed = player.GetPlayerStats().Mov_Speed;
+                speed = GlobalData.Player.GetPlayerStats().Mov_Speed;
                 MoveLegs(speed);
                 nextUpdateTime = Time.time + updateRateLegsStop;
             }
@@ -150,9 +143,9 @@ public class PlayerControl : MonoBehaviour
     private float speed;
     public void Move()
     {
-        speed = player.GetPlayerStats().Mov_Speed;
+        speed = GlobalData.Player.GetPlayerStats().Mov_Speed;
         movement = inputDirection.normalized * speed;
-        g_m.PlayerPosY = transform.position.y;
+        GlobalData.GameManager.PlayerPosY = transform.position.y;
 
         rb.linearVelocity = movement;
 

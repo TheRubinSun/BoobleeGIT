@@ -236,13 +236,13 @@ public class Inventory:MonoBehaviour, ISlot
                         {
                             if(itemAdd is ArtifactItem artifactItem)
                             {
-                                artID = Artifacts.Instance.AddNewArtifact(artifact.artifactLevel);
+                                artID = GlobalData.Artifacts.AddNewArtifact(artifact.artifactLevel);
                             }
                             else if(itemAdd is Weapon)
                             {
                                 if(UnityEngine.Random.value <= GlobalData.ChanceCharOnWeapon)
                                 {
-                                    artID = Artifacts.Instance.AddNewArtifact(artifact.artifactLevel);
+                                    artID = GlobalData.Artifacts.AddNewArtifact(artifact.artifactLevel);
                                 }
                                 else
                                 {
@@ -269,7 +269,7 @@ public class Inventory:MonoBehaviour, ISlot
 
         if(dropRemains)
         {
-            DragAndDrop.Instance.DropItemThat(itemAdd, count, artID);
+            GlobalData.DragAndDrop.DropItemThat(itemAdd, count, artID);
             return 0;
         }
 
@@ -491,8 +491,8 @@ public class Inventory:MonoBehaviour, ISlot
         newSlot.artifact_id = tempArtifactId;
 
         //Destroy(tempSlot);
-        Inventory.Instance.UpdateSlotUI(oldSlot);
-        Inventory.Instance.UpdateSlotUI(newSlot);;
+        GlobalData.Inventory.UpdateSlotUI(oldSlot);
+        GlobalData.Inventory.UpdateSlotUI(newSlot);;
         //PrintSlots();
     }
 
