@@ -545,6 +545,11 @@ public class DragAndDrop:MonoBehaviour
     //================================================ Блок поднять предмет ====================================================================
     public void PickUp()
     {
+        if(ItemsOnMapLevel == null)
+        {
+            ItemsOnMapLevel = GameObject.Find("DropItems").transform;
+            Debug.LogWarning("Warrning!!! not found ItemsOnMapLevel. You need to link object on DRAG_AND_DROP script");
+        }
         foreach(Transform child in ItemsOnMapLevel)
         {
             float distance = Vector2.Distance(player.position, child.transform.position);

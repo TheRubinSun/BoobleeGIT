@@ -1047,7 +1047,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2223221925364285075, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
       propertyPath: m_fontSize
-      value: 18
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 2235289048855529535, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1345,6 +1345,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 293217885867844315}
+    - target: {fileID: 3353422995079257286, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
+      propertyPath: ItemsOnMapLevel
+      value: 
+      objectReference: {fileID: 4292319139416013166}
     - target: {fileID: 3492897121659396703, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
       propertyPath: m_Spacing
       value: 5
