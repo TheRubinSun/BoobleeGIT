@@ -1,5 +1,7 @@
-using NUnit.Framework;
+using System.Collections;
 using System.Collections.Generic;
+using NUnit.Framework;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -18,12 +20,23 @@ public class CullingManager : MonoBehaviour
 
     public float activationRadiusX = 2f; // горизонталь
     public float activationRadiusY = 2f;  // вертикаль
+    private float radiusX; // горизонталь
+    private float radiusY;  // вертикаль
 
     public bool allVisible = false;
     private HashSet<ICullableObject> objects_visibles = new HashSet<ICullableObject>();
 
     private float cullCheckInterval = 0.25f; // 4 раза в секунду (вместо каждого кадра)
     private float cullCheckTimer = 0;
+
+    private PixelPerfectCamera ppc;
+    private Camera cam;
+    private Coroutine applayResole;
+
+    private int lastWidth;
+    private int lastHeight;
+
+
     private void Awake()
     {
         Instance = this;
@@ -36,18 +49,59 @@ public class CullingManager : MonoBehaviour
                 GlobalData.GameManager.PlayerModel = target;
             }
         }
+        cam = Camera.main;
+        ppc = cam.GetComponent<PixelPerfectCamera>();
+        applayResole = StartCoroutine(ApplyScale());
     }
-    private void Start()
-    {
-        Camera cam = Camera.main;
-        if(cam.orthographic)
-        {
-            float vert = cam.orthographicSize;
-            float horiz = vert * cam.aspect;
 
-            activationRadiusY = vert + activationRadiusY;
-            activationRadiusX = horiz + activationRadiusX;
+    //Дальность камеры от игрока (больше видимости в зависмости от разришения экрана)
+    private IEnumerator ApplyScale()
+    {
+
+        lastWidth = Screen.width;
+        lastHeight = Screen.height;
+
+        float multiply;
+
+
+        if (lastHeight >= 1900)          // 4K и около
+        {
+
+            ppc.assetsPPU = 50;
+            multiply = 2f;
         }
+        else if (lastHeight >= 1300)          // 2K и около
+        {
+            ppc.assetsPPU = 75;
+            multiply = 1.8f;
+        }
+        else if (lastHeight >= 900)      // FullHD
+        {
+            ppc.assetsPPU = 125;
+            multiply = 1.5f;
+        }
+        else                    // HD
+        {
+            ppc.assetsPPU = 125;
+            multiply = 1.1f;
+        }
+        yield return null;
+
+        ResizeNextFrame(multiply);
+    }
+    private void ResizeNextFrame(float multiply) //Обновление рамки помещение объектов  в кадор
+    {
+        float vert = cam.orthographicSize;
+        float horiz = vert * cam.aspect;
+
+        radiusY = vert + activationRadiusY * multiply;
+        radiusX = horiz + activationRadiusX * multiply;
+        //Debug.Log($"radiusY: {radiusY} radiusX:{radiusX} vert: {vert} horiz: {horiz}");
+    }
+
+    public void UpdateResolution()
+    {
+        applayResole = StartCoroutine(ApplyScale());
     }
     public void RegisterObject(ICullableObject object_Visible)
     {
@@ -70,8 +124,8 @@ public class CullingManager : MonoBehaviour
 
             Vector2 objectPos = object_Visible.GetPosition();
 
-            bool inBounds = Mathf.Abs(objectPos.x - target.position.x) <= activationRadiusX &&
-                            Mathf.Abs(objectPos.y - target.position.y) <= activationRadiusY;
+            bool inBounds = Mathf.Abs(objectPos.x - target.position.x) <= radiusX &&
+                            Mathf.Abs(objectPos.y - target.position.y) <= radiusY;
 
             bool shouldBeVisible = allVisible || inBounds;
 
