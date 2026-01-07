@@ -1,8 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using System.Collections;
-using UnityEditor.Rendering.LookDev;
 using System;
 
 public class SlotSelector : MonoBehaviour

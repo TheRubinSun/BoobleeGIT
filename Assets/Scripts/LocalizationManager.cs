@@ -27,8 +27,8 @@ public class LocalizationManager : MonoBehaviour
         currentLanguage = language;
 
         string nameFile = "localization.json";
-        string pathToFile = "/Data/LocalizationFiles/";
-        string filePath = Path.Combine(Application.dataPath + pathToFile, nameFile);
+        string pathToFile = "Data/LocalizationFiles";
+        string filePath = Path.Combine(Application.streamingAssetsPath, pathToFile, nameFile);
         if(File.Exists(filePath))
         {
             string dataAsJson = await File.ReadAllTextAsync(filePath, System.Text.Encoding.UTF8);

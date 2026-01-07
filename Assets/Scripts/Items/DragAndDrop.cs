@@ -1,12 +1,7 @@
 using System;
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditorInternal.VersionControl;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.XR;
-using static UnityEditor.Progress;
 
 public class DragAndDrop:MonoBehaviour
 {

@@ -1,5 +1,4 @@
-using Unity.Collections;
-using UnityEditor.ShaderGraph.Internal;
+
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewEffect", menuName = "Game/Effect")]

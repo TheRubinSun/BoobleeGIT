@@ -3,16 +3,8 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
-using UnityEditorInternal.VersionControl;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Localization.SmartFormat.Core.Parsing;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class Inventory:MonoBehaviour, ISlot
 {

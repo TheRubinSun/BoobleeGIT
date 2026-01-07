@@ -1,10 +1,6 @@
 using NUnit.Framework;
 using System;
-using System.Collections;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 
 [System.Serializable]
 public class PlayerStats : CharacterStats

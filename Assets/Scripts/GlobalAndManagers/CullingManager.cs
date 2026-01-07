@@ -60,7 +60,7 @@ public class CullingManager : MonoBehaviour
 
         lastWidth = Screen.width;
         lastHeight = Screen.height;
-
+        float ratio = lastWidth / lastHeight;
         float multiply;
 
 
@@ -85,7 +85,25 @@ public class CullingManager : MonoBehaviour
             ppc.assetsPPU = 125;
             multiply = 1.1f;
         }
+
         yield return null;
+
+        //if(ratio > 2.2f)
+        //{
+
+        //}
+        //else if(ratio > 1.8f)
+        //{
+
+        //}
+        //else if(ratio > 1.7f)
+        //{
+
+        //}
+        //else
+        //{
+
+        //}
 
         ResizeNextFrame(multiply);
     }

@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
-using UnityEditor.Build.Pipeline;
+
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class WeaponControl : MonoBehaviour
 {
