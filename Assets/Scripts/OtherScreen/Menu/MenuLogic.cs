@@ -22,13 +22,21 @@ public class MenuLogic : MonoBehaviour
     }
     public void OpenCloseOptions()
     {
-        if(!OptionsWindowActive)
+        OptionsWindowActive = !OptionsWindowActive;
+        OptionsWindow.SetActive(OptionsWindowActive);
+        if (OptionsWindowActive)
         {
             Options.Instance.AddResole();
             Options.Instance.DisplayCurResole();
         }
-        options.SaveChange();
-        OptionsWindowActive = !OptionsWindowActive;
-        OptionsWindow.SetActive(OptionsWindowActive);
+        else
+        {
+            options.SaveChange();
+        }
+
+    }
+    public void ExitTheGame()
+    {
+        Application.Quit();
     }
 }

@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 
+[Serializable]
 public class Boster : Item, IUsable
 {
     protected AllStats boosterType;
@@ -18,9 +20,19 @@ public class Boster : Item, IUsable
 
     public virtual bool Use()
     {
-        GlobalData.Player.AddAttribute(boosterType, countBoost);
-        if (GlobalData.Player != null) Debug.Log("Работает: " + countBoost);
-        return true;
+
+        if (GlobalData.Player != null)
+        {
+            GlobalData.Player.AddAttribute(boosterType, countBoost);
+            Debug.Log("Работает: " + countBoost);
+            return true;
+        }
+        else
+        {
+            Debug.LogWarning("Не найден игрок");
+            return false;
+        }
+
     }
 }
 //public enum BoosterType

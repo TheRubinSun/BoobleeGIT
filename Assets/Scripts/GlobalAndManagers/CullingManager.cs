@@ -55,8 +55,13 @@ public class CullingManager : MonoBehaviour
     }
 
     //ƒальность камеры от игрока (больше видимости в зависмости от разришени€ экрана)
+    public void UpdateResolution()
+    {
+        applayResole = StartCoroutine(ApplyScale());
+    }
     private IEnumerator ApplyScale()
     {
+        yield return new WaitForEndOfFrame();
 
         lastWidth = Screen.width;
         lastHeight = Screen.height;
@@ -66,7 +71,6 @@ public class CullingManager : MonoBehaviour
 
         if (lastHeight >= 1900)          // 4K и около
         {
-
             ppc.assetsPPU = 50;
             multiply = 2f;
         }
@@ -86,7 +90,7 @@ public class CullingManager : MonoBehaviour
             multiply = 1.1f;
         }
 
-        yield return null;
+        yield return new WaitForEndOfFrame();
 
         //if(ratio > 2.2f)
         //{
@@ -117,10 +121,7 @@ public class CullingManager : MonoBehaviour
         //Debug.Log($"radiusY: {radiusY} radiusX:{radiusX} vert: {vert} horiz: {horiz}");
     }
 
-    public void UpdateResolution()
-    {
-        applayResole = StartCoroutine(ApplyScale());
-    }
+
     public void RegisterObject(ICullableObject object_Visible)
     {
         objects_visibles.Add(object_Visible);

@@ -29,7 +29,7 @@ public static class GlobalData
 
     public static float ChanceCharOnWeapon = 0.10f;
 
-    public static Vector2Int screen_resole;
+    public static ScreenResolutions screen_resole;
 
     public static Inventory Inventory => Inventory.Instance;
     public static EqupmentPlayer EqupmentPlayer => EqupmentPlayer.Instance;
@@ -57,6 +57,7 @@ public static class GlobalData
     public static GenInfoSaves GenInfoSaves => GenInfoSaves.Instance;
     public static SpawnMobs SpawnMobs => SpawnMobs.Instance;
     
+    public static ScreenResolutions GetScreenResolutions() => new ScreenResolutions(Screen.width, Screen.height, Screen.currentResolution.refreshRateRatio.numerator, Screen.currentResolution.refreshRateRatio.denominator);
 }
 public static class BASE_VALUE_STATS_ARTEFACT
 {

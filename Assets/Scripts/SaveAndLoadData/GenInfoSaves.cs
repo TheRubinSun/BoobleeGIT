@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using UnityEngine.UI;
 using Unity.Collections;
 using System.Runtime.CompilerServices;
+using System.Collections;
 
 public class GenInfoSaves : MonoBehaviour 
 {
@@ -47,25 +48,31 @@ public class GenInfoSaves : MonoBehaviour
         icon_Player_Saves = new Image[SavesBut.Length];
         text_Player_info_saves = new TextMeshProUGUI[SavesBut.Length];
 
-        if (saveGameFiles.Count == 0) //Проверка, если вход в меню был из игры а файлы уже загруженны
+        if (saveGameFiles.Count == 0) //Проверка, если вход в меню был из игры а файлы уже загружены
         {
-            if (GameDataHolder.savesDataInfo == null || GameDataHolder.savesDataInfo.saveGameFiles.Count == 0)
+            if (GameDataHolder.savesDataInfo == null || GameDataHolder.savesDataInfo.saveGameFiles == null || GameDataHolder.savesDataInfo.saveGameFiles.Count == 0)
             {
                 CreateNullSaves();
             }
             else
             {
-                LoadSaveFiles(); //Если файлы уже не загруужены, если вход был из игры в меню
+                Debug.LogWarning(112);
+                LoadSaveFiles(); //Если файлы ещё не загружены, если вход был из игры в меню
 
                 if (saveGameFiles.Count < 3)
                 {
+                    Debug.LogWarning(1122);
                     CreateSaveEmpty();
                 }
             }
         }
         UpdateAllTextInfo();
     }
-
+    private void Start()
+    {
+        if(GlobalData.screen_resole == null) //Если разрешение ещё не записанно и не установленно (например при выходе в главное меню из сохранения)
+            StartCoroutine(ApplyResolution(GameDataHolder.savesDataInfo));
+    }
     public void LoadSave(int saveInt)
     {
         if (saveGameFiles.ContainsKey(saveInt))
@@ -85,6 +92,10 @@ public class GenInfoSaves : MonoBehaviour
         else
         {
             Debug.LogError($"Слот {saveInt} не найден!");
+            foreach(var save in saveGameFiles)
+            {
+                Debug.LogError($"Слот {save.Key} {save.Value.fileName}");
+            }
         }
     }
     public void LoadLastGame()
@@ -109,7 +120,7 @@ public class GenInfoSaves : MonoBehaviour
         lastSaveID = 100;
         string path_player_data = Path.Combine(Application.persistentDataPath, saveGameFiles[id].fileName + "player.json");
         string path_artifacts_data = Path.Combine(Application.persistentDataPath, saveGameFiles[id].fileName + "artifacts.json");
-        string screen_resole = $"{Screen.width}x{Screen.height}";
+        ScreenResolutions screen_resole = GlobalData.GetScreenResolutions();
         if (File.Exists(path_player_data))
         {
             try
@@ -135,7 +146,7 @@ public class GenInfoSaves : MonoBehaviour
             Debug.LogWarning($"Файл {path_player_data} не существует, удаление невозможно.");
         }
     }
-    public async Task SavedChanged(Dictionary<int, SaveGameInfo> _saveGameFiles, int _lastSaveID, string _language, float volume_sounds, float volume_musics, string screen_resole)
+    public async Task SavedChanged(Dictionary<int, SaveGameInfo> _saveGameFiles, int _lastSaveID, string _language, float volume_sounds, float volume_musics, ScreenResolutions screen_resole)
     {
         SavesDataInfo savesDataInfo = new SavesDataInfo(_saveGameFiles, _lastSaveID, _language, volume_sounds, volume_musics, screen_resole);
         await SaveSystem.SaveDataAsync(savesDataInfo, "saves_info.json");
@@ -171,15 +182,9 @@ public class GenInfoSaves : MonoBehaviour
             icon_Player_Saves[id].sprite = spritesPlayer[1];
             icon_Player_Saves[id].color = new Color32(255, 255, 255, 255);
             toggle_Saves[id].isOn = saveGameFiles[id].godMode;
-            //text_infoSaves[id].text = $"All time: {hours} h  {minutes} m\nLevel: {saveGameFiles[id].level}\nKills enemy: {saveGameFiles[id].enemy_kills}";
-            //imagesPlayerIcon[id].sprite = spritesPlayer[1];
-            //imagesPlayerIcon[id].color = new Color32(255, 255, 255, 255);
         }
         else
         {
-            //imagesPlayerIcon[id].sprite = spritesPlayer[0];
-            //imagesPlayerIcon[id].color = new Color32(113, 94, 94, 255);
-            //text_infoSaves[id].text = "empty";
             text_Player_info_saves[id].text = "empty";
             icon_Player_Saves[id].sprite = spritesPlayer[0];
             icon_Player_Saves[id].color = new Color32(113, 94, 94, 255);
@@ -218,39 +223,71 @@ public class GenInfoSaves : MonoBehaviour
     }
     private void LoadSaveFiles()
     {
-        //SavesDataInfo saveDataInfo = await SaveSystem.LoadDataAsync<SavesDataInfo>("saves_info.json");
+
         SavesDataInfo saveDataInfo = GameDataHolder.savesDataInfo;
-        GlobalData.VOLUME_MUSICS = saveDataInfo.volume_musics;
-        GlobalData.VOLUME_SOUNDS = saveDataInfo.volume_sounds;
-        GlobalData.Options.SetMusicVolume();
 
-        if(saveDataInfo.screen_resole != null)
-        {
-            string[] resoleStr = saveDataInfo.screen_resole.Split('x');
-            GlobalData.screen_resole = new Vector2Int(int.Parse(resoleStr[0]), int.Parse(resoleStr[1]));
-
-            //if (GlobalData.screen_resole.x != 0 && GlobalData.screen_resole.y != 0)
-                //Screen.SetResolution(GlobalData.screen_resole.x, GlobalData.screen_resole.y, FullScreenMode.FullScreenWindow);
-        }
-
-        if (saveDataInfo != null && saveDataInfo.saveGameFiles != null)
-        {
-            saveGameFiles = saveDataInfo.saveGameFiles;
-            lastSaveID = saveDataInfo.lastSaveID;
-            language = saveDataInfo.language;
-            volume_sounds = saveDataInfo.volume_sounds;
-            volume_musics = saveDataInfo.volume_musics;
-
-            Debug.Log("Сохранения загружены.");
-        }
-        else
+        if(saveDataInfo == null)
         {
             saveGameFiles = new Dictionary<int, SaveGameInfo>();
             lastSaveID = 100;
             language = "en";
+            CreateNullSaves();
             Debug.LogWarning("Файл сохранений не найден, создаем новые.");
         }
+        else
+        {
+            if(saveDataInfo.saveGameFiles == null)
+            {
+                CreateNullSaves();
+            }
+            else
+            {
+                saveGameFiles = saveDataInfo.saveGameFiles;
+            }
+            GlobalData.VOLUME_MUSICS = saveDataInfo.volume_musics;
+            GlobalData.VOLUME_SOUNDS = saveDataInfo.volume_sounds;
 
+            lastSaveID = saveDataInfo.lastSaveID;
+            language = saveDataInfo.language;
+            volume_sounds = saveDataInfo.volume_sounds;
+            volume_musics = saveDataInfo.volume_musics;
+        }
+
+        //if (saveDataInfo != null && saveDataInfo.saveGameFiles != null)
+        //{
+
+        //    Debug.Log("5555");
+        //    Debug.Log("Сохранения загружены.");
+        //}
+        //else
+        //{
+        //    saveGameFiles = new Dictionary<int, SaveGameInfo>();
+        //    lastSaveID = 100;
+        //    language = "en";
+        //    Debug.LogWarning("Файл сохранений не найден, создаем новые.");
+        //}
+        if (GlobalData.Options != null)
+            GlobalData.Options.SetMusicVolume();
+        else
+            Debug.LogWarning("GlobalData.Options == null");
+    }
+    private IEnumerator ApplyResolution(SavesDataInfo saveDataInfo)
+    {
+        yield return null;
+        yield return null;
+
+        if (saveDataInfo.screen_resole != null)
+        {
+            if (saveDataInfo.screen_resole.Width > 0 && saveDataInfo.screen_resole.Height > 0 && saveDataInfo.screen_resole.Hz_num > 0 && saveDataInfo.screen_resole.Hz_denom > 0)
+            {
+                GlobalData.screen_resole = saveDataInfo.screen_resole;
+                Screen.SetResolution(saveDataInfo.screen_resole.Width, saveDataInfo.screen_resole.Height, FullScreenMode.FullScreenWindow, new RefreshRate { numerator = saveDataInfo.screen_resole.Hz_num, denominator = saveDataInfo.screen_resole.Hz_denom });
+            }
+            else
+            {
+                GlobalData.screen_resole = GlobalData.GetScreenResolutions();
+            }
+        }
     }
 }
 

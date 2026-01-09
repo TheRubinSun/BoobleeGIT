@@ -94,11 +94,13 @@ MonoBehaviour:
   nameLocationName: {fileID: 335147606460955109}
   TimeToStart: 1
   TimeToEnd: 1
-  TimeTimeLoad: 2
+  TimeDisplayText: 1
   wholeObject: {fileID: 3586819235927898959}
-  nameLoc: Tralalalala
+  nameLoc: 
   fade_sound:
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 32e7fdc71fdc56f4bb9b4555f539a092, type: 3}
+  - {fileID: 8300000, guid: 6344bdbc9d11cdd489ef4364858aa1b7, type: 3}
+  - {fileID: 8300000, guid: 78115d4385666fa45a85a988a294178f, type: 3}
 --- !u!225 &3586819235927898959
 CanvasGroup:
   m_ObjectHideFlags: 0

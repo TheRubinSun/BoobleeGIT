@@ -263,6 +263,7 @@ public class Player : MonoBehaviour, ITakeDamage
     }
     public void AddAttribute(AllStats boosterType, int count)
     {
+        Debug.Log($"{boosterType}: {count}");
         pl_stats.AddAttribute(boosterType, count);
         UpdateAllUiInfo();
     }

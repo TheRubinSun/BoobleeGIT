@@ -14,12 +14,12 @@ public class SavesDataInfo
 
     public float volume_sounds;
     public float volume_musics;
-    public string screen_resole;
+    public ScreenResolutions screen_resole;
     public SavesDataInfo()
     {
         saveGameFiles = new();
     }
-    public SavesDataInfo(Dictionary<int, SaveGameInfo> _saveGameFiles, int _lastSaveID, string language, float volume_sounds, float volume_musics, string screen_resole)
+    public SavesDataInfo(Dictionary<int, SaveGameInfo> _saveGameFiles, int _lastSaveID, string language, float volume_sounds, float volume_musics, ScreenResolutions screen_resole)
     {
         saveGameFiles = _saveGameFiles;
         lastSaveID = _lastSaveID;

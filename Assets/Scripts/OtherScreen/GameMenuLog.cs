@@ -39,11 +39,17 @@ public class GameMenuLog : MonoBehaviour
     }
     public bool CheckSaveZone()
     {
-        if (GlobalData.saveZone && (GlobalData.Player.GetHp() > 0)) return true;
+        if (GlobalData.saveZone && (GlobalData.Player.GetHp() > 0))
+            return true;
         return false;
     }
     public void ApplySettings()
     {
+        //if (GlobalData.CullingManager != null)
+        //{
+        //    GlobalData.CullingManager.UpdateResolution();
+        //}
+
         GlobalData.Options.SaveChange();
         GlobalData.UIControl.LocalizationTranslate();
         SettingsWindow.SetActive(false);
@@ -99,6 +105,7 @@ public class GameMenuLog : MonoBehaviour
     private async Task GoToMenu()
     {
         GlobalData.NAME_NEW_LOCATION = "Game_village";
+        Debug.Log($"{GlobalData.screen_resole.Width}x{GlobalData.screen_resole.Height} ({GlobalData.screen_resole.Hz_num/ GlobalData.screen_resole.Hz_denom}Hz)");
         //await GameManager.Instance.SavePlayTime();
         await SceneManager.LoadSceneAsync("Menu");
     }
