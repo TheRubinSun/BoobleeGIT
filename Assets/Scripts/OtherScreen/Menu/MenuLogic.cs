@@ -22,6 +22,11 @@ public class MenuLogic : MonoBehaviour
     }
     public void OpenCloseOptions()
     {
+        if(!OptionsWindowActive)
+        {
+            Options.Instance.AddResole();
+            Options.Instance.DisplayCurResole();
+        }
         options.SaveChange();
         OptionsWindowActive = !OptionsWindowActive;
         OptionsWindow.SetActive(OptionsWindowActive);

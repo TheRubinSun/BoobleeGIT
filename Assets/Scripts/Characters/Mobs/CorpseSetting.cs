@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
-using static UnityEditor.Progress;
 
 public class CorpseSetting : MonoBehaviour, ICullableObject
 {

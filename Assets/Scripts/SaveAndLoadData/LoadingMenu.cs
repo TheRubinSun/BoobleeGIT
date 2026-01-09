@@ -125,35 +125,83 @@ public class LoadingMenu : MonoBehaviour
     //}
     private IEnumerator LoadSprites(string addressableKey)
     {
+        //if (string.IsNullOrEmpty(addressableKey))
+        //{
+        //    Debug.LogError("LoadSprites: передан пустой addressableKey!");
+        //    GameDataHolder.spriteList = new Sprite[0]; // Чтобы не было null-ошибок
+        //    yield break;
+        //}
+        //Dictionary<int, Sprite> spriteById = new();
+        //List<Sprite> sprites = new List<Sprite> { null }; //первый элемент `null`
+        //AsyncOperationHandle<IList<Sprite>> handle = Addressables.LoadAssetAsync<IList<Sprite>>(addressableKey);
+
+        //while (!handle.IsDone) // Ждем окончания загрузки
+        //{
+        //    progressBar.value = handle.PercentComplete; // Обновляем прогресс загрузки
+        //    yield return null;
+        //}
+
+        //if (handle.Status == AsyncOperationStatus.Succeeded && handle.Result != null && handle.Result.Count > 0)
+        //{
+        //    sprites.AddRange(handle.Result);
+        //    GameDataHolder.spriteList = sprites.ToArray();
+        //    Debug.Log($"Успешно загружено {GameDataHolder.spriteList.Length} спрайтов.");
+        //}
+        //else
+        //{
+        //    Debug.LogError("Не удалось загрузить спрайты через Addressables или список пуст.");
+        //    GameDataHolder.spriteList = new Sprite[0]; // Чтобы избежать ошибок
+        //}
+
+        //Addressables.Release(handle);
+
         if (string.IsNullOrEmpty(addressableKey))
         {
-            Debug.LogError("LoadSprites: передан пустой addressableKey!");
-            GameDataHolder.spriteList = new Sprite[0]; // Чтобы не было null-ошибок
+            Debug.LogError("LoadSprites: пустой ключ");
             yield break;
         }
 
-        List<Sprite> sprites = new List<Sprite> { null }; //первый элемент `null`
-        AsyncOperationHandle<IList<Sprite>> handle = Addressables.LoadAssetAsync<IList<Sprite>>(addressableKey);
+        AsyncOperationHandle<IList<Sprite>> handle =
+            Addressables.LoadAssetAsync<IList<Sprite>>(addressableKey);
 
-        while (!handle.IsDone) // Ждем окончания загрузки
+        while (!handle.IsDone)
         {
-            progressBar.value = handle.PercentComplete; // Обновляем прогресс загрузки
+            progressBar.value = handle.PercentComplete;
             yield return null;
         }
 
-        if (handle.Status == AsyncOperationStatus.Succeeded && handle.Result != null && handle.Result.Count > 0)
+        if (handle.Status != AsyncOperationStatus.Succeeded || handle.Result == null)
         {
-            sprites.AddRange(handle.Result);
-            GameDataHolder.spriteList = sprites.ToArray();
-            Debug.Log($"Успешно загружено {GameDataHolder.spriteList.Length} спрайтов.");
-        }
-        else
-        {
-            Debug.LogError("Не удалось загрузить спрайты через Addressables или список пуст.");
-            GameDataHolder.spriteList = new Sprite[0]; // Чтобы избежать ошибок
+            Debug.LogError("LoadSprites: ошибка загрузки");
+            yield break;
         }
 
-        Addressables.Release(handle);
+        Dictionary<int, Sprite> spriteById = new Dictionary<int, Sprite>();
+
+        foreach (Sprite sprite in handle.Result)
+        {
+            // Формат: SpriteSheet_0, SpriteSheet_1, ...
+            int underscoreIndex = sprite.name.LastIndexOf('_');
+
+            if (underscoreIndex < 0)
+            {
+                Debug.LogWarning($"Некорректное имя спрайта: {sprite.name}");
+                continue;
+            }
+
+            if (int.TryParse(sprite.name.Substring(underscoreIndex + 1), out int id))
+            {
+                spriteById[id] = sprite;
+            }
+            else
+            {
+                Debug.LogWarning($"Не удалось извлечь ID из имени спрайта: {sprite.name}");
+            }
+        }
+
+        GameDataHolder.spriteById = spriteById;
+
+        Debug.Log($"Sprite Sheet загружен: {spriteById.Count} спрайтов");
     }
     private void UpdateProgress(float step, float totalStep)
     {

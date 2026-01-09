@@ -309,7 +309,8 @@ public class GameManager: MonoBehaviour
         saveGameInfo.lvl_left = GlobalData.cur_lvl_left;
 
         //saveGameIngo.randomCalls = GlobalData.randomCalls;
-        SavesDataInfo savesDataInfo = new SavesDataInfo(GenInfoSaves.saveGameFiles, GlobalData.SaveInt, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS);
+        string resole = $"{Screen.width}x{Screen.height}";
+        SavesDataInfo savesDataInfo = new SavesDataInfo(GenInfoSaves.saveGameFiles, GlobalData.SaveInt, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, resole);
         //await SaveSystem.SaveDataAsync(savesDataInfo, "saves_info.json");
 
         CraftsRecipesData savesDataRecipesCrafts = new CraftsRecipesData(RecipesCraft.recipesCraft);
@@ -344,7 +345,8 @@ public class GameManager: MonoBehaviour
     public async Task SaveOnlyPlayTime()
     {
         WritePlayTime();
-        SavesDataInfo savesDataInfo = new SavesDataInfo(GenInfoSaves.saveGameFiles, GlobalData.SaveInt, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS);
+        string resole = $"{Screen.width}x{Screen.height}";
+        SavesDataInfo savesDataInfo = new SavesDataInfo(GenInfoSaves.saveGameFiles, GlobalData.SaveInt, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, resole);
         await SaveSystem.SaveDataAsync(savesDataInfo, "saves_info.json");
     }
     //public async void LoadDataGame()

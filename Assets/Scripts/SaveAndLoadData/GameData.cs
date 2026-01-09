@@ -1,6 +1,5 @@
 using NUnit.Framework;
 using System.Collections.Generic;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 
 public class GameData
@@ -15,17 +14,19 @@ public class SavesDataInfo
 
     public float volume_sounds;
     public float volume_musics;
+    public string screen_resole;
     public SavesDataInfo()
     {
         saveGameFiles = new();
     }
-    public SavesDataInfo(Dictionary<int, SaveGameInfo> _saveGameFiles, int _lastSaveID, string language, float volume_sounds, float volume_musics)
+    public SavesDataInfo(Dictionary<int, SaveGameInfo> _saveGameFiles, int _lastSaveID, string language, float volume_sounds, float volume_musics, string screen_resole)
     {
         saveGameFiles = _saveGameFiles;
         lastSaveID = _lastSaveID;
         this.language = language;
         this.volume_sounds = volume_sounds;
         this.volume_musics = volume_musics;
+        this.screen_resole = screen_resole;
     }
 }
 public class SaveDataBinds

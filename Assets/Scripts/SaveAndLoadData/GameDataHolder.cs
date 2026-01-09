@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class GameDataHolder
@@ -11,4 +12,5 @@ public static class GameDataHolder
     public static EnemyData EnemyData;
     public static ItemsDropOnEnemy ItemsDropOnEnemy;
     public static Sprite[] spriteList;
+    public static Dictionary<int, Sprite> spriteById;
 }

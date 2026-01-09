@@ -29,6 +29,7 @@ public static class GlobalData
 
     public static float ChanceCharOnWeapon = 0.10f;
 
+    public static Vector2Int screen_resole;
 
     public static Inventory Inventory => Inventory.Instance;
     public static EqupmentPlayer EqupmentPlayer => EqupmentPlayer.Instance;
