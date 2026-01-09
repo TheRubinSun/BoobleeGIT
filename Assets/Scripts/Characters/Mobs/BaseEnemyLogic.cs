@@ -1,14 +1,8 @@
 using NUnit.Framework;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using TMPro;
-using UnityEditor.Build.Player;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
-using UnityEngine.Audio;
-using UnityEngine.ResourceManagement.ResourceProviders.Simulation;
 
 public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAttack
 {

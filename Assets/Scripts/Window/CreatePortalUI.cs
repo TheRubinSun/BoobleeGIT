@@ -1,8 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
-using System.Globalization;
 using TMPro;
-using Unity.Android.Gradle;
 using UnityEngine;
 
 public class CreatePortalUI : MonoBehaviour 

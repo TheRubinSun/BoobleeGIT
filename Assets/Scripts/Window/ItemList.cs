@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
@@ -139,20 +140,49 @@ public static class ItemsList
     }
     private static void InitializeSpritesItem()
     {
-        for(int i = 1;i<items.Count;i++)
+        //for (int i = 1; i < items.Count; i++)
+        //{
+
+        //    if (items[i].Id < spriteList.Length)
+        //    {
+        //        if (items[i].SpriteID != 0) items[i].SetSprite(spriteList[items[i].SpriteID-1]); //Если записан какой-то другой id sprite не по порядку, то берем его
+
+        //        else items[i].SetSprite(spriteList[items[i].Id-1]); //Иначе берем по ID предмета спрайт, так как там по порядку идут
+
+        //    }
+        //    else
+        //    {
+        //        Debug.LogWarning($"[ItemsList] Спрайт не найден для предмета ID={items[i].Id}, SpriteID={items[i].Id}");
+        //    }
+        //}
+        //int b = 0;
+        //foreach (var c in GameDataHolder.spriteList)
+        //{
+        //    Debug.Log($"c: {b} => {c}");
+        //    b++;
+        //}
+
+        for (int i = 1; i < items.Count; i++)
         {
-
-            if (items[i].Id < spriteList.Length)
+            if (items[i].SpriteID != 0)
             {
-                if(items[i].SpriteID != 0) items[i].SetSprite(spriteList[items[i].SpriteID]); //Если записан какой-то другой id sprite не по порядку, то берем его
-
-                else items[i].SetSprite(spriteList[items[i].Id]); //Иначе берем по ID предмета спрайт, так как там по порядку идут
-
+                FindSprite(i, items[i].SpriteID - 1);//Если записан какой-то другой id sprite не по порядку, то берем его
             }
             else
             {
-                Debug.LogWarning($"[ItemsList] Спрайт не найден для предмета ID={items[i].Id}, SpriteID={items[i].Id}");
+                FindSprite(i, items[i].Id - 1);//Иначе берем по ID предмета спрайт, так как там по порядку идут
             }
+        }
+    }
+    private static void FindSprite(int idItem, int idSprite)
+    {
+        if (GameDataHolder.spriteById.TryGetValue(idSprite, out Sprite sprite))
+        {
+            items[idItem].SetSprite(sprite);
+        }
+        else
+        {
+            Debug.LogWarning($"[ItemsList] Спрайт не найден для предмета ID={items[idItem].Id}, SpriteID={items[idItem].SpriteID}");
         }
     }
     private static void InitializeSpriteItem(int i)

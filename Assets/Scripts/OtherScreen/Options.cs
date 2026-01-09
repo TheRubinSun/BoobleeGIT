@@ -1,10 +1,10 @@
+
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
-using static Unity.VisualScripting.Icons;
 
 
 
@@ -22,6 +22,10 @@ public class Options : MonoBehaviour
     private bool OpenContolSet = false;
 
     private string language;
+
+    public TMP_Dropdown selectResole;
+    public TextMeshProUGUI textCurResole;
+    private Resolution[] res;
     private void Awake()
     {
         Instance = this;
@@ -31,13 +35,17 @@ public class Options : MonoBehaviour
         sounds_volume_sli.value = GlobalData.VOLUME_SOUNDS;
         music_volume_sli.value = GlobalData.VOLUME_MUSICS;
         LoadSavedLanguage();
+
+        //AddResole();
+        //DisplayCurResole();
     }
     public async void SaveChange()
     {
-        if(language != null)
-            await GlobalData.GenInfoSaves.SavedChanged(GenInfoSaves.saveGameFiles, GenInfoSaves.lastSaveID, language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS);
+        string resole = $"{Screen.width}x{Screen.height}";
+        if (language != null)
+            await GlobalData.GenInfoSaves.SavedChanged(GenInfoSaves.saveGameFiles, GenInfoSaves.lastSaveID, language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, resole);
         else
-            await GlobalData.GenInfoSaves.SavedChanged(GenInfoSaves.saveGameFiles, GenInfoSaves.lastSaveID, GenInfoSaves.language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS);
+            await GlobalData.GenInfoSaves.SavedChanged(GenInfoSaves.saveGameFiles, GenInfoSaves.lastSaveID, GenInfoSaves.language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, resole);
     }
     public async void SwitchLanguage(string localeCode)
     {
@@ -78,7 +86,7 @@ public class Options : MonoBehaviour
     public void SetMusicVolume()
     {
         float db_sounds = Mathf.Log10(Mathf.Clamp01(GlobalData.VOLUME_SOUNDS + 0.001f)) * 20f;
-        //Debug.Log(db_sounds);
+
         float db_music = Mathf.Log10(Mathf.Clamp01(GlobalData.VOLUME_MUSICS + 0.001f)) * 20f;
         mixer.SetFloat("Sounds", db_sounds);
         mixer.SetFloat("MusicVol", db_music);
@@ -92,5 +100,43 @@ public class Options : MonoBehaviour
     {
         WindowControlsSet.SetActive(false);
         OpenContolSet = false;
+    }
+
+    public void AddResole()
+    {
+        res = Screen.resolutions;
+        selectResole.ClearOptions();
+        foreach (Resolution resolution in res)
+        {
+            if(resolution.width < 1200 || resolution.height < 700) 
+                continue;
+            selectResole.options.Add(new TMP_Dropdown.OptionData($"{resolution.width}x{resolution.height} ({resolution.refreshRateRatio} Hz)"));
+        }
+    }
+    public void DisplayCurResole()
+    {
+        var cur = Screen.currentResolution;
+        for (int i = 0; i < res.Length;  i++)
+        {
+            if (res[i].width == Screen.width && res[i].height == Screen.height && res[i].refreshRateRatio.value == cur.refreshRateRatio.value)
+            {
+                selectResole.SetValueWithoutNotify(i);
+                textCurResole.text = $"{Screen.width}x{Screen.height}";
+                return;
+            }
+        }
+        textCurResole.text = $"{Screen.width}x{Screen.height}";
+    }
+    public void SwitchResolution()
+    {
+        int index = selectResole.value;
+        if(selectResole == null)
+        {
+            selectResole = GameObject.Find("SelectResole").GetComponent<TMP_Dropdown>();
+            Debug.LogWarning("SelectResole приходится искать, не заданна ссылка");
+        }
+
+        Screen.SetResolution(res[index].width, res[index].height, FullScreenMode.FullScreenWindow);
+        GlobalData.screen_resole = new Vector2Int(res[index].width, res[index].height);
     }
 }

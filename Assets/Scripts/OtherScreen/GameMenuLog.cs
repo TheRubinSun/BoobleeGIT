@@ -57,6 +57,8 @@ public class GameMenuLog : MonoBehaviour
     }
     public void OpenSettings()
     {
+        Options.Instance.AddResole();
+        Options.Instance.DisplayCurResole();
         SettingsWindow.SetActive(true);
     }
     public void OpenControlSet()
