@@ -355,8 +355,8 @@ Transform:
   m_GameObject: {fileID: 6221128400833103457}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3, y: 5, z: 0}
-  m_LocalScale: {x: 20, y: 20, z: 1}
+  m_LocalPosition: {x: 5, y: 5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5474354063514761166}
@@ -470,7 +470,7 @@ MonoBehaviour:
   attachSound: {fileID: 8300000, guid: 7c10f79409b3fd049bfd251c26a48ed1, type: 3}
   audioMove:
   - {fileID: 8300000, guid: c6654f1e309cc8d4d932ebc042678887, type: 3}
-  MinionSlots: {fileID: 0}
+  MinionSlots: {fileID: 5710650095865819719}
   slotHand: {fileID: 5710650095865819719}
   Rotate_Obj: {fileID: 5500005018856370692}
   Body_Obj: {fileID: 397049028878963008}
