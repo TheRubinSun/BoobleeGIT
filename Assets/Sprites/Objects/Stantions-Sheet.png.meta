@@ -1,25 +1,22 @@
 fileFormatVersion: 2
-guid: 7097690ddc8f6cd4fa99fcb70e5f3455
+guid: e774cb82a7a93be47affe893a64d0441
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3064098373982928753
-    second: Stantions_Sheets_0
+      213: 2206989927750400822
+    second: Stantions-Sheet_0
   - first:
-      213: 2569054452176909711
-    second: Stantions_Sheets_1
+      213: -6304975954214246615
+    second: Stantions-Sheet_1
   - first:
-      213: -2871665623440857591
-    second: Stantions_Sheets_2
+      213: -4533039229387763458
+    second: Stantions-Sheet_2
   - first:
-      213: 2222790264544727237
-    second: Stantions_Sheets_3
+      213: -3103419117203556285
+    second: Stantions-Sheet_3
   - first:
-      213: -1930561628202101759
-    second: Stantions_Sheets_4
-  - first:
-      213: 4184075844398433310
-    second: Stantions_Sheets_5
+      213: -6441240397136468132
+    second: Stantions-Sheet_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -87,9 +84,9 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -141,13 +138,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Stantions_Sheets_0
+      name: Stantions-Sheet_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 150
-        height: 150
+        x: 19
+        y: 48
+        width: 92
+        height: 49
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -156,20 +153,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 17fba12ac3dd58a20800000000000000
-      internalID: 3064098373982928753
+      spriteID: 63b7d6a65adc0ae10800000000000000
+      internalID: 2206989927750400822
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Stantions_Sheets_1
+      name: Stantions-Sheet_1
       rect:
         serializedVersion: 2
-        x: 150
-        y: 0
-        width: 150
-        height: 150
+        x: 199
+        y: 32
+        width: 48
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -178,20 +175,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f85f3aea96d17a320800000000000000
-      internalID: 2569054452176909711
+      spriteID: 9272eab56c93088a0800000000000000
+      internalID: -6304975954214246615
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Stantions_Sheets_2
+      name: Stantions-Sheet_2
       rect:
         serializedVersion: 2
-        x: 300
-        y: 0
-        width: 150
-        height: 150
+        x: 318
+        y: 35
+        width: 116
+        height: 51
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -200,20 +197,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9066b19845bc528d0800000000000000
-      internalID: -2871665623440857591
+      spriteID: ef09e6386d86711c0800000000000000
+      internalID: -4533039229387763458
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Stantions_Sheets_3
+      name: Stantions-Sheet_3
       rect:
         serializedVersion: 2
-        x: 450
-        y: 0
-        width: 150
-        height: 150
+        x: 476
+        y: 22
+        width: 99
+        height: 94
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -222,8 +219,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5c0926008ffe8de10800000000000000
-      internalID: 2222790264544727237
+      spriteID: 348fce961c07ee4d0800000000000000
+      internalID: -3103419117203556285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Stantions-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 637
+        y: 24
+        width: 66
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c57e8c76cfd1c96a0800000000000000
+      internalID: -6441240397136468132
       vertices: []
       indices: 
       edges: []
@@ -232,7 +251,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 241640a8d1588404aa8f117abcb6fdba
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -242,10 +261,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Stantions_Sheets_0: 3064098373982928753
-      Stantions_Sheets_1: 2569054452176909711
-      Stantions_Sheets_2: -2871665623440857591
-      Stantions_Sheets_3: 2222790264544727237
+      Stantions-Sheet_0: 2206989927750400822
+      Stantions-Sheet_1: -6304975954214246615
+      Stantions-Sheet_2: -4533039229387763458
+      Stantions-Sheet_3: -3103419117203556285
+      Stantions-Sheet_4: -6441240397136468132
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
