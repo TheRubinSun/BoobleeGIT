@@ -72,9 +72,9 @@ public static class EnemyList
             mobs.Add(new Car("death_car_enem", 40, 1.7f, false, 2, 40, 2.5f, 100, TypeMob.Technology, 3, 0f, 0.15f));
             mobs.Add(new TastyFly("tasty_fly_enem", 9, 4f, false, 2, 30, 1.7f, 30, 10f, TypeMob.Magic, 3, 0.15f, 0f));
             mobs.Add(new Bur("bur_enem", 20, 2f, false, 4, 15, 1.5f, 45, 4f, TypeMob.Technology, 3, 0f, 0.15f));
-            mobs.Add(new Bug_poop("bug_skull_enem", 10, 1.4f, false, 1, 15, 1f, 20, 5, 4f, 3, 2.5f, TypeMob.Magic, 2, 0.15f, 0));
+            mobs.Add(new Bug_poop("bug_skull_enem", 10, 1.4f, false, 1, 15, 1f, 20, 5, 4f, 3, 2.5f,damageT.Magic ,TypeMob.Magic, 2, 0.15f, 0));
             mobs.Add(new Bug("bug_enem", 10, 1.4f, false, 1, 15, 2.5f, 20, TypeMob.Magic, 2, 0.15f, 0));
-            mobs.Add(new MultitacBoss("multitacBoss_enem", 500, 6f, false, 1, 4, 0.5f, 20, TypeMob.Magic, 2, 0.15f, 0));
+            mobs.Add(new MultitacBoss("multitacBoss_enem", 500, 6f, false, 1, 4, 0.5f, 20,20, 4, 3, damageT.Magic, TypeMob.Magic, 2, 0.15f, 0));
             //DisplayMobsList.Instance.DisplayLinesMobs(mobs);
             //CreatePortalUI.Instance.DisplayLinesMobs(mobs);
         }
@@ -267,7 +267,8 @@ public class Bug_poop : Mob
     public int damage_ball { get; set; }
     public float speed_ball { get; set; }
     public float speed_withoutBall { get; set; }
-    public Bug_poop(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed, int giveExp, int _hp_ball, float _speed_ball, int _damage_ball, float _speed_withoutBall, TypeMob typeMob,
+    public damageT damageType { get; set; }
+    public Bug_poop(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed, int giveExp, int _hp_ball, float _speed_ball, int _damage_ball, float _speed_withoutBall, damageT _damageT, TypeMob typeMob,
     int _Armor = 0, float _Mag_Resis = 0, float _Tech_Resis = 0)
     : base(_name, _hp, _rangeAt, _isranged, _damage, _attackspeed, _speed, giveExp, typeMob, _Armor, _Mag_Resis, _Tech_Resis)
     {
@@ -275,6 +276,7 @@ public class Bug_poop : Mob
         speed_ball = _speed_ball;
         damage_ball = _damage_ball;
         speed_withoutBall = _speed_withoutBall;
+        damageType = _damageT;
     }
 }
 [Serializable]
@@ -290,10 +292,18 @@ public class Bug : Mob
 [Serializable]
 public class MultitacBoss : Mob
 {
-    public MultitacBoss(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed, int giveExp, TypeMob typeMob,
+    public int hp_ball { get; set; }
+    public int damage_ball { get; set; }
+    public float speed_ball { get; set; }
+    public damageT damageType { get; set; }
+    public MultitacBoss(string _name, int _hp, float _rangeAt, bool _isranged, int _damage, int _attackspeed, float _speed, int giveExp,
+         int _hp_ball, float _speed_ball, int _damage_ball, damageT _damageT, TypeMob typeMob,
     int _Armor = 0, float _Mag_Resis = 0, float _Tech_Resis = 0)
     : base(_name, _hp, _rangeAt, _isranged, _damage, _attackspeed, _speed, giveExp, typeMob, _Armor, _Mag_Resis, _Tech_Resis)
     {
-
+        hp_ball = _hp_ball;
+        damage_ball = _damage_ball;
+        speed_ball = _speed_ball;
+        damageType = _damageT;
     }
 }

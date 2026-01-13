@@ -2,53 +2,17 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Ball_logic : ObjectLBroken
+public class Ball_logic : EnemyShield
 {
-    protected int damage_ball { get; set; }
-    public bool isRun { get; set; }
-    public bool isDestroyed { get; private set; }
-    protected int layerOBJ;
-
-    //protected GameManager g_m = GameManager.Instance;
     protected Rigidbody2D rb;
-
-    protected override void Awake()
-    {
-        layerOBJ = gameObject.layer;
-        base.Awake();
-    }
-    protected override void Start()
-    {
-        base.Start();
-    }
+    public bool isRun { get; set; }
     public void SetRB2D(Rigidbody2D _rb)
     {
         rb = _rb;
     }
-    public void LoadParametrs(int hp, int damage)
-    {
-        remainsHits = hp;
-        damage_ball = damage;
-    }
-    public override Vector2 GetPosition() => transform.position;
-    public override void Break(CanBeWeapon canBeWeapon)
-    {
-        //Debug.Log($"remainsHits: {remainsHits}");
-        remainsHits--;
-        if (remainsHits <= 0 && !isDestroyed)
-        {
-            isDestroyed = true;
-            StartCoroutine(PlayeSoundFullBroken());
-        }
-        else if (remainsHits % toNextStageAnim == 0)
-        {
-            PlayeSoundBroken();
-            brokenStage++;
-        }
-    }
     protected override IEnumerator PlayeSoundFullBroken()
     {
-        if(rb != null) rb.linearVelocity = Vector3.zero;
+        if (rb != null) rb.linearVelocity = Vector3.zero;
         anim.SetTrigger("Destroy");
         if (fullBroken == null)
         {
@@ -61,7 +25,7 @@ public class Ball_logic : ObjectLBroken
             audioS.PlayOneShot(fullBroken);
         }
 
-        
+
         Collider2D collider2D = GetComponent<Collider2D>();
         collider2D.enabled = false;
         DropItems();
@@ -74,20 +38,6 @@ public class Ball_logic : ObjectLBroken
     {
         isRun = true;
     }
-    public override void CreateCulling()
-    {
-        culling = new CullingObject(spr_ren, anim, null);
-    }
-
-    public override void UpdateCulling(bool shouldBeVisible)
-    {
-        if (isVisibleNow != shouldBeVisible)
-        {
-            isVisibleNow = shouldBeVisible;
-            culling.SetVisible(shouldBeVisible);
-        }
-    }
-
     public override void UpdateSortingOrder()
     {
         if (!isVisibleNow) return;
@@ -95,9 +45,9 @@ public class Ball_logic : ObjectLBroken
         float mobPosY = transform.position.y;
         float PlayerPosY = GlobalData.GameManager.PlayerPosY;
 
-        spr_ren.sortingOrder = Mathf.RoundToInt(((mobPosY - PlayerPosY - 2) * -5) -1f);
+        spr_ren.sortingOrder = Mathf.RoundToInt(((mobPosY - PlayerPosY - 2) * -5) - 1f);
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    protected override void OnCollisionEnter2D(Collision2D collision)
     {
         int layerCol = collision.gameObject.layer;
         if (layerCol == LayerManager.playerLayer)
@@ -109,15 +59,15 @@ public class Ball_logic : ObjectLBroken
             StartCoroutine(PlayeSoundFullBroken());
         }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
 
         int layerCol = collision.gameObject.layer;
-        if(layerCol == LayerManager.playerLayer)
+        if (layerCol == LayerManager.playerLayer)
         {
-            GlobalData.Player.TakeDamage(damage_ball, damageT.Magic, false);
+            GlobalData.Player.TakeDamage(damage_ball, damageType, false);
         }
-        if(isRun && (layerCol == LayerManager.obstaclesLayer || layerCol == LayerManager.playerLayer))
+        if (isRun && (layerCol == LayerManager.obstaclesLayer || layerCol == LayerManager.playerLayer))
         {
             StartCoroutine(PlayeSoundFullBroken());
         }

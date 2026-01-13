@@ -13,4 +13,8 @@ public class BossLogic : BaseEnemyLogic
     {
         base.Attack(distanceToPlayer);
     }
+    protected override void LoadParametrs()
+    {
+        base.LoadParametrs();
+    }
 }

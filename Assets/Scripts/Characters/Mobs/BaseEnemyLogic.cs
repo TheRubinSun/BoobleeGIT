@@ -93,6 +93,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
 
     [SerializeField] protected Abillity[] abillities;
 
+    protected Coroutine flashCol;
     protected virtual void Awake()
     {
         bf_stats = new BuffsStats();
@@ -290,7 +291,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
         {
             healthBar.UpdateHealthBar(enum_stat.Cur_Hp, enum_stat.Max_Hp);
         }
-        StartCoroutine(FlashColor(new Color32(255, 108, 108, 255), 0.1f));
+        flashCol = StartCoroutine(FlashColor(new Color32(255, 108, 108, 255), 0.1f));
         if (enum_stat.Cur_Hp <= 0)
         {
             Death();
@@ -337,7 +338,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
         {
             healthBar.UpdateHealthBar(enum_stat.Cur_Hp, enum_stat.Max_Hp);
         }
-        StartCoroutine(FlashColor(new Color32(110, 255, 93, 255), 0.1f));
+        flashCol = StartCoroutine(FlashColor(new Color32(110, 255, 93, 255), 0.1f));
     }
     public virtual IEnumerator FlashColor(Color32 color, float time) //Менять цвет на время
     {

@@ -26,7 +26,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.8, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2116592827263197391}
@@ -110,6 +110,7 @@ MonoBehaviour:
   - {fileID: 3660523776718287939}
   - {fileID: 1419693046388019252}
   - {fileID: 7416031374871379536}
+  ballsLogic: []
   addRangeToPlayer: 5
 --- !u!114 &2190829937573134563
 MonoBehaviour:
@@ -537,9 +538,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2460447429755782637, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2460447429755782637, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9135936
+      objectReference: {fileID: 0}
+    - target: {fileID: 2460447429755782637, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_Color.r
+      value: 0.47450984
+      objectReference: {fileID: 0}
     - target: {fileID: 8417221321333851958, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
       propertyPath: m_Name
       value: CellBoss (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8417221321333851958, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 8417221321333851958, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -604,9 +625,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2460447429755782637, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2460447429755782637, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9135936
+      objectReference: {fileID: 0}
+    - target: {fileID: 2460447429755782637, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_Color.r
+      value: 0.47450984
+      objectReference: {fileID: 0}
     - target: {fileID: 8417221321333851958, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
       propertyPath: m_Name
       value: CellBoss (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8417221321333851958, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 8417221321333851958, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -671,9 +712,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2460447429755782637, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_Color.b
+      value: 0.72750634
+      objectReference: {fileID: 0}
+    - target: {fileID: 2460447429755782637, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2460447429755782637, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_Color.r
+      value: 0.47450984
+      objectReference: {fileID: 0}
     - target: {fileID: 8417221321333851958, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
       propertyPath: m_Name
       value: CellBoss (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8417221321333851958, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 8417221321333851958, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -738,9 +799,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2460447429755782637, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_Color.b
+      value: 0.72750634
+      objectReference: {fileID: 0}
+    - target: {fileID: 2460447429755782637, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2460447429755782637, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_Color.r
+      value: 0.47450984
+      objectReference: {fileID: 0}
     - target: {fileID: 8417221321333851958, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
       propertyPath: m_Name
       value: CellBoss (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8417221321333851958, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 8417221321333851958, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -805,9 +886,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2460447429755782637, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_Color.b
+      value: 0.47450984
+      objectReference: {fileID: 0}
+    - target: {fileID: 2460447429755782637, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9653729
+      objectReference: {fileID: 0}
     - target: {fileID: 8417221321333851958, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
       propertyPath: m_Name
       value: CellBoss (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8417221321333851958, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 8417221321333851958, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -876,6 +973,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: CellBoss (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8417221321333851958, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 8417221321333851958, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -939,9 +1044,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2460447429755782637, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_Color.b
+      value: 0.47450984
+      objectReference: {fileID: 0}
+    - target: {fileID: 2460447429755782637, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9653729
+      objectReference: {fileID: 0}
     - target: {fileID: 8417221321333851958, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
       propertyPath: m_Name
       value: CellBoss (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8417221321333851958, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 8417221321333851958, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1009,6 +1130,14 @@ PrefabInstance:
     - target: {fileID: 8417221321333851958, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
       propertyPath: m_Name
       value: CellBoss (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8417221321333851958, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 8417221321333851958, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

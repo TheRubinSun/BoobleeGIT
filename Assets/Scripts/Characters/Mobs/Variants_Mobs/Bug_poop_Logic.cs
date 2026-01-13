@@ -40,7 +40,7 @@ public class Bug_poop_Logic : BaseEnemyLogic
             Debug.Log(mob.NameKey);
             speed_without_ball = bug_mob.speed_withoutBall;
             speed_ball = bug_mob.speed_ball;
-            ball_logic.LoadParametrs(bug_mob.Hp, bug_mob.damage_ball);
+            ball_logic.LoadParametrs(bug_mob.Hp, bug_mob.damage_ball, bug_mob.damageType);
         }
         
     }

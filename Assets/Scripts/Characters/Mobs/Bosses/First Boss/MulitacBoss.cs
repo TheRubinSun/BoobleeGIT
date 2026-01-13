@@ -8,7 +8,10 @@ public class MulitacBoss : BossLogic
     private Vector2[] cellPosition = new Vector2[8] {
         new Vector2(0.0f, 0.4f), new Vector2(0.3f, 0.3f), new Vector2(0.4f, 0.0f), new Vector2(0.3f, -0.3f),
         new Vector2(0.0f, -0.4f), new Vector2(-0.3f, -0.3f), new Vector2(-0.4f, 0.0f), new Vector2(-0.3f, 0.3f)};
+
     public List<GameObject> ballsOfBoss = new List<GameObject>();
+    public BallBoss[] ballsLogic;
+
     private float speedBalls = 4f;
     [SerializeField] private int addRangeToPlayer = 1;
 
@@ -21,7 +24,26 @@ public class MulitacBoss : BossLogic
         base.Start();
         retrunBalls = new Coroutine[ballsOfBoss.Count];
         shootBalls = new Coroutine[ballsOfBoss.Count];
+
         StartCoroutine(ReturnBallsToStart());
+    }
+    protected override void LoadParametrs()
+    {
+        base.LoadParametrs();
+        ballsLogic = new BallBoss[ballsOfBoss.Count];
+
+        if (mob is MultitacBoss boss)
+        {
+            for (int i = 0; i < ballsOfBoss.Count; i++)
+            {
+                if(ballsOfBoss[i] != null)
+                {
+                    ballsLogic[i] = ballsOfBoss[i].GetComponent<BallBoss>();
+                    ballsLogic[i].LoadParametrs(boss.hp_ball, boss.damage_ball, boss.damageType);
+                }
+            }
+        }
+
     }
     public override void Attack(float distanceToPlayer)
     {

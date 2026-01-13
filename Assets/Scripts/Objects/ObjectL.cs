@@ -33,9 +33,12 @@ public abstract class ObjectLBroken : ObjectL
 
     [SerializeField] protected List<ItemDropData> itemsDrop = new List<ItemDropData>();
 
+    protected Color32 original_color; //Цвет
+    [SerializeField] protected Color32 damage_color;
+
     protected AudioSource audioS;
     protected int brokenStage;
-
+    protected Coroutine flashCol;
     public override Vector2 GetPosition() => startPos;
     public virtual float GetPosX() => startPos.x;
     public virtual float GetPosY() => startPos.y;
@@ -48,6 +51,7 @@ public abstract class ObjectLBroken : ObjectL
     }
     protected virtual void Start()
     {
+        original_color = spr_ren.color;
         startPos = transform.position;
         //audioS.volume = GlobalData.VOLUME_SOUNDS;
 
@@ -96,7 +100,12 @@ public abstract class ObjectLBroken : ObjectL
     }
     protected virtual void PlayeSoundBroken()
     {
-        if(soundsBroken.Length == 0)
+        if (!damage_color.Equals(default(Color32)))
+        {
+            flashCol = StartCoroutine(FlashColor(damage_color, 0.1f));
+        }
+
+        if (soundsBroken.Length == 0)
         {
             Debug.LogWarning("Нет звуков");
             return;
@@ -152,6 +161,17 @@ public abstract class ObjectLBroken : ObjectL
 
             dropItem.GetComponent<SpriteRenderer>().sprite = ItemD.sprite;
             dropItem.GetComponentInChildren<TextMeshPro>().text = $"{ItemD.item.Name} ({ItemD.count})";
+        }
+    }
+    public virtual IEnumerator FlashColor(Color32 color, float time) //Менять цвет на время
+    {
+        if (spr_ren != null)
+        {
+            spr_ren.color = color;
+
+            yield return new WaitForSeconds(time);
+
+            spr_ren.color = original_color;
         }
     }
 }

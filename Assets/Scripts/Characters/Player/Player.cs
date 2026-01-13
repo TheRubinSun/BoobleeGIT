@@ -26,6 +26,7 @@ public class Player : MonoBehaviour, ITakeDamage
     private readonly Dictionary<int, MinionControl> MinionsObj = new();
     private PlayerControl playerControl;
 
+    private Coroutine flashCol;
     [SerializeField] 
     private GameObject PlayerModel;
     //[SerializeField]
@@ -350,7 +351,7 @@ public class Player : MonoBehaviour, ITakeDamage
             GetComponent<EffectsManager>().ApplyEffect(effect);
         }
         pl_ui.UpdateHpBar(pl_stats);
-        StartCoroutine(FlashColor(new Color32(255, 108, 108, 255), 0.1f));
+        flashCol = StartCoroutine(FlashColor(new Color32(255, 108, 108, 255), 0.1f));
         IsDeath();
     }
     public bool HaveMana(int spendMana) => pl_stats.HaveMana(spendMana);
@@ -365,7 +366,7 @@ public class Player : MonoBehaviour, ITakeDamage
         {
             GlobalData.SoundsManager.PlayItemSoundsWithRandomPitch(0.7f, 1.2f, 4);
             pl_ui.UpdateHpBar(pl_stats);
-            StartCoroutine(FlashColor(new Color32(110, 255, 93, 255), 0.1f));
+            flashCol = StartCoroutine(FlashColor(new Color32(110, 255, 93, 255), 0.1f));
             return true;
         }
         return false;
@@ -376,7 +377,7 @@ public class Player : MonoBehaviour, ITakeDamage
         {
             GlobalData.SoundsManager.PlayItemSounds(4);
             pl_ui.UpdateManaBar(pl_stats);
-            StartCoroutine(FlashColor(new Color32(84, 160, 210, 255), 0.1f));
+            flashCol = StartCoroutine(FlashColor(new Color32(84, 160, 210, 255), 0.1f));
             return true;
         }
         return false;
