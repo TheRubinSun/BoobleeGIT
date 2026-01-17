@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BowLogic : RangeWeaponLogic
+public class BowLogic : GunLogic
 {
     protected Animator anim;
     protected override void Start()

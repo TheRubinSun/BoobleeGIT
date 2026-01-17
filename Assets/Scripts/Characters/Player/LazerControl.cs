@@ -54,7 +54,7 @@ public class LazerControl : MonoBehaviour
 
             if (hitLayer == LayerManager.touchObjectsLayer || hitLayer == LayerManager.touchTriggObjLayer)
             {
-                ObjectLBroken objectL = hit.collider.gameObject.GetComponent<ObjectLBroken>();
+                ObjectLBroken objectL = GetObjLogic(hit.collider);
                 if (objectL != null)
                 {
                     objectL.Break(canBeWeapon);
@@ -85,37 +85,96 @@ public class LazerControl : MonoBehaviour
     }
     protected void ProcessOtherHits(RaycastHit2D hit)
     {
-        int countHits = 1;
         if (hit.transform == null) return;
         Collider2D[] arroundHits = Physics2D.OverlapCircleAll(hit.transform.position, attack_range / 2);
-        int countToch = 0;
+
+        int hitsCount = 0;
         foreach (Collider2D arHit in arroundHits)
         {
             if (arHit.transform == hit.transform)
                 continue;
 
-            if (arHit.gameObject.layer == LayerManager.enemyLayer)
-            {
-                countHits++;
-                laserRend.AddLaser(hit.point, arHit.transform.position);
-
-                BaseEnemyLogic enemyLogic = GetEnemyLogic(arHit);
-                if (enemyLogic != null)
-                    enemyLogic.TakeDamage(damage / 2, damageType, canBeWeapon.canBeMissed, effectAttack);
-
-                countToch++;
-                if (countToch == CountProjectiles) break;
-
+            if (!TryProcessTarget(hit, arHit))
                 continue;
-            }
 
+            hitsCount++;
+
+            if (hitsCount >= CountProjectiles)
+                break;
         }
+        //foreach (Collider2D arHit in arroundHits)
+        //{
+        //    if (arHit.transform == hit.transform)
+        //        continue;
+
+        //    if (arHit.gameObject.layer == LayerManager.enemyLayer)
+        //    {
+        //        laserRend.AddLaser(hit.point, arHit.transform.position);
+
+        //        BaseEnemyLogic enemyLogic = GetEnemyLogic(arHit);
+        //        if (enemyLogic != null)
+        //            enemyLogic.TakeDamage(damage / 2, damageType, canBeWeapon.canBeMissed, effectAttack);
+
+        //        countToch++;
+        //        if (countToch == CountProjectiles) break;
+
+        //        continue;
+        //    }
+        //    else if (arHit.gameObject.layer == LayerManager.touchObjectsLayer)
+        //    {
+        //        laserRend.AddLaser(hit.point, arHit.transform.position);
+
+        //        ObjectLBroken objectL = GetObjLogic(arHit);
+        //        if (objectL != null)
+        //        {
+        //            objectL.Break(canBeWeapon);
+        //        }
+
+        //        countToch++;
+        //        if (countToch == CountProjectiles) break;
+
+        //        continue;
+        //    }
+
+        //}
+    }
+    private bool TryProcessTarget(RaycastHit2D originalHit, Collider2D target)
+    {
+        int layer = target.gameObject.layer;
+        if(layer == LayerManager.enemyLayer)
+        {
+            laserRend.AddLaser(originalHit.point, target.transform.position);
+
+            BaseEnemyLogic enemyLogic = GetEnemyLogic(target);
+            if (enemyLogic != null)
+                enemyLogic.TakeDamage(damage / 2, damageType, canBeWeapon.canBeMissed, effectAttack);
+            return true;
+        }
+        else if(layer == LayerManager.touchObjectsLayer)
+        {
+            laserRend.AddLaser(originalHit.point, target.transform.position);
+
+            ObjectLBroken objectL = GetObjLogic(target);
+            if (objectL != null)
+            {
+                objectL.Break(canBeWeapon);
+            }
+            return true;
+        }
+        return false;
     }
     private BaseEnemyLogic GetEnemyLogic(Collider2D collider)
     {
         BaseEnemyLogic logic = collider.GetComponent<BaseEnemyLogic>();
         if (logic == null)
             logic = collider.transform.parent.GetComponent<BaseEnemyLogic>();
+        return logic;
+    }
+    private ObjectLBroken GetObjLogic(Collider2D collider)
+    {
+        ObjectLBroken logic = collider.GetComponent<ObjectLBroken>();
+        if (logic == null)
+            logic = collider.transform.parent.GetComponent<ObjectLBroken>();
         return logic;
     }
     private IEnumerator WaitForDivideRay(RaycastHit2D hit, float time)

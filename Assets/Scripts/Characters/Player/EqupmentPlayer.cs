@@ -296,34 +296,35 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     }
     private void LoadParametersWeapon(GameObject weaponObj, Slot slot)
     {
-        if (slot.Item is Gun gun)
-        {
-            //Debug.Log($"Gun: {gun.NameKey}: {gun.projectileSpeed}");
-            weaponObj.GetComponent<RangeWeaponLogic>().GetStatsWeapon(gun ,gun.damage, gun.attackSpeedCoof,gun.addAttackSpeed, gun.projectileSpeed, gun.rangeType, gun.range, gun.conut_Projectiles, gun.spreadAngle, gun.typeDamage, PlayerModel,
-                ResourcesData.GetProjectilesPrefab(gun.idPrefabShot), gun.projectileSpeedCoof, gun.effectID);
-        }
-        else if (slot.Item is MeleWeapon sword)
-        {
-            weaponObj.GetComponent<MeleWeaponLogic>().GetStatsWeapon(sword,sword.damage, sword.attackSpeedCoof,sword.addAttackSpeed, 0, sword.rangeType, sword.range, sword.conut_Projectiles, 0f, sword.typeDamage, PlayerModel, null, 0, sword.effectID);
-        }
-        else if (slot.Item is StaffBullet staff)
-        {
-            weaponObj.GetComponent<StaffLogic>().GetStatsStaff(staff, staff.damage, staff.attackSpeedCoof, staff.addAttackSpeed, staff.projectileSpeed, staff.rangeType, staff.range, staff.conut_Projectiles, staff.spreadAngle, staff.typeDamage, PlayerModel, 2,
-                ResourcesData.GetProjectilesPrefab(staff.idPrefabShot), staff.projectileSpeedCoof, staff.effectID);
-            
-        }
-        else if(slot.Item is LazerStaffGun stuffLGun)
-        {
-            weaponObj.GetComponent<RayStaffLogic>().GetStatsRayStaff(stuffLGun, stuffLGun.damage, stuffLGun.attackSpeedCoof, stuffLGun.addAttackSpeed, 0, stuffLGun.rangeType, stuffLGun.range, stuffLGun.conut_Projectiles, 0f, stuffLGun.typeDamage, stuffLGun.CountPenetration, stuffLGun.manaCost, PlayerModel, stuffLGun.idPrefabShot, null, 0 ,stuffLGun.effectID);
-        }
-        else if (slot.Item is LazerGun lGun)
-        {
-            weaponObj.GetComponent<RayWeaponLogic>().GetStatsLazerGun(lGun, lGun.damage, lGun.attackSpeedCoof, lGun.addAttackSpeed, 0, lGun.rangeType, lGun.range, lGun.conut_Projectiles, 0f, lGun.typeDamage, lGun.CountPenetration, PlayerModel, lGun.idPrefabShot , null, 0, lGun.effectID);
-        }
-        else if (slot.Item is Weapon weapon)
-        {
-            weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(weapon, weapon.damage, weapon.attackSpeedCoof, weapon.addAttackSpeed, 0, weapon.rangeType, weapon.range, weapon.conut_Projectiles, 0f, weapon.typeDamage, PlayerModel, null, 0, weapon.effectID);
-        }
+        Weapon weapon = slot.Item as Weapon;
+        weaponObj.GetComponent<WeaponControl>().ApplyStats(weapon, PlayerModel);
+        //if (slot.Item is StaffBullet staff)
+        //{
+        //    weaponObj.GetComponent<StaffLogic>().GetStatsStaff(staff, staff.damage, staff.attackSpeedCoof, staff.addAttackSpeed, staff.projectileSpeed, staff.rangeType, staff.range, staff.conut_Projectiles, staff.spreadAngle, staff.typeDamage, PlayerModel, staff.manaCost,
+        //        ResourcesData.GetProjectilesPrefab(staff.idPrefabShot), staff.projectileSpeedCoof, staff.effectID);
+        //}
+        //else if(slot.Item is LazerStaffGun stuffLGun)
+        //{
+        //    weaponObj.GetComponent<RayStaffLogic>().GetStatsRayStaff(stuffLGun, stuffLGun.damage, stuffLGun.attackSpeedCoof, stuffLGun.addAttackSpeed, 0, stuffLGun.rangeType, stuffLGun.range, stuffLGun.conut_Projectiles, 0f, stuffLGun.typeDamage, stuffLGun.CountPenetration, stuffLGun.manaCost, PlayerModel, stuffLGun.idPrefabShot, null, 0 ,stuffLGun.effectID);
+        //}
+        //else if (slot.Item is LazerGun lGun)
+        //{
+        //    weaponObj.GetComponent<RayWeaponLogic>().GetStatsLazerGun(lGun, lGun.damage, lGun.attackSpeedCoof, lGun.addAttackSpeed, 0, lGun.rangeType, lGun.range, lGun.conut_Projectiles, 0f, lGun.typeDamage, lGun.CountPenetration, PlayerModel, lGun.idPrefabShot , null, 0, lGun.effectID);
+        //}
+        //else if (slot.Item is Gun gun)
+        //{
+        //    //Debug.Log($"Gun: {gun.NameKey}: {gun.projectileSpeed}");
+        //    weaponObj.GetComponent<RangeWeaponLogic>().GetStatsWeapon(gun, gun.damage, gun.attackSpeedCoof, gun.addAttackSpeed, gun.projectileSpeed, gun.rangeType, gun.range, gun.conut_Projectiles, gun.spreadAngle, gun.typeDamage, PlayerModel,
+        //        ResourcesData.GetProjectilesPrefab(gun.idPrefabShot), gun.projectileSpeedCoof, gun.effectID);
+        //}
+        //else if (slot.Item is MeleWeapon sword)
+        //{
+        //    weaponObj.GetComponent<MeleWeaponLogic>().GetStatsWeapon(sword, sword.damage, sword.attackSpeedCoof, sword.addAttackSpeed, 0, sword.rangeType, sword.range, sword.conut_Projectiles, 0f, sword.typeDamage, PlayerModel, null, 0, sword.effectID);
+        //}
+        //else if (slot.Item is Weapon weapon)
+        //{
+        //    weaponObj.GetComponent<WeaponControl>().GetStatsWeapon(weapon, weapon.damage, weapon.attackSpeedCoof, weapon.addAttackSpeed, 0, weapon.rangeType, weapon.range, weapon.conut_Projectiles, 0f, weapon.typeDamage, PlayerModel, null, 0, weapon.effectID);
+        //}
     }
     private void LoadParametersMinion(GameObject minionObj, Slot slot)
     {

@@ -1,7 +1,12 @@
 
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class WeaponControl : MonoBehaviour
+public abstract class WeaponStatsApplier: MonoBehaviour
+{
+    public abstract void ApplyStats(Weapon weapon, Transform playerModel);
+}
+public class WeaponControl : WeaponStatsApplier
 {
     protected Weapon baseWeapon;
     protected int Attack_Damage {  get; set; }
@@ -58,39 +63,71 @@ public class WeaponControl : MonoBehaviour
     {
         //audioSource_Shot.volume = GlobalData.VOLUME_SOUNDS;
     }
-    public virtual void GetStatsWeapon(Weapon _weapon,int damage, float at_speed_coof, float add_at_speed, float att_sp_pr, bool isRang, float attack_ran, int count_proj, float _spreadAngle, damageT _damT, Transform pl_mod, GameObject _Projectile_pref = null, float att_sp_pr_coof = 0, int _effectID = -1)
+    public override void ApplyStats(Weapon weapon, Transform playerModel)
     {
         PlayerStats pl_stat = GlobalData.Player.GetPlayerStats();
 
-        baseWeapon = _weapon;
-        Attack_Damage = damage + pl_stat.Att_Damage;
+        baseWeapon = weapon;
+        Attack_Damage = weapon.damage + pl_stat.Att_Damage;
 
-        Attack_Speed_Coof = at_speed_coof;
-        Add_Attack_Speed = add_at_speed;
+        Attack_Speed_Coof = weapon.attackSpeedCoof;
+        Add_Attack_Speed = weapon.addAttackSpeed;
 
-        isRange = isRang;
+        isRange = weapon.rangeType;
 
-        if(isRang) Attack_Range = attack_ran + pl_stat.Att_Range;
-        else Attack_Range = attack_ran + (pl_stat.Att_Range/2);
+        if (isRange) Attack_Range = weapon.range + pl_stat.Att_Range;
+        else Attack_Range = weapon.range + (pl_stat.Att_Range / 2);
 
-        damageType = _damT;
+        damageType = weapon.typeDamage;
 
         if (pl_stat.Att_Speed < 1)
             attackInterval = 10f;
         else
             attackInterval = 60f / ((Add_Attack_Speed + pl_stat.Att_Speed) * Attack_Speed_Coof);
 
-        PlayerModel = pl_mod;
+        PlayerModel = playerModel;
 
         canBeWeapon.canBeMissed = true;
 
-        if (_effectID == -1) EffectAttack = null;
+        if (weapon.effectID == -1) EffectAttack = null;
         else
-            EffectAttack = ResourcesData.GetEffectsPrefab(_effectID);
+            EffectAttack = ResourcesData.GetEffectsPrefab(weapon.effectID);
 
-        CountProjectiles = GlobalData.Player.GetPlayerStats().count_Projectile + count_proj;
-
+        CountProjectiles = GlobalData.Player.GetPlayerStats().count_Projectile + weapon.conut_Projectiles;
     }
+    //public virtual void GetStatsWeapon(Weapon _weapon,int damage, float at_speed_coof, float add_at_speed, float att_sp_pr, bool isRang, float attack_ran, int count_proj, float _spreadAngle, damageT _damT, Transform pl_mod, GameObject _Projectile_pref = null, float att_sp_pr_coof = 0, int _effectID = -1)
+    //{
+    //    PlayerStats pl_stat = GlobalData.Player.GetPlayerStats();
+
+    //    baseWeapon = _weapon;
+    //    Attack_Damage = damage + pl_stat.Att_Damage;
+
+    //    Attack_Speed_Coof = at_speed_coof;
+    //    Add_Attack_Speed = add_at_speed;
+
+    //    isRange = isRang;
+
+    //    if(isRang) Attack_Range = attack_ran + pl_stat.Att_Range;
+    //    else Attack_Range = attack_ran + (pl_stat.Att_Range/2);
+
+    //    damageType = _damT;
+
+    //    if (pl_stat.Att_Speed < 1)
+    //        attackInterval = 10f;
+    //    else
+    //        attackInterval = 60f / ((Add_Attack_Speed + pl_stat.Att_Speed) * Attack_Speed_Coof);
+
+    //    PlayerModel = pl_mod;
+
+    //    canBeWeapon.canBeMissed = true;
+
+    //    if (_effectID == -1) EffectAttack = null;
+    //    else
+    //        EffectAttack = ResourcesData.GetEffectsPrefab(_effectID);
+
+    //    CountProjectiles = GlobalData.Player.GetPlayerStats().count_Projectile + count_proj;
+
+    //}
     //protected virtual void UpdateStats()
     //{
     //    PlayerStats pl_stat = Player.Instance.GetPlayerStats();
@@ -152,7 +189,6 @@ public class WeaponControl : MonoBehaviour
     protected virtual void ShootLogic(float offset) { }
     protected virtual void ShootVelocity(GameObject projectile, Vector2 direction) { }
     protected virtual void MeleeAttack() { }
-
 
 
 }

@@ -1,14 +1,11 @@
 
 using UnityEngine;
 
-public class RayWeaponLogic : WeaponControl
+public class RayWeaponLogic : RangeWeaponLogic
 {
-    [SerializeField] protected Transform ShootPos;
-
     [Header("Делится ли лазер")]
     [SerializeField] bool isDivideRay;
     protected int countPenetrations;
-    protected Vector2 defaultShootPos;
     protected float startWidthLine;
     protected LaserBatchRenderer laserBatchRenderer;
     protected int IdPrefabLazer;
@@ -24,14 +21,21 @@ public class RayWeaponLogic : WeaponControl
 
         defaultShootPos = ShootPos.localPosition;
     }
-    public virtual void GetStatsLazerGun(Weapon _weapon, int damage, float at_speed_coof, float add_at_speed, float att_sp_pr, bool isRang, float attack_ran, int count_proj, float _spreadAngle, damageT _damT, int _countPenetr, Transform pl_mod, int _IdPrefabLazer, GameObject _Projectile_pref = null, float att_sp_pr_coof = 0, int effectID = -1)
+    public override void ApplyStats(Weapon weapon, Transform playerModel)
     {
-        base.GetStatsWeapon(_weapon, damage, at_speed_coof, add_at_speed, att_sp_pr, isRang, attack_ran, count_proj, _spreadAngle, _damT, pl_mod, _Projectile_pref, att_sp_pr_coof, effectID);
-        countPenetrations = _countPenetr;
-        IdPrefabLazer = _IdPrefabLazer;
+        base.ApplyStats(weapon, playerModel);
+        LazerGun lazerGun = weapon as LazerGun;
+        countPenetrations = lazerGun.CountPenetration;
+        IdPrefabLazer = lazerGun.idPrefabShot;
         lazerPrefab = ResourcesData.GetLazerPrefab(IdPrefabLazer);
-
     }
+    //public virtual void GetStatsLazerGun(Weapon _weapon, int damage, float at_speed_coof, float add_at_speed, float att_sp_pr, bool isRang, float attack_ran, int count_proj, float _spreadAngle, damageT _damT, int _countPenetr, Transform pl_mod, int _IdPrefabLazer, GameObject _Projectile_pref = null, float att_sp_pr_coof = 0, int effectID = -1)
+    //{
+    //    base.GetStatsWeapon(_weapon, damage, at_speed_coof, add_at_speed, att_sp_pr, isRang, attack_ran, count_proj, _spreadAngle, _damT, pl_mod, _Projectile_pref, att_sp_pr_coof, effectID);
+    //    countPenetrations = _countPenetr;
+    //    IdPrefabLazer = _IdPrefabLazer;
+    //    lazerPrefab = ResourcesData.GetLazerPrefab(IdPrefabLazer);
+    //}
     public override void Attack()
     {
         if (Time.time - lastAttackTime < attackInterval) return;

@@ -28,6 +28,7 @@ public interface IManaCost
 {
     public int manaCost { get; set; }
 }
+
 [Serializable]
 public abstract class Weapon : Item, IArtifact
 {
@@ -139,7 +140,7 @@ public class StaffBullet : Gun, IManaCost
         bool rangeType, float range, damageT typeDamage, int damage,
         float _attackSpeedCoof, int _addAttackSpeed, int conut_Projectiles,
         float _projectileSpeed, float _projectileSpeedCoof, float _spreadAngle, int _idBulletPref,
-        int manaCost, int effectID = -1
+        int _manaCost, int effectID = -1
     ) : base(
         id, name, maxCount, spriteID, quality, cost, decription,
         rangeType, range, typeDamage, damage,
@@ -147,7 +148,7 @@ public class StaffBullet : Gun, IManaCost
         _projectileSpeed, _projectileSpeedCoof, _spreadAngle, _idBulletPref, effectID
     )
     {
-        this.manaCost = manaCost;
+        manaCost = _manaCost;
     }
 }
 [Serializable]

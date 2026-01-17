@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ShotGunLogic : RangeWeaponLogic
+public class ShotGunLogic : GunLogic
 {
     protected override void RotateWeaponOnCursor()
     {
