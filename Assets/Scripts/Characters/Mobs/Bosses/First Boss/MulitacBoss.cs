@@ -101,14 +101,28 @@ public class MulitacBoss : BossLogic
     }
     private IEnumerator ShotBallToPos(Transform ballPos, Vector2 posPlayer, Vector2 offsetCellPosition)
     {
+        if (!ballPos)
+            yield break;
+
         ballPos.SetParent(transform.root);
         Vector3 targetPos = (posPlayer.normalized * offsetCellPosition) + posPlayer;
-        while (Vector2.Distance(ballPos.position, targetPos) > 0.1f)
+
+        while (true)
         {
+            if (!ballPos)
+                yield break;
+
+            if(Vector2.Distance(ballPos.position, targetPos) <= 0.1f)
+                break;
+
             ballPos.position += (targetPos - ballPos.position).normalized * speedBalls * Time.deltaTime;
+
             yield return null;
         }
-        ballPos.localPosition = targetPos;
+
+        if(!ballPos)
+            ballPos.localPosition = targetPos;
+
     }
 
     private IEnumerator RetrunBallsWithDelay()

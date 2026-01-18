@@ -64,7 +64,8 @@ public class PlayerProjectile : MonoBehaviour, UBullet
     // Если используется триггер, то используйте OnTriggerEnter2D
     protected virtual void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.layer == LayerManager.touchObjectsLayer)
+        int layer = collider.gameObject.layer;
+        if (layer == LayerManager.touchObjectsLayer || layer == LayerManager.enemyObject)
         {
             ObjectLBroken objectL = collider.gameObject.GetComponent<ObjectLBroken>();
             if (objectL != null)

@@ -23,7 +23,7 @@ public class MeleWeaponLogic : WeaponControl
 
     protected void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log($"S: {collision.name}");
+        //Debug.Log($"S: {collision.name}");
         // Проверяем, что столкновение произошло с врагом
         if (!IsAttack) return;
 
@@ -32,9 +32,8 @@ public class MeleWeaponLogic : WeaponControl
         hitObjAndEnemies.Add(collision);
 
         int colLayer = collision.gameObject.layer;
-        if (colLayer == LayerManager.touchObjectsLayer || colLayer == LayerManager.touchTriggObjLayer) //Столкновение в врагов или объектом
+        if (colLayer == LayerManager.touchObjectsLayer || colLayer == LayerManager.touchTriggObjLayer || colLayer == LayerManager.enemyObject) //Столкновение в врагов или объектом
         {
-
             ObjectLBroken objectL = collision.gameObject.GetComponent<ObjectLBroken>();
             if (objectL != null)
             {
