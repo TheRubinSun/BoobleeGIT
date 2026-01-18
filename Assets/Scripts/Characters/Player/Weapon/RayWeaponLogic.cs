@@ -65,31 +65,61 @@ public class RayWeaponLogic : RangeWeaponLogic
     {
         Vector2 originPos = ShootPos.position;
         Vector2 direction;
-        Vector2 endPos;
 
         if (AttackDirectionOrVector)
-        {
             direction = GetDirection(originPos, centerPl.position).normalized;
-        }
         else
-        {
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            direction = (mousePos - originPos).normalized;
-        }
-        endPos = originPos + direction * Attack_Range;
+            direction = ((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - originPos).normalized;
 
-        int layerMask = (1 << LayerManager.touchObjectsLayer) | (1 << LayerManager.touchTriggObjLayer) | (1 << LayerManager.enemyLayer);
+        Vector2 endPos = originPos + direction * Attack_Range;
+
+        int layerMask = (1 << LayerManager.touchObjectsLayer) | 
+            (1 << LayerManager.touchTriggObjLayer) | 
+            (1 << LayerManager.enemyLayer) | 
+            (1 << LayerManager.enemyObject);
+
         RaycastHit2D[] hits = new RaycastHit2D[countPenetrations + 1]; // заранее выделенный массив
+
         int hitCount = Physics2D.RaycastNonAlloc(originPos, direction, hits, Attack_Range, layerMask);
 
         //RaycastHit2D[] hits = Physics2D.RaycastAll(originPos, direction, Attack_Range); //Ётот способ сильнее грузит, т.к. за каждый хит увеличивает выдел€емую пам€ть 
 
         GameObject lazer = Instantiate(lazerPrefab, ShootPos);
         lazer.transform.SetParent(transform.root);
-        LazerControl lazCon = lazer.GetComponent<LazerControl>();
 
-        lazCon.Init(hits, originPos, endPos, Attack_Damage, Attack_Range, damageType, EffectAttack, countPenetrations, CountProjectiles, isDivideRay, canBeWeapon);
+        LazerControl lazCon = lazer.GetComponent<LazerControl>();
+        lazCon.Init(hits, hitCount, originPos, endPos, Attack_Damage, Attack_Range, damageType, EffectAttack, countPenetrations, CountProjectiles, isDivideRay, layerMask, canBeWeapon);
     }
+    //protected override void ShootLogic(float offset)//–абочий код, но больше
+    //{
+    //    Vector2 originPos = ShootPos.position;
+    //    Vector2 direction;
+    //    Vector2 endPos;
+
+    //    if (AttackDirectionOrVector)
+    //    {
+    //        direction = GetDirection(originPos, centerPl.position).normalized;
+    //    }
+    //    else
+    //    {
+    //        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    //        direction = (mousePos - originPos).normalized;
+    //    }
+    //    endPos = originPos + direction * Attack_Range;
+
+    //    int layerMask = (1 << LayerManager.touchObjectsLayer) | (1 << LayerManager.touchTriggObjLayer) | (1 << LayerManager.enemyLayer) | (1 << LayerManager.enemyObject);
+    //    RaycastHit2D[] hits = new RaycastHit2D[countPenetrations + 1]; // заранее выделенный массив
+    //    int hitCount = Physics2D.RaycastNonAlloc(originPos, direction, hits, Attack_Range, layerMask);
+
+    //    //RaycastHit2D[] hits = Physics2D.RaycastAll(originPos, direction, Attack_Range); //Ётот способ сильнее грузит, т.к. за каждый хит увеличивает выдел€емую пам€ть 
+
+    //    GameObject lazer = Instantiate(lazerPrefab, ShootPos);
+    //    lazer.transform.SetParent(transform.root);
+    //    LazerControl lazCon = lazer.GetComponent<LazerControl>();
+
+    //    lazCon.Init(hits, originPos, endPos, Attack_Damage, Attack_Range, damageType, EffectAttack, countPenetrations, CountProjectiles, isDivideRay, layerMask, canBeWeapon);
+    //}
+
     protected override void FlipWeapon(float dirX)
     {
         if (dirX > 0)
