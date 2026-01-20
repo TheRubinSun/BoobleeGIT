@@ -120,6 +120,13 @@ MonoBehaviour:
     chance: 25
     min: 1
     max: 2
+  damage_color:
+    serializedVersion: 2
+    rgba: 0
+  exp: 0
+  exp_full: 3
+  typeExp: 3
+  exp_damage: 0
 --- !u!61 &537814440007233801
 BoxCollider2D:
   m_ObjectHideFlags: 0

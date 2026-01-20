@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class TreeLogic : ObjectLBroken
 {
+    //[SerializeField] private int exp_collect = 1;
+    //[SerializeField] private int exp_full_collect = 3;
+
     private GameObject shadow_obj;
     private SpriteRenderer spr_Child_ren;
     protected override void Awake()
@@ -20,10 +23,12 @@ public class TreeLogic : ObjectLBroken
             remainsHits--;
             if (remainsHits == 0)
             {
+                GlobalData.Player.AddTypeExp(typeExp, exp_full);
                 StartCoroutine(PlayeSoundFullBroken());
             }
             else if (remainsHits % toNextStageAnim == 0)
             {
+                GlobalData.Player.AddTypeExp(typeExp, exp);
                 PlayeSoundBroken();
                 brokenStage++;
                 //anim.SetInteger("broken_state", brokenStage);
@@ -37,8 +42,10 @@ public class TreeLogic : ObjectLBroken
         float treePosY = transform.position.y;
         float PlayerPosY = GlobalData.GameManager.PlayerPosY;
 
-        spr_ren.sortingOrder = Mathf.RoundToInt(((treePosY - 2f) - PlayerPosY - 2) * -5);
-        spr_Child_ren.sortingOrder = spr_ren.sortingOrder - 1;
+        if(spr_ren != null) 
+            spr_ren.sortingOrder = Mathf.RoundToInt(((treePosY - 2f) - PlayerPosY - 2) * -5);
+        if (spr_Child_ren != null) 
+            spr_Child_ren.sortingOrder = spr_ren.sortingOrder - 1;
     }
     public override void CreateCulling()
     {

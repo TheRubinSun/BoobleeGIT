@@ -27,9 +27,21 @@ public class PlayerStats : CharacterStats
     public int cur_exp { get; set; }
     public int nextLvl_exp { get; set; }
 
+
+    //Trade
     public int trade_level { get; set; }
     public int trade_cur_exp { get; set; }
     public int trade_nextLvl_exp { get; set; }
+
+    //Farm
+    public int farm_level { get; set; }
+    public int farm_cur_exp { get; set; }
+    public int farm_nextLvl_exp { get; set; }
+
+    //Res collections
+    public int collect_level { get; set; }
+    public int collect_cur_exp { get; set; }
+    public int collec_nextLvl_exp { get; set; }
 
     //Knowlange
     public int MagicPoints { get; set; }
@@ -77,6 +89,13 @@ public class PlayerStats : CharacterStats
         trade_level = 0;
         trade_nextLvl_exp = 30;
 
+        farm_level = 0;
+        farm_nextLvl_exp = 30;
+
+        collect_level = 0;
+        collec_nextLvl_exp = 30;
+
+
         count_Projectile = 0;
         MagicPoints = 1;
         TechniquePoints = 1;
@@ -121,6 +140,14 @@ public class PlayerStats : CharacterStats
         trade_level = playerSaveData.trade_level;
         trade_cur_exp = playerSaveData.trade_cur_exp;
         trade_nextLvl_exp = playerSaveData.trade_nextLvl_exp;
+
+        farm_level = playerSaveData.farm_level;
+        farm_cur_exp = playerSaveData.farm_cur_exp;
+        farm_nextLvl_exp = playerSaveData.farm_nextLvl_exp;
+
+        collect_level = playerSaveData.collect_level;
+        collect_cur_exp = playerSaveData.collect_cur_exp;
+        collec_nextLvl_exp = playerSaveData.collec_nextLvl_exp;
 
         count_Projectile = playerSaveData.count_Projectile;
         MagicPoints = playerSaveData.MagicPoints;
@@ -396,11 +423,27 @@ public class PlayerStats : CharacterStats
         GlobalData.Player.LvlUp();
         if (cur_exp >= nextLvl_exp) CheckLevel();
     }
-    public void AddTradeExp(int add_exp)
+    public void AddTypeExp(TypeExp typeExp, int add_exp)
     {
-        trade_cur_exp += add_exp;
-        CheckTradeLevel();
+        switch (typeExp)
+        {
+            case TypeExp.None:
+                break;
+            case TypeExp.Trade:
+                trade_cur_exp += add_exp;
+                CheckTradeLevel();
+                break;
+            case TypeExp.Farm:
+                farm_cur_exp += add_exp;
+                CheckFarmLevel();
+                break;
+            case TypeExp.Collect:
+                collect_cur_exp += add_exp;
+                CheckCollectLevel();
+                break;
+        }
     }
+    //Trade
     private void CheckTradeLevel()
     {
         if (isNewTradeLevel())
@@ -422,5 +465,50 @@ public class PlayerStats : CharacterStats
         TraderSkill++;
         GlobalData.Player.TradeLvlUp();
         if (trade_cur_exp >= trade_nextLvl_exp) CheckTradeLevel();
+    }
+    //Farm
+    private void CheckFarmLevel()
+    {
+        if (isNewFarmLevel())
+            FarmLvlUp();
+    }
+    private bool isNewFarmLevel()
+    {
+        if (farm_cur_exp >= farm_nextLvl_exp)
+        {
+            farm_cur_exp -= farm_nextLvl_exp;
+            farm_nextLvl_exp = (int)((farm_nextLvl_exp + 30 * farm_level) * 1.2f);
+            return true;
+        }
+        return false;
+    }
+    public void FarmLvlUp()
+    {
+        farm_level++;
+        GlobalData.Player.FarmLvlUp();
+        if (farm_cur_exp >= farm_nextLvl_exp) CheckFarmLevel();
+    }
+    //Collect
+    private void CheckCollectLevel()
+    {
+        if (isNewCollectLevel())
+            CollectLvlUp();
+    }
+    private bool isNewCollectLevel()
+    {
+        if (collect_cur_exp >= collec_nextLvl_exp)
+        {
+            collect_cur_exp -= collec_nextLvl_exp;
+            collec_nextLvl_exp = (int)((collec_nextLvl_exp + 30 * collect_level) * 1.2f);
+            return true;
+        }
+        return false;
+    }
+    public void CollectLvlUp()
+    {
+        collect_level++;
+
+        GlobalData.Player.CollectLvlUp();
+        if (collect_cur_exp >= collec_nextLvl_exp) CheckCollectLevel();
     }
 }

@@ -16,13 +16,15 @@ public class OreL : ObjectLBroken
         remainsHits--;
         if (remainsHits == 0)
         {
+            GlobalData.Player.AddTypeExp(typeExp, exp_full);
             StartCoroutine(PlayeSoundFullBroken());
+            return;
         }
         else if (remainsHits % toNextStageAnim == 0)
         {
             StartCoroutine(WaitForSound(0.1f));
         }
-
+        GlobalData.Player.AddTypeExp(typeExp, exp);
     }
     protected IEnumerator WaitForSound(float delay)
     {

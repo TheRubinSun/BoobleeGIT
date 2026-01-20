@@ -438,8 +438,8 @@ public class ShopLogic : MonoBehaviour , ISlot
             if ((totalCostOrProfit * -1) <= GlobalData.Player.GetGold()) //ѕроверка наличие кол-во денег у игрока
             {
                 GlobalData.Player.PayGold(totalCostOrProfit);
-                GlobalData.Player.TradeAddExp(personalProfSum);
-                GlobalData.Player.TradeAddExp(personalCostSum);
+                GlobalData.Player.AddTypeExp(TypeExp.Trade, personalProfSum);
+                GlobalData.Player.AddTypeExp(TypeExp.Trade, personalCostSum);
 
                 TradeBeetwenSlots(buySlots, GlobalData.Inventory.slots, true);
                 TradeBeetwenSlots(sellSlots, traderSlots[lastTrader], false);
@@ -456,8 +456,8 @@ public class ShopLogic : MonoBehaviour , ISlot
         else //≈сли игрок зарабатывает на сделке
         {
             GlobalData.Player.PayGold(totalCostOrProfit);
-            GlobalData.Player.TradeAddExp(personalProfSum);
-            GlobalData.Player.TradeAddExp(personalCostSum);
+            GlobalData.Player.AddTypeExp(TypeExp.Trade, personalProfSum);
+            GlobalData.Player.AddTypeExp(TypeExp.Trade, personalCostSum);
 
             TradeBeetwenSlots(buySlots, GlobalData.Inventory.slots, true);
             TradeBeetwenSlots(sellSlots, traderSlots[lastTrader], false);

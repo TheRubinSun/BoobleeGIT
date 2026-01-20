@@ -25,7 +25,7 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     public Slot[] SlotsEqup {  get; set; }
 
     [SerializeField] GameObject [] slotsObjEquip; //Массив слотов
-    [SerializeField] Transform [] EquipSlotPrefab; //Префабы рук как родителя
+    [SerializeField] Transform [] EquipSlotPrefab; //Руки, броня, миньоны - куда будут появлсятся предметы визуально
     [SerializeField] Transform PlayerModel;
 
     readonly Dictionary<int, GameObject> slots_Weapon = new (); //В ячейки рук по порядку префабы оружия 

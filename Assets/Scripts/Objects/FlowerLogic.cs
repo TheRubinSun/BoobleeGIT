@@ -30,7 +30,11 @@ public class FlowerLogic : ObjectLBroken , IPointFarm
                         Debug.Log($"remove Flower in {ID}");
                         gr.RemoveSeed(IdDirtBed);
                     }
-                        
+                    GlobalData.Player.AddTypeExp(typeExp, exp_full); //Если было посаженно то фарм
+                }
+                else
+                {
+                    GlobalData.Player.AddTypeExp(typeExp, exp_full); //Если найденно то коллект
                 }
                 StartCoroutine(PlayeSoundFullBroken());
             }

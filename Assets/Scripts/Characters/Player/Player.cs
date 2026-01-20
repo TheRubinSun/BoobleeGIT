@@ -65,6 +65,7 @@ public class Player : MonoBehaviour, ITakeDamage
     {
         if (playerSaveData != null && playerSaveData.Base_Max_Hp > 0)
         {
+            //pl_stats = playerSaveData;
             pl_stats.LoadStats(playerSaveData);
             LoadWeaponToggles();
             pl_stats.UpdateTotalStats();
@@ -437,14 +438,25 @@ public class Player : MonoBehaviour, ITakeDamage
         GlobalData.SoundsManager.PlayLevelUP();
         StartCoroutine(ShowLevelUPWithDelay());
     }
-    public void TradeAddExp(int add_exp)
+    public void AddTypeExp(TypeExp typeExp,int add_exp)
     {
-        pl_stats.AddTradeExp(add_exp);
+        pl_stats.AddTypeExp(typeExp, add_exp);
+        GlobalData.UIControl.UpdateLevelsInfo();
     }
     public void TradeLvlUp()
     {
         GlobalData.SoundsManager.PlayLevelUP();
     }
+    public void FarmLvlUp()
+    {
+        GlobalData.SoundsManager.PlayLevelUP();
+    }
+    public void CollectLvlUp()
+    {
+        GlobalData.SoundsManager.PlayLevelUP();
+    }
+
+    
     private IEnumerator ShowLevelUPWithDelay()
     {
         yield return new WaitForSeconds(1f);

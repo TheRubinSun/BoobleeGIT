@@ -113,13 +113,20 @@ MonoBehaviour:
   fullBroken: {fileID: 8300000, guid: 23fb05d2137480046a9602ce6d1ec73b, type: 3}
   itemsDrop:
   - item_key: material_iron_ore
-    chance: 33
+    chance: 25
     min: 1
-    max: 3
+    max: 2
   - item_key: material_quartzite
-    chance: 60
+    chance: 40
     min: 1
-    max: 5
+    max: 4
+  damage_color:
+    serializedVersion: 2
+    rgba: 4290238421
+  exp: 2
+  exp_full: 4
+  typeExp: 3
+  exp_damage: 0
   soundsHit:
   - {fileID: 8300000, guid: 9cd3d93e2eabc1d45b262da5f0f3f159, type: 3}
   - {fileID: 8300000, guid: db3ab1cd4d00a6541b684fc74099c5be, type: 3}
