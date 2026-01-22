@@ -159,15 +159,18 @@ public class Player : MonoBehaviour, ITakeDamage
         switch (aspectName)
         {
             case AspectName.Agillity:
-                pl_stats.Base_Agility += (int)value;
+                //pl_stats.Base_Agility += (int)value;
+                pl_stats.AddAttribute(AllStats.Agility, (int)value);
                 break;
 
             case AspectName.Strength:
-                pl_stats.Base_Strength += (int)value;
+                //pl_stats.Base_Strength += (int)value;
+                pl_stats.AddAttribute(AllStats.Strength, (int)value);
                 break;
 
             case AspectName.Intelligence:
-                pl_stats.Base_Intelligence += (int)value;
+                //pl_stats.Base_Intelligence += (int)value;
+                pl_stats.AddAttribute(AllStats.Intelligence, (int)value);
                 break;
 
             case AspectName.Tech_Point:
@@ -265,7 +268,7 @@ public class Player : MonoBehaviour, ITakeDamage
     }
     public void AddAttribute(AllStats boosterType, int count)
     {
-        Debug.Log($"{boosterType}: {count}");
+        //Debug.Log($"{boosterType}: {count}");
         pl_stats.AddAttribute(boosterType, count);
         UpdateAllUiInfo();
     }

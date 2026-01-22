@@ -340,6 +340,7 @@ public class PlayerStats : CharacterStats
             case AllStats.Strength:
                 {
                     Base_Strength += count;
+                    Cur_Hp += count * 2;
                     break;
                 }
             case AllStats.Agility:
@@ -350,6 +351,7 @@ public class PlayerStats : CharacterStats
             case AllStats.Intelligence:
                 {
                     Base_Intelligence += count;
+                    Cur_Mana += count * 4;
                     break;
                 }
             default:

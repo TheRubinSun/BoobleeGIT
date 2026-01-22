@@ -91,21 +91,23 @@ public class MulitacBoss : BossLogic
             if (ballsOfBoss[i] != null)
             {
                 rnd = Random.Range(0, ballsOfBoss.Count);
-                rnd2 = Random.Range(0, 12);
-                shootBalls[i] = StartCoroutine(ShotBallToPos(ballsOfBoss[i].transform, player.position, cellPosition[rnd] * rnd2));
+                rnd2 = Random.Range(6, 16);
+                shootBalls[i] = StartCoroutine(ShotBallToPos(ballsOfBoss[i].transform, player.position, cellPosition[rnd], rnd2));
                 yield return new WaitForSeconds(0.3f);
             }
             continue;
         }
         shotBallsArray = null;
     }
-    private IEnumerator ShotBallToPos(Transform ballPos, Vector2 posPlayer, Vector2 offsetCellPosition)
+    private IEnumerator ShotBallToPos(Transform ballPos, Vector2 posPlayer, Vector2 offsetCellPosition, int range)
     {
         if (!ballPos)
             yield break;
 
         ballPos.SetParent(transform.root);
-        Vector3 targetPos = (posPlayer.normalized * offsetCellPosition) + posPlayer;
+        //Vector3 targetPos = (posPlayer.normalized * (offsetCellPosition * range)) + posPlayer;
+        Vector2 dirToPlayer = (posPlayer - (Vector2)ballPos.position).normalized;
+        Vector3 targetPos = (dirToPlayer * range) + (offsetCellPosition * range) + posPlayer;
 
         while (true)
         {
@@ -120,8 +122,7 @@ public class MulitacBoss : BossLogic
             yield return null;
         }
 
-        if(!ballPos)
-            ballPos.localPosition = targetPos;
+        ballPos.position = targetPos;
 
     }
 
