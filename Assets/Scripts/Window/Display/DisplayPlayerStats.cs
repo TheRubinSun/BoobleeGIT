@@ -5,6 +5,7 @@ using UnityEngine;
 public class DisplayPlayerStats : MonoBehaviour
 {
     DisplayInfo displayInfo = DisplayInfo.Instance;
+    //public RectTransform content;
 
     [SerializeField] TextMeshProUGUI Status_Info_Name_Text;
     [SerializeField] TextMeshProUGUI Status_Info;

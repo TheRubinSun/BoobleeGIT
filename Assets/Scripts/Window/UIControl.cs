@@ -211,6 +211,13 @@ public class UIControl:MonoBehaviour
         GlobalData.ShopLogic.ClosedShop();
         ShopWindow.SetActive(false);
     }
+    public void UpdateLevelsInfo()
+    {
+        if (infoPlayerIsOpened)
+        {
+            GlobalData.DisplayInfo.UpdateLevelsInfo();
+        }
+    }
     public void OpenInfoPlayer()
     {
 

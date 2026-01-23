@@ -69,7 +69,7 @@ public class GardenManager : MonoBehaviour
                 flowerData.ID = point.Key;
                 flowerData.IdDirtBed = point.Value.IdDirtBed;
                 flowersSpawn.Add(flower);
-
+                flower.GetComponent<FlowerLogic>().typeExp = TypeExp.Farm;
                 dirtBeds[point.Value.IdDirtBed].Busy = true;
             }
         }

@@ -4,6 +4,14 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+public enum TypeExp
+{
+    None,
+    Trade,
+    Farm,
+    Collect,
+    MainExp
+}
 public abstract class ObjectL : MonoBehaviour, ICullableObject
 {
     protected SpriteRenderer spr_ren;
@@ -22,6 +30,7 @@ public abstract class ObjectL : MonoBehaviour, ICullableObject
             GlobalData.CullingManager.UnregisterObject(this);
     }
 }
+
 public abstract class ObjectLBroken : ObjectL
 {
     protected Animator anim;
@@ -39,6 +48,13 @@ public abstract class ObjectLBroken : ObjectL
     protected AudioSource audioS;
     protected int brokenStage;
     protected Coroutine flashCol;
+
+    [SerializeField] protected int exp;
+    [SerializeField] protected int exp_full;
+    public TypeExp typeExp;
+
+    [SerializeField] protected int exp_damage;
+
     public override Vector2 GetPosition() => startPos;
     public virtual float GetPosX() => startPos.x;
     public virtual float GetPosY() => startPos.y;
@@ -121,15 +137,27 @@ public abstract class ObjectLBroken : ObjectL
     }
     protected virtual void DropItems()
     {
+        int addForLevelType = 0;
+        switch(typeExp) //За уровень увеличенный дроп
+        {
+            case TypeExp.None:
+                break;
+            case TypeExp.Farm:
+                addForLevelType += GlobalData.Player.GetPlayerStats().farm_level;
+                break;
+            case TypeExp.Collect:
+                addForLevelType += GlobalData.Player.GetPlayerStats().collect_level;
+                break;
+        }
         foreach (ItemDropData item in itemsDrop)
         {
             int countItem = 0;
-            if (item.max > 0)
+            if (item.max + addForLevelType > 0)
             {
                 for(int i = 0; i < item.max; i++)
                 {
                     int chance = Random.Range(0, 10000); //Рандомный шанс до 100.00
-                    if (chance >= item.chance * 100f) break; 
+                    if (chance >= (item.chance + (addForLevelType * 2)) * 100f) break; 
                     countItem++;
                 }
             }

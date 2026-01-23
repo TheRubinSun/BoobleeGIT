@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PistolLogic : RangeWeaponLogic
+public class PistolLogic : GunLogic
 {
 
     protected override void Start()

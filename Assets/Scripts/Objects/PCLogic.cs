@@ -38,6 +38,8 @@ public class PCLogic : ObjectLBroken
         {
             if (justSounds != null) justSounds.Stop();
             StartCoroutine(PlayeSoundFullBroken());
+            GlobalData.Player.AddTypeExp(typeExp, exp_full);
+            return;
         }
         else if (remainsHits % toNextStageAnim == 0)
         {
@@ -50,7 +52,7 @@ public class PCLogic : ObjectLBroken
 
             StartCoroutine(WaitForSound(0.1f));
         }
-
+        GlobalData.Player.AddTypeExp(typeExp, exp);
     }
     protected IEnumerator WaitForSound(float delay)
     {

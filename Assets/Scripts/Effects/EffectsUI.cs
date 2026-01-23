@@ -10,7 +10,7 @@ public class EffectsUI : MonoBehaviour
 {
     [SerializeField] private GameObject pref_effectUI;
     [SerializeField] private Transform parent_area_effects;
-    [SerializeField] private Transform player;
+    [SerializeField] private EffectsManager effectsManagerPlayer;
 
 
     private EffectsManager playerEffects_manager;
@@ -21,8 +21,13 @@ public class EffectsUI : MonoBehaviour
     private void Awake()
     {
         effectSprites = Resources.LoadAll<Sprite>("Effects/Effects_Sheet");
-        if (player == null) player = GlobalData.GameManager.PlayerModel;
-        playerEffects_manager = player?.GetComponent<EffectsManager>();
+
+        //playerEffects_manager = effectsManagerPlayer?.GetComponent<EffectsManager>();
+    }
+    private void Start()
+    {
+        if (effectsManagerPlayer == null) 
+            effectsManagerPlayer = GlobalData.Player.GetComponent<EffectsManager>();
     }
     private void OnEnable()
     {

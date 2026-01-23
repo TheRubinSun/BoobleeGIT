@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class Potion : Item, IUsable
 {
@@ -17,21 +18,54 @@ public class Potion : Item, IUsable
 public class HealPotion : Potion
 {
     public int countHeal;
+    public int couldDownHeal;
+    public int idSpriteEffectColdown;
     private static int soundID = 1;
-    public HealPotion(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description,int _countHeal) : base(id, name, maxCount, spriteID, quality, cost, description)
+    private string effectName = "HealColdown";
+    public HealPotion(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description,int _countHeal, int _couldDownHeal, int _idSpriteColdown) : base(id, name, maxCount, spriteID, quality, cost, description)
     {
         countHeal = _countHeal;
+        couldDownHeal = _couldDownHeal;
+        idSpriteEffectColdown = _idSpriteColdown;
     }
     public override bool Use()
     {
-        if(GlobalData.Player.TakeHeal(countHeal))
+        EffectsManager eff_man = GlobalData.Player.GetComponent<EffectsManager>();
+        if (!eff_man.IsAlreadyUsed(effectName))
         {
-            Debug.Log("ѕытаюсь отхилить");
-            return true;
+            return false;
+        }
+
+        if (GlobalData.Player.TakeHeal(countHeal))
+        {
+            //Debug.Log("ѕытаюсь отхилить");
+
+            EffectData effect = ScriptableObject.CreateInstance<EffectData>();
+
+
+
+            //EffectData effectTemplate = Resources.Load<EffectData>("Effects/" + "HealCooldown");
+
+            //if (effectTemplate != null)
+            //{
+            //    //Debug.Log($"Ёффект с именем {nameEffect} найден");
+            //    effect.Sprite = effectTemplate.Sprite;
+            //}
+
+            effect.EffectName = effectName;
+
+            
+
+
+            effect.effectType = EffectData.EffectType.SpeedBoost;
+            effect.idSprite = idSpriteEffectColdown;
+            effect.duration = couldDownHeal;
+
+            return eff_man.ApplyEffect(effect);
         }
         else
         {
-            Debug.Log("Ќемогу отхилить");
+            //Debug.Log("Ќемогу отхилить");
             return false;
         }
     }
@@ -59,6 +93,10 @@ public class SpeedUpPotion : Potion
         Debug.Log("ѕытаюсь использовать");
         EffectsManager eff_man = GlobalData.Player.GetComponent<EffectsManager>();
 
+        if (!eff_man.IsAlreadyUsed(nameEffect))
+        {
+            return false;
+        }
 
 
         if (eff_man != null)
@@ -114,17 +152,35 @@ public class SpeedUpPotion : Potion
 public class ManaHealPotion : Potion
 {
     public int countHeal;
+    public float duration;
+    public int idSpriteEffect;
     private static int soundID = 1;
-    public ManaHealPotion(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, int _countHeal) : base(id, name, maxCount, spriteID, quality, cost, description)
+    private string effectName = "manaHeal";
+    public ManaHealPotion(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, int _countHeal, float _duration, int _idSpriteEffect) : base(id, name, maxCount, spriteID, quality, cost, description)
     {
         countHeal = _countHeal;
+        duration = _duration;
+        idSpriteEffect = _idSpriteEffect;
     }
     public override bool Use()
     {
+
+        EffectsManager eff_man = GlobalData.Player.GetComponent<EffectsManager>();
+        if (!eff_man.IsAlreadyUsed(effectName))
+        {
+            return false;
+        }
         if (GlobalData.Player.TakeHealMana(countHeal))
         {
             Debug.Log("ѕытаюсь отхилить");
-            return true;
+
+
+            EffectData regenEffect = ScriptableObject.CreateInstance<EffectData>();
+            regenEffect.EffectName = effectName;
+            regenEffect.effectType = EffectData.EffectType.HpRegenBoost;
+            regenEffect.idSprite = idSpriteEffect;
+            regenEffect.duration = duration;
+            return eff_man.ApplyEffect(regenEffect);
         }
         else
         {
@@ -173,6 +229,10 @@ public class Food : Item, IUsable
         }
 
         EffectsManager eff_man = pl.GetComponent<EffectsManager>();
+        if (!eff_man.IsAlreadyUsed(nameEffect))
+        {
+            return false;
+        }
         if (eff_man != null)
         {
             //EffectData regenEffect = new EffectData();
@@ -189,7 +249,7 @@ public class Food : Item, IUsable
             //Debug.LogWarning("Ёффект с именем " + nameEffect + " не найден в папке Resources/Effects.");
             Debug.Log("создаем временный новый");
 
-            regenEffect.EffectName = "Food Regen";
+            regenEffect.EffectName = nameEffect;
             regenEffect.effectType = EffectData.EffectType.HpRegenBoost;
             regenEffect.value = countHealHP;
             regenEffect.valueTwo = countHealMana;

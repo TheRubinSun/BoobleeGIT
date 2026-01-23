@@ -91,24 +91,39 @@ public class MulitacBoss : BossLogic
             if (ballsOfBoss[i] != null)
             {
                 rnd = Random.Range(0, ballsOfBoss.Count);
-                rnd2 = Random.Range(0, 12);
-                shootBalls[i] = StartCoroutine(ShotBallToPos(ballsOfBoss[i].transform, player.position, cellPosition[rnd] * rnd2));
+                rnd2 = Random.Range(6, 16);
+                shootBalls[i] = StartCoroutine(ShotBallToPos(ballsOfBoss[i].transform, player.position, cellPosition[rnd], rnd2));
                 yield return new WaitForSeconds(0.3f);
             }
             continue;
         }
         shotBallsArray = null;
     }
-    private IEnumerator ShotBallToPos(Transform ballPos, Vector2 posPlayer, Vector2 offsetCellPosition)
+    private IEnumerator ShotBallToPos(Transform ballPos, Vector2 posPlayer, Vector2 offsetCellPosition, int range)
     {
+        if (!ballPos)
+            yield break;
+
         ballPos.SetParent(transform.root);
-        Vector3 targetPos = (posPlayer.normalized * offsetCellPosition) + posPlayer;
-        while (Vector2.Distance(ballPos.position, targetPos) > 0.1f)
+        //Vector3 targetPos = (posPlayer.normalized * (offsetCellPosition * range)) + posPlayer;
+        Vector2 dirToPlayer = (posPlayer - (Vector2)ballPos.position).normalized;
+        Vector3 targetPos = (dirToPlayer * range) + (offsetCellPosition * range) + posPlayer;
+
+        while (true)
         {
+            if (!ballPos)
+                yield break;
+
+            if(Vector2.Distance(ballPos.position, targetPos) <= 0.1f)
+                break;
+
             ballPos.position += (targetPos - ballPos.position).normalized * speedBalls * Time.deltaTime;
+
             yield return null;
         }
-        ballPos.localPosition = targetPos;
+
+        ballPos.position = targetPos;
+
     }
 
     private IEnumerator RetrunBallsWithDelay()

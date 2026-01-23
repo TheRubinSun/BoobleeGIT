@@ -27,6 +27,7 @@ public class EffectData : ScriptableObject
     public EffectData() { }
     public enum EffectType
     {
+        None,
         SpeedBoost,
         SpeedSlow,
         HpRegenBoost,

@@ -34,9 +34,18 @@ public class EffectsManager : MonoBehaviour
             } 
         }
     }
+    public bool IsAlreadyUsed(string effectName)
+    {
+        EffectData existingEffect = activeCoroutines.Keys.FirstOrDefault(e => e.EffectName == effectName);
+
+        if (existingEffect != null && activeEffectDataMap.TryGetValue(existingEffect, out var existActiveEffect))
+        {
+            return false;
+        }
+        return true;
+    }
     public bool ApplyEffect(EffectData effect)
     {
-
         EffectData existingEffect = activeCoroutines.Keys.FirstOrDefault(e => e.EffectName == effect.EffectName);
 
         if(!curEffectsObj.ContainsKey(effect.effectType) && parentCurEffect != null && effect.effectObj != null)

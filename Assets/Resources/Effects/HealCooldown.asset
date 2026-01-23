@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 94b7ec75e6b24da4881e4d14954f8447, type: 3}
-  m_Name: Heal
+  m_Name: HealCooldown
   m_EditorClassIdentifier: 
-  EffectName: Regen hp
+  EffectName: Coldown
   Sprite: {fileID: 360549386, guid: ea0ee6003c21dcb4289360442e07771d, type: 3}
   idSprite: 0
   duration: 15
-  cooldown: 5
+  cooldown: 0
   value: 1
   valueTwo: 0
-  effectType: 3
-  effectObj: {fileID: 3801599369282522109, guid: 1489a46860e253d47a3325944d39790a, type: 3}
+  effectType: 0
+  effectObj: {fileID: 0}

@@ -71,8 +71,30 @@ public class DisplayInfo: MonoBehaviour
 
     public string word_Tech_Resis {get; private set;}
     public string word_Magic_Resis {get; private set;}
+    public string word_trade_skill { get; private set; }
+    public string word_farm_skill { get; private set; }
+    public string word_collect_skill { get; private set; }
+    public string word_experience { get; private set; }
+    public string word_exp_to_next_level { get; private set; }
 
+    [SerializeField] private Transform trade_exp_panel;
+    [SerializeField] private Transform farm_exp_panel;
+    [SerializeField] private Transform collect_exp_panel;
 
+    private Transform tradeBar;
+    private Image trade_cur_exp_image;
+    private TextMeshProUGUI trade_exp_text;
+    private TextMeshProUGUI trade_lvlInfo_text;
+
+    private Transform farmBar;
+    private Image farm_cur_exp_image;
+    private TextMeshProUGUI farm_exp_text;
+    private TextMeshProUGUI farm_lvlInfo_text;
+
+    private Transform collectBar;
+    private Image collect_cur_exp_image;
+    private TextMeshProUGUI collect_exp_text;
+    private TextMeshProUGUI collect_lvlInfo_text;
     //Slots
     public string word_player {get; private set;}
     public string word_typeItem {get; private set;}
@@ -99,6 +121,26 @@ public class DisplayInfo: MonoBehaviour
         sizeInfoItem = InfoItemsObj.GetComponent<RectTransform>();
         //mouseOffset = new Vector2(sizeInfoItem.rect.width / 2, 0);
         //sizeInfoItem.pivot = new Vector2(1f, 1.15f); //Центр выше, смещение
+    }
+    private void Start()
+    {
+        // TRADE
+        tradeBar = trade_exp_panel.GetChild(0);
+        trade_lvlInfo_text = trade_exp_panel.GetChild(1).GetComponent<TextMeshProUGUI>();
+        trade_cur_exp_image = tradeBar.GetChild(1).GetComponent<Image>();
+        trade_exp_text = tradeBar.GetChild(2).GetComponent<TextMeshProUGUI>();
+
+        // FARM
+        farmBar = farm_exp_panel.GetChild(0);
+        farm_lvlInfo_text = farm_exp_panel.GetChild(1).GetComponent<TextMeshProUGUI>();
+        farm_cur_exp_image = farmBar.GetChild(1).GetComponent<Image>();
+        farm_exp_text = farmBar.GetChild(2).GetComponent<TextMeshProUGUI>();
+
+        // COLLECT
+        collectBar = collect_exp_panel.GetChild(0);
+        collect_lvlInfo_text = collect_exp_panel.GetChild(1).GetComponent<TextMeshProUGUI>();
+        collect_cur_exp_image = collectBar.GetChild(1).GetComponent<Image>();
+        collect_exp_text = collectBar.GetChild(2).GetComponent<TextMeshProUGUI>();
     }
     private void Update()
     {
@@ -190,6 +232,12 @@ public class DisplayInfo: MonoBehaviour
                 word_count_proj = localized_player_stats_name["word_count_proj"];
                 word_Tech_Resis = localized_player_stats_name["word_Tech_Resis"];
                 word_Magic_Resis = localized_player_stats_name["word_Magic_Resis"];
+
+                word_trade_skill = localized_player_stats_name["word_trade_skill"];
+                word_farm_skill = localized_player_stats_name["word_farm_skill"];
+                word_collect_skill = localized_player_stats_name["word_collect_skill"];
+                word_experience = localized_player_stats_name["word_experience"];
+                word_exp_to_next_level = localized_player_stats_name["word_exp_to_next_level"];
             }
             else Debug.LogWarning($"Локализация для ключа \"localized_player_stats_name\"  не найдена.");
             if(localized_slots_name != null)
@@ -274,8 +322,11 @@ public class DisplayInfo: MonoBehaviour
         info.AppendLine($"{word_mage_gold}: {pl_stat.MagicPoints}");
         info.AppendLine($"{word_count_proj}: {pl_stat.count_Projectile}");
 
-
         InfoStatus.UpdateOtherInfo(word_status_info, info.ToString());
+
+        UpdateLevelsInfo();
+
+        //LayoutRebuilder.ForceRebuildLayoutImmediate(InfoStatus.content);
 
     }
     private void AppendStat(StringBuilder info, string statName, float totalStat, bool IsProcent, bool isHundred, float baseStat, float statModifier, float classBonus, float equipBonus, string statNameMofifier, string roleClass, string equipment)
@@ -313,6 +364,30 @@ public class DisplayInfo: MonoBehaviour
         if (classBonus > 0) info.Append($" + {classBonus} ({word_for + roleClass})");
         if (equipBonus > 0) info.Append($" + {equipBonus} ({word_for + equipment})");
         info.Append($"\n</color></size>");
+    }
+    public void UpdateLevelsInfo()
+    {
+        pl_stat = GlobalData.Player.GetPlayerStats();
+        trade_cur_exp_image.fillAmount = (float)pl_stat.trade_cur_exp / pl_stat.trade_nextLvl_exp;  
+        trade_exp_text.text = $"{pl_stat.trade_cur_exp} / {pl_stat.trade_nextLvl_exp}";
+        trade_lvlInfo_text.text = InfoExpLevel(GlobalColors.Hh_Trade, word_trade_skill, pl_stat.trade_level, pl_stat.trade_cur_exp, pl_stat.trade_nextLvl_exp);
+
+        farm_cur_exp_image.fillAmount = (float)pl_stat.farm_cur_exp / pl_stat.farm_nextLvl_exp;
+        farm_exp_text.text = $"{pl_stat.farm_cur_exp} / {pl_stat.farm_nextLvl_exp}";
+        farm_lvlInfo_text.text = InfoExpLevel(GlobalColors.Hh_Farm, word_farm_skill, pl_stat.farm_level, pl_stat.farm_cur_exp, pl_stat.farm_nextLvl_exp);
+
+        collect_cur_exp_image.fillAmount = (float)pl_stat.collect_cur_exp / pl_stat.collec_nextLvl_exp;
+        collect_exp_text.text = $"{pl_stat.collect_cur_exp} / {pl_stat.collec_nextLvl_exp}";
+        collect_lvlInfo_text.text = InfoExpLevel(GlobalColors.Hh_Collect, word_collect_skill, pl_stat.collect_level, pl_stat.collect_cur_exp, pl_stat.collec_nextLvl_exp);
+    }
+    private string InfoExpLevel(string colorHash, string name, int level, int cur_exp, int next_level)
+    {
+        int sizeFont = 14;
+        int sizeChildFont = 12;
+
+        return
+            $"<size={sizeFont}><color={colorHash}>{name}: {level} lvl</color></size>\n" +
+            $"<size={sizeChildFont}>{word_experience}: {cur_exp}\n{word_exp_to_next_level} {next_level}</size>";
     }
     public void UpdateInfoItem(int numbSlot, string TypeSlot)
     {

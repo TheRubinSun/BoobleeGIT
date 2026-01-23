@@ -292,7 +292,7 @@ GameObject:
   - component: {fileID: 4071017329840358034}
   - component: {fileID: 265690218132362547}
   - component: {fileID: 8937208536725906677}
-  m_Layer: 19
+  m_Layer: 22
   m_Name: Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -447,6 +447,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e655acc4f0492c9409b46d4d27e233cf, type: 3}
   fullBroken: {fileID: 8300000, guid: 72c061d34ccb82545b17b51328383a42, type: 3}
   itemsDrop: []
+  damage_color:
+    serializedVersion: 2
+    rgba: 4284243037
+  damageType: 0
 --- !u!82 &8937208536725906677
 AudioSource:
   m_ObjectHideFlags: 0

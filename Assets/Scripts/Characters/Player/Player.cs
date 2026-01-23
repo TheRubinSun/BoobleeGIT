@@ -65,6 +65,7 @@ public class Player : MonoBehaviour, ITakeDamage
     {
         if (playerSaveData != null && playerSaveData.Base_Max_Hp > 0)
         {
+            //pl_stats = playerSaveData;
             pl_stats.LoadStats(playerSaveData);
             LoadWeaponToggles();
             pl_stats.UpdateTotalStats();
@@ -158,15 +159,18 @@ public class Player : MonoBehaviour, ITakeDamage
         switch (aspectName)
         {
             case AspectName.Agillity:
-                pl_stats.Base_Agility += (int)value;
+                //pl_stats.Base_Agility += (int)value;
+                pl_stats.AddAttribute(AllStats.Agility, (int)value);
                 break;
 
             case AspectName.Strength:
-                pl_stats.Base_Strength += (int)value;
+                //pl_stats.Base_Strength += (int)value;
+                pl_stats.AddAttribute(AllStats.Strength, (int)value);
                 break;
 
             case AspectName.Intelligence:
-                pl_stats.Base_Intelligence += (int)value;
+                //pl_stats.Base_Intelligence += (int)value;
+                pl_stats.AddAttribute(AllStats.Intelligence, (int)value);
                 break;
 
             case AspectName.Tech_Point:
@@ -264,7 +268,7 @@ public class Player : MonoBehaviour, ITakeDamage
     }
     public void AddAttribute(AllStats boosterType, int count)
     {
-        Debug.Log($"{boosterType}: {count}");
+        //Debug.Log($"{boosterType}: {count}");
         pl_stats.AddAttribute(boosterType, count);
         UpdateAllUiInfo();
     }
@@ -437,14 +441,25 @@ public class Player : MonoBehaviour, ITakeDamage
         GlobalData.SoundsManager.PlayLevelUP();
         StartCoroutine(ShowLevelUPWithDelay());
     }
-    public void TradeAddExp(int add_exp)
+    public void AddTypeExp(TypeExp typeExp,int add_exp)
     {
-        pl_stats.AddTradeExp(add_exp);
+        pl_stats.AddTypeExp(typeExp, add_exp);
+        GlobalData.UIControl.UpdateLevelsInfo();
     }
     public void TradeLvlUp()
     {
         GlobalData.SoundsManager.PlayLevelUP();
     }
+    public void FarmLvlUp()
+    {
+        GlobalData.SoundsManager.PlayLevelUP();
+    }
+    public void CollectLvlUp()
+    {
+        GlobalData.SoundsManager.PlayLevelUP();
+    }
+
+    
     private IEnumerator ShowLevelUPWithDelay()
     {
         yield return new WaitForSeconds(1f);

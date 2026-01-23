@@ -23,7 +23,8 @@ public class Boster : Item, IUsable
         if (GlobalData.Player != null)
         {
             GlobalData.Player.AddAttribute(boosterType, countBoost);
-            Debug.Log("Работает: " + countBoost);
+            //Debug.Log("Работает: " + countBoost);
+            GlobalData.EqupmentPlayer.UpdateAllWeaponsStats();
             return true;
         }
         else

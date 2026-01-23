@@ -33,6 +33,10 @@ public class GlobalColors
     public static readonly string Hh_Mana = "#2395C8";
     public static readonly string Hh_ManaReg = "#347FC8";
 
+    public static readonly string Hh_Trade = "#FFD24A";
+    public static readonly string Hh_Farm = "#C45A2E";
+    public static readonly string Hh_Collect = "#3FAE5C";
+
     public static readonly string Common = "#D7AD9D";   // Скорость снаряда
     public static readonly string Uncommon = "#6FA8CC";      // Бонус к опыту
     public static readonly string Rare = "#52CB65";   // Сопротивление магии
