@@ -80,21 +80,22 @@ public class DisplayInfo: MonoBehaviour
     [SerializeField] private Transform trade_exp_panel;
     [SerializeField] private Transform farm_exp_panel;
     [SerializeField] private Transform collect_exp_panel;
+    private LevelBar[] levelBars;
 
-    private Transform tradeBar;
-    private Image trade_cur_exp_image;
-    private TextMeshProUGUI trade_exp_text;
-    private TextMeshProUGUI trade_lvlInfo_text;
+    //private Transform tradeBar;
+    //private Image trade_cur_exp_image;
+    //private TextMeshProUGUI trade_exp_text;
+    //private TextMeshProUGUI trade_lvlInfo_text;
 
-    private Transform farmBar;
-    private Image farm_cur_exp_image;
-    private TextMeshProUGUI farm_exp_text;
-    private TextMeshProUGUI farm_lvlInfo_text;
+    //private Transform farmBar;
+    //private Image farm_cur_exp_image;
+    //private TextMeshProUGUI farm_exp_text;
+    //private TextMeshProUGUI farm_lvlInfo_text;
 
-    private Transform collectBar;
-    private Image collect_cur_exp_image;
-    private TextMeshProUGUI collect_exp_text;
-    private TextMeshProUGUI collect_lvlInfo_text;
+    //private Transform collectBar;
+    //private Image collect_cur_exp_image;
+    //private TextMeshProUGUI collect_exp_text;
+    //private TextMeshProUGUI collect_lvlInfo_text;
     //Slots
     public string word_player {get; private set;}
     public string word_typeItem {get; private set;}
@@ -124,23 +125,34 @@ public class DisplayInfo: MonoBehaviour
     }
     private void Start()
     {
-        // TRADE
-        tradeBar = trade_exp_panel.GetChild(0);
-        trade_lvlInfo_text = trade_exp_panel.GetChild(1).GetComponent<TextMeshProUGUI>();
-        trade_cur_exp_image = tradeBar.GetChild(1).GetComponent<Image>();
-        trade_exp_text = tradeBar.GetChild(2).GetComponent<TextMeshProUGUI>();
+        levelBars = new LevelBar[3];
+        levelBars[0] = new LevelBar(trade_exp_panel);
+        levelBars[1] = new LevelBar(farm_exp_panel);
+        levelBars[2] = new LevelBar(collect_exp_panel);
 
-        // FARM
-        farmBar = farm_exp_panel.GetChild(0);
-        farm_lvlInfo_text = farm_exp_panel.GetChild(1).GetComponent<TextMeshProUGUI>();
-        farm_cur_exp_image = farmBar.GetChild(1).GetComponent<Image>();
-        farm_exp_text = farmBar.GetChild(2).GetComponent<TextMeshProUGUI>();
+        //// TRADE
+        //trade_lvlInfo_text = trade_exp_panel.GetChild(0).GetComponent<TextMeshProUGUI>();
+        //tradeBar = trade_exp_panel.GetChild(1);
+        //trade_exp_text = trade_exp_panel.GetChild(2).GetComponent<TextMeshProUGUI>();
 
-        // COLLECT
-        collectBar = collect_exp_panel.GetChild(0);
-        collect_lvlInfo_text = collect_exp_panel.GetChild(1).GetComponent<TextMeshProUGUI>();
-        collect_cur_exp_image = collectBar.GetChild(1).GetComponent<Image>();
-        collect_exp_text = collectBar.GetChild(2).GetComponent<TextMeshProUGUI>();
+        //trade_cur_exp_image = tradeBar.GetChild(1).GetComponent<Image>();
+
+
+        //// FARM
+        //farm_lvlInfo_text = farm_exp_panel.GetChild(0).GetComponent<TextMeshProUGUI>();
+        //farmBar = farm_exp_panel.GetChild(1);
+        //farm_exp_text = farm_exp_panel.GetChild(2).GetComponent<TextMeshProUGUI>();
+
+        //farm_cur_exp_image = farmBar.GetChild(1).GetComponent<Image>();
+
+
+        //// COLLECT
+        //collect_lvlInfo_text = collect_exp_panel.GetChild(0).GetComponent<TextMeshProUGUI>();
+        //collectBar = collect_exp_panel.GetChild(1);
+        //collect_exp_text = collect_exp_panel.GetChild(2).GetComponent<TextMeshProUGUI>();
+
+        //collect_cur_exp_image = collectBar.GetChild(1).GetComponent<Image>();
+
     }
     private void Update()
     {
@@ -368,26 +380,44 @@ public class DisplayInfo: MonoBehaviour
     public void UpdateLevelsInfo()
     {
         pl_stat = GlobalData.Player.GetPlayerStats();
-        trade_cur_exp_image.fillAmount = (float)pl_stat.trade_cur_exp / pl_stat.trade_nextLvl_exp;  
-        trade_exp_text.text = $"{pl_stat.trade_cur_exp} / {pl_stat.trade_nextLvl_exp}";
-        trade_lvlInfo_text.text = InfoExpLevel(GlobalColors.Hh_Trade, word_trade_skill, pl_stat.trade_level, pl_stat.trade_cur_exp, pl_stat.trade_nextLvl_exp);
+        levelBars[0].cur_exp_image.fillAmount = (float)pl_stat.trade_cur_exp != 0 
+            ? (float)pl_stat.trade_cur_exp / pl_stat.trade_nextLvl_exp : 0; 
 
-        farm_cur_exp_image.fillAmount = (float)pl_stat.farm_cur_exp / pl_stat.farm_nextLvl_exp;
-        farm_exp_text.text = $"{pl_stat.farm_cur_exp} / {pl_stat.farm_nextLvl_exp}";
-        farm_lvlInfo_text.text = InfoExpLevel(GlobalColors.Hh_Farm, word_farm_skill, pl_stat.farm_level, pl_stat.farm_cur_exp, pl_stat.farm_nextLvl_exp);
+        levelBars[0].exp_text.text = $"{pl_stat.trade_cur_exp} / {pl_stat.trade_nextLvl_exp}";
+        levelBars[0].name_text.text = InfoExpLevel(GlobalColors.Hh_Trade, word_trade_skill);
+        levelBars[0].cur_lvl_text.text = pl_stat.trade_level.ToString();
 
-        collect_cur_exp_image.fillAmount = (float)pl_stat.collect_cur_exp / pl_stat.collec_nextLvl_exp;
-        collect_exp_text.text = $"{pl_stat.collect_cur_exp} / {pl_stat.collec_nextLvl_exp}";
-        collect_lvlInfo_text.text = InfoExpLevel(GlobalColors.Hh_Collect, word_collect_skill, pl_stat.collect_level, pl_stat.collect_cur_exp, pl_stat.collec_nextLvl_exp);
+        levelBars[1].cur_exp_image.fillAmount = pl_stat.farm_cur_exp != 0 
+            ? (float)pl_stat.farm_cur_exp / pl_stat.farm_nextLvl_exp : 0f;
+
+        levelBars[1].exp_text.text = $"{pl_stat.farm_cur_exp} / {pl_stat.farm_nextLvl_exp}";
+        levelBars[1].name_text.text = InfoExpLevel(GlobalColors.Hh_Farm, word_farm_skill);
+        levelBars[1].cur_lvl_text.text = pl_stat.farm_level.ToString();
+
+        levelBars[2].cur_exp_image.fillAmount = pl_stat.collect_cur_exp != 0
+            ? (float)pl_stat.collect_cur_exp / pl_stat.collec_nextLvl_exp : 0f;
+
+        levelBars[2].exp_text.text = $"{pl_stat.collect_cur_exp} / {pl_stat.collec_nextLvl_exp}";
+        levelBars[2].name_text.text = InfoExpLevel(GlobalColors.Hh_Collect, word_collect_skill);
+        levelBars[2].cur_lvl_text.text = pl_stat.collect_level.ToString();
+
+        //trade_cur_exp_image.fillAmount = (float)pl_stat.trade_cur_exp / pl_stat.trade_nextLvl_exp;  
+        //trade_exp_text.text = $"{pl_stat.trade_cur_exp} / {pl_stat.trade_nextLvl_exp}";
+        //trade_lvlInfo_text.text = InfoExpLevel(GlobalColors.Hh_Trade, word_trade_skill, pl_stat.trade_level);
     }
-    private string InfoExpLevel(string colorHash, string name, int level, int cur_exp, int next_level)
+    private void LevelBarUpdate()
+    {
+
+    }
+    private string InfoExpLevel(string colorHash, string name)
     {
         int sizeFont = 14;
-        int sizeChildFont = 12;
 
         return
-            $"<size={sizeFont}><color={colorHash}>{name}: {level} lvl</color></size>\n" +
-            $"<size={sizeChildFont}>{word_experience}: {cur_exp}\n{word_exp_to_next_level} {next_level}</size>";
+            $"<size={sizeFont}><color={colorHash}>{name}</color></size>";
+        //return
+        //$"<size={sizeFont}><color={colorHash}>{name}: {level} lvl</color></size>" +
+        //$"<size={sizeChildFont}>{word_experience}: {cur_exp}\n{word_exp_to_next_level} {next_level}</size>";
     }
     public void UpdateInfoItem(int numbSlot, string TypeSlot)
     {
@@ -504,4 +534,22 @@ public class DisplayInfo: MonoBehaviour
         return $"<size={sizeFont}><color={HashColor}>{line}</color></size>";
     }
 
+}
+public class LevelBar
+{
+    public Transform lineBar;
+    public Image cur_exp_image;
+    public TextMeshProUGUI name_text;
+    public TextMeshProUGUI cur_lvl_text;
+    public TextMeshProUGUI exp_text;
+
+    public LevelBar(Transform panel)
+    {
+        name_text = panel.GetChild(0).GetComponent<TextMeshProUGUI>();
+        lineBar = panel.GetChild(1);
+        exp_text = panel.GetChild(2).GetComponent<TextMeshProUGUI>();
+
+        cur_exp_image = lineBar.GetChild(1).GetComponent<Image>();
+        cur_lvl_text = lineBar.GetChild(2).GetChild(0).GetComponent<TextMeshProUGUI>();
+    }
 }
