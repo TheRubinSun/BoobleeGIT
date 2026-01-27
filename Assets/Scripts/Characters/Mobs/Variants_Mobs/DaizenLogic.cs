@@ -34,6 +34,8 @@ public class DaizenLogic : BaseEnemyLogic
     {
         if (!isVisibleNow) return;
 
+        if (IsUpper) return;
+
         float mobPosY = transform.position.y;
         float PlayerPosY = GlobalData.GameManager.PlayerPosY;
 

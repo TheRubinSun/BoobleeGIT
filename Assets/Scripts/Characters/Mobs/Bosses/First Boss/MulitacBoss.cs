@@ -1,16 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MulitacBoss : BossLogic
 {
-    [SerializeField] private Transform parentBalls;
-    private Vector2[] cellPosition = new Vector2[8] {
+    [SerializeField] private Transform uperPartBoss;
+    [SerializeField] private Transform shadow_trans;
+    private Transform mob_trans;
+
+    private SpriteRenderer uper_parth_spRen;
+    private Animator uper_parth_anim;
+
+    [SerializeField] private Transform parentBallsRotate;
+    [SerializeField] private Transform parentBallsHome;
+
+    private Vector2[] homeCellPosition = new Vector2[8] {
+        new Vector2(0.117f, 1.45f), new Vector2(0.9f, 1.15f), new Vector2(1f, 0.45f), new Vector2(0.48f, -0.38f),
+        new Vector2(-0.42f, -0.7f), new Vector2(0.14f, 0.5f), new Vector2(-0.55f, 0.166f), new Vector2(-0.64f, 1.14f)};
+
+    private Vector2[] circleCellPosition = new Vector2[8] {
         new Vector2(0.0f, 0.4f), new Vector2(0.3f, 0.3f), new Vector2(0.4f, 0.0f), new Vector2(0.3f, -0.3f),
         new Vector2(0.0f, -0.4f), new Vector2(-0.3f, -0.3f), new Vector2(-0.4f, 0.0f), new Vector2(-0.3f, 0.3f)};
 
-    public List<GameObject> ballsOfBoss = new List<GameObject>();
-    public BallBoss[] ballsLogic;
+    public List<Transform> ballsOfBoss = new List<Transform>();
+    public EyeBossData[] ballsLogic;
 
     private float speedBalls = 4f;
     [SerializeField] private int addRangeToPlayer = 1;
@@ -19,31 +33,70 @@ public class MulitacBoss : BossLogic
     private Coroutine[] shootBalls;
     private Coroutine retrunBallsArray;
     private Coroutine shotBallsArray;
+
+    [Header("Настройки парения")]
+    public float amplitude = 0.08f;   // Максимальное отклонение
+    public float speed = 2f;          // Скорость колебаний
+    private Vector2 startPos;
+    protected override void Awake()
+    {
+        base.Awake();
+        uper_parth_spRen = uperPartBoss.GetComponent<SpriteRenderer>();
+        uper_parth_anim = uperPartBoss.GetComponent<Animator>();
+        
+    }
     protected override void Start()
     {
         base.Start();
+        mob_trans = mob_object.transform;
         retrunBalls = new Coroutine[ballsOfBoss.Count];
         shootBalls = new Coroutine[ballsOfBoss.Count];
 
-        StartCoroutine(ReturnBallsToStart());
+        startPos = uperPartBoss.localPosition;
+        //StartCoroutine(ReturnBallsToStart());
+    }
+    protected override void Update()
+    {
+        base.Update();
+
+        float yOffset = Mathf.Sin(Time.time * speed) * amplitude;
+        Vector2 newPos = startPos + new Vector2(0, yOffset);
+        mob_trans.localPosition = newPos;
+        uperPartBoss.localPosition = newPos;
+
+        // ---------- ТЕНЬ ----------
+
+        // Нормализуем Y: -0.08 .. 0.08 ? 0 .. 1
+        float t = Mathf.InverseLerp(-amplitude, amplitude, yOffset);
+
+        // Интерполяция размера тени
+        float shadowScaleX = Mathf.Lerp(1.4f, 1.0f, t);
+        float shadowScaleY = Mathf.Lerp(0.3f, 0.2f, t);
+
+        shadow_trans.localScale = new Vector3(shadowScaleX, shadowScaleY, 1f);
     }
     protected override void LoadParametrs()
     {
         base.LoadParametrs();
-        ballsLogic = new BallBoss[ballsOfBoss.Count];
+        ballsLogic = new EyeBossData[ballsOfBoss.Count];
 
         if (mob is MultitacBoss boss)
         {
             for (int i = 0; i < ballsOfBoss.Count; i++)
             {
-                if(ballsOfBoss[i] != null)
-                {
-                    ballsLogic[i] = ballsOfBoss[i].GetComponent<BallBoss>();
-                    ballsLogic[i].LoadParametrs(boss.hp_ball, boss.damage_ball, boss.damageType);
-                }
+                if (ballsOfBoss[i] == null) 
+                    continue;
+
+                ballsLogic[i] = new EyeBossData(ballsOfBoss[i]);
+                ballsLogic[i].ballLogic.LoadParametrs(boss.hp_ball, boss.damage_ball, boss.damageType);
             }
         }
 
+    }
+    public override void CreateCulling()
+    {
+
+        culling = new CullingObject(spr_ren, animator_main, new SpriteRenderer[] { uper_parth_spRen }, new Animator[] { uper_parth_anim });
     }
     public override void Attack(float distanceToPlayer)
     {
@@ -53,7 +106,6 @@ public class MulitacBoss : BossLogic
             // Выполняем атаку (выстрел)
             if (animator_main != null)
             {
-                
                 //animator_main.SetTrigger("Attack");
             }
             StartCoroutine(ShotAndReturn());
@@ -64,7 +116,7 @@ public class MulitacBoss : BossLogic
     }
     private IEnumerator ReturnBallsToStart()
     {
-        retrunBallsArray = StartCoroutine(RetrunBallsWithDelay());
+        retrunBallsArray = StartCoroutine(RetrunBallsWithDelay(circleCellPosition, parentBallsHome));
         yield return new WaitForSeconds(6f);
     }
     private IEnumerator ShotAndReturn()
@@ -73,8 +125,11 @@ public class MulitacBoss : BossLogic
         yield return new WaitForSeconds(3f);
         StopCorutineArray(shootBalls, shotBallsArray);
 
-        retrunBallsArray = StartCoroutine(RetrunBallsWithDelay());
+        retrunBallsArray = StartCoroutine(RetrunBallsWithDelay(circleCellPosition, parentBallsRotate));
         yield return new WaitForSeconds(6f);
+
+        retrunBallsArray = StartCoroutine(RetrunBallsWithDelay(homeCellPosition, parentBallsHome));
+        yield return new WaitForSeconds(3f);
 
         if (retrunBallsArray != null)
         {
@@ -92,7 +147,8 @@ public class MulitacBoss : BossLogic
             {
                 rnd = Random.Range(0, ballsOfBoss.Count);
                 rnd2 = Random.Range(6, 16);
-                shootBalls[i] = StartCoroutine(ShotBallToPos(ballsOfBoss[i].transform, player.position, cellPosition[rnd], rnd2));
+                shootBalls[i] = StartCoroutine(ShotBallToPos(ballsOfBoss[i].transform, player.position, circleCellPosition[rnd], rnd2));
+                ballsLogic[i].SetUpperLayer();
                 yield return new WaitForSeconds(0.3f);
             }
             continue;
@@ -126,29 +182,34 @@ public class MulitacBoss : BossLogic
 
     }
 
-    private IEnumerator RetrunBallsWithDelay()
+    private IEnumerator RetrunBallsWithDelay(Vector2[] positions, Transform parent)
     {
         for (int i = 0; i < ballsOfBoss.Count; i++)
         {
             if (ballsOfBoss[i] != null)
             {
-                retrunBalls[i] = StartCoroutine(RetrunBallToPos(ballsOfBoss[i].transform, cellPosition[i]));
+                retrunBalls[i] = StartCoroutine(RetrunBallToPos(ballsOfBoss[i].transform, ballsLogic[i], positions[i], parent));
                 yield return new WaitForSeconds(0.3f);
             }
             continue;
         }
         retrunBallsArray = null;
     }
-    private IEnumerator RetrunBallToPos(Transform ballPos, Vector2 localPos)
+    private IEnumerator RetrunBallToPos(Transform ballPos, EyeBossData logic_eye, Vector2 localPos, Transform parent)
     {
+        float totalSpeed = (parent == parentBallsHome ? speedBalls : speedBalls / 3);
         //Vector3 targetPos = parentBalls.position + (Vector3)localPos;
-        ballPos.SetParent(parentBalls);
+        ballPos.SetParent(parent);
         Vector3 targetPos = (Vector3)localPos;
         while (Vector2.Distance(ballPos.localPosition, targetPos) > 0.1f)
         {
-            ballPos.localPosition += (targetPos - ballPos.localPosition).normalized * (speedBalls / 3) * Time.deltaTime;
+            ballPos.localPosition += (targetPos - ballPos.localPosition).normalized * totalSpeed * Time.deltaTime;
             yield return null;
         }
+
+        if(parent == parentBallsHome) 
+            logic_eye.SetLowerLayer();
+
         ballPos.localPosition = targetPos;
     }
     private void RetrunBallsStraightaway()
@@ -157,8 +218,8 @@ public class MulitacBoss : BossLogic
         {
             if (ballsOfBoss[i] != null)
             {
-                ballsOfBoss[i].transform.SetParent(parentBalls);
-                ballsOfBoss[i].transform.position = cellPosition[i];
+                ballsOfBoss[i].transform.SetParent(parentBallsRotate);
+                ballsOfBoss[i].transform.position = circleCellPosition[i];
             }
         }
     }
@@ -177,5 +238,47 @@ public class MulitacBoss : BossLogic
             StopCoroutine(mainCor);
             mainCor = null;
         }
+    }
+}
+public class EyeBossData
+{
+    public Transform eyeObj;
+    public BallBoss ballLogic;
+    public GameObject capil;
+
+    private SpriteRenderer glass_sr;
+    private SpriteRenderer puppil_sr;
+    private SpriteRenderer capil_sr;
+
+    private int glass_layer;
+    private int puppil_layer;
+    private int capil_layer;
+    public EyeBossData(Transform _eyeObj)
+    {
+        eyeObj = _eyeObj;
+        ballLogic = _eyeObj.GetComponent<BallBoss>();
+        capil = _eyeObj.GetChild(1).gameObject;
+
+        glass_sr = _eyeObj.GetComponent<SpriteRenderer>();
+        puppil_sr = _eyeObj.GetChild(0).GetComponent<SpriteRenderer>();
+        capil_sr = capil.transform.GetComponent<SpriteRenderer>();
+
+        glass_layer = glass_sr.sortingOrder;
+        puppil_layer = puppil_sr.sortingOrder;
+        capil_layer = capil_sr.sortingOrder;
+    }
+    public void SetUpperLayer()
+    {
+        glass_sr.sortingOrder = glass_layer + 10;
+        puppil_sr.sortingOrder = puppil_layer + 10;
+        capil_sr.sortingOrder = capil_layer + 10;
+        capil.gameObject.SetActive(true);
+    }
+    public void SetLowerLayer()
+    {
+        glass_sr.sortingOrder = glass_layer;
+        puppil_sr.sortingOrder = puppil_layer;
+        capil_sr.sortingOrder = capil_layer;
+        capil.gameObject.SetActive(false);
     }
 }

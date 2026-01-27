@@ -17,4 +17,8 @@ public class BossLogic : BaseEnemyLogic
     {
         base.LoadParametrs();
     }
+    protected override void Update()
+    {
+        base.Update();  
+    }
 }

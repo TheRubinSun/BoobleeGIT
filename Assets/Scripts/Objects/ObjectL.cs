@@ -19,6 +19,7 @@ public abstract class ObjectL : MonoBehaviour, ICullableObject
     protected bool isVisibleNow = true;
     protected Vector2 startPos;
     [SerializeField] protected Vector2 ToDropPos;
+    [SerializeField] protected bool IsUpper;
     public abstract void CreateCulling();
     public abstract Vector2 GetPosition();
     public abstract void UpdateCulling(bool shouldBeVisible);

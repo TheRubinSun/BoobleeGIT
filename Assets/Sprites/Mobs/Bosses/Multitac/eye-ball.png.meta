@@ -160,11 +160,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 42
         width: 32
         height: 42
       alignment: 9
-      pivot: {x: 0.5, y: 0.6428571}
+      pivot: {x: 0.5, y: 0.645}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -182,11 +182,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 0
+        y: 42
         width: 32
         height: 42
       alignment: 9
-      pivot: {x: 0.5, y: 0.6428571}
+      pivot: {x: 0.5, y: 0.645}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -204,11 +204,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 0
+        y: 42
         width: 32
         height: 42
       alignment: 9
-      pivot: {x: 0.5, y: 0.6428571}
+      pivot: {x: 0.5, y: 0.645}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -226,11 +226,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 0
+        y: 42
         width: 32
         height: 42
       alignment: 9
-      pivot: {x: 0.5, y: 0.6428571}
+      pivot: {x: 0.5, y: 0.645}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -248,11 +248,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 128
-        y: 0
+        y: 42
         width: 32
         height: 42
       alignment: 9
-      pivot: {x: 0.5, y: 0.6428571}
+      pivot: {x: 0.5, y: 0.645}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -270,11 +270,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 160
-        y: 0
+        y: 42
         width: 32
         height: 42
       alignment: 9
-      pivot: {x: 0.5, y: 0.6428571}
+      pivot: {x: 0.5, y: 0.645}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -292,11 +292,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 192
-        y: 0
+        y: 42
         width: 32
         height: 42
       alignment: 9
-      pivot: {x: 0.5, y: 0.6428571}
+      pivot: {x: 0.5, y: 0.645}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -314,11 +314,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 224
-        y: 0
+        y: 42
         width: 32
         height: 42
       alignment: 9
-      pivot: {x: 0.5, y: 0.6428571}
+      pivot: {x: 0.5, y: 0.645}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -336,11 +336,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 256
-        y: 0
+        y: 42
         width: 32
         height: 42
       alignment: 9
-      pivot: {x: 0.5, y: 0.6428571}
+      pivot: {x: 0.5, y: 0.645}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -358,11 +358,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 288
-        y: 0
+        y: 42
         width: 32
         height: 42
       alignment: 9
-      pivot: {x: 0.5, y: 0.6428571}
+      pivot: {x: 0.5, y: 0.645}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -380,11 +380,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 320
-        y: 0
+        y: 42
         width: 32
         height: 42
       alignment: 9
-      pivot: {x: 0.5, y: 0.6428571}
+      pivot: {x: 0.5, y: 0.645}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -393,6 +393,248 @@ TextureImporter:
       bones: []
       spriteID: ecf0a4e3ca4390c4ba7c1d470cad4252
       internalID: -963914971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eye-ball_11
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 42
+      alignment: 9
+      pivot: {x: 0.5, y: 0.645}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25b7c89f8ff5fdf44809b9e719581bae
+      internalID: 1072989383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eye-ball_12
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 42
+      alignment: 9
+      pivot: {x: 0.5, y: 0.645}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19f52c989061bfb42936c2e5f4f4e80a
+      internalID: 981108753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eye-ball_13
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 42
+      alignment: 9
+      pivot: {x: 0.5, y: 0.645}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1dc2ef619b2321f4d915aeaa4ab49849
+      internalID: -1856866543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eye-ball_14
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 42
+      alignment: 9
+      pivot: {x: 0.5, y: 0.645}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62bef79a3219e5d4985963f323fb97ec
+      internalID: -1450726446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eye-ball_15
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 42
+      alignment: 9
+      pivot: {x: 0.5, y: 0.645}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 878c106b10a19584e84f19211aae09be
+      internalID: 457891054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eye-ball_16
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 32
+        height: 42
+      alignment: 9
+      pivot: {x: 0.5, y: 0.645}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39f40df65f7ba284bbd0052f8ddff2df
+      internalID: -1235468427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eye-ball_17
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 32
+        height: 42
+      alignment: 9
+      pivot: {x: 0.5, y: 0.645}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb33341c9a6c301499a44a34205b02ae
+      internalID: 756470937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eye-ball_18
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 0
+        width: 32
+        height: 42
+      alignment: 9
+      pivot: {x: 0.5, y: 0.645}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f0fbffd452e9c54c843b6d589a1e2b6
+      internalID: -447377836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eye-ball_19
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 32
+        height: 42
+      alignment: 9
+      pivot: {x: 0.5, y: 0.645}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e570d0c6d6b15014bb9b08e07379ac2e
+      internalID: -305251917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eye-ball_20
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 0
+        width: 32
+        height: 42
+      alignment: 9
+      pivot: {x: 0.5, y: 0.645}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c034ad3975743c544846e7ca6e035a4e
+      internalID: 548214953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: eye-ball_21
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 32
+        height: 42
+      alignment: 9
+      pivot: {x: 0.5, y: 0.645}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88a4b52f03f0bad4e92b30e4d4aeb9f7
+      internalID: 1520065379
       vertices: []
       indices: 
       edges: []
@@ -414,7 +656,18 @@ TextureImporter:
       eye-ball_0: 2005696439
       eye-ball_1: 1540829357
       eye-ball_10: -963914971
+      eye-ball_11: 1072989383
+      eye-ball_12: 981108753
+      eye-ball_13: -1856866543
+      eye-ball_14: -1450726446
+      eye-ball_15: 457891054
+      eye-ball_16: -1235468427
+      eye-ball_17: 756470937
+      eye-ball_18: -447377836
+      eye-ball_19: -305251917
       eye-ball_2: -1711199125
+      eye-ball_20: 548214953
+      eye-ball_21: 1520065379
       eye-ball_3: -255001443
       eye-ball_4: -1666104391
       eye-ball_5: -46957291

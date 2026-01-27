@@ -36,6 +36,7 @@ public class CullingManager : MonoBehaviour
     private int lastWidth;
     private int lastHeight;
 
+    [SerializeField] bool IsUpper;
 
     private void Awake()
     {

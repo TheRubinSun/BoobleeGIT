@@ -47,6 +47,7 @@ public class LazerControl : MonoBehaviour
             RaycastHit2D hit = hits[i];
             if (hit.collider == null)
                 continue;
+
             int hitLayer = hit.collider.gameObject.layer;
 
             if ((layerMask & (1 << hitLayer)) == 0) //Исключаем все объеты кроме определенных

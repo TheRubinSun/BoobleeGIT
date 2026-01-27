@@ -50,6 +50,8 @@ public class OreL : ObjectLBroken
     {
         if (!isVisibleNow) return;
 
+        if (IsUpper) return;
+
         float treePosY = transform.position.y;
         float PlayerPosY = GlobalData.GameManager.PlayerPosY;
 

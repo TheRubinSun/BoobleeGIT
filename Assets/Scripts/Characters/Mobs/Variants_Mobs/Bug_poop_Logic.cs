@@ -136,6 +136,8 @@ public class Bug_poop_Logic : BaseEnemyLogic
     {
         if (!isVisibleNow) return;
 
+        if (IsUpper) return;
+
         float mobPosY = transform.position.y;
         float PlayerPosY = GlobalData.GameManager.PlayerPosY;
 

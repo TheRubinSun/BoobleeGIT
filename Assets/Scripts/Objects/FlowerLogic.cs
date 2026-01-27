@@ -64,6 +64,8 @@ public class FlowerLogic : ObjectLBroken , IPointFarm
     {
         if (!isVisibleNow) return;
 
+        if (IsUpper) return;
+
         float PosY = transform.position.y;
         float PlayerPosY = GlobalData.GameManager.PlayerPosY;
 

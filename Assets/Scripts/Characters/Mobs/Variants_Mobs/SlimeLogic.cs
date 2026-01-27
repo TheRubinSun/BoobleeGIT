@@ -52,6 +52,8 @@ public class SlimeLogic : BaseEnemyLogic, IItemMove
     {
         if (!isVisibleNow) return;
 
+        if (IsUpper) return;
+
         float mobPosY = transform.position.y;
         float PlayerPosY = GlobalData.GameManager.PlayerPosY;
 

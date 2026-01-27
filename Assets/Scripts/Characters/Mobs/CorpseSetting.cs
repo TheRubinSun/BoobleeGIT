@@ -8,7 +8,7 @@ public class CorpseSetting : MonoBehaviour, ICullableObject
     public bool isBusy { get; private set; }
     public string NameKey { get; set; }
     public AudioSource audioSource;
-
+    
 
     private SpriteRenderer spr_ren;
     private Animator animator_main;

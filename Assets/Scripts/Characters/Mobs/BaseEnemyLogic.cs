@@ -92,6 +92,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     protected bool isVisibleNow = true;
 
     [SerializeField] protected Abillity[] abillities;
+    [SerializeField] protected bool IsUpper;
 
     protected Coroutine flashCol;
     protected virtual void Awake()
@@ -111,7 +112,25 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
             healthBar = new HealthBar2D(HPBar.transform.GetChild(0).gameObject, HPBar.transform.GetChild(1).gameObject);
         }
     }
+    protected virtual void Start()
+    {
+        if (player == null && GlobalData.GameManager.PlayerModel != null)
+            player = GlobalData.GameManager.PlayerModel;
 
+        original_color = spr_ren.color;
+        moveDirection = (player.position - CenterObject.position).normalized; //Вычисление направление к игроку
+        UpdateSortingOrder();
+
+        combinedLayerMask = (1 << LayerManager.obstaclesLayer) /*| (1 << LayerManager.interactableLayer) | (1 << LayerManager.touchObjectsLayer)*/ | (1 << LayerManager.playerLayer);
+        obstCombLayerMask = (1 << LayerManager.obstaclesLayer) /*| (1 << LayerManager.interactableLayer) | (1 << LayerManager.touchObjectsLayer)*/;
+
+        CreateCulling();
+        UpdateCulling(false);
+        GlobalData.CullingManager.RegisterObject(this);
+
+        if (abillities.Length > 0) StartCoroutine(LoadAbilities());
+        //SetVolume();
+    }
     protected virtual void LoadParametrs()
     {
         //Debug.Log($"Size {EnemyList.mobs.Count} {IdMobs}");
@@ -156,25 +175,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
         rb = GetComponent<Rigidbody2D>();
         mobRadius = selfCollider.bounds.extents.magnitude + 0.1f;
     }
-    protected virtual void Start()
-    {
-        if (player == null && GlobalData.GameManager.PlayerModel != null)
-            player = GlobalData.GameManager.PlayerModel;
 
-        original_color = spr_ren.color;
-        moveDirection = (player.position - CenterObject.position).normalized; //Вычисление направление к игроку
-        UpdateSortingOrder();
-
-        combinedLayerMask = (1 << LayerManager.obstaclesLayer) /*| (1 << LayerManager.interactableLayer) | (1 << LayerManager.touchObjectsLayer)*/ | (1 << LayerManager.playerLayer);
-        obstCombLayerMask = (1 << LayerManager.obstaclesLayer) /*| (1 << LayerManager.interactableLayer) | (1 << LayerManager.touchObjectsLayer)*/;
-
-        CreateCulling();
-        UpdateCulling(false);
-        GlobalData.CullingManager.RegisterObject(this);
-
-        if (abillities.Length > 0) StartCoroutine(LoadAbilities());
-        //SetVolume();
-    }
     //public void SetSpeedCoof(float newCoofSpeed)
     //{
     //    coofMoveSpeed = newCoofSpeed;
@@ -212,8 +213,8 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
 
 
     protected int fixedUpdateCounter = 0;
-
-    public virtual void FixedUpdate()
+    protected virtual void Update() { }
+    protected virtual void FixedUpdate()
     {
         fixedUpdateCounter++;
         directionUpdateInterval = IsNearThePlayer ? 8 : 24;
@@ -227,6 +228,10 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     public virtual void UpdateSortingOrder()
     {
         if (!isVisibleNow) return;
+
+        if (IsUpper) return; //Если моб должен быть поверх всего
+
+        Debug.Log(IsUpper);
 
         float mobPosY = transform.position.y;
         float PlayerPosY = GlobalData.GameManager.PlayerPosY;

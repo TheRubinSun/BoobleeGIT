@@ -24,6 +24,8 @@ public class JustObject : ObjectL
     {
         if (!isVisibleNow) return;
 
+        if (IsUpper) return;
+
         float PosY = transform.position.y;
         float PlayerPosY = GlobalData.GameManager.PlayerPosY;
 
