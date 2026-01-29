@@ -213,8 +213,11 @@ MonoBehaviour:
   mob_object: {fileID: 8190891518342037492}
   audioSource: {fileID: 9119874925974501244}
   attack_sounds: []
-  player_touch_sounds: []
-  die_sounds: []
+  player_touch_sounds:
+  - {fileID: 8300000, guid: 33c9ba42e68415f44b067ef9967beafd, type: 3}
+  die_sounds:
+  - {fileID: 8300000, guid: e1ffd110d12ba8b4493194cd4f409f5d, type: 3}
+  - {fileID: 8300000, guid: 2a1291c06e6657c45883939c4fe20401, type: 3}
   abolity_sounds: []
   damageValuePref: {fileID: 6292013005122663656, guid: cac7b7163f7b90940bb6363f0f51064d, type: 3}
   attackBuffer: 0
@@ -225,6 +228,21 @@ MonoBehaviour:
   shadow_trans: {fileID: 5973034391210070178}
   parentBallsRotate: {fileID: 6977709554306858531}
   parentBallsHome: {fileID: 2175523287238433042}
+  addRangeToPlayer: 5
+  beeps_home_sounds:
+  - {fileID: 8300000, guid: bfe64f894a3b98e48aedffd915a37da7, type: 3}
+  - {fileID: 8300000, guid: bc58615eb1bcb004f9ae7d057a0d55f1, type: 3}
+  beeps_attacks_sounds:
+  - {fileID: 8300000, guid: 266a66df06367f241aa287d21c77857b, type: 3}
+  - {fileID: 8300000, guid: f790eb89a3c2d8848be94711e9121af6, type: 3}
+  - {fileID: 8300000, guid: c1e0f51a4a9bcd042a53d9ef7cd4bdb1, type: 3}
+  rotations_sounds:
+  - {fileID: 8300000, guid: a95c1380c51fb1c42b5767b752b36fe5, type: 3}
+  - {fileID: 8300000, guid: cfd298ea5e41e28499ed96a96d363981, type: 3}
+  just_sounds:
+  - {fileID: 8300000, guid: f62adb4b8e694b64586a35eec392f3a4, type: 3}
+  - {fileID: 8300000, guid: 045a2114ee798fb4a86d6519bbe22b61, type: 3}
+  - {fileID: 8300000, guid: 26bdf8a24400e03408d8e35d6cd1f430, type: 3}
   ballsOfBoss:
   - {fileID: 3204908706669769868}
   - {fileID: 1396765874314255162}
@@ -234,7 +252,6 @@ MonoBehaviour:
   - {fileID: 5813610005843471332}
   - {fileID: 8201370246663245715}
   - {fileID: 327026346670875127}
-  addRangeToPlayer: 5
   amplitude: 0.08
   speed: 2
 --- !u!114 &2190829937573134563
@@ -332,7 +349,7 @@ AudioSource:
   m_GameObject: {fileID: 5361420741660025998}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 6456686879423158592, guid: 1178313d785468941ae1fbfa072bd037, type: 2}
+  OutputAudioMixerGroup: {fileID: -6329634715214523283, guid: 1178313d785468941ae1fbfa072bd037, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1

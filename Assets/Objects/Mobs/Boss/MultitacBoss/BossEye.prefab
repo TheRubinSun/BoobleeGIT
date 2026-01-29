@@ -233,6 +233,7 @@ GameObject:
   - component: {fileID: 3509771579064529004}
   - component: {fileID: 4345168826514106543}
   - component: {fileID: 1040282491818228704}
+  - component: {fileID: 3514449642227444831}
   m_Layer: 19
   m_Name: BossEye
   m_TagString: Untagged
@@ -328,8 +329,10 @@ MonoBehaviour:
   IsUpper: 1
   remainsHits: 4
   toNextStageAnim: 1
-  soundsBroken: []
-  fullBroken: {fileID: 0}
+  soundsBroken:
+  - {fileID: 8300000, guid: cfe2bcb83e42d1c43bee92e9c18ce8a5, type: 3}
+  - {fileID: 8300000, guid: 4498fde9e6b91de4daaf33d6bd71f209, type: 3}
+  fullBroken: {fileID: 8300000, guid: aa250cedb1f8da9439fd4c2b85f9b312, type: 3}
   itemsDrop: []
   damage_color:
     serializedVersion: 2
@@ -340,6 +343,14 @@ MonoBehaviour:
   exp_damage: 0
   damageType: 0
   damageT: 0
+  hits_sounds:
+  - {fileID: 8300000, guid: 63d4cc6623a94b6489be1af4aa5f28d9, type: 3}
+  backHome_sounds:
+  - {fileID: 8300000, guid: 307c2d70283187e48bcbff099454a910, type: 3}
+  - {fileID: 8300000, guid: c9f31c03b5efaa745965e80aad74f4d3, type: 3}
+  - {fileID: 8300000, guid: abee379f8b0ebbb428302ff3917a3d31, type: 3}
+  - {fileID: 8300000, guid: 2bf596e5e0f6e6b468cb6fffe84aa860, type: 3}
+  - {fileID: 8300000, guid: 5512d9ddb8200654fb0ff0a803ba5383, type: 3}
 --- !u!58 &4345168826514106543
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -398,3 +409,100 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!82 &3514449642227444831
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8417221321333851958}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 6456686879423158592, guid: 1178313d785468941ae1fbfa072bd037, type: 2}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 0.6
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

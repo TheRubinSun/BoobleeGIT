@@ -8,6 +8,9 @@ public class BallBoss : EnemyShield
     private SpriteRenderer[] childSpRen;
     private Animator[] childAnim;
     private Color32[] childBaseColor;
+
+    [SerializeField] private AudioClip[] hits_sounds;
+    [SerializeField] private AudioClip[] backHome_sounds;
     protected override void Awake()
     {
         layerOBJ = gameObject.layer;
@@ -39,10 +42,10 @@ public class BallBoss : EnemyShield
     {
         if(collision.gameObject.layer == LayerManager.playerLayer)
         {
+            PlayHitSound(0.8f, 1.2f);
             GlobalData.Player.TakeDamage(damage_ball, damageT, true);
         }
     }
-
     public override void CreateCulling()
     {
         culling = new CullingObject(spr_ren, anim, childSpRen, childAnim);
@@ -72,5 +75,23 @@ public class BallBoss : EnemyShield
                 }
             }
         }
+    }
+    public void PlayFromHomeSound()
+    {
+        AudioClip temp = backHome_sounds[Random.Range(0, backHome_sounds.Length)];
+        audioS.pitch = Random.Range(1.2f, 1.4f);
+        audioS.PlayOneShot(temp);
+    }
+    public void PlayToHomeSound()
+    {
+        AudioClip temp = backHome_sounds[Random.Range(0, backHome_sounds.Length)];
+        audioS.pitch = Random.Range(0.6f, 0.8f);
+        audioS.PlayOneShot(temp);
+    }
+    protected void PlayHitSound(float minPitch, float maxPitch)
+    {
+        AudioClip temp = hits_sounds[Random.Range(0, hits_sounds.Length)];
+        audioS.pitch = Random.Range(minPitch, maxPitch);
+        audioS.PlayOneShot(temp);
     }
 }

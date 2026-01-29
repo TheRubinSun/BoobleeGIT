@@ -5,7 +5,7 @@ public class EnemyShield : ObjectLBroken
 {
     public damageT damageType;
     protected int damage_ball { get; set; }
-    public bool isDestroyed { get; private set; }
+    public bool isDestroyed { get; protected set; }
     protected int layerOBJ;
 
     //protected GameManager g_m = GameManager.Instance;
