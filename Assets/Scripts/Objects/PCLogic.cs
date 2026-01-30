@@ -37,7 +37,7 @@ public class PCLogic : ObjectLBroken
         if (remainsHits == 0)
         {
             if (justSounds != null) justSounds.Stop();
-            StartCoroutine(PlayeSoundFullBroken());
+            StartCoroutine(PlaySoundFullBroken());
             GlobalData.Player.AddTypeExp(typeExp, exp_full);
             return;
         }
@@ -93,17 +93,19 @@ public class PCLogic : ObjectLBroken
 
         spr_ren.sortingOrder = Mathf.RoundToInt((treePosY - PlayerPosY - 2) * -5);
     }
-    protected override IEnumerator PlayeSoundFullBroken()
+    protected override IEnumerator PlaySoundFullBroken()
     {
         float pitch = Random.Range(0.8f, 1.2f);
         audioS.pitch = pitch;
-        audioS.PlayOneShot(fullBroken);
+        AudioClip useAudio = fullBroken[Random.Range(0, fullBroken.Length)];
+        audioS.PlayOneShot(useAudio);
+
         spr_ren.enabled = false;
         Collider2D collider2D = GetComponent<Collider2D>();
         collider2D.enabled = false;
         DropItems();
 
-        yield return new WaitForSeconds(fullBroken.length);
+        yield return new WaitForSeconds(useAudio.length);
 
         DestroyObject();
     }

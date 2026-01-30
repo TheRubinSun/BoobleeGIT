@@ -11,6 +11,9 @@ public class BallBoss : EnemyShield
 
     [SerializeField] private AudioClip[] hits_sounds;
     [SerializeField] private AudioClip[] backHome_sounds;
+
+    [SerializeField] private GameObject puppilObj;
+    [SerializeField] private GameObject capilObj;
     protected override void Awake()
     {
         layerOBJ = gameObject.layer;
@@ -23,7 +26,13 @@ public class BallBoss : EnemyShield
         float anim_speed = Random.Range(0.9f, 1.1f);
         anim.speed = anim_speed;
 
-        foreach(Animator anim_ch in childAnim)
+        if (puppilObj == null)
+            puppilObj = transform.GetChild(0).gameObject;
+
+        if (capilObj == null)
+            capilObj = transform.GetChild(1).gameObject;
+
+        foreach (Animator anim_ch in childAnim)
         {
             anim_ch.speed = anim_speed;
         }
@@ -46,6 +55,13 @@ public class BallBoss : EnemyShield
             GlobalData.Player.TakeDamage(damage_ball, damageT, true);
         }
     }
+    protected override IEnumerator PlaySoundFullBroken()
+    {
+        Destroy(puppilObj);
+        Destroy(capilObj);
+
+        yield return base.PlaySoundFullBroken();
+    }
     public override void CreateCulling()
     {
         culling = new CullingObject(spr_ren, anim, childSpRen, childAnim);
@@ -63,7 +79,6 @@ public class BallBoss : EnemyShield
                 }
             }
 
-
             yield return new WaitForSeconds(time);
 
             spr_ren.color = original_color;
@@ -71,7 +86,9 @@ public class BallBoss : EnemyShield
             {
                 for (int i = 0; i < childSpRen.Length; i++)
                 {
-                    childSpRen[i].color = childBaseColor[i];
+                    if(childSpRen[i] != null)
+                        childSpRen[i].color = childBaseColor[i];
+
                 }
             }
         }

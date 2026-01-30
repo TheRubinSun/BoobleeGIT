@@ -440,16 +440,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ToDropPos: {x: 0, y: 0}
+  IsUpper: 0
   remainsHits: 4
   toNextStageAnim: 1
   soundsBroken:
   - {fileID: 8300000, guid: f145fbbf6f2e92f4e9e44d0d4da79efe, type: 3}
   - {fileID: 8300000, guid: e655acc4f0492c9409b46d4d27e233cf, type: 3}
-  fullBroken: {fileID: 8300000, guid: 72c061d34ccb82545b17b51328383a42, type: 3}
+  fullBroken:
+  - {fileID: 8300000, guid: 59d77fffffe9e6249acaf9ab6c06b0de, type: 3}
   itemsDrop: []
   damage_color:
     serializedVersion: 2
     rgba: 4284243037
+  exp: 0
+  exp_full: 0
+  typeExp: 0
+  exp_damage: 0
   damageType: 0
 --- !u!82 &8937208536725906677
 AudioSource:
@@ -742,6 +748,7 @@ MonoBehaviour:
   attackBuffer: 0.4
   HPBar: {fileID: 8081081011683111393}
   abillities: []
+  IsUpper: 0
   ball: {fileID: 4039394062910905871}
   haveBall: 1
 --- !u!114 &2465009672477220326

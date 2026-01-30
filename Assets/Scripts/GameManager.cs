@@ -187,7 +187,7 @@ public class GameManager: MonoBehaviour
     {
         //Создаем труп
         GameObject corpseEnemy = Instantiate(CorpsePref, mob_logic.transform.parent);
-
+        corpseEnemy.transform.localScale = new Vector3(enemy.localScale.x, enemy.localScale.y, enemy.localScale.z);
         //Назначаем позицию
         corpseEnemy.transform.position = enemy.transform.position;
 

@@ -7,7 +7,7 @@ public class VasaLogic : ObjectLBroken
         remainsHits--;
         if (remainsHits == 0)
         {
-            StartCoroutine(PlayeSoundFullBroken());
+            StartCoroutine(PlaySoundFullBroken());
         }
         else if (remainsHits % toNextStageAnim == 0)
         {

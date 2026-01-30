@@ -10,10 +10,16 @@ public class Ball_logic : EnemyShield
     {
         rb = _rb;
     }
-    protected override IEnumerator PlayeSoundFullBroken()
+    protected override IEnumerator PlaySoundFullBroken()
     {
-        if (rb != null) rb.linearVelocity = Vector3.zero;
+        if (rb != null) 
+            rb.linearVelocity = Vector3.zero;
+
         anim.SetTrigger("Destroy");
+
+        Collider2D collider2D = GetComponent<Collider2D>();
+        collider2D.enabled = false;
+
         if (fullBroken == null)
         {
             Debug.LogWarning("Нет звуков");
@@ -22,16 +28,15 @@ public class Ball_logic : EnemyShield
         {
             float pitch = Random.Range(0.8f, 1.2f);
             audioS.pitch = pitch;
-            audioS.PlayOneShot(fullBroken);
+
+            AudioClip useAudio = fullBroken[Random.Range(0, fullBroken.Length)];
+            audioS.PlayOneShot(useAudio);
+            yield return new WaitForSeconds(useAudio.length);
         }
 
 
-        Collider2D collider2D = GetComponent<Collider2D>();
-        collider2D.enabled = false;
+
         DropItems();
-
-        yield return new WaitForSeconds(0.6f);
-
         DestroyObject();
     }
     public void RunBall()
@@ -58,7 +63,7 @@ public class Ball_logic : EnemyShield
         }
         if (isRun && (layerCol == LayerManager.obstaclesLayer || layerCol == LayerManager.playerLayer))
         {
-            StartCoroutine(PlayeSoundFullBroken());
+            StartCoroutine(PlaySoundFullBroken());
         }
     }
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -71,7 +76,7 @@ public class Ball_logic : EnemyShield
         }
         if (isRun && (layerCol == LayerManager.obstaclesLayer || layerCol == LayerManager.playerLayer))
         {
-            StartCoroutine(PlayeSoundFullBroken());
+            StartCoroutine(PlaySoundFullBroken());
         }
     }
 }

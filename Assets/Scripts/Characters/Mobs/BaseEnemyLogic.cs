@@ -367,24 +367,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
         enum_stat.Mov_Speed = 0;
 
         StopAllCoroutines();
-        //AudioSource tempSource = gameObject.AddComponent<AudioSource>();
-        //tempSource.outputAudioMixerGroup = audioSource.outputAudioMixerGroup;
-        //tempSource.volume = die_volume;
-        //audioSource.Stop();
-        //audioSource.pitch = UnityEngine.Random.Range(0.5f, 1.5f);
-
-        //AudioClip dieSounds = null;
-
-        //if (die_sounds.Length != 0)
-        //    dieSounds = die_sounds[UnityEngine.Random.Range(0, die_sounds.Length)];
-
-        //audioSource.PlayOneShot(dieSounds);
-        //animator_main.SetTrigger("Death");
-        //selfCollider.enabled = false;
-
         OnEnemyDeath?.Invoke(this);
-        //Destroy(gameObject);
-        //StartCoroutine(WaitToDie(0.1f));
     }
     //public IEnumerator WaitToDie(float time)
     //{

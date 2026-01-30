@@ -104,17 +104,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ToDropPos: {x: 0, y: 0}
+  IsUpper: 0
   remainsHits: 1
   toNextStageAnim: 1
   soundsBroken:
   - {fileID: 8300000, guid: 1b40ded6ccbeade49a550de71431e2a2, type: 3}
   - {fileID: 8300000, guid: d335f1dc4d6d6544bb1211f6414fcdb4, type: 3}
   - {fileID: 8300000, guid: 6cddb74011dd4074cb0ba5eff1798a40, type: 3}
-  fullBroken: {fileID: 8300000, guid: f35ab162af0412b4495d87fc28894a8d, type: 3}
+  fullBroken:
+  - {fileID: 8300000, guid: f35ab162af0412b4495d87fc28894a8d, type: 3}
   itemsDrop:
   - item_key: seed_tallsha
+    chance: 0
     min: 1
     max: 1
+  damage_color:
+    serializedVersion: 2
+    rgba: 0
+  exp: 0
+  exp_full: 0
+  typeExp: 0
+  exp_damage: 0
 --- !u!61 &537814440007233801
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -152,7 +162,7 @@ BoxCollider2D:
   m_Offset: {x: 0, y: -0.01}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0}
     oldSize: {x: 0.21666667, y: 0.18333334}
     newSize: {x: 0.45, y: 0.76666665}
     adaptiveTilingThreshold: 0.5

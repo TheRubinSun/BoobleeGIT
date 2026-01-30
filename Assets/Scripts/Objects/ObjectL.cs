@@ -39,7 +39,7 @@ public abstract class ObjectLBroken : ObjectL
     [SerializeField] protected int toNextStageAnim = 1;
 
     [SerializeField] protected AudioClip[] soundsBroken;
-    [SerializeField] protected AudioClip fullBroken;
+    [SerializeField] protected AudioClip[] fullBroken;
 
     [SerializeField] protected List<ItemDropData> itemsDrop = new List<ItemDropData>();
 
@@ -85,7 +85,7 @@ public abstract class ObjectLBroken : ObjectL
         }
     }
 
-    protected virtual IEnumerator PlayeSoundFullBroken()
+    protected virtual IEnumerator PlaySoundFullBroken()
     {
         HideBeforeDestroy();
 
@@ -112,8 +112,10 @@ public abstract class ObjectLBroken : ObjectL
     {
         float pitch = Random.Range(0.8f, 1.2f);
         audioS.pitch = pitch;
-        audioS.PlayOneShot(fullBroken);
-        yield return new WaitForSeconds(fullBroken.length);
+
+        AudioClip useAudio = fullBroken[Random.Range(0, fullBroken.Length)];
+        audioS.PlayOneShot(useAudio);
+        yield return new WaitForSeconds(useAudio.length);
     }
     protected virtual void PlayeSoundBroken()
     {

@@ -172,7 +172,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 112
         width: 80
         height: 112
       alignment: 0
@@ -194,7 +194,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 80
-        y: 0
+        y: 112
         width: 80
         height: 112
       alignment: 0
@@ -216,7 +216,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 160
-        y: 0
+        y: 112
         width: 80
         height: 112
       alignment: 0
@@ -238,7 +238,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 240
-        y: 0
+        y: 112
         width: 80
         height: 112
       alignment: 0
@@ -260,6 +260,72 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 320
+        y: 112
+        width: 80
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1de525fd4a399a945a1034b7797ff46b
+      internalID: 8254566798159723748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Multitac-anim_Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 112
+        width: 80
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6bd5715f3f319b5469f9eadf5bc502a2
+      internalID: -8591829905729065550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Multitac-anim_Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 112
+        width: 80
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 673a04b46226342449a65dd737da3048
+      internalID: -940216571460817995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Multitac-anim_Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 0
         width: 80
         height: 112
@@ -269,16 +335,104 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 4ec3b03b4cc1e8270800000000000000
-      internalID: 8254566798159723748
+      spriteID: 91559b7aa2e520742abc2370287fec6f
+      internalID: -463853041
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Multitac-anim_Sheet_5
+      name: Multitac-anim_Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 80
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c1be2de469290c4eb71f1e4c51faa92
+      internalID: 1694169807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Multitac-anim_Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 80
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18f190a07f0459648a4cdf6643bf4042
+      internalID: -2069631642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Multitac-anim_Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 0
+        width: 80
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 663fce540e5d1484094178819e5ab89c
+      internalID: -330557881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Multitac-anim_Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 80
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7435933d17003b948a70a7aac9f06066
+      internalID: -515416866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Multitac-anim_Sheet_12
       rect:
         serializedVersion: 2
         x: 400
@@ -291,16 +445,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 2bde072e830b3c880800000000000000
-      internalID: -8591829905729065550
+      spriteID: b14df161ee986524c9f71a91b31366c8
+      internalID: -55244970
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Multitac-anim_Sheet_6
+      name: Multitac-anim_Sheet_13
       rect:
         serializedVersion: 2
         x: 480
@@ -313,10 +467,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 5bb642e720ea3f2f0800000000000000
-      internalID: -940216571460817995
+      spriteID: 9b60d3ab84f7a1444b9ca283e8058139
+      internalID: 202447575
       vertices: []
       indices: 
       edges: []
@@ -337,11 +491,18 @@ TextureImporter:
     nameFileIdTable:
       Multitac-anim_Sheet_0: -5988893969785628716
       Multitac-anim_Sheet_1: -6573138384230848056
+      Multitac-anim_Sheet_10: -330557881
+      Multitac-anim_Sheet_11: -515416866
+      Multitac-anim_Sheet_12: -55244970
+      Multitac-anim_Sheet_13: 202447575
       Multitac-anim_Sheet_2: 988210333951009474
       Multitac-anim_Sheet_3: -1770778659216214681
       Multitac-anim_Sheet_4: 8254566798159723748
       Multitac-anim_Sheet_5: -8591829905729065550
       Multitac-anim_Sheet_6: -940216571460817995
+      Multitac-anim_Sheet_7: -463853041
+      Multitac-anim_Sheet_8: 1694169807
+      Multitac-anim_Sheet_9: -2069631642
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

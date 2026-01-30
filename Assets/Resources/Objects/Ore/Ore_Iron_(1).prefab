@@ -104,13 +104,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ToDropPos: {x: 0, y: 0}
+  IsUpper: 0
   remainsHits: 24
   toNextStageAnim: 4
   soundsBroken:
   - {fileID: 8300000, guid: 09f0b08ed2f336d4995d92f436ae4e9f, type: 3}
   - {fileID: 8300000, guid: fc2ccae9d7b72684b94a340d464b1a82, type: 3}
   - {fileID: 8300000, guid: 82fbd31a526d4a141b7efe9cd16d5506, type: 3}
-  fullBroken: {fileID: 8300000, guid: 23fb05d2137480046a9602ce6d1ec73b, type: 3}
+  fullBroken:
+  - {fileID: 8300000, guid: 23fb05d2137480046a9602ce6d1ec73b, type: 3}
+  - {fileID: 8300000, guid: 09827114dada8124480a9ec94beefffb, type: 3}
+  - {fileID: 8300000, guid: 9a1ff54e878616a438941080c25903b4, type: 3}
+  - {fileID: 8300000, guid: a83c51e19f86d6644845e3bc19cd8f68, type: 3}
   itemsDrop:
   - item_key: material_iron_ore
     chance: 25

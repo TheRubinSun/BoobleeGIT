@@ -332,7 +332,11 @@ MonoBehaviour:
   soundsBroken:
   - {fileID: 8300000, guid: cfe2bcb83e42d1c43bee92e9c18ce8a5, type: 3}
   - {fileID: 8300000, guid: 4498fde9e6b91de4daaf33d6bd71f209, type: 3}
-  fullBroken: {fileID: 8300000, guid: aa250cedb1f8da9439fd4c2b85f9b312, type: 3}
+  fullBroken:
+  - {fileID: 8300000, guid: 014ca4de5ffeeb047b1816c90a4ae225, type: 3}
+  - {fileID: 8300000, guid: 4ead1bdbb1eb8414d8e0f6008068855d, type: 3}
+  - {fileID: 8300000, guid: 05b57cf9602fc964caab2c5ddcb35977, type: 3}
+  - {fileID: 8300000, guid: 642a3641a4033c743b26ff10bf3fb15d, type: 3}
   itemsDrop: []
   damage_color:
     serializedVersion: 2
@@ -351,6 +355,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: abee379f8b0ebbb428302ff3917a3d31, type: 3}
   - {fileID: 8300000, guid: 2bf596e5e0f6e6b468cb6fffe84aa860, type: 3}
   - {fileID: 8300000, guid: 5512d9ddb8200654fb0ff0a803ba5383, type: 3}
+  puppilObj: {fileID: 7059677197176043512}
+  capilObj: {fileID: 6329947810383780982}
 --- !u!58 &4345168826514106543
 CircleCollider2D:
   m_ObjectHideFlags: 0

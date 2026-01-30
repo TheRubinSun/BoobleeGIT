@@ -24,7 +24,7 @@ public class TreeLogic : ObjectLBroken
             if (remainsHits == 0)
             {
                 GlobalData.Player.AddTypeExp(typeExp, exp_full);
-                StartCoroutine(PlayeSoundFullBroken());
+                StartCoroutine(PlaySoundFullBroken());
             }
             else if (remainsHits % toNextStageAnim == 0)
             {

@@ -104,12 +104,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ToDropPos: {x: 0, y: 0}
+  IsUpper: 0
   remainsHits: 4
   toNextStageAnim: 1
   soundsBroken:
   - {fileID: 8300000, guid: 6dcb7194c813fd84d941b39638928272, type: 3}
   - {fileID: 8300000, guid: 11032f1622ca32141938226d76481460, type: 3}
-  fullBroken: {fileID: 8300000, guid: eade12cd5b5038046925a883864d679b, type: 3}
+  fullBroken:
+  - {fileID: 8300000, guid: eade12cd5b5038046925a883864d679b, type: 3}
   itemsDrop:
   - item_key: material_iron_bar
     chance: 15
@@ -143,6 +145,13 @@ MonoBehaviour:
     chance: 1
     min: 0
     max: 1
+  damage_color:
+    serializedVersion: 2
+    rgba: 0
+  exp: 0
+  exp_full: 0
+  typeExp: 0
+  exp_damage: 0
 --- !u!61 &3098389959272517242
 BoxCollider2D:
   m_ObjectHideFlags: 0

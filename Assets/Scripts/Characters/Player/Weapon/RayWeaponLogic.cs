@@ -88,6 +88,7 @@ public class RayWeaponLogic : RangeWeaponLogic
         lazer.transform.SetParent(transform.root);
 
         LazerControl lazCon = lazer.GetComponent<LazerControl>();
+
         lazCon.Init(hits, hitCount, originPos, endPos, Attack_Damage, Attack_Range, damageType, EffectAttack, countPenetrations, CountProjectiles, isDivideRay, layerMask, canBeWeapon);
     }
     //protected override void ShootLogic(float offset)//Рабочий код, но больше

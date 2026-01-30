@@ -36,7 +36,7 @@ public class FlowerLogic : ObjectLBroken , IPointFarm
                 {
                     GlobalData.Player.AddTypeExp(typeExp, exp_full); //Если найденно то коллект
                 }
-                StartCoroutine(PlayeSoundFullBroken());
+                StartCoroutine(PlaySoundFullBroken());
             }
             else if (remainsHits % toNextStageAnim == 0)
             {

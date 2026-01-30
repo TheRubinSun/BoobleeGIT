@@ -37,7 +37,7 @@ public class EnemyShield : ObjectLBroken
         if (remainsHits <= 0 && !isDestroyed)
         {
             isDestroyed = true;
-            StartCoroutine(PlayeSoundFullBroken());
+            StartCoroutine(PlaySoundFullBroken());
         }
         else if (remainsHits % toNextStageAnim == 0)
         {
@@ -46,10 +46,13 @@ public class EnemyShield : ObjectLBroken
         }
         
     }
-    protected override IEnumerator PlayeSoundFullBroken()
+    protected override IEnumerator PlaySoundFullBroken()
     {
         if(anim != null)
             anim.SetTrigger("Destroy");
+
+        Collider2D collider2D = GetComponent<Collider2D>();
+        collider2D.enabled = false;
 
         if (fullBroken == null)
         {
@@ -59,16 +62,13 @@ public class EnemyShield : ObjectLBroken
         {
             float pitch = Random.Range(0.8f, 1.2f);
             audioS.pitch = pitch;
-            audioS.PlayOneShot(fullBroken);
+
+            AudioClip useAudio = fullBroken[Random.Range(0, fullBroken.Length)];
+            audioS.PlayOneShot(useAudio);
+            yield return new WaitForSeconds(useAudio.length);
         }
 
-
-        Collider2D collider2D = GetComponent<Collider2D>();
-        collider2D.enabled = false;
         DropItems();
-
-        yield return new WaitForSeconds(0.6f);
-
         DestroyObject();
     }
 
