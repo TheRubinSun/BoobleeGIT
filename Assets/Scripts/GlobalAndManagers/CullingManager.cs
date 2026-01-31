@@ -4,6 +4,7 @@ using NUnit.Framework;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using static Unity.VisualScripting.Metadata;
 
 public interface ICullableObject
 {
@@ -172,6 +173,7 @@ public class CullingObject
     private Animator animator_main;
     private Animator[] animator_main_childs;
     private Light2D light;
+    private AudioSource audioSource;
     private AudioSource[] audioSources;
 
     public CullingObject(SpriteRenderer ren, Animator anim = null, SpriteRenderer[] _sprites_ren_childs = null, Animator[] _animator_main_childs = null, 
@@ -189,6 +191,14 @@ public class CullingObject
         sprite_ren = ren;
         animator_main = anim;
         audioSources = _audioSources;
+    }
+    public CullingObject(SpriteRenderer ren, Animator anim, SpriteRenderer[] childSpRen, Animator[] childAnim, AudioSource _audioSource)
+    {
+        sprite_ren = ren;
+        animator_main = anim;
+        sprites_ren_childs = childSpRen;
+        animator_main_childs = childAnim;
+        audioSource = _audioSource;
     }
     public void SetVisible(bool isVisible)
     {
@@ -212,6 +222,10 @@ public class CullingObject
             foreach (var anim_child in animator_main_childs)
                 anim_child.enabled = isVisible;
 
+        }
+        if(audioSource != null)
+        {
+            audioSource.enabled = isVisible;
         }
         if (audioSources != null && audioSources.Length > 0)
         {

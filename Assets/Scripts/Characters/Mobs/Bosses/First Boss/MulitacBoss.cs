@@ -7,6 +7,7 @@ public class MulitacBoss : BossLogic
 {
     [SerializeField] private Transform uperPartBoss;
     [SerializeField] private Transform shadow_trans;
+    [SerializeField] private Transform blood_anim_trans;
     [SerializeField] private Transform parentBallsRotate;
     [SerializeField] private Transform parentBallsHome;
     [SerializeField] private int addRangeToPlayer = 1;
@@ -20,16 +21,20 @@ public class MulitacBoss : BossLogic
 
     private Transform mob_trans;
     private SpriteRenderer uper_parth_spRen;
+    private SpriteRenderer blood_sr;
+    private SpriteRenderer shadow_sr;
     private Animator uper_parth_anim;
+    private Animator blood_anim;
+
     private ActionMultitac action;
 
     private Vector2[] homeCellPosition = new Vector2[8] {
-        new Vector2(0.117f, 1.45f), new Vector2(0.9f, 1.15f), new Vector2(1f, 0.45f), new Vector2(0.48f, -0.38f),
-        new Vector2(-0.42f, -0.7f), new Vector2(0.14f, 0.5f), new Vector2(-0.55f, 0.166f), new Vector2(-0.64f, 1.14f)};
+        new Vector2(0.06f, 0.870f),new Vector2(0.528f, 0.690f),new Vector2(0.59f, 0.27f),new Vector2(0.276f, -0.228f),
+        new Vector2(-0.264f, -0.42f),new Vector2(0.072f, 0.3f),new Vector2(-0.342f, 0.01f),new Vector2(-0.4f, 0.684f)};
 
     private Vector2[] circleCellPosition = new Vector2[8] {
-        new Vector2(0.0f, 0.4f), new Vector2(0.3f, 0.3f), new Vector2(0.4f, 0.0f), new Vector2(0.3f, -0.3f),
-        new Vector2(0.0f, -0.4f), new Vector2(-0.3f, -0.3f), new Vector2(-0.4f, 0.0f), new Vector2(-0.3f, 0.3f)};
+        new Vector2(0.0f, 1.6f),new Vector2(1.2f, 1.2f),new Vector2(1.6f, 0.0f),new Vector2(1.2f, -1.2f),
+        new Vector2(0.0f, -1.6f),new Vector2(-1.2f, -1.2f),new Vector2(-1.6f, 0.0f),new Vector2(-1.2f, 1.2f)};
 
     public List<Transform> ballsOfBoss = new List<Transform>();
     public EyeBossData[] ballsLogic;
@@ -55,16 +60,21 @@ public class MulitacBoss : BossLogic
         base.Awake();
         uper_parth_spRen = uperPartBoss.GetComponent<SpriteRenderer>();
         uper_parth_anim = uperPartBoss.GetComponent<Animator>();
+
+        blood_sr = blood_anim_trans.GetComponent<SpriteRenderer>();
+        blood_anim = blood_anim_trans.GetComponent<Animator>();
+        shadow_sr = shadow_trans.GetComponent<SpriteRenderer>();
+
+        calls_audio = gameObject.AddComponent<AudioSource>();
+        calls_audio.outputAudioMixerGroup = audioSource.outputAudioMixerGroup;
+
         uper_parth_anim.SetBool("HaveEyes", true);
     }
     protected override void Start()
     {
         base.Start();
+
         action = ActionMultitac.ComebackEyes;
-
-        calls_audio = gameObject.AddComponent<AudioSource>();
-        calls_audio.outputAudioMixerGroup = audioSource.outputAudioMixerGroup;
-
         mob_trans = mob_object.transform;
         retrunBalls = new Coroutine[ballsOfBoss.Count];
         shootBalls = new Coroutine[ballsOfBoss.Count];
@@ -84,11 +94,18 @@ public class MulitacBoss : BossLogic
     protected override void Update()
     {
         base.Update();
-
+        SoaringBoss();
+    }
+    private void SoaringBoss()
+    {
         float yOffset = Mathf.Sin(Time.time * speedFlyBody) * amplitude;
         Vector2 newPos = startPos + new Vector2(0, yOffset);
         mob_trans.localPosition = newPos;
         uperPartBoss.localPosition = newPos;
+
+        parentBallsHome.localPosition = newPos;
+        parentBallsRotate.localPosition = newPos;
+
 
         // ---------- ТЕНЬ ----------
 
@@ -123,8 +140,8 @@ public class MulitacBoss : BossLogic
     }
     public override void CreateCulling()
     {
-
-        culling = new CullingObject(spr_ren, animator_main, new SpriteRenderer[] { uper_parth_spRen }, new Animator[] { uper_parth_anim });
+        culling = new CullingObject(spr_ren, animator_main, new SpriteRenderer[] { uper_parth_spRen, blood_sr, shadow_sr },
+            new Animator[] { uper_parth_anim, blood_anim }, null, new AudioSource[] { audioSource, calls_audio });
     }
     public override void Death()
     {
@@ -272,9 +289,11 @@ public class MulitacBoss : BossLogic
         retrunBallsCoroutine = StartCoroutine(RetrunBallsWithDelay(homeCellPosition, parentBallsHome, totalSpeed));
         yield return retrunBallsCoroutine;
 
+        yield return new WaitForSeconds(0.5f);
+
         uper_parth_anim.SetBool("HaveEyes", true);
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2.0f);
 
         if (retrunBallsCoroutine != null)
         {
@@ -295,7 +314,7 @@ public class MulitacBoss : BossLogic
             if (ballsOfBoss[i] != null && ballsLogic[i] != null)
             {
                 rnd = Random.Range(0, ballsOfBoss.Count);
-                rnd2 = Random.Range(6, 16);
+                rnd2 = Random.Range(2, 4);
                 shootBalls[i] = StartCoroutine(ShotBallToPos(ballsOfBoss[i].transform, player.position, circleCellPosition[rnd], rnd2, totalSpeed));
 
                 ballsLogic[i].SetLayer(true);
@@ -352,16 +371,22 @@ public class MulitacBoss : BossLogic
     {
         ballPos.SetParent(parent);
         Vector3 targetPos = (Vector3)localPos;
+
+        if (parent == parentBallsRotate) //Как уходят с точки, "встают" по слоям
+        {
+            logic_eye.SetLayer(true);
+        }
+
         while (Vector2.Distance(ballPos.localPosition, targetPos) > 0.1f)
         {
             if (ballPos == null || logic_eye == null)
                 yield return null;
 
-           ballPos.localPosition += (targetPos - ballPos.localPosition).normalized * totalSpeed * Time.deltaTime;
+            ballPos.localPosition += (targetPos - ballPos.localPosition).normalized * totalSpeed * Time.deltaTime;
             yield return null;
         }
 
-        if(parent == parentBallsHome)
+        if (parent == parentBallsHome) //Как глаза доходят до точки, "садятся" по слоям
         {
             logic_eye.SetLayer(false);
             ballsLogic[i].ballLogic.PlayFromHomeSound();

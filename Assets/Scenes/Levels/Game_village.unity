@@ -4529,6 +4529,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2704117935747042821, guid: 0a3a737e55069804a8338bdd1cafd5aa, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5361420741660025998, guid: 0a3a737e55069804a8338bdd1cafd5aa, type: 3}
       propertyPath: m_Name
       value: MultitacBoss

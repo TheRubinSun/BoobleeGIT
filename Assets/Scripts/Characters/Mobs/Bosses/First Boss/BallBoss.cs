@@ -64,7 +64,7 @@ public class BallBoss : EnemyShield
     }
     public override void CreateCulling()
     {
-        culling = new CullingObject(spr_ren, anim, childSpRen, childAnim);
+        culling = new CullingObject(spr_ren, anim, childSpRen, childAnim, audioS);
     }
     public override IEnumerator FlashColor(Color32 color, float time)
     {
