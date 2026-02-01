@@ -14,6 +14,11 @@ public class UsebleItem : Item, IUsable
         throw new System.NotImplementedException();
     }
 
+    public virtual TypeSound GetTypeSound()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public virtual bool Use()
     {
         throw new System.NotImplementedException();
@@ -21,7 +26,7 @@ public class UsebleItem : Item, IUsable
 }
 public class ForseItem : UsebleItem
 {
-    public static int soundID = 5;
+    public static int soundID = 1;
     public ForseItem(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, float value, TypeItem typeItem = TypeItem.Other, bool isUse = false) : base(id, name, maxCount, spriteID, quality, cost, description, value, typeItem, isUse)
     {
 
@@ -30,6 +35,10 @@ public class ForseItem : UsebleItem
     public override int GetSoundID()
     {
         return soundID;
+    }
+    public override TypeSound GetTypeSound()
+    {
+        return TypeSound.Effects;
     }
     public override bool Use()
     {

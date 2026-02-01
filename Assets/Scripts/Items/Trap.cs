@@ -17,6 +17,8 @@ public class Trap : Item, IUsable
         prefab_trap = ResourcesData.GetTrapPrefab(id_trap_prefab);
     }
     public virtual int GetSoundID() => 0;
+
+    public TypeSound GetTypeSound() => TypeSound.Traps;
 }
 public class Mine: Trap
 {
@@ -24,7 +26,7 @@ public class Mine: Trap
     public damageT damageT;
     public float radiusExp;
     public float delayTime;
-    private static int soundID = 3;
+    private static int soundID = 0;
 
     public Mine(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, int _id_trap_prefab, int _damageMine, damageT _damageT, float _radiusExp, float _delayTime) : base(id, name, maxCount, spriteID, quality, cost, description, _id_trap_prefab)
     {
@@ -58,7 +60,7 @@ public class FootTrap : Trap
     public int damageTrap;
     public damageT damageT;
     public float timeDuration;
-    private static int soundID = 6;
+    private static int soundID = 1;
 
     public FootTrap(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, int _id_trap_prefab, int _damageTrap, damageT _damageT, float _timeDuration) : base(id, name, maxCount, spriteID, quality, cost, description, _id_trap_prefab)
     {

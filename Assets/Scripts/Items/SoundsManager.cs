@@ -1,3 +1,6 @@
+using NUnit.Framework;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Rendering;
@@ -16,9 +19,9 @@ public class SoundsManager : MonoBehaviour
     [SerializeField] private AudioClip openLvelUPWindow;
     [SerializeField] private AudioClip switchItem;
 
-    [SerializeField] private AudioClip[] items_sounds;
-    [SerializeField] private AudioClip[] craftItems;
-
+    //[SerializeField] private AudioClip[] items_sounds;
+    //[SerializeField] private AudioClip[] craftItems;
+    [SerializeField] private List<SoundsType> sounds_types;
     //public float volume;
     private void Awake()
     {
@@ -69,24 +72,62 @@ public class SoundsManager : MonoBehaviour
         audioSource.pitch = 1f;
         audioSource.PlayOneShot(acceptAspect);
     }
-    public void PlayItemSounds(int id)
-    {
-        audioSource.pitch = 1f;
-        audioSource.PlayOneShot(items_sounds[id]);
-    }
-    public void PlayItemSoundsWithRandomPitch(float min, float max, int id)
-    {
-        audioSource.pitch = Random.Range(min, max);
-        audioSource.PlayOneShot(items_sounds[id]);
-    }
-    public void PlayCraftItemSounds(int id)
-    {
-        audioSource.pitch = Random.Range(0.8f, 1.2f);
-        audioSource.PlayOneShot(craftItems[id]);
-    }
+    //public void PlayItemSounds(int id)
+    //{
+    //    audioSource.pitch = 1f;
+    //    audioSource.PlayOneShot(items_sounds[id]);
+    //}
+    //public void PlayItemSoundsWithRandomPitch(float min, float max, int id)
+    //{
+    //    audioSource.pitch = Random.Range(min, max);
+    //    audioSource.PlayOneShot(items_sounds[id]);
+    //}
+    //public void PlayCraftItemSounds(int id)
+    //{
+    //    audioSource.pitch = Random.Range(0.8f, 1.2f);
+    //    audioSource.PlayOneShot(craftItems[id]);
+    //}
     public void PlaySwitchItemSounds()
     {
         audioSource.pitch = Random.Range(0.8f, 1.2f);
         audioSource.PlayOneShot(switchItem);
     }
+    public void PlayItemSounds(TypeSound typeSound, int id)
+    {
+        audioSource.pitch = 1f;
+        audioSource.PlayOneShot(sounds_types[GetIdForTypeSound(typeSound)].sounds[id]);
+        //Debug.Log($"{typeSound}: {id}");
+    }
+    public void PlayItemSoundsWithRandomPitch(TypeSound typeSound, int id, float min, float max)
+    {
+        audioSource.pitch = Random.Range(min, max);
+        audioSource.PlayOneShot(sounds_types[GetIdForTypeSound(typeSound)].sounds[id]);
+    }
+    private int GetIdForTypeSound(TypeSound typeSound)
+    {
+        for (int i = 0; i < sounds_types.Count; i++)
+        {
+            if (sounds_types[i].typeSounds == typeSound)
+                return i;
+        }
+        return 0;
+    }
 }
+[System.Serializable]
+public class SoundsType
+{
+    public TypeSound typeSounds;
+    public AudioClip[] sounds;
+}
+public enum TypeSound
+{
+    None,
+    Booster,
+    Potions,
+    Traps,
+    Effects,
+    CraftItems,
+    Others
+}
+
+

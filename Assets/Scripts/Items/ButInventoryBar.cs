@@ -16,7 +16,7 @@ public class ButInventoryBar : MonoBehaviour
         {
             if (usableitem.Use())
             {
-                GlobalData.SoundsManager.PlayItemSounds(usableitem.GetSoundID());
+                GlobalData.SoundsManager.PlayItemSounds(usableitem.GetTypeSound() ,usableitem.GetSoundID());
                 GlobalData.Inventory.RemoveItem(slot, 1);
             }
         }

@@ -1,10 +1,8 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public class Potion : Item, IUsable
 {
-    public Potion(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description) : base(id,name,maxCount,spriteID,quality,cost,description,TypeItem.Potion,true)
+    public Potion(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description) : base(id, name, maxCount, spriteID, quality, cost, description, TypeItem.Potion, true)
     {
 
     }
@@ -14,15 +12,19 @@ public class Potion : Item, IUsable
     }
     public virtual int GetSoundID() => 0;
 
+    public virtual TypeSound GetTypeSound()
+    {
+        return TypeSound.Potions;
+    }
 }
 public class HealPotion : Potion
 {
     public int countHeal;
     public int couldDownHeal;
     public int idSpriteEffectColdown;
-    private static int soundID = 1;
+    private static int soundID = 0;
     private string effectName = "HealColdown";
-    public HealPotion(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description,int _countHeal, int _couldDownHeal, int _idSpriteColdown) : base(id, name, maxCount, spriteID, quality, cost, description)
+    public HealPotion(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, int _countHeal, int _couldDownHeal, int _idSpriteColdown) : base(id, name, maxCount, spriteID, quality, cost, description)
     {
         countHeal = _countHeal;
         couldDownHeal = _couldDownHeal;
@@ -54,7 +56,7 @@ public class HealPotion : Potion
 
             effect.EffectName = effectName;
 
-            
+
 
 
             effect.effectType = EffectData.EffectType.SpeedBoost;
@@ -73,6 +75,7 @@ public class HealPotion : Potion
     {
         return soundID;
     }
+    //public override TypeSound GetTypeSound() => TypeSound.Potions;
 }
 public class SpeedUpPotion : Potion
 {
@@ -80,7 +83,7 @@ public class SpeedUpPotion : Potion
     public float duration;
     public int idSpriteEffect;
     public string nameEffect { get; set; }
-    private static int soundID = 2;
+    private static int soundID = 1;
     public SpeedUpPotion(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, int _valueUp, float _duration, string _nameEffect, int _idSpriteEffect) : base(id, name, maxCount, spriteID, quality, cost, description)
     {
         valueUp = _valueUp;
@@ -136,7 +139,7 @@ public class SpeedUpPotion : Potion
             effect.idSprite = idSpriteEffect;
             effect.duration = duration;
 
-            return eff_man.ApplyEffect(effect); 
+            return eff_man.ApplyEffect(effect);
         }
         else
         {
@@ -154,7 +157,7 @@ public class ManaHealPotion : Potion
     public int countHeal;
     public float duration;
     public int idSpriteEffect;
-    private static int soundID = 1;
+    private static int soundID = 0;
     private string effectName = "manaHeal";
     public ManaHealPotion(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, int _countHeal, float _duration, int _idSpriteEffect) : base(id, name, maxCount, spriteID, quality, cost, description)
     {
@@ -202,7 +205,9 @@ public class Food : Item, IUsable
     public int idSpriteEffect;
     public string nameEffect { get; set; }
     private static int soundID = 0;
-    public Food(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description , int _countHealHP, int _countHealMana, float _duration, float _cooldown, string _nameEffect, int _idSpriteEffect) : base(id, name, maxCount, spriteID, quality, cost, description, TypeItem.Food)
+
+
+    public Food(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, int _countHealHP, int _countHealMana, float _duration, float _cooldown, string _nameEffect, int _idSpriteEffect) : base(id, name, maxCount, spriteID, quality, cost, description, TypeItem.Food)
     {
         countHealHP = _countHealHP;
         countHealMana = _countHealMana;
@@ -215,11 +220,11 @@ public class Food : Item, IUsable
     {
         Debug.Log("ѕытаюсь использовать");
         Player pl = Player.Instance;
-        if(countHealHP > 0 && countHealMana > 0)
+        if (countHealHP > 0 && countHealMana > 0)
         {
             if (pl.IsFullHP() && pl.IsFullMana()) return false;
         }
-        else if(countHealHP > 0)
+        else if (countHealHP > 0)
         {
             if (pl.IsFullHP()) return false;
         }
@@ -275,5 +280,10 @@ public class Food : Item, IUsable
     public virtual int GetSoundID()
     {
         return soundID;
+    }
+
+    public TypeSound GetTypeSound()
+    {
+        return TypeSound.Effects;
     }
 }

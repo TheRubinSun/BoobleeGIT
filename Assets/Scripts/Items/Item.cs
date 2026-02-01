@@ -34,6 +34,7 @@ public interface IUsable
 {
     public bool Use();
     public int GetSoundID();
+    public TypeSound GetTypeSound();
 }
 
 [Serializable]

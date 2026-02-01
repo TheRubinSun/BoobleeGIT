@@ -304,7 +304,8 @@ public class CraftLogic : MonoBehaviour, ISlot
         {
             GlobalData.Inventory.SubractItem(material.Item, material.Count);
         }
-        GlobalData.SoundsManager.PlayCraftItemSounds(GetIDSounds());
+        //GlobalData.SoundsManager.PlayCraftItemSounds(GetIDSounds());
+        GlobalData.SoundsManager.PlayItemSounds(TypeSound.CraftItems, GetIDSounds());
         ReloadSelectMaterials();
     }
     private int GetIDSounds()

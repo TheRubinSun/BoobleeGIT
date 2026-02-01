@@ -368,7 +368,7 @@ public class Player : MonoBehaviour, ITakeDamage
     {
         if (pl_stats.PlayerHealStat(heal))
         {
-            GlobalData.SoundsManager.PlayItemSoundsWithRandomPitch(0.7f, 1.2f, 4);
+            GlobalData.SoundsManager.PlayItemSoundsWithRandomPitch(TypeSound.Effects, 2, 0.7f, 1.2f);
             pl_ui.UpdateHpBar(pl_stats);
             flashCol = StartCoroutine(FlashColor(new Color32(110, 255, 93, 255), 0.1f));
             return true;
@@ -379,7 +379,7 @@ public class Player : MonoBehaviour, ITakeDamage
     {
         if (pl_stats.PlayerManaHealStat(manaHeal))
         {
-            GlobalData.SoundsManager.PlayItemSounds(4);
+            GlobalData.SoundsManager.PlayItemSounds(TypeSound.Effects, 2);
             pl_ui.UpdateManaBar(pl_stats);
             flashCol = StartCoroutine(FlashColor(new Color32(84, 160, 210, 255), 0.1f));
             return true;

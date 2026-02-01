@@ -7,7 +7,7 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class Seed : Item, IUsable
 {
-    public static int soundID = 7;
+    public static int soundID = 0;
     public int id_seed_pref;
     public string flower_type;
     private GameObject flower_pref {  get; set; }
@@ -20,7 +20,10 @@ public class Seed : Item, IUsable
     {
         return soundID;
     }
-
+    public TypeSound GetTypeSound()
+    {
+        return TypeSound.Others;
+    }
     public bool Use()
     {
         if (GardenManager.instance == null || InteractZoneTools.instance == null) return false;
@@ -39,4 +42,6 @@ public class Seed : Item, IUsable
 
 
     }
+
+
 }

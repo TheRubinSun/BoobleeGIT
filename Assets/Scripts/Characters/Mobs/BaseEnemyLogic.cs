@@ -231,7 +231,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
 
         if (IsUpper) return; //Если моб должен быть поверх всего
 
-        Debug.Log(IsUpper);
+        //Debug.Log(IsUpper);
 
         float mobPosY = transform.position.y;
         float PlayerPosY = GlobalData.GameManager.PlayerPosY;
