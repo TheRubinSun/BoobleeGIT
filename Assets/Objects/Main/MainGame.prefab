@@ -1116,7 +1116,8 @@ PrefabInstance:
       propertyPath: 'TooglesWeapon.Array.data[3]'
       value: 
       objectReference: {fileID: 262271179900534198}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4565921804170456416, guid: 34fd9a4dc164ab045bc7f00dde09e800, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:

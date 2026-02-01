@@ -156,8 +156,6 @@ MonoBehaviour:
   textures:
   - {fileID: 2800000, guid: 4670f53d852019b419b620c22ce181ba, type: 3}
   fps: 1
-  body: {fileID: 7431083733948108546}
-  leg: {fileID: 3029118436429803892}
   anim_need: 0
 --- !u!1 &516056931220534679
 GameObject:
@@ -520,8 +518,6 @@ MonoBehaviour:
   textures:
   - {fileID: 2800000, guid: 4670f53d852019b419b620c22ce181ba, type: 3}
   fps: 1
-  body: {fileID: 7431083733948108546}
-  leg: {fileID: 4672556417648310142}
   anim_need: 0
 --- !u!1 &2121988432735761519
 GameObject:
@@ -920,6 +916,7 @@ MonoBehaviour:
   - {fileID: 1099640217857862809}
   - {fileID: 2798311470355957940}
   range: 1
+  maxTeleportDistanceSqr: 3.4
   time_move_legs: 0.12
   soundTop:
   - {fileID: 8300000, guid: 23d4636d0f8647944aac156d5768d736, type: 3}
@@ -1181,8 +1178,6 @@ MonoBehaviour:
   textures:
   - {fileID: 2800000, guid: 4670f53d852019b419b620c22ce181ba, type: 3}
   fps: 1
-  body: {fileID: 7431083733948108546}
-  leg: {fileID: 4622223752531203409}
   anim_need: 0
 --- !u!1 &5296972152766456823
 GameObject:
@@ -1640,7 +1635,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5026001772685742285}
   - component: {fileID: 3929531527988713277}
-  - component: {fileID: 5907899734088633803}
   - component: {fileID: 5224319458199058956}
   - component: {fileID: 2505624228128708211}
   - component: {fileID: 496429055157513362}
@@ -1691,18 +1685,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
---- !u!114 &5907899734088633803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8331394142474898389}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73492ddb605ff324f943b3d278771017, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5224319458199058956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1716,6 +1698,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp_bar: {fileID: 0}
+  mana_bar: {fileID: 0}
   exp_bar: {fileID: 0}
   player_info_panel: {fileID: 0}
 --- !u!114 &2505624228128708211
@@ -1742,6 +1725,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08492b67ee78a0646bc237ac09a99783, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentCurEffect: {fileID: 0}
 --- !u!1 &8465149856494008535
 GameObject:
   m_ObjectHideFlags: 0
@@ -2072,8 +2056,6 @@ MonoBehaviour:
   textures:
   - {fileID: 2800000, guid: 4670f53d852019b419b620c22ce181ba, type: 3}
   fps: 1
-  body: {fileID: 7431083733948108546}
-  leg: {fileID: 6483085744401825270}
   anim_need: 0
 --- !u!1 &8975132101129291835
 GameObject:
@@ -2127,19 +2109,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerObj: {fileID: 8975132101129291835}
-  cameraObj: {fileID: 0}
-  hand: {fileID: 0}
   centerLegs: {fileID: 5600970305383037141}
   legsLines:
-  - {fileID: 4711911863290642483}
-  - {fileID: 7132163582137603849}
-  - {fileID: 8959504843359167105}
-  - {fileID: 3262992111027566003}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   legsControl: {fileID: 5214255440929596248}
   WeaponSlots: {fileID: 4928780890667930764}
   radiusCenterLegs: 0.23
-  inputDirection: {x: 0, y: 0}
+  currentPosCenterLegs: {x: 0, y: 0}
   direction: {x: 0, y: 0}
+  updateRateLegsMove: 0.13
+  updateRateLegsStop: 0.3
   audioClips: {fileID: 8300000, guid: c98eb08a8c602af4899ca10e800bea7c, type: 3}
 --- !u!114 &7165683340874009979
 MonoBehaviour:

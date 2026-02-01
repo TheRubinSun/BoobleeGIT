@@ -3,22 +3,11 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
 
-public class Classes : MonoBehaviour 
+public static class Classes
 {
-    public static Classes Instance { get; private set; }
+    private static Dictionary<string, RoleClass> roleClasses = new Dictionary<string, RoleClass>();
 
-    [SerializeField] Dictionary<string, RoleClass> roleClasses = new Dictionary<string, RoleClass>();
-
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-    }
-    public void LoadOrCreateClasses(Dictionary<string, RoleClass> classes)
+    public static void LoadOrCreateClasses(Dictionary<string, RoleClass> classes)
     {
         if(classes!=null && classes.Count > 0)
         {
@@ -33,15 +22,11 @@ public class Classes : MonoBehaviour
             roleClasses.Add("Warrior", new RoleClass(2, 1, 1, 1f, 2, 35, 0, 0.4f, 5, 0f, 0, 2, 0, 0));
         }
     }
-    void Start()
-    {
-
-    }
-    public RoleClass GetRoleClass(string name)
+    public static RoleClass GetRoleClass(string name)
     {
         return roleClasses[name];
     }
-    public Dictionary<string, RoleClass> GetClasses()
+    public static Dictionary<string, RoleClass> GetClasses()
     {
         return roleClasses;
     }

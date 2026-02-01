@@ -27,9 +27,15 @@ public class GenInfoSaves : MonoBehaviour
     private Toggle[] toggle_Saves;
     private Image[] icon_Player_Saves;
     private TextMeshProUGUI[] text_Player_info_saves;
+
+
+    private NewPlayer newPlayer;
+    private int selectSave; 
+
     //[SerializeField] TextMeshProUGUI[] text_infoSaves;
     //[SerializeField] Image[] imagesPlayerIcon;
     [SerializeField] Sprite[] spritesPlayer;
+    [SerializeField] private GameObject createNewSaveWindow;
     private void Awake()
     {
 
@@ -41,14 +47,14 @@ public class GenInfoSaves : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(Instance);
 
-
+        GlobalData.newPlayer = default;
         GlobalData.saveZone = true;
 
         toggle_Saves = new Toggle[SavesBut.Length];
         icon_Player_Saves = new Image[SavesBut.Length];
         text_Player_info_saves = new TextMeshProUGUI[SavesBut.Length];
 
-        if (saveGameFiles.Count == 0) //Проверка, если вход в меню был из игры а файлы уже загружены
+        if (saveGameFiles.Count == 0) //Проверка, если файлы ещё уже загруженны, например вход первый, а не из игры
         {
             if (GameDataHolder.savesDataInfo == null || GameDataHolder.savesDataInfo.saveGameFiles == null || GameDataHolder.savesDataInfo.saveGameFiles.Count == 0)
             {
@@ -56,12 +62,10 @@ public class GenInfoSaves : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning(112);
                 LoadSaveFiles(); //Если файлы ещё не загружены, если вход был из игры в меню
 
                 if (saveGameFiles.Count < 3)
                 {
-                    Debug.LogWarning(1122);
                     CreateSaveEmpty();
                 }
             }
@@ -77,17 +81,16 @@ public class GenInfoSaves : MonoBehaviour
     {
         if (saveGameFiles.ContainsKey(saveInt))
         {
-            GlobalData.SavePath = saveGameFiles[saveInt].fileName;
-            GlobalData.SaveInt = saveInt;
-            saveGameFiles[saveInt].godMode = toggle_Saves[saveInt].isOn;
-
-            GlobalData.cur_seed = (saveGameFiles[saveInt].seed != 0) ? saveGameFiles[saveInt].seed : saveGameFiles[saveInt].GenNewSeed();
-            GlobalData.cur_lvl_left = saveGameFiles[saveInt].lvl_left;
-            lastSaveID = saveInt;
-
-            Debug.Log($"Выбран слот {saveInt}, путь: {GlobalData.SavePath}");
-
-            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("LoadingScreen");
+            if (!saveGameFiles[saveInt].isStarted)
+            {
+                createNewSaveWindow.SetActive(true);
+                newPlayer = new NewPlayer(0,0,0, Classes.GetRoleClass("Warrior"));
+                selectSave = saveInt;
+            }
+            else
+            {
+                StartSaveGame(saveInt);
+            }
         }
         else
         {
@@ -97,6 +100,25 @@ public class GenInfoSaves : MonoBehaviour
                 Debug.LogError($"Слот {save.Key} {save.Value.fileName}");
             }
         }
+    }
+    public void StartNewGame()
+    {
+        GlobalData.newPlayer = newPlayer;
+        StartSaveGame(selectSave);
+    }
+    private void StartSaveGame(int saveInt)
+    {
+        GlobalData.SavePath = saveGameFiles[saveInt].fileName;
+        GlobalData.SaveInt = saveInt;
+        saveGameFiles[saveInt].godMode = toggle_Saves[saveInt].isOn;
+
+        GlobalData.cur_seed = (saveGameFiles[saveInt].seed != 0) ? saveGameFiles[saveInt].seed : saveGameFiles[saveInt].GenNewSeed();
+        GlobalData.cur_lvl_left = saveGameFiles[saveInt].lvl_left;
+        lastSaveID = saveInt;
+
+        Debug.Log($"Выбран слот {saveInt}, путь: {GlobalData.SavePath}");
+
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("LoadingScreen");
     }
     public void LoadLastGame()
     {
@@ -111,15 +133,19 @@ public class GenInfoSaves : MonoBehaviour
     }
     public async void DeleteSave(int id)
     {
+        if (lastSaveID == id)
+            lastSaveID = 100;
+
         saveGameFiles[id].level = 0;
         saveGameFiles[id].enemy_kills = 0;
         saveGameFiles[id].timeHasPassed = 0;
         saveGameFiles[id].isStarted = false;
         saveGameFiles[id].seed = 0;
         saveGameFiles[id].lvl_left = 0;
-        lastSaveID = 100;
+
         string path_player_data = Path.Combine(Application.persistentDataPath, saveGameFiles[id].fileName + "player.json");
         string path_artifacts_data = Path.Combine(Application.persistentDataPath, saveGameFiles[id].fileName + "artifacts.json");
+        string path_world_data = Path.Combine(Application.persistentDataPath, saveGameFiles[id].fileName + "world_data.json");
         ScreenResolutions screen_resole = GlobalData.GetScreenResolutions();
         if (File.Exists(path_player_data))
         {
@@ -127,6 +153,7 @@ public class GenInfoSaves : MonoBehaviour
             {
                 File.Delete(path_player_data);
                 File.Delete(path_artifacts_data);
+                File.Delete(path_world_data);
                 UpdateTextInfoCell(id);
 
                 
@@ -289,6 +316,10 @@ public class GenInfoSaves : MonoBehaviour
             }
         }
     }
+    public void CloseCreatePlayerWindow()
+    {
+        createNewSaveWindow.SetActive(false);
+    }
 }
 
 [Serializable]
@@ -338,3 +369,18 @@ public class SaveGameInfo
         return UnityEngine.Random.Range(10000, 99999);
     }
 }
+public struct NewPlayer
+{
+    public int Strength { get; set; }
+    public int Agility { get; set; }
+    public int Intelligence { get; set; }
+    public RoleClass roleClass { get; set; }
+    public NewPlayer(int strength, int agility, int intelligence, RoleClass _roleClass)
+    {
+        Strength = strength;
+        Agility = agility;
+        Intelligence = intelligence;
+        roleClass = _roleClass;
+    }
+}
+

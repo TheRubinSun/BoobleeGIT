@@ -48,6 +48,9 @@ public class LoadingMenu : MonoBehaviour
             if (asyncLoad.progress >= 0.9f)
             {
                 ItemsList.LoadSprites();
+
+                Classes.LoadOrCreateClasses(GameDataHolder.RoleClassesData.role_Classes_data);
+
                 ItemsList.LoadOrCreateItemList(GameDataHolder.ItemsData.item_List_data);
 
                 EnemyList.LoadOrCreateMobsList(GameDataHolder.EnemyData.mob_list_data);

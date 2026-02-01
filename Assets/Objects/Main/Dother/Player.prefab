@@ -434,15 +434,17 @@ MonoBehaviour:
   playerObj: {fileID: 1310100157017385104}
   centerLegs: {fileID: 2529579196438403198}
   legsLines:
-  - {fileID: 3441991390040645784}
-  - {fileID: 890290835595868066}
-  - {fileID: 1366547947929502250}
-  - {fileID: 4893161236755322136}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   legsControl: {fileID: 2809326440228684787}
   WeaponSlots: {fileID: 3082421655244305447}
   radiusCenterLegs: 0.23
-  inputDirection: {x: 0, y: 0}
+  currentPosCenterLegs: {x: 0, y: 0}
   direction: {x: 0, y: 0}
+  updateRateLegsMove: 0.13
+  updateRateLegsStop: 0.3
   audioClips: {fileID: 8300000, guid: c98eb08a8c602af4899ca10e800bea7c, type: 3}
 --- !u!114 &995829026852105680
 MonoBehaviour:
@@ -730,8 +732,6 @@ MonoBehaviour:
   textures:
   - {fileID: 2800000, guid: 4670f53d852019b419b620c22ce181ba, type: 3}
   fps: 1
-  body: {fileID: 684821445223198633}
-  leg: {fileID: 3988208033787813213}
   anim_need: 0
 --- !u!1 &1833784081944184117
 GameObject:
@@ -917,7 +917,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3107355969996910694}
   - component: {fileID: 6352602340625168278}
-  - component: {fileID: 4565921804170456416}
   - component: {fileID: 2747469478750952103}
   - component: {fileID: 5505010375173175000}
   - component: {fileID: 7513079128303111225}
@@ -968,18 +967,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
---- !u!114 &4565921804170456416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2107531679857683326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73492ddb605ff324f943b3d278771017, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2747469478750952103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1331,8 +1318,6 @@ MonoBehaviour:
   textures:
   - {fileID: 2800000, guid: 4670f53d852019b419b620c22ce181ba, type: 3}
   fps: 1
-  body: {fileID: 684821445223198633}
-  leg: {fileID: 3352096709035357690}
   anim_need: 0
 --- !u!1 &3560416735095779020
 GameObject:
@@ -2024,8 +2009,6 @@ MonoBehaviour:
   textures:
   - {fileID: 2800000, guid: 4670f53d852019b419b620c22ce181ba, type: 3}
   fps: 1
-  body: {fileID: 684821445223198633}
-  leg: {fileID: 3348491739761874901}
   anim_need: 0
 --- !u!1 &7124783313310949674
 GameObject:
@@ -2388,8 +2371,6 @@ MonoBehaviour:
   textures:
   - {fileID: 2800000, guid: 4670f53d852019b419b620c22ce181ba, type: 3}
   fps: 1
-  body: {fileID: 684821445223198633}
-  leg: {fileID: 4947746363494109663}
   anim_need: 0
 --- !u!1 &8345921134704972996
 GameObject:

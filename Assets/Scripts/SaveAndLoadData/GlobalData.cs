@@ -12,7 +12,8 @@ public static class GlobalData
     public static int cur_lvl_left;
     public static Vector2 center;
     public static int chunkSize;
-   
+
+    public static NewPlayer? newPlayer = default;
 
     //public static bool GOD_MODE;
     public static float VOLUME_SOUNDS = 0.5f;
@@ -44,7 +45,6 @@ public static class GlobalData
     public static SoundsManager SoundsManager => SoundsManager.Instance;
     public static UIControl UIControl => UIControl.Instance;
     public static PlayerControl PlayerControl => PlayerControl.Instance;
-    public static Classes Classes => Classes.Instance;
     public static PlayerInputHandler PlayerInputHandler => PlayerInputHandler.Instance;
     public static CraftLogic CraftLogic => CraftLogic.Instance;
     public static DragAndDrop DragAndDrop => DragAndDrop.Instance;
@@ -109,3 +109,4 @@ public static class BASE_VALUE_STATS_ARTEFACT
     public const float DAMAGE = 1f;
     public const float ADD_FOR_CHAR_DAMAGE = 1f;
 }
+

@@ -64,9 +64,14 @@ public class PlayerStats : CharacterStats
 
     public void SetBaseStats()
     {
-        Base_Strength = 0;
-        Base_Agility = 0;
-        Base_Intelligence = 0;
+        var player = GlobalData.newPlayer; //Если нет данных о новом игроке по нулям и стрелок иначе берём данные 
+        Base_Strength = player?.Strength ?? 0;
+        Base_Agility = player?.Agility ?? 0;
+        Base_Intelligence = player?.Intelligence ?? 0;
+        classPlayer = player?.roleClass ?? Classes.GetRoleClass("Shooter");
+
+        GlobalData.newPlayer = default;
+
         Base_Max_Hp = 2;
         Base_Max_Mana = 6;
         Base_Regen_Mana = 0.25f;
@@ -106,7 +111,6 @@ public class PlayerStats : CharacterStats
         Gold = 10;
         TraderSkill = 1;
 
-        classPlayer = GlobalData.Classes.GetRoleClass("Shooter");
         DirectionOrVectorWeapon = new bool[4];
 
         equipStats = GlobalData.Player.GetEquipStats();

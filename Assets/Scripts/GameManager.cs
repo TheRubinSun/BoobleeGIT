@@ -71,7 +71,7 @@ public class GameManager: MonoBehaviour
         if (GameDataHolder.PlayerData != null)
         {
             //ItemsList.LoadOrCreateItemList(GameDataHolder.ItemsData.item_List_data);
-            GlobalData.Classes.LoadOrCreateClasses(GameDataHolder.RoleClassesData.role_Classes_data);
+            //GlobalData.Classes.LoadOrCreateClasses(GameDataHolder.RoleClassesData.role_Classes_data);
 
 
             GlobalData.Artifacts.LoadOrNew(GameDataHolder.ArtifactsData.artifacts);
@@ -275,7 +275,7 @@ public class GameManager: MonoBehaviour
         ItemsData items_Data = new ItemsData(ItemsList.items);
         //await SaveSystem.SaveDataAsync(items_Data, "items.json");
 
-        RoleClassesData role_classes_data = new RoleClassesData(GlobalData.Classes.GetClasses());
+        RoleClassesData role_classes_data = new RoleClassesData(Classes.GetClasses());
         //await SaveSystem.SaveDataAsync(role_classes_data, "role_classes_data.json");
 
         PlayerData player_Data = new PlayerData(GlobalData.Player.GetPlayerStats() , inventory_slots_list, equipment_item_list);
