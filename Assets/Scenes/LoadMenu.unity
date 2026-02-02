@@ -150,7 +150,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   progressBar: {fileID: 2022279432}
   progressText: {fileID: 2095584488}
-  spriteSheetPath: Sprites_Items
+  spriteItemsSheetPath: Sprites_Items
+  spritePlayerHairPath: Player_Hairs
+  spritePlayerHeadPath: Player_Heads
 --- !u!4 &29957575
 Transform:
   m_ObjectHideFlags: 0

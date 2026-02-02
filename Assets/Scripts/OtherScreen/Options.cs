@@ -17,8 +17,6 @@ public class Options : MonoBehaviour
     public static Options Instance;
 
     [SerializeField] private Button[] SwitchLanguageButtons;
-    [SerializeField] Color32 yesGreenColor;
-    [SerializeField] Color32 noRedColor;
     [SerializeField] Slider sounds_volume_sli;
     [SerializeField] Slider music_volume_sli;
     [SerializeField] AudioMixer mixer;
@@ -59,10 +57,10 @@ public class Options : MonoBehaviour
         await GlobalData.LocalizationManager.SwitchLanguage(localeCode);
         for (int i = 0; i < SwitchLanguageButtons.Length; i++)
         {
-            SwitchLanguageButtons[i].transform.GetChild(2).GetComponent<Image>().color = noRedColor;
+            SwitchLanguageButtons[i].transform.GetChild(2).GetComponent<Image>().color = GlobalColors.noRedColor;
         }
         GameObject obj = EventSystem.current.currentSelectedGameObject;
-        obj.transform.GetChild(2).GetComponent<Image>().color = yesGreenColor;
+        obj.transform.GetChild(2).GetComponent<Image>().color = GlobalColors.yesGreenColor;
 
         language = localeCode;
     }
@@ -72,11 +70,11 @@ public class Options : MonoBehaviour
         {
             if (SwitchLanguageButtons[i].name == GlobalData.cur_language + "But")
             {
-                SwitchLanguageButtons[i].transform.GetChild(2).GetComponent<Image>().color = yesGreenColor;
+                SwitchLanguageButtons[i].transform.GetChild(2).GetComponent<Image>().color = GlobalColors.yesGreenColor;
             }
             else
             {
-                SwitchLanguageButtons[i].transform.GetChild(2).GetComponent<Image>().color = noRedColor;
+                SwitchLanguageButtons[i].transform.GetChild(2).GetComponent<Image>().color = GlobalColors.noRedColor;
             }
         }
     }

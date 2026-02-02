@@ -16,14 +16,17 @@ public class LoadingMenu : MonoBehaviour
 
     private float progress = 0f;
 
-    public string spriteSheetPath;
+    public string spriteItemsSheetPath;
+
+    public string spritePlayerHairPath;
+    public string spritePlayerHeadPath;
     private void Start()
     {
         StartCoroutine(LoadGameScene());
     }
     private IEnumerator LoadGameScene()
     {
-        int totalSteps = 4;
+        int totalSteps = 6;
         int currentStep = 0;
 
         // Загружаем данные и сохраняем в GameDataHolder
@@ -33,9 +36,14 @@ public class LoadingMenu : MonoBehaviour
         yield return StartCoroutine(LoadLanguageCoroutine());
         UpdateProgress(++currentStep, totalSteps);
 
-        yield return StartCoroutine(LoadSprites(spriteSheetPath));
+        yield return StartCoroutine(LoadSprites(spriteItemsSheetPath, GameDataHolder.spriteItemsById));
         UpdateProgress(++currentStep, totalSteps);
 
+        yield return StartCoroutine(LoadSprites(spritePlayerHairPath, GameDataHolder.spritePlayerHairById));
+        UpdateProgress(++currentStep, totalSteps);
+
+        yield return StartCoroutine(LoadSprites(spritePlayerHeadPath, GameDataHolder.spritePlayerHeadById));
+        UpdateProgress(++currentStep, totalSteps);
         // Загружаем игровую сцену асинхронно
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Menu");
         asyncLoad.allowSceneActivation = false;
@@ -126,37 +134,9 @@ public class LoadingMenu : MonoBehaviour
     //        Debug.LogError("Не удалось загрузить спрайты через Addressables");
     //    }
     //}
-    private IEnumerator LoadSprites(string addressableKey)
+    private IEnumerator LoadSprites(string addressableKey, Dictionary<int, Sprite> spriteData)
     {
-        //if (string.IsNullOrEmpty(addressableKey))
-        //{
-        //    Debug.LogError("LoadSprites: передан пустой addressableKey!");
-        //    GameDataHolder.spriteList = new Sprite[0]; // Чтобы не было null-ошибок
-        //    yield break;
-        //}
-        //Dictionary<int, Sprite> spriteById = new();
-        //List<Sprite> sprites = new List<Sprite> { null }; //первый элемент `null`
-        //AsyncOperationHandle<IList<Sprite>> handle = Addressables.LoadAssetAsync<IList<Sprite>>(addressableKey);
-
-        //while (!handle.IsDone) // Ждем окончания загрузки
-        //{
-        //    progressBar.value = handle.PercentComplete; // Обновляем прогресс загрузки
-        //    yield return null;
-        //}
-
-        //if (handle.Status == AsyncOperationStatus.Succeeded && handle.Result != null && handle.Result.Count > 0)
-        //{
-        //    sprites.AddRange(handle.Result);
-        //    GameDataHolder.spriteList = sprites.ToArray();
-        //    Debug.Log($"Успешно загружено {GameDataHolder.spriteList.Length} спрайтов.");
-        //}
-        //else
-        //{
-        //    Debug.LogError("Не удалось загрузить спрайты через Addressables или список пуст.");
-        //    GameDataHolder.spriteList = new Sprite[0]; // Чтобы избежать ошибок
-        //}
-
-        //Addressables.Release(handle);
+        spriteData.Clear();
 
         if (string.IsNullOrEmpty(addressableKey))
         {
@@ -164,8 +144,7 @@ public class LoadingMenu : MonoBehaviour
             yield break;
         }
 
-        AsyncOperationHandle<IList<Sprite>> handle =
-            Addressables.LoadAssetAsync<IList<Sprite>>(addressableKey);
+        AsyncOperationHandle<IList<Sprite>> handle = Addressables.LoadAssetAsync<IList<Sprite>>(addressableKey);
 
         while (!handle.IsDone)
         {
@@ -179,7 +158,7 @@ public class LoadingMenu : MonoBehaviour
             yield break;
         }
 
-        Dictionary<int, Sprite> spriteById = new Dictionary<int, Sprite>();
+        //Dictionary<int, Sprite> spriteById = new Dictionary<int, Sprite>();
 
         foreach (Sprite sprite in handle.Result)
         {
@@ -194,7 +173,7 @@ public class LoadingMenu : MonoBehaviour
 
             if (int.TryParse(sprite.name.Substring(underscoreIndex + 1), out int id))
             {
-                spriteById[id] = sprite;
+                spriteData[id] = sprite;
             }
             else
             {
@@ -202,9 +181,9 @@ public class LoadingMenu : MonoBehaviour
             }
         }
 
-        GameDataHolder.spriteById = spriteById;
+        //spriteData = spriteById;
 
-        Debug.Log($"Sprite Sheet загружен: {spriteById.Count} спрайтов");
+        Debug.Log($"Sprite Sheet загружен: {spriteData.Count} спрайтов");
     }
     private void UpdateProgress(float step, float totalStep)
     {

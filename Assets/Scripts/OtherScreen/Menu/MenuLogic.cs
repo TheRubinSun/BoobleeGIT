@@ -18,7 +18,10 @@ public class MenuLogic : MonoBehaviour
     {
         SavesWindowActive = !SavesWindowActive;
         SavesWindow.SetActive(SavesWindowActive);
-        
+
+        if(SavesWindowActive)
+            Classes.LocalizationClasses();
+
     }
     public void OpenCloseOptions()
     {

@@ -15,11 +15,29 @@ MonoBehaviour:
   m_GroupName: Sprites
   m_GUID: 01378b2b80c76ab43802c6598e3776e4
   m_SerializeEntries:
+  - m_GUID: 0ed8d7d3dffd3d64aa89413fdf8f1ac4
+    m_Address: Assets/Sprites/Player/heads_Sheet.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Player_Heads
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1eb9b0402b9617a4b819dba8c8c334ec
     m_Address: Assets/Sprites/Items/SpriteSheet.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - Sprites_Items
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5b48f994d312e4343a6bf53912fbc680
+    m_Address: Assets/Sprites/Player/Hairs_Sheet.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Player_Hairs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c23ef4f34c870714389cbedfc3d7eb86
+    m_Address: Assets/Sprites/Player/player_Sheet.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Player_View
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 0c39e9370348b1f4abc1856cad86f478, type: 2}

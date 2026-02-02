@@ -68,7 +68,7 @@ public class PlayerStats : CharacterStats
         Base_Strength = player?.Strength ?? 0;
         Base_Agility = player?.Agility ?? 0;
         Base_Intelligence = player?.Intelligence ?? 0;
-        classPlayer = player?.roleClass ?? Classes.GetRoleClass("Shooter");
+        classPlayer = Classes.GetRoleClass(player?.className) ?? Classes.GetRoleClass("c_warrior");
 
         GlobalData.newPlayer = default;
 

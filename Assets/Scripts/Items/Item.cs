@@ -156,25 +156,39 @@ public class Item
                 }
         }
     }
-    public void LocalizationItem()
+    /// <summary>
+    /// Перевести конкретный предмет, подгруживая заранее загруженный список предметов
+    /// </summary>
+    public void LocalizationItem(Dictionary<string, Dictionary<string, string>> items_names)
     {
-        if (LocalizationManager.Instance != null)
+        Dictionary<string, string> localized = items_names[NameKey];
+        if (localized != null)
         {
-            Dictionary<string, string> localized = GlobalData.LocalizationManager.GetLocalizedValue("items", NameKey);
-            if (localized!=null)
-            {
-                Name = localized["Name"];
-                Description = localized["Description"];
-            }
-            else
-            {
-                Debug.LogWarning($"Локализация для ключа {NameKey} не найдена.");
-            }
+            Name = localized["Name"];
+            Description = localized["Description"];
         }
         else
         {
-            Debug.LogWarning("LocalizationManager нет на сцене.");
+            Debug.LogWarning($"Локализация для ключа {NameKey} не найдена.");
         }
+
+    }
+    /// <summary>
+    /// Перевести конкретный предмет, подгруживая весь список для каждого предмета
+    /// </summary>
+    public void LocalizationItem()
+    {
+        Dictionary<string, string> localized = GlobalData.LocalizationManager.GetLocalizedValue("items", NameKey);
+        if (localized != null)
+        {
+            Name = localized["Name"];
+            Description = localized["Description"];
+        }
+        else
+        {
+            Debug.LogWarning($"Локализация для ключа {NameKey} не найдена.");
+        }
+
     }
 }
 

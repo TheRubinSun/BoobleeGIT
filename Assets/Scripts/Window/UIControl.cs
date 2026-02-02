@@ -350,10 +350,12 @@ public class UIControl:MonoBehaviour
     }
     public void LocalizationTranslate()
     {
-        if(ItemsList.items != null && EnemyList.mobs != null && DisplayInfo.Instance != null && ShopLogic.Instance != null && LvlUpLogic.Instance != null)
+        Debug.Log($"Переводим...");
+        if (ItemsList.items != null && EnemyList.mobs != null && DisplayInfo.Instance != null && ShopLogic.Instance != null && LvlUpLogic.Instance != null)
         {
             ItemsList.LocalizaitedItems();
             EnemyList.LocalizaitedMobs();
+            Classes.LocalizationClasses();
             GlobalData.DisplayInfo.LocalizationText();
             GlobalData.ShopLogic.LocalizationText();
             GlobalData.LvlUpLogic.LocalizationText();

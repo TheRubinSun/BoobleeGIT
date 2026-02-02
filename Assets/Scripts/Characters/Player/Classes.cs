@@ -5,11 +5,12 @@ using UnityEngine;
 
 public static class Classes
 {
-    private static Dictionary<string, RoleClass> roleClasses = new Dictionary<string, RoleClass>();
+    private static Dictionary<string, RoleClass> roleClasses;
 
     public static void LoadOrCreateClasses(Dictionary<string, RoleClass> classes)
     {
-        if(classes!=null && classes.Count > 0)
+        roleClasses = new Dictionary<string, RoleClass>();
+        if (classes != null && classes.Count > 0)
         {
             roleClasses = classes;
         }
@@ -17,13 +18,28 @@ public static class Classes
         {
             //                    strength agility intell range, damage, at_sp, projSpeed, speed, hp, def
             //                                       s  a  i  r   d  a   p   s  h   d
-            roleClasses.Add("Shooter", new RoleClass(1, 2, 1, 2f, 0, 45, 2f, 0.2f, 2, 0f, 0, 0, 0, 0));
-            roleClasses.Add("Mage", new RoleClass(1, 1, 2, 1f, 0, 40, 1f, 0.2f, 3, 10, 0.5f, 0, 10, 10));
-            roleClasses.Add("Warrior", new RoleClass(2, 1, 1, 1f, 2, 35, 0, 0.4f, 5, 0f, 0, 2, 0, 0));
+            roleClasses.Add("c_shooter", new RoleClass(1, 2, 1, 2f, 0, 45, 2f, 0.2f, 2, 0f, 0, 0, 0, 0));
+            roleClasses.Add("c_mage", new RoleClass(1, 1, 2, 1f, 0, 40, 1f, 0.2f, 3, 10, 0.5f, 0, 10, 10));
+            roleClasses.Add("c_warrior", new RoleClass(2, 1, 1, 1f, 2, 35, 0, 0.4f, 5, 0f, 0, 2, 0, 0));
+        }
+    }
+    public static void LocalizationClasses()
+    {
+        if (GlobalData.LocalizationManager != null)
+        {
+            Dictionary<string, string> localized_player_stats_name = 
+                GlobalData.LocalizationManager.GetLocalizedValue("name_others", "classes_name");
+            //Debug.Log($"Найдена localized_player_stats_name: {localized_player_stats_name.Count}");
+            foreach(KeyValuePair<string, string> name_classes in localized_player_stats_name)
+            {
+                //Debug.Log($"{name_classes.Key}: {name_classes.Value}");
+                roleClasses[name_classes.Key].name_language = name_classes.Value;
+            }
         }
     }
     public static RoleClass GetRoleClass(string name)
     {
+        Debug.Log($"Name class: {name}");
         return roleClasses[name];
     }
     public static Dictionary<string, RoleClass> GetClasses()
@@ -34,6 +50,7 @@ public static class Classes
 [Serializable]
 public class RoleClass
 {
+    public string name_language { get; set; }
     public int Bonus_Class_Strength {  get; set; }
     public int Bonus_Class_Agility { get; set; }
     public int Bonus_Class_Intelligence { get; set; }

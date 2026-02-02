@@ -176,7 +176,7 @@ public static class ItemsList
     }
     private static void FindSprite(int idItem, int idSprite)
     {
-        if (GameDataHolder.spriteById.TryGetValue(idSprite, out Sprite sprite))
+        if (GameDataHolder.spriteItemsById.TryGetValue(idSprite, out Sprite sprite))
         {
             items[idItem].SetSprite(sprite);
         }
@@ -191,10 +191,27 @@ public static class ItemsList
     }
     public static void LocalizaitedItems()
     {
-        foreach (var item in items)
+        if (LocalizationManager.Instance != null)
         {
-            item.LocalizationItem();
+            Dictionary<string, Dictionary<string, string>> items_names = GlobalData.LocalizationManager.GetLocalizedValue("items");
+            if(items_names != null)
+            {
+                foreach (var item in items)
+                {
+                    item.LocalizationItem(items_names);
+                }
+            }
+            else
+            {
+                Debug.LogWarning("items не найдено");
+            }
+
         }
+        else
+        {
+            Debug.LogWarning("LocalizationManager нет на сцене.");
+        }
+
     }
     public static Item GetItemForName(string nameKey)
     {

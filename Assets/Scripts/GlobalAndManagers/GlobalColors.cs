@@ -14,6 +14,9 @@ public class GlobalColors
     public static readonly Color32 technical = new Color32(35, 245, 241, 255);
     public static readonly Color32 physycal = new Color32(250, 50, 30, 255);
 
+    public static readonly Color32 yesGreenColor = new Color32(35, 152, 25, 255);
+    public static readonly Color32 noRedColor = new Color32(115, 74, 77, 255);
+
     public static readonly string Hh_Str = "#A62E22";
     public static readonly string Hh_Agi = "#22A64C";
     public static readonly string Hh_Int = "#2273A6";

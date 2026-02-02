@@ -27,15 +27,16 @@ public class Player : MonoBehaviour, ITakeDamage
     private PlayerControl playerControl;
 
     private Coroutine flashCol;
-    [SerializeField] 
-    private GameObject PlayerModel;
+    [SerializeField] private GameObject PlayerModel;
     //[SerializeField]
     //private GameObject[] PlayerLegs;
 
-    [SerializeField] 
-    public Toggle[] TooglesWeapon = new Toggle[4];
+    [SerializeField] public Toggle[] TooglesWeapon = new Toggle[4];
+
+    
 
     SpriteRenderer player_sprite;
+    [SerializeField] private SpriteRenderer HairPlayer;
 
     //Abillity
     private bool canForce = true;
@@ -58,7 +59,9 @@ public class Player : MonoBehaviour, ITakeDamage
         pl_ui.SetComponentUI();
 
         player_sprite = PlayerModel.GetComponent<SpriteRenderer>();
-
+        //Debug.Log($"ID_head: {GlobalData.ID_head} ID_hair: {GlobalData.ID_hair}");
+        player_sprite.sprite = GameDataHolder.spritePlayerHeadById[GlobalData.ID_head];
+        HairPlayer.sprite = GameDataHolder.spritePlayerHairById[GlobalData.ID_hair];
         StartCoroutine(AddManaForRegen());
     }
     public void LoadOrCreateNew(PlayerStats playerSaveData)

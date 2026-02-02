@@ -80,6 +80,12 @@ public class LocalizationManager : MonoBehaviour
         //string selectedLanguage = LocalizationSettings.SelectedLocale.Identifier.Code;
         if (language != currentLanguage) await LoadLocalization(language);
     }
+    /// <summary>
+    /// Найти конкретное название
+    /// </summary>
+    /// <param name="тип"></param>
+    /// <param name="то что нужно"></param>
+    /// <returns></returns>
     public Dictionary<string, string> GetLocalizedValue(string type_value, string key)
     {
         if (localizedText != null)
@@ -106,6 +112,33 @@ public class LocalizationManager : MonoBehaviour
         }
 
        
+        return null;
+    }
+
+    /// <summary>
+    /// Найти группу, например items, ui, class
+    /// </summary>
+    /// <param name="type_value"></param>
+    /// <returns></returns>
+    public Dictionary<string, Dictionary<string, string>> GetLocalizedValue(string type_value)
+    {
+        if (localizedText != null)
+        {
+            if (localizedText.ContainsKey(type_value))
+            {
+                return localizedText[type_value];
+            }
+            else
+            {
+                Debug.LogWarningFormat("Ошибка локализации 101 {0}", type_value);
+            }
+        }
+        else
+        {
+            Debug.LogWarningFormat("Ошибка локализации 100");
+        }
+
+
         return null;
     }
 }
