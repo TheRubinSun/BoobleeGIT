@@ -129,7 +129,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Hear_Sheet_0
+      name: Hairs_Sheet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -142,16 +142,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: c8589cfe8528b65f0800000000000000
-      internalID: -762372393417472628
+      spriteID: 7b03f5713f2e9b84ba4027e151c50487
+      internalID: 1887816002
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hear_Sheet_1
+      name: Hairs_Sheet_1
       rect:
         serializedVersion: 2
         x: 32
@@ -164,16 +164,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 98f8a8aba85d51620800000000000000
-      internalID: 2744334339764031369
+      spriteID: d4ffd75a413defd40b74e7be04cdae31
+      internalID: -192752747
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hear_Sheet_2
+      name: Hairs_Sheet_2
       rect:
         serializedVersion: 2
         x: 64
@@ -188,8 +188,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3a0faf1a10156e048991001fa35af454
-      internalID: -1229005660
+      spriteID: e3a57a3eb27cb9b4e9e4b5290b20a621
+      internalID: 1921525883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hairs_Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6eeea7f5c5681c48ad7f60c0f61f606
+      internalID: -2024240413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hairs_Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5978df81827b2ac40b14b10d6245a953
+      internalID: 1970660983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hairs_Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29133a6a424f6d44392c56419a5772a9
+      internalID: 1631045640
       vertices: []
       indices: 
       edges: []
@@ -208,9 +274,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Hear_Sheet_0: -762372393417472628
-      Hear_Sheet_1: 2744334339764031369
-      Hear_Sheet_2: -1229005660
+      Hairs_Sheet_0: 1887816002
+      Hairs_Sheet_1: -192752747
+      Hairs_Sheet_2: 1921525883
+      Hairs_Sheet_3: -2024240413
+      Hairs_Sheet_4: 1970660983
+      Hairs_Sheet_5: 1631045640
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

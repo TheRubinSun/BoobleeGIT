@@ -484,14 +484,8 @@ MonoBehaviour:
   - {fileID: 1567865119}
   - {fileID: 1565344311}
   - {fileID: 1958591165}
-  spritesPlayer:
-  - {fileID: 8604142848159055455, guid: a87f5142e63478c458e2b9194eebcd96, type: 3}
-  - {fileID: 21300000, guid: c03b01056a501394dbcf8ad22c692b64, type: 3}
+  nullPlayerSprite: {fileID: 8604142848159055455, guid: a87f5142e63478c458e2b9194eebcd96, type: 3}
   createNewSaveWindow: {fileID: 1403647503}
-  ClassBut: {fileID: 5845901409257168993, guid: 3821a4e4ae5e3be4daf21acf7b799e0a, type: 3}
-  classesParent: {fileID: 431174007}
-  hear_Image: {fileID: 478290106}
-  head_Image: {fileID: 266533063}
 --- !u!4 &165071818
 Transform:
   m_ObjectHideFlags: 0
@@ -930,9 +924,9 @@ RectTransform:
   - {fileID: 1272120529}
   m_Father: {fileID: 1403647504}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 960, y: -763}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -223}
   m_SizeDelta: {x: 350, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &340640562
@@ -1742,8 +1736,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 165071817}
-        m_TargetAssemblyTypeName: GenInfoSaves, Assembly-CSharp
+      - m_Target: {fileID: 1403647507}
+        m_TargetAssemblyTypeName: CreatePlayer, Assembly-CSharp
         m_MethodName: HeadChange
         m_Mode: 6
         m_Arguments:
@@ -2085,8 +2079,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 165071817}
-        m_TargetAssemblyTypeName: GenInfoSaves, Assembly-CSharp
+      - m_Target: {fileID: 1403647507}
+        m_TargetAssemblyTypeName: CreatePlayer, Assembly-CSharp
         m_MethodName: HairChange
         m_Mode: 6
         m_Arguments:
@@ -3225,8 +3219,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 165071817}
-        m_TargetAssemblyTypeName: GenInfoSaves, Assembly-CSharp
+      - m_Target: {fileID: 1403647507}
+        m_TargetAssemblyTypeName: CreatePlayer, Assembly-CSharp
         m_MethodName: HairChange
         m_Mode: 6
         m_Arguments:
@@ -3493,8 +3487,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 165071817}
-        m_TargetAssemblyTypeName: GenInfoSaves, Assembly-CSharp
+      - m_Target: {fileID: 1403647507}
+        m_TargetAssemblyTypeName: CreatePlayer, Assembly-CSharp
         m_MethodName: HeadChange
         m_Mode: 6
         m_Arguments:
@@ -4185,6 +4179,7 @@ GameObject:
   - component: {fileID: 1403647504}
   - component: {fileID: 1403647506}
   - component: {fileID: 1403647505}
+  - component: {fileID: 1403647507}
   m_Layer: 5
   m_Name: CreatePlayer
   m_TagString: Untagged
@@ -4253,6 +4248,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1403647503}
   m_CullTransparentMesh: 1
+--- !u!114 &1403647507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1403647503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e32621b354b3c0b43bdc3dd56c7dc2d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ClassBut: {fileID: 5845901409257168993, guid: 3821a4e4ae5e3be4daf21acf7b799e0a, type: 3}
+  classesParent: {fileID: 431174007}
+  hear_Image: {fileID: 478290106}
+  head_Image: {fileID: 266533063}
 --- !u!1 &1440081556
 GameObject:
   m_ObjectHideFlags: 0

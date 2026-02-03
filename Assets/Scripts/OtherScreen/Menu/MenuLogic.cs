@@ -35,6 +35,7 @@ public class MenuLogic : MonoBehaviour
         else
         {
             options.SaveChange();
+            Paralax.Instance.ParalaxUpdate();
         }
 
     }

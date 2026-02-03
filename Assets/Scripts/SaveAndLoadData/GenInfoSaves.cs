@@ -22,36 +22,19 @@ public class GenInfoSaves : MonoBehaviour
     public static float volume_musics;
     public static Dictionary<int, SaveGameInfo> saveGameFiles = new Dictionary<int, SaveGameInfo>();
 
-    [SerializeField] GameObject[] SavesBut;
-
-
     private Toggle[] toggle_Saves;
     private Image[] im_head_Saves;
     private Image[] im_hair_Saves;
     private TextMeshProUGUI[] text_Player_info_saves;
 
+    private int selectSave;
 
-    private NewPlayer newPlayer;
-    private int selectSave; 
-
-    //[SerializeField] TextMeshProUGUI[] text_infoSaves;
-    //[SerializeField] Image[] imagesPlayerIcon;
-    [SerializeField] Sprite[] spritesPlayer;
+    [SerializeField] GameObject[] SavesBut;
+    [SerializeField] private Sprite nullPlayerSprite;
     [SerializeField] private GameObject createNewSaveWindow;
 
-    //Создание игрока 
-    //Классы
-    [SerializeField] private GameObject ClassBut;
-    [SerializeField] private Transform classesParent;
-    private ClassBut[] classesButs;
-
-    [SerializeField] private Image hear_Image;
-    [SerializeField] private Image head_Image;
-    private int curSpriteID_hair;
-    private int curSpriteID_head;
     private void Awake()
     {
-
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -95,16 +78,11 @@ public class GenInfoSaves : MonoBehaviour
         if (saveGameFiles.ContainsKey(saveInt))
         {
             GlobalData.newPlayer = default;
-            newPlayer = default;
 
             if (!saveGameFiles[saveInt].isStarted)
             {
-                newPlayer = new NewPlayer(0, 0, 0, "c_warrior");
-
                 createNewSaveWindow.SetActive(true);
-                RemoveAllButClasses();
-                AddAllButClasses();
-
+                GlobalData.CreatePlayer.ClearAndCreateRoleClasses(saveInt);
                 selectSave = saveInt;
             }
             else
@@ -123,9 +101,11 @@ public class GenInfoSaves : MonoBehaviour
     }
     public void StartNewGame()
     {
-        saveGameFiles[selectSave].spriteId_head = curSpriteID_head;
-        saveGameFiles[selectSave].spriteId_hair = curSpriteID_hair;
-        GlobalData.newPlayer = newPlayer;
+        int idHear;
+        int idHead;
+        GlobalData.CreatePlayer.GetIdSpritesPlayer(out idHear,out idHead);
+        saveGameFiles[selectSave].spriteId_head = idHead;
+        saveGameFiles[selectSave].spriteId_hair = idHear;
         StartSaveGame(selectSave);
     }
     private void StartSaveGame(int saveInt)
@@ -156,62 +136,7 @@ public class GenInfoSaves : MonoBehaviour
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("LoadingScreen");
         }
     }
-    private void RemoveAllButClasses()
-    {
-        foreach(Transform t in classesParent.transform)
-        {
-            Destroy(t.gameObject);
-        }
-        classesButs = null;
-    }
-    private void AddAllButClasses()
-    {
-        classesButs = new ClassBut[Classes.GetClasses().Count];
-        int i = 0;
-        foreach (KeyValuePair<string, RoleClass> classR in Classes.GetClasses())
-        {
-            GameObject classBut = Instantiate(ClassBut, classesParent);
-
-            Button classButLog = classBut.GetComponent<Button>();
-            TextMeshProUGUI textBut = classBut.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-            Image onColor = classBut.transform.GetChild(1).GetChild(0).GetComponent<Image>();
-
-
-            classesButs[i] = new ClassBut(classR.Key, textBut, onColor);
-            textBut.text = classR.Value.name_language;
-            //Debug.Log($"{classR.Key}: {classR.Value.name_language}");
-
-            string classID = classR.Key;
-            int index = i;
-
-            classButLog.onClick.RemoveAllListeners();
-            classButLog.onClick.AddListener(() => OnClassButtonClicked(index));
-
-            i++;
-        }
-        AllClassButtonDeactivate();
-    }
-    private void OnClassButtonClicked(int id)
-    {
-        classesButs[id].onColor.color = GlobalColors.yesGreenColor;
-        newPlayer.className = classesButs[id].className;
-        AllClassButtonDeactivate();
-    }
-    private void AllClassButtonDeactivate()
-    {
-        foreach(ClassBut but in classesButs)
-        {
-            if(but.className == newPlayer.className)
-            {
-                but.onColor.color = GlobalColors.yesGreenColor;
-            }
-            else
-            {
-                but.onColor.color = GlobalColors.noRedColor;
-            }
-
-        }
-    }
+    
     public async void DeleteSave(int id)
     {
         if (lastSaveID == id)
@@ -297,7 +222,7 @@ public class GenInfoSaves : MonoBehaviour
         else
         {
             text_Player_info_saves[id].text = "empty";
-            im_head_Saves[id].sprite = spritesPlayer[0];
+            im_head_Saves[id].sprite = nullPlayerSprite;
             im_head_Saves[id].color = new Color32(113, 94, 94, 255);
             im_hair_Saves[id].color = new Color32(0, 0, 0, 0);
             toggle_Saves[id].isOn = false;
@@ -405,58 +330,7 @@ public class GenInfoSaves : MonoBehaviour
     {
         createNewSaveWindow.SetActive(false);
     }
-    public void HairChange(bool nextOrUndo)
-    {
-        if(nextOrUndo)
-        {
-            if(curSpriteID_hair < GameDataHolder.spritePlayerHairById.Count - 1)
-            {
-                curSpriteID_hair++;
-            }
-            else
-            {
-                curSpriteID_hair = 0;
-            }
-        }
-        else
-        {
-            if (curSpriteID_hair == 0)
-            {
-                curSpriteID_hair = GameDataHolder.spritePlayerHairById.Count - 1;
-            }
-            else
-            {
-                curSpriteID_hair--;
-            }
-        }
-        hear_Image.sprite = GameDataHolder.spritePlayerHairById[curSpriteID_hair];
-    }
-    public void HeadChange(bool nextOrUndo)
-    {
-        if (nextOrUndo)
-        {
-            if (curSpriteID_head < GameDataHolder.spritePlayerHeadById.Count - 1)
-            {
-                curSpriteID_head++;
-            }
-            else
-            {
-                curSpriteID_head = 0;
-            }
-        }
-        else
-        {
-            if (curSpriteID_head == 0)
-            {
-                curSpriteID_head = GameDataHolder.spritePlayerHeadById.Count - 1;
-            }
-            else
-            {
-                curSpriteID_head--;
-            }
-        }
-        head_Image.sprite = GameDataHolder.spritePlayerHeadById[curSpriteID_head];
-    }
+    
 }
 
 [Serializable]
@@ -506,32 +380,6 @@ public class SaveGameInfo
     public int GenNewSeed()
     {
         return UnityEngine.Random.Range(10000, 99999);
-    }
-}
-public struct NewPlayer
-{
-    public int Strength { get; set; }
-    public int Agility { get; set; }
-    public int Intelligence { get; set; }
-    public string className { get; set; }
-    public NewPlayer(int strength, int agility, int intelligence, string _className)
-    {
-        Strength = strength;
-        Agility = agility;
-        Intelligence = intelligence;
-        className = _className;
-    }
-}
-public class ClassBut
-{
-    public string className;
-    public TextMeshProUGUI textClass;
-    public Image onColor;
-    public ClassBut(string name, TextMeshProUGUI _textClass, Image _onColor)
-    {
-        className = name;
-        textClass = _textClass;
-        onColor = _onColor;
     }
 }
 

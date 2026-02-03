@@ -3,9 +3,20 @@ using UnityEngine;
 
 public class Paralax : MonoBehaviour
 {
+    public static Paralax Instance; 
     public ParalaxLayer[] layers;
     private float leftEdge;
     private float rightEdge;
+
+    private void Awake()
+    {
+        if(Instance != null)
+        {
+            Destroy(Instance);
+            return;
+        }
+        Instance = this;
+    }
     void Start()
     {
         leftEdge = Camera.main.ViewportToWorldPoint(Vector3.zero).x;
@@ -28,6 +39,10 @@ public class Paralax : MonoBehaviour
             // Храним слои в массиве для удобной работы
             layer.parts = new Transform[] { layer.part1, layer.part2, layer.part3 };
         }
+    }
+    public void ParalaxUpdate()
+    {
+        Start();
     }
 
     void Update()

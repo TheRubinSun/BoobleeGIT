@@ -59,7 +59,7 @@ public static class GlobalData
     public static SwitchKey SwitchKey => SwitchKey.Instance;
     public static GenInfoSaves GenInfoSaves => GenInfoSaves.Instance;
     public static SpawnMobs SpawnMobs => SpawnMobs.Instance;
-    
+    public static CreatePlayer CreatePlayer => CreatePlayer.Instance;
     public static ScreenResolutions GetScreenResolutions() => new ScreenResolutions(Screen.width, Screen.height, Screen.currentResolution.refreshRateRatio.numerator, Screen.currentResolution.refreshRateRatio.denominator);
 }
 public static class BASE_VALUE_STATS_ARTEFACT
