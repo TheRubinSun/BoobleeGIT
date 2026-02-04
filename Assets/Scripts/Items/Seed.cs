@@ -33,7 +33,7 @@ public class Seed : Item, IUsable
             if(dirtBed.Busy) 
                 return false;
 
-            flower_pref = ResourcesData.GetFlowerSeedPrefab(id_seed_pref);
+            flower_pref = ResourcesData.GetFlowerSeedPrefab(id_seed_pref); //Нужно указать префаба посадки
             dirtBed.Busy = true;
 
             return GardenManager.instance.PlantSeed(flower_pref, flower_type, dirtBed.ID, dirtBed.transform.position);

@@ -58,6 +58,8 @@ public class ResourcesData : MonoBehaviour
         flowers_seed[0] = Resources.Load<GameObject>("Objects/Flowers/Sunflower_seed");
         flowers_seed[1] = Resources.Load<GameObject>("Objects/Flowers/Tolania_seed");
         flowers_seed[2] = Resources.Load<GameObject>("Objects/Flowers/Tall_seed");
+        flowers_seed[3] = Resources.Load<GameObject>("Objects/Flowers/Tomato_seed");
+        flowers_seed[4] = Resources.Load<GameObject>("Objects/Flowers/Pumkin_seed");
 
         effects[0] = Resources.Load<EffectData>("Effects/Heal");
         effects[1] = Resources.Load<EffectData>("Effects/Posion_Pistol");

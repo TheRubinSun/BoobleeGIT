@@ -161,8 +161,7 @@ public class Item
     /// </summary>
     public void LocalizationItem(Dictionary<string, Dictionary<string, string>> items_names)
     {
-        Dictionary<string, string> localized = items_names[NameKey];
-        if (localized != null)
+        if(items_names.TryGetValue(NameKey, out Dictionary<string, string> localized))
         {
             Name = localized["Name"];
             Description = localized["Description"];
@@ -171,6 +170,7 @@ public class Item
         {
             Debug.LogWarning($"Локализация для ключа {NameKey} не найдена.");
         }
+
 
     }
     /// <summary>

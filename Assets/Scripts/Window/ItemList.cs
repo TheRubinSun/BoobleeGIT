@@ -136,6 +136,11 @@ public static class ItemsList
         items.Add(new Item(69, "material_syringe", 40, 0, Quality.Common, 12, "_", TypeItem.Material));
         items.Add(new Boster(70, "booster_strength", 100, 0, Quality.Rare, 500, "_", AllStats.Strength, 2, 2, TypeItem.Booster));
         items.Add(new Boster(71, "booster_agillity", 100, 0, Quality.Rare, 500, "_", AllStats.Agility, 2, 3, TypeItem.Booster));
+
+        items.Add(new Food(72, "item_tomato",  20, 0, Quality.Uncommon, 50, "_", 3, 0, 6, 2, "Heal", 1));
+        items.Add(new Food(73, "item_pumkin",  20, 0, Quality.Uncommon, 35, "_", 1, 1, 9, 1, "Heal", 1));
+        items.Add(new Seed(74, "seed_tomato",  100, 0, Quality.Common, 2, "_", 3, "tomato", TypeItem.Seed));
+        items.Add(new Seed(75, "seed_pumkin",  100, 0, Quality.Common, 2, "_", 4, "pumkin", TypeItem.Seed));
         //PrintItemList();
     }
     private static void InitializeSpritesItem()

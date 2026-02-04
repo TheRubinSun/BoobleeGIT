@@ -2005,6 +2005,18 @@ MonoBehaviour:
     - {fileID: 294128056547279690, guid: 33084b806077ed341a12c780bf28f185, type: 3}
     flower_seed: {fileID: 294128056547279690, guid: 3a5f84748cd88234e901e2f54c751d7c, type: 3}
     flower_sprout: {fileID: 294128056547279690, guid: d398fd623a38f2d42881c95e4287a561, type: 3}
+  - id: 3
+    key_name: tomato
+    flower_finals:
+    - {fileID: 294128056547279690, guid: d91edcb4a93510a48a76de1c63c3e0e5, type: 3}
+    flower_seed: {fileID: 294128056547279690, guid: e27dfa215d046384f9f8404773f05967, type: 3}
+    flower_sprout: {fileID: 294128056547279690, guid: 8d48a40e4224a31468361c133a8564a9, type: 3}
+  - id: 4
+    key_name: pumkin
+    flower_finals:
+    - {fileID: 294128056547279690, guid: b9cb6c3becde1f14cad1f0a65a579471, type: 3}
+    flower_seed: {fileID: 294128056547279690, guid: 4ea010175f0da2c47b78e2481f3b7ddf, type: 3}
+    flower_sprout: {fileID: 294128056547279690, guid: 9cf492c07e2379b4ba4fa963c17b96f0, type: 3}
   parentDirtBedsOBJ: {fileID: 1924234519}
 --- !u!1001 &940287992
 PrefabInstance:
