@@ -8,7 +8,7 @@ public class RotateCir : MonoBehaviour
     {
         cirTrans = GetComponent<Transform>();
     }
-    private void Update()
+    private void LateUpdate()
     {
         cirTrans.Rotate(0, 0, rotateSpeed * Time.deltaTime);
     }

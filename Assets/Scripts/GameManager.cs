@@ -19,6 +19,7 @@ public class GameManager: MonoBehaviour
 
     public Transform dropParent;
     public Transform PlayerModel;
+    public int countBosses;
 
     public float PlayerPosY;
 
@@ -33,6 +34,9 @@ public class GameManager: MonoBehaviour
     private string savePath;
 
     private bool isPaused = false;
+
+    private bool playedBossMusic;
+    private Coroutine musicRoutine;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -155,10 +159,14 @@ public class GameManager: MonoBehaviour
     private void OnEnable()
     {
         BaseEnemyLogic.OnEnemyDeath += HandleEnemyDeath;
+        BossLogic.OnBossDie += HandleBossDie;
+        BossLogic.OnBossAdd += HandleBossAdd;
     }
     private void OnDisable()
     {
         BaseEnemyLogic.OnEnemyDeath -= HandleEnemyDeath;
+        BossLogic.OnBossDie -= HandleBossDie;
+        BossLogic.OnBossAdd -= HandleBossAdd;
     }
     private void HandleEnemyDeath(BaseEnemyLogic enemy)
     {
@@ -170,19 +178,58 @@ public class GameManager: MonoBehaviour
             GlobalData.Player.AddExp(enemy.enum_stat.GiveExp);
         }
         
-
         int chanceSpawnCorpse = UnityEngine.Random.Range(0, 100);
         if(chanceSpawnCorpse < 30) StartCoroutine(SpawnCorpse(enemy.mob_object.transform, enemy, false));
         else StartCoroutine(SpawnCorpse(enemy.mob_object.transform, enemy, true));
-
-
-
 
         if (InfoReaminingEnemy != null)
         {
             InfoReaminingEnemy.text = $"Убито врагов {KillsEnemy} из {enemisRemaining}";
         }
     }
+    private IEnumerator FadeAndPlay(AudioClip newClip, float startTime)
+    {
+        while(music_source.volume > 0.05f)
+        {
+            music_source.volume -= Time.deltaTime;
+            yield return null;
+        }
+        music_source.clip = newClip;
+        music_source.time = startTime;
+        music_source.Play();
+
+        while(music_source.volume < 1f)
+        {
+            music_source.volume += Time.deltaTime;
+            yield return null;
+        }
+    }
+    private void PlayMusic(AudioClip clip, float startTime)
+    {
+        if(musicRoutine != null)
+            StopCoroutine(musicRoutine);
+        musicRoutine = StartCoroutine(FadeAndPlay(clip, startTime));
+    }
+    private void HandleBossDie(BossLogic bossLogic)
+    {
+        countBosses--;
+        if(countBosses <= 0)
+        {
+            PlayMusic(musics[Random.Range(0, musics.Length)], 0);
+            playedBossMusic = false;
+        }
+    }
+    private void HandleBossAdd(BossLogic bossLogic)
+    {
+        countBosses++;
+        if (!playedBossMusic)
+        {
+            PlayMusic(bossLogic.GetBossMusic(), 7f);
+            playedBossMusic = true;
+        }
+
+    }
+
     private IEnumerator SpawnCorpse(Transform enemy, BaseEnemyLogic mob_logic, bool destroyCorpse)
     {
         //Создаем труп

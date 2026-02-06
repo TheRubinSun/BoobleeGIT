@@ -62,13 +62,13 @@ public static class ItemsList
         items.Add(new MeleWeapon(16, "soldier_spear",    1, 0, Quality.Uncommon, 120, "_",       false, 0.55f, damageT.Physical,  2, 0.75f,  40, 1));
         items.Add(new MeleWeapon(17, "simple_knife",     1, 0, Quality.Common, 65, "_",   false, 0.32f, damageT.Physical, 2, 0.7f,    50, 1));
 
-        items.Add(new Gun(2,  "gun_makarov",                   1, 0, Quality.Rare, 400, "_",     true, 4f, damageT.Physical, 2,  0.7f, 40, 1, 12f, 1.0f, 5f, 0, 1));
-        items.Add(new Gun(13, "bow_simple",                    1, 0, Quality.Mystical, 600, "_", true, 6f, damageT.Physical, 10, 0.7f, 30, 1, 8f,  0.5f, 5f, 2));
-        items.Add(new Gun(14, "shotgun_pump",                  1, 0, Quality.Rare, 550, "_",     true, 2f, damageT.Physical, 3,  0.6f, 40, 4, 10f, 1f,  15f, 1));
-        items.Add(new StaffBullet(48, "staff_forest",                1, 0, Quality.Rare, 550, "_",     true, 4f, damageT.Magic,    2,  0.7f, 30, 1, 0.5f, 1f, 5f, 3, 2));
+        items.Add(new Gun(2,  "gun_makarov",         1, 0, Quality.Rare, 400, "_",     true, 4f, damageT.Physical, 2,  0.7f, 40, 1, 12f, 1.0f, 5f, 0, 1));
+        items.Add(new Gun(13, "bow_simple",          1, 0, Quality.Mystical, 600, "_", true, 6f, damageT.Physical, 10, 0.7f, 30, 1, 8f,  0.5f, 5f, 2));
+        items.Add(new Gun(14, "shotgun_pump",        1, 0, Quality.Rare, 550, "_",     true, 2f, damageT.Physical, 3,  0.6f, 40, 4, 10f, 1f,  15f, 1));
+        items.Add(new StaffBullet(48, "staff_forest",1, 0, Quality.Rare, 550, "_",     true, 4f, damageT.Magic,    2,  0.7f, 30, 1, 0.5f, 1f, 5f, 3, 2));
 
         items.Add(new Food(3, "item_meat", 20, 0, Quality.Common, 1, "_", 1, 0, 15, 5, "Heal", 1));
-        items.Add(new HealPotion(4, "item_potion_hp",         20, 0, Quality.Uncommon, 30, "_", 8, 15, 0));
+        items.Add(new HealPotion(4, "item_potion_hp",         20, 0, Quality.Uncommon, 30, "_", 8, 15, 6));
         items.Add(new Item(5, "armor_armor",                   1, 0, Quality.Common, 300, "_", TypeItem.Armor));
         items.Add(new Minion(6, "minion_robot_es",             1, 0, Quality.Rare, 500, "_", TypeItem.Minion, 5f, 6f, 2f, TypeMob.Technology));
         items.Add(new Item(7, "material_chip_one",            20, 0, Quality.Uncommon, 15, "_", TypeItem.Material));
@@ -113,7 +113,7 @@ public static class ItemsList
         items.Add(new Item(46, "material_quartz_sand",        100, 0, Quality.Common, 3, "_", TypeItem.Material));
         items.Add(new Item(47, "material_iron_ore",            10, 0, Quality.Common, 6, "_", TypeItem.Material));
         items.Add(new FootTrap(49, "trap_foottrap",            20, 0, Quality.Uncommon, 25, "_", 1, 2, damageT.Technical, 2f));
-        items.Add(new ForseItem(50, "item_force_air",          20, 0, Quality.Uncommon, 22, "_", 1f, TypeItem.Other, true));
+        items.Add(new ForceItem(50, "item_force_air",          20, 0, Quality.Uncommon, 22, "_", 1f, TypeItem.Other, true));
         items.Add(new Item(51, "material_beetle_shell",        20, 0, Quality.Uncommon, 30, "_", TypeItem.Material));
         items.Add(new Item(52, "material_beetle_sludge",       40, 0, Quality.Common,   4, "_", TypeItem.Material));
         items.Add(new Seed(53, "seed_sunflower",              100, 0, Quality.Common, 2, "_", 0, "sunflower", TypeItem.Seed));
@@ -121,7 +121,7 @@ public static class ItemsList
         items.Add(new Seed(55, "seed_tonalia",                100, 0, Quality.Common, 2, "_", 2, "tallflower", TypeItem.Seed));
         items.Add(new Item(56, "material_tolania_leaves",      20, 0, Quality.Common, 6, "_", TypeItem.Material));
         items.Add(new Item(57, "material_tallsha",             20, 0, Quality.Common, 3, "_", TypeItem.Material));
-        items.Add(new ManaHealPotion(58, "item_potion_mana",   20, 0, Quality.Uncommon, 32, "_", 20, 15, 0));
+        items.Add(new ManaHealPotion(58, "item_potion_mana",   20, 0, Quality.Uncommon, 32, "_", 20, 15, 7));
         items.Add(new Food(59, "item_moonana",                 20, 0, Quality.Uncommon, 15, "_", 1, 2, 12, 3, "Heal", 1));
         items.Add(new Food(60, "item_pepper",                  20, 0, Quality.Common, 3, "_", 1, 0, 10, 2, "Heal", 1));
         items.Add(new Food(61, "item_spicy_meat",              20, 0, Quality.Uncommon, 10, "_", 2, 0, 15, 3, "Heal", 1));

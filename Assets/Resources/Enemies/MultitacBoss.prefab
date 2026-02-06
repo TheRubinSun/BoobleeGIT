@@ -414,6 +414,7 @@ MonoBehaviour:
   HPBar: {fileID: 7998632648935421142}
   abillities: []
   IsUpper: 1
+  bossMusic: {fileID: 8300000, guid: 0c67c9a9286d3d94b887d54036636106, type: 3}
   uperPartBoss: {fileID: 2175523287238433042}
   shadow_trans: {fileID: 5973034391210070178}
   blood_anim_trans: {fileID: 6376020987703614741}
@@ -444,7 +445,7 @@ MonoBehaviour:
   - {fileID: 8201370246663245715}
   - {fileID: 327026346670875127}
   amplitude: 0.08
-  speedFlyBody: 2
+  speedFlyBody: 4
 --- !u!114 &2190829937573134563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -871,7 +872,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8975ab5f47c456e428ede1bf70778c3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpeed: 30
+  rotateSpeed: 60
 --- !u!1 &9098641772156811602
 GameObject:
   m_ObjectHideFlags: 0
@@ -987,6 +988,10 @@ PrefabInstance:
       propertyPath: IsUpper
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3514449642227444831, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 6456686879423158592, guid: 1178313d785468941ae1fbfa072bd037, type: 2}
     - target: {fileID: 3804285388404368234, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
       propertyPath: m_SortingOrder
       value: 53
@@ -1093,6 +1098,10 @@ PrefabInstance:
       propertyPath: IsUpper
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3514449642227444831, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 6456686879423158592, guid: 1178313d785468941ae1fbfa072bd037, type: 2}
     - target: {fileID: 3804285388404368234, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
       propertyPath: m_SortingOrder
       value: 52
@@ -1199,6 +1208,10 @@ PrefabInstance:
       propertyPath: IsUpper
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3514449642227444831, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 6456686879423158592, guid: 1178313d785468941ae1fbfa072bd037, type: 2}
     - target: {fileID: 3804285388404368234, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
       propertyPath: m_SortingOrder
       value: 51
@@ -1305,6 +1318,10 @@ PrefabInstance:
       propertyPath: IsUpper
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3514449642227444831, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 6456686879423158592, guid: 1178313d785468941ae1fbfa072bd037, type: 2}
     - target: {fileID: 3804285388404368234, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
       propertyPath: m_SortingOrder
       value: 54
@@ -1407,6 +1424,10 @@ PrefabInstance:
       propertyPath: IsUpper
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3514449642227444831, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 6456686879423158592, guid: 1178313d785468941ae1fbfa072bd037, type: 2}
     - target: {fileID: 3804285388404368234, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
       propertyPath: m_SortingOrder
       value: 51
@@ -1509,6 +1530,10 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 53
       objectReference: {fileID: 0}
+    - target: {fileID: 3514449642227444831, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 6456686879423158592, guid: 1178313d785468941ae1fbfa072bd037, type: 2}
     - target: {fileID: 3804285388404368234, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
       propertyPath: m_SortingOrder
       value: 52
@@ -1607,6 +1632,10 @@ PrefabInstance:
       propertyPath: IsUpper
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3514449642227444831, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 6456686879423158592, guid: 1178313d785468941ae1fbfa072bd037, type: 2}
     - target: {fileID: 3804285388404368234, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
       propertyPath: m_SortingOrder
       value: 56
@@ -1701,6 +1730,10 @@ PrefabInstance:
       propertyPath: IsUpper
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3514449642227444831, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 6456686879423158592, guid: 1178313d785468941ae1fbfa072bd037, type: 2}
     - target: {fileID: 3804285388404368234, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
       propertyPath: m_SortingOrder
       value: 57

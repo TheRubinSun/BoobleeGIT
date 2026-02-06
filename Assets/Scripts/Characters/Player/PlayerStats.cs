@@ -187,7 +187,7 @@ public class PlayerStats : CharacterStats
 
         Armor = (int)(Strength / 10) + Base_Armor + classPlayer.Bonus_Class_Armor + equipStats.Bonus_Equip_Armor + buffsStats.Buff_Armor;
         Mov_Speed = (Agility * 0.015f) + Base_Mov_Speed + classPlayer.Bonus_Class_SpeedMove + equipStats.Bonus_Equip_Mov_Speed + buffsStats.Buff_Mov_Speed;
-        Evasion = (Agility) + Base_Evasion + equipStats.Bonus_Equip_Evasion + buffsStats.Buff_Evasion;
+        Evasion = (Agility) / 2 + Base_Evasion + equipStats.Bonus_Equip_Evasion + buffsStats.Buff_Evasion;
         Att_Speed = (Agility * 2) + Base_Att_Speed + classPlayer.Bonus_Class_AttackSpeed + equipStats.Bonus_Equip_Att_Speed + buffsStats.Buff_Att_Speed;
         Att_Range = Base_Att_Range + classPlayer.Bonus_Class_Range + equipStats.Bonus_Equip_Att_Range + buffsStats.Buff_Att_Range;
         Proj_Speed = Base_Proj_Speed + classPlayer.Bonus_Class_ProjectileSpeed + equipStats.Bonus_Equip_Proj_Speed + buffsStats.Buff_Proj_Speed;
@@ -300,7 +300,7 @@ public class PlayerStats : CharacterStats
     public bool isEvasion()
     {
         int random = UnityEngine.Random.Range(0, 100);
-        if (Evasion >= random && random < 90)
+        if (Evasion >= random && random <= 75)
         {
             return true;
         }

@@ -43,23 +43,17 @@ public class HealPotion : Potion
             //Debug.Log("ѕытаюсь отхилить");
 
             EffectData effect = ScriptableObject.CreateInstance<EffectData>();
+            EffectData effectTemplate = Resources.Load<EffectData>("Effects/" + "HealCooldown");
 
-
-
-            //EffectData effectTemplate = Resources.Load<EffectData>("Effects/" + "HealCooldown");
-
-            //if (effectTemplate != null)
-            //{
-            //    //Debug.Log($"Ёффект с именем {nameEffect} найден");
-            //    effect.Sprite = effectTemplate.Sprite;
-            //}
+            if (effectTemplate != null)
+            {
+                //Debug.Log($"Ёффект с именем {nameEffect} найден");
+                effect.Sprite = effectTemplate.Sprite;
+            }
 
             effect.EffectName = effectName;
 
-
-
-
-            effect.effectType = EffectData.EffectType.SpeedBoost;
+            effect.effectType = EffectData.EffectType.None;
             effect.idSprite = idSpriteEffectColdown;
             effect.duration = couldDownHeal;
 
@@ -158,7 +152,7 @@ public class ManaHealPotion : Potion
     public float duration;
     public int idSpriteEffect;
     private static int soundID = 0;
-    private string effectName = "manaHeal";
+    private string effectName = "ManaHealCooldown";
     public ManaHealPotion(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, int _countHeal, float _duration, int _idSpriteEffect) : base(id, name, maxCount, spriteID, quality, cost, description)
     {
         countHeal = _countHeal;
@@ -175,10 +169,14 @@ public class ManaHealPotion : Potion
         }
         if (GlobalData.Player.TakeHealMana(countHeal))
         {
-            Debug.Log("ѕытаюсь отхилить");
-
-
             EffectData regenEffect = ScriptableObject.CreateInstance<EffectData>();
+            EffectData effectTemplate = Resources.Load<EffectData>("Effects/" + "ManaHealCooldown");
+
+            if (effectTemplate != null)
+            {
+                regenEffect.Sprite = effectTemplate.Sprite;
+            }
+
             regenEffect.EffectName = effectName;
             regenEffect.effectType = EffectData.EffectType.HpRegenBoost;
             regenEffect.idSprite = idSpriteEffect;

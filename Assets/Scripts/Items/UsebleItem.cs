@@ -24,10 +24,10 @@ public class UsebleItem : Item, IUsable
         throw new System.NotImplementedException();
     }
 }
-public class ForseItem : UsebleItem
+public class ForceItem : UsebleItem
 {
     public static int soundID = 1;
-    public ForseItem(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, float value, TypeItem typeItem = TypeItem.Other, bool isUse = false) : base(id, name, maxCount, spriteID, quality, cost, description, value, typeItem, isUse)
+    public ForceItem(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, float value, TypeItem typeItem = TypeItem.Other, bool isUse = false) : base(id, name, maxCount, spriteID, quality, cost, description, value, typeItem, isUse)
     {
 
     }

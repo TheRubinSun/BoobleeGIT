@@ -68,7 +68,8 @@ public class ResourcesData : MonoBehaviour
         effects[4] = Resources.Load<EffectData>("Effects/Posion_BossSlime");
         effects[5] = Resources.Load<EffectData>("Effects/Trapped");
         effects[6] = Resources.Load<EffectData>("Effects/TrappedMin");
-
+        effects[7] = Resources.Load<EffectData>("Effects/HealCooldown");
+        effects[8] = Resources.Load<EffectData>("Effects/ManaHealCooldown");
 
         if (weapons["sword_gods_slayer"] == null)
             Debug.LogError("Не удалось загрузить префаб Sword_God_Pref!");
