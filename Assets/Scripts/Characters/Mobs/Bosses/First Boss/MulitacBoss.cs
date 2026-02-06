@@ -16,6 +16,7 @@ public class MulitacBoss : BossLogic
     [SerializeField] private AudioClip[] beeps_attacks_sounds;
     [SerializeField] private AudioClip[] rotations_sounds;
     [SerializeField] private AudioClip[] just_sounds;
+    [SerializeField] private RotateCir rotateCir;
 
     private AudioSource calls_audio;
     private Transform mob_trans;
@@ -24,7 +25,9 @@ public class MulitacBoss : BossLogic
     private SpriteRenderer shadow_sr;
     private Animator uper_parth_anim;
     private Animator blood_anim;
+
     private ActionMultitac action;
+    private float rotateSpeed;
 
     private Vector2[] homeCellPosition = new Vector2[8] {
         new Vector2(0.06f, 0.870f),new Vector2(0.528f, 0.690f),new Vector2(0.59f, 0.27f),new Vector2(0.276f, -0.228f),
@@ -51,7 +54,7 @@ public class MulitacBoss : BossLogic
     private Vector2 startPos;
 
     public override void Flipface() { }
-    private bool isRotate;
+    private bool isRotateAttack;
 
     protected override void Awake()
     {
@@ -65,6 +68,7 @@ public class MulitacBoss : BossLogic
 
         calls_audio = gameObject.AddComponent<AudioSource>();
         calls_audio.outputAudioMixerGroup = audioSource.outputAudioMixerGroup;
+        rotateSpeed = rotateCir.rotateSpeed;
 
         uper_parth_anim.SetBool("HaveEyes", true);
     }
@@ -101,7 +105,12 @@ public class MulitacBoss : BossLogic
         uperPartBoss.localPosition = newPos;
 
         parentBallsHome.localPosition = newPos;
-        parentBallsRotate.localPosition = newPos;
+
+        //if(!isRotateAttack)
+        //{
+        //    parentBallsRotate.localPosition = newPos;
+        //}
+        
 
         // ---------- “≈Ќ№ ----------
 
@@ -190,47 +199,60 @@ public class MulitacBoss : BossLogic
         {
             case ActionMultitac.ComebackEyes:
                 {
-                    int rnd = Random.Range(0, 2);
+                    int rnd = Random.Range(0, 3);
                     uper_parth_anim.SetBool("HaveEyes", false);
+                    isRotateAttack = false;
                     if (rnd == 0)
                     {
-                        Debug.Log("¬ыбрасываю глаза");
                         yield return ActionAttackEyes();
                     }
                     else if (rnd == 1)
                     {
-                        Debug.Log("¬ращ€ю глаза");
                         yield return ActionRotateEyes();
+                    }
+                    else if (rnd == 2)
+                    {
+                        yield return ActionAttackRotate(5);
                     }
                     break;
                 }
             case ActionMultitac.AttackEyes:
                 {
-                    //int rnd = Random.Range(0, 2);
-                    //if (rnd == 0)
-                    //{
-                    //    yield return ActionComebackEyes();
-                    //}
-                    //else if (rnd == 1)
-                    //{
-                    //    yield return ActionRotateEyes();
-                    //}
-                    Debug.Log("¬озвращ€ю глаза");
-                    yield return ActionComebackEyes();
-                    break;
-                }
-            case ActionMultitac.RotateEyes:
-                {
                     int rnd = Random.Range(0, 2);
                     if (rnd == 0)
                     {
-                        Debug.Log("¬озвращ€ю глаза");
                         yield return ActionComebackEyes();
                     }
                     else if (rnd == 1)
                     {
-                        Debug.Log("¬ыбрасываю глаза");
+                        yield return ActionRotateEyes();
+                    }
+                    break;
+                }
+            case ActionMultitac.RotateEyes:
+                {
+                    isRotateAttack = false;
+                    int rnd = Random.Range(0, 2);
+                    if (rnd == 0)
+                    {
+                        yield return ActionComebackEyes();
+                    }
+                    else if (rnd == 1)
+                    {
                         yield return ActionAttackEyes();
+                    }
+                    break;
+                }
+            case ActionMultitac.AttackRotate:
+                {
+                    int rnd = Random.Range(0, 2);
+                    if (rnd == 0)
+                    {
+                        yield return ActionComebackEyes();
+                    }
+                    else if (rnd == 1)
+                    {
+                        yield return ActionRotateEyes();
                     }
                     break;
                 }
@@ -245,6 +267,42 @@ public class MulitacBoss : BossLogic
         //yield return new WaitForSeconds(3f);
 
         //StopCorutineArray(shootBalls, shotBallsCoroutine);
+    }
+    private IEnumerator ActionAttackRotate(float distance)
+    {
+        rotateCir.rotateSpeed = rotateSpeed * 2;
+        isRotateAttack = true;
+
+        PlaySound(rotations_sounds, 1.2f, 1.4f);
+        RetrunBallsWithDelay(circleCellPosition, parentBallsRotate);
+
+        action = ActionMultitac.AttackRotate;
+
+        Vector3 targetPos = parentBallsRotate.localPosition + new Vector3(distance, 0, 0);
+
+        yield return SendObjectTo(parentBallsRotate, targetPos, speedBalls / 2);
+        yield return new WaitForSeconds(3.5f);
+        yield return SendObjectTo(parentBallsRotate, Vector3.zero, speedBalls / 2);
+        yield return new WaitForSeconds(1f);
+
+        rotateCir.rotateSpeed = rotateSpeed;
+        IsReturnBalls = false;
+    }
+    private IEnumerator SendObjectTo(Transform obj, Vector3 targetPos, float speed)
+    {
+        while (true)
+        {
+            if (obj == null)
+                yield break;
+
+            if (Vector2.Distance(obj.localPosition, targetPos) <= 0.1f)
+                break;
+
+            obj.localPosition += (targetPos - obj.localPosition).normalized * speed * Time.deltaTime;
+
+            yield return null;
+        }
+        obj.localPosition = targetPos;
     }
     private IEnumerator ActionRotateEyes()
     {
@@ -481,12 +539,14 @@ public class MulitacBoss : BossLogic
             moveDirection = toPlayer.normalized;
         }
     }
+
 }
 public enum ActionMultitac
 {
     AttackEyes,
     RotateEyes,
-    ComebackEyes
+    ComebackEyes,
+    AttackRotate
     //Attack
 }
 

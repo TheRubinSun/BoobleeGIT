@@ -110,6 +110,37 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &2187181399521096042
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7171014199268496789}
+  m_Layer: 0
+  m_Name: CircleParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7171014199268496789
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2187181399521096042}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6977709554306858531}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3055801441810362679
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,7 +449,7 @@ MonoBehaviour:
   uperPartBoss: {fileID: 2175523287238433042}
   shadow_trans: {fileID: 5973034391210070178}
   blood_anim_trans: {fileID: 6376020987703614741}
-  parentBallsRotate: {fileID: 6977709554306858531}
+  parentBallsRotate: {fileID: 7171014199268496789}
   parentBallsHome: {fileID: 7769500868952155323}
   addRangeToPlayer: 5
   beeps_home_sounds:
@@ -435,6 +466,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f62adb4b8e694b64586a35eec392f3a4, type: 3}
   - {fileID: 8300000, guid: 045a2114ee798fb4a86d6519bbe22b61, type: 3}
   - {fileID: 8300000, guid: 26bdf8a24400e03408d8e35d6cd1f430, type: 3}
+  rotateCir: {fileID: 875445014524837147}
   ballsOfBoss:
   - {fileID: 3204908706669769868}
   - {fileID: 1396765874314255162}
@@ -858,6 +890,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7392861687498544771}
+  - {fileID: 7171014199268496789}
   m_Father: {fileID: 2116592827263197391}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &875445014524837147

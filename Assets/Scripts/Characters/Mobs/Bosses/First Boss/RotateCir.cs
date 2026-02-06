@@ -3,7 +3,7 @@ using UnityEngine;
 public class RotateCir : MonoBehaviour
 {
     private Transform cirTrans;
-    public float rotateSpeed = 30f;
+    public float rotateSpeed;
     private void Start()
     {
         cirTrans = GetComponent<Transform>();
