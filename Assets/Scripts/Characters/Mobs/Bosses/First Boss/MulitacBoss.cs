@@ -26,8 +26,9 @@ public class MulitacBoss : BossLogic
     private Animator uper_parth_anim;
     private Animator blood_anim;
 
-    private ActionMultitac action;
+    private ActionMultitac last_action;
     private float rotateSpeed;
+    private float circle_moveSpeed;
 
     private Vector2[] homeCellPosition = new Vector2[8] {
         new Vector2(0.06f, 0.870f),new Vector2(0.528f, 0.690f),new Vector2(0.59f, 0.27f),new Vector2(0.276f, -0.228f),
@@ -76,7 +77,7 @@ public class MulitacBoss : BossLogic
     {
         base.Start();
 
-        action = ActionMultitac.ComebackEyes;
+        last_action = ActionMultitac.ComebackEyes;
         mob_trans = mob_object.transform;
         retrunBalls = new Coroutine[ballsOfBoss.Count];
         shootBalls = new Coroutine[ballsOfBoss.Count];
@@ -106,17 +107,8 @@ public class MulitacBoss : BossLogic
 
         parentBallsHome.localPosition = newPos;
 
-        //if(!isRotateAttack)
-        //{
-        //    parentBallsRotate.localPosition = newPos;
-        //}
-        
-
-        // ---------- ТЕНЬ ----------
-
-        // Нормализуем Y: -0.08 .. 0.08 ? 0 .. 1
+        //Shadow
         float t = Mathf.InverseLerp(-amplitude, amplitude, yOffset);
-
         // Интерполяция размера тени
         float shadowScaleX = Mathf.Lerp(1.4f, 1.0f, t);
         float shadowScaleY = Mathf.Lerp(0.3f, 0.2f, t);
@@ -127,8 +119,6 @@ public class MulitacBoss : BossLogic
     {
         base.LoadParametrs();
         ballsLogic = new EyeBossData[ballsOfBoss.Count];
-        
-
         if (mob is MultitacBoss boss)
         {
             speedBalls = boss.speed_ball;
@@ -171,7 +161,7 @@ public class MulitacBoss : BossLogic
         // Проверяем, прошло ли достаточно времени для следующей атаки
         if (Time.time - lastAttackTime >= enum_stat.Attack_Interval)
         {
-            if(IsReturnBalls == false && IsShotBalls == false)
+            if(IsShotBalls == false && IsReturnBalls == false)
             {
                 StartCoroutine(ShotAndReturn());
             }
@@ -180,22 +170,13 @@ public class MulitacBoss : BossLogic
             {
                 //animator_main.SetTrigger("Attack");
             }
-            
             // Обновляем время последней атаки
-            //Debug.Log("Attack");
             lastAttackTime = Time.time;
         }
     }
-    
-    //private IEnumerator ReturnBallsToStart()
-    //{
-    //    retrunBallsCoroutine = StartCoroutine(RetrunBallsWithDelay(circleCellPosition, parentBallsHome, speedBalls));
-    //    yield return retrunBallsCoroutine;
-    //    //StopCorutineArray(retrunBalls, retrunBallsCoroutine);
-    //}
     private IEnumerator ShotAndReturn()
     {
-        switch (action)
+        switch (last_action)
         {
             case ActionMultitac.ComebackEyes:
                 {
@@ -239,7 +220,7 @@ public class MulitacBoss : BossLogic
                     }
                     else if (rnd == 1)
                     {
-                        yield return ActionAttackEyes();
+                        yield return ActionAttackRotate(5);
                     }
                     break;
                 }
@@ -260,36 +241,38 @@ public class MulitacBoss : BossLogic
     }
     private IEnumerator ActionAttackEyes()
     {
-        action = ActionMultitac.AttackEyes;
+        last_action = ActionMultitac.AttackEyes;
 
         yield return ShotBallsWithDelay();
         IsShotBalls = false;
-        //yield return new WaitForSeconds(3f);
-
-        //StopCorutineArray(shootBalls, shotBallsCoroutine);
     }
     private IEnumerator ActionAttackRotate(float distance)
     {
-        rotateCir.rotateSpeed = rotateSpeed * 2;
+        //rotateCir.rotateSpeed = rotateSpeed * 2;
         isRotateAttack = true;
 
         PlaySound(rotations_sounds, 1.2f, 1.4f);
-        RetrunBallsWithDelay(circleCellPosition, parentBallsRotate);
+        StartCoroutine(RetrunBallsWithDelay(circleCellPosition, parentBallsRotate));
 
-        action = ActionMultitac.AttackRotate;
+        last_action = ActionMultitac.AttackRotate;
+        //Vector3 targetPos = parentBallsRotate.localPosition + new Vector3(distance, 0, 0);
+        Vector3 fromPlayer = ToPlayer.normalized;
+        Vector3 dirAwayLocal = parentBallsRotate.InverseTransformDirection(-fromPlayer); //Мировые координаты в локальные, учитывая все повроты родителей
+        Vector3 targetPos = parentBallsRotate.localPosition + (Vector3)(dirAwayLocal * distance); //Направлять от игрока
 
-        Vector3 targetPos = parentBallsRotate.localPosition + new Vector3(distance, 0, 0);
-
+        StartCoroutine(ChangeRotateSpeed(rotateSpeed, rotateSpeed * 2, 2));
         yield return SendObjectTo(parentBallsRotate, targetPos, speedBalls / 2);
-        yield return new WaitForSeconds(3.5f);
-        yield return SendObjectTo(parentBallsRotate, Vector3.zero, speedBalls / 2);
-        yield return new WaitForSeconds(1f);
 
-        rotateCir.rotateSpeed = rotateSpeed;
+        yield return new WaitForSeconds(3.5f);
+
+        StartCoroutine(SendObjectTo(parentBallsRotate, Vector3.zero, speedBalls / 2));
+        StartCoroutine(ChangeRotateSpeed(rotateSpeed * 2, rotateSpeed, 2));
+        //rotateCir.rotateSpeed = rotateSpeed;
         IsReturnBalls = false;
     }
     private IEnumerator SendObjectTo(Transform obj, Vector3 targetPos, float speed)
     {
+
         while (true)
         {
             if (obj == null)
@@ -304,31 +287,37 @@ public class MulitacBoss : BossLogic
         }
         obj.localPosition = targetPos;
     }
+    private IEnumerator ChangeRotateSpeed(float fromSpeed, float toSpeed, float duration)
+    {
+        float timer = 0f;
+        while(timer < duration)
+        {
+            timer += Time.deltaTime;
+            float t = Mathf.Clamp01(timer / duration);
+            rotateCir.rotateSpeed = Mathf.Lerp(fromSpeed, toSpeed, t);
+            yield return null;
+        }
+        rotateCir.rotateSpeed = toSpeed;
+    }
     private IEnumerator ActionRotateEyes()
     {
-        //isRotate = true;
-        //parentBallsRotate.localPosition = Vector3.zero;
-        action = ActionMultitac.RotateEyes;
+        last_action = ActionMultitac.RotateEyes;
 
         PlaySound(rotations_sounds, 1.2f, 1.4f);
         yield return RetrunBallsWithDelay(circleCellPosition, parentBallsRotate);
 
-        //StopCorutineArray(retrunBalls, retrunBallsCoroutine);
-        //yield return new WaitForSeconds(1.5f);
-
         PlaySound(just_sounds, 0.8f, 1.2f);
 
         yield return new WaitForSeconds(2f);
-        //isRotate = false;
+
         IsReturnBalls = false;
     }
     private IEnumerator ActionComebackEyes()
     {
-        action = ActionMultitac.ComebackEyes;
+        last_action = ActionMultitac.ComebackEyes;
 
         PlaySound(beeps_home_sounds, 0.6f, 0.8f);
         yield return RetrunBallsWithDelay(homeCellPosition, parentBallsHome);
-        //StopCorutineArray(retrunBalls, retrunBallsCoroutine);
 
         yield return new WaitForSeconds(0.5f);
 
@@ -364,12 +353,6 @@ public class MulitacBoss : BossLogic
             }
             continue;
         }
-        //// Ждём завершения всех шаров
-        //for (int i = 0; i < shootBalls.Length; i++)
-        //{
-        //    if (shootBalls[i] != null)
-        //        yield return shootBalls[i];
-        //}
     }
     private IEnumerator ShotBallToPos(Transform ballPos, Vector2 posPlayer, Vector2 offsetCellPosition, int range)
     {
@@ -401,21 +384,30 @@ public class MulitacBoss : BossLogic
     private IEnumerator RetrunBallsWithDelay(Vector2[] positions, Transform parent)
     {
         IsReturnBalls = true;
+        int active = 0;
         for (int i = 0; i < ballsOfBoss.Count; i++)
         {
             if (ballsOfBoss[i] != null)
             {
-                retrunBalls[i] = StartCoroutine(RetrunBallToPos(ballsOfBoss[i].transform, ballsLogic[i], positions[i], parent, i));
+                active++;
+                StartCoroutine(ReturnBallWrapper(ballsOfBoss[i].transform, ballsLogic[i], positions[i], parent, i, () => active--));
                 yield return new WaitForSeconds(0.3f);
             }
             continue;
         }
         // Ждём завершения всех шаров
-        for (int i = 0; i < retrunBalls.Length; i++)
-        {
-            if (retrunBalls[i] != null)
-                yield return retrunBalls[i];
-        }
+        while(active > 0)
+            yield return null;
+        //for (int i = 0; i < retrunBalls.Length; i++)
+        //{
+        //    if (retrunBalls[i] != null)
+        //        yield return retrunBalls[i];
+        //}
+    }
+    private IEnumerator ReturnBallWrapper(Transform ballPos, EyeBossData logic_eye, Vector2 localPos, Transform parent, int i, System.Action onFinish) 
+    { 
+        yield return RetrunBallToPos(ballPos, logic_eye, localPos, parent, i); 
+        onFinish?.Invoke(); 
     }
     private IEnumerator RetrunBallToPos(Transform ballPos, EyeBossData logic_eye, Vector2 localPos, Transform parent, int i)
     {
