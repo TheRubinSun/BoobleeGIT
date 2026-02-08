@@ -72,6 +72,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     [SerializeField] protected bool IsUpper;
 
     protected Coroutine flashCol;
+    protected int finalTakeDamage;
     protected virtual void Awake()
     {
         bf_stats = new BuffsStats();
@@ -236,29 +237,30 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
             }
         }
         Color32 colorDamage = Color.white;
+
         switch (typeAttack)
         {
             case damageT.Physical:
                 {
-                    enum_stat.TakePhysicalDamageStat(damage);
+                    finalTakeDamage = enum_stat.TakePhysicalDamageStat(damage);
                     colorDamage = GlobalColors.physycal;
                     break;
                 }
             case damageT.Magic:
                 {
-                    enum_stat.TakeMagicDamageStat(damage);
+                    finalTakeDamage = enum_stat.TakeMagicDamageStat(damage);
                     colorDamage = GlobalColors.magic;
                     break;
                 }
             case damageT.Technical:
                 {
-                    enum_stat.TakeTechDamageStat(damage);
+                    finalTakeDamage = enum_stat.TakeTechDamageStat(damage);
                     colorDamage = GlobalColors.technical;
                     break;
                 }
             case damageT.Posion:
                 {
-                    enum_stat.TakePosionDamageStat(damage);
+                    finalTakeDamage = enum_stat.TakePosionDamageStat(damage);
                     colorDamage = GlobalColors.posion;
                     break;
                 }

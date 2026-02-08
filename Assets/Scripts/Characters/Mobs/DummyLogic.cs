@@ -1,5 +1,7 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
+
 
 public class DummyLogic : BaseEnemyLogic
 {
@@ -12,9 +14,35 @@ public class DummyLogic : BaseEnemyLogic
     protected override void PlayerDetected(Vector2 toPlayer, float distanceToPlayer) { }
     public override void RotateTowardsMovementDirection(Vector2 direction) { }
     public override void Attack(float distanceToPlayer) { }
+
+    [SerializeField] private TextMeshPro textDPS;
+
+    private int damageThisSecond = 0;
+    private int currentDPS = 0;
+    private float timer = 0f;
+
     public override void TakeDamage(int damage, damageT typeAttack, bool canEvade, EffectData effect = null)
     {
         animator_main.SetTrigger("TakeDamage");
+        finalTakeDamage = 0;
         base.TakeDamage(damage, typeAttack, canEvade, effect);
+        damageThisSecond += finalTakeDamage;
     }
+    protected override void Update() 
+    {
+        timer += Time.deltaTime;
+        if(timer >= 1f)
+        {
+            currentDPS = damageThisSecond;
+            damageThisSecond = 0;
+            timer = 0f;
+
+            DisplayDPS(currentDPS);
+        }
+    }
+    private void DisplayDPS(int dps)
+    {
+        textDPS.text = $"DPS: {dps}";
+    }
+
 }

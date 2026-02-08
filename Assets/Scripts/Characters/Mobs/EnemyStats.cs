@@ -22,28 +22,29 @@ public class EnemyStats : CharacterStats
         }
         return false;
     }
-    public bool TakePhysicalDamageStat(int damage)
+    public int TakePhysicalDamageStat(int damage)
     {
-        float decreasePhisDamage = (Mathf.Max(damage / (1 + Armor / 10f), 1));
-        decreasePhisDamage -= Armor;
-        Cur_Hp -= (int)Mathf.Max(decreasePhisDamage, 1);
-        return true;
+        int finalDamage = ((int)Mathf.Max(damage / (1 + Armor / 10f), 1));
+        finalDamage -= Armor;
+        finalDamage = Mathf.Max(finalDamage, 1);
+        Cur_Hp -= finalDamage;
+        return finalDamage;
     }
-    public bool TakeMagicDamageStat(int damage)
+    public int TakeMagicDamageStat(int damage)
     {
-        float finalDamage = damage * (1 - Magic_Resis);
-        Cur_Hp -= (Mathf.Max((int)finalDamage, 1));
-        return true;
+        int finalDamage = Mathf.Max((int)(damage * (1 - Magic_Resis)), 1);
+        Cur_Hp -= finalDamage;
+        return finalDamage;
     }
-    public bool TakeTechDamageStat(int damage)
+    public int TakeTechDamageStat(int damage)
     {
-        float finalDamage = damage * (1 - Tech_Resis);
-        Cur_Hp -= (Mathf.Max((int)finalDamage, 1));
-        return true;
+        int finalDamage = Mathf.Max((int)(damage * (1 - Tech_Resis)), 1);
+        Cur_Hp -= finalDamage;
+        return finalDamage;
     }
-    public bool TakePosionDamageStat(int damage)
+    public int TakePosionDamageStat(int damage)
     {
         Cur_Hp -= damage;
-        return true;
+        return damage;
     }
 }
