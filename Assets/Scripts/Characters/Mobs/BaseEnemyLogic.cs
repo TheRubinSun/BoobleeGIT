@@ -7,53 +7,37 @@ using UnityEngine;
 public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAttack
 {
     public static event Action<BaseEnemyLogic> OnEnemyDeath;
-
-    
+    [SerializeField] protected Transform EffectsObj;
+    [SerializeField] protected Transform CenterObject;
     public int IdMobs; //Тип моба
-
-    protected Mob mob; //Моб
-
     public string Name; //Имя
-
     public EnemyStats enum_stat;
-    protected BuffsStats bf_stats;
     public TypeMob typeMob { get; protected set; }
-
+    protected Mob mob; //Моб
+    protected BuffsStats bf_stats;
     //Состояния
     protected bool IsDead { get; set; }
     public bool IsFly;
-
-
     protected Color32 original_color; //Цвет
-
     //Движение
     protected Coroutine avoidCoroutine;
     public float mobRadius;
     protected float avoidDistance = 1f; //Обходное расстояние
-
     protected Vector2 moveDirection;
     protected RaycastHit2D[] hits;
     protected Collider2D selfCollider;
 
-    [SerializeField] protected Transform EffectsObj;
-    [SerializeField] protected Transform CenterObject;
     public Transform player;
 
     // Для задержки обновления направления
     private int directionUpdateInterval = 8; // 60 / 10 = каждые 6 FixedUpdate
     protected bool IsNearThePlayer = false;
-
     protected bool CanBeMissedAttack = true;
-    //protected GameManager g_m = GameManager.Instance;
-
-    //[SerializeField]
-    //protected LayerMask obstacleLayer; // Слой для препятствий (стены и игрок)
 
     //Анимации
     [SerializeField] public GameObject mob_object;
     protected SpriteRenderer spr_ren;
     protected Animator animator_main;
-
     protected Rigidbody2D rb;
 
     //Звуки
@@ -64,13 +48,8 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     [SerializeField] protected AudioClip[] player_touch_sounds;
     [SerializeField] public AudioClip[] die_sounds;
     [SerializeField] protected AudioClip[] abolity_sounds;
-
     [SerializeField] protected GameObject damageValuePref;
-
-
-
-    [SerializeField]
-    protected float attackBuffer; // Можно настроить
+    [SerializeField] protected float attackBuffer; // Можно настроить
 
     //Скорость
     public bool IsTrapped { get; protected set; }
@@ -86,9 +65,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     //Слой
     protected int combinedLayerMask;
     protected int obstCombLayerMask;
-
     protected CullingObject culling;
-
     protected bool isVisibleNow = true;
 
     [SerializeField] protected Abillity[] abillities;

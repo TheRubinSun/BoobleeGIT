@@ -56,12 +56,14 @@ public class LoadingMenu : MonoBehaviour
             if (asyncLoad.progress >= 0.9f)
             {
                 ItemsList.LoadSprites();
-
                 Classes.LoadOrCreateClasses(GameDataHolder.RoleClassesData.role_Classes_data);
-
                 ItemsList.LoadOrCreateItemList(GameDataHolder.ItemsData.item_List_data);
-
                 EnemyList.LoadOrCreateMobsList(GameDataHolder.EnemyData.mob_list_data);
+
+                yield return null;
+
+                ItemDropEnemy.LoadOrCreate(GameDataHolder.ItemsDropOnEnemy.namesKeys);
+                RecipesCraft.LoadItemInCrafts();
 
                 yield return new WaitForSeconds(1f);
                 asyncLoad.allowSceneActivation = true;
@@ -74,21 +76,21 @@ public class LoadingMenu : MonoBehaviour
     private IEnumerator LoadDataCoroutine()
     {
         Task loadDataTask = LoadData();
+
         while (!loadDataTask.IsCompleted)
-        {
             yield return null;
-        }
+
+        if(loadDataTask.IsFaulted)
+            Debug.LogError(loadDataTask.Exception.ToString());
     }
     private async Task LoadData()
     {
         GameDataHolder.savesDataInfo = await SaveSystem.LoadDataAsync<SavesDataInfo>("saves_info.json");
-
         Hotkeys.LoadBind((await SaveSystem.LoadDataAsync<SaveDataBinds>("keyBinds.json")).saveKeyBindings);
-
         GameDataHolder.ItemsData = await SaveSystem.LoadDataAsync<ItemsData>("items.json");
-
         GameDataHolder.EnemyData = await SaveSystem.LoadDataAsync<EnemyData>("enemies.json");
         GameDataHolder.RoleClassesData = await SaveSystem.LoadDataAsync<RoleClassesData>("role_classes_data.json");
+
         GameDataHolder.ItemsDropOnEnemy = await SaveSystem.LoadDataAsync<ItemsDropOnEnemy>("item_drop.json");
         RecipesCraft.LoadAllCrafts((await SaveSystem.LoadDataAsync<CraftsRecipesData>("recipes_crafts_data.json")).craftsRecipesData);
         await GlobalPrefabs.LoadPrefabs();

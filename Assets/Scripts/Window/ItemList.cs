@@ -56,7 +56,7 @@ public static class ItemsList
     private static void InitializeItems()
     {
         items.Clear();
-        if (items.Count == 0) items.Add(new Item(0, "item_none", 0, 0, Quality.None, 0, ""));
+        if (items.Count == 0) items.Add(new Item(0, "item_none", 0, 0, Quality.None, 0, "", TypeItem.None));
         items.Add(new MeleWeapon(1, "sword_gods_slayer", 1, 0, Quality.Mystical, 1000, "_", false, 1f, damageT.Physical,    5, 0.8f,    30, 1 , 1 ));
         items.Add(new MeleWeapon(20, "axe_woodcutter",   1, 0, Quality.Common, 250, "_",     false, 0.2f, damageT.Physical,  1, 0.6f,      60, 1));
         items.Add(new MeleWeapon(16, "soldier_spear",    1, 0, Quality.Uncommon, 120, "_",       false, 0.55f, damageT.Physical,  2, 0.75f,  40, 1));
@@ -130,13 +130,11 @@ public static class ItemsList
         items.Add(new LazerGun(64, "lazergun_tra", 1, 0, Quality.Legendary, 3550, "_", true, 4f, damageT.Technical, 1, 1.2f, 0, 1, 0f, 2, 2));
         items.Add(new LazerGun(65, "thunder_gun", 1, 0, Quality.Mystical, 1550, "_", true, 2f, damageT.Technical, 1, 1f, 20, 2, 0f, 0, 1));
         items.Add(new LazerStaffGun(66, "thunder_stuff", 1, 0, Quality.Mystical, 1550, "_", true, 4f, damageT.Magic, 1, 1f, 20, 2, 0f, 1, 0, 4));
-
         items.Add(new Item(67, "material_book", 20, 0, Quality.Common, 20, "_", TypeItem.Material));
         items.Add(new Boster(68, "booster_intelligence", 100, 0, Quality.Rare, 500, "_", AllStats.Intelligence, 2, 0, TypeItem.Booster));
         items.Add(new Item(69, "material_syringe", 40, 0, Quality.Common, 12, "_", TypeItem.Material));
         items.Add(new Boster(70, "booster_strength", 100, 0, Quality.Rare, 500, "_", AllStats.Strength, 2, 2, TypeItem.Booster));
         items.Add(new Boster(71, "booster_agillity", 100, 0, Quality.Rare, 500, "_", AllStats.Agility, 2, 3, TypeItem.Booster));
-
         items.Add(new Food(72, "item_tomato",  20, 0, Quality.Uncommon, 50, "_", 3, 0, 6, 2, "Heal", 1));
         items.Add(new Food(73, "item_pumkin",  20, 0, Quality.Uncommon, 35, "_", 1, 1, 9, 1, "Heal", 1));
         items.Add(new Seed(74, "seed_tomato",  100, 0, Quality.Common, 2, "_", 3, "tomato", TypeItem.Seed));
@@ -224,7 +222,15 @@ public static class ItemsList
         {
             if(item.NameKey == nameKey) return item;
         }
-        return items[0];
+        return null;
+    }
+    public static int GetIDForName(string nameKey)
+    {
+        for(int i = 0; i<items.Count; i++)
+        {
+            if (items[i].NameKey == nameKey) return i;
+        }
+        return 0;
     }
     public static Item GetItemForId(int id) => itemById.TryGetValue(id, out Item item) ? item : items[0];
     public static Item GetItemForNameKey(string name_key) => itemByKey.TryGetValue(name_key, out Item item) ? item : items[0];

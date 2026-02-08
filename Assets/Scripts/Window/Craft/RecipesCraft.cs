@@ -10,7 +10,7 @@ public static class RecipesCraft
     
     public static void LoadAllCrafts(RecipeCraft[] _recipesCraft)
     {
-        if(_recipesCraft.Length > 2)
+        if(_recipesCraft != null && _recipesCraft.Length > 2)
         {
             recipesCraft = _recipesCraft;
         }
@@ -44,23 +44,61 @@ public static class RecipesCraft
         crafts.Add(new RecipeCraft("item_force_air", 5, new Dictionary<string, int> { { "material_wings_fly", 1 }, { "material_slime_acid", 1 }, { "material_rubin_piece", 5 } }, CraftTable.Alchemy_Station));
         crafts.Add(new RecipeCraft("staff_forest", 1, new Dictionary<string, int> { { "material_strange_eye", 1 }, { "material_wood", 5 }, { "material_sunflower", 10 } }, CraftTable.Workbench));
         crafts.Add(new RecipeCraft("item_spicy_meat", 1, new Dictionary<string, int> { { "item_meat", 1 }, { "material_tallsha", 1 }, { "item_pepper", 1 } }, CraftTable.Alchemy_Station));
+
+        crafts.Add(new RecipeCraft("item_potion_mana", 3, new Dictionary<string, int> { { "item_moonana", 1 }, { "material_tolania_leaves", 1 }, { "material_bottle", 3 } }, CraftTable.Alchemy_Station));
+        crafts.Add(new RecipeCraft("minion_heal", 1, new Dictionary<string, int> { { "seed_sunflower", 15 }, { "material_rubin", 1 }, { "material_wings_fly", 4 }, { "material_tongue_mimic", 1 }, { "material_quartzite", 10 } }, CraftTable.Workbench));
+        crafts.Add(new RecipeCraft("minion_gunmin_tech", 1, new Dictionary<string, int> { { "material_beetle_sludge", 15 }, { "material_iron_bar", 10 }, { "material_simple_engine", 1 }, { "material_battery", 1 }, { "material_copper_wires", 10 } }, CraftTable.Workbench));
+        crafts.Add(new RecipeCraft("lazergun_tra", 1, new Dictionary<string, int> { { "material_lamp", 1 }, { "material_battery", 1 }, { "material_copper_wires", 10 }, { "material_glass", 2 }, { "material_iron_bar", 6 }, { "material_rubin", 6 } }, CraftTable.Workbench));
+        crafts.Add(new RecipeCraft("thunder_gun", 1, new Dictionary<string, int> { { "material_lamp", 1 }, { "material_battery", 1 }, { "material_copper_wires", 10 }, { "material_glass", 2 }, { "material_iron_bar", 6 }, { "item_force_air", 10 }, { "material_simple_engine", 1 } }, CraftTable.Workbench));
+        crafts.Add(new RecipeCraft("thunder_stuff", 1, new Dictionary<string, int> { { "material_strange_eye", 1 }, { "material_iron_bar", 5 }, { "artifact_simple_ring", 1 }, { "item_potion_mana", 5 }, { "material_slime_acid", 5 }, { "item_force_air", 10 } }, CraftTable.Workbench));
+
+
         recipesCraft = crafts.ToArray();
+    }
+    public static void LoadItemInCrafts()
+    {
+        foreach(RecipeCraft recipe in recipesCraft)
+        {
+            recipe.LoadItemsAndMaterials();
+        }
     }
 }
 [System.Serializable]
 public class RecipeCraft
 {
-    public string craftItem { get; set; }
+    public string craftItemName { get; set; }
+    public int craftItemID { get; set; }
     public int countCraftItem { get; set; }
     public CraftTable craftTable { get; set; }
     public Dictionary<string, int> needsMaterials { get; set; }
+    public Dictionary<int, int> needsMatID { get; set; }
 
-    public RecipeCraft(string craftItem, int countCraftItem, Dictionary<string, int> needsMaterials, CraftTable craftTable = CraftTable.Workbench)
+    public RecipeCraft(string _craftItemName, int countCraftItem, Dictionary<string, int> needsMaterials, CraftTable craftTable = CraftTable.Workbench)
     {
-        this.craftItem = craftItem;
+        this.craftItemName = _craftItemName;
         this.countCraftItem = countCraftItem;
         this.craftTable = craftTable;
         this.needsMaterials = needsMaterials;
+    }
+    public void LoadItemsAndMaterials()
+    {
+        craftItemID = ItemsList.GetIDForName(craftItemName);
+        if (craftItemID == 0)
+        {
+            Debug.LogWarning($"{craftItemName} Не находит такой предмет");
+        }
+
+        needsMatID = new Dictionary<int, int>();
+        foreach (KeyValuePair<string, int> materialName in needsMaterials)
+        {
+            int IDMat = ItemsList.GetIDForName(materialName.Key);
+            if (IDMat == 0)
+            {
+                Debug.LogWarning($"{materialName.Key} Не находит такой материал");
+                continue;
+            }
+            needsMatID.Add(IDMat, materialName.Value);
+        }
     }
 }
 public enum CraftTable

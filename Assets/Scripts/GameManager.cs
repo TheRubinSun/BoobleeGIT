@@ -90,7 +90,7 @@ public class GameManager: MonoBehaviour
             GlobalData.EqupmentPlayer.LoadOrCreateEquipment(GameDataHolder.PlayerData.equip_item_data);
 
             //EnemyList.LoadOrCreateMobsList(GameDataHolder.EnemyData.mob_list_data);
-            ItemDropEnemy.LoadOrCreate(GameDataHolder.ItemsDropOnEnemy.namesKeys);
+            //ItemDropEnemy.LoadOrCreate(GameDataHolder.ItemsDropOnEnemy.namesKeys);
 
             GlobalData.UIControl.LocalizationTranslate();
 

@@ -87,7 +87,8 @@ public class CraftLogic : MonoBehaviour, ISlot
         int id = 0;
         foreach (RecipeCraft recipe in RecipesCraft.recipesCraft)
         {
-            Item craftItem = ItemsList.GetItemForNameKey(recipe.craftItem);
+            //Item craftItem = ItemsList.GetItemForNameKey(recipe.craftItemName);
+            Item craftItem = ItemsList.GetItemForId(recipe.craftItemID);
             Slot craftSlot = new Slot(id, craftItem, recipe.countCraftItem);
             slotsCrafts.Add(craftSlot, null);
             id++;
@@ -129,9 +130,13 @@ public class CraftLogic : MonoBehaviour, ISlot
             //======================================
 
             Dictionary<Item, int> materialsInCraft = new Dictionary<Item, int>();
-            foreach (KeyValuePair<string, int> material in recipe.needsMaterials)
+            //foreach (KeyValuePair<string, int> material in recipe.needsMaterials) //Вариант через название предмета
+            //{
+            //    materialsInCraft.Add(ItemsList.GetItemForNameKey(material.Key), material.Value);
+            //}
+            foreach (KeyValuePair<int, int> material in recipe.needsMatID) //Вариант через загрузку вначале
             {
-                materialsInCraft.Add(ItemsList.GetItemForNameKey(material.Key), material.Value);
+                materialsInCraft.Add(ItemsList.items[material.Key], material.Value);
             }
             slotsCrafts[craftSlot] = materialsInCraft;
 

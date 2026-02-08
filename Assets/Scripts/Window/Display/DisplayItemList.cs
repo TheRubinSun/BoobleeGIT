@@ -103,6 +103,12 @@ public class DisplayItemList:MonoBehaviour
             case "Booster":
                 tempFilter = TypeItem.Booster;
                 break;
+            case "Seed":
+                tempFilter = TypeItem.Seed;
+                break;
+            case "Other":
+                tempFilter = TypeItem.Other;
+                break;
             case "None":
                 tempFilter = TypeItem.None; 
                 break;

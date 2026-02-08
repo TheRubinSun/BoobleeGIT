@@ -1406,7 +1406,7 @@ PrefabInstance:
       objectReference: {fileID: 1804365559361293287, guid: 1272870115dee3540a1fb03cbd881b3f, type: 3}
     - target: {fileID: 4927062703946977834, guid: ef7945317dabde14c85b7325307dd327, type: 3}
       propertyPath: mobs_prefab.Array.size
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4927062703946977834, guid: ef7945317dabde14c85b7325307dd327, type: 3}
       propertyPath: 'mobs_prefab.Array.data[8]'
@@ -1420,6 +1420,10 @@ PrefabInstance:
       propertyPath: 'mobs_prefab.Array.data[10]'
       value: 
       objectReference: {fileID: 5361420741660025998, guid: 0a3a737e55069804a8338bdd1cafd5aa, type: 3}
+    - target: {fileID: 4927062703946977834, guid: ef7945317dabde14c85b7325307dd327, type: 3}
+      propertyPath: 'mobs_prefab.Array.data[11]'
+      value: 
+      objectReference: {fileID: 3951391217442813014, guid: 4bf6a5cae8d9f7b438e87e3673674f43, type: 3}
     - target: {fileID: 8163569857235264691, guid: ef7945317dabde14c85b7325307dd327, type: 3}
       propertyPath: m_Name
       value: Level

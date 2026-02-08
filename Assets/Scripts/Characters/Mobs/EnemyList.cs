@@ -74,7 +74,8 @@ public static class EnemyList
             mobs.Add(new Bur("bur_enem", 20, 2f, false, 4, 15, 1.5f, 45, 4f, TypeMob.Technology, 3, 0f, 0.15f));
             mobs.Add(new Bug_poop("bug_skull_enem", 10, 1.4f, false, 1, 15, 1f, 20, 5, 4f, 3, 2.5f,damageT.Magic ,TypeMob.Magic, 2, 0.15f, 0));
             mobs.Add(new Bug("bug_enem", 10, 1.4f, false, 1, 15, 2.5f, 20, TypeMob.Magic, 2, 0.15f, 0));
-            mobs.Add(new MultitacBoss("multitac_boss", 500, 6f, false, 5, 60, 1.5f, 400, 20, 5, 5, damageT.Magic, TypeMob.Magic, 4, 0.15f, 0));
+            mobs.Add(new MultitacBoss("multitac_boss", 300, 6f, false, 5, 60, 1.5f, 400, 25, 5, 4, damageT.Magic, TypeMob.Magic, 4, 0.15f, 0));
+            mobs.Add(new Mob("dummy", 9999999, 0, false, 0, 0, 0, 0, TypeMob.Magic, 0, 0, 0));
             //DisplayMobsList.Instance.DisplayLinesMobs(mobs);
             //CreatePortalUI.Instance.DisplayLinesMobs(mobs);
         }

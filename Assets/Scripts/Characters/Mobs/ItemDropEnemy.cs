@@ -9,7 +9,7 @@ public class ItemDropEnemy
 
     public static void LoadOrCreate(Dictionary<string, DropItemEnemy[]> _enemyAndHisDrop)
     {
-        if (_enemyAndHisDrop != null && _enemyAndHisDrop.Count > 0)
+        if (_enemyAndHisDrop != null && _enemyAndHisDrop.Count > 1)
         {
             enemyAndHisDropItems = _enemyAndHisDrop;
         }
