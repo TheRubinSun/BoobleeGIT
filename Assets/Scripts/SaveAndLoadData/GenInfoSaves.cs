@@ -22,6 +22,7 @@ public class GenInfoSaves : MonoBehaviour
     public static float volume_musics;
     public static Dictionary<int, SaveGameInfo> saveGameFiles = new Dictionary<int, SaveGameInfo>();
 
+
     private Toggle[] toggle_Saves;
     private Image[] im_head_Saves;
     private Image[] im_hair_Saves;
@@ -163,7 +164,7 @@ public class GenInfoSaves : MonoBehaviour
                 UpdateTextInfoCell(id);
 
                 
-                await SavedChanged(GenInfoSaves.saveGameFiles, 100, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, screen_resole);
+                await SavedChanged(GenInfoSaves.saveGameFiles, 100, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, screen_resole, GlobalData.IsBigUI);
 
                 Debug.Log($"Файл {path_player_data} был успешно удалён.");
             }
@@ -175,13 +176,13 @@ public class GenInfoSaves : MonoBehaviour
         else
         {
             UpdateTextInfoCell(id);
-            await SavedChanged(GenInfoSaves.saveGameFiles, 100, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, screen_resole);
+            await SavedChanged(GenInfoSaves.saveGameFiles, 100, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, screen_resole, GlobalData.IsBigUI);
             Debug.LogWarning($"Файл {path_player_data} не существует, удаление невозможно.");
         }
     }
-    public async Task SavedChanged(Dictionary<int, SaveGameInfo> _saveGameFiles, int _lastSaveID, string _language, float volume_sounds, float volume_musics, ScreenResolutions screen_resole)
+    public async Task SavedChanged(Dictionary<int, SaveGameInfo> _saveGameFiles, int _lastSaveID, string _language, float volume_sounds, float volume_musics, ScreenResolutions screen_resole, bool bigUI)
     {
-        SavesDataInfo savesDataInfo = new SavesDataInfo(_saveGameFiles, _lastSaveID, _language, volume_sounds, volume_musics, screen_resole);
+        SavesDataInfo savesDataInfo = new SavesDataInfo(_saveGameFiles, _lastSaveID, _language, volume_sounds, volume_musics, screen_resole, bigUI);
         await SaveSystem.SaveDataAsync(savesDataInfo, "saves_info.json");
     }
 
@@ -283,6 +284,7 @@ public class GenInfoSaves : MonoBehaviour
             }
             GlobalData.VOLUME_MUSICS = saveDataInfo.volume_musics;
             GlobalData.VOLUME_SOUNDS = saveDataInfo.volume_sounds;
+            GlobalData.IsBigUI = saveDataInfo.BigUI;
 
             lastSaveID = saveDataInfo.lastSaveID;
             language = saveDataInfo.language;

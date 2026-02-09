@@ -18,6 +18,8 @@ public static class GlobalData
     public static int ID_head;
     public static int ID_hair;
 
+    public static bool IsBigUI;
+
     //public static bool GOD_MODE;
     public static float VOLUME_SOUNDS = 0.5f;
     public static float VOLUME_MUSICS = 0.5f;

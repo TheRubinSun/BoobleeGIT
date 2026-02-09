@@ -11,7 +11,8 @@ public class CraftLogic : MonoBehaviour, ISlot
     [SerializeField] private Transform CraftsParent;
     [SerializeField] private Transform MaterialsParent;
     [SerializeField] private Transform parentInventSlots;
-    [SerializeField] private SlotSelector slotSelector;
+    [SerializeField] private Transform scrollView;
+    private SlotSelector slotSelector;
 
     Dictionary<Slot, Dictionary<Item, int>> slotsCrafts = new Dictionary<Slot, Dictionary<Item, int>>();
 
@@ -33,10 +34,26 @@ public class CraftLogic : MonoBehaviour, ISlot
             return;
         }
         Instance = this;
+        slotSelector = scrollView.GetComponent<SlotSelector>();
     }
-    private void Start()
+    public void SizeUI()
     {
+        switch (GlobalData.IsBigUI)
+        {
+            case false:
+                {
+                    parentInventSlots.localScale = new Vector3(1, 1, 1);
+                    scrollView.localScale = new Vector3(1, 1, 1);
+                    break;
+                }
+            case true:
+                {
+                    parentInventSlots.localScale = new Vector3(2, 2, 1);
+                    scrollView.localScale = new Vector3(2, 2, 1);
+                    break;
+                }
 
+        }
     }
     public void OpenSelectCrafts(CraftTable craftTable)
     {

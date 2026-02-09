@@ -15,11 +15,12 @@ public class SavesDataInfo
     public float volume_sounds;
     public float volume_musics;
     public ScreenResolutions screen_resole;
+    public bool BigUI;
     public SavesDataInfo()
     {
         saveGameFiles = new();
     }
-    public SavesDataInfo(Dictionary<int, SaveGameInfo> _saveGameFiles, int _lastSaveID, string language, float volume_sounds, float volume_musics, ScreenResolutions screen_resole)
+    public SavesDataInfo(Dictionary<int, SaveGameInfo> _saveGameFiles, int _lastSaveID, string language, float volume_sounds, float volume_musics, ScreenResolutions screen_resole, bool bigUI)
     {
         saveGameFiles = _saveGameFiles;
         lastSaveID = _lastSaveID;
@@ -27,6 +28,7 @@ public class SavesDataInfo
         this.volume_sounds = volume_sounds;
         this.volume_musics = volume_musics;
         this.screen_resole = screen_resole;
+        this.BigUI = bigUI;
     }
 }
 public class SaveDataBinds

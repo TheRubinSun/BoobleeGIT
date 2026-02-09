@@ -15,6 +15,10 @@ public class ShopLogic : MonoBehaviour , ISlot
     //[SerializeField] private Transform item_info;
     //[SerializeField] private Transform oldParent_item_info;
     //[SerializeField] private Transform newParent_item_info;
+    [SerializeField] private Transform panel_InfoPl;
+    [SerializeField] private Transform panel_Info;
+    [SerializeField] private Transform panel_Slots_area;
+
 
 
     [SerializeField] private Transform sells_slots_parent;
@@ -89,12 +93,32 @@ public class ShopLogic : MonoBehaviour , ISlot
     }
     private void Start()
     {
-
         trade_cur_exp_image = trade_exp_bar.GetChild(1).GetComponent<Image>();
         trade_exp_text = trade_exp_bar.GetChild(2).GetComponent<TextMeshProUGUI>();
         trade_expRect = trade_exp_bar.GetComponent<RectTransform>();
         player_stat = GlobalData.Player.GetPlayerStats();
         none_item = ItemsList.items[0];
+    }
+    public void SizeUI()
+    {
+        switch (GlobalData.IsBigUI)
+        {
+            case false:
+                {
+                    panel_InfoPl.localScale = new Vector3(1, 1, 1);
+                    panel_Info.localScale = new Vector3(1, 1, 1);
+                    panel_Slots_area.localScale = new Vector3(1, 1, 1);
+                    break;
+                }
+            case true:
+                {
+                    panel_InfoPl.localScale = new Vector3(2, 2, 1);
+                    panel_Info.localScale = new Vector3(2, 2, 1);
+                    panel_Slots_area.localScale = new Vector3(2, 2, 1);
+                    break;
+                }
+
+        }
     }
     public void OpenShop(string traderName)
     {

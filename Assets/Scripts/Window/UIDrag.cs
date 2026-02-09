@@ -36,7 +36,7 @@ public class UIDrag : MonoBehaviour, IDragHandler, IPointerDownHandler
                 eventData.pressEventCamera,
                 out localPointerPosition))
             {
-                Vector2 newPos = localPointerPosition - offset;
+                Vector2 newPos = localPointerPosition - (offset * dragRectTransform.localScale.x);
                 newPos = ClampToCanvas(newPos);
                 dragRectTransform.localPosition = newPos;
             }

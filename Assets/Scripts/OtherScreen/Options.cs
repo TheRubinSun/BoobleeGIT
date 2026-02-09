@@ -21,6 +21,7 @@ public class Options : MonoBehaviour
     [SerializeField] Slider music_volume_sli;
     [SerializeField] AudioMixer mixer;
     [SerializeField] private GameObject WindowControlsSet;
+    [SerializeField] private Toggle ifBigUIToggle;
     private bool OpenContolSet = false;
 
     private string language;
@@ -37,6 +38,7 @@ public class Options : MonoBehaviour
     }
     private void Start()
     {
+        ifBigUIToggle.isOn = GlobalData.IsBigUI;
         sounds_volume_sli.value = GlobalData.VOLUME_SOUNDS;
         music_volume_sli.value = GlobalData.VOLUME_MUSICS;
         LoadSavedLanguage();
@@ -48,9 +50,9 @@ public class Options : MonoBehaviour
     {
         ScreenResolutions screen_resole = new ScreenResolutions(Screen.width, Screen.height, Screen.currentResolution.refreshRateRatio.numerator, Screen.currentResolution.refreshRateRatio.denominator);
         if (language != null)
-            await GlobalData.GenInfoSaves.SavedChanged(GenInfoSaves.saveGameFiles, GenInfoSaves.lastSaveID, language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, screen_resole);
+            await GlobalData.GenInfoSaves.SavedChanged(GenInfoSaves.saveGameFiles, GenInfoSaves.lastSaveID, language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, screen_resole, GlobalData.IsBigUI);
         else
-            await GlobalData.GenInfoSaves.SavedChanged(GenInfoSaves.saveGameFiles, GenInfoSaves.lastSaveID, GenInfoSaves.language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, screen_resole);
+            await GlobalData.GenInfoSaves.SavedChanged(GenInfoSaves.saveGameFiles, GenInfoSaves.lastSaveID, GenInfoSaves.language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, screen_resole, GlobalData.IsBigUI);
     }
     public async void SwitchLanguage(string localeCode)
     {
@@ -106,7 +108,10 @@ public class Options : MonoBehaviour
         WindowControlsSet.SetActive(false);
         OpenContolSet = false;
     }
-
+    public void SetBigUI()
+    {
+        GlobalData.IsBigUI = ifBigUIToggle.isOn;
+    }
     public void AddResole()//ƒобавить доступные разрешени€ в список
     {
         resolutions = Screen.resolutions;
@@ -170,6 +175,7 @@ public class Options : MonoBehaviour
             GlobalData.CullingManager.UpdateResolution();
         }
     }
+
 }
 [Serializable]
 public class ScreenResolutions

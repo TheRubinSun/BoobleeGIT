@@ -25,8 +25,11 @@ public class UIControl:MonoBehaviour
     [SerializeField] GameObject LvlUPButton;
     [SerializeField] Transform inventoryBar;
     [SerializeField] GameObject CraftWindow;
+    [SerializeField] Transform itemInfo;
+    [SerializeField] Transform buffInfo;
 
     [SerializeField] Transform mainParentInventory;
+
 
     bool invIsOpened;
     bool itemsIsOpened;
@@ -44,6 +47,8 @@ public class UIControl:MonoBehaviour
     [SerializeField] GameObject allUIButtonsParent;
     Dictionary<string, TextMeshProUGUI> nameButtons = new();
 
+    private Vector4 saveDefSizeAllItems;
+    private RectTransform rtAllItems;
     private PlayerInputHandler playerInputHandler;
     private GameManager gameManager;
     private void Awake()
@@ -54,13 +59,52 @@ public class UIControl:MonoBehaviour
             return;
         }
         Instance = this;
+        rtAllItems = allItemsWindow.GetComponent<RectTransform>();
+        saveDefSizeAllItems = new Vector4(rtAllItems.offsetMin.x, rtAllItems.offsetMax.x, rtAllItems.offsetMax.y, rtAllItems.offsetMin.y);
+
         ResourcesData.LoadWeapons();
         gameManager = GameManager.Instance;
+        SizeUISlots();
     }
     private void Start()
     {
         //InitializeKeyActions();
         LoadButtonsHud();
+    }
+    public void SizeUISlots()
+    {
+        GlobalData.CraftLogic.SizeUI();
+        GlobalData.ShopLogic.SizeUI();
+        switch (GlobalData.IsBigUI)
+        {
+            case false:
+                {
+                    inventoryWindow.transform.localScale = new Vector3(1, 1, 1);
+                    allItemsWindow.transform.localScale = new Vector3(1, 1, 1);
+                    inventoryBar.localScale = new Vector3(1, 1, 1);
+                    buffInfo.localScale = new Vector3(1, 1, 1);
+                    itemInfo.localScale = new Vector3(1, 1, 1);
+                    infoPlayerWindow.transform.localScale = new Vector3(1, 1, 1);
+
+                    rtAllItems.offsetMin = new Vector2(saveDefSizeAllItems.x, saveDefSizeAllItems.w);//размеры окна 
+                    rtAllItems.offsetMax = new Vector2(saveDefSizeAllItems.y, saveDefSizeAllItems.z);
+                    break;
+                }
+            case true:
+                {
+                    inventoryWindow.transform.localScale = new Vector3(2, 2, 1);
+                    allItemsWindow.transform.localScale = new Vector3(2, 2, 1);
+                    inventoryBar.localScale = new Vector3(2, 2, 1);
+                    buffInfo.localScale = new Vector3(2, 2, 1);
+                    itemInfo.localScale = new Vector3(2, 2, 1);
+                    infoPlayerWindow.transform.localScale = new Vector3(2, 2, 1);
+
+                    rtAllItems.offsetMin = new Vector2(saveDefSizeAllItems.x, saveDefSizeAllItems.w);//Уменьшаем размеры окна 
+                    rtAllItems.offsetMax = new Vector2(saveDefSizeAllItems.y-112, saveDefSizeAllItems.z-300);
+
+                    break;
+                }
+        }
     }
     public void LoadButtons()
     {
