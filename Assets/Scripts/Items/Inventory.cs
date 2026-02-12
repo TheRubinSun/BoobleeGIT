@@ -66,17 +66,24 @@ public class Inventory:MonoBehaviour, ISlot
         SetSlotsInventoryBar();
 
         UpdateWholeSlots();//Обновляем целиком инвентарь
-
+    }
+    public void GiveStartItem(Item item, int count)
+    {
         if (!GenInfoSaves.saveGameFiles[GlobalData.SaveInt].isStarted)
         {
             Slot slotTemp = slots[slots.Count - 1];
-            GiveItemInSlot(slotTemp, "item_meat", 5);
+            GiveItemInSlot(slotTemp, item, count);
             UpdateSlotUI(slotTemp);
         }
     }
     private void GiveItemInSlot(Slot slot, string item_key, int count)
     {
         slot.Item = ItemsList.GetItemForNameKey(item_key);
+        slot.Count = 5;
+    }
+    private void GiveItemInSlot(Slot slot, Item item, int count)
+    {
+        slot.Item = item;
         slot.Count = 5;
     }
     private bool IsLoadInventory(List<SlotTypeSave> invntory_items)//Просто обновляем знаечния в клетках на новые из сохранения

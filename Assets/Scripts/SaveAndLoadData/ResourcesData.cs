@@ -28,13 +28,15 @@ public class ResourcesData : MonoBehaviour
         weapons["lazergun_tra"] = Resources.Load<GameObject>("Weapons/LazerGun");
         weapons["thunder_gun"] = Resources.Load<GameObject>("Weapons/ThunderGun");
         weapons["thunder_stuff"] = Resources.Load<GameObject>("Weapons/ThunderStuff");
-        
+        weapons["slingshot"] = Resources.Load<GameObject>("Weapons/Slingshot");
+
         projectiles[0] = Resources.Load<GameObject>("Projectiles/Pistol_Bullet");
         projectiles[1] = Resources.Load<GameObject>("Projectiles/Shotgun_Bullet");
         projectiles[2] = Resources.Load<GameObject>("Projectiles/Arrow");
         projectiles[3] = Resources.Load<GameObject>("Projectiles/Forest_mag");
         projectiles[4] = Resources.Load<GameObject>("Projectiles/GunMinion");
         projectiles[5] = Resources.Load<GameObject>("Projectiles/HealMin");
+        projectiles[6] = Resources.Load<GameObject>("Projectiles/Shot_stone");
 
         lazers[0] = Resources.Load<GameObject>("Lazers/Blue_Thunder");
         lazers[1] = Resources.Load<GameObject>("Lazers/Yellow_Thunder");

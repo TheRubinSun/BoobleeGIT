@@ -9,13 +9,6 @@ public class GunLogic : RangeWeaponLogic
         attack_Speed_Projectile = (gun.projectileSpeed + GlobalData.Player.GetPlayerStats().Proj_Speed) * gun.projectileSpeedCoof;
         Projectile_pref = ResourcesData.GetProjectilesPrefab(gun.idPrefabShot);
     }
-    //public override void GetStatsWeapon(Weapon gun, int damage, float at_speed_coof, float add_attack_speed, float att_sp_pr, bool isRang, float attack_ran, int count_proj, float _spreadAngle, damageT _damT, Transform pl_mod, GameObject _Projectile_pref = null, float att_sp_pr_coof = 0, int _effectID = -1)
-    //{
-    //    base.GetStatsWeapon(gun, damage, at_speed_coof, add_attack_speed, att_sp_pr, isRang, attack_ran, count_proj, _spreadAngle, _damT, pl_mod, Projectile_pref, att_sp_pr_coof, _effectID);
-    //    attack_Speed_Projectile = (att_sp_pr + GlobalData.Player.GetPlayerStats().Proj_Speed) * att_sp_pr_coof;
-    //    Projectile_pref = _Projectile_pref;
-    //    spreadAngle = _spreadAngle;
-    //}
     protected override void ShootLogic(float offsetProj)
     {
         if (audioClips.Length > 0)

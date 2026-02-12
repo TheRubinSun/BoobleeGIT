@@ -48,18 +48,19 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     }
     public void Start()
     {
-
         if (PlayerModel == null) PlayerModel = GlobalData.GameManager.PlayerModel;
+    }
+    public void GiveStartWeapon(Item item)
+    {
+        if(item == null) return;
+
         if (!GenInfoSaves.saveGameFiles[GlobalData.SaveInt].isStarted)
         {
-
-            SlotWeaponFour.Item = ItemsList.GetItemForNameKey("simple_knife");
-            //Debug.LogWarning($"Item: {slotWeaponFour.Item.NameKey} {slotWeaponFour.Item.SpriteID} {ItemsList.items.Count}");
+            SlotWeaponFour.Item = item;
             SlotWeaponFour.Count = 1;
-
+            PutOnEquip(SlotWeaponFour);
             SlotsManager.UpdateSlotUI(SlotWeaponFour);
         }
-
     }
     public void LockSlot(int numbSlot)
     {
@@ -271,11 +272,6 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
         foreach(KeyValuePair<int, GameObject> slotsWeapon in slots_Weapon)
         {
             LoadParametersWeapon(slotsWeapon.Value, SlotsEqup[slotsWeapon.Key]); //Загружаем параметры с слолта в оружие
-
-            //if (SlotsEqup[slotsWeapon.Key].artifact_id > 0)
-            //{
-            //    LoadAttributeArtifact(SlotsEqup[slotsWeapon.Key].artifact_id); //Загружаем параметры с слота артефакта
-            //}
         }
     }
     public void UpdateAllMinionsStats()
@@ -296,8 +292,11 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
     }
     private void LoadParametersWeapon(GameObject weaponObj, Slot slot)
     {
-        Weapon weapon = slot.Item as Weapon;
-        weaponObj.GetComponent<WeaponControl>().ApplyStats(weapon, PlayerModel);
+        if(slot.Item is Weapon weapon)
+        {
+            weaponObj.GetComponent<WeaponControl>().ApplyStats(weapon, PlayerModel);
+        }
+        
         //if (slot.Item is StaffBullet staff)
         //{
         //    weaponObj.GetComponent<StaffLogic>().GetStatsStaff(staff, staff.damage, staff.attackSpeedCoof, staff.addAttackSpeed, staff.projectileSpeed, staff.rangeType, staff.range, staff.conut_Projectiles, staff.spreadAngle, staff.typeDamage, PlayerModel, staff.manaCost,

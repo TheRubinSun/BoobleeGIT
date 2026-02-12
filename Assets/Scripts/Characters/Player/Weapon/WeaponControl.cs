@@ -68,6 +68,8 @@ public class WeaponControl : WeaponStatsApplier
         PlayerStats pl_stat = GlobalData.Player.GetPlayerStats();
 
         baseWeapon = weapon;
+        if (weapon == null) Debug.LogError("Null weapon!!!");
+        if (pl_stat == null) Debug.LogError("Null pl_stat!!!");
         Attack_Damage = weapon.damage + pl_stat.Att_Damage;
 
         Attack_Speed_Coof = weapon.attackSpeedCoof;

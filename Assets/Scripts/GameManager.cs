@@ -112,8 +112,8 @@ public class GameManager: MonoBehaviour
         }
         SaveGameInfo saveGameInfo = GenInfoSaves.saveGameFiles[GlobalData.SaveInt];
         Debug.LogWarning($"Passed time: {saveGameInfo.timeHasPassed}");
-        //StartCoroutine(TrackPlayTime(5));
-        //InvokeRepeating(nameof(UpdatePlayTime), 1f, 1f);
+
+        GlobalData.Player.GiveStartKit();
     }
     //private IEnumerator TrackPlayTime(int timer)
     //{

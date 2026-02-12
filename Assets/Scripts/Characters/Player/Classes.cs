@@ -18,9 +18,9 @@ public static class Classes
         {
             //                    strength agility intell range, damage, at_sp, projSpeed, speed, hp, def
             //                                       s  a  i  r   d  a   p   s  h   d
-            roleClasses.Add("c_shooter", new RoleClass(1, 2, 1, 2f, 0, 45, 2f, 0.2f, 2, 0f, 0, 0, 0, 0));
-            roleClasses.Add("c_mage", new RoleClass(1, 1, 2, 1f, 0, 40, 1f, 0.2f, 3, 10, 0.5f, 0, 10, 10));
-            roleClasses.Add("c_warrior", new RoleClass(2, 1, 1, 1f, 2, 35, 0, 0.4f, 5, 0f, 0, 2, 0, 0));
+            roleClasses.Add("c_shooter", new RoleClass(RoleClassEnum.Shooter, 1, 2, 1, 2f, 0, 45, 2f, 0.2f, 2, 0f, 0, 0, 0, 0));
+            roleClasses.Add("c_mage", new RoleClass(RoleClassEnum.Mage,1, 1, 2, 1f, 0, 40, 1f, 0.2f, 3, 10, 0.5f, 0, 10, 10));
+            roleClasses.Add("c_warrior", new RoleClass(RoleClassEnum.Warrior, 2, 1, 1, 1f, 2, 35, 0, 0.4f, 5, 0f, 0, 2, 0, 0));
         }
     }
     public static void LocalizationClasses()
@@ -50,6 +50,7 @@ public static class Classes
 [Serializable]
 public class RoleClass
 {
+    public RoleClassEnum roleClassEn{ get; set; }
     public string name_language { get; set; }
     public int Bonus_Class_Strength {  get; set; }
     public int Bonus_Class_Agility { get; set; }
@@ -66,10 +67,11 @@ public class RoleClass
     public float Bonus_Magic_Resis { get; set; }
     public float Bonus_Tech_Resis { get; set; }
 
-    public RoleClass(int bonusStrength, int bonusAgility, int bonisIntelligence ,float bonusRange, int bonusDamage, 
+    public RoleClass(RoleClassEnum roleClass, int bonusStrength, int bonusAgility, int bonisIntelligence ,float bonusRange, int bonusDamage, 
         int bonusAttackSpeed, float bonusProjectileSpeed, float bonusSpeedMove, int bonusHp, float bonusMana, float regenMana, int bonusDeffence, 
         float bonus_Magic_Resis,float bonus_Tech_Resis)
     {
+        roleClassEn = roleClass;
         Bonus_Class_Strength = bonusStrength;
         Bonus_Class_Agility = bonusAgility;
         Bonus_Class_Intelligence = bonisIntelligence;
@@ -86,4 +88,11 @@ public class RoleClass
         Bonus_Magic_Resis = bonus_Magic_Resis;
         Bonus_Tech_Resis = bonus_Tech_Resis;
     }
+   
+}
+public enum RoleClassEnum
+{
+    Warrior,
+    Mage,
+    Shooter
 }

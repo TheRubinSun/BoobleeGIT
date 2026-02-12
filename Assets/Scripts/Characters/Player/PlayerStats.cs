@@ -517,4 +517,5 @@ public class PlayerStats : CharacterStats
         GlobalData.Player.CollectLvlUp();
         if (collect_cur_exp >= collec_nextLvl_exp) CheckCollectLevel();
     }
+    public RoleClassEnum GetRoleClass() => classPlayer.roleClassEn;
 }

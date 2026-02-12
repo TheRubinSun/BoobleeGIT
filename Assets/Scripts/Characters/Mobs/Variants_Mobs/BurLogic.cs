@@ -38,7 +38,6 @@ public class BurLogic : BaseEnemyLogic
             spr_ren.flipX = shouldFaceLeft;
             healthBar.FlipX(shouldFaceLeft);
         }
-        
     }
     public override void Death()
     {
@@ -76,13 +75,6 @@ public class BurLogic : BaseEnemyLogic
         }
         else
         {
-            //if(!audioSource.isPlaying && enum_stat.Cur_Hp > 0)
-            //{
-            //    audioSource.loop = true;
-
-            //}
-
-
             IsNearThePlayer = false;
             moveDirection = toPlayer.normalized;
         }
@@ -99,7 +91,6 @@ public class BurLogic : BaseEnemyLogic
                 //MeleeAttack();
                 animator_main.SetTrigger("Attack");
             }
-
             // Обновляем время последней атаки
             lastAttackTime = Time.time;
         }

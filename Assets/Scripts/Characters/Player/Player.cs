@@ -13,34 +13,24 @@ public class Player : MonoBehaviour, ITakeDamage
     public static Player Instance { get; set; }
     public bool GodMode { get; private set; }
     public bool PlayerStay {  get; set; }
-    [SerializeField] private Transform spawnPoint;
     private PlayerStats pl_stats;
     private BuffsStats bf_stats;
-    [SerializeField] 
-    private EquipStats equip_Stats;
-
     private PlayerUI pl_ui;
-
-    //GameObjects
     private readonly Dictionary<int, WeaponControl> WeaponsObj = new();
     private readonly Dictionary<int, MinionControl> MinionsObj = new();
     private PlayerControl playerControl;
-
     private Coroutine flashCol;
-    [SerializeField] private GameObject PlayerModel;
-    //[SerializeField]
-    //private GameObject[] PlayerLegs;
-
-    [SerializeField] public Toggle[] TooglesWeapon = new Toggle[4];
-
-    
-
-    SpriteRenderer player_sprite;
-    [SerializeField] private SpriteRenderer HairPlayer;
-
     //Abillity
     private bool canForce = true;
     private float cooldownForce = 0.3f;
+    private SpriteRenderer player_sprite;
+    [SerializeField] private Transform spawnPoint;
+    [SerializeField] private EquipStats equip_Stats;
+    [SerializeField] private GameObject PlayerModel;
+    [SerializeField] public Toggle[] TooglesWeapon = new Toggle[4];
+    [SerializeField] private SpriteRenderer HairPlayer;
+
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -59,7 +49,6 @@ public class Player : MonoBehaviour, ITakeDamage
         pl_ui.SetComponentUI();
 
         player_sprite = PlayerModel.GetComponent<SpriteRenderer>();
-        //Debug.Log($"ID_head: {GlobalData.ID_head} ID_hair: {GlobalData.ID_hair}");
         player_sprite.sprite = GameDataHolder.spritePlayerHeadById[GlobalData.ID_head];
         HairPlayer.sprite = GameDataHolder.spritePlayerHairById[GlobalData.ID_hair];
         StartCoroutine(AddManaForRegen());
@@ -68,7 +57,6 @@ public class Player : MonoBehaviour, ITakeDamage
     {
         if (playerSaveData != null && playerSaveData.Base_Max_Hp > 0)
         {
-            //pl_stats = playerSaveData;
             pl_stats.LoadStats(playerSaveData);
             LoadWeaponToggles();
             pl_stats.UpdateTotalStats();
@@ -81,6 +69,7 @@ public class Player : MonoBehaviour, ITakeDamage
             pl_stats.FillHp();
             pl_stats.FillMana();
             ResetWeaponToggles();
+            
         }
         if (spawnPoint != null)
         {
@@ -88,15 +77,44 @@ public class Player : MonoBehaviour, ITakeDamage
             {
                 child.position = spawnPoint.transform.position;
             }
-            //PlayerModel.transform.position = spawnPoint.transform.position;
-            //foreach (GameObject leg in PlayerLegs)
-            //{
-            //    leg.transform.position = spawnPoint.transform.position;
-            //}
         }
 
         pl_ui.UpdateAllInfo(pl_stats);
         ChangeToggleWeapons();
+    }
+    public void GiveStartKit()
+    {
+        
+        if (GenInfoSaves.saveGameFiles[GlobalData.SaveInt].isStarted)
+            return;
+        Debug.Log(GenInfoSaves.saveGameFiles[GlobalData.SaveInt].isStarted);
+        Item? startWeapon;
+        Item? startEat = ItemsList.GetItemForNameKey("item_meat");
+        switch (pl_stats.GetRoleClass())
+        {
+            case RoleClassEnum.Warrior:
+                {
+                    startWeapon = ItemsList.GetItemForNameKey("simple_knife");
+                    break;
+                }
+            case RoleClassEnum.Shooter:
+                {
+                    startWeapon = ItemsList.GetItemForNameKey("slingshot");
+                    break;
+                }
+            case RoleClassEnum.Mage:
+                {
+                    startWeapon = ItemsList.GetItemForNameKey("staff_forest");
+                    break;
+                }
+            default:
+                {
+                    startWeapon = null;
+                    break;
+                }
+        }
+        GlobalData.EqupmentPlayer.GiveStartWeapon(startWeapon);
+        GlobalData.Inventory.GiveStartItem(startEat, 5);
     }
     public Vector2 GetPosPlayer() => playerControl.transform.position;
     public void UpdateHP()

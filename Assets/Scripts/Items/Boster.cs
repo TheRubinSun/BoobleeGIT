@@ -5,7 +5,7 @@ public class Boster : Item, IUsable
 {
     public AllStats boosterType;
     public int countBoost;
-    private int soundID;
+    public int soundID;
     public Boster(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, AllStats bosterType, int countBoost, int idSound = 0, TypeItem typeItem = TypeItem.Other, bool isUse = false) : base(id, name, maxCount, spriteID, quality, cost, description, typeItem, isUse)
     {
         this.boosterType = bosterType;
@@ -27,7 +27,6 @@ public class Boster : Item, IUsable
         if (GlobalData.Player != null)
         {
             GlobalData.Player.AddAttribute(boosterType, countBoost);
-            //Debug.Log("Работает: " + countBoost);
             GlobalData.EqupmentPlayer.UpdateAllWeaponsStats();
             return true;
         }

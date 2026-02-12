@@ -47,7 +47,6 @@ public class CorpseSetting : MonoBehaviour, ICullableObject
     }
     public List<Slot> GetDrop()
     {
-        //Debug.Log($"труп: {NameKey}");
         return ChanceAllDrop();
     }
     private List<Slot> ChanceAllDrop()
