@@ -89,15 +89,15 @@ public class RecipeCraft
         }
 
         needsMatID = new Dictionary<int, int>();
-        foreach (KeyValuePair<string, int> materialName in needsMaterials)
+        foreach (KeyValuePair<string, int> material in needsMaterials)
         {
-            int IDMat = ItemsList.GetIDForName(materialName.Key);
+            int IDMat = ItemsList.GetIDForName(material.Key);
             if (IDMat == 0)
             {
-                Debug.LogWarning($"{materialName.Key} Не находит такой материал");
+                Debug.LogWarning($"{material.Key} Не находит такой материал");
                 continue;
             }
-            needsMatID.Add(IDMat, materialName.Value);
+            needsMatID.Add(IDMat, material.Value);
         }
     }
 }

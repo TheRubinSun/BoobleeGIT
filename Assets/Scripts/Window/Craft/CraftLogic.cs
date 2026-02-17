@@ -105,9 +105,11 @@ public class CraftLogic : MonoBehaviour, ISlot
         foreach (RecipeCraft recipe in RecipesCraft.recipesCraft)
         {
             //Item craftItem = ItemsList.GetItemForNameKey(recipe.craftItemName);
+            
             Item craftItem = ItemsList.GetItemForId(recipe.craftItemID);
             Slot craftSlot = new Slot(id, craftItem, recipe.countCraftItem);
             slotsCrafts.Add(craftSlot, null);
+            //Debug.Log($"{recipe.craftItemID} - {craftItem.Name} - {recipe.craftItemName}");
             id++;
         }
         recipeIsLoaded = true;
@@ -153,7 +155,7 @@ public class CraftLogic : MonoBehaviour, ISlot
             //}
             foreach (KeyValuePair<int, int> material in recipe.needsMatID) //Вариант через загрузку вначале
             {
-                materialsInCraft.Add(ItemsList.items[material.Key], material.Value);
+                materialsInCraft.Add(ItemsList.GetItemForId(material.Key), material.Value);
             }
             slotsCrafts[craftSlot] = materialsInCraft;
 

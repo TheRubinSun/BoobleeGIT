@@ -120,22 +120,6 @@ public class LoadingMenu : MonoBehaviour
             Debug.Log($"Загружен стандартный en");
         }
     }
-    //private async Task LoadSprites(string addressableKey)
-    //{
-    //    List<Sprite> sprites = new List<Sprite> { null };
-    //    AsyncOperationHandle<IList<Sprite>> handle = Addressables.LoadAssetAsync<IList<Sprite>>(addressableKey);
-    //    await handle.Task;
-    //    if (handle.Status == AsyncOperationStatus.Succeeded)
-    //    {
-    //        sprites.AddRange(handle.Result);
-    //        Addressables.Release(handle);
-    //        GameDataHolder.spriteList = sprites.ToArray();
-    //    }
-    //    else
-    //    {
-    //        Debug.LogError("Не удалось загрузить спрайты через Addressables");
-    //    }
-    //}
     private IEnumerator LoadSprites(string addressableKey, Dictionary<int, Sprite> spriteData)
     {
         spriteData.Clear();
@@ -160,8 +144,6 @@ public class LoadingMenu : MonoBehaviour
             yield break;
         }
 
-        //Dictionary<int, Sprite> spriteById = new Dictionary<int, Sprite>();
-
         foreach (Sprite sprite in handle.Result)
         {
             // Формат: SpriteSheet_0, SpriteSheet_1, ...
@@ -182,8 +164,6 @@ public class LoadingMenu : MonoBehaviour
                 Debug.LogWarning($"Не удалось извлечь ID из имени спрайта: {sprite.name}");
             }
         }
-
-        //spriteData = spriteById;
 
         Debug.Log($"Sprite Sheet загружен: {spriteData.Count} спрайтов");
     }

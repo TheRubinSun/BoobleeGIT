@@ -228,9 +228,9 @@ public static class ItemsList
     }
     public static int GetIDForName(string nameKey)
     {
-        for(int i = 0; i<items.Count; i++)
+        for(int i = 0; i < items.Count; i++)
         {
-            if (items[i].NameKey == nameKey) return i;
+            if (items[i].NameKey == nameKey) return items[i].Id;
         }
         return 0;
     }
