@@ -27,59 +27,52 @@ public class BurLogic : BaseEnemyLogic
 
         GlobalData.Player.TakeDamage(enum_stat.Att_Damage, damageT.Physical, true);
     }
-    public override void Flipface() //Разворачиваем моба 
+    protected override void FlipfaceChild(bool shouldFaceLeft)
     {
-        if (player == null) return; // Проверка на null
-
-        bool shouldFaceLeft = player.position.x < transform.position.x; // Игрок слева?
-
-        if (spr_ren.flipX != shouldFaceLeft) // Если нужно сменить направление
-        {
-            spr_ren.flipX = shouldFaceLeft;
-            healthBar.FlipX(shouldFaceLeft);
-        }
+        healthBar.FlipX(shouldFaceLeft);
     }
     public override void Death()
     {
         moveSoundSource.Stop();
         base.Death();
     }
-    protected override void PlayerDetected(Vector2 toPlayer, float distanceToPlayer)
-    {
-        // Проверяем перед атакой, есть ли стена перед врагом
-        RaycastHit2D visionHit = Physics2D.Raycast(CenterObject.position, toPlayer.normalized, distanceToPlayer, combinedLayerMask);
+    //protected override void ToPlayerAttack()
+    //{
+    //    Vector2 toPlayer = ToPlayer;
+    //    // Проверяем перед атакой, есть ли стена перед врагом
+    //    RaycastHit2D visionHit = Physics2D.Raycast(CenterObject.position, toPlayer.normalized, distToPlayer, combinedLayerMask);
 
-        // Дополнительный буфер для ренджа атаки
+    //    // Дополнительный буфер для ренджа атаки
 
-        float effectiveRange = enum_stat.Att_Range - attackBuffer;
+    //    float effectiveRange = enum_stat.Att_Range - attackBuffer;
 
-        bool canSeePlayer = visionHit.collider != null && visionHit.collider.gameObject.layer == LayerManager.playerLayer;
+    //    bool canSeePlayer = visionHit.collider != null && visionHit.collider.gameObject.layer == LayerManager.playerLayer;
 
 
-        if (distanceToPlayer < effectiveRange && canSeePlayer)
-        {
-            moveDirection = Vector2.zero;
+    //    if (distToPlayer < effectiveRange && canSeePlayer)
+    //    {
+    //        moveDirection = Vector2.zero;
 
-            // Если моб слишком близко, он немного отходит назад
-            if (distanceToPlayer < enum_stat.Att_Range * 0.4f)
-            {
-                moveDirection = -toPlayer.normalized;
-            }
-            IsNearThePlayer = true;
-            Attack(distanceToPlayer);
-        }
-        else if (distanceToPlayer < enum_stat.Att_Range && canSeePlayer && IsNearThePlayer)
-        {
-            moveDirection = Vector2.zero;
-            Attack(distanceToPlayer);
-        }
-        else
-        {
-            IsNearThePlayer = false;
-            moveDirection = toPlayer.normalized;
-        }
+    //        // Если моб слишком близко, он немного отходит назад
+    //        if (distToPlayer < enum_stat.Att_Range * 0.4f)
+    //        {
+    //            moveDirection = -toPlayer.normalized;
+    //        }
+    //        IsNearThePlayer = true;
+    //        Attack(distToPlayer);
+    //    }
+    //    else if (distToPlayer < enum_stat.Att_Range && canSeePlayer && IsNearThePlayer)
+    //    {
+    //        moveDirection = Vector2.zero;
+    //        Attack(distToPlayer);
+    //    }
+    //    else
+    //    {
+    //        IsNearThePlayer = false;
+    //        moveDirection = toPlayer.normalized;
+    //    }
 
-    }
+    //}
     public override void Attack(float distanceToPlayer)
     {
         // Проверяем, прошло ли достаточно времени для следующей атаки

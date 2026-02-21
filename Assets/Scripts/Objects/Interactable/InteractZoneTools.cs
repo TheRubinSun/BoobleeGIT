@@ -13,6 +13,7 @@ public class DrawOutline : MonoBehaviour
     [SerializeField] private float outlineSize = 1f;
 
     [SerializeField] private GameObject e_icon;
+
     private void Start()
     {
         sr = GetComponent<SpriteRenderer>();
@@ -33,6 +34,8 @@ public class InteractZoneTools : MonoBehaviour
 {
     public static InteractZoneTools instance;
     private Collider2D playerCol;
+    private LayerMask interactiveLayer =>
+    (1 << LayerManager.interactableLayer) | (1 << LayerManager.interactableTriggerLayer);
 
     //private IInteractable old_interactable;
     private List<IInteractable> interactablesInRange = new();
@@ -68,7 +71,7 @@ public class InteractZoneTools : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer != LayerManager.interactableLayer) return;
+        if (((1 << collision.gameObject.layer) & interactiveLayer) == 0) return;
 
         if(collision.TryGetComponent(out IInteractable interactable))
         {
@@ -85,7 +88,7 @@ public class InteractZoneTools : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.layer != LayerManager.interactableLayer) return;
+        if (((1 << collision.gameObject.layer) & interactiveLayer) == 0) return;
 
         if (collision.TryGetComponent(out IInteractable interactable))
         {

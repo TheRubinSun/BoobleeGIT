@@ -448,11 +448,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff079710f0d676e4cb95615bf9f68453, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EffectsObj: {fileID: 3728983346688498400}
+  CenterObject: {fileID: 1504947471745933170}
+  separationWeight: 1
   IdMobs: 9
   Name: 
   IsFly: 0
-  EffectsObj: {fileID: 3728983346688498400}
-  CenterObject: {fileID: 1504947471745933170}
+  runBackRangePrecent: 0.6
+  stayRangePrecent: 0
   player: {fileID: 0}
   mob_object: {fileID: 802024983914837707}
   audioSource: {fileID: 0}
@@ -470,6 +473,9 @@ MonoBehaviour:
   attackBuffer: 0
   HPBar: {fileID: 8081081011683111393}
   abillities: []
+  IsUpper: 0
+  DisplayPathTraking: 0
+  isToPath: 0
   ball: {fileID: 0}
   haveBall: 0
 --- !u!114 &2465009672477220326

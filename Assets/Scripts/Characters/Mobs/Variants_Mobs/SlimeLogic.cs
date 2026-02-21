@@ -82,75 +82,71 @@ public class SlimeLogic : BaseEnemyLogic, IItemMove
             idPosion = slime.idPosion;
         }
     }
-    public override void Flipface() //Разворачиваем моба 
+    protected override void FlipfaceChild(bool shouldFaceLeft)
     {
-        if (player == null) return; // Проверка на null
-
-        bool shouldFaceLeft = player.position.x < transform.position.x; // Игрок слева?
-
-        if (spr_ren.flipX != shouldFaceLeft) // Если нужно сменить направление
-        {
-            spr_ren.flipX = shouldFaceLeft;
-            face_dir *= -1;
-        }
+        face_dir *= -1;
     }
-    protected override IEnumerator AvoidTarget(RaycastHit2D target)
+    //protected override void ToPlayerAttack()
+    //{
+    //    Vector2 toPlayer = ToPlayer;
+
+    //    // Дополнительный буфер для ренджа атаки
+    //    float effectiveRange = enum_stat.Att_Range - attackBuffer;
+
+    //    // Проверяем перед атакой, есть ли стена перед врагом
+    //    RaycastHit2D visionHit = Physics2D.Raycast(CenterObject.position, toPlayer.normalized, distToPlayer, combinedLayerMask);
+
+    //    bool canSeePlayer = visionHit.collider != null && visionHit.transform.CompareTag("Player");
+    //    if (distToPlayer < effectiveRange && canSeePlayer)
+    //    {
+    //        animator_main.SetBool("Move", false);
+    //        moveDirection = Vector2.zero;
+
+    //        // Если моб слишком близко, он немного отходит назад
+    //        if (distToPlayer < enum_stat.Att_Range * 0.25f)
+    //        {
+    //            moveDirection = -toPlayer.normalized;
+    //        }
+    //        IsNearThePlayer = true;
+    //        Attack(distToPlayer);
+    //    }
+    //    else if (distToPlayer < enum_stat.Att_Range && canSeePlayer && IsNearThePlayer)
+    //    {
+    //        animator_main.SetBool("Move", false);
+    //        moveDirection = Vector2.zero;
+    //        Attack(distToPlayer);
+    //    }
+    //    else
+    //    {
+    //        IsNearThePlayer = false;
+    //        moveDirection = toPlayer.normalized;
+    //        animator_main.SetBool("Move", true);
+    //    }
+    //}
+    protected override void RunBackAndAttack(Vector2 toPlayer)
     {
-        animator_main.SetBool("Move", true);
+        animator_main.SetBool("Move", false);
+        moveDirection = Vector2.zero;
+
+        // Если моб слишком близко, он немного отходит назад
+        if (distToPlayer < enum_stat.Att_Range * runBackRangePrecent)
+        {
+            moveDirection = -toPlayer.normalized;
+        }
+        IsNearThePlayer = true;
+        Attack(distToPlayer);
+    }
+    protected override void StayAndAttack()
+    {
+        animator_main.SetBool("Move", false);
+        moveDirection = Vector2.zero;
+        Attack(distToPlayer);
+    }
+    protected override void RunRight(Vector2 toPlayer)
+    {
         IsNearThePlayer = false;
-        RaycastHit2D hit = target;
-        while (hit.collider != null && (((1 << hit.collider.gameObject.layer) & obstCombLayerMask) != 0))
-        {
-            Vector2 toPlayer = player.position - CenterObject.position;
-
-            hit = BuildRayCast(CenterObject.position, toPlayer.normalized, mobRadius, combinedLayerMask);
-            Vector2 avoidDir = Vector2.Perpendicular(toPlayer).normalized;
-            bool canLeft = !Physics2D.Raycast(CenterObject.position, avoidDir, mobRadius, obstCombLayerMask);
-            bool canRight = !Physics2D.Raycast(CenterObject.position, -avoidDir, mobRadius, obstCombLayerMask);
-
-            if (canLeft)
-                moveDirection = avoidDir;
-            else if (canRight)
-                moveDirection = -avoidDir;
-
-            yield return new WaitForSeconds(0.2f);
-        }
-        avoidCoroutine = null;
-    }
-    protected override void PlayerDetected(Vector2 toPlayer, float distanceToPlayer)
-    {
-        // Дополнительный буфер для ренджа атаки
-        float effectiveRange = enum_stat.Att_Range - attackBuffer;
-
-        // Проверяем перед атакой, есть ли стена перед врагом
-        RaycastHit2D visionHit = Physics2D.Raycast(CenterObject.position, toPlayer.normalized, distanceToPlayer, combinedLayerMask);
-
-        bool canSeePlayer = visionHit.collider != null && visionHit.transform.CompareTag("Player");
-        if (distanceToPlayer < effectiveRange && canSeePlayer)
-        {
-            animator_main.SetBool("Move", false);
-            moveDirection = Vector2.zero;
-
-            // Если моб слишком близко, он немного отходит назад
-            if (distanceToPlayer < enum_stat.Att_Range * 0.25f)
-            {
-                moveDirection = -toPlayer.normalized;
-            }
-            IsNearThePlayer = true;
-            Attack(distanceToPlayer);
-        }
-        else if (distanceToPlayer < enum_stat.Att_Range && canSeePlayer && IsNearThePlayer)
-        {
-            animator_main.SetBool("Move", false);
-            moveDirection = Vector2.zero;
-            Attack(distanceToPlayer);
-        }
-        else
-        {
-            IsNearThePlayer = false;
-            moveDirection = toPlayer.normalized;
-            animator_main.SetBool("Move", true);
-        }
+        moveDirection = toPlayer.normalized;
+        animator_main.SetBool("Move", true);
     }
     public override void Attack(float distanceToPlayer)
     {

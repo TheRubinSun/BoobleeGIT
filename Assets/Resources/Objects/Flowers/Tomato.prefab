@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 537814440007233801}
   - component: {fileID: 863736202380144601}
   - component: {fileID: 7520884781995511583}
-  m_Layer: 19
+  m_Layer: 21
   m_Name: Tomato
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,7 +166,7 @@ BoxCollider2D:
   m_Offset: {x: 0.01, y: -0.045}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0}
     oldSize: {x: 0.33333334, y: 0.33333334}
     newSize: {x: 0.45, y: 0.76666665}
     adaptiveTilingThreshold: 0.5

@@ -167,7 +167,7 @@ GameObject:
   - component: {fileID: 269021855506470877}
   - component: {fileID: 5604476399783664988}
   - component: {fileID: 6648334305816751609}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: Ball
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -183,7 +183,7 @@ Transform:
   m_GameObject: {fileID: 1584937734026354486}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.25, z: 0}
+  m_LocalPosition: {x: 0, y: -0.24, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -301,7 +301,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.09
+  m_Radius: 0.12
 --- !u!1 &4729019500627109863
 GameObject:
   m_ObjectHideFlags: 0
@@ -473,12 +473,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02b213fd9da86744980364cb977e1bfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EffectsObj: {fileID: 1784190780623767438}
+  CenterObject: {fileID: 3794253683764855951}
   IdMobs: 0
   Name: 
   IsFly: 0
-  mobRadius: 0
-  EffectsObj: {fileID: 1784190780623767438}
-  CenterObject: {fileID: 3794253683764855951}
   player: {fileID: 0}
   mob_object: {fileID: 420888788017792791}
   audioSource: {fileID: 0}
@@ -495,8 +494,10 @@ MonoBehaviour:
   damageValuePref: {fileID: 6292013005122663656, guid: cac7b7163f7b90940bb6363f0f51064d, type: 3}
   attackBuffer: 0
   HPBar: {fileID: 6034422211155977361}
-  nextWaypointDistance: 0.1
   abillities: []
+  IsUpper: 0
+  DisplayPathTraking: 1
+  isToPath: 0
   child_Obj: {fileID: 3794253683764855951}
 --- !u!114 &2507145932948197912
 MonoBehaviour:

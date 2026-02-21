@@ -42,16 +42,15 @@ public class Bug_poop_Logic : BaseEnemyLogic
             speed_ball = bug_mob.speed_ball;
             ball_logic.LoadParametrs(bug_mob.Hp, bug_mob.damage_ball, bug_mob.damageType);
         }
-        
     }
     protected override void Get2DPhysics()
     {
         selfCollider = mob_object.GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
-        if(haveBall)
-            mobRadius = col_ball.bounds.extents.magnitude;
-        else
-            mobRadius = selfCollider.bounds.extents.magnitude + 0.1f;
+        //if(haveBall)
+        //    mobRadius = col_ball.bounds.extents.magnitude;
+        //else
+        //    mobRadius = selfCollider.bounds.extents.magnitude + 0.1f;
     }
     public override void SetTrapped(float time)
     {
@@ -68,7 +67,7 @@ public class Bug_poop_Logic : BaseEnemyLogic
         IsTrapped = false;
         col_ball.isTrigger = false;
     }
-    public override void Move()
+    protected override void Move()
     {
         if (haveBall && ball_logic.IsDestroyed())
         {
@@ -77,7 +76,7 @@ public class Bug_poop_Logic : BaseEnemyLogic
             animator_main.SetBool("HaveBall", false);
             CenterObject = mob_object.transform;
             mob_object.GetComponent<Collider2D>().isTrigger = false;
-            mobRadius = selfCollider.bounds.extents.magnitude + 0.1f;
+            //mobRadius = selfCollider.bounds.extents.magnitude + 0.1f;
         }
         Flipface();
 
@@ -87,51 +86,60 @@ public class Bug_poop_Logic : BaseEnemyLogic
         }
         else
         {
-            if (enum_stat.Mov_Speed > 0)
+            Vector2 finalDirection = moveDirection;
+            Vector2 separation = GetSeparationVector();
+            finalDirection = (finalDirection + separation * separationWeight).normalized;
+            if (enum_stat.Mov_Speed > 0 && finalDirection != Vector2.zero)
             {
                 animator_main.SetBool("Move", true);
-                Vector2 newPosition = rb.position + moveDirection * (enum_stat.Mov_Speed) * Time.fixedDeltaTime;
+                Vector2 newPosition = rb.position + finalDirection * enum_stat.Mov_Speed * Time.fixedDeltaTime;
                 rb.MovePosition(newPosition);
             }
-        }
-
-    }
-    protected override void PlayerDetected(Vector2 toPlayer, float distanceToPlayer)
-    {
-        // Проверяем перед атакой, есть ли стена перед врагом
-        // Финальная проверка: есть ли прямая видимость игрока
-        RaycastHit2D visionHit = Physics2D.Raycast(CenterObject.position, toPlayer.normalized, distanceToPlayer, combinedLayerMask);
-
-        // Дополнительный буфер для ренджа атаки
-
-        float effectiveRange = enum_stat.Att_Range - attackBuffer;
-
-        bool canSeePlayer = visionHit.collider != null && visionHit.collider.gameObject.layer == LayerManager.playerLayer;
-
-
-        if (distanceToPlayer < effectiveRange && canSeePlayer)
-        {
-            //moveDirection = Vector2.zero;
-
-            // Если моб слишком близко, он немного отходит назад
-            if (distanceToPlayer < enum_stat.Att_Range)
+            else
             {
-                moveDirection = -toPlayer.normalized;
+                rb.linearVelocity = Vector2.zero;
             }
-            IsNearThePlayer = true;
-            Attack(distanceToPlayer);
         }
-        else if (distanceToPlayer < enum_stat.Att_Range && canSeePlayer && IsNearThePlayer)
-        {
-            //moveDirection = Vector2.zero;
-            Attack(distanceToPlayer);
-        }
-        else
-        {
-            IsNearThePlayer = false;
-            moveDirection = toPlayer.normalized;
-        }
+
     }
+    //protected override void ToPlayerAttack()
+    //{
+    //    Vector2 toPlayer = ToPlayer;
+
+    //    // Проверяем перед атакой, есть ли стена перед врагом
+    //    // Финальная проверка: есть ли прямая видимость игрока
+    //    RaycastHit2D visionHit = Physics2D.Raycast(CenterObject.position, toPlayer.normalized, distToPlayer, combinedLayerMask);
+
+    //    // Дополнительный буфер для ренджа атаки
+
+    //    float effectiveRange = enum_stat.Att_Range - attackBuffer;
+
+    //    bool canSeePlayer = visionHit.collider != null && visionHit.collider.gameObject.layer == LayerManager.playerLayer;
+
+
+    //    if (distToPlayer < effectiveRange && canSeePlayer)
+    //    {
+    //        //moveDirection = Vector2.zero;
+
+    //        // Если моб слишком близко, он немного отходит назад
+    //        if (distToPlayer < enum_stat.Att_Range)
+    //        {
+    //            moveDirection = -toPlayer.normalized;
+    //        }
+    //        IsNearThePlayer = true;
+    //        Attack(distToPlayer);
+    //    }
+    //    else if (distToPlayer < enum_stat.Att_Range && canSeePlayer && IsNearThePlayer)
+    //    {
+    //        //moveDirection = Vector2.zero;
+    //        Attack(distToPlayer);
+    //    }
+    //    else
+    //    {
+    //        IsNearThePlayer = false;
+    //        moveDirection = toPlayer.normalized;
+    //    }
+    //}
     public override void UpdateSortingOrder()
     {
         if (!isVisibleNow) return;
@@ -145,23 +153,14 @@ public class Bug_poop_Logic : BaseEnemyLogic
 
         if (spr_ren_ball != null) spr_ren_ball.sortingOrder = spr_ren.sortingOrder - 5;
     }
-    public override void Flipface() //Разворачиваем моба 
+    protected override void FlipfaceChild(bool shouldFaceLeft)
     {
-        if (player == null) return; // Проверка на null
-
-        bool shouldFaceLeft = player.position.x < transform.position.x; // Игрок слева?
-
-        if (spr_ren.flipX != shouldFaceLeft) // Если нужно сменить направление
+        if (spr_ren_ball != null)
         {
-            spr_ren.flipX = shouldFaceLeft;
-            if (spr_ren_ball != null)
-            {
-                spr_ren_ball.flipX = shouldFaceLeft;
-                animator_ball.SetBool("IsRight?", shouldFaceLeft);
-                healthBar.FlipX(shouldFaceLeft);
-                transfrom_ball.localPosition = new Vector2(-transfrom_ball.localPosition.x, transfrom_ball.localPosition.y);
-            }
-                
+            spr_ren_ball.flipX = shouldFaceLeft;
+            animator_ball.SetBool("IsRight?", shouldFaceLeft);
+            healthBar.FlipX(shouldFaceLeft);
+            transfrom_ball.localPosition = new Vector2(-transfrom_ball.localPosition.x, transfrom_ball.localPosition.y);
         }
     }
 

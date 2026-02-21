@@ -424,12 +424,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c77769b58cafc245beef4abc47a8fbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EffectsObj: {fileID: 7527035539572008148}
+  CenterObject: {fileID: 1407614551742650331}
   IdMobs: 10
   Name: 
   IsFly: 1
-  mobRadius: 0
-  EffectsObj: {fileID: 7527035539572008148}
-  CenterObject: {fileID: 1407614551742650331}
+  runBackRangePrecent: 0.25
+  stayRangePrecent: 0.4
   player: {fileID: 0}
   mob_object: {fileID: 8190891518342037492}
   audioSource: {fileID: 9119874925974501244}
@@ -445,6 +446,8 @@ MonoBehaviour:
   HPBar: {fileID: 7998632648935421142}
   abillities: []
   IsUpper: 1
+  DisplayPathTraking: 0
+  isToPath: 0
   bossMusic: {fileID: 8300000, guid: 0c67c9a9286d3d94b887d54036636106, type: 3}
   uperPartBoss: {fileID: 2175523287238433042}
   shadow_trans: {fileID: 5973034391210070178}

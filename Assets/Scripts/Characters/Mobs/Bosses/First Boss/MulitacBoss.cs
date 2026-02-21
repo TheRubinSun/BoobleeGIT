@@ -54,7 +54,7 @@ public class MulitacBoss : BossLogic
     public float speedFlyBody = 2f;          // Скорость колебаний
     private Vector2 startPos;
 
-    public override void Flipface() { }
+    protected override void Flipface() { }
     private bool isRotateAttack;
 
     protected override void Awake()
@@ -486,50 +486,69 @@ public class MulitacBoss : BossLogic
         }
         return false;
     }
-    protected override void PlayerDetected(Vector2 toPlayer, float distanceToPlayer)
+    //protected override void ToPlayerAttack()
+    //{
+    //    Vector2 toPlayer = ToPlayer;
+    //    // Проверяем перед атакой, есть ли стена перед врагом
+    //    // Финальная проверка: есть ли прямая видимость игрока
+    //    RaycastHit2D visionHit = Physics2D.Raycast(CenterObject.position, toPlayer.normalized, distToPlayer, combinedLayerMask);
+
+    //    // Дополнительный буфер для ренджа атаки
+
+    //    float effectiveRange = enum_stat.Att_Range - attackBuffer;
+
+    //    bool canSeePlayer = visionHit.collider != null && visionHit.collider.gameObject.layer == LayerManager.playerLayer;
+
+
+    //    if (distToPlayer < effectiveRange && canSeePlayer)
+    //    {
+
+    //        //moveDirection = Vector2.zero;
+
+    //        // Если моб слишком близко, он немного отходит назад
+    //        if (distToPlayer < enum_stat.Att_Range * 0.25f)
+    //        {
+    //            moveDirection = -toPlayer.normalized;
+    //        }
+    //        else if (distToPlayer < enum_stat.Att_Range * 0.40f)
+    //        {
+    //            moveDirection = Vector2.zero;
+    //        }
+    //        else
+    //        {
+    //            moveDirection = toPlayer.normalized;
+    //        }
+    //        IsNearThePlayer = true;
+    //        Attack(distToPlayer);
+    //    }
+    //    else if (distToPlayer < enum_stat.Att_Range && canSeePlayer && IsNearThePlayer)
+    //    {
+    //        moveDirection = Vector2.zero;
+    //        Attack(distToPlayer);
+    //    }
+    //    else
+    //    {
+    //        IsNearThePlayer = false;
+    //        moveDirection = toPlayer.normalized;
+    //    }
+    //}
+    protected override void RunBackAndAttack(Vector2 toPlayer)
     {
-        // Проверяем перед атакой, есть ли стена перед врагом
-        // Финальная проверка: есть ли прямая видимость игрока
-        RaycastHit2D visionHit = Physics2D.Raycast(CenterObject.position, toPlayer.normalized, distanceToPlayer, combinedLayerMask);
-
-        // Дополнительный буфер для ренджа атаки
-
-        float effectiveRange = enum_stat.Att_Range - attackBuffer;
-
-        bool canSeePlayer = visionHit.collider != null && visionHit.collider.gameObject.layer == LayerManager.playerLayer;
-
-
-        if (distanceToPlayer < effectiveRange && canSeePlayer)
+        // Если моб слишком близко, он немного отходит назад
+        if (distToPlayer < enum_stat.Att_Range * runBackRangePrecent)
         {
-            
-            //moveDirection = Vector2.zero;
-
-            // Если моб слишком близко, он немного отходит назад
-            if (distanceToPlayer < enum_stat.Att_Range * 0.25f)
-            {
-                moveDirection = -toPlayer.normalized;
-            }
-            else if(distanceToPlayer < enum_stat.Att_Range * 0.40f)
-            {
-                moveDirection = Vector2.zero;
-            }
-            else
-            {
-                moveDirection = toPlayer.normalized;
-            }
-            IsNearThePlayer = true;
-            Attack(distanceToPlayer);
+            moveDirection = -toPlayer.normalized;
         }
-        else if (distanceToPlayer < enum_stat.Att_Range && canSeePlayer && IsNearThePlayer)
+        else if (distToPlayer < enum_stat.Att_Range * stayRangePrecent)
         {
             moveDirection = Vector2.zero;
-            Attack(distanceToPlayer);
         }
         else
         {
-            IsNearThePlayer = false;
             moveDirection = toPlayer.normalized;
         }
+        IsNearThePlayer = true;
+        Attack(distToPlayer);
     }
 
 }

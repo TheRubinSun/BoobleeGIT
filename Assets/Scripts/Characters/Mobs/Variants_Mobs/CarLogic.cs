@@ -30,42 +30,44 @@ public class CarLogic : BaseEnemyLogic
 
         GlobalData.Player.TakeDamage(enum_stat.Att_Damage, damageT.Physical, true);
     }
-    protected override void PlayerDetected(Vector2 toPlayer, float distanceToPlayer)
-    {
-        // Проверяем перед атакой, есть ли стена перед врагом
-        RaycastHit2D visionHit = Physics2D.Raycast(CenterObject.position, toPlayer.normalized, distanceToPlayer, combinedLayerMask);
+    //protected override void ToPlayerAttack()
+    //{
+    //    Vector2 toPlayer = ToPlayer;
 
-        // Дополнительный буфер для ренджа атаки
+    //    // Проверяем перед атакой, есть ли стена перед врагом
+    //    RaycastHit2D visionHit = Physics2D.Raycast(CenterObject.position, toPlayer.normalized, distToPlayer, combinedLayerMask);
 
-        float effectiveRange = enum_stat.Att_Range - attackBuffer;
+    //    // Дополнительный буфер для ренджа атаки
 
-        bool canSeePlayer = visionHit.collider != null && visionHit.collider.gameObject.layer == LayerManager.playerLayer;
+    //    float effectiveRange = enum_stat.Att_Range - attackBuffer;
+
+    //    bool canSeePlayer = visionHit.collider != null && visionHit.collider.gameObject.layer == LayerManager.playerLayer;
 
 
-        if (distanceToPlayer < effectiveRange && canSeePlayer)
-        {
-            moveDirection = Vector2.zero;
+    //    if (distToPlayer < effectiveRange && canSeePlayer)
+    //    {
+    //        moveDirection = Vector2.zero;
 
-            // Если моб слишком близко, он немного отходит назад
-            if (distanceToPlayer < enum_stat.Att_Range * 0.6f)
-            {
-                moveDirection = -toPlayer.normalized;
-            }
-            IsNearThePlayer = true;
-            Attack(distanceToPlayer);
-        }
-        else if (distanceToPlayer < enum_stat.Att_Range && canSeePlayer && IsNearThePlayer)
-        {
-            moveDirection = Vector2.zero;
-            Attack(distanceToPlayer);
-        }
-        else
-        {
-            IsNearThePlayer = false;
-            moveDirection = toPlayer.normalized;
-        }
+    //        // Если моб слишком близко, он немного отходит назад
+    //        if (distToPlayer < enum_stat.Att_Range * 0.6f)
+    //        {
+    //            moveDirection = -toPlayer.normalized;
+    //        }
+    //        IsNearThePlayer = true;
+    //        Attack(distToPlayer);
+    //    }
+    //    else if (distToPlayer < enum_stat.Att_Range && canSeePlayer && IsNearThePlayer)
+    //    {
+    //        moveDirection = Vector2.zero;
+    //        Attack(distToPlayer);
+    //    }
+    //    else
+    //    {
+    //        IsNearThePlayer = false;
+    //        moveDirection = toPlayer.normalized;
+    //    }
 
-    }
+    //}
     public override void Death()
     {
         moveSoundSource.Stop();

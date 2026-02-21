@@ -1,27 +1,33 @@
 using NUnit.Framework;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using UnityEngine;
+using static UnityEditorInternal.VersionControl.ListControl;
 
 public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAttack
 {
     public static event Action<BaseEnemyLogic> OnEnemyDeath;
     [SerializeField] protected Transform EffectsObj;
     [SerializeField] protected Transform CenterObject;
+    [SerializeField] protected float separationWeight = 1f; //Толщина моба, чтобы распределялись
     public int IdMobs; //Тип моба
     public string Name; //Имя
     public EnemyStats enum_stat;
     public TypeMob typeMob { get; protected set; }
     protected Mob mob; //Моб
     protected BuffsStats bf_stats;
+
     //Состояния
     protected bool IsDead { get; set; }
     public bool IsFly;
     protected Color32 original_color; //Цвет
+    public float runBackRangePrecent = 0.6f;
+    public float stayRangePrecent = 0;
+    protected bool isRunBack;
     //Движение
-    protected Coroutine avoidCoroutine;
-    public float mobRadius;
     protected float avoidDistance = 1f; //Обходное расстояние
     protected Vector2 moveDirection;
     protected RaycastHit2D[] hits;
@@ -63,8 +69,9 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     protected HealthBar2D healthBar;
 
     //Слой
-    protected int combinedLayerMask;
-    protected int obstCombLayerMask;
+
+    protected int obstCombLayerMask => (1 << LayerManager.obstaclesLayer) | (1 << LayerManager.touchObjectsLayer);
+    protected int combinedLayerMask => obstCombLayerMask | (1 << LayerManager.playerLayer);
     protected CullingObject culling;
     protected bool isVisibleNow = true;
 
@@ -73,6 +80,10 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
 
     protected Coroutine flashCol;
     protected int finalTakeDamage;
+
+    protected Pathfinding pathfinding;
+    protected List<NodeP> path;
+    public bool DisplayPathTraking;
     protected virtual void Awake()
     {
         bf_stats = new BuffsStats();
@@ -95,23 +106,19 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
         if (player == null && GlobalData.GameManager.PlayerModel != null)
             player = GlobalData.GameManager.PlayerModel;
 
+        pathfinding = Pathfinding.instance;
+
         original_color = spr_ren.color;
         moveDirection = (player.position - CenterObject.position).normalized; //Вычисление направление к игроку
         UpdateSortingOrder();
-
-        combinedLayerMask = (1 << LayerManager.obstaclesLayer) /*| (1 << LayerManager.interactableLayer) | (1 << LayerManager.touchObjectsLayer)*/ | (1 << LayerManager.playerLayer);
-        obstCombLayerMask = (1 << LayerManager.obstaclesLayer) /*| (1 << LayerManager.interactableLayer) | (1 << LayerManager.touchObjectsLayer)*/;
-
         CreateCulling();
         UpdateCulling(false);
         GlobalData.CullingManager.RegisterObject(this);
 
         if (abillities.Length > 0) StartCoroutine(LoadAbilities());
-        //SetVolume();
     }
     protected virtual void LoadParametrs()
     {
-        //Debug.Log($"Size {EnemyList.mobs.Count} {IdMobs}");
         mob = EnemyList.mobs[IdMobs];
         Name = mob.NameKey;
         typeMob = mob.TypeMob;
@@ -151,17 +158,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     {
         selfCollider = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
-        mobRadius = selfCollider.bounds.extents.magnitude + 0.1f;
     }
-
-    //public void SetSpeedCoof(float newCoofSpeed)
-    //{
-    //    coofMoveSpeed = newCoofSpeed;
-    //}
-    //public void ToBaseSpeed()
-    //{
-    //    coofMoveSpeed = baseCoofMove;
-    //}
     protected virtual IEnumerator LoadAbilities()
     {
         for (int i = 0; i < abillities.Length; i++)
@@ -184,32 +181,11 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
         // логика применения
         yield return null;
     }
-    protected virtual void SetVolume()
-    {
-        //audioSource.volume = GlobalData.VOLUME_SOUNDS;
-    }
-
-
-    protected int fixedUpdateCounter = 0;
-    protected virtual void Update() { }
-    protected virtual void FixedUpdate()
-    {
-        fixedUpdateCounter++;
-        directionUpdateInterval = IsNearThePlayer ? 8 : 24;
-        if (fixedUpdateCounter >= directionUpdateInterval)
-        {
-            DetectDirection();
-            fixedUpdateCounter = 0;
-        }
-        Move();
-    }
     public virtual void UpdateSortingOrder()
     {
         if (!isVisibleNow) return;
 
         if (IsUpper) return; //Если моб должен быть поверх всего
-
-        //Debug.Log(IsUpper);
 
         float mobPosY = transform.position.y;
         float PlayerPosY = GlobalData.GameManager.PlayerPosY;
@@ -220,7 +196,6 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     public virtual void TakeDamage(int damage, damageT typeAttack, bool canEvade, EffectData effect = null)
     {
         audioSource.Stop();
-        //audioSource.volume = touch_volume;
         audioSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f);
 
         if(player_touch_sounds.Length != 0)
@@ -348,23 +323,53 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
         StopAllCoroutines();
         OnEnemyDeath?.Invoke(this);
     }
-    //public IEnumerator WaitToDie(float time)
-    //{
-    //    yield return new WaitForSeconds(time);
-    //    Destroy(gameObject);
-    //}
-
-
 
     ///////////////////Controle
 
-    public virtual void Move()
+    protected int fixedUpdateCounter = 0;
+    protected Coroutine CreatePath;
+    protected virtual void Update() { }
+    protected virtual void FixedUpdate()
+    {
+        fixedUpdateCounter++;
+        directionUpdateInterval = IsNearThePlayer ? 8 : 24; //Если моб близко, быстрее определять вектор
+        if (fixedUpdateCounter >= directionUpdateInterval)
+        {
+            DetectDirection(); //Метод определяет, идти прямо или строить путь
+            fixedUpdateCounter = 0;
+        }
+
+        if (isToPath && !IsNearThePlayer)
+        {
+            if(CreatePath == null)
+                CreatePath = StartCoroutine(UpdatePathRoutine());
+
+            MoveAlongPath();
+        }
+        else
+        {
+            if(CreatePath != null)
+            {
+                StopCoroutine(CreatePath);
+                CreatePath = null;
+                if (path != null) path.Clear();
+            }
+            ToPlayerAttack();
+        }
+            
+        Move();
+    }
+
+    protected virtual void Move()
     {
         Flipface();
-
-        if(enum_stat.Mov_Speed > 0)
+        Vector2 finalDirection = moveDirection;
+        Vector2 separation = GetSeparationVector();
+        finalDirection = (finalDirection + separation * separationWeight).normalized;
+        if (enum_stat.Mov_Speed > 0 && finalDirection != Vector2.zero)
         {
-            Vector2 newPosition = rb.position + moveDirection * enum_stat.Mov_Speed * Time.fixedDeltaTime;
+            float finalSpeed = isRunBack ? enum_stat.Mov_Speed / 2 : enum_stat.Mov_Speed;
+            Vector2 newPosition = rb.position + finalDirection * finalSpeed * Time.fixedDeltaTime;
             rb.MovePosition(newPosition);
         }
         else
@@ -373,123 +378,148 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
         }
 
     }
-    public virtual void Flipface() //Разворачиваем моба 
+    protected Vector2 GetSeparationVector()
+    {
+        Vector2 separation = Vector2.zero;
+        Collider2D[] teammates = Physics2D.OverlapCircleAll(CenterObject.position, 0.8f, LayerManager.enemyLayer);
+        foreach(Collider2D teammate in teammates)
+        {
+            if (teammate == selfCollider) continue;
+
+            Vector2 diff = (Vector2)CenterObject.position - (Vector2)teammate.transform.position;
+            separation += diff.normalized / diff.magnitude;
+        }
+        return separation;
+    }
+    protected virtual void MoveAlongPath()
+    {
+        // 1. Всегда проверяем, есть ли куда идти
+        if (path == null || path.Count == 0)
+        {
+            moveDirection = Vector2.zero;
+            return;
+        }
+
+        Vector2 targetPos = path[0].worldPos;
+
+        moveDirection = (targetPos - rb.position).normalized;
+        if (Vector2.Distance(transform.position, targetPos) < 0.1f)
+        {
+            path.RemoveAt(0);
+        }
+    }
+    protected virtual IEnumerator UpdatePathRoutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.5f);
+
+            path = pathfinding.FindPath(transform.position, player.position);
+        }
+    }
+    protected virtual void Flipface() //Разворачиваем моба 
     {
         if (player == null) return; // Проверка на null
 
-        bool shouldFaceLeft = player.position.x < transform.position.x; // Игрок слева?
+        bool shouldFaceLeft;
+
+        if (Mathf.Abs(moveDirection.x) < 0.01f || isRunBack) //Если нет направление (например стоит, чтобы в сторону игрока смотрел)
+            shouldFaceLeft = player.position.x < transform.position.x;
+        else
+            shouldFaceLeft = moveDirection.x < 0; // Игрок слева?
 
         if (spr_ren.flipX != shouldFaceLeft) // Если нужно сменить направление
         {
             spr_ren.flipX = shouldFaceLeft;
+            FlipfaceChild(shouldFaceLeft);
         }
+        
     }
+    protected virtual void FlipfaceChild(bool shouldFaceLeft) { }
+    
     public virtual Vector2 ToPlayer => player.position - CenterObject.position;
+    public virtual float distToPlayer => ToPlayer.magnitude;
+
+    public bool isToPath = false;
     public virtual void DetectDirection() //Вычисляем направление
     {
-        Vector2 toPlayer = ToPlayer;
-        float distanceToPlayer = toPlayer.magnitude; // Расстояние до игрока
-
-        // Создаем LayerMask, который включает оба слоя: playerLayer и obstacleLayer
-
-        RaycastHit2D hit = BuildRayCast(CenterObject.position, toPlayer.normalized, mobRadius, combinedLayerMask);
+        
+        RaycastHit2D hit = BuildRayCast(CenterObject.position, ToPlayer.normalized, distToPlayer, combinedLayerMask);
         bool wallDetected = false;
 
         if (hit.collider != null)
         {
             if (((1 << hit.collider.gameObject.layer) & obstCombLayerMask) != 0)
-            {
                 wallDetected = true;
-            }
-            // Если луч попал в игрока, игнорируем
-            else /*if (hit.collider.gameObject.layer == LayerManager.playerLayer || hit.collider.gameObject.layer == LayerManager.enemyLayer)*/
-            {
+            else
                 wallDetected = false;
-            }
         }
-
-
         if (wallDetected && !IsFly)
-        {
-            if(avoidCoroutine == null)
-            {
-                avoidCoroutine = StartCoroutine(AvoidTarget(hit));
-            }
-            return;
-        }
+            isToPath = true;
         else
-        {
-            if(avoidCoroutine != null)
-            {
-                StopCoroutine(avoidCoroutine);
-                avoidCoroutine = null;
-            }
-            PlayerDetected(toPlayer, distanceToPlayer);
-        }
-        //AvoidWall(wallDetected, toPlayer, distanceToPlayer);
+            isToPath = false;
     }
     protected virtual RaycastHit2D BuildRayCast(Vector2 start, Vector2 end, float avoidDist, int combinedLayerMask)
     {
-        return Physics2D.Raycast(start, end, mobRadius, combinedLayerMask);
+        return Physics2D.Raycast(start, end, avoidDist, combinedLayerMask);
     }
-    protected virtual IEnumerator AvoidTarget(RaycastHit2D target)
+    protected virtual void ToPlayerAttack()
     {
-        IsNearThePlayer = false;
-        RaycastHit2D hit = target;
-        while(hit.collider != null && (((1 << hit.collider.gameObject.layer) & obstCombLayerMask) != 0))
-        {
-            Vector2 toPlayer = player.position - CenterObject.position;
-
-            hit = BuildRayCast(CenterObject.position, toPlayer.normalized, mobRadius, combinedLayerMask);
-            Vector2 avoidDir = Vector2.Perpendicular(toPlayer).normalized;
-            bool canLeft = !Physics2D.Raycast(CenterObject.position, avoidDir, mobRadius, obstCombLayerMask);
-            bool canRight = !Physics2D.Raycast(CenterObject.position, -avoidDir, mobRadius, obstCombLayerMask);
-
-            if (canLeft)
-                moveDirection = avoidDir;
-            else if (canRight)
-                moveDirection = -avoidDir;
-
-            yield return new WaitForSeconds(0.2f);
-        }
-        avoidCoroutine = null;
-    }
-    protected virtual void PlayerDetected(Vector2 toPlayer, float distanceToPlayer)
-    {
+        Vector2 toPlayer = ToPlayer;
         // Проверяем перед атакой, есть ли стена перед врагом
         // Финальная проверка: есть ли прямая видимость игрока
-        RaycastHit2D visionHit = Physics2D.Raycast(CenterObject.position, toPlayer.normalized, distanceToPlayer, combinedLayerMask);
+        RaycastHit2D visionHit = Physics2D.Raycast(CenterObject.position, toPlayer.normalized, distToPlayer, combinedLayerMask);
 
-        // Дополнительный буфер для ренджа атаки
-
+        // Дополнительный буфер для ренджа атаки (Чтобы моб сразу не отходил, мог немного стоят и стрелять)
         float effectiveRange = enum_stat.Att_Range - attackBuffer;
-
         bool canSeePlayer = visionHit.collider != null && visionHit.collider.gameObject.layer == LayerManager.playerLayer;
 
-
-        if (distanceToPlayer < effectiveRange && canSeePlayer)
+        if (distToPlayer < effectiveRange && canSeePlayer)
         {
-            moveDirection = Vector2.zero;
-
-            // Если моб слишком близко, он немного отходит назад
-            if (distanceToPlayer < enum_stat.Att_Range * 0.6f)
-            {
-                moveDirection = -toPlayer.normalized;
-            }
-            IsNearThePlayer = true;
-            Attack(distanceToPlayer);
+            //Атака максимальной ренджи, и отходит если слишком близко к мобу
+            RunBackAndAttack(toPlayer);
         }
-        else if (distanceToPlayer < enum_stat.Att_Range && canSeePlayer && IsNearThePlayer)
+        else if (distToPlayer < enum_stat.Att_Range && canSeePlayer && IsNearThePlayer)
         {
-            moveDirection = Vector2.zero;
-            Attack(distanceToPlayer);
+            //Стоит и атакует в пределах ренджи (например дальний моб не отходил каждый милиметр по приближению игрока)
+            StayAndAttack();
         }
         else
         {
-            IsNearThePlayer = false;
-            moveDirection = toPlayer.normalized;
+            //Подойти для ренджи атаки
+            RunRight(toPlayer);
         }
     }
+
+    protected virtual void RunBackAndAttack(Vector2 toPlayer)
+    {
+        moveDirection = Vector2.zero;
+
+        // Если моб слишком близко, он немного отходит назад
+        if (distToPlayer < enum_stat.Att_Range * runBackRangePrecent)
+        {
+            isRunBack = true;
+            moveDirection = -toPlayer.normalized;
+        }
+        else
+            isRunBack = false;
+
+        IsNearThePlayer = true;
+        Attack(distToPlayer);
+    }
+    protected virtual void StayAndAttack()
+    {
+        isRunBack = false;
+        moveDirection = Vector2.zero;
+        Attack(distToPlayer);
+    }
+    protected virtual void RunRight(Vector2 toPlayer)
+    {
+        isRunBack = false;
+        IsNearThePlayer = false;
+        moveDirection = toPlayer.normalized;
+    }
+
 
     public virtual void RotateTowardsMovementDirection(Vector2 direction)
     {
@@ -547,6 +577,18 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
             if (GlobalData.isVisibleHpBarEnemy == true && healthBar != null)
             {
                 healthBar.SetActiveHP(shouldBeVisible);
+            }
+        }
+    }
+    private void OnDrawGizmos()
+    {
+        if (!DisplayPathTraking) return;
+        if (path != null)
+        {
+            Gizmos.color = Color.black;
+            foreach (NodeP n in path)
+            {
+                Gizmos.DrawCube(n.worldPos, Vector2.one * 0.3f);
             }
         }
     }

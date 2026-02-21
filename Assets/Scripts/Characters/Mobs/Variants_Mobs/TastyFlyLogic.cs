@@ -24,17 +24,9 @@ public class TastyFlyLogic : BaseEnemyLogic
         }
 
     }
-    public override void Flipface() //Разворачиваем моба 
+    protected override void FlipfaceChild(bool shouldFaceLeft)
     {
-        if (player == null) return; // Проверка на null
-
-        bool shouldFaceLeft = player.position.x < transform.position.x; // Игрок слева?
-
-        if (spr_ren.flipX != shouldFaceLeft) // Если нужно сменить направление
-        {
-            spr_ren.flipX = shouldFaceLeft;
-            shadow_sprite.flipX = shouldFaceLeft;
-        }
+        shadow_sprite.flipX = shouldFaceLeft;
     }
     public override void DetectDirection() //Вычисляем направление
     {

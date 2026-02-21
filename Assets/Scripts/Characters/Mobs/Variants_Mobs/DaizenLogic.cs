@@ -59,19 +59,10 @@ public class DaizenLogic : BaseEnemyLogic
         }
     }
 
-
-    public override void Flipface() //Разворачиваем моба 
+    protected override void FlipfaceChild(bool shouldFaceLeft)
     {
-        if (player == null) return; // Проверка на null
-
-        bool shouldFaceLeft = player.position.x < transform.position.x; // Игрок слева?
-
-        if (spr_ren.flipX != shouldFaceLeft) // Если нужно сменить направление
-        {
-            spr_ren.flipX = shouldFaceLeft;
-            if (spr_ren_ch != null)
-                spr_ren_ch.flipX = shouldFaceLeft;
-        }
+        if (spr_ren_ch != null)
+            spr_ren_ch.flipX = shouldFaceLeft;
     }
     public override void MeleeAttack()
     {
