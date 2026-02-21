@@ -412,11 +412,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cc779135a28a42498a64098426c5bc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EffectsObj: {fileID: 6146058071365724942}
+  CenterObject: {fileID: 5103865891430872179}
+  separationWeight: 0.15
   IdMobs: 5
   Name: 
   IsFly: 0
-  EffectsObj: {fileID: 6146058071365724942}
-  CenterObject: {fileID: 5103865891430872179}
+  runBackRangePrecent: 0.6
+  stayRangePrecent: 0
   player: {fileID: 0}
   mob_object: {fileID: 5278448938266498526}
   audioSource: {fileID: 0}
@@ -435,13 +438,15 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f1903128da6e82d41959a723c2a255e8, type: 3}
   damageValuePref: {fileID: 6292013005122663656, guid: cac7b7163f7b90940bb6363f0f51064d, type: 3}
   attackBuffer: 0
-  baseCoofMove: 1
   HPBar: {fileID: 4426098493281138801}
   abillities:
   - nameAbility: 
     Duration: 2
     Cooldown: 10
     Value: 2.5
+  IsUpper: 0
+  DisplayPathTraking: 0
+  isToPath: 0
   moveSound: {fileID: 8300000, guid: 4f8e879b54ff5e74399acea974eb719d, type: 3}
   Skill_speed: 0
 --- !u!114 &7636874673718867518

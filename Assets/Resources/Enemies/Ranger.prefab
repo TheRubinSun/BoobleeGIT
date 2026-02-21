@@ -387,10 +387,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EffectsObj: {fileID: 4571109830553865167}
   CenterObject: {fileID: 256399650496971137}
+  separationWeight: 0.15
   IdMobs: 1
   Name: 
   IsFly: 0
-  mobRadius: 0
+  runBackRangePrecent: 0.6
+  stayRangePrecent: 0
   player: {fileID: 0}
   mob_object: {fileID: 202375288678573708}
   audioSource: {fileID: 0}
@@ -408,6 +410,7 @@ MonoBehaviour:
   abillities: []
   IsUpper: 0
   DisplayPathTraking: 0
+  isToPath: 0
   child_Obj: {fileID: 256399650496971137}
   Shoot_point: {fileID: 456431214478227135}
 --- !u!50 &7199100356596578262

@@ -174,11 +174,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5de17572e70ced141a656bf8d17c82a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EffectsObj: {fileID: 6496129284565621122}
+  CenterObject: {fileID: 1286109631142785009}
+  separationWeight: 0.15
   IdMobs: 4
   Name: 
   IsFly: 0
-  EffectsObj: {fileID: 6496129284565621122}
-  CenterObject: {fileID: 1286109631142785009}
+  runBackRangePrecent: 0.6
+  stayRangePrecent: 0
   player: {fileID: 0}
   mob_object: {fileID: 756568382040267094}
   audioSource: {fileID: 0}
@@ -191,9 +194,11 @@ MonoBehaviour:
   abolity_sounds: []
   damageValuePref: {fileID: 6292013005122663656, guid: cac7b7163f7b90940bb6363f0f51064d, type: 3}
   attackBuffer: 1
-  baseCoofMove: 1
   HPBar: {fileID: 1852044187561295959}
   abillities: []
+  IsUpper: 0
+  DisplayPathTraking: 0
+  isToPath: 0
 --- !u!114 &6522999422788731205
 MonoBehaviour:
   m_ObjectHideFlags: 0

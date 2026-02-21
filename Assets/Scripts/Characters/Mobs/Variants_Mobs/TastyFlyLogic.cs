@@ -24,6 +24,17 @@ public class TastyFlyLogic : BaseEnemyLogic
         }
 
     }
+    protected override void FixedUpdate()
+    {
+        fixedUpdateCounter++;
+        directionUpdateInterval = IsNearThePlayer ? 8 : 24;
+        if (fixedUpdateCounter >= directionUpdateInterval)
+        {
+            DetectDirection();
+            fixedUpdateCounter = 0;
+        }
+        Move();
+    }
     protected override void FlipfaceChild(bool shouldFaceLeft)
     {
         shadow_sprite.flipX = shouldFaceLeft;

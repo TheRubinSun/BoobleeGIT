@@ -2,10 +2,8 @@ using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using TMPro;
 using UnityEngine;
-using static UnityEditorInternal.VersionControl.ListControl;
 
 public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAttack
 {
@@ -36,7 +34,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     public Transform player;
 
     // Для задержки обновления направления
-    private int directionUpdateInterval = 8; // 60 / 10 = каждые 6 FixedUpdate
+    protected int directionUpdateInterval = 8; // 60 / 10 = каждые 6 FixedUpdate
     protected bool IsNearThePlayer = false;
     protected bool CanBeMissedAttack = true;
 
@@ -378,17 +376,29 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
         }
 
     }
-    protected Vector2 GetSeparationVector()
+    private Vector2 cachedSeparation;
+    private int separationCounter;
+    // Создаем буфер заранее. 10 слотов обычно хватает для расталкивания в толпе.
+    private Collider2D[] teammatesBuffer = new Collider2D[10];
+    protected Vector2 GetSeparationVector() //Отталкивание мобов друг от друга, чтобы не толкали
     {
-        Vector2 separation = Vector2.zero;
-        Collider2D[] teammates = Physics2D.OverlapCircleAll(CenterObject.position, 0.8f, LayerManager.enemyLayer);
-        foreach(Collider2D teammate in teammates)
-        {
-            if (teammate == selfCollider) continue;
+        separationCounter++;
+        if (separationCounter % 4 != 0) return cachedSeparation;
 
-            Vector2 diff = (Vector2)CenterObject.position - (Vector2)teammate.transform.position;
-            separation += diff.normalized / diff.magnitude;
+        Vector2 separation = Vector2.zero;
+        int count = Physics2D.OverlapCircle(CenterObject.position, 0.8f, 
+            new ContactFilter2D { useLayerMask = true, layerMask = LayerManager.enemyAll}, teammatesBuffer);
+        for (int i = 0; i < count; i++)
+        {
+            if (teammatesBuffer[i].attachedRigidbody == rb) continue;
+
+            Vector2 diff = (Vector2)CenterObject.position - (Vector2)teammatesBuffer[i].transform.position;
+
+            float dist = diff.magnitude;
+            if (dist > 0.05f)
+                separation += diff.normalized / dist;
         }
+        cachedSeparation = separation;
         return separation;
     }
     protected virtual void MoveAlongPath()

@@ -475,9 +475,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EffectsObj: {fileID: 1784190780623767438}
   CenterObject: {fileID: 3794253683764855951}
+  separationWeight: 0.15
   IdMobs: 0
   Name: 
   IsFly: 0
+  runBackRangePrecent: 0.6
+  stayRangePrecent: 0
   player: {fileID: 0}
   mob_object: {fileID: 420888788017792791}
   audioSource: {fileID: 0}

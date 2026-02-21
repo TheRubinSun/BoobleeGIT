@@ -305,10 +305,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EffectsObj: {fileID: 7310259383649713287}
   CenterObject: {fileID: 1103414272828867590}
+  separationWeight: 0
   IdMobs: 11
   Name: 
   IsFly: 0
-  mobRadius: 0
+  runBackRangePrecent: 0.6
+  stayRangePrecent: 0
   player: {fileID: 0}
   mob_object: {fileID: 7742736579471170417}
   audioSource: {fileID: 8690447992199704978}
@@ -322,6 +324,8 @@ MonoBehaviour:
   HPBar: {fileID: 3565432840889089585}
   abillities: []
   IsUpper: 0
+  DisplayPathTraking: 0
+  isToPath: 0
   textDPS: {fileID: 2509148606658024321}
 --- !u!50 &1491836216295525892
 Rigidbody2D:

@@ -25,7 +25,7 @@ public class CullingManager : MonoBehaviour
     public bool allVisible = false;
     private HashSet<ICullableObject> objects_visibles = new HashSet<ICullableObject>();
 
-    private float cullCheckInterval = 0.25f; // 4 раза в секунду (вместо каждого кадра)
+    private float cullCheckInterval = 0.3f; // 4 раза в секунду (вместо каждого кадра)
     private float cullCheckTimer = 0;
 
     private PixelPerfectCamera ppc;
@@ -91,24 +91,6 @@ public class CullingManager : MonoBehaviour
         }
 
         yield return new WaitForEndOfFrame();
-
-        //if(ratio > 2.2f)
-        //{
-
-        //}
-        //else if(ratio > 1.8f)
-        //{
-
-        //}
-        //else if(ratio > 1.7f)
-        //{
-
-        //}
-        //else
-        //{
-
-        //}
-
         ResizeNextFrame(multiply);
     }
     private void ResizeNextFrame(float multiply) //Обновление рамки помещение объектов  в кадор
@@ -118,7 +100,6 @@ public class CullingManager : MonoBehaviour
 
         radiusY = vert + activationRadiusY * multiply;
         radiusX = horiz + activationRadiusX * multiply;
-        //Debug.Log($"radiusY: {radiusY} radiusX:{radiusX} vert: {vert} horiz: {horiz}");
     }
 
 
