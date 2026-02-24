@@ -6,9 +6,11 @@ public class NodeP
     public Vector2 worldPos;   //Позиция в мире
     public Vector2Int gridPos; //Координата в массиве сетки
     public int pathID; // Новое поле для оптимизации 
+    public bool isCheked;
 
     public int gCost; // Расстояние от старта
     public int hCost; // Расстояние до цели
+    public int penalty;
     public int fCost => gCost + hCost; // Общая стоимость
     public NodeP parent;
     public NodeP(bool _walkable, Vector2 _worldPos, Vector2Int _gridPos)

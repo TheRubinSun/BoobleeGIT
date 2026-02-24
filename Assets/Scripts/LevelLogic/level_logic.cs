@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class level_logic : MonoBehaviour
 {
+    public static level_logic Instance;
     [SerializeField] private List<SpawnMobPortal> spawnEnemy = new List<SpawnMobPortal>();
     [SerializeField] private float timeToBackHome;
     [SerializeField] private GameObject portalHome;
@@ -17,10 +18,16 @@ public class level_logic : MonoBehaviour
     [SerializeField] private Transform[] PosForPortals;
     //private Transform parentPortal;
     private SpawnMobs spawnMobsLogic;
-
     private int countMobs;
-
-    private void Start()
+    private void Awake()
+    {
+        if(Instance != null)
+        {
+            Destroy(Instance);
+        }
+        Instance = this;
+    }
+    public void StartLevelLogic()
     {
         cooldownEnemySpawn = new float[spawnEnemy.Count];
         spawnMobsLogic = MobsLogicOBJ.GetComponent<SpawnMobs>();
@@ -48,6 +55,7 @@ public class level_logic : MonoBehaviour
     }
     private void Update()
     {
+        if (!GlobalData.LoadedGame) return;
         for (int i = 0; i < cooldownEnemySpawn.Length; i++)
         {
             cooldownEnemySpawn[i] += Time.deltaTime;

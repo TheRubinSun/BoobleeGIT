@@ -49,14 +49,18 @@ public class GameManager: MonoBehaviour
         if (dropParent == null) dropParent = GameObject.Find("DropItems").transform;
         if (PlayerModel == null) PlayerModel = GameObject.Find("PlayerModel").transform;
     }
-    private void Start()
+    private IEnumerator Start()
     {
+        if(Player.Instance != null)
+        {
+            Player.Instance.LoadPlayerLogic();
+        }
+
         music_source = AudioManager.GetComponent<AudioSource>();
         music_source.volume = GlobalData.VOLUME_MUSICS;
         music_source.loop = true;
         music_source.clip = musics[Random.Range(0, musics.Length)];
         music_source.Play();
-
 
         savePath = GlobalData.SavePath;
         if (savePath == null) savePath = "";
@@ -70,36 +74,17 @@ public class GameManager: MonoBehaviour
         {
             Debug.LogError("Ошибка: Локализация не была загружена.");
         }
-
-
         if (GameDataHolder.PlayerData != null)
         {
-            //ItemsList.LoadOrCreateItemList(GameDataHolder.ItemsData.item_List_data);
-            //GlobalData.Classes.LoadOrCreateClasses(GameDataHolder.RoleClassesData.role_Classes_data);
-
-
             GlobalData.Artifacts.LoadOrNew(GameDataHolder.ArtifactsData.artifacts);
-
-
             GlobalWorld.LoadData(GameDataHolder.WorldData.numbTotalPoints, GameDataHolder.WorldData.farmPoints);
-
-
             GlobalData.Player.LoadOrCreateNew(GameDataHolder.PlayerData.player_data);
-
             GlobalData.Inventory.LoadOrCreateInventory(GameDataHolder.PlayerData.inventory_items_data);
             GlobalData.EqupmentPlayer.LoadOrCreateEquipment(GameDataHolder.PlayerData.equip_item_data);
-
-            //EnemyList.LoadOrCreateMobsList(GameDataHolder.EnemyData.mob_list_data);
-            //ItemDropEnemy.LoadOrCreate(GameDataHolder.ItemsDropOnEnemy.namesKeys);
-
             GlobalData.UIControl.LocalizationTranslate();
-
             SaveGameInfo dataInfo = GenInfoSaves.saveGameFiles[GlobalData.SaveInt];
             KillsEnemy = 0;
-            //totalSecondsPlayed = dataInfo.timeHasPassed;
-
             sessionStartTime = Time.realtimeSinceStartup; //Сохраняем настоящее время входа в игру
-
             if (dataInfo.godMode == true) GlobalData.Player.SetGodMode();
             else GlobalData.Player.SetSurvaveMode();
 
@@ -110,10 +95,27 @@ public class GameManager: MonoBehaviour
         {
             Debug.LogError("Ошибка: данные из GameDataHolder не были загружены!");
         }
+
+        yield return StartCoroutine(ChunkGenerator.Instance.GenerateChunks());
+        if (GridNodes.Instance != null)
+        {
+            GridNodes.Instance.CreateGrid();
+        }
+        if (CullingManager.Instance != null)
+        {
+            CullingManager.Instance.StartCulling();
+        }
+        if(level_logic.Instance != null)
+        {
+            level_logic.Instance.StartLevelLogic();
+        }
+        ChunkGenerator.Instance.DeactivateAllChunks();
+
         SaveGameInfo saveGameInfo = GenInfoSaves.saveGameFiles[GlobalData.SaveInt];
         Debug.LogWarning($"Passed time: {saveGameInfo.timeHasPassed}");
-
         GlobalData.Player.GiveStartKit();
+
+        GlobalData.LoadedGame = true;
     }
     //private IEnumerator TrackPlayTime(int timer)
     //{

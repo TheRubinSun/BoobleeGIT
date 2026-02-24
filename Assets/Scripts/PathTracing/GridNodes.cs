@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Bson;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -29,10 +30,9 @@ public class GridNodes : MonoBehaviour
 
         nodeDiametr = nodeRadius * 2;
         gridSize = new Vector2Int(Mathf.RoundToInt(gridWorldSize.x / nodeDiametr), Mathf.RoundToInt(gridWorldSize.y / nodeDiametr));
-        CreateGrid();
     }
 
-    private void CreateGrid()
+    public void CreateGrid()
     {
         grid = new NodeP[gridSize.x, gridSize.y];
         Vector2 worldBottomLeft = (Vector2)transform.position - Vector2.right * gridWorldSize.x/2 - Vector2.up * gridWorldSize.y/2;
@@ -117,9 +117,20 @@ public class GridNodes : MonoBehaviour
         {
             foreach(NodeP node in grid)
             {
-                Gizmos.color = (node.walkable) ? noColor : colorBlock;
+                if(node.walkable)
+                    Gizmos.color = node.isCheked ? Color.blue : noColor;
+                else
+                    Gizmos.color = colorBlock;
+
                 Gizmos.DrawCube(node.worldPos, Vector3.one * (nodeDiametr - .1f));
             }
+        }
+    }
+    public void ClearChecked()
+    {
+        foreach (NodeP node in grid)
+        {
+            node.isCheked = false;
         }
     }
     public void RefreshGrid()

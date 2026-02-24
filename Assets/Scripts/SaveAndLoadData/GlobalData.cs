@@ -12,7 +12,7 @@ public static class GlobalData
     public static int cur_lvl_left;
     public static Vector2 center;
     public static int chunkSize;
-
+    public static bool LoadedGame;
     public static NewPlayer? newPlayer = default;
 
     public static int ID_head;

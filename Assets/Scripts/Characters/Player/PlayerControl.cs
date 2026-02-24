@@ -37,31 +37,19 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private float updateRateLegsMove = 0.13f;
     [SerializeField] private float updateRateLegsStop = 0.3f;
     private float nextUpdateTime = 0f;
-
     [SerializeField] AudioClip audioClips;
 
-    void Start()
+    public void StartControl()
     {
         Instance = this;
-        if (cameraObj == null) cameraObj =  GameObject.Find("Main Camera").transform;
-        //player = GetComponentInParent<Player>();
-
+        if (cameraObj == null) cameraObj = GameObject.Find("Main Camera").transform;
         rb = GetComponent<Rigidbody2D>();
-        SetVolume();
     }
-    private void SetVolume()
-    {
-        //legsControl.GetComponent<AudioSource>().volume = GlobalData.VOLUME_SOUNDS;
-    }
-    // ������� ��� ��������, ��������� �� ��������� ���� ��� UI
-    //private bool IsPointerOverUI()
-    //{
-    //    return EventSystem.current.IsPointerOverGameObject();
-    //}
     private void Update()
     {
-        //inputDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        inputDirection = PlayerInputHandler.CurInputDirection;
+        if (!GlobalData.LoadedGame) return;
+
+       inputDirection = PlayerInputHandler.CurInputDirection;
         RotateWeaponSlots();
     }
     private void FixedUpdate()

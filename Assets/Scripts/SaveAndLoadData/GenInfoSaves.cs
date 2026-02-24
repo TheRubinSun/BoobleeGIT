@@ -71,6 +71,8 @@ public class GenInfoSaves : MonoBehaviour
     }
     private void Start()
     {
+        ChunkManager.isGenerated = false;
+        GlobalData.LoadedGame = false;
         if(GlobalData.screen_resole == null) //≈сли разрешение ещЄ не записанно и не установленно (например при выходе в главное меню из сохранени€)
             StartCoroutine(ApplyResolution(GameDataHolder.savesDataInfo));
     }

@@ -34,26 +34,23 @@ public class CullingManager : MonoBehaviour
 
     private int lastWidth;
     private int lastHeight;
+    private bool isInitialized = false;
 
     [SerializeField] bool IsUpper;
 
     private void Awake()
     {
         Instance = this;
-        if(target == null)
-        {
-            if(GlobalData.GameManager.PlayerModel != null) target = GlobalData.GameManager.PlayerModel;
-            else
-            {
-                target = GameObject.Find("PlayerModel").transform;
-                GlobalData.GameManager.PlayerModel = target;
-            }
-        }
+
         cam = Camera.main;
         ppc = cam.GetComponent<PixelPerfectCamera>();
+        
+    }
+    public void StartCulling()
+    {
+        if (target == null) GlobalData.GameManager.PlayerModel = target;
         applayResole = StartCoroutine(ApplyScale());
     }
-
     //ƒальность камеры от игрока (больше видимости в зависмости от разришени€ экрана)
     public void UpdateResolution()
     {
@@ -113,6 +110,8 @@ public class CullingManager : MonoBehaviour
     }
     private void Update()
     {
+        if (!GlobalData.LoadedGame) return;
+
         cullCheckTimer += Time.deltaTime;
         if (cullCheckTimer < cullCheckInterval) return;
 

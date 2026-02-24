@@ -18,7 +18,9 @@ public class PortalToLevel : MonoBehaviour
         }
         if(collision.gameObject.layer == LayerManager.playerLayer)
         {
-            if(add_lvl_left)
+            ChunkManager.isGenerated = false;
+            GlobalData.LoadedGame = false; 
+            if (add_lvl_left)
             {
                 GlobalData.cur_lvl_left++;
                 GlobalWorld.AddStageGround();

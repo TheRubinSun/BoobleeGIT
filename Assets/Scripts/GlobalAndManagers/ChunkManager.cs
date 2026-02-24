@@ -26,7 +26,7 @@ public class ChunkManager : MonoBehaviour
     }
     private void Update()
     {
-        if ((!isGenerated)) return;
+        if (!GlobalData.LoadedGame || !isGenerated) return;
 
         chunkSize = GlobalData.chunkSize;
 
@@ -72,6 +72,7 @@ public class ChunkManager : MonoBehaviour
                 }
             }
         }
+
     }
 
     private Vector2Int GetPlayerChunk(Vector3 playerPos, int chunkSize, Vector2 center)

@@ -45,10 +45,12 @@ public class Player : MonoBehaviour, ITakeDamage
         pl_ui = GetComponent<PlayerUI>();
         equip_Stats = GetComponent<EquipStats>();
         playerControl = transform.GetChild(0).GetComponent<PlayerControl>();
-
-        pl_ui.SetComponentUI();
-
         player_sprite = PlayerModel.GetComponent<SpriteRenderer>();
+    }
+    public void LoadPlayerLogic()
+    {
+        playerControl.StartControl();
+        pl_ui.SetComponentUI();
         player_sprite.sprite = GameDataHolder.spritePlayerHeadById[GlobalData.ID_head];
         HairPlayer.sprite = GameDataHolder.spritePlayerHairById[GlobalData.ID_hair];
         StartCoroutine(AddManaForRegen());

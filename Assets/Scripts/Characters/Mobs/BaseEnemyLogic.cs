@@ -81,6 +81,8 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
 
     protected Pathfinding pathfinding;
     protected List<NodeP> path;
+    protected NodeP lastNodePlayer;
+    protected NodeP lastMyNode;
     public bool DisplayPathTraking;
     protected virtual void Awake()
     {
@@ -418,13 +420,46 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
             path.RemoveAt(0);
         }
     }
+    
     protected virtual IEnumerator UpdatePathRoutine()
     {
+        yield return new WaitForSeconds(UnityEngine.Random.Range(0f, 0.5f));
+        int i = 0;
+        int j = 0;
         while (true)
         {
-            yield return new WaitForSeconds(0.5f);
+            i++;
+            yield return new WaitForSeconds(0.6f);
 
+            NodeP curNodePlayer = GridNodes.Instance.NodeFromWorldPoint(player.position);
+            NodeP curMyNode = GridNodes.Instance.NodeFromWorldPoint(CenterObject.position);
+            
+            if (lastMyNode == curMyNode && path != null && path.Count > 0 && moveDirection.magnitude > 0.1f)
+            {
+                j++;
+                if(j >= 4)
+                {
+                    pathfinding.AddPenalty(curMyNode, 40);
+                    j = 0;
+                }
+
+            }
+            else if(lastMyNode != null && lastMyNode != curMyNode)
+            {
+                if(j >= 2)
+                    pathfinding.AddPenalty(lastMyNode, 5);
+                j = 0;
+            }
+                
+
+            lastMyNode = curMyNode;
+
+            if (lastNodePlayer == curNodePlayer && i < 4)
+                continue;
+
+            i = 0;
             path = pathfinding.FindPath(transform.position, player.position);
+            lastNodePlayer = curNodePlayer;
         }
     }
     protected virtual void Flipface() //Разворачиваем моба 

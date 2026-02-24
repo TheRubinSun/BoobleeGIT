@@ -3,9 +3,11 @@ using UnityEngine.Tilemaps;
 using UnityEngine;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Collections;
 
 public class ChunkGenerator : MonoBehaviour
 {
+    public static ChunkGenerator Instance;
     public GameObject chunkPrefab;
     public int chunkSize;
     public GameObject map;
@@ -13,13 +15,19 @@ public class ChunkGenerator : MonoBehaviour
     public static Vector2Int chunkOffset;
 
     public Dictionary<Vector2Int, GameObject> allChunks = new Dictionary<Vector2Int, GameObject>();
-    private void Start()
+    //private void Start()
+    //{
+    //    GenerateChunks();
+    //}
+    private void Awake()
     {
-        GenerateChunks();
-        
+        if(Instance != null)
+        {
+            Destroy(Instance);
+        }
+        Instance = this;
     }
-
-    public void GenerateChunks()
+    public IEnumerator GenerateChunks()
     {
         chunksParent = transform;
         Tilemap[] mapTilemaps = map.GetComponentsInChildren<Tilemap>();
@@ -44,6 +52,10 @@ public class ChunkGenerator : MonoBehaviour
         int MaxRangeY = Math.Max(centerY - (bounds.yMin), (bounds.yMax) - centerY);
 
         HashSet<Vector2Int> visited = new HashSet<Vector2Int>();
+        // —четчик дл€ контрол€ нагрузки на кадр
+        int chunksProcessed = 0;
+        int chunksPerFrame = 4; // –егулируй это число (сколько чанков за 1 кадр)
+
         for (int dy = 0; dy <= MaxRangeY; dy += chunkSize)
         {
             for (int dx = 0; dx <= MaxRangeX; dx += chunkSize)
@@ -68,36 +80,15 @@ public class ChunkGenerator : MonoBehaviour
                     Vector2 worldCenter = new Vector2(centerX, centerY);
                     Vector2Int chunkCoord = new Vector2Int(Mathf.FloorToInt((pos.x - centerX) / chunkSize), Mathf.FloorToInt((pos.y - centerY) / chunkSize));
 
-                    GameObject chunkObj = Instantiate(chunkPrefab, worldPos, Quaternion.identity, chunksParent);
-                    chunkObj.name = $"Chunk_{chunkCoord.x}_{chunkCoord.y}";
-                    allChunks[chunkCoord] = chunkObj;
+                    CreateChunkAt(worldPos, chunkCoord, pos, mapTilemaps);
+                    chunksProcessed++;
 
-
-                    Tilemap[] chunkTilemaps = chunkObj.GetComponentsInChildren<Tilemap>();
-                    foreach (var mapTilemap in mapTilemaps)
+                    if(chunksProcessed >= chunksPerFrame)
                     {
-                        Tilemap chunkTilemap = FindChildTilemap(chunkTilemaps, mapTilemap.name);
-                        if (chunkTilemap == null) continue;
-
-                        for (int cx = 0; cx < chunkSize; cx++)
-                        {
-                            for (int cy = 0; cy < chunkSize; cy++)
-                            {
-                                Vector3Int tilePos = new Vector3Int(pos.x + cx, pos.y + cy, 0);
-                                TileBase tile = mapTilemap.GetTile(tilePos);
-
-                                if (tile != null)
-                                {
-                                    Vector3Int localPos = new Vector3Int(cx, cy, 0);
-                                    chunkTilemap.SetTile(localPos, tile);
-
-                                    Matrix4x4 matrix = mapTilemap.GetTransformMatrix(tilePos);
-                                    chunkTilemap.SetTransformMatrix(localPos, matrix);
-                                }
-                            }
-                        }
+                        chunksProcessed = 0;
+                        yield return null;
                     }
-                    chunkObj.SetActive(false);
+
                 }
 
 
@@ -147,6 +138,48 @@ public class ChunkGenerator : MonoBehaviour
         }
         ChunkManager.UpdateAllChunks(allChunks);
         ChunkManager.isGenerated = true;
+        yield return null;
+    }
+
+    private void CreateChunkAt(Vector2 worldPos,  Vector2Int chunkCoord, Vector2Int pos, Tilemap[] mapTilemaps)
+    {
+        GameObject chunkObj = Instantiate(chunkPrefab, worldPos, Quaternion.identity, chunksParent);
+        chunkObj.name = $"Chunk_{chunkCoord.x}_{chunkCoord.y}";
+        allChunks[chunkCoord] = chunkObj;
+
+
+        Tilemap[] chunkTilemaps = chunkObj.GetComponentsInChildren<Tilemap>();
+        foreach (var mapTilemap in mapTilemaps)
+        {
+            Tilemap chunkTilemap = FindChildTilemap(chunkTilemaps, mapTilemap.name);
+            if (chunkTilemap == null) continue;
+
+            for (int cx = 0; cx < chunkSize; cx++)
+            {
+                for (int cy = 0; cy < chunkSize; cy++)
+                {
+                    Vector3Int tilePos = new Vector3Int(pos.x + cx, pos.y + cy, 0);
+                    TileBase tile = mapTilemap.GetTile(tilePos);
+
+                    if (tile != null)
+                    {
+                        Vector3Int localPos = new Vector3Int(cx, cy, 0);
+                        chunkTilemap.SetTile(localPos, tile);
+
+                        Matrix4x4 matrix = mapTilemap.GetTransformMatrix(tilePos);
+                        chunkTilemap.SetTransformMatrix(localPos, matrix);
+                    }
+                }
+            }
+        }
+        //chunkObj.SetActive(false);
+    }
+    public void DeactivateAllChunks()
+    {
+        foreach(GameObject chunk in allChunks.Values)
+        {
+            chunk.SetActive(false);
+        }
     }
     private void CopyTile()
     {

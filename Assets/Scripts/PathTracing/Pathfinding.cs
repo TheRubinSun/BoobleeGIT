@@ -5,9 +5,13 @@ using UnityEngine;
 
 public class Pathfinding : MonoBehaviour
 {
+    [SerializeField] private float accuracyPathfining = 1f;
+    [SerializeField] private int maxPathCost = 100;
     public static Pathfinding instance;
     GridNodes grid;
     private int currentPathID = 0;
+    private HashSet<NodeP> penaltyColdown = new HashSet<NodeP>();
+    private List<NodeP> nodesToRemovePenalty = new List<NodeP>();
     private void Awake()
     {
         if(instance != null)
@@ -30,7 +34,7 @@ public class Pathfinding : MonoBehaviour
     public List<NodeP> FindPath(Vector2 startPos, Vector2 targerPos)
     {
         currentPathID++;
-
+        grid.ClearChecked();
         NodeP startNode = grid.NodeFromWorldPoint(startPos);
         NodeP targetNode = grid.NodeFromWorldPoint(targerPos);
 
@@ -39,6 +43,7 @@ public class Pathfinding : MonoBehaviour
 
         ResertNodeIfObsolete(startNode);
         startNode.gCost = 0;
+        startNode.hCost = GetDistance(startNode, targetNode); // Инициализируем hCost для старта
 
         int distanceToPlayer = GetDistance(startNode, targetNode);
         if(distanceToPlayer > 50)
@@ -49,6 +54,8 @@ public class Pathfinding : MonoBehaviour
         List<NodeP> openSet = new List<NodeP>();
         HashSet<NodeP> closedSet = new HashSet<NodeP>();
         openSet.Add(startNode);
+
+        NodeP bestNodeSoFar = startNode;
 
         while(openSet.Count > 0)
         {
@@ -61,7 +68,14 @@ public class Pathfinding : MonoBehaviour
             }
             openSet.Remove(currentNode);
             closedSet.Add(currentNode);
-            if(currentNode == targetNode)
+
+            if(currentNode.hCost + currentNode.penalty < bestNodeSoFar.hCost + bestNodeSoFar.penalty)
+            {
+                bestNodeSoFar = currentNode;
+            }
+
+            currentNode.isCheked = true;
+            if (currentNode == targetNode)
             {
                 return ReplacePath(startNode, targetNode);
             }
@@ -70,11 +84,14 @@ public class Pathfinding : MonoBehaviour
                 if (!neighbor.walkable || closedSet.Contains(neighbor)) continue;
                 ResertNodeIfObsolete(neighbor);
 
-                int costNeighbor = currentNode.gCost + GetDistance(currentNode, neighbor);
-                if(costNeighbor < neighbor.gCost || !openSet.Contains(neighbor))
+                int distanceCost = currentNode.gCost + GetDistance(currentNode, neighbor);
+                int totalCostWithPenalty = distanceCost + neighbor.penalty;
+                if (distanceCost > maxPathCost) continue;
+
+                if(totalCostWithPenalty < neighbor.gCost || !openSet.Contains(neighbor))
                 {
-                    neighbor.gCost = costNeighbor;
-                    neighbor.hCost = GetDistance(neighbor, targetNode);
+                    neighbor.gCost = totalCostWithPenalty;
+                    neighbor.hCost = (int)(GetDistance(neighbor, targetNode) * accuracyPathfining);
                     neighbor.parent = currentNode;
 
                     if(!openSet.Contains(neighbor))
@@ -84,7 +101,37 @@ public class Pathfinding : MonoBehaviour
                 }
             }
         }
+
+        if (bestNodeSoFar != startNode)
+            return ReplacePath(startNode, bestNodeSoFar);
         return null;
+    }
+    private void FixedUpdate()
+    {
+        if(Time.frameCount % 10 == 0)
+        {
+            nodesToRemovePenalty.Clear();
+            foreach (NodeP item in penaltyColdown)
+            {
+                item.penalty -= 5;
+                if (item.penalty < 0)
+                {
+                    item.penalty = 0;
+                    nodesToRemovePenalty.Add(item);
+                }
+            }
+            foreach (NodeP item in nodesToRemovePenalty)
+            {
+                penaltyColdown.Remove(item);
+            }
+        }
+
+    }
+    public void AddPenalty(NodeP node, int penalty)
+    {
+        if (node.penalty > 1000) return;
+        node.penalty += penalty;
+        penaltyColdown.Add(node);
     }
     private NodeP GetNearestWalkable(NodeP targetNode)
     {
