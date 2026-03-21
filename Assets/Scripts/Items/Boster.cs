@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Boster : Item, IUsable
 {
+    public bool Spent { get; set; } = true;
     public AllStats boosterType;
     public int countBoost;
     public int soundID;

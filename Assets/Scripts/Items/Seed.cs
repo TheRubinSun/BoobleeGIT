@@ -7,6 +7,7 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class Seed : Item, IUsable
 {
+    public bool Spent { get; set; } = true;
     public static int soundID = 0;
     public int id_seed_pref;
     public string flower_type;

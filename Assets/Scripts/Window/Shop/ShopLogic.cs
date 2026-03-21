@@ -96,6 +96,10 @@ public class ShopLogic : MonoBehaviour , ISlot
         trade_cur_exp_image = trade_exp_bar.GetChild(1).GetComponent<Image>();
         trade_exp_text = trade_exp_bar.GetChild(2).GetComponent<TextMeshProUGUI>();
         trade_expRect = trade_exp_bar.GetComponent<RectTransform>();
+
+    }
+    public void LoadShopsData()
+    {
         player_stat = GlobalData.Player.GetPlayerStats();
         none_item = ItemsList.items[0];
     }

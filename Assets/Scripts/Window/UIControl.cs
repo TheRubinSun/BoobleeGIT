@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static System.Runtime.CompilerServices.RuntimeHelpers;
 
-public class UIControl:MonoBehaviour
+public class UIControl : MonoBehaviour
 {
     public static UIControl Instance { get; private set; }
 
@@ -61,13 +61,12 @@ public class UIControl:MonoBehaviour
         Instance = this;
         rtAllItems = allItemsWindow.GetComponent<RectTransform>();
         saveDefSizeAllItems = new Vector4(rtAllItems.offsetMin.x, rtAllItems.offsetMax.x, rtAllItems.offsetMax.y, rtAllItems.offsetMin.y);
-
-        ResourcesData.LoadWeapons();
         gameManager = GameManager.Instance;
-        SizeUISlots();
+        
     }
-    private void Start()
+    public void LoadUI()
     {
+        SizeUISlots();
         //InitializeKeyActions();
         LoadButtonsHud();
     }
@@ -144,26 +143,7 @@ public class UIControl:MonoBehaviour
     {
         buttonsInventoryHud = inventoryBar.GetComponentsInChildren<ButInventoryBar>().ToList();
     }
-    private void Update()
-    {
-        //if (GameMenuWindow.activeSelf)
-        //{
-        //    if(Input.GetKeyDown(KeyCode.Escape))
-        //    {
-        //        keyActions[KeyCode.Escape]?.Invoke();
-        //    }
-        //    return;
-        //}
-        //foreach (KeyValuePair<KeyCode, System.Action> keyAction in keyActions)
-        //{
 
-        //    if (Input.GetKeyDown(keyAction.Key))
-        //    {
-        //        keyAction.Value.Invoke();
-        //        break;
-        //    }
-        //}
-    }
     public void OpenInventory()
     {
         invIsOpened = !invIsOpened;

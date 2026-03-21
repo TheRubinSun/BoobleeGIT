@@ -7,35 +7,15 @@ using UnityEngine;
 
 public static class ItemsList
 {
-    //public static ItemsList Instance { get; private set; }
     public static List<Item> items = new List<Item>();
     private static Sprite[] spriteList;
 
     private static Dictionary<string, Item> itemByKey;
     private static Dictionary<int, Item> itemById;
-    //private void Awake()
-    //{
-    //    if (Instance != null && Instance != this)
-    //    {
-    //        Destroy(gameObject);
-    //        return;
-    //    }
-    //    Instance = this;
-
-    //    LoadSprites();
-    //}
     public static void LoadSprites()
     {
         spriteList = GameDataHolder.spriteList;
     }
-    //private void Start()
-    //{
-    //    if (spriteList.Length == 0)
-    //    {
-    //        Debug.LogError("Список spriteList пуст! Добавьте спрайты через инспектор.");
-    //        return;
-    //    }
-    //}
     public static void LoadOrCreateItemList(List<Item> itemList)
     {
         if(itemList != null && itemList.Count > 0)
@@ -140,33 +120,11 @@ public static class ItemsList
         items.Add(new Seed(74, "seed_tomato",  100, 0, Quality.Common, 2, "_", 3, "tomato", TypeItem.Seed));
         items.Add(new Seed(75, "seed_pumkin",  100, 0, Quality.Common, 2, "_", 4, "pumkin", TypeItem.Seed));
         items.Add(new Gun(76, "slingshot", 1, 0, Quality.Uncommon, 80, "_", true, 2.7f, damageT.Physical, 1, 0.5f, 50, 1, 7f, 0.5f, 15f, 6));
-        
+        items.Add(new Hook(77, "hook", 1, 0, Quality.Mystical, 1000, "_", 6f, 10f, 6f, 0, TypeItem.Other));
         //PrintItemList();
     }
     private static void InitializeSpritesItem()
     {
-        //for (int i = 1; i < items.Count; i++)
-        //{
-
-        //    if (items[i].Id < spriteList.Length)
-        //    {
-        //        if (items[i].SpriteID != 0) items[i].SetSprite(spriteList[items[i].SpriteID-1]); //Если записан какой-то другой id sprite не по порядку, то берем его
-
-        //        else items[i].SetSprite(spriteList[items[i].Id-1]); //Иначе берем по ID предмета спрайт, так как там по порядку идут
-
-        //    }
-        //    else
-        //    {
-        //        Debug.LogWarning($"[ItemsList] Спрайт не найден для предмета ID={items[i].Id}, SpriteID={items[i].Id}");
-        //    }
-        //}
-        //int b = 0;
-        //foreach (var c in GameDataHolder.spriteList)
-        //{
-        //    Debug.Log($"c: {b} => {c}");
-        //    b++;
-        //}
-
         for (int i = 1; i < items.Count; i++)
         {
             if (items[i].SpriteID != 0)
@@ -236,22 +194,6 @@ public static class ItemsList
     }
     public static Item GetItemForId(int id) => itemById.TryGetValue(id, out Item item) ? item : items[0];
     public static Item GetItemForNameKey(string name_key) => itemByKey.TryGetValue(name_key, out Item item) ? item : items[0];
-    //public static Item GetItemForId(int id)
-    //{
-    //    foreach (Item item in items)
-    //    {
-    //        if (item.Id == id) return item;
-    //    }
-    //    return items[0];
-    //}
-    //public static Item GetItemForNameKey(string key)
-    //{
-    //    foreach (Item item in items)
-    //    {
-    //        if (item.NameKey == key) return item;
-    //    }
-    //    return items[0];
-    //}
     public static Item GetNoneItem()
     {
         if(items.Count == 0)

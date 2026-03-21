@@ -39,6 +39,7 @@ public class GameManager: MonoBehaviour
     private Coroutine musicRoutine;
     private void Awake()
     {
+        GlobalData.LoadedGame = false;
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -51,7 +52,9 @@ public class GameManager: MonoBehaviour
     }
     private IEnumerator Start()
     {
-        if(Player.Instance != null)
+        yield return null;
+        if (DisplayInfo.Instance != null) DisplayInfo.Instance.LoadDisplayInfo();
+        if (Player.Instance != null)
         {
             Player.Instance.LoadPlayerLogic();
         }
@@ -97,39 +100,22 @@ public class GameManager: MonoBehaviour
         }
 
         yield return StartCoroutine(ChunkGenerator.Instance.GenerateChunks());
-        if (GridNodes.Instance != null)
-        {
-            GridNodes.Instance.CreateGrid();
-        }
-        if (CullingManager.Instance != null)
-        {
-            CullingManager.Instance.StartCulling();
-        }
-        if(level_logic.Instance != null)
-        {
-            level_logic.Instance.StartLevelLogic();
-        }
+        if (GridNodes.Instance != null) GridNodes.Instance.CreateGrid();
+        if (CullingManager.Instance != null) CullingManager.Instance.StartCulling();
+        if (level_logic.Instance != null) level_logic.Instance.StartLevelLogic();
         ChunkGenerator.Instance.DeactivateAllChunks();
+        if (UIControl.Instance != null) UIControl.Instance.LoadUI();
+        if (ShopLogic.Instance != null) ShopLogic.Instance.LoadShopsData();
+
 
         SaveGameInfo saveGameInfo = GenInfoSaves.saveGameFiles[GlobalData.SaveInt];
         Debug.LogWarning($"Passed time: {saveGameInfo.timeHasPassed}");
         GlobalData.Player.GiveStartKit();
 
         GlobalData.LoadedGame = true;
-    }
-    //private IEnumerator TrackPlayTime(int timer)
-    //{
-    //    //float lastTime = Time.realtimeSinceStartup;
-    //    while (true)
-    //    {
-    //        yield return new WaitForSecondsRealtime(timer);
 
-    //        //float currentTime = Time.realtimeSinceStartup;
-    //        //float delta = currentTime - lastTime;
-    //        //lastTime = currentTime;
-    //        totalSecondsPlayed += timer;
-    //    }
-    //}
+        yield return null;
+    }
     private async void OnApplicationPause(bool pauseStatus)
     {
         if (pauseStatus) // »гра уходит в фон

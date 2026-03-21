@@ -2,7 +2,7 @@
 
 public class UsebleItem : Item, IUsable
 {
-
+    public bool Spent { get; set; } = true;
     public float value;
     public UsebleItem(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, float value, TypeItem typeItem = TypeItem.Other, bool isUse = false) : base(id, name, maxCount, spriteID, quality, cost, description, typeItem, isUse)
     {

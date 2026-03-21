@@ -204,8 +204,8 @@ public class EffectsManager : MonoBehaviour
             if (gameObject.layer == LayerManager.playerManagerLayer)
             {
                 Player pl = Player.Instance;
-                pl.TakeHeal((int)effect.value);
-                if(effect.valueTwo != 0) pl.TakeHealMana((int)effect.valueTwo);
+                if (effect.value != 0) pl.TakeHeal((int)effect.value, TypeHeal.FoodHeal);
+                if (effect.valueTwo != 0) pl.TakeHealMana((int)effect.valueTwo, TypeManaHeal.FoodManaHeal);
                 
             }
             else if (gameObject.layer == LayerManager.enemyLayer)

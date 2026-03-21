@@ -44,11 +44,12 @@ public class EqupmentPlayer : MonoBehaviour, ISlot
             //DontDestroyOnLoad(gameObject); // Обеспечивает сохранение объекта между сценами
         }
 
-        StartDataEquip();
+        
     }
-    public void Start()
+    public void LoadEquipData()
     {
         if (PlayerModel == null) PlayerModel = GlobalData.GameManager.PlayerModel;
+        StartDataEquip();
     }
     public void GiveStartWeapon(Item item)
     {

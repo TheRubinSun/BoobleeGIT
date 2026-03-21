@@ -32,6 +32,7 @@ public enum Quality
 }
 public interface IUsable
 {
+    public bool Spent { get; set; }
     public bool Use();
     public int GetSoundID();
     public TypeSound GetTypeSound();

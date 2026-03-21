@@ -462,6 +462,18 @@
         "TypeItem": "",
         "Quality": "",
         "Description": "Pumpkin seeds. Used for growing pumpkins."
+      },
+      "slingshot": {
+        "Name": "Scrap Slingshot",
+        "TypeItem": "Weapon",
+        "Quality": "Uncommon",
+        "Description": "A rudimentary yet reliable starter weapon for any marksman. It allows the use of simple projectiles to keep distance in a harsh techno-magical world."
+      },
+      "hook": {
+        "Name": "Magical Grappling Hook",
+        "TypeItem": "Other",
+        "Quality": "Mystical",
+        "Description": "A device merging engineering precision with magical pull. It allows the user to latch onto ledges and walls, significantly enhancing mobility during combat and exploration."
       }
     },
     "mobs": {
@@ -519,6 +531,11 @@
         "Name": "Eyemass",
         "TypeMob": "Boss",
         "Description": "A dangerous eye-ridden overlord from the horrifying magical depths of the Dark Forest. Its fleshy, pulsating body is covered with living eyes. Eyemass launches them toward the player to track every movement, then mercilessly pulls them back, reclaiming the eyes as parts of its single nightmarish organism."
+      },
+      "dummy": {
+        "Name": "Training Dummy",
+        "TypeMob": "Magic",
+        "Description": "A reinforced magical target built to withstand extreme punishment. Equipped with power and mana sensors, it allows players to accurately measure their damage output while remaining virtually indestructible."
       }
     },
     "ui_text": {
@@ -1094,6 +1111,18 @@
         "TypeItem": "",
         "Quality": "",
         "Description": "Семена тыквы. Используются для выращивания тыкв."
+      },
+      "slingshot": {
+        "Name": "Самодельная рогатка",
+        "TypeItem": "Оружие",
+        "Quality": "Необычное",
+        "Description": "Простое, но эффективное стартовое оружие для начинающего стрелка. Позволяет использовать подручные снаряды, чтобы держать дистанцию в суровом техно-магическом мире."
+      },
+      "hook": {
+        "Name": "Магический крюк-кошка",
+        "TypeItem": "Прочее",
+        "Quality": "Мистическое",
+        "Description": "Устройство, сочетающее в себе инженерную мысль и магическую тягу. Позволяет цепляться за выступы и стены, значительно повышая мобильность владельца в бою и при исследовании мира."
       }
     },
     "mobs": {
@@ -1151,6 +1180,11 @@
         "Name": "Многогляд",
         "TypeMob": "Boss",
         "Description": "Опасный глазной владыка из ужасающих магических глубин Тёмного леса. Его мясистая, пульсирующая конструкция усыпана живыми глазами. Многогляд выстреливает их в сторону игрока, наблюдая за каждым движением, а затем безжалостно возвращает обратно, втягивая глаза в своё тело, словно они — часть единого кошмарного организма."
+      },
+      "dummy": {
+        "Name": "Тренировочный манекен",
+        "TypeMob": "Magic",
+        "Description": "Укреплённая магическая мишень, созданная для испытания мощи оружия. Оснащена детекторами силы и маны, которые позволяют замерять наносимый урон, оставаясь практически неуязвимой."
       }
     },
     "ui_text": {

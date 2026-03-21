@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -14,6 +15,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private LegControl[] legsLines;
     [SerializeField] private LegsControl legsControl;
     [SerializeField] private Transform WeaponSlots;
+    [SerializeField] private Transform legsParent;
 
     [SerializeField] private float radiusCenterLegs = 0.23f;        
 
@@ -38,7 +40,9 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private float updateRateLegsStop = 0.3f;
     private float nextUpdateTime = 0f;
     [SerializeField] AudioClip audioClips;
-
+    private HookLogic hookLogic;
+    private bool isHooked;
+    private Vector2 directionHook;
     public void StartControl()
     {
         Instance = this;
@@ -54,6 +58,33 @@ public class PlayerControl : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if(hookLogic != null)
+        {
+            bool tempState = hookLogic.GetMoveToHook();
+
+            if(tempState != isHooked)
+            {
+                isHooked = tempState;
+
+                if (isHooked)
+                {
+                    legsParent.SetParent(transform);
+                    LegsJump();
+                    return;
+                }
+                else
+                {
+                    legsParent.SetParent(transform.parent);
+                    MoveLegs(speed);
+                    return;
+                }
+
+            }
+
+        }
+
+
+
         if (inputDirection.sqrMagnitude > 0 && !GlobalData.Player.PlayerStay)
         {
             Move();
@@ -109,6 +140,16 @@ public class PlayerControl : MonoBehaviour
             }
         }
     }
+    public void CheckHook(Hook hook, int targetMask)
+    {
+        //float range, float speedHook, float speedMove, LayerMask targetMask
+        if (hookLogic == null)
+        {
+            hookLogic = this.AddComponent<HookLogic>();
+        }
+        hookLogic.LoadData(hook.range, hook.speedHook, hook.speedMove, targetMask, out directionHook, hook.idPrefab);
+        isHooked = true;
+    }
     void RotateWeaponSlots()
     {
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -142,7 +183,6 @@ public class PlayerControl : MonoBehaviour
             MoveLegs(speed);
             nextUpdateTime = Time.time + updateRateLegsMove;
         }
-
         MoveCenterLegs(inputDirection, speed);
     }
     //int i = 0;
@@ -168,5 +208,9 @@ public class PlayerControl : MonoBehaviour
         {
             centerLegs.localPosition = newPos;
         }
+    }
+    void LegsJump()
+    {
+        legsControl.JumpLegs();
     }
 }

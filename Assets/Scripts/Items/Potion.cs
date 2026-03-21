@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class Potion : Item, IUsable
 {
+    public bool Spent { get ; set; } = true;
+
     public Potion(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description) : base(id, name, maxCount, spriteID, quality, cost, description, TypeItem.Potion, true)
     {
-
     }
     public virtual bool Use()
     {
@@ -38,7 +39,7 @@ public class HealPotion : Potion
             return false;
         }
 
-        if (GlobalData.Player.TakeHeal(countHeal))
+        if (GlobalData.Player.TakeHeal(countHeal, TypeHeal.PotionHeal))
         {
             //Debug.Log("ѕытаюсь отхилить");
 
@@ -99,24 +100,6 @@ public class SpeedUpPotion : Potion
         if (eff_man != null)
         {
 
-            //EffectData effect = new EffectData();
-            //EffectData effect = Resources.Load<EffectData>("Effects/" + nameEffect);
-            //if (effect != null)
-            //{
-            //    //Debug.Log($"Ёффект с именем {nameEffect} найден");
-            //    effect = new EffectData(effect);
-
-
-            //}
-            //else
-            //{
-            //    Debug.LogWarning("Ёффект с именем " + nameEffect + " не найден в папке Resources/Effects.");
-            //    Debug.Log("создаем временный новый");
-
-            //    effect = ScriptableObject.CreateInstance<EffectData>();
-            //}
-
-            //EffectData effect = new EffectData();
             EffectData effect = ScriptableObject.CreateInstance<EffectData>();
             EffectData effectTemplate = Resources.Load<EffectData>("Effects/" + nameEffect);
 
@@ -167,7 +150,7 @@ public class ManaHealPotion : Potion
         {
             return false;
         }
-        if (GlobalData.Player.TakeHealMana(countHeal))
+        if (GlobalData.Player.TakeHealMana(countHeal, TypeManaHeal.PotionHeal))
         {
             EffectData regenEffect = ScriptableObject.CreateInstance<EffectData>();
             EffectData effectTemplate = Resources.Load<EffectData>("Effects/" + "ManaHealCooldown");
@@ -196,6 +179,8 @@ public class ManaHealPotion : Potion
 }
 public class Food : Item, IUsable
 {
+    public bool Spent { get; set; } = true;
+
     public int countHealHP;
     public int countHealMana;
     public float duration;
@@ -284,4 +269,15 @@ public class Food : Item, IUsable
     {
         return TypeSound.Effects;
     }
+}
+public enum TypeHeal
+{
+    PotionHeal,
+    FoodHeal,
+    ShootHeal
+}
+public enum TypeManaHeal
+{
+    PotionHeal,
+    FoodManaHeal
 }

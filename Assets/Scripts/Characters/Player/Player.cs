@@ -27,6 +27,7 @@ public class Player : MonoBehaviour, ITakeDamage
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private EquipStats equip_Stats;
     [SerializeField] private GameObject PlayerModel;
+    [SerializeField] private Transform particalParents; //Обычно объект particals
     [SerializeField] public Toggle[] TooglesWeapon = new Toggle[4];
     [SerializeField] private SpriteRenderer HairPlayer;
 
@@ -51,6 +52,7 @@ public class Player : MonoBehaviour, ITakeDamage
     {
         playerControl.StartControl();
         pl_ui.SetComponentUI();
+        EqupmentPlayer.Instance.LoadEquipData();
         player_sprite.sprite = GameDataHolder.spritePlayerHeadById[GlobalData.ID_head];
         HairPlayer.sprite = GameDataHolder.spritePlayerHairById[GlobalData.ID_hair];
         StartCoroutine(AddManaForRegen());
@@ -86,7 +88,6 @@ public class Player : MonoBehaviour, ITakeDamage
     }
     public void GiveStartKit()
     {
-        
         if (GenInfoSaves.saveGameFiles[GlobalData.SaveInt].isStarted)
             return;
         Debug.Log(GenInfoSaves.saveGameFiles[GlobalData.SaveInt].isStarted);
@@ -299,6 +300,8 @@ public class Player : MonoBehaviour, ITakeDamage
     {
         if (!canForce) return false;
 
+        Instantiate(ResourcesData.GetParticalPrefab(TypePartical.Force_Particle), particalParents);
+
         canForce = false;
         playerControl.Jump(force);
         StartCoroutine(ColdDown(cooldownForce, value => canForce = value));
@@ -349,30 +352,33 @@ public class Player : MonoBehaviour, ITakeDamage
                 return;
             }
         }
+        bool IsTakeDamage;
         switch (typeAttack)
         {
             case damageT.Physical:
                 {
-                    pl_stats.TakePhysicalDamageStat(damage);
+                    IsTakeDamage = pl_stats.TakePhysicalDamageStat(damage);
                     break;
                 }
             case damageT.Magic:
                 {
-                    pl_stats.TakeMagicDamageStat(damage);
+                    IsTakeDamage = pl_stats.TakeMagicDamageStat(damage);
                     break;
                 }
             case damageT.Technical:
                 {
-                    pl_stats.TakeTechDamageStat(damage);
+                    IsTakeDamage = pl_stats.TakeTechDamageStat(damage);
                     break;
                 }
             case damageT.Posion:
                 {
-                    pl_stats.TakePosionDamageStat(damage);
+                    IsTakeDamage = pl_stats.TakePosionDamageStat(damage);
                     break;
                 }
             default: goto case damageT.Physical;
         }
+        if (IsTakeDamage)
+            Instantiate(ResourcesData.GetParticalPrefab(TypePartical.Damage_Particle), particalParents);
         if (effect != null)
         {
             GetComponent<EffectsManager>().ApplyEffect(effect);
@@ -387,10 +393,29 @@ public class Player : MonoBehaviour, ITakeDamage
         pl_stats.SpendMana(spendMana);
         pl_ui.UpdateManaBar(pl_stats);
     }
-    public bool TakeHeal(int heal)
+    public bool TakeHeal(int heal, TypeHeal typeHeal)
     {
         if (pl_stats.PlayerHealStat(heal))
         {
+            switch(typeHeal)
+            {
+                case TypeHeal.PotionHeal:
+                    {
+                        Instantiate(ResourcesData.GetParticalPrefab(TypePartical.Heal_Particle), particalParents);
+                        break;
+                    }
+                case TypeHeal.FoodHeal:
+                    {
+                        Instantiate(ResourcesData.GetParticalPrefab(TypePartical.Food_Heal_Particle), particalParents);
+                        break;
+                    }
+                case TypeHeal.ShootHeal:
+                    {
+                        Instantiate(ResourcesData.GetParticalPrefab(TypePartical.Shoot_Heal_Particle), particalParents);
+                        break;
+                    }
+            }
+
             GlobalData.SoundsManager.PlayItemSoundsWithRandomPitch(TypeSound.Effects, 2, 0.7f, 1.2f);
             pl_ui.UpdateHpBar(pl_stats);
             flashCol = StartCoroutine(FlashColor(new Color32(110, 255, 93, 255), 0.1f));
@@ -398,10 +423,24 @@ public class Player : MonoBehaviour, ITakeDamage
         }
         return false;
     }
-    public bool TakeHealMana(int manaHeal)
+    public bool TakeHealMana(int manaHeal, TypeManaHeal typeHeal)
     {
         if (pl_stats.PlayerManaHealStat(manaHeal))
         {
+            switch (typeHeal)
+            {
+                case TypeManaHeal.PotionHeal:
+                    {
+                        Instantiate(ResourcesData.GetParticalPrefab(TypePartical.Mana_heal_Particle), particalParents);
+                        break;
+                    }
+                case TypeManaHeal.FoodManaHeal:
+                    {
+                        Instantiate(ResourcesData.GetParticalPrefab(TypePartical.Food_Mana_heal_Particle), particalParents);
+                        break;
+                    }
+            }
+                    
             GlobalData.SoundsManager.PlayItemSounds(TypeSound.Effects, 2);
             pl_ui.UpdateManaBar(pl_stats);
             flashCol = StartCoroutine(FlashColor(new Color32(84, 160, 210, 255), 0.1f));
@@ -454,11 +493,6 @@ public class Player : MonoBehaviour, ITakeDamage
     }
     public void LvlUp()
     {
-        //pl_ui.LvlUIUpdate(pl_stats);
-        //pl_ui.UpdateHpBar(pl_stats);
-        //pl_ui.UpdateSizeHpBar(pl_stats);
-        //pl_ui.UpdateManaBar(pl_stats);
-        //pl_ui.UpdateSizeManaBar(pl_stats);
         pl_ui.UpdateAllInfo(pl_stats);
 
         GlobalData.SoundsManager.PlayLevelUP();

@@ -42,57 +42,13 @@ public class LegsControl : MonoBehaviour
         audioSource_Move = GetComponent<AudioSource>();
         //audioSource_Move.volume = 0.02f;
     }
-    //public void MoveLegs(float speed)
-    //{
-    //    Vector2 centerLegs = (Vector2)transform.position;
-    //    for (int i = 0; i < foots.Length; i += 2)
-    //    {
-    //        Vector2 moveToEnd;
-    //        //RaycastHit2D hitEnd = Physics2D.Raycast(centerFootsPos[i].position, Vector2.zero); //Луч
-    //        Collider2D hitEnd = Physics2D.OverlapPoint(centerFootsPos[i].position);//Конечная точка
-    //        if (hitEnd != null)
-    //        {
-    //            int colLayer = hitEnd.gameObject.layer;
-    //            if (colLayer == LayerManager.obstaclesLayer || colLayer == LayerManager.touchObjectsLayer)
-    //            {
-    //                SetMoveToEndPoint(minionsSlots[i].position, out moveToEnd);
-    //            }
-    //            else
-    //            {
-    //                SetMoveToEndPoint(footStandartLocalPos[i] + centerLegs, out moveToEnd);
-    //            }
-    //        }
-    //        else
-    //        {
-    //            SetMoveToEndPoint(footStandartLocalPos[i] + centerLegs, out moveToEnd);
-    //        }
-    //        float sqrDistance = ((Vector2)foots[i].position - moveToEnd).sqrMagnitude;
-    //        if (!isMoving[i] && sqrDistance > range)
-    //        {
-    //            time_move_legs = 0.3f / speed;
-    //            if(sqrDistance > maxTeleportDistanceSqr)
-    //            {
-    //                foots[i].position = moveToEnd;
-    //                isMoving[i] = false;
-
-    //                if (activeCorutines.ContainsKey(i))
-    //                {
-    //                    StopCoroutine(activeCorutines[i]);
-    //                    activeCorutines.Remove(i);
-    //                }
-    //            }
-    //            else
-    //            {
-    //                if(activeCorutines.TryGetValue(i, out Coroutine oldCorutine))
-    //                {
-    //                    StopCoroutine(oldCorutine);
-    //                    activeCorutines.Remove(i);
-    //                }
-    //                activeCorutines[i] = StartCoroutine(MoveLegSmoothle(i, true, foots[i].position, moveToEnd, time_move_legs));
-    //            }
-    //        }
-    //    }
-    //}
+    public void JumpLegs()
+    {
+        for (int i = 0; i < foots.Length; i++)
+        {
+            foots[i].position = minionsSlots[i].position;
+        }
+    }
     public void MoveLegs(float speed)
     {
         Vector2 centerLegs = (Vector2)transform.position;

@@ -12,6 +12,8 @@ public class ResourcesData : MonoBehaviour
     public static Dictionary<int, GameObject> flowers_seed = new Dictionary<int, GameObject>();
     public static Dictionary<int, EffectData> effects = new Dictionary<int, EffectData>();
     public static Dictionary<int, GameObject> lazers = new Dictionary<int, GameObject>();
+    public static Dictionary<int, GameObject> hooks = new Dictionary<int, GameObject>();
+    public static Dictionary<int, GameObject> particals = new Dictionary<int, GameObject>();
     public static void LoadWeapons()
     {
         weapons["sword_gods_slayer"] = Resources.Load<GameObject>("Weapons/Sword_God_Pref");
@@ -73,10 +75,22 @@ public class ResourcesData : MonoBehaviour
         effects[7] = Resources.Load<EffectData>("Effects/HealCooldown");
         effects[8] = Resources.Load<EffectData>("Effects/ManaHealCooldown");
 
+        hooks[0] = Resources.Load<GameObject>("Hooks/Hook_one");
+
+        particals[0] = Resources.Load<GameObject>("Particals/Heal_Particle");
+        particals[1] = Resources.Load<GameObject>("Particals/Damage_Particle");
+        particals[2] = Resources.Load<GameObject>("Particals/Mana_heal_Particle");
+        particals[3] = Resources.Load<GameObject>("Particals/Force_Particle");
+        particals[4] = Resources.Load<GameObject>("Particals/Food_Heal_Particle");
+        particals[5] = Resources.Load<GameObject>("Particals/Shoot_Heal_Particle");
+        particals[6] = Resources.Load<GameObject>("Particals/Food_Mana_heal_Particle");
+        
+
         if (weapons["sword_gods_slayer"] == null)
             Debug.LogError("Не удалось загрузить префаб Sword_God_Pref!");
         if (weapons["gun_makarov"] == null)
             Debug.LogError("Не удалось загрузить префаб Pistol_Mark_Pref!");
+
     }
 
     public static GameObject GetWeaponPrefab(string nameKey)
@@ -115,4 +129,26 @@ public class ResourcesData : MonoBehaviour
     {
         return effects.ContainsKey(id) ? effects[id] : null;
     }
+    public static GameObject GetHookPrefab(int id)
+    {
+        return hooks.ContainsKey(id) ? hooks[id] : null;
+    }
+    public static GameObject GetParticalPrefab(int id)
+    {
+        return particals.ContainsKey(id) ? particals[id] : null;
+    }
+    public static GameObject GetParticalPrefab(TypePartical typePart)
+    {
+        return particals.ContainsKey((int)typePart) ? particals[(int)typePart] : null;
+    }
+}
+public enum TypePartical
+{
+    Heal_Particle,
+    Damage_Particle,
+    Mana_heal_Particle,
+    Force_Particle,
+    Food_Heal_Particle,
+    Shoot_Heal_Particle,
+    Food_Mana_heal_Particle
 }

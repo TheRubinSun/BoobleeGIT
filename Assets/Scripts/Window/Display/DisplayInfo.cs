@@ -82,20 +82,6 @@ public class DisplayInfo: MonoBehaviour
     [SerializeField] private Transform collect_exp_panel;
     private LevelBar[] levelBars;
 
-    //private Transform tradeBar;
-    //private Image trade_cur_exp_image;
-    //private TextMeshProUGUI trade_exp_text;
-    //private TextMeshProUGUI trade_lvlInfo_text;
-
-    //private Transform farmBar;
-    //private Image farm_cur_exp_image;
-    //private TextMeshProUGUI farm_exp_text;
-    //private TextMeshProUGUI farm_lvlInfo_text;
-
-    //private Transform collectBar;
-    //private Image collect_cur_exp_image;
-    //private TextMeshProUGUI collect_exp_text;
-    //private TextMeshProUGUI collect_lvlInfo_text;
     //Slots
     public string word_player {get; private set;}
     public string word_typeItem {get; private set;}
@@ -118,44 +104,20 @@ public class DisplayInfo: MonoBehaviour
 
         InfoStatus = InfoStatusObj.GetComponent<DisplayPlayerStats>();
         InfoItem = InfoItemsObj.GetComponent<DisplayItem>();
-
         sizeInfoItem = InfoItemsObj.GetComponent<RectTransform>();
         //mouseOffset = new Vector2(sizeInfoItem.rect.width / 2, 0);
         //sizeInfoItem.pivot = new Vector2(1f, 1.15f); //Центр выше, смещение
     }
-    private void Start()
+    public void LoadDisplayInfo()
     {
         levelBars = new LevelBar[3];
         levelBars[0] = new LevelBar(trade_exp_panel);
         levelBars[1] = new LevelBar(farm_exp_panel);
         levelBars[2] = new LevelBar(collect_exp_panel);
-
-        //// TRADE
-        //trade_lvlInfo_text = trade_exp_panel.GetChild(0).GetComponent<TextMeshProUGUI>();
-        //tradeBar = trade_exp_panel.GetChild(1);
-        //trade_exp_text = trade_exp_panel.GetChild(2).GetComponent<TextMeshProUGUI>();
-
-        //trade_cur_exp_image = tradeBar.GetChild(1).GetComponent<Image>();
-
-
-        //// FARM
-        //farm_lvlInfo_text = farm_exp_panel.GetChild(0).GetComponent<TextMeshProUGUI>();
-        //farmBar = farm_exp_panel.GetChild(1);
-        //farm_exp_text = farm_exp_panel.GetChild(2).GetComponent<TextMeshProUGUI>();
-
-        //farm_cur_exp_image = farmBar.GetChild(1).GetComponent<Image>();
-
-
-        //// COLLECT
-        //collect_lvlInfo_text = collect_exp_panel.GetChild(0).GetComponent<TextMeshProUGUI>();
-        //collectBar = collect_exp_panel.GetChild(1);
-        //collect_exp_text = collect_exp_panel.GetChild(2).GetComponent<TextMeshProUGUI>();
-
-        //collect_cur_exp_image = collectBar.GetChild(1).GetComponent<Image>();
-
     }
     private void Update()
     {
+        if (!GlobalData.LoadedGame) return;
         if(moveInfo)
         {
             UpdateItemInfoPanel();

@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Trap : Item, IUsable
 {
+    public bool Spent { get; set; } = true;
     public int id_trap_prefab;
     protected GameObject prefab_trap;
     public Trap(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, int _id_trap_prefab) : base(id, name, maxCount, spriteID, quality, cost, description, TypeItem.Trap, true)

@@ -13,6 +13,7 @@ public class LayerManager : MonoBehaviour
     public static int enemyObject = -1;
     public static int interactableTriggerLayer = -1;
     public static LayerMask enemyAll;
+    public static LayerMask allToughTrigger;
     private void Awake()
     {
         if (obstaclesLayer == -1) // Проверяем, чтобы не переинициализировать слои
@@ -27,6 +28,7 @@ public class LayerManager : MonoBehaviour
             enemyObject = LayerMask.NameToLayer("EnemyObject");
             interactableTriggerLayer = LayerMask.NameToLayer("InteractableTrigger");
             enemyAll = (1 << enemyLayer) | (1 << enemyObject);
+            allToughTrigger = (1 << obstaclesLayer) | (1 << touchObjectsLayer) | (1 << touchTriggObjLayer);
         }
     }
 }

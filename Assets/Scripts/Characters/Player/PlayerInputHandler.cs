@@ -185,7 +185,7 @@ public class PlayerInputHandler : MonoBehaviour
                         break;
 
                     case PlayerAction.HealMana:
-                        if (GlobalData.Player.GodMode && GlobalData.Player.TakeHealMana(2)) { }
+                        if (GlobalData.Player.GodMode && GlobalData.Player.TakeHealMana(2, TypeManaHeal.PotionHeal)) { }
                         break;
 
                     case PlayerAction.Jump:
