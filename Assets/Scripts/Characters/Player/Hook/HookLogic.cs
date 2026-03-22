@@ -1,7 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class HookLogic : MonoBehaviour 

@@ -20,6 +20,7 @@ public abstract class ObjectL : MonoBehaviour, ICullableObject
     protected Vector2 startPos;
     [SerializeField] protected Vector2 ToDropPos;
     [SerializeField] protected bool IsUpper;
+
     public abstract void CreateCulling();
     public abstract Vector2 GetPosition();
     public abstract void UpdateCulling(bool shouldBeVisible);
@@ -40,6 +41,7 @@ public abstract class ObjectLBroken : ObjectL
 
     [SerializeField] protected AudioClip[] soundsBroken;
     [SerializeField] protected AudioClip[] fullBroken;
+    [SerializeField] protected Color32 particalColor;
 
     [SerializeField] protected List<ItemDropData> itemsDrop = new List<ItemDropData>();
 
@@ -85,10 +87,10 @@ public abstract class ObjectLBroken : ObjectL
         }
     }
 
-    protected virtual IEnumerator PlaySoundFullBroken()
+    protected virtual IEnumerator BreakAndDestroy()
     {
+        CreateParticale();
         HideBeforeDestroy();
-
         DropItems();
 
         if (fullBroken == null)
@@ -97,28 +99,14 @@ public abstract class ObjectLBroken : ObjectL
         }
         else
         {
-            yield return PlayFullBroken();
+            yield return CompletelyBreak();
         }
         
         DestroyObject();
     }
-    protected virtual void HideBeforeDestroy()
+    protected virtual void PartiallyBreak()
     {
-        spr_ren.enabled = false;
-        Collider2D collider2D = GetComponent<Collider2D>();
-        collider2D.enabled = false;
-    }
-    protected virtual IEnumerator PlayFullBroken()
-    {
-        float pitch = Random.Range(0.8f, 1.2f);
-        audioS.pitch = pitch;
-
-        AudioClip useAudio = fullBroken[Random.Range(0, fullBroken.Length)];
-        audioS.PlayOneShot(useAudio);
-        yield return new WaitForSeconds(useAudio.length);
-    }
-    protected virtual void PlayeSoundBroken()
-    {
+        CreateParticale();
         if (!damage_color.Equals(default(Color32)))
         {
             flashCol = StartCoroutine(FlashColor(damage_color, 0.1f));
@@ -133,6 +121,31 @@ public abstract class ObjectLBroken : ObjectL
         float pitch = Random.Range(0.8f, 1.2f);
         audioS.pitch = pitch;
         audioS.PlayOneShot(audioClip);
+    }
+    protected virtual void CreateParticale()
+    {
+        if (!particalColor.Equals(default(Color32)))
+        {
+            GameObject particleObj = Instantiate(ResourcesData.GetParticalPrefab(TypePartical.Broken_Particle), transform.position, Quaternion.identity);
+            ParticleSystem particle = particleObj.GetComponent<ParticleSystem>();
+            var main = particle.main;
+            main.startColor = new ParticleSystem.MinMaxGradient(particalColor);
+        }
+    }
+    protected virtual IEnumerator CompletelyBreak()
+    {
+        float pitch = Random.Range(0.8f, 1.2f);
+        audioS.pitch = pitch;
+
+        AudioClip useAudio = fullBroken[Random.Range(0, fullBroken.Length)];
+        audioS.PlayOneShot(useAudio);
+        yield return new WaitForSeconds(useAudio.length);
+    }
+    protected virtual void HideBeforeDestroy()
+    {
+        spr_ren.enabled = false;
+        Collider2D collider2D = GetComponent<Collider2D>();
+        collider2D.enabled = false;
     }
     protected virtual void DestroyObject()
     {

@@ -37,7 +37,7 @@ public class PCLogic : ObjectLBroken
         if (remainsHits == 0)
         {
             if (justSounds != null) justSounds.Stop();
-            StartCoroutine(PlaySoundFullBroken());
+            StartCoroutine(BreakAndDestroy());
             GlobalData.Player.AddTypeExp(typeExp, exp_full);
             return;
         }
@@ -57,7 +57,7 @@ public class PCLogic : ObjectLBroken
     protected IEnumerator WaitForSound(float delay)
     {
         yield return new WaitForSeconds(delay);
-        PlayeSoundBroken();
+        PartiallyBreak();
         brokenStage++;
         anim.SetInteger("broken_stage", brokenStage);
         DropItems();
@@ -93,7 +93,7 @@ public class PCLogic : ObjectLBroken
 
         spr_ren.sortingOrder = Mathf.RoundToInt((treePosY - PlayerPosY - 2) * -5);
     }
-    protected override IEnumerator PlaySoundFullBroken()
+    protected override IEnumerator BreakAndDestroy()
     {
         float pitch = Random.Range(0.8f, 1.2f);
         audioS.pitch = pitch;

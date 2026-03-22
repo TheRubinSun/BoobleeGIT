@@ -116,6 +116,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 09827114dada8124480a9ec94beefffb, type: 3}
   - {fileID: 8300000, guid: 9a1ff54e878616a438941080c25903b4, type: 3}
   - {fileID: 8300000, guid: a83c51e19f86d6644845e3bc19cd8f68, type: 3}
+  particalColor:
+    serializedVersion: 2
+    rgba: 4281938994
   itemsDrop:
   - item_key: material_iron_ore
     chance: 25

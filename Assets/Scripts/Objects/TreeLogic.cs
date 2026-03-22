@@ -24,12 +24,12 @@ public class TreeLogic : ObjectLBroken
             if (remainsHits == 0)
             {
                 GlobalData.Player.AddTypeExp(typeExp, exp_full);
-                StartCoroutine(PlaySoundFullBroken());
+                StartCoroutine(BreakAndDestroy());
             }
             else if (remainsHits % toNextStageAnim == 0)
             {
                 GlobalData.Player.AddTypeExp(typeExp, exp);
-                PlayeSoundBroken();
+                PartiallyBreak();
                 brokenStage++;
                 //anim.SetInteger("broken_state", brokenStage);
             }

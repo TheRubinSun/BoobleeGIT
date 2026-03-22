@@ -37,16 +37,16 @@ public class EnemyShield : ObjectLBroken
         if (remainsHits <= 0 && !isDestroyed)
         {
             isDestroyed = true;
-            StartCoroutine(PlaySoundFullBroken());
+            StartCoroutine(BreakAndDestroy());
         }
         else if (remainsHits % toNextStageAnim == 0)
         {
-            PlayeSoundBroken();
+            PartiallyBreak();
             brokenStage++;
         }
         
     }
-    protected override IEnumerator PlaySoundFullBroken()
+    protected override IEnumerator BreakAndDestroy()
     {
         if(anim != null)
             anim.SetTrigger("Destroy");

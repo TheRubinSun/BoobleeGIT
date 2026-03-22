@@ -17,7 +17,7 @@ public class OreL : ObjectLBroken
         if (remainsHits == 0)
         {
             GlobalData.Player.AddTypeExp(typeExp, exp_full);
-            StartCoroutine(PlaySoundFullBroken());
+            StartCoroutine(BreakAndDestroy());
             return;
         }
         else if (remainsHits % toNextStageAnim == 0)
@@ -29,7 +29,7 @@ public class OreL : ObjectLBroken
     protected IEnumerator WaitForSound(float delay)
     {
         yield return new WaitForSeconds(delay);
-        PlayeSoundBroken();
+        PartiallyBreak();
         brokenStage++;
         anim.SetInteger("broken_stage", brokenStage);
         DropItems();
@@ -57,7 +57,7 @@ public class OreL : ObjectLBroken
 
         spr_ren.sortingOrder = Mathf.RoundToInt((treePosY - PlayerPosY - 2) * -5);
     }
-    protected override IEnumerator PlaySoundFullBroken()
+    protected override IEnumerator BreakAndDestroy()
     {
         float pitch = Random.Range(0.8f, 1.2f);
         audioS.pitch = pitch;

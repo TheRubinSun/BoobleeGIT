@@ -10,7 +10,7 @@ public class Ball_logic : EnemyShield
     {
         rb = _rb;
     }
-    protected override IEnumerator PlaySoundFullBroken()
+    protected override IEnumerator BreakAndDestroy()
     {
         if (rb != null) 
             rb.linearVelocity = Vector3.zero;
@@ -63,7 +63,7 @@ public class Ball_logic : EnemyShield
         }
         if (isRun && (layerCol == LayerManager.obstaclesLayer || layerCol == LayerManager.playerLayer))
         {
-            StartCoroutine(PlaySoundFullBroken());
+            StartCoroutine(BreakAndDestroy());
         }
     }
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -76,7 +76,7 @@ public class Ball_logic : EnemyShield
         }
         if (isRun && (layerCol == LayerManager.obstaclesLayer || layerCol == LayerManager.playerLayer))
         {
-            StartCoroutine(PlaySoundFullBroken());
+            StartCoroutine(BreakAndDestroy());
         }
     }
 }

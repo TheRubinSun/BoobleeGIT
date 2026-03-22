@@ -55,12 +55,12 @@ public class BallBoss : EnemyShield
             GlobalData.Player.TakeDamage(damage_ball, damageT, true);
         }
     }
-    protected override IEnumerator PlaySoundFullBroken()
+    protected override IEnumerator BreakAndDestroy()
     {
         Destroy(puppilObj);
         Destroy(capilObj);
 
-        yield return base.PlaySoundFullBroken();
+        yield return base.BreakAndDestroy();
     }
     public override void CreateCulling()
     {

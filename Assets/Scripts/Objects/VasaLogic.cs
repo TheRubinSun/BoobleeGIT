@@ -7,11 +7,11 @@ public class VasaLogic : ObjectLBroken
         remainsHits--;
         if (remainsHits == 0)
         {
-            StartCoroutine(PlaySoundFullBroken());
+            StartCoroutine(BreakAndDestroy());
         }
         else if (remainsHits % toNextStageAnim == 0)
         {
-            PlayeSoundBroken();
+            PartiallyBreak();
             brokenStage++;
             anim.SetInteger("broken_state", brokenStage);
         }

@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class PlayerControl : MonoBehaviour 
 {
