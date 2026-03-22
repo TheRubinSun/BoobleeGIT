@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+п»їusing System.Collections.Generic;
 using System.Text;
 using System.Xml.Linq;
 using TMPro;
@@ -23,7 +23,7 @@ public class DisplayInfo: MonoBehaviour
     //private Vector2 mouseOffset;
     public bool moveInfo;
     //Player
-    //Характеристики
+    //РҐР°СЂР°РєС‚РµСЂРёСЃС‚РёРєРё
     public string word_status_info { get; private set; }
     public string word_Cur_Hp {get; private set;}
     public string word_Max_Hp {get; private set;}
@@ -94,7 +94,7 @@ public class DisplayInfo: MonoBehaviour
 
     private void Awake()
     {
-        // Проверка на существование другого экземпляра
+        // РџСЂРѕРІРµСЂРєР° РЅР° СЃСѓС‰РµСЃС‚РІРѕРІР°РЅРёРµ РґСЂСѓРіРѕРіРѕ СЌРєР·РµРјРїР»СЏСЂР°
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -106,7 +106,7 @@ public class DisplayInfo: MonoBehaviour
         InfoItem = InfoItemsObj.GetComponent<DisplayItem>();
         sizeInfoItem = InfoItemsObj.GetComponent<RectTransform>();
         //mouseOffset = new Vector2(sizeInfoItem.rect.width / 2, 0);
-        //sizeInfoItem.pivot = new Vector2(1f, 1.15f); //Центр выше, смещение
+        //sizeInfoItem.pivot = new Vector2(1f, 1.15f); //Р¦РµРЅС‚СЂ РІС‹С€Рµ, СЃРјРµС‰РµРЅРёРµ
     }
     public void LoadDisplayInfo()
     {
@@ -146,8 +146,8 @@ public class DisplayInfo: MonoBehaviour
         {
             sizeInfoItem.pivot = new Vector2(newPivotX, newPivotY);
         }
-        Vector2 offset = new Vector2(20f * (newPivotX == 1 ? -1 : 1),  // Смещение по X влево или вправо
-                                     20f * (newPivotY == 1 ? -1 : 1));  // Смещение по Y вверх или вниз
+        Vector2 offset = new Vector2(20f * (newPivotX == 1 ? -1 : 1),  // РЎРјРµС‰РµРЅРёРµ РїРѕ X РІР»РµРІРѕ РёР»Рё РІРїСЂР°РІРѕ
+                                     20f * (newPivotY == 1 ? -1 : 1));  // РЎРјРµС‰РµРЅРёРµ РїРѕ Y РІРІРµСЂС… РёР»Рё РІРЅРёР·
 
         sizeInfoItem.position = mousePos + offset; ;
     }
@@ -213,7 +213,7 @@ public class DisplayInfo: MonoBehaviour
                 word_experience = localized_player_stats_name["word_experience"];
                 word_exp_to_next_level = localized_player_stats_name["word_exp_to_next_level"];
             }
-            else Debug.LogWarning($"Локализация для ключа \"localized_player_stats_name\"  не найдена.");
+            else Debug.LogWarning($"Р›РѕРєР°Р»РёР·Р°С†РёСЏ РґР»СЏ РєР»СЋС‡Р° \"localized_player_stats_name\"  РЅРµ РЅР°Р№РґРµРЅР°.");
             if(localized_slots_name != null)
             {
                 word_player = localized_slots_name["word_player"];
@@ -226,11 +226,11 @@ public class DisplayInfo: MonoBehaviour
                 word_description = localized_slots_name["word_description"];
 
             }
-            else Debug.LogWarning($"Локализация для ключа \"localized_slots_name\"  не найдена.");
+            else Debug.LogWarning($"Р›РѕРєР°Р»РёР·Р°С†РёСЏ РґР»СЏ РєР»СЋС‡Р° \"localized_slots_name\"  РЅРµ РЅР°Р№РґРµРЅР°.");
         }
         else
         {
-            Debug.LogWarning("LocalizationManager нет на сцене.");
+            Debug.LogWarning("LocalizationManager РЅРµС‚ РЅР° СЃС†РµРЅРµ.");
         }
     }
 
@@ -272,8 +272,13 @@ public class DisplayInfo: MonoBehaviour
             ($"{word_strength} / 10"), word_roleClass, word_eqipment);
         AppendStat(info, word_Mov_Speed, pl_stat.Mov_Speed, false, false, pl_stat.Base_Mov_Speed, pl_stat.Agility * 0.015f, pl_stat.classPlayer.Bonus_Class_SpeedMove, eqip_stat.Bonus_Equip_Mov_Speed,
             ($"{word_agility} * 0.015"), word_roleClass, word_eqipment);
-        AppendStat(info, word_Evasion, pl_stat.Evasion, true, true, pl_stat.Base_Evasion, pl_stat.Agility, eqip_stat.Bonus_Equip_Evasion, 0,
-            ($"{word_for + word_agility}"), word_roleClass, word_eqipment);
+
+
+        //Evasion = (1 - K_ev / (K_ev + Agility + (Base_Evasion + equipStats.Bonus_Equip_Evasion + buffsStats.Buff_Evasion) * 2)) * 100;
+        AppendStat(info, word_Evasion, pl_stat.Evasion, true, true, pl_stat.Base_Evasion, pl_stat.Agility, pl_stat.classPlayer.Bonus_Evasion, eqip_stat.Bonus_Equip_Evasion,
+            ($"{word_for + word_agility}"), word_roleClass, word_eqipment, true);
+
+
         AppendStat(info, word_Att_Speed, pl_stat.Att_Speed, false, false, pl_stat.Base_Att_Speed, pl_stat.Agility * 2, pl_stat.classPlayer.Bonus_Class_AttackSpeed, eqip_stat.Bonus_Equip_Att_Speed,
             ($"{word_agility} / 2"), word_roleClass, word_eqipment);
         AppendStat(info, word_Att_Range, pl_stat.Att_Range, false, false, pl_stat.Base_Att_Range, pl_stat.Intelligence * 0.05f, pl_stat.classPlayer.Bonus_Class_Range, eqip_stat.Bonus_Equip_Att_Range,
@@ -283,7 +288,7 @@ public class DisplayInfo: MonoBehaviour
         AppendStat(info, word_Att_Damage, pl_stat.Att_Damage, false, false, pl_stat.Base_Att_Damage, (pl_stat.Strength * 2 + pl_stat.Intelligence * 2) / 10, pl_stat.classPlayer.Bonus_Class_Damage, eqip_stat.Bonus_Equip_Att_Damage,
             ($"{pl_stat.Strength * 2} ({word_strength} * 2) + {(pl_stat.Intelligence * 2)} ({word_intelligence} * 2) / 10"),
             word_roleClass, word_eqipment);
-        // Добавление сопротивлений в статистику
+        // Р”РѕР±Р°РІР»РµРЅРёРµ СЃРѕРїСЂРѕС‚РёРІР»РµРЅРёР№ РІ СЃС‚Р°С‚РёСЃС‚РёРєСѓ
         AppendStat(info, word_Tech_Resis, pl_stat.Tech_Resis, true, false, pl_stat.Base_Tech_Resis, pl_stat.Intelligence, pl_stat.classPlayer.Bonus_Tech_Resis, eqip_stat.Bonus_Tech_Resis,
             ($"{word_intelligence} / ({word_intelligence} + 100)"), word_roleClass, word_eqipment);
 
@@ -303,19 +308,17 @@ public class DisplayInfo: MonoBehaviour
         //LayoutRebuilder.ForceRebuildLayoutImmediate(InfoStatus.content);
 
     }
-    private void AppendStat(StringBuilder info, string statName, float totalStat, bool IsProcent, bool isHundred, float baseStat, float statModifier, float classBonus, float equipBonus, string statNameMofifier, string roleClass, string equipment)
+    private void AppendStat(StringBuilder info, string statName, float totalStat, bool IsProcent, bool isHundred, float baseStat, float statModifier, float classBonus, float equipBonus, string statNameMofifier, string roleClass, string equipment, bool isEvasion = false)
     {
         int sizeFont = 13;
 
-        if (IsProcent && !isHundred)
+        // Р”Р»СЏ РѕР±С‹С‡РЅС‹С… СЃС‚Р°С‚РѕРІ (РЅРµ РїСЂРѕС†РµРЅС‚РЅС‹С…) РїРµСЂРµРІРѕРґРёРј 0.15 РІ 15%
+        if (IsProcent && !isHundred && !isEvasion)
         {
-            totalStat *= 100;
-            baseStat *= 100;
-            statModifier *= 100;
-            classBonus *= 100;
-            equipBonus *= 100;
+            totalStat *= 100; baseStat *= 100; statModifier *= 100; classBonus *= 100; equipBonus *= 100;
         }
 
+        // Р’С‹РІРѕРґ РѕСЃРЅРѕРІРЅРѕР№ СЃС‚СЂРѕРєРё (РќР°Р·РІР°РЅРёРµ: Р—РЅР°С‡РµРЅРёРµ%)
         if (IsProcent)
             info.Append($"{statName}: {totalStat.ToString("F0")}%");
         else
@@ -332,11 +335,27 @@ public class DisplayInfo: MonoBehaviour
             info.Append("\n");
             return;
         }
+
+        // Р”РµС‚Р°Р»СЊРЅР°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ (СЃРµСЂР°СЏ СЃС‚СЂРѕРєР°)
         info.Append($"<size={sizeFont}><color={GlobalColors.Hh_AddInfo}>    = ");
+
+        if(isEvasion)
+        {
+            float K = (float)pl_stat.GetKCoof();
+            info.Append($"100% * (1 - {K} / ({K} + [");
+        }
+
         info.Append($"{baseStat} ({word_base})");
-        if (statModifier > 0) info.Append($" + {statModifier} ({statNameMofifier})");
-        if (classBonus > 0) info.Append($" + {classBonus} ({word_for + roleClass})");
-        if (equipBonus > 0) info.Append($" + {equipBonus} ({word_for + equipment})");
+        if (statModifier > 0)
+            info.Append($" + {statModifier} ({statNameMofifier})");
+        if (classBonus > 0)
+            info.Append($" + {classBonus} ({word_for + roleClass})");
+        if (equipBonus > 0)
+            info.Append($" + {equipBonus} ({word_for + equipment})");
+
+        if(isEvasion) info.Append($"]))");
+
+
         info.Append($"\n</color></size>");
     }
     public void UpdateLevelsInfo()
@@ -362,10 +381,6 @@ public class DisplayInfo: MonoBehaviour
         levelBars[2].exp_text.text = $"{pl_stat.collect_cur_exp} / {pl_stat.collec_nextLvl_exp}";
         levelBars[2].name_text.text = InfoExpLevel(GlobalColors.Hh_Collect, word_collect_skill);
         levelBars[2].cur_lvl_text.text = pl_stat.collect_level.ToString();
-
-        //trade_cur_exp_image.fillAmount = (float)pl_stat.trade_cur_exp / pl_stat.trade_nextLvl_exp;  
-        //trade_exp_text.text = $"{pl_stat.trade_cur_exp} / {pl_stat.trade_nextLvl_exp}";
-        //trade_lvlInfo_text.text = InfoExpLevel(GlobalColors.Hh_Trade, word_trade_skill, pl_stat.trade_level);
     }
     private void LevelBarUpdate()
     {
@@ -377,9 +392,6 @@ public class DisplayInfo: MonoBehaviour
 
         return
             $"<size={sizeFont}><color={colorHash}>{name}</color></size>";
-        //return
-        //$"<size={sizeFont}><color={colorHash}>{name}: {level} lvl</color></size>" +
-        //$"<size={sizeChildFont}>{word_experience}: {cur_exp}\n{word_exp_to_next_level} {next_level}</size>";
     }
     public void UpdateInfoItem(int numbSlot, string TypeSlot)
     {
@@ -417,12 +429,12 @@ public class DisplayInfo: MonoBehaviour
         moveInfo = true;
 
 
-        //Первый текст
+        //РџРµСЂРІС‹Р№ С‚РµРєСЃС‚
         string colorName = "#" + ColorUtility.ToHtmlStringRGBA(item.GetColor());
         string nameItem =  $"<size=14>{item.Name}</size>\n<size=12><color={colorName}>{item.quality}</color></size>";
 
 
-        //Второй текст
+        //Р’С‚РѕСЂРѕР№ С‚РµРєСЃС‚
         StringBuilder info = new StringBuilder();
         info.AppendLine($"{word_typeItem}: {item.TypeItem.ToString()}");
         if (item is Weapon weapon)

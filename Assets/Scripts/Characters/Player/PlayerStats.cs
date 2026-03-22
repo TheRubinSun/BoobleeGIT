@@ -5,6 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerStats : CharacterStats
 {
+    public const int K_ev = 100; //коофицент деградирования уклонения при высших значениях ловкости
     public RoleClass classPlayer { get; set; }
     //Base Характеристики
     public int Base_Strength {  get; set; }
@@ -61,7 +62,7 @@ public class PlayerStats : CharacterStats
     private EquipStats equipStats;
     public bool[] DirectionOrVectorWeapon { get; set; }
     public PlayerStats() { }
-
+    public int GetKCoof() => K_ev;
     public void SetBaseStats()
     {
         var player = GlobalData.newPlayer; //Если нет данных о новом игроке по нулям и стрелок иначе берём данные 
@@ -172,6 +173,7 @@ public class PlayerStats : CharacterStats
         equipStats = GlobalData.Player.GetEquipStats();
         buffsStats = GlobalData.Player.GetBuffStatsPlayer();
     }
+
     public override void UpdateTotalStats()
     {
         bool isFullyHp = Max_Hp == Cur_Hp ? true : false;
@@ -187,7 +189,8 @@ public class PlayerStats : CharacterStats
 
         Armor = (int)(Strength / 10) + Base_Armor + classPlayer.Bonus_Class_Armor + equipStats.Bonus_Equip_Armor + buffsStats.Buff_Armor;
         Mov_Speed = (Agility * 0.015f) + Base_Mov_Speed + classPlayer.Bonus_Class_SpeedMove + equipStats.Bonus_Equip_Mov_Speed + buffsStats.Buff_Mov_Speed;
-        Evasion = (Agility) / 2 + Base_Evasion + equipStats.Bonus_Equip_Evasion + buffsStats.Buff_Evasion;
+
+        Evasion = (int)((1f - (float)K_ev / (K_ev + Agility + (Base_Evasion + equipStats.Bonus_Equip_Evasion + buffsStats.Buff_Evasion) * 2)) * 100f);
         Att_Speed = (Agility * 2) + Base_Att_Speed + classPlayer.Bonus_Class_AttackSpeed + equipStats.Bonus_Equip_Att_Speed + buffsStats.Buff_Att_Speed;
         Att_Range = Base_Att_Range + classPlayer.Bonus_Class_Range + equipStats.Bonus_Equip_Att_Range + buffsStats.Buff_Att_Range;
         Proj_Speed = Base_Proj_Speed + classPlayer.Bonus_Class_ProjectileSpeed + equipStats.Bonus_Equip_Proj_Speed + buffsStats.Buff_Proj_Speed;
@@ -300,7 +303,7 @@ public class PlayerStats : CharacterStats
     public bool isEvasion()
     {
         int random = UnityEngine.Random.Range(0, 100);
-        if (Evasion >= random && random <= 75)
+        if (Evasion >= random)
         {
             return true;
         }

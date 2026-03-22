@@ -84,7 +84,8 @@ public class ResourcesData : MonoBehaviour
         particals[4] = Resources.Load<GameObject>("Particals/Food_Heal_Particle");
         particals[5] = Resources.Load<GameObject>("Particals/Shoot_Heal_Particle");
         particals[6] = Resources.Load<GameObject>("Particals/Food_Mana_heal_Particle");
-        
+        particals[7] = Resources.Load<GameObject>("Particals/Bonefire_Particle");
+
 
         if (weapons["sword_gods_slayer"] == null)
             Debug.LogError("Не удалось загрузить префаб Sword_God_Pref!");
@@ -150,5 +151,6 @@ public enum TypePartical
     Force_Particle,
     Food_Heal_Particle,
     Shoot_Heal_Particle,
-    Food_Mana_heal_Particle
+    Food_Mana_heal_Particle,
+    Bonefire_Particle
 }
