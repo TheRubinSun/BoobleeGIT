@@ -295,13 +295,16 @@ public class Player : MonoBehaviour, ITakeDamage
     {
         if (!canForce) return false;
 
-        Instantiate(ResourcesData.GetParticalPrefab(TypePartical.Force_Particle), particalParents);
-
         canForce = false;
-        playerControl.Jump(force);
         StartCoroutine(ColdDown(cooldownForce, value => canForce = value));
 
-        return true;
+        if(playerControl.Jump(force))
+        {
+            Instantiate(ResourcesData.GetParticalPrefab(TypePartical.Force_Particle), particalParents);
+            return true;
+        }
+        else 
+            return false;
     }
     private IEnumerator ColdDown(float cooldown, System.Action<bool> setValue)
     {

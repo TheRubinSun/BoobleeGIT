@@ -42,12 +42,6 @@ public class ForceItem : UsebleItem
     }
     public override bool Use()
     {
-        if (GlobalData.Player.ForcePlayer(value))
-        {
-            return true;
-        }
-        else
-            return false;
-        
+        return GlobalData.Player.ForcePlayer(value);
     }
 }

@@ -158,14 +158,18 @@ public class PlayerControl : MonoBehaviour
 
         WeaponSlots.rotation = Quaternion.Euler(0, 0, roundedAngle);
     }
-    public void Jump(float distance)
+    public bool Jump(float distance)
     {
-        transform.position += (Vector3)inputDirection.normalized * distance;
+        Vector3 dir = (Vector3)inputDirection.normalized;
+
+        if (dir.Equals(Vector3.zero)) return false;
+        transform.position += dir * distance;
 
         foreach (LineControle legsLine in legsLines)
         {
             legsLine.transform.position += (Vector3)inputDirection.normalized * distance;
         }
+        return true;
     }
     private float speed;
     public void Move()
