@@ -150,6 +150,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   progressBar: {fileID: 2022279432}
   progressText: {fileID: 2095584488}
+  canvasGroup: {fileID: 2084775284}
+  fadeSpeed: 1.5
   spriteItemsSheetPath: Sprites_Items
   spritePlayerHairPath: Player_Hairs
   spritePlayerHeadPath: Player_Heads
@@ -165,7 +167,8 @@ Transform:
   m_LocalPosition: {x: -0.2557795, y: -0.6740182, z: -0.01449857}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1601621230}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &74561875
@@ -642,7 +645,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2084775281}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 29957575}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -700,7 +703,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 1144354548}
-  m_PlaneDistance: 100
+  m_PlaneDistance: 1000
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -813,8 +816,9 @@ GameObject:
   - component: {fileID: 2084775281}
   - component: {fileID: 2084775283}
   - component: {fileID: 2084775282}
+  - component: {fileID: 2084775284}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: LoadSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -854,7 +858,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.23385005, g: 0.012237454, b: 0.23584908, a: 0.392}
+  m_Color: {r: 0.254717, g: 0.1742168, b: 0.254717, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -879,6 +883,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2084775280}
   m_CullTransparentMesh: 1
+--- !u!225 &2084775284
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2084775280}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2085101683
 GameObject:
   m_ObjectHideFlags: 0
@@ -1056,6 +1072,5 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1144354549}
-  - {fileID: 1601621230}
   - {fileID: 29957575}
   - {fileID: 74561877}

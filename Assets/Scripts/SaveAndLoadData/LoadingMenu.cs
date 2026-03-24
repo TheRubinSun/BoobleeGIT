@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,65 +14,81 @@ public class LoadingMenu : MonoBehaviour
 {
     public Slider progressBar;
     public TextMeshProUGUI progressText;
+    public CanvasGroup canvasGroup;
+    public float fadeSpeed = 1.5f;
 
-    private float progress = 0f;
-
+    [Header("Settings")]
     public string spriteItemsSheetPath;
-
     public string spritePlayerHairPath;
     public string spritePlayerHeadPath;
     private void Start()
     {
+        DontDestroyOnLoad(gameObject);
         StartCoroutine(LoadGameScene());
     }
     private IEnumerator LoadGameScene()
     {
         int totalSteps = 6;
-        int currentStep = 0;
+        float currentTargetProgress = 0f;
 
         // Загружаем данные и сохраняем в GameDataHolder
         yield return StartCoroutine(LoadDataCoroutine());
-        UpdateProgress(++currentStep, totalSteps);
+        currentTargetProgress = 1f / totalSteps;
 
+        //Локализация
         yield return StartCoroutine(LoadLanguageCoroutine());
-        UpdateProgress(++currentStep, totalSteps);
+        currentTargetProgress = 2f / totalSteps;
 
-        yield return StartCoroutine(LoadSprites(spriteItemsSheetPath, GameDataHolder.spriteItemsById));
-        UpdateProgress(++currentStep, totalSteps);
+        //Спрайты
+        yield return StartCoroutine(LoadSprites(spriteItemsSheetPath, GameDataHolder.spriteItemsById, 2f, 3f, totalSteps));
+        yield return StartCoroutine(LoadSprites(spritePlayerHairPath, GameDataHolder.spritePlayerHairById, 3f, 4f, totalSteps));
+        yield return StartCoroutine(LoadSprites(spritePlayerHeadPath, GameDataHolder.spritePlayerHeadById, 4f, 5f, totalSteps));
+        currentTargetProgress = 3f / totalSteps;
 
-        yield return StartCoroutine(LoadSprites(spritePlayerHairPath, GameDataHolder.spritePlayerHairById));
-        UpdateProgress(++currentStep, totalSteps);
-
-        yield return StartCoroutine(LoadSprites(spritePlayerHeadPath, GameDataHolder.spritePlayerHeadById));
-        UpdateProgress(++currentStep, totalSteps);
         // Загружаем игровую сцену асинхронно
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Menu");
         asyncLoad.allowSceneActivation = false;
 
-        while (!asyncLoad.isDone)
+        while (asyncLoad.progress < 0.9f)
         {
-            float sceneProgress = Mathf.Clamp01(asyncLoad.progress / 0.9f);
-            UpdateProgress(currentStep + sceneProgress, totalSteps);
-
-            if (asyncLoad.progress >= 0.9f)
-            {
-                ItemsList.LoadSprites();
-                Classes.LoadOrCreateClasses(GameDataHolder.RoleClassesData.role_Classes_data);
-                ItemsList.LoadOrCreateItemList(GameDataHolder.ItemsData.item_List_data);
-                EnemyList.LoadOrCreateMobsList(GameDataHolder.EnemyData.mob_list_data);
-
-                yield return null;
-
-                ItemDropEnemy.LoadOrCreate(GameDataHolder.ItemsDropOnEnemy.namesKeys);
-                RecipesCraft.LoadItemInCrafts();
-
-                yield return new WaitForSeconds(1f);
-                asyncLoad.allowSceneActivation = true;
-            }
+            float sceneProgress = asyncLoad.progress / 0.9f;
+            float totalProgress = (5f + sceneProgress) / totalSteps;
+            UpdateUI(totalProgress);
+            yield return null;
         }
 
+        // Выполняем тяжелую логику инициализации ПЕРЕД активацией
+        ItemsList.LoadSprites();
+        Classes.LoadOrCreateClasses(GameDataHolder.RoleClassesData.role_Classes_data);
+        ItemsList.LoadOrCreateItemList(GameDataHolder.ItemsData.item_List_data);
+        EnemyList.LoadOrCreateMobsList(GameDataHolder.EnemyData.mob_list_data);
 
         yield return null;
+
+        ItemDropEnemy.LoadOrCreate(GameDataHolder.ItemsDropOnEnemy.namesKeys);
+        RecipesCraft.LoadItemInCrafts();
+
+        UpdateUI(1f); // Показываем 100%
+        yield return new WaitForSeconds(0.5f);
+
+        asyncLoad.allowSceneActivation = true;
+
+        // Ждем пока сцена полностью станет активной
+        while (!asyncLoad.isDone) yield return null;
+
+        // ПЛАВНЫЙ ПЕРЕХОД (Исчезновение)
+        yield return StartCoroutine(FadeOut());
+
+        Destroy(gameObject);
+    }
+    private IEnumerator FadeOut()
+    {
+        if (canvasGroup == null) yield break;
+        while(canvasGroup.alpha > 0)
+        {
+            canvasGroup.alpha -= 2f * Time.deltaTime;
+            yield return null;
+        }
     }
     private IEnumerator LoadDataCoroutine()
     {
@@ -120,57 +137,45 @@ public class LoadingMenu : MonoBehaviour
             Debug.Log($"Загружен стандартный en");
         }
     }
-    private IEnumerator LoadSprites(string addressableKey, Dictionary<int, Sprite> spriteData)
+    private IEnumerator LoadSprites(string path, Dictionary<int, Sprite> spriteData, float startStep, float endStep, int total)
     {
-        spriteData.Clear();
-
-        if (string.IsNullOrEmpty(addressableKey))
-        {
-            Debug.LogError("LoadSprites: пустой ключ");
-            yield break;
-        }
-
-        AsyncOperationHandle<IList<Sprite>> handle = Addressables.LoadAssetAsync<IList<Sprite>>(addressableKey);
+        AsyncOperationHandle<IList<Sprite>> handle = Addressables.LoadAssetAsync<IList<Sprite>>(path);
 
         while (!handle.IsDone)
         {
-            progressBar.value = handle.PercentComplete;
+            float subProgress = handle.PercentComplete;
+            float totalProgress = Mathf.Lerp(startStep, endStep, subProgress) / total;
+            UpdateUI(totalProgress);
             yield return null;
         }
 
-        if (handle.Status != AsyncOperationStatus.Succeeded || handle.Result == null)
+        if (handle.Status == AsyncOperationStatus.Succeeded)
         {
-            Debug.LogError("LoadSprites: ошибка загрузки");
-            yield break;
+            ProgressSpriteSheet(handle.Result, spriteData);
         }
-
-        foreach (Sprite sprite in handle.Result)
-        {
-            // Формат: SpriteSheet_0, SpriteSheet_1, ...
-            int underscoreIndex = sprite.name.LastIndexOf('_');
-
-            if (underscoreIndex < 0)
-            {
-                Debug.LogWarning($"Некорректное имя спрайта: {sprite.name}");
-                continue;
-            }
-
-            if (int.TryParse(sprite.name.Substring(underscoreIndex + 1), out int id))
-            {
-                spriteData[id] = sprite;
-            }
-            else
-            {
-                Debug.LogWarning($"Не удалось извлечь ID из имени спрайта: {sprite.name}");
-            }
-        }
-
-        Debug.Log($"Sprite Sheet загружен: {spriteData.Count} спрайтов");
+        Addressables.Release(handle);
+        yield break;
     }
-    private void UpdateProgress(float step, float totalStep)
+    private void ProgressSpriteSheet(IList<Sprite> sprites, Dictionary<int, Sprite> spriteData)
     {
-        progress = step / totalStep;
-        progressBar.value = progress;
-        progressText.text = $"Loading: {progress * 100:F0}%";
+        spriteData.Clear();
+        foreach (Sprite sprite in sprites)
+        {
+            int underscoreIndex = sprite.name.LastIndexOf('_');
+            if (underscoreIndex >= 0 && int.TryParse(sprite.name.Substring(underscoreIndex + 1), out int id)) //Очищяем все символы кроме id спрайта и парсим в int
+                spriteData[id] = sprite; //Под этот id записываем спрайт
+        }
     }
+    private void UpdateUI(float value)
+    {
+        progressBar.value = Mathf.MoveTowards(progressBar.value, value, Time.deltaTime * 2f);
+        progressText.text = $"Loading: {progressBar.value * 100:F0}%";
+    }
+
+    //private void UpdateProgress(float step, float totalStep)
+    //{
+    //    progress = step / totalStep;
+    //    progressBar.value = progress;
+    //    progressText.text = $"Loading: {progress * 100:F0}%";
+    //}
 }

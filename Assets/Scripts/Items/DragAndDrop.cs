@@ -281,7 +281,12 @@ public class DragAndDrop:MonoBehaviour
                         //Debug.LogWarning("14");
                         return false;
                     }
-
+                    else //(Если предметы одинаковые, но не складываються, должны поменятся местами, но в руке остается предмет) (может быть нужно поставить else if (newSlot.Item == tempSlot.Item))
+                    {
+                        //Debug.LogWarning("15");
+                        SlotsManager.SwapSlots(newSlot, tempSlot);
+                        return false;
+                    }
                     //if (newSlot.Item != tempSlot.Item && newSlot.Item != ItemsList.GetNoneItem()); //Если предметы разные или не пустой (баг был из-за крафта когда oldSlot == null)
                     //else
                     //{

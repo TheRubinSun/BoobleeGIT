@@ -9374,6 +9374,10 @@ PrefabInstance:
       propertyPath: m_PixelPerfect
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8242682581556430395, guid: afdf47f5b8678e546bf74f4eb46fcd7f, type: 3}
+      propertyPath: m_SortingOrder
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 8249841273792245913, guid: afdf47f5b8678e546bf74f4eb46fcd7f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

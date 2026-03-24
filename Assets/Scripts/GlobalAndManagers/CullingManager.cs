@@ -65,15 +65,15 @@ public class CullingManager : MonoBehaviour
         float ratio = lastWidth / lastHeight;
         float multiply;
 
-
+        //125, 92, 63, 41 Те значения при которых хорошо выглядит игра
         if (lastHeight >= 1900)          // 4K и около
         {
-            ppc.assetsPPU = 50;
+            ppc.assetsPPU = 41;
             multiply = 2f;
         }
         else if (lastHeight >= 1300)          // 2K и около
         {
-            ppc.assetsPPU = 75;
+            ppc.assetsPPU = 63;
             multiply = 1.8f;
         }
         else if (lastHeight >= 900)      // FullHD

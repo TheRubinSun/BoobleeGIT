@@ -2,7 +2,7 @@ using Newtonsoft.Json.Bson;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class MouseButtonHandler : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
+public class MouseButtonHandler : MonoBehaviour, IPointerDownHandler
 {
 
     // Этот метод вызывается при клике на объект с этим скриптом
@@ -137,10 +137,10 @@ public class MouseButtonHandler : MonoBehaviour, IPointerClickHandler, IPointerD
         eventData.Use();
         OnPointerClick(eventData);
     }
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        OnPointerClick(eventData);
-    }
+    //public void OnPointerUp(PointerEventData eventData)
+    //{
+    //    OnPointerClick(eventData);
+    //}
     int GetNumbSlot()
     {
         string nameSlot = name;

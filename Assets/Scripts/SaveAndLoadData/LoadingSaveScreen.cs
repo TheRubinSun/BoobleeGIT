@@ -10,81 +10,54 @@ public class LoadingSaveScreen : MonoBehaviour
     public Slider progressBar;
     public TextMeshProUGUI progressText;
     public CanvasGroup canvasGroup; // Добавьте компонент CanvasGroup для плавного исчезновения
+    public float fadeSpeed = 1.5f;
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
         StartCoroutine(LoadGameScene());
     }
-    //private IEnumerator LoadGameScene()
-    //{
-    //    string savePath = GlobalData.SavePath ?? "";
-
-    //    // Загружаем данные в GameDataHolder
-    //    yield return LoadData(savePath);
-    //    yield return LoadArtifact(savePath);
-    //    yield return LoadWorldData(savePath);
-
-    //    AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(GlobalData.NAME_NEW_LOCATION);
-    //    asyncLoad.allowSceneActivation = false;
-
-    //    // Фаза 1: Загрузка самой сцены (ресурсов)
-    //    while (asyncLoad.progress < 0.9f)
-    //    {
-    //        float progress = Mathf.Clamp01(asyncLoad.progress / 0.9f);
-    //        UpdateUI(progress * 0.5f); // Это первые 50% прогресса
-    //        yield return null;
-    //    }
-
-    //    // Активируем сцену
-    //    asyncLoad.allowSceneActivation = true;
-
-    //    // Фаза 2: Ждем, пока GameManager в новой сцене скажет "Я готов"
-    //    // Мы используем флаг, который вы уже создали в GlobalData
-    //    while (!GlobalData.LoadedGame)
-    //    {
-    //        // Здесь можно крутить какую-то анимацию загрузки
-    //        UpdateUI(0.5f + 0.5f * 0.8f); // Имитируем прогресс до 90%
-    //        yield return null;
-    //    }
-
-    //    UpdateUI(1f); // 100% готовность
-
-    //    // Плавно скрываем экран загрузки
-    //    yield return StartCoroutine(FadeOut());
-
-    //    Destroy(gameObject); // Теперь можно удалять
-    //}
-    //private void Start()
-    //{
-    //    StartCoroutine(LoadGameScene());
-    //}
-
     private IEnumerator LoadGameScene()
     {
-        string savePath = GlobalData.SavePath;
-        if (savePath == null) savePath = "";
+        string savePath = GlobalData.SavePath ?? "";
 
         // Загружаем данные и сохраняем в GameDataHolder
-        yield return LoadData(savePath);
-        yield return LoadArtifact(savePath);
-        yield return LoadWorldData(savePath);
+        Task taskData = LoadData(savePath);
+        Task taskArt = LoadArtifact(savePath);
+        Task taskWorld = LoadWorldData(savePath);
+
+        while (!taskData.IsCompleted || !taskArt.IsCompleted || !taskWorld.IsCompleted)
+        {
+            UpdateUI(0.2f); //Загрузка 20% когда загрузятся все данные
+            yield return null;
+        }
 
         // Загружаем игровую сцену асинхронно
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(GlobalData.NAME_NEW_LOCATION);
         asyncLoad.allowSceneActivation = false;
-        while (!asyncLoad.isDone)
+
+        while (asyncLoad.progress < 0.9f)
         {
-            float progress = Mathf.Clamp01(asyncLoad.progress / 0.9f);
-            progressBar.value = progress;
-            progressText.text = $"Loading: {progress * 100:F0}%";
-            if (asyncLoad.progress >= 0.9f)
-            {
-                yield return new WaitForSeconds(1f);
-                asyncLoad.allowSceneActivation = true;
-            }
+            // Масштабируем 0.9 в диапазон 0.2 - 0.8 для плавности UI
+            float progress = 0.2f + (asyncLoad.progress / 0.9f) * 0.6f;
+            UpdateUI(progress);
+            yield return null;
         }
-        yield return null;
-        yield return new WaitForSeconds(1f);
+        //Разрешаем активацию сцены
+        asyncLoad.allowSceneActivation = true;
+
+        //Ждем, пока сцена загрузится полностью
+        while(!asyncLoad.isDone)
+            yield return null;
+
+        //Ждем инициализации объектов в новой сцене
+        while(!GlobalData.LoadedGame)
+        {
+            UpdateUI(0.95f);
+            yield return null;
+        }
+        UpdateUI(1f);
+
+        yield return StartCoroutine(FadeOut());
         Destroy(this.gameObject);
 
     }
@@ -99,13 +72,6 @@ public class LoadingSaveScreen : MonoBehaviour
         while (canvasGroup.alpha > 0)
         {
             canvasGroup.alpha -= Time.deltaTime * 2f;
-            yield return null;
-        }
-    }
-    private IEnumerator WaitAndStartGame()
-    {
-        while(!GlobalData.LoadedGame)
-        {
             yield return null;
         }
     }

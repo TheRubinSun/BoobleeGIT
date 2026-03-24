@@ -242,6 +242,7 @@ MonoBehaviour:
   progressBar: {fileID: 129636221}
   progressText: {fileID: 1267505737}
   canvasGroup: {fileID: 131234857}
+  fadeSpeed: 1.5
 --- !u!4 &131234856
 Transform:
   m_ObjectHideFlags: 0
@@ -615,7 +616,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 100
+  m_SortingOrder: 1000
   m_TargetDisplay: 0
 --- !u!224 &791492918
 RectTransform:
@@ -1037,7 +1038,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.16884178, g: 0.3679245, b: 0.13710395, a: 0}
+  m_Color: {r: 0.11713256, g: 0.18867922, b: 0.10590956, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
