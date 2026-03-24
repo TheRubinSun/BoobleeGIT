@@ -35,14 +35,14 @@ public class ArtifactObj
     private int statCount;
     public bool StatsGen { get; set; }
     private HashSet<AllStats> statTypes = new HashSet<AllStats>();
-    public ArtifactObj(int id,  int _art_level)
+    public ArtifactObj(int id,  int _art_level) //СОздаем новый артефакт
     {
         art_level = _art_level;
         ID_Art = id;
 
         SetRandomAttributes();
     }
-    public ArtifactObj(int id, int _art_level, System.Random random, int seed)
+    public ArtifactObj(int id, int _art_level, System.Random random, int seed) //По сиду
     {
         art_level = _art_level;
         ID_Art = id;
@@ -61,56 +61,51 @@ public class ArtifactObj
     {
 
     }
-    public void SetRandomAttributes(System.Random random = null)
+    public void SetRandomAttributes(System.Random random = null) //Назначаем чары или атрибуты по сиду
     {
         statCount = System.Enum.GetValues(typeof(AllStats)).Length;
 
         int precentNewCharm = 0;
         int levelCharm = 0;
-        
+        bool firstCharm = true;
 
+        GetPrecentForLevelCharm(out precentNewCharm);
+        Debug.Log($"precentNewCharm: {precentNewCharm} || artLevel: {art_level}");
         while (true)
         {
-            CheckLevel(out precentNewCharm, out levelCharm, random);
-            if (random != null)
+            GetLevelCharm(out levelCharm, random);
+            int roll = (random != null) ? random.Next(0, 101) : Random.Range(0, 101);
+
+            if(firstCharm || roll <= precentNewCharm)
             {
-                if (random.Next(0, 101) <= precentNewCharm)
-                {
-                    GetStat(levelCharm, random);
-                }
-                else break;
+                GetStat(levelCharm, random);
+                firstCharm = false;
             }
-            else
-            {
-                if (Random.Range(0, 101) <= precentNewCharm)
-                {
-                    GetStat(levelCharm, random);
-                }
-                else break;
-            }
+            else break;
+            precentNewCharm -= Mathf.Max(10 - art_level, 5); //Уменьшение шанаса на доп чар
         }
         StatsGen = true;
     }
-    private void CheckLevel(out int precent, out int levelCharm, System.Random random = null)
+    private void GetLevelCharm(out int levelCharm, System.Random random = null) //Рассчитываем уровень чара по уровню артефакта
     {
-        int baseChance = 50;
-
-        // Рассчитываем шанс
-        int minLevel = 0;
+        int minLevel = 1;
         int maxLevel = art_level + 1;
-        
-        if(random != null)
-            levelCharm = random.Next(minLevel, maxLevel + 1);
-        else
-            levelCharm = Random.Range(minLevel, maxLevel + 1);
-        //levelCharm = Mathf.Max(1, Random.Range(art_level - 1, art_level + 1));
 
-        precent = baseChance + art_level * 6; // Увеличение шанса с каждым уровнем на 7%
+        if (random != null)
+            levelCharm = random.Next(minLevel, maxLevel + 1); //По сиду
+        else
+            levelCharm = Random.Range(minLevel, maxLevel + 1); // Если сида нет, то просто на рандоме
+    }
+    private int GetPrecentForLevelCharm(out int precent) // Рассчитываем шанс на получения чара
+    {
+        int baseChance = 60;
+        precent = baseChance + art_level * 6; // Увеличение шанса с каждым уровнем на 6%
         // Для уровня выше 5 можно задать максимальный шанс
-        if (precent > 85)
+        if (precent > 100)
         {
-            precent = 85; // Ограничиваем шанс максимальным значением, например, 80%
+            precent = 100; // Ограничиваем шанс максимальным значением, например, 85%
         }
+        return precent;
     }
     private void GetStat(int levelCharm, System.Random random = null)
     {
@@ -172,57 +167,40 @@ public class ArtifactObj
                 Artif_ManaRegen += GetValueStat(levelCharm, BASE_VALUE_STATS_ARTEFACT.MANA_REGEN, BASE_VALUE_STATS_ARTEFACT.ADD_FOR_CHAR_MANA_REGEN, random);
                 break;
         }
-
     }
-    private float GetValueStat(int levelCharm, float baseValue, float addForChar, System.Random random = null)
+    /// <summary>
+    /// Вычисляем позитивный или негативный эффект и его силу
+    /// </summary>
+    /// <param name="levelCharm">Текущий уровень атрибута.</param>
+    /// <param name="baseValue">Базовые значение атрибута(например инта 1, а скорость атаки 5)</param>
+    /// <param name="addForChar">Множитель за уровень выше 1</param>
+    /// <param name="random">Рандом по сиду</param>
+    /// <returns>Итоговая сила + или -</returns>
+    private float GetValueStat(int levelCharm, float baseValue, float addForChar, System.Random random = null)//Высчитываем позитивный или негативный чар
     {
-        float positive, negative, randValue;
+        if (levelCharm < 1) return 0;
+        float value, randValue;
 
-        if(levelCharm > 1)
-        {
-            positive = (addForChar * (levelCharm - 1)) + baseValue;
-            negative = -((addForChar * (levelCharm - 1)) + baseValue);
-        }
-        else if(levelCharm == 1)
-        {
-            positive = baseValue;
-            negative = -baseValue;
-        }
-        else
-        {
-            positive = 0;
-            negative = 0;
-        }
+        value = (addForChar * (levelCharm - 1)) + baseValue;
 
-        //float result = Random.value < 0.35 ? negative : positive;
         if (random != null)
-        {
-            //positive = (float)(random.NextDouble() * ((addForChar * levelCharm))) + baseValue;
-            //float negMin = -addForChar * levelCharm;
-            //float negMax = -baseValue;
-            //float negRange = negMax - negMin;
-            //negative = Mathf.Min(-0.01f, (float)(random.NextDouble() * negRange + negMin));
-
             randValue = (float)random.NextDouble(); // от 0 до 1
-        }
         else
-        {
             randValue = Random.value;
-        }
 
-        float result;
-        if (randValue < 0.35)
+        float chancePositive = Mathf.Min(44f + art_level * 6f, 98) / 100f; //Чем выше уровень артефакта, тем меньше шанс на проклятие
+
+        if (randValue < chancePositive)
         {
-            result = negative;
-            curse_level += levelCharm;
-        }
-        else
-        {
-            result = positive;
             chars_level += levelCharm;
         }
+        else
+        {
+            value *= -1;
+            curse_level += levelCharm;
+        }
 
-        return result;
+        return value;
     }
     public bool isAllNull()
     {

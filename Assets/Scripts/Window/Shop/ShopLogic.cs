@@ -254,7 +254,7 @@ public class ShopLogic : MonoBehaviour , ISlot
         //{
 
         //}
-        int seedRand = GlobalData.cur_seed + (GlobalData.cur_lvl_left * 5) + id + StableHash(lastTrader); // Умножение смещает предметы ранее
+        int seedRand = GlobalData.CurSeed + (GlobalData.cur_lvl_left * 5) + id + StableHash(lastTrader); // Умножение смещает предметы ранее
         random = new System.Random(seedRand);
 
         Item item;

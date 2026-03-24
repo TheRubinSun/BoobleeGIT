@@ -41,10 +41,13 @@ public class PlayerControl : MonoBehaviour
     private HookLogic hookLogic;
     private bool isHooked;
     private Vector2 directionHook;
+    private void Awake()
+    {
+        if (cameraObj == null) cameraObj = Camera.main.transform;
+    }
     public void StartControl()
     {
         Instance = this;
-        if (cameraObj == null) cameraObj = GameObject.Find("Main Camera").transform;
         rb = GetComponent<Rigidbody2D>();
     }
     private void Update()
@@ -89,6 +92,7 @@ public class PlayerControl : MonoBehaviour
         }
         else
         {
+            if (rb == null) return;
             rb.linearVelocity = Vector2.zero;
             if (Time.time >= nextUpdateTime)
             {

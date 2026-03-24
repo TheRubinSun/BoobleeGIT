@@ -340,7 +340,7 @@ public class GameManager: MonoBehaviour
         saveGameInfo.enemy_kills += KillsEnemy;
         saveGameInfo.level = GlobalData.Player.GetLevel();
         saveGameInfo.isStarted = true;
-        saveGameInfo.seed = GlobalData.cur_seed;
+        saveGameInfo.seed = GlobalData.CurSeed;
         saveGameInfo.lvl_left = GlobalData.cur_lvl_left;
 
         //saveGameIngo.randomCalls = GlobalData.randomCalls;

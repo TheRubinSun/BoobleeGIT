@@ -110,7 +110,7 @@ public class LvlUpLogic : MonoBehaviour
     {
         
         //Debug.Log(GlobalData.cur_seed + " " + GlobalData.cur_seed + (Player.GetLevel() - Player.GetFreeSkillPoint()));
-        random = new System.Random(GlobalData.cur_seed + (GlobalData.Player.GetLevel() - GlobalData.Player.GetFreeSkillPoint()));
+        random = new System.Random(GlobalData.CurSeed + (GlobalData.Player.GetLevel() - GlobalData.Player.GetFreeSkillPoint()));
         if (tempAspects.Count > 0)
         {
             RemoveObj();

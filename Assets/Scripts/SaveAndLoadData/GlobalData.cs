@@ -8,7 +8,7 @@ public static class GlobalData
     public static string SavePath;
     public static int SaveInt;
     public static string cur_language;
-    public static int cur_seed;
+    //public static int cur_seed;
     public static int cur_lvl_left;
     public static Vector2 center;
     public static int chunkSize;
@@ -63,6 +63,24 @@ public static class GlobalData
     public static SpawnMobs SpawnMobs => SpawnMobs.Instance;
     public static CreatePlayer CreatePlayer => CreatePlayer.Instance;
     public static ScreenResolutions GetScreenResolutions() => new ScreenResolutions(Screen.width, Screen.height, Screen.currentResolution.refreshRateRatio.numerator, Screen.currentResolution.refreshRateRatio.denominator);
+    public static System.Random GetRandom(int offset) => new System.Random(cur_seed + offset);
+
+    private static System.Random masterRandom;
+    private static int cur_seed;
+    public static int CurSeed
+    {
+        get => cur_seed;
+        set
+        {
+            cur_seed = value;
+            masterRandom = new System.Random(cur_seed);
+        }
+    }
+    public static System.Random CreateSubRandom()
+    {
+        int subSeed = masterRandom.Next();
+        return new System.Random(subSeed);
+    }
 }
 public static class BASE_VALUE_STATS_ARTEFACT
 {

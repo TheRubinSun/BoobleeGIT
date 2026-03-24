@@ -39,7 +39,7 @@ public class TastyFlyLogic : BaseEnemyLogic
     {
         shadow_sprite.flipX = shouldFaceLeft;
     }
-    public override void DetectDirection() //Вычисляем направление
+    protected override void DetectDirection() //Вычисляем направление
     {
         Vector2 toPlayer = player.position - CenterObject.position;
         float distanceToPlayer = toPlayer.magnitude; // Расстояние до игрока

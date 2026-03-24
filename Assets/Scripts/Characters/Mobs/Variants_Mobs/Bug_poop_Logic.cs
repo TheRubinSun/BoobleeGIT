@@ -52,6 +52,20 @@ public class Bug_poop_Logic : BaseEnemyLogic
         //else
         //    mobRadius = selfCollider.bounds.extents.magnitude + 0.1f;
     }
+    protected override void DetectDirection()
+    {
+        if (haveBall && ball_logic.IsDestroyed())
+        {
+            haveBall = false;
+            enum_stat.Mov_Speed = speed_without_ball;
+            animator_main.SetBool("HaveBall", false);
+            CenterObject = mob_object.transform;
+            mob_object.GetComponent<Collider2D>().isTrigger = false;
+            //mobRadius = selfCollider.bounds.extents.magnitude + 0.1f;
+        }
+
+        base.DetectDirection();
+    }
     public override void SetTrapped(float time)
     {
         selfCollider.isTrigger = true;
@@ -69,15 +83,7 @@ public class Bug_poop_Logic : BaseEnemyLogic
     }
     protected override void Move()
     {
-        if (haveBall && ball_logic.IsDestroyed())
-        {
-            haveBall = false;
-            enum_stat.Mov_Speed = speed_without_ball;
-            animator_main.SetBool("HaveBall", false);
-            CenterObject = mob_object.transform;
-            mob_object.GetComponent<Collider2D>().isTrigger = false;
-            //mobRadius = selfCollider.bounds.extents.magnitude + 0.1f;
-        }
+
         Flipface();
 
         if(moveDirection == Vector2.zero)

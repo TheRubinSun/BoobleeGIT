@@ -65,7 +65,8 @@ public class PlayerProjectile : MonoBehaviour, UBullet
     protected virtual void OnTriggerEnter2D(Collider2D collider)
     {
         int layer = collider.gameObject.layer;
-        if (layer == LayerManager.touchObjectsLayer || layer == LayerManager.enemyObject)
+
+        if (((1 << layer) & LayerManager.allTrigger) != 0)
         {
             ObjectLBroken objectL = collider.gameObject.GetComponent<ObjectLBroken>();
             if (objectL != null)
@@ -84,7 +85,6 @@ public class PlayerProjectile : MonoBehaviour, UBullet
             baseEnemyLogic.TakeDamage(damage, typeDamage, canBeWeapon.canBeMissed, effectBul);
             Destroy(gameObject);
             return;
-            //Debug.Log(collider.GetComponent<BaseEnemyLogic>().enum_stat.Cur_Hp+" "+ collider.GetComponent<BaseEnemyLogic>().enum_stat.Max_Hp);
         }
         else if (collider.gameObject.layer == LayerManager.obstaclesLayer)
         {

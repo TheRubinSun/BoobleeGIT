@@ -8,7 +8,7 @@ public class DummyLogic : BaseEnemyLogic
     protected override void Move() { }
     protected override void Flipface() { }
     public override Vector2 ToPlayer => new Vector2();
-    public override void DetectDirection() { }
+    protected override void DetectDirection() { }
     protected override RaycastHit2D BuildRayCast(Vector2 start, Vector2 end, float avoidDist, int combinedLayerMask) => new RaycastHit2D();
     protected override void ToPlayerAttack() { }
     public override void RotateTowardsMovementDirection(Vector2 direction) { }

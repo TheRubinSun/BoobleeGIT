@@ -3,13 +3,13 @@ using UnityEngine.EventSystems;
 
 public class UIDrag : MonoBehaviour, IDragHandler, IPointerDownHandler
 {
-    private RectTransform dragRectTransform;
+    private RectTransform windowRect;
     private Canvas canvas;
 
     private Vector2 offset; // Смещение между позицией курсора и позицией объекта
     private void Awake()
     {
-        dragRectTransform = GetComponent<RectTransform>();
+        windowRect = transform.parent.GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
     }
     public void OnPointerDown(PointerEventData eventData)
@@ -18,7 +18,7 @@ public class UIDrag : MonoBehaviour, IDragHandler, IPointerDownHandler
         {
             // Вычисляем смещение между позицией курсора и позицией объекта
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                dragRectTransform,
+                windowRect,
                 eventData.position,
                 eventData.pressEventCamera,
                 out offset
@@ -36,9 +36,9 @@ public class UIDrag : MonoBehaviour, IDragHandler, IPointerDownHandler
                 eventData.pressEventCamera,
                 out localPointerPosition))
             {
-                Vector2 newPos = localPointerPosition - (offset * dragRectTransform.localScale.x);
+                Vector2 newPos = localPointerPosition - (offset * windowRect.localScale.x);
                 newPos = ClampToCanvas(newPos);
-                dragRectTransform.localPosition = newPos;
+                windowRect.localPosition = newPos;
             }
         }
     }
@@ -49,7 +49,7 @@ public class UIDrag : MonoBehaviour, IDragHandler, IPointerDownHandler
         Vector2 canvasSize = new Vector2(canvasRect.width, canvasRect.height);
 
         // Получаем размеры объекта
-        Vector2 objectSize = dragRectTransform.rect.size;
+        Vector2 objectSize = windowRect.rect.size;
 
         // Ограничиваем позицию, чтобы объект не выходил за пределы Canvas
         float minX = (-canvasSize.x / 2) + (objectSize.x / 2);

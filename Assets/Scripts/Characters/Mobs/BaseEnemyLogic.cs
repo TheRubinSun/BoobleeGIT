@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAttack
 {
@@ -481,14 +482,30 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
         
     }
     protected virtual void FlipfaceChild(bool shouldFaceLeft) { }
-    
-    public virtual Vector2 ToPlayer => player.position - CenterObject.position;
+
+    //public virtual Vector2 ToPlayer => player.position - (!CenterObject ? SetCenterObject().position : CenterObject.position);
+    //private Transform SetCenterObject() => CenterObject = mob_object.transform;
+    public virtual Vector2 ToPlayer
+    {
+        get
+        {
+            if(!player) 
+                return Vector2.zero;
+
+            if (!CenterObject) 
+                CenterObject = mob_object.transform;
+
+            if(!CenterObject) 
+                return Vector2.zero;
+
+            return player.position - CenterObject.position;
+        }
+    }
     public virtual float distToPlayer => ToPlayer.magnitude;
 
     public bool isToPath = false;
-    public virtual void DetectDirection() //Вычисляем направление
+    protected virtual void DetectDirection() //Вычисляем направление
     {
-        
         RaycastHit2D hit = BuildRayCast(CenterObject.position, ToPlayer.normalized, distToPlayer, combinedLayerMask);
         bool wallDetected = false;
 

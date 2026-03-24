@@ -4,6 +4,7 @@ public class VasaLogic : ObjectLBroken
 {
     public override void Break(CanBeWeapon canBeWeapon)
     {
+        Debug.Log("qweqwe");
         remainsHits--;
         if (remainsHits == 0)
         {

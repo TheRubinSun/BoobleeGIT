@@ -505,6 +505,7 @@ public class Inventory:MonoBehaviour, ISlot
         int numb = 1;
         foreach (Transform child in InventoryBarParent)
         {
+            slots[i].SlotObj.GetComponent<Image>().color = GlobalColors.GreenSlotColor;
             Slot newSlot = new Slot(slots[i].Item, child.gameObject, slots[i].Count);
             inventoryBarSlots.Add(newSlot);
             butInventoryBars[numb - 1] = child.GetComponent<ButInventoryBar>();

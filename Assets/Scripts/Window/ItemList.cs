@@ -67,8 +67,8 @@ public static class ItemsList
         items.Add(new Item(26, "material_glass",              20, 0, Quality.Common, 15, "_", TypeItem.Material));
         items.Add(new Item(27, "material_someone_eye",        20, 0, Quality.Uncommon, 35, "_", TypeItem.Material));
         items.Add(new Item(28, "material_strange_eye",        20, 0, Quality.Mystical, 350, "_", TypeItem.Material));
-        items.Add(new ArtifactItem(29, "artifact_simple_ring", 1, 0, Quality.Mystical, 350, "_", TypeItem.Artifact, 1));
-        items.Add(new ArtifactItem(30, "artifact_eye_ring",    1, 0, Quality.Mystical, 800, "_", TypeItem.Artifact, 2));
+        items.Add(new ArtifactItem(29, "artifact_simple_ring", 1, 0, Quality.Uncommon, 250, "_", TypeItem.Artifact, 1));
+        items.Add(new ArtifactItem(30, "artifact_eye_ring",    1, 0, Quality.Rare, 600, "_", TypeItem.Artifact, 2));
 
 
         items.Add(new Item(31, "material_tooth_mimic",         100, 0, Quality.Uncommon, 50, "_", TypeItem.Material));
@@ -120,6 +120,7 @@ public static class ItemsList
         items.Add(new Seed(75, "seed_pumkin",  100, 0, Quality.Common, 2, "_", 4, "pumkin", TypeItem.Seed));
         items.Add(new Gun(76, "slingshot", 1, 0, Quality.Uncommon, 80, "_", true, 2.7f, damageT.Physical, 1, 0.5f, 50, 1, 7f, 0.5f, 15f, 6));
         items.Add(new Hook(77, "hook", 1, 0, Quality.Mystical, 1000, "_", 6f, 10f, 6f, 0, TypeItem.Other));
+        items.Add(new ArtifactItem(78, "artifact_zado", 1, 67, Quality.Interverse, 5800, "_", TypeItem.Artifact, 6));
         //PrintItemList();
     }
     private static void InitializeSpritesItem()

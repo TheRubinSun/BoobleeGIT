@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class MeleWeaponLogic : WeaponControl
 {
@@ -31,8 +32,8 @@ public class MeleWeaponLogic : WeaponControl
 
         hitObjAndEnemies.Add(collision);
 
-        int colLayer = collision.gameObject.layer;
-        if (colLayer == LayerManager.touchObjectsLayer || colLayer == LayerManager.touchTriggObjLayer || colLayer == LayerManager.enemyObject) //Столкновение в врагов или объектом
+        int layer = collision.gameObject.layer;
+        if (((1 << layer) & LayerManager.allTrigger) != 0) //Столкновение в врагов или объектом
         {
             ObjectLBroken objectL = collision.gameObject.GetComponent<ObjectLBroken>();
             if (objectL != null)
@@ -40,7 +41,7 @@ public class MeleWeaponLogic : WeaponControl
                 objectL.Break(canBeWeapon);
             }
         }
-        else if (collision.gameObject.layer == LayerManager.enemyLayer)
+        else if (layer == LayerManager.enemyLayer)
         {
             BaseEnemyLogic enemy = collision.GetComponent<BaseEnemyLogic>();
             if (enemy == null)

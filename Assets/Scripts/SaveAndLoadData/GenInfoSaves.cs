@@ -121,7 +121,7 @@ public class GenInfoSaves : MonoBehaviour
         GlobalData.SaveInt = saveInt;
         saveGameFiles[saveInt].godMode = toggle_Saves[saveInt].isOn;
 
-        GlobalData.cur_seed = (saveGameFiles[saveInt].seed != 0) ? saveGameFiles[saveInt].seed : saveGameFiles[saveInt].GenNewSeed();
+        GlobalData.CurSeed = (saveGameFiles[saveInt].seed != 0) ? saveGameFiles[saveInt].seed : saveGameFiles[saveInt].GenNewSeed();
         GlobalData.cur_lvl_left = saveGameFiles[saveInt].lvl_left;
         lastSaveID = saveInt;
 
@@ -135,7 +135,7 @@ public class GenInfoSaves : MonoBehaviour
         {
             GlobalData.SavePath = saveGameFiles[lastSaveID].fileName;
             GlobalData.SaveInt = lastSaveID;
-            GlobalData.cur_seed = (saveGameFiles[lastSaveID].seed != 0) ? saveGameFiles[lastSaveID].seed : saveGameFiles[lastSaveID].GenNewSeed();
+            GlobalData.CurSeed = (saveGameFiles[lastSaveID].seed != 0) ? saveGameFiles[lastSaveID].seed : saveGameFiles[lastSaveID].GenNewSeed();
             Debug.Log($"Выбран слот {lastSaveID}, путь: {GlobalData.SavePath}");
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("LoadingScreen");
         }

@@ -31,6 +31,8 @@ public class Artifacts : MonoBehaviour
     /// </summary>
     public int AddNewArtifact(int levelArtefact, System.Random random = null)
     {
+        random = GlobalData.CreateSubRandom();
+
         ArtifactObj artif;
         if (random == null) artif = new ArtifactObj(artifacts.Count, levelArtefact);
         else
