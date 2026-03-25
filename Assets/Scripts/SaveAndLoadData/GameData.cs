@@ -16,11 +16,12 @@ public class SavesDataInfo
     public float volume_musics;
     public ScreenResolutions screen_resole;
     public bool BigUI;
+    public bool IsCameraFarAway;
     public SavesDataInfo()
     {
         saveGameFiles = new();
     }
-    public SavesDataInfo(Dictionary<int, SaveGameInfo> _saveGameFiles, int _lastSaveID, string language, float volume_sounds, float volume_musics, ScreenResolutions screen_resole, bool bigUI)
+    public SavesDataInfo(Dictionary<int, SaveGameInfo> _saveGameFiles, int _lastSaveID, string language, float volume_sounds, float volume_musics, ScreenResolutions screen_resole, bool bigUI, bool isCameraFarAway)
     {
         saveGameFiles = _saveGameFiles;
         lastSaveID = _lastSaveID;
@@ -29,6 +30,7 @@ public class SavesDataInfo
         this.volume_musics = volume_musics;
         this.screen_resole = screen_resole;
         this.BigUI = bigUI;
+        this.IsCameraFarAway = isCameraFarAway;
     }
 }
 public class SaveDataBinds

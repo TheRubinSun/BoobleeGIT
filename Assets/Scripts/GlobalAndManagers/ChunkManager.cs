@@ -4,7 +4,6 @@ using UnityEngine;
 public class ChunkManager : MonoBehaviour
 {
     [SerializeField] private Transform PlayerPos;
-    [SerializeField] private Vector2Int renderDistance;
 
     private int chunkSize;
     private Vector2Int lastPlayerChunk;
@@ -41,10 +40,10 @@ public class ChunkManager : MonoBehaviour
     private void UpdateChunks()
     {
         HashSet<Vector2Int> chunksToActivate = new HashSet<Vector2Int>();
-
-        for(int y = -renderDistance.y; y <= renderDistance.y; y++)
+        Vector2Int rendDisnt = GlobalData.RenderDistance;
+        for (int y = -rendDisnt.y; y <= rendDisnt.y; y++)
         {
-            for(int x = -renderDistance.x; x <= renderDistance.x; x++)
+            for(int x = -rendDisnt.x; x <= rendDisnt.x; x++)
             {
                 Vector2Int chunkCoord = lastPlayerChunk + new Vector2Int(x, y);
                 chunksToActivate.Add(chunkCoord);

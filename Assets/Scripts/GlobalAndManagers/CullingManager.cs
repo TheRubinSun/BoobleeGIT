@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
+using UnityEditor.Localization.Plugins.XLIFF.V20;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -25,7 +26,7 @@ public class CullingManager : MonoBehaviour
     public bool allVisible = false;
     private HashSet<ICullableObject> objects_visibles = new HashSet<ICullableObject>();
 
-    private float cullCheckInterval = 0.3f; // 4 раза в секунду (вместо каждого кадра)
+    private float cullCheckInterval = 0.33f; // 3 раза в секунду (вместо каждого кадра)
     private float cullCheckTimer = 0;
 
     private PixelPerfectCamera ppc;
@@ -65,27 +66,57 @@ public class CullingManager : MonoBehaviour
         float ratio = lastWidth / lastHeight;
         float multiply;
 
-        //125, 92, 63, 41 Те значения при которых хорошо выглядит игра
+        Vector2Int chunkLoad = Vector2Int.zero;
+        //125, 92, 62, 41 Те значения при которых хорошо выглядит игра
+        bool isFarAway = GlobalData.IsFarCamera;
         if (lastHeight >= 1900)          // 4K и около
         {
-            ppc.assetsPPU = 41;
-            multiply = 2f;
+            if(isFarAway)
+            {
+                chunkLoad = new Vector2Int(2, 2);
+                ppc.assetsPPU = 41;
+            } 
+            else
+            {
+                chunkLoad = new Vector2Int(2, 1);
+                ppc.assetsPPU = 63;
+            }
+                
+            multiply = 1.8f;
         }
         else if (lastHeight >= 1300)          // 2K и около
         {
-            ppc.assetsPPU = 63;
-            multiply = 1.8f;
+            if (isFarAway)
+            {
+                chunkLoad = new Vector2Int(2, 2);
+                ppc.assetsPPU = 41;
+            }
+            else
+            {
+                chunkLoad = new Vector2Int(2, 1);
+                ppc.assetsPPU = 62;
+            }
+            //ppc.assetsPPU = 62;
+            multiply = 1.4f;
         }
         else if (lastHeight >= 900)      // FullHD
         {
-            ppc.assetsPPU = 125;
-            multiply = 1.5f;
+            if (isFarAway)
+                ppc.assetsPPU = 63;
+            else
+                ppc.assetsPPU = 125;
+
+            chunkLoad = new Vector2Int(2, 1);
+            //ppc.assetsPPU = 125;
+            multiply = 1.25f;
         }
         else                    // HD
         {
+            chunkLoad = new Vector2Int(2, 1);
             ppc.assetsPPU = 125;
-            multiply = 1.1f;
+            multiply = 1f;
         }
+        GlobalData.RenderDistance = chunkLoad;
 
         yield return new WaitForEndOfFrame();
         ResizeNextFrame(multiply);

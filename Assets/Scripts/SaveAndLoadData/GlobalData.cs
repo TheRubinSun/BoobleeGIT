@@ -15,10 +15,15 @@ public static class GlobalData
     public static bool LoadedGame;
     public static NewPlayer? newPlayer = default;
 
+
     public static int ID_head;
     public static int ID_hair;
 
+    //Settings
+    public static Vector2Int RenderDistance { get; set; } = new Vector2Int(2, 1);
     public static bool IsBigUI;
+    public static bool IsFarCamera = false;
+    public static ScreenResolutions screen_resole;
 
     //public static bool GOD_MODE;
     public static float VOLUME_SOUNDS = 0.5f;
@@ -34,8 +39,6 @@ public static class GlobalData
     public static int add_mobs = 1;
 
     public static float ChanceCharOnWeapon = 0.10f;
-
-    public static ScreenResolutions screen_resole;
 
     public static Inventory Inventory => Inventory.Instance;
     public static EqupmentPlayer EqupmentPlayer => EqupmentPlayer.Instance;

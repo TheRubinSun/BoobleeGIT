@@ -167,7 +167,7 @@ public class GenInfoSaves : MonoBehaviour
                 UpdateTextInfoCell(id);
 
                 
-                await SavedChanged(GenInfoSaves.saveGameFiles, 100, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, screen_resole, GlobalData.IsBigUI);
+                await SavedChanged(GenInfoSaves.saveGameFiles, 100, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, screen_resole, GlobalData.IsBigUI, GlobalData.IsFarCamera);
 
                 Debug.Log($"Файл {path_player_data} был успешно удалён.");
             }
@@ -179,13 +179,13 @@ public class GenInfoSaves : MonoBehaviour
         else
         {
             UpdateTextInfoCell(id);
-            await SavedChanged(GenInfoSaves.saveGameFiles, 100, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, screen_resole, GlobalData.IsBigUI);
+            await SavedChanged(GenInfoSaves.saveGameFiles, 100, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, screen_resole, GlobalData.IsBigUI, GlobalData.IsFarCamera);
             Debug.LogWarning($"Файл {path_player_data} не существует, удаление невозможно.");
         }
     }
-    public async Task SavedChanged(Dictionary<int, SaveGameInfo> _saveGameFiles, int _lastSaveID, string _language, float volume_sounds, float volume_musics, ScreenResolutions screen_resole, bool bigUI)
+    public async Task SavedChanged(Dictionary<int, SaveGameInfo> _saveGameFiles, int _lastSaveID, string _language, float volume_sounds, float volume_musics, ScreenResolutions screen_resole, bool bigUI, bool isCameraAway)
     {
-        SavesDataInfo savesDataInfo = new SavesDataInfo(_saveGameFiles, _lastSaveID, _language, volume_sounds, volume_musics, screen_resole, bigUI);
+        SavesDataInfo savesDataInfo = new SavesDataInfo(_saveGameFiles, _lastSaveID, _language, volume_sounds, volume_musics, screen_resole, bigUI, isCameraAway);
         await SaveSystem.SaveDataAsync(savesDataInfo, "saves_info.json");
     }
 
@@ -288,6 +288,7 @@ public class GenInfoSaves : MonoBehaviour
             GlobalData.VOLUME_MUSICS = saveDataInfo.volume_musics;
             GlobalData.VOLUME_SOUNDS = saveDataInfo.volume_sounds;
             GlobalData.IsBigUI = saveDataInfo.BigUI;
+            GlobalData.IsFarCamera = saveDataInfo.IsCameraFarAway;
 
             lastSaveID = saveDataInfo.lastSaveID;
             language = saveDataInfo.language;

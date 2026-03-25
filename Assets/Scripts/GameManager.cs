@@ -345,7 +345,7 @@ public class GameManager: MonoBehaviour
 
         //saveGameIngo.randomCalls = GlobalData.randomCalls;
         ScreenResolutions screen_resole = GlobalData.GetScreenResolutions();
-        SavesDataInfo savesDataInfo = new SavesDataInfo(GenInfoSaves.saveGameFiles, GlobalData.SaveInt, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, screen_resole, GlobalData.IsBigUI);
+        SavesDataInfo savesDataInfo = new SavesDataInfo(GenInfoSaves.saveGameFiles, GlobalData.SaveInt, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, screen_resole, GlobalData.IsBigUI, GlobalData.IsFarCamera);
         //await SaveSystem.SaveDataAsync(savesDataInfo, "saves_info.json");
 
         CraftsRecipesData savesDataRecipesCrafts = new CraftsRecipesData(RecipesCraft.recipesCraft);
@@ -381,7 +381,7 @@ public class GameManager: MonoBehaviour
     {
         WritePlayTime();
         ScreenResolutions screen_resole = GlobalData.GetScreenResolutions();
-        SavesDataInfo savesDataInfo = new SavesDataInfo(GenInfoSaves.saveGameFiles, GlobalData.SaveInt, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, screen_resole, GlobalData.IsBigUI);
+        SavesDataInfo savesDataInfo = new SavesDataInfo(GenInfoSaves.saveGameFiles, GlobalData.SaveInt, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, screen_resole, GlobalData.IsBigUI, GlobalData.IsFarCamera);
         await SaveSystem.SaveDataAsync(savesDataInfo, "saves_info.json");
     }
     //public async void LoadDataGame()
