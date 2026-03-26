@@ -20,9 +20,9 @@ public class GunLogic : RangeWeaponLogic
         projectile = Instantiate(Projectile_pref, ShootPos);    //Создаем снаряд по префабу
         projectile.transform.position += new Vector3(0, offsetProj);
         proj_set = projectile.GetComponent<PlayerProjectile>();
-        proj_set.damage = Attack_Damage;//Назначем урон
-        proj_set.maxDistance = Attack_Range;
-        proj_set.SetStats(Attack_Range, Attack_Damage, null, damageType, canBeWeapon.canBeMissed);
+        //proj_set.damage = Attack_Damage;//Назначем урон
+        //proj_set.maxDistance = Attack_Range;
+        proj_set.SetStats(Attack_Range, Attack_Damage, EffectAttack, damageType, canBeWeapon.canBeMissed);
 
         projectile.transform.SetParent(transform.root); //Подять в иерархии объекта пули/стрелы
 
@@ -42,6 +42,6 @@ public class GunLogic : RangeWeaponLogic
 
         float randomAngle = Random.Range(-spreadAngle, spreadAngle);
         direction = Quaternion.Euler(0, 0, randomAngle) * direction; //Добавляем разброс снарядам
-        proj_set.effectBul = EffectAttack;
+        //proj_set.effectBul = EffectAttack;
     }
 }

@@ -10,6 +10,7 @@ public abstract class TrapLogic : MonoBehaviour
 
     protected bool isActivate = false;
 
+    [SerializeField] protected LayerMask triggerMask;
     protected virtual void Awake()
     {
         anim = GetComponent<Animator>();
@@ -25,9 +26,9 @@ public abstract class TrapLogic : MonoBehaviour
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("Trigger");
-        if (collision!= null)
+        if (collision != null)
         {
-            if (collision.gameObject.layer == LayerManager.enemyLayer)
+            if (((1 << collision.gameObject.layer) & triggerMask) != 0)
             {
                 Activate();
             }

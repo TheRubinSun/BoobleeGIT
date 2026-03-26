@@ -102,6 +102,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b07b11c268b9bc44a1d3e941f5fd891, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triggerMask:
+    serializedVersion: 2
+    m_Bits: 16384
   trapped_sound: {fileID: 8300000, guid: 0912b6ef0ce0b654386b81c4986067fb, type: 3}
 --- !u!82 &1525009448337185818
 AudioSource:

@@ -22,7 +22,7 @@ public class Player : MonoBehaviour, ITakeDamage
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private EquipStats equip_Stats;
     [SerializeField] private GameObject PlayerModel;
-    [SerializeField] private Transform particalParents; //Обычно объект particals
+    [SerializeField] private Transform particalParents; //Обычно объект particles
     [SerializeField] public Toggle[] TooglesWeapon = new Toggle[4];
     [SerializeField] private SpriteRenderer HairPlayer;
 
@@ -300,7 +300,7 @@ public class Player : MonoBehaviour, ITakeDamage
 
         if(playerControl.Jump(force))
         {
-            Instantiate(ResourcesData.GetParticalPrefab(TypePartical.Force_Particle), particalParents);
+            Instantiate(ResourcesData.GetParticalPrefab(TypeParticle.Force_Particle), particalParents);
             return true;
         }
         else 
@@ -376,7 +376,7 @@ public class Player : MonoBehaviour, ITakeDamage
             default: goto case damageT.Physical;
         }
         if (IsTakeDamage)
-            Instantiate(ResourcesData.GetParticalPrefab(TypePartical.Damage_Particle), particalParents);
+            Instantiate(ResourcesData.GetParticalPrefab(TypeParticle.Damage_Particle), particalParents);
         if (effect != null)
         {
             GetComponent<EffectsManager>().ApplyEffect(effect);
@@ -399,17 +399,17 @@ public class Player : MonoBehaviour, ITakeDamage
             {
                 case TypeHeal.PotionHeal:
                     {
-                        Instantiate(ResourcesData.GetParticalPrefab(TypePartical.Heal_Particle), particalParents);
+                        Instantiate(ResourcesData.GetParticalPrefab(TypeParticle.Heal_Particle), particalParents);
                         break;
                     }
                 case TypeHeal.FoodHeal:
                     {
-                        Instantiate(ResourcesData.GetParticalPrefab(TypePartical.Food_Heal_Particle), particalParents);
+                        Instantiate(ResourcesData.GetParticalPrefab(TypeParticle.Food_Heal_Particle), particalParents);
                         break;
                     }
                 case TypeHeal.ShootHeal:
                     {
-                        Instantiate(ResourcesData.GetParticalPrefab(TypePartical.Shoot_Heal_Particle), particalParents);
+                        Instantiate(ResourcesData.GetParticalPrefab(TypeParticle.Shoot_Heal_Particle), particalParents);
                         break;
                     }
             }
@@ -429,12 +429,12 @@ public class Player : MonoBehaviour, ITakeDamage
             {
                 case TypeManaHeal.PotionHeal:
                     {
-                        Instantiate(ResourcesData.GetParticalPrefab(TypePartical.Mana_heal_Particle), particalParents);
+                        Instantiate(ResourcesData.GetParticalPrefab(TypeParticle.Mana_heal_Particle), particalParents);
                         break;
                     }
                 case TypeManaHeal.FoodManaHeal:
                     {
-                        Instantiate(ResourcesData.GetParticalPrefab(TypePartical.Food_Mana_heal_Particle), particalParents);
+                        Instantiate(ResourcesData.GetParticalPrefab(TypeParticle.Food_Mana_heal_Particle), particalParents);
                         break;
                     }
             }

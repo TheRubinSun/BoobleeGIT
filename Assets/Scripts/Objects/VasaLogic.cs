@@ -2,11 +2,10 @@ using UnityEngine;
 
 public class VasaLogic : ObjectLBroken
 {
-    public override void Break(CanBeWeapon canBeWeapon)
+    public override void Break(CanBeWeapon canBeWeapon, int count = 1)
     {
-        Debug.Log("qweqwe");
-        remainsHits--;
-        if (remainsHits == 0)
+        remainsHits -= count;
+        if (remainsHits <= 0)
         {
             StartCoroutine(BreakAndDestroy());
         }

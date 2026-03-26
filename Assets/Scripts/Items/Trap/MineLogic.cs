@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -11,7 +12,7 @@ public class MineLogic : TrapLogic
 
     [SerializeField] private GameObject Explosion_Pref;
     [SerializeField] private AudioClip explosion_sound;
-
+    public CanBeWeapon canBeWeapon = new CanBeWeapon { canBeExplosion = true};
     public void SetParameters(int _damageTrap, damageT _damageT, float _radiusExp, float _delayTime)
     {
         damageTrap = _damageTrap;
@@ -21,7 +22,7 @@ public class MineLogic : TrapLogic
     }
     public override void Activate()
     {
-        Debug.Log($"Radius {radiusExp}");
+        //Debug.Log($"Radius {radiusExp}");
         if (isActivate) return;
         StartCoroutine(WaitToRun());
     }
@@ -35,19 +36,38 @@ public class MineLogic : TrapLogic
     }
     private void RunExplosion()
     {
-        GameObject explosion = Instantiate(Explosion_Pref, transform);
+        GameObject explosion = Instantiate(Explosion_Pref, transform.position, Quaternion.identity);
         explosion.transform.localScale = Vector3.one * (radiusExp * 2f);
+        Destroy(explosion, 0.05f);
 
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, radiusExp);
-        foreach(Collider2D enemy in hitEnemies)
+        Collider2D[] hitObjects = Physics2D.OverlapCircleAll(transform.position, radiusExp);
+        HashSet<GameObject> hitProcessed = new HashSet<GameObject>();
+
+        foreach (Collider2D obj in hitObjects)
         {
-            //if(enemy.gameObject.layer == LayerMask.NameToLayer("DamageCollider"))
-            if (enemy.gameObject.layer == LayerManager.enemyLayer)
+            if (obj == null || hitProcessed.Contains(obj.gameObject)) continue;
+
+            if (((1 << obj.gameObject.layer) & (1 << LayerManager.enemyLayer)) != 0)
             {
-                enemy.GetComponent<BaseEnemyLogic>().TakeDamage(damageTrap, damageT.Physical, false);
+                BaseEnemyLogic enemy = obj.GetComponentInParent<BaseEnemyLogic>();
+                if(enemy != null)
+                {
+                    enemy.TakeDamage(damageTrap, damageT.Physical, false);
+                    hitProcessed.Add(enemy.gameObject);
+                }
+            }
+            else if(((1 << obj.gameObject.layer) & LayerManager.allTrigger) != 0)
+            {
+                ObjectLBroken broke_l = obj.GetComponent<ObjectLBroken>();
+                if (broke_l != null)
+                {
+                    broke_l.Break(canBeWeapon, 5);
+                    hitProcessed.Add(broke_l.gameObject);
+                }
+
             }
         }
-        Destroy(explosion, 0.05f);
+        Instantiate(ResourcesData.GetParticalPrefab(TypeParticle.Explosion_particle), transform.position, Quaternion.identity);
         StartCoroutine(PlaySoundsAndDestroy());
     }
     private IEnumerator PlaySoundsAndDestroy()

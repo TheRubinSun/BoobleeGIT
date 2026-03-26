@@ -41,9 +41,9 @@ public class MeleWeaponLogic : WeaponControl
         }
         else if (layer == LayerManager.enemyLayer)
         {
-            BaseEnemyLogic enemy = collision.GetComponent<BaseEnemyLogic>();
-            if (enemy == null)
-                enemy = collision.transform.parent.GetComponent<BaseEnemyLogic>();
+            BaseEnemyLogic enemy = collision.GetComponentInParent<BaseEnemyLogic>();
+            //if (enemy == null)
+            //    enemy = collision.transform.parent.GetComponent<BaseEnemyLogic>();
 
             if (enemy != null)
             {

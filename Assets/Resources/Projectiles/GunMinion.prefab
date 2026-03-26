@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2425935601267977463}
   - component: {fileID: 5655098281387644665}
-  - component: {fileID: 5285748788805456718}
   - component: {fileID: -1202711172353098019}
+  - component: {fileID: 5285748788805456718}
   - component: {fileID: 5857379995935829794}
   m_Layer: 13
   m_Name: GunMinion
@@ -90,6 +90,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-1202711172353098019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6616506242328447504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae5d0a2ccc2e98c4f93b9660164a6887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites: []
+  typeParticle: 10
 --- !u!50 &5285748788805456718
 Rigidbody2D:
   serializedVersion: 5
@@ -117,22 +131,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &-1202711172353098019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6616506242328447504}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae5d0a2ccc2e98c4f93b9660164a6887, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxDistance: 1
-  destroyTime: 3
-  typeDamage: 2
-  sprites: []
 --- !u!58 &5857379995935829794
 CircleCollider2D:
   m_ObjectHideFlags: 0

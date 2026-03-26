@@ -4,23 +4,28 @@ using UnityEngine;
 public class OreL : ObjectLBroken
 {
     [SerializeField] protected AudioClip[] soundsHit;
-    public override void Break(CanBeWeapon canBeWeapon)
+    public override void Break(CanBeWeapon canBeWeapon, int count = 1)
     {
-        if (canBeWeapon.canBePixace == false)
+        if (canBeWeapon.canBePixace == false && canBeWeapon.canBeExplosion == false)
         {
             return;
         }
-        float pitch = Random.Range(0.8f, 1.2f);
+
+        audioS.pitch = Random.Range(0.8f, 1.2f);
         audioS.PlayOneShot(soundsHit[Random.Range(0, soundsHit.Length)]);
 
-        remainsHits--;
-        if (remainsHits == 0)
+        int stageBefore = remainsHits / toNextStageAnim;
+        remainsHits -= count;
+        int stageAfter = remainsHits / toNextStageAnim;
+
+        if (remainsHits <= 0)
         {
             GlobalData.Player.AddTypeExp(typeExp, exp_full);
             StartCoroutine(BreakAndDestroy());
             return;
         }
-        else if (remainsHits % toNextStageAnim == 0)
+        
+        if (stageAfter < stageBefore)
         {
             StartCoroutine(WaitForSound(0.1f));
         }
@@ -67,8 +72,7 @@ public class OreL : ObjectLBroken
 
 
         spr_ren.enabled = false;
-        Collider2D collider2D = GetComponent<Collider2D>();
-        collider2D.enabled = false;
+        myCollider.enabled = false;
         DropItems();
 
         yield return new WaitForSeconds(useAudio.length);

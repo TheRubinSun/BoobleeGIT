@@ -51,6 +51,7 @@ public abstract class ObjectLBroken : ObjectL
     protected AudioSource audioS;
     protected int brokenStage;
     protected Coroutine flashCol;
+    protected Collider2D myCollider;
 
     [SerializeField] protected int exp;
     [SerializeField] protected int exp_full;
@@ -61,12 +62,14 @@ public abstract class ObjectLBroken : ObjectL
     public override Vector2 GetPosition() => startPos;
     public virtual float GetPosX() => startPos.x;
     public virtual float GetPosY() => startPos.y;
-    public abstract void Break(CanBeWeapon canBeWeapon);
+
+    public abstract void Break(CanBeWeapon canBeWeapon, int count = 1);
     protected virtual void Awake()
     {
         spr_ren = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         audioS = GetComponent<AudioSource>();
+        myCollider = GetComponent<Collider2D>();
     }
     protected virtual void Start()
     {
@@ -126,7 +129,7 @@ public abstract class ObjectLBroken : ObjectL
     {
         if (!particalColor.Equals(default(Color32)))
         {
-            GameObject particleObj = Instantiate(ResourcesData.GetParticalPrefab(TypePartical.Broken_Particle), transform.position, Quaternion.identity);
+            GameObject particleObj = Instantiate(ResourcesData.GetParticalPrefab(TypeParticle.Broken_Particle), transform.position, Quaternion.identity);
             ParticleSystem particle = particleObj.GetComponent<ParticleSystem>();
             var main = particle.main;
             main.startColor = new ParticleSystem.MinMaxGradient(particalColor);
@@ -144,11 +147,11 @@ public abstract class ObjectLBroken : ObjectL
     protected virtual void HideBeforeDestroy()
     {
         spr_ren.enabled = false;
-        Collider2D collider2D = GetComponent<Collider2D>();
-        collider2D.enabled = false;
+        myCollider.enabled = false;
     }
     protected virtual void DestroyObject()
     {
+        GridNodes.NotifyWalkableObject(transform.position, myCollider.bounds.size);
         Destroy(gameObject);
     }
     protected virtual void DropItems()
@@ -217,6 +220,16 @@ public abstract class ObjectLBroken : ObjectL
 
             spr_ren.color = original_color;
         }
+    }
+}
+public class PositionArgs : System.EventArgs
+{
+    public Vector2 pos;
+    public Vector2 sizeObj;
+    public PositionArgs(Vector2 worldPos, Vector2 size)
+    {
+        pos = worldPos;
+        sizeObj = size;
     }
 }
 [System.Serializable]

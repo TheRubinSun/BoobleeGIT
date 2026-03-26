@@ -137,7 +137,7 @@ public class GunMinCon : MinionControl
         GameObject bullet = Instantiate(bulletPref, ShotPos);
         bullet.transform.SetParent(transform.root);
         bullet_set = bullet.GetComponent<PlayerProjectile>();
-        bullet_set.maxDistance = radiusVision;
+        //bullet_set.maxDistance = radiusVision;
         bullet_set.SetStats(radiusVision, damage, effect, damageT.Physical, false);
 
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();

@@ -133,11 +133,8 @@ public class GenInfoSaves : MonoBehaviour
     {
         if(lastSaveID < 3 && saveGameFiles[lastSaveID].isStarted)
         {
-            GlobalData.SavePath = saveGameFiles[lastSaveID].fileName;
-            GlobalData.SaveInt = lastSaveID;
-            GlobalData.CurSeed = (saveGameFiles[lastSaveID].seed != 0) ? saveGameFiles[lastSaveID].seed : saveGameFiles[lastSaveID].GenNewSeed();
-            Debug.Log($"Выбран слот {lastSaveID}, путь: {GlobalData.SavePath}");
-            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("LoadingScreen");
+            StartSaveGame(lastSaveID);
+            //Debug.Log($"Выбран слот {lastSaveID}, путь: {GlobalData.SavePath}");
         }
     }
     
@@ -267,7 +264,7 @@ public class GenInfoSaves : MonoBehaviour
 
         SavesDataInfo saveDataInfo = GameDataHolder.savesDataInfo;
 
-        if(saveDataInfo == null)
+        if(saveDataInfo == null) //если вообще нету данных, то создаём файл
         {
             saveGameFiles = new Dictionary<int, SaveGameInfo>();
             lastSaveID = 100;
@@ -277,7 +274,7 @@ public class GenInfoSaves : MonoBehaviour
         }
         else
         {
-            if(saveDataInfo.saveGameFiles == null)
+            if(saveDataInfo.saveGameFiles == null) //создаем болванки
             {
                 CreateNullSaves();
             }

@@ -13,7 +13,7 @@ public class ResourcesData : MonoBehaviour
     public static Dictionary<int, EffectData> effects = new Dictionary<int, EffectData>();
     public static Dictionary<int, GameObject> lazers = new Dictionary<int, GameObject>();
     public static Dictionary<int, GameObject> hooks = new Dictionary<int, GameObject>();
-    public static Dictionary<int, GameObject> particals = new Dictionary<int, GameObject>();
+    public static Dictionary<int, GameObject> particles = new Dictionary<int, GameObject>();
     public static void LoadWeapons()
     {
         weapons["sword_gods_slayer"] = Resources.Load<GameObject>("Weapons/Sword_God_Pref");
@@ -77,16 +77,18 @@ public class ResourcesData : MonoBehaviour
 
         hooks[0] = Resources.Load<GameObject>("Hooks/Hook_one");
 
-        particals[0] = Resources.Load<GameObject>("Particals/Heal_Particle");
-        particals[1] = Resources.Load<GameObject>("Particals/Damage_Particle");
-        particals[2] = Resources.Load<GameObject>("Particals/Mana_heal_Particle");
-        particals[3] = Resources.Load<GameObject>("Particals/Force_Particle");
-        particals[4] = Resources.Load<GameObject>("Particals/Food_Heal_Particle");
-        particals[5] = Resources.Load<GameObject>("Particals/Shoot_Heal_Particle");
-        particals[6] = Resources.Load<GameObject>("Particals/Food_Mana_heal_Particle");
-        particals[7] = Resources.Load<GameObject>("Particals/Bonefire_Particle");
-        particals[8] = Resources.Load<GameObject>("Particals/Broken_Particle");
-
+        particles[0] = Resources.Load<GameObject>("Particals/Heal_Particle");
+        particles[1] = Resources.Load<GameObject>("Particals/Damage_Particle");
+        particles[2] = Resources.Load<GameObject>("Particals/Mana_heal_Particle");
+        particles[3] = Resources.Load<GameObject>("Particals/Force_Particle");
+        particles[4] = Resources.Load<GameObject>("Particals/Food_Heal_Particle");
+        particles[5] = Resources.Load<GameObject>("Particals/Shoot_Heal_Particle");
+        particles[6] = Resources.Load<GameObject>("Particals/Food_Mana_heal_Particle");
+        particles[7] = Resources.Load<GameObject>("Particals/Bonefire_Particle");
+        particles[8] = Resources.Load<GameObject>("Particals/Broken_Particle");
+        particles[9] = Resources.Load<GameObject>("Particals/Shoot_resin");
+        particles[10] = Resources.Load<GameObject>("Particals/Explosion_particle");
+        
         if (weapons["sword_gods_slayer"] == null)
             Debug.LogError("Не удалось загрузить префаб Sword_God_Pref!");
         if (weapons["gun_makarov"] == null)
@@ -136,15 +138,16 @@ public class ResourcesData : MonoBehaviour
     }
     public static GameObject GetParticalPrefab(int id)
     {
-        return particals.ContainsKey(id) ? particals[id] : null;
+        return particles.ContainsKey(id) ? particles[id] : null;
     }
-    public static GameObject GetParticalPrefab(TypePartical typePart)
+    public static GameObject GetParticalPrefab(TypeParticle typePart)
     {
-        return particals.ContainsKey((int)typePart) ? particals[(int)typePart] : null;
+        return particles.ContainsKey((int)typePart - 1) ? particles[(int)typePart - 1] : null;
     }
 }
-public enum TypePartical
+public enum TypeParticle
 {
+    None,
     Heal_Particle,
     Damage_Particle,
     Mana_heal_Particle,
@@ -153,5 +156,7 @@ public enum TypePartical
     Shoot_Heal_Particle,
     Food_Mana_heal_Particle,
     Bonefire_Particle,
-    Broken_Particle
+    Broken_Particle,
+    Shoot_resin,
+    Explosion_particle
 }

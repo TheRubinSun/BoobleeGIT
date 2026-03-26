@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2425935601267977463}
   - component: {fileID: 5655098281387644665}
+  - component: {fileID: -1202711172353098019}
   - component: {fileID: 5285748788805456718}
   - component: {fileID: 5253939595935696532}
-  - component: {fileID: -1202711172353098019}
   m_Layer: 13
   m_Name: Shotgun_Bullet
   m_TagString: Untagged
@@ -90,6 +90,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-1202711172353098019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6616506242328447504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae5d0a2ccc2e98c4f93b9660164a6887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDistance: 1
+  destroyTime: 3
+  typeDamage: 2
+  sprites:
+  - {fileID: -5422157820973837998, guid: b664cd3dfa784604c93968d521637de0, type: 3}
+  - {fileID: 8572834464743117445, guid: b664cd3dfa784604c93968d521637de0, type: 3}
+  - {fileID: 7425422262792413544, guid: b664cd3dfa784604c93968d521637de0, type: 3}
+  - {fileID: -1375417603297299479, guid: b664cd3dfa784604c93968d521637de0, type: 3}
+  - {fileID: -3687393778470333740, guid: b664cd3dfa784604c93968d521637de0, type: 3}
+  typePartical: 0
 --- !u!50 &5285748788805456718
 Rigidbody2D:
   serializedVersion: 5
@@ -163,24 +185,3 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.13500221, y: 0.13500223}
   m_EdgeRadius: 0
---- !u!114 &-1202711172353098019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6616506242328447504}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae5d0a2ccc2e98c4f93b9660164a6887, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxDistance: 1
-  destroyTime: 3
-  typeDamage: 2
-  sprites:
-  - {fileID: -5422157820973837998, guid: b664cd3dfa784604c93968d521637de0, type: 3}
-  - {fileID: 8572834464743117445, guid: b664cd3dfa784604c93968d521637de0, type: 3}
-  - {fileID: 7425422262792413544, guid: b664cd3dfa784604c93968d521637de0, type: 3}
-  - {fileID: -1375417603297299479, guid: b664cd3dfa784604c93968d521637de0, type: 3}
-  - {fileID: -3687393778470333740, guid: b664cd3dfa784604c93968d521637de0, type: 3}

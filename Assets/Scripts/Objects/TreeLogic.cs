@@ -16,12 +16,12 @@ public class TreeLogic : ObjectLBroken
         spr_Child_ren = shadow_obj.GetComponent<SpriteRenderer>();
         anim.speed = Random.Range(0.9f, 1.1f);
     }
-    public override void Break(CanBeWeapon canBeWeapon)
+    public override void Break(CanBeWeapon canBeWeapon, int count = 1)
     {
-        if (canBeWeapon.canBeAxe == true)
+        if (canBeWeapon.canBeAxe == true || canBeWeapon.canBeExplosion == true)
         {
-            remainsHits--;
-            if (remainsHits == 0)
+            remainsHits -= count;
+            if (remainsHits <= 0)
             {
                 GlobalData.Player.AddTypeExp(typeExp, exp_full);
                 StartCoroutine(BreakAndDestroy());

@@ -7257,7 +7257,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerPos: {fileID: 419049370}
-  renderDistance: {x: 2, y: 1}
 --- !u!114 &1397526024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9770,7 +9769,7 @@ MonoBehaviour:
   m_RefResolutionX: 1280
   m_RefResolutionY: 720
   m_CropFrame: 0
-  m_GridSnapping: 1
+  m_GridSnapping: 0
   m_FilterMode: 1
   m_UpscaleRT: 0
   m_PixelSnapping: 0

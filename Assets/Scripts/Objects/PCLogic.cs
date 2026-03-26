@@ -28,20 +28,23 @@ public class PCLogic : ObjectLBroken
         base.Start();
 
     }
-    public override void Break(CanBeWeapon canBeWeapon)
+    public override void Break(CanBeWeapon canBeWeapon, int count = 1)
     {
-        float pitch = Random.Range(0.8f, 1.2f);
+        audioS.pitch = Random.Range(0.8f, 1.2f);
         audioS.PlayOneShot(soundsHit[Random.Range(0, soundsHit.Length)]);
 
-        remainsHits--;
-        if (remainsHits == 0)
+        int stageBefore = remainsHits / toNextStageAnim;
+        remainsHits -= count;
+        int stageAfter = remainsHits / toNextStageAnim;
+
+        if (remainsHits <= 0)
         {
             if (justSounds != null) justSounds.Stop();
             StartCoroutine(BreakAndDestroy());
             GlobalData.Player.AddTypeExp(typeExp, exp_full);
             return;
         }
-        else if (remainsHits % toNextStageAnim == 0)
+        else if (stageAfter < stageBefore)
         {
             if(SounsOnOrOff)
             {
@@ -101,8 +104,7 @@ public class PCLogic : ObjectLBroken
         audioS.PlayOneShot(useAudio);
 
         spr_ren.enabled = false;
-        Collider2D collider2D = GetComponent<Collider2D>();
-        collider2D.enabled = false;
+        myCollider.enabled = false;
         DropItems();
 
         yield return new WaitForSeconds(useAudio.length);

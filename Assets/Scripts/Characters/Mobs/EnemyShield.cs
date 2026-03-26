@@ -8,6 +8,7 @@ public class EnemyShield : ObjectLBroken
     public bool isDestroyed { get; protected set; }
     protected int layerOBJ;
 
+    [SerializeField] protected bool isFlyObj; //Например летающий глаз
     //protected GameManager g_m = GameManager.Instance;
 
     protected override void Awake()
@@ -27,12 +28,12 @@ public class EnemyShield : ObjectLBroken
         damageType = _damageT;
     }
     public override Vector2 GetPosition() => transform.position;
-    public override void Break(CanBeWeapon canBeWeapon)
+    public override void Break(CanBeWeapon canBeWeapon, int count = 1)
     {
-        //Debug.Log($"remainsHits: {remainsHits}");
-        remainsHits--;
-        //if (!damage_color.Equals(default(Color32)))
-        //    FlashColor(damage_color, 0.1f);
+        if (isFlyObj && !canBeWeapon.canBeBeatFly)
+            return;
+
+        remainsHits -= count;
 
         if (remainsHits <= 0 && !isDestroyed)
         {

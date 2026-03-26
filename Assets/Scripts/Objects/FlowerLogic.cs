@@ -12,13 +12,13 @@ public class FlowerLogic : ObjectLBroken , IPointFarm
 
         anim.speed = Random.Range(0.9f, 1.1f);
     }
-    public override void Break(CanBeWeapon canBeWeapon)
+    public override void Break(CanBeWeapon canBeWeapon, int count = 1)
     {
 
-        if (canBeWeapon.canBeCut == true)
+        if (canBeWeapon.canBeCut == true || canBeWeapon.canBeExplosion == true)
         {
-            remainsHits--;
-            if (remainsHits == 0)
+            remainsHits -= count;
+            if (remainsHits <= 0)
             {
                 GardenManager gr = GardenManager.instance;
                 if (gameObject.tag == "Planted")

@@ -15,6 +15,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private Transform WeaponSlots;
     [SerializeField] private Transform legsParent;
 
+    [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private float radiusCenterLegs = 0.23f;        
 
     private Vector2 inputDirection;
@@ -102,11 +103,13 @@ public class PlayerControl : MonoBehaviour
             }
         }
     }
+    private Vector3 cameraVelocity = Vector3.zero;
+    [SerializeField] private float smoothTime = 0.15f; // Чем меньше, тем быстрее камера
     private void LateUpdate()
     {
         Vector3 targerPos = new Vector3(transform.position.x, transform.position.y, -10f);
-        cameraObj.position = Vector3.Lerp(cameraObj.position, targerPos, Time.deltaTime * 7f);
-
+        cameraObj.position = Vector3.SmoothDamp(cameraObj.position, targerPos, ref cameraVelocity, smoothTime);
+        //cameraObj.position = Vector3.Lerp(cameraObj.position, targerPos, Time.deltaTime * 7f);
         foreach (LegControl legsLine in legsLines)
         {
             legsLine.MoveLinesLegs();
@@ -157,10 +160,14 @@ public class PlayerControl : MonoBehaviour
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 direction = mousePos - (Vector2)transform.position;
 
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        float roundedAngle = (int)(angle * 10f) / 10f;
+        if (direction.sqrMagnitude < 0.1f) return;
 
-        WeaponSlots.rotation = Quaternion.Euler(0, 0, roundedAngle);
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        Quaternion targetRotation = Quaternion.Euler(0,0,angle);
+        //float roundedAngle = (int)(angle * 10f) / 10f;
+
+        WeaponSlots.rotation = Quaternion.Lerp(WeaponSlots.rotation, targetRotation, Time.deltaTime * rotationSpeed);
     }
     public bool Jump(float distance)
     {

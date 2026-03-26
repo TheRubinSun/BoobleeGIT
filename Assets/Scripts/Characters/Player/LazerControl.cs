@@ -133,9 +133,7 @@ public class LazerControl : MonoBehaviour
     }
     private ObjectLBroken GetObjLogic(Transform tarTr)
     {
-        ObjectLBroken logic = tarTr.GetComponent<ObjectLBroken>();
-        if (logic == null)
-            logic = tarTr.parent.GetComponent<ObjectLBroken>();
+        ObjectLBroken logic = tarTr.GetComponentInParent<ObjectLBroken>();
         return logic;
     }
     private IEnumerator WaitForDivideRay(Vector2 hitPoint, float time)

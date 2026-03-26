@@ -337,6 +337,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4ead1bdbb1eb8414d8e0f6008068855d, type: 3}
   - {fileID: 8300000, guid: 05b57cf9602fc964caab2c5ddcb35977, type: 3}
   - {fileID: 8300000, guid: 642a3641a4033c743b26ff10bf3fb15d, type: 3}
+  particalColor:
+    serializedVersion: 2
+    rgba: 0
   itemsDrop: []
   damage_color:
     serializedVersion: 2
@@ -346,6 +349,7 @@ MonoBehaviour:
   typeExp: 0
   exp_damage: 0
   damageType: 0
+  isFlyObj: 1
   damageT: 0
   hits_sounds:
   - {fileID: 8300000, guid: 63d4cc6623a94b6489be1af4aa5f28d9, type: 3}

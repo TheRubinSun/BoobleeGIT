@@ -1,11 +1,13 @@
 using Newtonsoft.Json.Bson;
 using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GridNodes : MonoBehaviour
 {
+    public static event EventHandler<PositionArgs> OnWalkableUpdate;
     public static GridNodes Instance;
 
     public bool WatchGrid;
@@ -16,13 +18,13 @@ public class GridNodes : MonoBehaviour
     public NodeP[,] grid { get; private set; }
     private float nodeDiametr;
     private Vector2Int gridSize;
-
+    private Vector2 worldBottomLeft;
 
     Color32 colorBlock = new Color32(255, 0, 0, 20);
     Color32 noColor = new Color32(255, 255, 255, 10);
     private void Awake()
     {
-        if(Instance != null)
+        if (Instance != null)
         {
             Destroy(Instance);
         }
@@ -30,12 +32,14 @@ public class GridNodes : MonoBehaviour
 
         nodeDiametr = nodeRadius * 2;
         gridSize = new Vector2Int(Mathf.RoundToInt(gridWorldSize.x / nodeDiametr), Mathf.RoundToInt(gridWorldSize.y / nodeDiametr));
+
+        OnWalkableUpdate += UpdateRegion;
     }
 
     public void CreateGrid()
     {
         grid = new NodeP[gridSize.x, gridSize.y];
-        Vector2 worldBottomLeft = (Vector2)transform.position - Vector2.right * gridWorldSize.x/2 - Vector2.up * gridWorldSize.y/2;
+        worldBottomLeft = (Vector2)transform.position - Vector2.right * gridWorldSize.x/2 - Vector2.up * gridWorldSize.y/2;
         for(int x = 0; x < gridSize.x; x++)
         {
             for(int y = 0; y < gridSize.y; y++)
@@ -43,6 +47,59 @@ public class GridNodes : MonoBehaviour
                 Vector2 worldPosNode = worldBottomLeft + Vector2.right * (x * nodeDiametr) + Vector2.up * (y * nodeDiametr);
                 bool walkable = !(Physics2D.OverlapCircle(worldPosNode, nodeRadius * 1.1f, unwalkableMask));
                 grid[x, y] = new NodeP(walkable, worldPosNode, new Vector2Int(x, y));
+            }
+        }
+    }
+    public static void NotifyWalkableObject(Vector2 position, Vector2 size)
+    {
+        OnWalkableUpdate?.Invoke(null, new PositionArgs(position, size));
+    }
+    public void UpdateRegion(object sender, PositionArgs positionArgs)
+    {
+        int rangeX = Mathf.CeilToInt((positionArgs.sizeObj.x + nodeDiametr * 2) / nodeDiametr); 
+        int rangeY = Mathf.CeilToInt((positionArgs.sizeObj.y + nodeDiametr * 2) / nodeDiametr);
+        //+ nodeDiametr * 2 - Делаем для того, чтобы например, если маленький объект стоит между клеток, но по размерку как одна клетка, чтобы соседние все проверял 
+        //Ну и часто колайдр меньше самого объекта
+        bool walkable;
+        for (int x = -rangeX; x <= rangeX; x++)
+        {
+            for (int y = -rangeY; y <= rangeY; y++)
+            {
+                // Вычисляем позицию конкретной точки в мире для проверки
+                Vector2 checkPos = positionArgs.pos + new Vector2(x * nodeDiametr, y * nodeDiametr);
+
+                NodeP node = NodeFromWorldPoint(checkPos);
+                if(node == null) 
+                    continue;
+
+                walkable = !(Physics2D.OverlapCircle(node.worldPos, nodeRadius * 1.1f, unwalkableMask));
+                node.walkable = walkable;
+            }
+        }
+    }
+    private void OnDestroy()
+    {
+        OnWalkableUpdate -= UpdateRegion;
+    }
+    public IEnumerator UpdateWalkableRoutine() //Чтобы пересчитывать клетки на проходимость
+    {
+        int nodesProcessed = 0;
+        int nodesPerFrame = 500; // Сколько узлов проверять за один кадр
+
+        for (int x = 0; x < gridSize.x; x++)
+        {
+            for (int y = 0; y < gridSize.y; y++)
+            {
+                Vector2 worldPosNode = worldBottomLeft + Vector2.right * (x * nodeDiametr) + Vector2.up * (y * nodeDiametr);
+                bool walkable = !(Physics2D.OverlapCircle(worldPosNode, nodeRadius * 1.1f, unwalkableMask));
+                grid[x, y].walkable = walkable;
+
+                nodesProcessed++;
+                if(nodesProcessed >= nodesPerFrame)
+                {
+                    nodesProcessed = 0;
+                    yield return null;
+                }
             }
         }
     }
