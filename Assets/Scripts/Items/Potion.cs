@@ -1,11 +1,29 @@
 using UnityEngine;
 
-public class Potion : Item, IUsable
+
+public abstract class Effect : Item
+{
+    protected string nameEffect;
+    protected EffectData effectTemplate = null;
+
+    protected Effect(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, TypeItem typeItem = TypeItem.Other, bool isUse = false) : base(id, name, maxCount, spriteID, quality, cost, description, typeItem, isUse)
+    {
+    }
+
+    public bool Spent { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
+    protected void LoadEffectData()
+    {
+        if (System.Enum.TryParse(nameEffect, out TypeEffectName type))
+            effectTemplate = ResourcesData.GetEffectsPrefab(type);
+    }
+}
+public class Potion : Effect, IUsable
 {
     public bool Spent { get ; set; } = true;
-
     public Potion(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description) : base(id, name, maxCount, spriteID, quality, cost, description, TypeItem.Potion, true)
     {
+        LoadEffectData();
     }
     public virtual bool Use()
     {
@@ -17,6 +35,7 @@ public class Potion : Item, IUsable
     {
         return TypeSound.Potions;
     }
+
 }
 public class HealPotion : Potion
 {
@@ -24,27 +43,26 @@ public class HealPotion : Potion
     public int couldDownHeal;
     public int idSpriteEffectColdown;
     private static int soundID = 0;
-    private string effectName = "HealColdown";
+
     public HealPotion(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, int _countHeal, int _couldDownHeal, int _idSpriteColdown) : base(id, name, maxCount, spriteID, quality, cost, description)
     {
+        LoadEffectData();
         countHeal = _countHeal;
         couldDownHeal = _couldDownHeal;
         idSpriteEffectColdown = _idSpriteColdown;
+        nameEffect = "HealColdown";
     }
     public override bool Use()
     {
         EffectsManager eff_man = GlobalData.Player.GetComponent<EffectsManager>();
-        if (!eff_man.IsAlreadyUsed(effectName))
+        if (!eff_man.IsAlreadyUsed(nameEffect))
         {
             return false;
         }
 
         if (GlobalData.Player.TakeHeal(countHeal, TypeHeal.PotionHeal))
         {
-            //Debug.Log("ѕытаюсь отхилить");
-
             EffectData effect = ScriptableObject.CreateInstance<EffectData>();
-            EffectData effectTemplate = Resources.Load<EffectData>("Effects/" + "HealCooldown");
 
             if (effectTemplate != null)
             {
@@ -52,9 +70,9 @@ public class HealPotion : Potion
                 effect.Sprite = effectTemplate.Sprite;
             }
 
-            effect.EffectName = effectName;
+            effect.EffectName = nameEffect;
 
-            effect.effectType = EffectData.EffectType.None;
+            effect.effectType = EffectType.None;
             effect.idSprite = idSpriteEffectColdown;
             effect.duration = couldDownHeal;
 
@@ -77,10 +95,10 @@ public class SpeedUpPotion : Potion
     public int valueUp;
     public float duration;
     public int idSpriteEffect;
-    public string nameEffect { get; set; }
     private static int soundID = 1;
     public SpeedUpPotion(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, int _valueUp, float _duration, string _nameEffect, int _idSpriteEffect) : base(id, name, maxCount, spriteID, quality, cost, description)
     {
+        LoadEffectData();
         valueUp = _valueUp;
         duration = _duration;
         nameEffect = _nameEffect;
@@ -88,7 +106,6 @@ public class SpeedUpPotion : Potion
     }
     public override bool Use()
     {
-        Debug.Log("ѕытаюсь использовать");
         EffectsManager eff_man = GlobalData.Player.GetComponent<EffectsManager>();
 
         if (!eff_man.IsAlreadyUsed(nameEffect))
@@ -99,9 +116,7 @@ public class SpeedUpPotion : Potion
 
         if (eff_man != null)
         {
-
             EffectData effect = ScriptableObject.CreateInstance<EffectData>();
-            EffectData effectTemplate = Resources.Load<EffectData>("Effects/" + nameEffect);
 
             if (effectTemplate != null)
             {
@@ -110,8 +125,8 @@ public class SpeedUpPotion : Potion
                 effect.Sprite = effectTemplate.Sprite;
             }
 
-            effect.EffectName = "Speed Up";
-            effect.effectType = EffectData.EffectType.SpeedBoost;
+            effect.EffectName = "SpeedUp";
+            effect.effectType = EffectType.SpeedBoost;
             effect.value = valueUp;
             effect.idSprite = idSpriteEffect;
             effect.duration = duration;
@@ -135,33 +150,34 @@ public class ManaHealPotion : Potion
     public float duration;
     public int idSpriteEffect;
     private static int soundID = 0;
-    private string effectName = "ManaHealCooldown";
+
     public ManaHealPotion(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, int _countHeal, float _duration, int _idSpriteEffect) : base(id, name, maxCount, spriteID, quality, cost, description)
     {
+        LoadEffectData();
         countHeal = _countHeal;
         duration = _duration;
         idSpriteEffect = _idSpriteEffect;
+        nameEffect = "ManaHealColdown";
     }
     public override bool Use()
     {
 
         EffectsManager eff_man = GlobalData.Player.GetComponent<EffectsManager>();
-        if (!eff_man.IsAlreadyUsed(effectName))
+        if (!eff_man.IsAlreadyUsed(nameEffect))
         {
             return false;
         }
         if (GlobalData.Player.TakeHealMana(countHeal, TypeManaHeal.PotionHeal))
         {
             EffectData regenEffect = ScriptableObject.CreateInstance<EffectData>();
-            EffectData effectTemplate = Resources.Load<EffectData>("Effects/" + "ManaHealCooldown");
 
             if (effectTemplate != null)
             {
                 regenEffect.Sprite = effectTemplate.Sprite;
             }
 
-            regenEffect.EffectName = effectName;
-            regenEffect.effectType = EffectData.EffectType.HpRegenBoost;
+            regenEffect.EffectName = nameEffect;
+            regenEffect.effectType = EffectType.HpRegenBoost;
             regenEffect.idSprite = idSpriteEffect;
             regenEffect.duration = duration;
             return eff_man.ApplyEffect(regenEffect);
@@ -177,18 +193,16 @@ public class ManaHealPotion : Potion
         return soundID;
     }
 }
-public class Food : Item, IUsable
+public class Food : Effect, IUsable
 {
-    public bool Spent { get; set; } = true;
+    public new bool Spent { get; set; } = true;
 
     public int countHealHP;
     public int countHealMana;
     public float duration;
     public float cooldown;
     public int idSpriteEffect;
-    public string nameEffect { get; set; }
     private static int soundID = 0;
-
 
     public Food(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, int _countHealHP, int _countHealMana, float _duration, float _cooldown, string _nameEffect, int _idSpriteEffect) : base(id, name, maxCount, spriteID, quality, cost, description, TypeItem.Food)
     {
@@ -223,10 +237,7 @@ public class Food : Item, IUsable
         }
         if (eff_man != null)
         {
-            //EffectData regenEffect = new EffectData();
-
             EffectData regenEffect = ScriptableObject.CreateInstance<EffectData>();
-            EffectData effectTemplate = Resources.Load<EffectData>("Effects/" + nameEffect);
 
             if (effectTemplate != null)
             {
@@ -238,7 +249,7 @@ public class Food : Item, IUsable
             Debug.Log("создаем временный новый");
 
             regenEffect.EffectName = nameEffect;
-            regenEffect.effectType = EffectData.EffectType.HpRegenBoost;
+            regenEffect.effectType = EffectType.HpRegenBoost;
             regenEffect.value = countHealHP;
             regenEffect.valueTwo = countHealMana;
             regenEffect.idSprite = idSpriteEffect;

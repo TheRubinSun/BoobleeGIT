@@ -132,6 +132,10 @@ public class ResourcesData : MonoBehaviour
     {
         return effects.ContainsKey(id) ? effects[id] : null;
     }
+    public static EffectData GetEffectsPrefab(TypeEffectName typeEffect)
+    {
+        return effects.ContainsKey((int)typeEffect - 1) ? effects[(int)typeEffect - 1] : null;
+    }
     public static GameObject GetHookPrefab(int id)
     {
         return hooks.ContainsKey(id) ? hooks[id] : null;
@@ -160,3 +164,17 @@ public enum TypeParticle
     Shoot_resin,
     Explosion_particle
 }
+public enum TypeEffectName
+{
+    None,
+    Heal,
+    Posion_Pistol,
+    SpeedUp,
+    Posion_SmallSlime,
+    Posion_BossSlime,
+    Trapped,
+    TrappedMin,
+    HealCooldown,
+    ManaHealCooldown
+}
+

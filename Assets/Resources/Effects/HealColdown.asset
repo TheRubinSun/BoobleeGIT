@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 94b7ec75e6b24da4881e4d14954f8447, type: 3}
-  m_Name: ManaHealCooldown
+  m_Name: HealColdown
   m_EditorClassIdentifier: 
   EffectName: Coldown
-  Sprite: {fileID: 657230412, guid: ea0ee6003c21dcb4289360442e07771d, type: 3}
+  Sprite: {fileID: -998167913, guid: ea0ee6003c21dcb4289360442e07771d, type: 3}
   idSprite: 0
   duration: 15
   cooldown: 0

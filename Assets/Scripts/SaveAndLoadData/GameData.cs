@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -127,6 +128,51 @@ public class PlayerData
         inventory_items_data = inventory;
         equip_item_data = equip_item;
     }
+}
+public class ActiveEffectsData
+{
+    public List<EffectDataSave> active_ef_data;
+
+    public ActiveEffectsData()
+    {
+        active_ef_data = new ();
+    }
+    public ActiveEffectsData(Dictionary<EffectData, ActionEffect> active_ef)
+    {
+        active_ef_data = new();
+        foreach(KeyValuePair<EffectData, ActionEffect> item in active_ef)
+        {
+            active_ef_data.Add(new EffectDataSave(item.Key, item.Value.time_remains));
+        }
+    }
+}
+
+public class EffectDataSave
+{
+    public string EffectName;
+    //public Sprite Sprite;
+    public int idSprite;
+    public float duration;
+    public float cooldown;
+    public float value;
+    public float valueTwo;
+    public EffectType effectType;
+    public float time_remains;
+    //public GameObject effectObj;
+
+    public EffectDataSave(EffectData original, float time_remains)
+    {
+        this.EffectName = original.EffectName;
+        this.effectType = original.effectType;
+        this.value = original.value;
+        this.valueTwo = original.valueTwo;
+        this.idSprite = original.idSprite;
+        this.duration = original.duration;
+        this.cooldown = original.cooldown;
+        this.time_remains = time_remains;
+        //this.effectObj = original.effectObj;
+    }
+    public EffectDataSave() { }
 }
 public class EnemyData
 {

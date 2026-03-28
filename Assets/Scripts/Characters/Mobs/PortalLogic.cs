@@ -40,7 +40,7 @@ public class PortalLogic : MonoBehaviour
     {
         anim.SetTrigger("CreWorld");
         AddWorldAnim();
-        Debug.Log($"{mobPref.name} {countSpawn} {time}");
+        //Debug.Log($"{mobPref.name} {countSpawn} {time}");
         StartCoroutine(SpawnEnemiesOverTime(mobPref, countSpawn, time, parent));
     }
     public void Event_RunningPortal()

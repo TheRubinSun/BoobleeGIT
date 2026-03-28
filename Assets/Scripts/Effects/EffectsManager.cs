@@ -19,6 +19,7 @@ public class EffectsManager : MonoBehaviour
     private Dictionary<EffectData, ActionEffect> activeEffectDataMap = new();
 
     private Dictionary<EffectType, GameObject> curEffectsObj = new Dictionary<EffectType, GameObject>();
+
     [SerializeField] private Transform parentCurEffect;
     private void Start()
     {
@@ -34,6 +35,16 @@ public class EffectsManager : MonoBehaviour
             } 
         }
     }
+    public Dictionary<EffectData, ActionEffect> GetActiveEffects() => activeEffectDataMap; //
+
+    //private void Update()
+    //{
+    //    foreach (KeyValuePair<EffectData, ActionEffect> item in activeEffectDataMap)
+    //    {
+    //        Debug.Log($"{item.Key.EffectName} {item.Value.time_remains} {item.Value.Effect.duration} {item.Value.Effect.cooldown} {item.Key.effectType} {item.Value.Effect.effectType}");
+
+    //    }
+    //}
     public bool IsAlreadyUsed(string effectName)
     {
         EffectData existingEffect = activeCoroutines.Keys.FirstOrDefault(e => e.EffectName == effectName);
@@ -62,8 +73,6 @@ public class EffectsManager : MonoBehaviour
                 {
                     existActiveEffect.time_remains = effect.duration;
                     return true;
-                    //StopCoroutine(activeCoroutines[effect]);
-                    //RemoveEffect(effect, false);
                 }
 
             }
@@ -95,7 +104,7 @@ public class EffectsManager : MonoBehaviour
 
         while (effect.duration == 0 || (newEffect.time_remains > 0))
         {
-            if (effect.cooldown > 0)
+            if (newEffect.time_remains % effect.cooldown == 0) //if (effect.cooldown > 0)
             {
                 yield return new WaitForSeconds(effect.cooldown);
                 UseEffect(effect, true);
@@ -172,25 +181,25 @@ public class EffectsManager : MonoBehaviour
         float multiply = apply ? 1 : -1; //Бафф или нет баффа
         switch (effect.effectType)
         {
-            case EffectData.EffectType.SpeedBoost:
+            case EffectType.SpeedBoost:
                 {
                     stats.buffsStats.Buff_Mov_Speed += effect.value * multiply;
                     stats.ApplyStat(AllStats.Mov_Speed, 1);
                     break;
                 }
-            case EffectData.EffectType.SpeedSlow:
+            case EffectType.SpeedSlow:
                 {
                     stats.buffsStats.Buff_Mov_Speed -= effect.value * multiply;
                     stats.ApplyStat(AllStats.Mov_Speed, 1);
                     //stats.Mov_Speed -= effect.value * multiply;
                     break;
                 }
-            case EffectData.EffectType.HpRegenBoost:
+            case EffectType.HpRegenBoost:
                 {
                     HealTarget(effect, apply);
                     break;
                 }
-            case EffectData.EffectType.Posion:
+            case EffectType.Posion:
                 {
                     DamageTarget(effect, apply);
                     break;

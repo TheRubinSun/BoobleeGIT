@@ -6,6 +6,7 @@ using Unity.Collections;
 using System.IO;
 using System.Collections;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 
 
 public class GameManager: MonoBehaviour 
@@ -36,6 +37,7 @@ public class GameManager: MonoBehaviour
     private bool isPaused = false;
 
     private bool playedBossMusic;
+    private EffectsManager playerEffects;
     private Coroutine musicRoutine;
     private void Awake()
     {
@@ -54,10 +56,12 @@ public class GameManager: MonoBehaviour
     {
         yield return null;
         if (DisplayInfo.Instance != null) DisplayInfo.Instance.LoadDisplayInfo();
-        if (Player.Instance != null)
+        if (GlobalData.Player != null)
         {
-            Player.Instance.LoadPlayerLogic();
+            GlobalData.Player.LoadPlayerLogic();
         }
+
+        playerEffects = GlobalData.Player.GetComponent<EffectsManager>();
 
         music_source = AudioManager.GetComponent<AudioSource>();
         music_source.volume = GlobalData.VOLUME_MUSICS;
@@ -85,6 +89,8 @@ public class GameManager: MonoBehaviour
             GlobalData.Inventory.LoadOrCreateInventory(GameDataHolder.PlayerData.inventory_items_data);
             GlobalData.EqupmentPlayer.LoadOrCreateEquipment(GameDataHolder.PlayerData.equip_item_data);
             GlobalData.UIControl.LocalizationTranslate();
+            LoadActiveEffect();
+
             SaveGameInfo dataInfo = GenInfoSaves.saveGameFiles[GlobalData.SaveInt];
             KillsEnemy = 0;
             sessionStartTime = Time.realtimeSinceStartup; //Сохраняем настоящее время входа в игру
@@ -331,6 +337,7 @@ public class GameManager: MonoBehaviour
         ItemsDropOnEnemy item_drop = new ItemsDropOnEnemy(ItemDropEnemy.enemyAndHisDropItems);
         //await SaveSystem.SaveDataAsync(item_drop, "item_drop.json");
 
+        ActiveEffectsData activeEffectsData = new ActiveEffectsData(playerEffects.GetActiveEffects());
 
         if (saveGameInfo == null)
             saveGameInfo = GenInfoSaves.saveGameFiles[GlobalData.SaveInt];
@@ -363,6 +370,7 @@ public class GameManager: MonoBehaviour
             SaveSystem.SaveDataAsync(item_drop, "item_drop.json"),
             SaveSystem.SaveDataAsync(savesDataInfo, "saves_info.json"),
             SaveSystem.SaveDataAsync(savesDataRecipesCrafts, "recipes_crafts_data.json"),
+            SaveSystem.SaveDataAsync(activeEffectsData, savePath + "activeEffects.json"),
         };
         await Task.WhenAll(tasks);
     }
@@ -384,6 +392,41 @@ public class GameManager: MonoBehaviour
         SavesDataInfo savesDataInfo = new SavesDataInfo(GenInfoSaves.saveGameFiles, GlobalData.SaveInt, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, screen_resole, GlobalData.IsBigUI, GlobalData.IsFarCamera);
         await SaveSystem.SaveDataAsync(savesDataInfo, "saves_info.json");
     }
+    private void LoadActiveEffect()
+    {
+        foreach (EffectDataSave effect in GameDataHolder.ActiveEffectsData.active_ef_data)
+        {
+            EffectData loadedEffect = ScriptableObject.CreateInstance<EffectData>();
+
+            EffectData effectTemplate = null;
+            if (System.Enum.TryParse(effect.EffectName, out TypeEffectName type))
+                effectTemplate = ResourcesData.GetEffectsPrefab(type);
+
+            //Debug.Log($"ищём {effect.EffectName}");
+            if (effectTemplate != null)
+            {
+                //Debug.Log($"Эффект с именем {effect.EffectName} найден");
+                loadedEffect.effectObj = effectTemplate.effectObj;
+                loadedEffect.Sprite = effectTemplate.Sprite;
+            }
+            loadedEffect.EffectName = effect.EffectName;
+            loadedEffect.effectType = effect.effectType;
+            loadedEffect.value = effect.value;
+            loadedEffect.valueTwo = effect.valueTwo;
+            loadedEffect.idSprite = effect.idSprite;
+            loadedEffect.duration = effect.time_remains;
+            loadedEffect.cooldown = effect.cooldown;
+            playerEffects.ApplyEffect(loadedEffect);
+        }
+
+        string path_player_data = Path.Combine(Application.persistentDataPath, GlobalData.SavePath + "activeEffects.json");
+        File.Delete(path_player_data);
+    }
+    //public void SaveActiveEffects()
+    //{
+    //    ActiveEffectsData activeEffectsData = new ActiveEffectsData(playerEffects.GetActiveEffects());
+    //    SaveSystem.SaveDataAsync(activeEffectsData, savePath + "activeEffects.json");
+    //}
     //public async void LoadDataGame()
     //{
     //    // Загрузка предметов

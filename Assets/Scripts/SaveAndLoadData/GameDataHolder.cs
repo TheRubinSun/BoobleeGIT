@@ -12,6 +12,7 @@ public static class GameDataHolder
     public static EnemyData EnemyData;
     public static ItemsDropOnEnemy ItemsDropOnEnemy;
     public static Sprite[] spriteList;
+    public static ActiveEffectsData ActiveEffectsData;
     //public static Dictionary<int, Sprite> spriteById;
     public static Dictionary<int, Sprite> spriteItemsById = new Dictionary<int, Sprite>();
     public static Dictionary<int, Sprite> spritePlayerHairById = new Dictionary<int, Sprite>();

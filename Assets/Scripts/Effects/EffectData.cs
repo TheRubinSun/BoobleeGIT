@@ -25,14 +25,14 @@ public class EffectData : ScriptableObject
         this.effectObj = original.effectObj;
     }
     public EffectData() { }
-    public enum EffectType
-    {
-        None,
-        SpeedBoost,
-        SpeedSlow,
-        HpRegenBoost,
-        Posion,
-        AttackBoost,
-        DefenseBoost,
-    }
+}
+public enum EffectType
+{
+    None,
+    SpeedBoost,
+    SpeedSlow,
+    HpRegenBoost,
+    Posion,
+    AttackBoost,
+    DefenseBoost,
 }

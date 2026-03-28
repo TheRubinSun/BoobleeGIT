@@ -57,10 +57,11 @@ public class OreL : ObjectLBroken
 
         if (IsUpper) return;
 
-        float treePosY = transform.position.y;
+        float orePosY = transform.position.y;
         float PlayerPosY = GlobalData.GameManager.PlayerPosY;
 
-        spr_ren.sortingOrder = Mathf.RoundToInt((treePosY - PlayerPosY - 2) * -5);
+        if (spr_ren != null)
+            spr_ren.sortingOrder = Mathf.RoundToInt(((orePosY - 2f) - PlayerPosY - 2) * -5);
     }
     protected override IEnumerator BreakAndDestroy()
     {

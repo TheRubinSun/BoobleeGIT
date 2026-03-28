@@ -24,8 +24,9 @@ public class LoadingSaveScreen : MonoBehaviour
         Task taskData = LoadData(savePath);
         Task taskArt = LoadArtifact(savePath);
         Task taskWorld = LoadWorldData(savePath);
+        Task taskEffects = LoadActiveEffects(savePath);
 
-        while (!taskData.IsCompleted || !taskArt.IsCompleted || !taskWorld.IsCompleted)
+        while (!taskData.IsCompleted || !taskArt.IsCompleted || !taskWorld.IsCompleted || !taskEffects.IsCompleted)
         {
             UpdateUI(0.2f); //Загрузка 20% когда загрузятся все данные
             yield return null;
@@ -88,5 +89,9 @@ public class LoadingSaveScreen : MonoBehaviour
     private async Task LoadWorldData(string savePath)
     {
         GameDataHolder.WorldData = await SaveSystem.LoadDataAsync<WorldData>(savePath + "world_data.json");
+    }
+    private async Task LoadActiveEffects(string savePath)
+    {
+        GameDataHolder.ActiveEffectsData = await SaveSystem.LoadDataAsync<ActiveEffectsData>(savePath + "activeEffects.json");
     }
 }

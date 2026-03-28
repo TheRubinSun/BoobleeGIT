@@ -7,7 +7,7 @@ public class FootTrapLogic : TrapLogic
     public damageT damageT { get; set; }
     public float timeDuration { get; set; }
     [SerializeField] private AudioClip trapped_sound;
-
+    private string nameEffect = "Trapped";
     //private bool isCaught = false;
 
     public void SetParameters(int _damageTrap, damageT _damageT, float _timeDuration)
@@ -28,13 +28,15 @@ public class FootTrapLogic : TrapLogic
 
         baseEnemyLogic.SetTrapped(timeDuration);
 
-        EffectData effectTemplate = Resources.Load<EffectData>("Effects/" + "Trapped");
+        EffectData effectTemplate = null;
+        if (System.Enum.TryParse(nameEffect, out TypeEffectName type))
+            effectTemplate = ResourcesData.GetEffectsPrefab(type);
         // Создаем КОПИЮ данных
         EffectData trapped = Instantiate(effectTemplate);
 
         trapped.EffectName = effectTemplate.EffectName;
         trapped.effectObj = effectTemplate.effectObj;
-        trapped.effectType = EffectData.EffectType.SpeedSlow;
+        trapped.effectType = EffectType.SpeedSlow;
         trapped.value = 100;
         trapped.idSprite = effectTemplate.idSprite;
         trapped.duration = timeDuration;
