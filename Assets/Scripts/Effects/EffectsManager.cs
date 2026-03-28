@@ -39,10 +39,13 @@ public class EffectsManager : MonoBehaviour
 
     //private void Update()
     //{
+    //    int id = 0;
     //    foreach (KeyValuePair<EffectData, ActionEffect> item in activeEffectDataMap)
     //    {
-    //        Debug.Log($"{item.Key.EffectName} {item.Value.time_remains} {item.Value.Effect.duration} {item.Value.Effect.cooldown} {item.Key.effectType} {item.Value.Effect.effectType}");
 
+    //        if (item.Key.EffectName != "Posion_SmallSlime") continue;
+    //        Debug.Log($"{id}: {item.Key.EffectName} {item.Value.time_remains} {item.Value.Effect.duration} {item.Value.Effect.cooldown} {item.Key.effectType} {item.Value.Effect.effectType}");
+    //        id++;
     //    }
     //}
     public bool IsAlreadyUsed(string effectName)
@@ -57,21 +60,18 @@ public class EffectsManager : MonoBehaviour
     }
     public bool ApplyEffect(EffectData effect)
     {
-        EffectData existingEffect = activeCoroutines.Keys.FirstOrDefault(e => e.EffectName == effect.EffectName);
-
-        if(!curEffectsObj.ContainsKey(effect.effectType) && parentCurEffect != null && effect.effectObj != null)
+        EffectData existingKey = activeCoroutines.Keys.FirstOrDefault(e => e.EffectName == effect.EffectName);
+        //Debug.LogWarning($"Пытаемя добавить эффект");
+        if (existingKey != null)
         {
-            curEffectsObj.Add(effect.effectType, Instantiate(effect.effectObj, parentCurEffect));
-        }
 
-        if (existingEffect != null)
-        {
-            //Debug.LogWarning($"{effect.EffectName} Уже действует");
             if (effect.cooldown > 0)
             {
-                if (activeEffectDataMap.TryGetValue(existingEffect, out var existActiveEffect))
+                if (activeEffectDataMap.TryGetValue(existingKey, out var activeData))
                 {
-                    existActiveEffect.time_remains = effect.duration;
+                    activeData.time_remains = effect.duration;
+                    OnEffectTimerUpdate?.Invoke(activeData);
+                    //Debug.LogWarning($"{effect.EffectName} Уже действует, обновляем время");
                     return true;
                 }
 
@@ -82,10 +82,18 @@ public class EffectsManager : MonoBehaviour
             }
 
         }
-
+        // 3. Визуальный объект эффекта (префаб под ногами/над головой)
+        if (!curEffectsObj.ContainsKey(effect.effectType) && parentCurEffect != null && effect.effectObj != null)
+        {
+            curEffectsObj.Add(effect.effectType, Instantiate(effect.effectObj, parentCurEffect));
+        }
+        // 4. Иконка в интерфейсе
         AddEffectIcon(effect);
+
+        // 5. Запуск корутины и сохранение ссылок
         Coroutine newCorutine = StartCoroutine(HandleEffect(effect));
         activeCoroutines[effect] = newCorutine;
+
         return true;
     }
     private void AddEffectIcon(EffectData effect)
@@ -97,33 +105,30 @@ public class EffectsManager : MonoBehaviour
     }
     private IEnumerator HandleEffect(EffectData effect)
     {
-        ActionEffect newEffect = new ActionEffect(effect, effect.duration);
-        //activeEffects.Add(newEffect);
-        activeEffectDataMap[effect] = newEffect; //Сохраняяем действущий эффект
-        OnEffectTimerUpdate?.Invoke(newEffect);
+        ActionEffect currentEffectState = new ActionEffect(effect, effect.duration);
+        activeEffectDataMap[effect] = currentEffectState; //Сохраняяем действущий эффект
 
-        while (effect.duration == 0 || (newEffect.time_remains > 0))
+        float tickTimer = 0;
+
+        while (effect.duration == 0 || (currentEffectState.time_remains > 0))
         {
-            if (newEffect.time_remains % effect.cooldown == 0) //if (effect.cooldown > 0)
+            if (effect.cooldown > 0) //if (effect.cooldown > 0)
             {
-                yield return new WaitForSeconds(effect.cooldown);
-                UseEffect(effect, true);
-                newEffect.time_remains -= effect.cooldown;
-                
-            }
-            else
-            {
-                if (effect.duration > 0)
+                if(tickTimer <= 0)
                 {
-                    if(newEffect.time_remains == effect.duration) UseEffect(effect, true);
-                    yield return new WaitForSeconds(1);
-                    newEffect.time_remains -= 1;
+                    UseEffect(effect, true);
+                    tickTimer = effect.cooldown;
                 }
-                else yield return null; // Для бесконечного эффекта просто ждём
-
+                tickTimer -= Time.deltaTime;
             }
-            OnEffectTimerUpdate?.Invoke(newEffect);
+            if(effect.duration > 0)
+            {
+                currentEffectState.time_remains -= Time.deltaTime;
+            }
+            OnEffectTimerUpdate?.Invoke(currentEffectState);
+            yield return null; // Обновляем каждый кадр для плавности и точности
         }
+        UseEffect(effect, true);
         RemoveEffect(effect);
         activeCoroutines.Remove(effect);
     }

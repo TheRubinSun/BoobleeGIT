@@ -5,6 +5,8 @@ public class PlayerProjectile : Projectile_Logic
     // Если используется триггер, то используйте OnTriggerEnter2D
     protected override void OnTriggerEnter2D(Collider2D collider)
     {
+        if (isDestroyed) return;
+
         int layer = collider.gameObject.layer;
 
         if (((1 << layer) & LayerManager.allTrigger) != 0)

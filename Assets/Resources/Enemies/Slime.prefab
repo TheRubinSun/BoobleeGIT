@@ -502,9 +502,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5186344358335366366}
   - component: {fileID: 8192902511955099803}
-  - component: {fileID: 3486733087209479870}
   - component: {fileID: 3973646208851135584}
-  - component: {fileID: 6213555974817926708}
+  - component: {fileID: 7414604348316206938}
   m_Layer: 0
   m_Name: Slime_mob
   m_TagString: Untagged
@@ -586,18 +585,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3486733087209479870
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3878224357203334447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6c019d4baca8394e9fcbb519aaf1279, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &3973646208851135584
 Animator:
   serializedVersion: 7
@@ -620,7 +607,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &6213555974817926708
+--- !u!114 &7414604348316206938
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

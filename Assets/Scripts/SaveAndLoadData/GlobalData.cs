@@ -13,6 +13,7 @@ public static class GlobalData
     public static Vector2 center;
     public static int chunkSize;
     public static bool LoadedGame;
+    public static bool NeedLoadFile;
     public static NewPlayer? newPlayer = default;
 
 

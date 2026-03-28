@@ -46,11 +46,12 @@ public class HealPotion : Potion
 
     public HealPotion(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, int _countHeal, int _couldDownHeal, int _idSpriteColdown) : base(id, name, maxCount, spriteID, quality, cost, description)
     {
-        LoadEffectData();
         countHeal = _countHeal;
         couldDownHeal = _couldDownHeal;
         idSpriteEffectColdown = _idSpriteColdown;
+
         nameEffect = "HealColdown";
+        LoadEffectData();
     }
     public override bool Use()
     {
@@ -98,11 +99,13 @@ public class SpeedUpPotion : Potion
     private static int soundID = 1;
     public SpeedUpPotion(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, int _valueUp, float _duration, string _nameEffect, int _idSpriteEffect) : base(id, name, maxCount, spriteID, quality, cost, description)
     {
-        LoadEffectData();
         valueUp = _valueUp;
         duration = _duration;
         nameEffect = _nameEffect;
         idSpriteEffect = _idSpriteEffect;
+
+        nameEffect = "SpeedUp";
+        LoadEffectData();
     }
     public override bool Use()
     {
@@ -125,7 +128,7 @@ public class SpeedUpPotion : Potion
                 effect.Sprite = effectTemplate.Sprite;
             }
 
-            effect.EffectName = "SpeedUp";
+            effect.EffectName = nameEffect;
             effect.effectType = EffectType.SpeedBoost;
             effect.value = valueUp;
             effect.idSprite = idSpriteEffect;
@@ -153,11 +156,12 @@ public class ManaHealPotion : Potion
 
     public ManaHealPotion(int id, string name, int maxCount, int spriteID, Quality quality, int cost, string description, int _countHeal, float _duration, int _idSpriteEffect) : base(id, name, maxCount, spriteID, quality, cost, description)
     {
-        LoadEffectData();
         countHeal = _countHeal;
         duration = _duration;
         idSpriteEffect = _idSpriteEffect;
+
         nameEffect = "ManaHealColdown";
+        LoadEffectData();
     }
     public override bool Use()
     {
@@ -212,6 +216,8 @@ public class Food : Effect, IUsable
         nameEffect = _nameEffect;
         cooldown = _cooldown;
         idSpriteEffect = _idSpriteEffect;
+
+        LoadEffectData();
     }
     public bool Use()
     {

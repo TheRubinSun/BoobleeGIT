@@ -45,6 +45,7 @@ public class GenInfoSaves : MonoBehaviour
         DontDestroyOnLoad(Instance);
 
         GlobalData.saveZone = true;
+        GlobalData.NeedLoadFile = true;
 
         toggle_Saves = new Toggle[SavesBut.Length];
         im_head_Saves = new Image[SavesBut.Length];

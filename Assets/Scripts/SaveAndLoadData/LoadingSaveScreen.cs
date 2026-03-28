@@ -21,16 +21,20 @@ public class LoadingSaveScreen : MonoBehaviour
         string savePath = GlobalData.SavePath ?? "";
 
         // Загружаем данные и сохраняем в GameDataHolder
-        Task taskData = LoadData(savePath);
-        Task taskArt = LoadArtifact(savePath);
-        Task taskWorld = LoadWorldData(savePath);
-        Task taskEffects = LoadActiveEffects(savePath);
-
-        while (!taskData.IsCompleted || !taskArt.IsCompleted || !taskWorld.IsCompleted || !taskEffects.IsCompleted)
+        if (GlobalData.NeedLoadFile) //Не загружать лишний раз файлы, если просто между сценами.
         {
-            UpdateUI(0.2f); //Загрузка 20% когда загрузятся все данные
-            yield return null;
+            Task taskData = LoadData(savePath);
+            Task taskArt = LoadArtifact(savePath);
+            Task taskWorld = LoadWorldData(savePath);
+            Task taskEffects = LoadActiveEffects(savePath);
+
+            while (!taskData.IsCompleted || !taskArt.IsCompleted || !taskWorld.IsCompleted || !taskEffects.IsCompleted)
+            {
+                UpdateUI(0.2f); //Загрузка 20% когда загрузятся все данные
+                yield return null;
+            }
         }
+        else UpdateUI(0.2f);
 
         // Загружаем игровую сцену асинхронно
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(GlobalData.NAME_NEW_LOCATION);

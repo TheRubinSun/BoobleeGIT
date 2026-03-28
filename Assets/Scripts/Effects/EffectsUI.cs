@@ -76,12 +76,12 @@ public class EffectsUI : MonoBehaviour
             TextMeshProUGUI textbar = icon.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
             if (effect.Effect.cooldown != 0)
             {
-                textbar.text = $"<color=#F9AEFF> {effect.time_remains/effect.Effect.cooldown} t </color>";
+                textbar.text = $"<color=#F9AEFF> {(int)(effect.time_remains/effect.Effect.cooldown) + 1} t </color>";
             }
             else
             {
 
-                textbar.text = $"<color=#AEFFBB> {effect.time_remains} s </color>";
+                textbar.text = $"<color=#AEFFBB> {(int)effect.time_remains} s </color>";
             }
         }
         //foreach (Transform icon in parent_area_effects)

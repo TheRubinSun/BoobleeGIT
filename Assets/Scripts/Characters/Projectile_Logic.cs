@@ -7,6 +7,7 @@ public abstract class Projectile_Logic : MonoBehaviour
     protected int damage { get; set; }
     protected damageT typeDamage;
     protected CanBeWeapon canBeWeapon = new CanBeWeapon();
+    protected bool isDestroyed = false;
     [SerializeField] protected EffectData effectBul { get; set; }
     [SerializeField] protected Sprite[] sprites;                      //Разные спрайты пуль, если нужны
     [SerializeField] protected TypeParticle typeParticle;             //Частицы, если нужны

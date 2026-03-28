@@ -119,6 +119,7 @@ public class GameManager: MonoBehaviour
         GlobalData.Player.GiveStartKit();
 
         GlobalData.LoadedGame = true;
+        GlobalData.NeedLoadFile = false;
 
         yield return null;
     }
@@ -358,6 +359,11 @@ public class GameManager: MonoBehaviour
         CraftsRecipesData savesDataRecipesCrafts = new CraftsRecipesData(RecipesCraft.recipesCraft);
         //await SaveSystem.SaveDataAsync(savesDataRecipesCrafts, "recipes_crafts_data.json");
 
+        GameDataHolder.PlayerData = player_Data;
+        GameDataHolder.WorldData = world_data;
+        GameDataHolder.ArtifactsData = artifacts_Data;
+        GameDataHolder.ActiveEffectsData = activeEffectsData;
+
         var tasks = new List<Task>
         {
             SaveSystem.SaveDataAsync(items_Data, "items.json"),
@@ -419,8 +425,8 @@ public class GameManager: MonoBehaviour
             playerEffects.ApplyEffect(loadedEffect);
         }
 
-        string path_player_data = Path.Combine(Application.persistentDataPath, GlobalData.SavePath + "activeEffects.json");
-        File.Delete(path_player_data);
+        //string path_player_data = Path.Combine(Application.persistentDataPath, GlobalData.SavePath + "activeEffects.json");
+        //File.Delete(path_player_data);
     }
     //public void SaveActiveEffects()
     //{

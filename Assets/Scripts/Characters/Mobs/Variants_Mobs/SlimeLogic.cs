@@ -180,21 +180,24 @@ public class SlimeLogic : BaseEnemyLogic, IItemMove
         audioSource.Stop();
         audioSource.PlayOneShot(attack_sounds[UnityEngine.Random.Range(0, attack_sounds.Length)]); //Звук выстрела
 
+
         //Стреляет из определенной точки или из центра моба
         if (Shoot_point != null)
         {
-            bullet = Instantiate(bulletPrefab, Shoot_point);
+            bullet = Instantiate(bulletPrefab, Shoot_point.position, Quaternion.identity);
             direction = (player.position - Shoot_point.position).normalized;
         }
         else
         {
-            bullet = Instantiate(bulletPrefab, this.transform);
+            bullet = Instantiate(bulletPrefab, this.transform.position, Quaternion.identity);
             direction = (player.position - transform.position).normalized;
         }
+        bullet.transform.localScale = mob_object.transform.localScale;
+
         BulletMob bull_log = bullet.GetComponent<BulletMob>();
 
         //Подять в иерархии объекта пули/стрелы
-        bullet.transform.SetParent(transform.parent);
+        //bullet.transform.SetParent(transform.parent);
 
         bull_log.SetStats(10, enum_stat.Att_Damage, posionNewEff, damageT.Magic, CanBeMissedAttack);
         // Получаем направление к игроку
@@ -213,6 +216,7 @@ public class SlimeLogic : BaseEnemyLogic, IItemMove
     }
     public override void MeleeAttack()
     {
+        Debug.Log("Аттака");
         //audioSource.volume = attack_volume;
         audioSource.Stop();
         audioSource.PlayOneShot(attack_sounds[UnityEngine.Random.Range(0, attack_sounds.Length)]); //Звук выстрела
