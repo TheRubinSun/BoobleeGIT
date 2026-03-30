@@ -221,7 +221,7 @@ public class Food : Effect, IUsable
         nameEffect = _nameEffect;
         cooldown = _cooldown;
         idSpriteEffect = _idSpriteEffect;
-
+        nameEffect = "Heal";
     }
     public bool Use()
     {
@@ -256,7 +256,6 @@ public class Food : Effect, IUsable
                 regenEffect.Sprite = effectTemplate.Sprite;
             }
             //Debug.LogWarning("Ёффект с именем " + nameEffect + " не найден в папке Resources/Effects.");
-            Debug.Log("создаем временный новый");
 
             regenEffect.EffectName = nameEffect;
             regenEffect.effectType = EffectType.HpRegenBoost;

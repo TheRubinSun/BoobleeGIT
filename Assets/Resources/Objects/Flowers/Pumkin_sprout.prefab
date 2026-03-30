@@ -105,6 +105,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ToDropPos: {x: 0, y: 0}
   IsUpper: 0
+  sr_childs: []
+  anims_childs: []
+  valueLayer: 2.92
   remainsHits: 1
   toNextStageAnim: 1
   soundsBroken:
@@ -113,6 +116,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6cddb74011dd4074cb0ba5eff1798a40, type: 3}
   fullBroken:
   - {fileID: 8300000, guid: f35ab162af0412b4495d87fc28894a8d, type: 3}
+  particalColor:
+    serializedVersion: 2
+    rgba: 0
   itemsDrop:
   - item_key: seed_pumkin
     chance: 0

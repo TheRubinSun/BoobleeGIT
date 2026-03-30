@@ -36,19 +36,19 @@ public class RaingerLogic : BaseEnemyLogic
         IsTrapped = false;
         child_col.isTrigger = false;
     }
-    public override void UpdateSortingOrder()
-    {
-        if (!isVisibleNow) return;
+    //public override void UpdateSortingOrder()
+    //{
+    //    if (!isVisibleNow) return;
 
-        if (IsUpper) return;
+    //    if (IsUpper) return;
 
-        float mobPosY = transform.position.y;
-        float PlayerPosY = GlobalData.GameManager.PlayerPosY;
+    //    float mobPosY = transform.position.y;
+    //    float PlayerPosY = GlobalData.GameManager.PlayerPosY;
 
-        spr_ren.sortingOrder = Mathf.RoundToInt((mobPosY - PlayerPosY - 2) * -5);
+    //    spr_ren.sortingOrder = Mathf.RoundToInt((mobPosY - PlayerPosY - 2) * -5);
 
-        if (spr_ren_ch != null) spr_ren_ch.sortingOrder = spr_ren.sortingOrder - 5;
-    }
+    //    if (spr_ren_ch != null) spr_ren_ch.sortingOrder = spr_ren.sortingOrder - 5;
+    //}
     protected override void LoadParametrs()
     {
         base.LoadParametrs();

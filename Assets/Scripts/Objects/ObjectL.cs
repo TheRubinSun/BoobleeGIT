@@ -20,11 +20,33 @@ public abstract class ObjectL : MonoBehaviour, ICullableObject
     protected Vector2 startPos;
     [SerializeField] protected Vector2 ToDropPos;
     [SerializeField] protected bool IsUpper;
-
+    [SerializeField] protected SpriteRenderer[] sr_childs;
+    [SerializeField] protected Animator[] anims_childs;
     public abstract void CreateCulling();
     public abstract Vector2 GetPosition();
     public abstract void UpdateCulling(bool shouldBeVisible);
-    public abstract void UpdateSortingOrder();
+
+    protected float valueLayer = 3f;
+    public virtual void UpdateSortingOrder()
+    {
+        if (!isVisibleNow) return;
+
+        if (IsUpper) return;
+
+        float PosY = transform.position.y;
+        float PlayerPosY = GlobalData.GameManager.PlayerPosY;
+
+        if (spr_ren != null)
+        {
+            spr_ren.sortingOrder = Mathf.RoundToInt(((PosY - valueLayer) - PlayerPosY - 2) * -5);
+            foreach (SpriteRenderer s in sr_childs)
+            {
+                if (s != null)
+                    s.sortingOrder = spr_ren.sortingOrder + 1;
+            }
+
+        }
+    }
 
     protected void OnDisable()
     {

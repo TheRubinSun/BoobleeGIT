@@ -112,7 +112,7 @@ public class GameManager: MonoBehaviour
         ChunkGenerator.Instance.DeactivateAllChunks();
         if (UIControl.Instance != null) UIControl.Instance.LoadUI();
         if (ShopLogic.Instance != null) ShopLogic.Instance.LoadShopsData();
-
+        if (GardenManager.instance != null) GardenManager.instance.CreateLoadFarmPoints();
 
         SaveGameInfo saveGameInfo = GenInfoSaves.saveGameFiles[GlobalData.SaveInt];
         Debug.LogWarning($"Passed time: {saveGameInfo.timeHasPassed}");

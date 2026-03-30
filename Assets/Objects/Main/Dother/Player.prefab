@@ -443,12 +443,14 @@ MonoBehaviour:
   legsControl: {fileID: 2809326440228684787}
   WeaponSlots: {fileID: 3082421655244305447}
   legsParent: {fileID: 774829569776999664}
+  rotationSpeed: 10
   radiusCenterLegs: 0.23
   currentPosCenterLegs: {x: 0, y: 0}
   direction: {x: 0, y: 0}
   updateRateLegsMove: 0.13
   updateRateLegsStop: 0.3
   audioClips: {fileID: 8300000, guid: c98eb08a8c602af4899ca10e800bea7c, type: 3}
+  smoothTime: 0.15
 --- !u!114 &995829026852105680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -504,7 +506,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 20
+  m_SortingOrder: 25
   m_Sprite: {fileID: 21300000, guid: c03b01056a501394dbcf8ad22c692b64, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1549,7 +1551,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 21
+  m_SortingOrder: 26
   m_Sprite: {fileID: -762372393417472628, guid: 5b48f994d312e4343a6bf53912fbc680, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1738,26 +1740,14 @@ MonoBehaviour:
   - {fileID: 7490844868690793877}
   - {fileID: 4035709604835244917}
   - {fileID: 1656267244821526764}
-  lines:
-  - {fileID: 3097710705675068559}
-  - {fileID: 7400448868302684216}
-  - {fileID: 2250953671255099065}
-  - {fileID: 3229804458529728086}
   minionsSlots:
   - {fileID: 1762374294459015316}
   - {fileID: 5788412606945161558}
   - {fileID: 7053427301267442738}
   - {fileID: 5221329232697223199}
   range: 1
-  maxTeleportDistanceSqr: 1.7
-  time_move_legs: 0.12
-  soundTop:
-  - {fileID: 8300000, guid: 23d4636d0f8647944aac156d5768d736, type: 3}
-  - {fileID: 8300000, guid: 44c6b2350ff794e4289990d2955ce982, type: 3}
-  - {fileID: 8300000, guid: 67e71573af02aa6418296da64786da86, type: 3}
-  - {fileID: 8300000, guid: 380166d3766f60c4da8ffbbfcb9de5ad, type: 3}
-  - {fileID: 8300000, guid: fdad589901ea7024bacf7001a4627d78, type: 3}
-  pitchRange: 0.1
+  stepsSounds: []
+  maxMovingLegs: 2
 --- !u!82 &785145915828108187
 AudioSource:
   m_ObjectHideFlags: 0

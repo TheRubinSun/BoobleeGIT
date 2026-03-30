@@ -319,10 +319,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ToDropPos: {x: 0, y: 0}
   IsUpper: 0
-  layer: 2
-  hasChilds: 1
   sr_childs: []
   anims_childs: []
+  valueLayer: 3
+  layer: 2
+  hasChilds: 1
 --- !u!1 &4504824794789102749
 GameObject:
   m_ObjectHideFlags: 0

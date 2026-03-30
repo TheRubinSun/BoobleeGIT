@@ -35,20 +35,20 @@ public class TreeLogic : ObjectLBroken
             }
         }
     }
-    public override void UpdateSortingOrder()
-    {
-        if (!isVisibleNow) return;
+    //public override void UpdateSortingOrder()
+    //{
+    //    if (!isVisibleNow) return;
 
-        if (IsUpper) return;
+    //    if (IsUpper) return;
 
-        float treePosY = transform.position.y;
-        float PlayerPosY = GlobalData.GameManager.PlayerPosY;
+    //    float treePosY = transform.position.y;
+    //    float PlayerPosY = GlobalData.GameManager.PlayerPosY;
 
-        if(spr_ren != null) 
-            spr_ren.sortingOrder = Mathf.RoundToInt(((treePosY - 2f) - PlayerPosY - 2) * -5);
-        if (spr_Child_ren != null) 
-            spr_Child_ren.sortingOrder = spr_ren.sortingOrder - 1;
-    }
+    //    if(spr_ren != null) 
+    //        spr_ren.sortingOrder = Mathf.RoundToInt(((treePosY - 2f) - PlayerPosY - 2) * -5);
+    //    if (spr_Child_ren != null) 
+    //        spr_Child_ren.sortingOrder = spr_ren.sortingOrder - 1;
+    //}
     public override void CreateCulling()
     {
         culling = new CullingObject(spr_ren, anim, new SpriteRenderer[] { spr_Child_ren });

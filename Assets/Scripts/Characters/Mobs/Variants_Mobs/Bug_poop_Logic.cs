@@ -146,19 +146,19 @@ public class Bug_poop_Logic : BaseEnemyLogic
     //        moveDirection = toPlayer.normalized;
     //    }
     //}
-    public override void UpdateSortingOrder()
-    {
-        if (!isVisibleNow) return;
+    //public override void UpdateSortingOrder()
+    //{
+    //    if (!isVisibleNow) return;
 
-        if (IsUpper) return;
+    //    if (IsUpper) return;
 
-        float mobPosY = transform.position.y;
-        float PlayerPosY = GlobalData.GameManager.PlayerPosY;
+    //    float mobPosY = transform.position.y;
+    //    float PlayerPosY = GlobalData.GameManager.PlayerPosY;
 
-        spr_ren.sortingOrder = Mathf.RoundToInt((mobPosY - PlayerPosY - 2) * -5);
+    //    spr_ren.sortingOrder = Mathf.RoundToInt((mobPosY - PlayerPosY - 2) * -5);
 
-        if (spr_ren_ball != null) spr_ren_ball.sortingOrder = spr_ren.sortingOrder - 5;
-    }
+    //    if (spr_ren_ball != null) spr_ren_ball.sortingOrder = spr_ren.sortingOrder - 5;
+    //}
     protected override void FlipfaceChild(bool shouldFaceLeft)
     {
         if (spr_ren_ball != null)

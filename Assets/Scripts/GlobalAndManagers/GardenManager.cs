@@ -26,7 +26,7 @@ public class GardenManager : MonoBehaviour
         instance = this;
     }
    
-    private void Start()
+    public void CreateLoadFarmPoints()
     {
         int id = 0;
         foreach(Transform child in parentDirtBedsOBJ)

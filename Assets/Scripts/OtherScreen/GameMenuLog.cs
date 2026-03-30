@@ -131,6 +131,7 @@ public class GameMenuLog : MonoBehaviour
         if (GenInfoSaves.saveGameFiles.ContainsKey(idSave))
         {
             GlobalData.cur_lvl_left = GenInfoSaves.saveGameFiles[idSave].lvl_left;
+            GlobalData.NAME_NEW_LOCATION = "Game_village";
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("LoadingScreen");
         }
         else

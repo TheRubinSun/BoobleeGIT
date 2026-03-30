@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class DaizenLogic : BaseEnemyLogic
 {
-    private SpriteRenderer spr_ren_ch { get; set; }
-
     //Объекты
     [SerializeField]
     private Transform child_Obj; //Дочерний объект
@@ -30,19 +28,19 @@ public class DaizenLogic : BaseEnemyLogic
         IsTrapped = false;
         child_col.isTrigger = false;
     }
-    public override void UpdateSortingOrder()
-    {
-        if (!isVisibleNow) return;
+    //public override void UpdateSortingOrder()
+    //{
+    //    if (!isVisibleNow) return;
 
-        if (IsUpper) return;
+    //    if (IsUpper) return;
 
-        float mobPosY = transform.position.y;
-        float PlayerPosY = GlobalData.GameManager.PlayerPosY;
+    //    float mobPosY = transform.position.y;
+    //    float PlayerPosY = GlobalData.GameManager.PlayerPosY;
 
-        spr_ren.sortingOrder = Mathf.RoundToInt((mobPosY - PlayerPosY - 2) * -5);
+    //    spr_ren.sortingOrder = Mathf.RoundToInt(((mobPosY - 2f) - PlayerPosY - 2) * -5) + 5;
 
-        if (spr_ren_ch != null) spr_ren_ch.sortingOrder = spr_ren.sortingOrder - 5;
-    }
+    //    if (spr_ren_ch != null) spr_ren_ch.sortingOrder = spr_ren.sortingOrder - 1;
+    //}
 
     public override IEnumerator FlashColor(Color32 color, float time)
     {

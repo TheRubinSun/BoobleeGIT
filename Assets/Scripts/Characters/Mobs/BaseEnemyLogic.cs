@@ -12,6 +12,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     [SerializeField] protected Transform EffectsObj;
     [SerializeField] protected Transform CenterObject;
     [SerializeField] protected float separationWeight = 1f; //Толщина моба, чтобы распределялись
+    protected SpriteRenderer spr_ren_ch { get; set; }
     public int IdMobs; //Тип моба
     public string Name; //Имя
     public EnemyStats enum_stat;
@@ -190,8 +191,10 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
 
         float mobPosY = transform.position.y;
         float PlayerPosY = GlobalData.GameManager.PlayerPosY;
+        spr_ren.sortingOrder = Mathf.RoundToInt(((mobPosY - 2f) - PlayerPosY - 2) * -5) + 5;
 
-        spr_ren.sortingOrder = Mathf.RoundToInt((mobPosY - PlayerPosY - 2) * -5);
+        if (spr_ren_ch != null) spr_ren_ch.sortingOrder = spr_ren.sortingOrder - 1;
+
     }
 
     public virtual void TakeDamage(int damage, damageT typeAttack, bool canEvade, EffectData effect = null)

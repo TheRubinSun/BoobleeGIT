@@ -51,18 +51,18 @@ public class OreL : ObjectLBroken
             culling.SetVisible(shouldBeVisible);
         }
     }
-    public override void UpdateSortingOrder()
-    {
-        if (!isVisibleNow) return;
+    //public override void UpdateSortingOrder()
+    //{
+    //    if (!isVisibleNow) return;
 
-        if (IsUpper) return;
+    //    if (IsUpper) return;
 
-        float orePosY = transform.position.y;
-        float PlayerPosY = GlobalData.GameManager.PlayerPosY;
+    //    float orePosY = transform.position.y;
+    //    float PlayerPosY = GlobalData.GameManager.PlayerPosY;
 
-        if (spr_ren != null)
-            spr_ren.sortingOrder = Mathf.RoundToInt(((orePosY - 2f) - PlayerPosY - 2) * -5);
-    }
+    //    if (spr_ren != null)
+    //        spr_ren.sortingOrder = Mathf.RoundToInt(((orePosY - 2f) - PlayerPosY - 2) * -5);
+    //}
     protected override IEnumerator BreakAndDestroy()
     {
         float pitch = Random.Range(0.8f, 1.2f);

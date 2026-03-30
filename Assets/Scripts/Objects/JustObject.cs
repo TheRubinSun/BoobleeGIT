@@ -8,8 +8,7 @@ public class JustObject : ObjectL
 
     [SerializeField] protected float layer;
     [SerializeField] protected bool hasChilds;
-    [SerializeField] protected SpriteRenderer[] sr_childs;
-    [SerializeField] protected Animator[] anims_childs;
+
 
     protected virtual void Awake()
     {
@@ -34,24 +33,26 @@ public class JustObject : ObjectL
         UpdateCulling(true);
         GlobalData.CullingManager.RegisterObject(this);
     }
-    public override void UpdateSortingOrder()
-    {
-        if (!isVisibleNow) return;
+    //public override void UpdateSortingOrder()
+    //{
+    //    if (!isVisibleNow) return;
 
-        if (IsUpper) return;
+    //    if (IsUpper) return;
 
-        float PosY = transform.position.y;
-        float PlayerPosY = GlobalData.GameManager.PlayerPosY;
+    //    float PosY = transform.position.y;
+    //    float PlayerPosY = GlobalData.GameManager.PlayerPosY;
 
-        if (spr_ren != null)
-            spr_ren.sortingOrder = Mathf.RoundToInt(((PosY - 2f) - PlayerPosY - 2) * -5);
-        foreach (SpriteRenderer s in sr_childs)
-        {
-            if (s != null)
-                s.sortingOrder = spr_ren.sortingOrder + 1;
-        }
+    //    if (spr_ren != null)
+    //    {
+    //        spr_ren.sortingOrder = Mathf.RoundToInt(((PosY - 2f) - PlayerPosY - 2) * -5);
+    //        foreach (SpriteRenderer s in sr_childs)
+    //        {
+    //            if (s != null)
+    //                s.sortingOrder = spr_ren.sortingOrder + 1;
+    //        }
 
-    }
+    //    }
+    //}
     public override void CreateCulling()
     {
         if (hasChilds && (sr_childs != null || anims_childs != null))
