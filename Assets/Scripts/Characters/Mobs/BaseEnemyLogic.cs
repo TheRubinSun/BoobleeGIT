@@ -63,7 +63,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     protected float updateRate = 0.25f; // Интервал обновления (5 раза в секунду)
     protected float nextUpdateTime = 0f;
     protected int layerMob;
-
+    protected float valueLayer = GlobalData.valueLayerObj;
     //Hp Bar
     [SerializeField] private GameObject HPBar;
     protected HealthBar2D healthBar;
@@ -191,7 +191,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
 
         float mobPosY = transform.position.y;
         float PlayerPosY = GlobalData.GameManager.PlayerPosY;
-        spr_ren.sortingOrder = Mathf.RoundToInt(((mobPosY - 2f) - PlayerPosY - 2) * -5) + 5;
+        spr_ren.sortingOrder = Mathf.RoundToInt(((mobPosY - valueLayer) - PlayerPosY - 2) * -5) + 5;
 
         if (spr_ren_ch != null) spr_ren_ch.sortingOrder = spr_ren.sortingOrder - 1;
 

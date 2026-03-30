@@ -15,7 +15,7 @@ public static class GlobalData
     public static bool LoadedGame;
     public static bool NeedLoadFile;
     public static NewPlayer? newPlayer = default;
-
+    public static float valueLayerObj = 3f;
 
     public static int ID_head;
     public static int ID_hair;

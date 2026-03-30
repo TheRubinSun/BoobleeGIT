@@ -50,14 +50,15 @@ public class SlimeLogic : BaseEnemyLogic, IItemMove
     }
     public override void UpdateSortingOrder()
     {
-        if (!isVisibleNow) return;
+        //if (!isVisibleNow) return;
 
-        if (IsUpper) return;
+        //if (IsUpper) return;
 
-        float mobPosY = transform.position.y;
-        float PlayerPosY = GlobalData.GameManager.PlayerPosY;
+        //float mobPosY = transform.position.y;
+        //float PlayerPosY = GlobalData.GameManager.PlayerPosY;
 
-        spr_ren.sortingOrder = Mathf.RoundToInt((mobPosY - PlayerPosY - 2) * -5);
+        //spr_ren.sortingOrder = Mathf.RoundToInt(((mobPosY - valueLayer) - PlayerPosY - 2) * -5) + 5;
+        base.UpdateSortingOrder();
 
         if (sr_item_one != null)
         {

@@ -25,8 +25,8 @@ public abstract class ObjectL : MonoBehaviour, ICullableObject
     public abstract void CreateCulling();
     public abstract Vector2 GetPosition();
     public abstract void UpdateCulling(bool shouldBeVisible);
+    protected float valueLayer = GlobalData.valueLayerObj;
 
-    protected float valueLayer = 3f;
     public virtual void UpdateSortingOrder()
     {
         if (!isVisibleNow) return;

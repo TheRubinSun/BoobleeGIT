@@ -52,7 +52,7 @@ public class Ball_logic : EnemyShield
         float mobPosY = transform.position.y;
         float PlayerPosY = GlobalData.GameManager.PlayerPosY;
 
-        spr_ren.sortingOrder = Mathf.RoundToInt(((mobPosY - PlayerPosY - 2) * -5) - 1f);
+        spr_ren.sortingOrder = Mathf.RoundToInt(((mobPosY - valueLayer) - PlayerPosY - 2) * -5) + 5;
     }
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
