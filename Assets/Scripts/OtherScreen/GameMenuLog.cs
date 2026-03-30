@@ -125,4 +125,17 @@ public class GameMenuLog : MonoBehaviour
 
         Application.Quit();
     }
+    public void LoadSave()
+    {
+        int idSave = GlobalData.SaveInt;
+        if (GenInfoSaves.saveGameFiles.ContainsKey(idSave))
+        {
+            GlobalData.cur_lvl_left = GenInfoSaves.saveGameFiles[idSave].lvl_left;
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("LoadingScreen");
+        }
+        else
+        {
+            Debug.LogError($"Слот {idSave} не найден!");
+        }
+    }
 }

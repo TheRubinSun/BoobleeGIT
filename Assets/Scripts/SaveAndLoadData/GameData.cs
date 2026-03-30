@@ -158,6 +158,7 @@ public class EffectDataSave
     public float valueTwo;
     public EffectType effectType;
     public float time_remains;
+    public bool getTempStat;
     //public GameObject effectObj;
 
     public EffectDataSave(EffectData original, float time_remains)
@@ -169,7 +170,9 @@ public class EffectDataSave
         this.idSprite = original.idSprite;
         this.duration = original.duration;
         this.cooldown = original.cooldown;
+        this.getTempStat = original.getTempStat;
         this.time_remains = time_remains;
+
         //this.effectObj = original.effectObj;
     }
     public EffectDataSave() { }

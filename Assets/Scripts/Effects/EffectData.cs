@@ -13,7 +13,7 @@ public class EffectData : ScriptableObject
     public float valueTwo;
     public EffectType effectType;
     public GameObject effectObj;
-
+    public bool getTempStat;
     public EffectData (EffectData original)
     {
         this.EffectName = original.EffectName;
@@ -23,6 +23,7 @@ public class EffectData : ScriptableObject
         this.idSprite = original.idSprite;
         this.duration = original.duration;
         this.effectObj = original.effectObj;
+        this.getTempStat = original.getTempStat;
     }
     public EffectData() { }
 }

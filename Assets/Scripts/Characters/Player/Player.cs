@@ -248,6 +248,7 @@ public class Player : MonoBehaviour, ITakeDamage
         if (pl_stats.Cur_Hp < 1)
         {
             PlayerModel.SetActive(false);
+            GlobalData.UIControl.OpenDeathWindow();
         }
     }
     public void ChangeToggleWeapon(int id)

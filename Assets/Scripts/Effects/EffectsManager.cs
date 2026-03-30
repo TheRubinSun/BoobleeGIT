@@ -108,30 +108,64 @@ public class EffectsManager : MonoBehaviour
         ActionEffect currentEffectState = new ActionEffect(effect, effect.duration);
         activeEffectDataMap[effect] = currentEffectState; //—охран€€ем действущий эффект
 
+        if(effect.getTempStat)
+        {
+            UseEffect(effect, true);
+        }
         float tickTimer = 0;
 
         while (effect.duration == 0 || (currentEffectState.time_remains > 0))
         {
             if (effect.cooldown > 0) //if (effect.cooldown > 0)
             {
-                if(tickTimer <= 0)
+                if (!effect.getTempStat && tickTimer <= 0)
                 {
                     UseEffect(effect, true);
                     tickTimer = effect.cooldown;
                 }
                 tickTimer -= Time.deltaTime;
             }
-            if(effect.duration > 0)
+            if (effect.duration > 0)
             {
                 currentEffectState.time_remains -= Time.deltaTime;
             }
             OnEffectTimerUpdate?.Invoke(currentEffectState);
             yield return null; // ќбновл€ем каждый кадр дл€ плавности и точности
         }
-        UseEffect(effect, true);
+        if(!effect.getTempStat) 
+            UseEffect(effect, true);
+
         RemoveEffect(effect);
         activeCoroutines.Remove(effect);
     }
+    //private IEnumerator HandleEffect(EffectData effect)
+    //{
+    //    ActionEffect newEffect = new ActionEffect(effect, effect.duration);
+    //    activeEffectDataMap[effect] = newEffect; //—охран€€ем действущий эффект
+    //    OnEffectTimerUpdate?.Invoke(newEffect);
+    //    while (effect.duration == 0 || (newEffect.time_remains > 0))
+    //    {
+    //        if (newEffect.time_remains % effect.cooldown == 0) //if (effect.cooldown > 0)
+    //        {
+    //            yield return new WaitForSeconds(effect.cooldown);
+    //            UseEffect(effect, true);
+    //            newEffect.time_remains -= effect.cooldown;
+    //        }
+    //        else
+    //        {
+    //            if (effect.duration > 0)
+    //            {
+    //                if (newEffect.time_remains == effect.duration) UseEffect(effect, true);
+    //                yield return new WaitForSeconds(1);
+    //                newEffect.time_remains -= 1;
+    //            }
+    //            else yield return null; // ƒл€ бесконечного эффекта просто ждЄм
+    //        }
+    //        OnEffectTimerUpdate?.Invoke(newEffect);
+    //    }
+    //    RemoveEffect(effect);
+    //    activeCoroutines.Remove(effect);
+    //}
     //private void RemoveEffect(EffectData effect, bool ContinueOrRemoveObj)
     //{
     //    OnRemoveEffectUI?.Invoke(effect);

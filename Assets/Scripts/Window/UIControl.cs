@@ -27,6 +27,7 @@ public class UIControl : MonoBehaviour
     [SerializeField] GameObject CraftWindow;
     [SerializeField] Transform itemInfo;
     [SerializeField] Transform buffInfo;
+    [SerializeField] GameObject DeathWindow;
 
     [SerializeField] Transform mainParentInventory;
 
@@ -39,6 +40,7 @@ public class UIControl : MonoBehaviour
     bool ShopIsOpened;
     bool LvlUpIsOpen;
     bool CraftIsOpened;
+    bool IsDeath;
 
     private bool isPaused = false;
 
@@ -160,7 +162,7 @@ public class UIControl : MonoBehaviour
     }
     public void OpenListItems()
     {
-        if (!GlobalData.Player.GodMode) return;
+        if (!GlobalData.Player.GodMode || IsDeath) return;
 
         itemsIsOpened = !itemsIsOpened;
         if (itemsIsOpened)
@@ -175,7 +177,7 @@ public class UIControl : MonoBehaviour
     }
     public void OpenListMobs()
     {
-        if (!GlobalData.Player.GodMode) return;
+        if (!GlobalData.Player.GodMode || IsDeath) return;
 
         mobsIsOpened = !mobsIsOpened;
         if (mobsIsOpened)
@@ -190,7 +192,7 @@ public class UIControl : MonoBehaviour
     }
     public void OpenCreatePortal()
     {
-        if (!GlobalData.Player.GodMode) return;
+        if (!GlobalData.Player.GodMode || IsDeath) return;
 
         createPortalIsOpened = !createPortalIsOpened;
         if (createPortalIsOpened)
@@ -210,7 +212,7 @@ public class UIControl : MonoBehaviour
     }
     public void OpenShopSurv(string nameTrader)
     {
-        if (CraftIsOpened) return;
+        if (CraftIsOpened || IsDeath) return;
 
         ShopIsOpened = !ShopIsOpened;
         if (ShopIsOpened)
@@ -228,7 +230,7 @@ public class UIControl : MonoBehaviour
     }
     public void CloseShopSurv()
     {
-        if ( CraftIsOpened) return;
+        if (CraftIsOpened || IsDeath) return;
 
         ShopIsOpened = false;
         GlobalData.Player.PlayerStay = false;
@@ -289,7 +291,7 @@ public class UIControl : MonoBehaviour
     }
     public void OpenCraftWindowSurv(CraftTable craftTable)
     {
-        if (ShopIsOpened) return;
+        if (ShopIsOpened || IsDeath) return;
 
         CraftIsOpened = !CraftIsOpened;
         if (CraftIsOpened && craftTable != CraftTable.None)
@@ -305,6 +307,11 @@ public class UIControl : MonoBehaviour
             GlobalData.CraftLogic.CloseCrafts();
         }
     }
+    public void OpenDeathWindow()
+    {
+        IsDeath = true;
+        DeathWindow.SetActive(true);
+    }
     public void ShowHideLvlUP(bool showOrHide)
     {
         LvlUPButton.SetActive(showOrHide);
@@ -316,6 +323,8 @@ public class UIControl : MonoBehaviour
     }
     public void OpenGameMenu()
     {
+        if (IsDeath) return;
+
         bool CloseWindow = GameMenuWindow.activeSelf;
         if (ShopIsOpened)
         {

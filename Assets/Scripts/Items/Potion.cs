@@ -15,7 +15,10 @@ public abstract class Effect : Item
     protected void LoadEffectData()
     {
         if (System.Enum.TryParse(nameEffect, out TypeEffectName type))
+        {
+            Debug.Log(type.ToString());
             effectTemplate = ResourcesData.GetEffectsPrefab(type);
+        }
     }
 }
 public class Potion : Effect, IUsable
@@ -51,7 +54,6 @@ public class HealPotion : Potion
         idSpriteEffectColdown = _idSpriteColdown;
 
         nameEffect = "HealColdown";
-        LoadEffectData();
     }
     public override bool Use()
     {
@@ -65,10 +67,12 @@ public class HealPotion : Potion
         {
             EffectData effect = ScriptableObject.CreateInstance<EffectData>();
 
+            LoadEffectData();
             if (effectTemplate != null)
             {
-                //Debug.Log($"Ёффект с именем {nameEffect} найден");
                 effect.Sprite = effectTemplate.Sprite;
+                effect.effectObj = effectTemplate.effectObj;
+
             }
 
             effect.EffectName = nameEffect;
@@ -105,7 +109,7 @@ public class SpeedUpPotion : Potion
         idSpriteEffect = _idSpriteEffect;
 
         nameEffect = "SpeedUp";
-        LoadEffectData();
+
     }
     public override bool Use()
     {
@@ -121,18 +125,19 @@ public class SpeedUpPotion : Potion
         {
             EffectData effect = ScriptableObject.CreateInstance<EffectData>();
 
+            LoadEffectData();
             if (effectTemplate != null)
             {
                 //Debug.Log($"Ёффект с именем {nameEffect} найден");
                 effect.effectObj = effectTemplate.effectObj;
                 effect.Sprite = effectTemplate.Sprite;
             }
-
             effect.EffectName = nameEffect;
             effect.effectType = EffectType.SpeedBoost;
             effect.value = valueUp;
             effect.idSprite = idSpriteEffect;
             effect.duration = duration;
+            effect.getTempStat = true;
 
             return eff_man.ApplyEffect(effect);
         }
@@ -161,7 +166,6 @@ public class ManaHealPotion : Potion
         idSpriteEffect = _idSpriteEffect;
 
         nameEffect = "ManaHealColdown";
-        LoadEffectData();
     }
     public override bool Use()
     {
@@ -175,6 +179,7 @@ public class ManaHealPotion : Potion
         {
             EffectData regenEffect = ScriptableObject.CreateInstance<EffectData>();
 
+            LoadEffectData();
             if (effectTemplate != null)
             {
                 regenEffect.Sprite = effectTemplate.Sprite;
@@ -217,7 +222,6 @@ public class Food : Effect, IUsable
         cooldown = _cooldown;
         idSpriteEffect = _idSpriteEffect;
 
-        LoadEffectData();
     }
     public bool Use()
     {
@@ -244,7 +248,7 @@ public class Food : Effect, IUsable
         if (eff_man != null)
         {
             EffectData regenEffect = ScriptableObject.CreateInstance<EffectData>();
-
+            LoadEffectData();
             if (effectTemplate != null)
             {
                 Debug.Log($"Ёффект с именем {nameEffect} найден");

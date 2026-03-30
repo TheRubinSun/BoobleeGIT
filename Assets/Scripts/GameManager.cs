@@ -422,6 +422,7 @@ public class GameManager: MonoBehaviour
             loadedEffect.idSprite = effect.idSprite;
             loadedEffect.duration = effect.time_remains;
             loadedEffect.cooldown = effect.cooldown;
+            loadedEffect.getTempStat = effect.getTempStat;
             playerEffects.ApplyEffect(loadedEffect);
         }
 

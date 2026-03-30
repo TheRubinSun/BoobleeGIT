@@ -110,6 +110,14 @@ public class ItemDropEnemy
             new("material_beetle_sludge", 1, 6),
             new("material_beetle_shell", 1, 2),
         };
+
+        enemyAndHisDropItems["multitac_boss"] = new DropItemEnemy[] {
+            new("material_strange_eye", 1, 3),
+            new("artifact_eye_ring", 1, 1),
+            new("booster_strength", 1, 1),
+            new("material_rubin", 1, 1),
+            
+        };
     }
 }
 public class DropItemEnemy

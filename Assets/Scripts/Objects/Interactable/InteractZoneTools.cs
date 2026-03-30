@@ -19,12 +19,12 @@ public class DrawOutline : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         mat = sr.material;
     }
-    public void DrawOutlineObj()
+    public virtual void DrawOutlineObj()
     {
         mat.SetFloat("_OutlineSize", outlineSize);
         if (e_icon != null) e_icon.SetActive(true);
     }
-    public void EarseOutlineObj()
+    public virtual void EarseOutlineObj()
     {
         mat.SetFloat("_OutlineSize", 0);
         if(e_icon!=null) e_icon.SetActive(false);
