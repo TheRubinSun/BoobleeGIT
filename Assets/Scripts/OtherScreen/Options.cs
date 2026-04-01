@@ -23,6 +23,7 @@ public class Options : MonoBehaviour
     [SerializeField] private GameObject WindowControlsSet;
     [SerializeField] private Toggle ifBigUIToggle;
     [SerializeField] private Toggle ifCameraFarAwayToggle;
+    [SerializeField] private Toggle ifCloudsON;
     private bool OpenContolSet = false;
 
     private string language;
@@ -41,6 +42,8 @@ public class Options : MonoBehaviour
     {
         ifBigUIToggle.isOn = GlobalData.IsBigUI;
         ifCameraFarAwayToggle.isOn = GlobalData.IsFarCamera;
+        ifCloudsON.isOn = GlobalData.OnClouds;
+
         sounds_volume_sli.value = GlobalData.VOLUME_SOUNDS;
         music_volume_sli.value = GlobalData.VOLUME_MUSICS;
         LoadSavedLanguage();
@@ -52,9 +55,9 @@ public class Options : MonoBehaviour
     {
         ScreenResolutions screen_resole = new ScreenResolutions(Screen.width, Screen.height, Screen.currentResolution.refreshRateRatio.numerator, Screen.currentResolution.refreshRateRatio.denominator);
         if (language != null)
-            await GlobalData.GenInfoSaves.SavedChanged(GenInfoSaves.saveGameFiles, GenInfoSaves.lastSaveID, language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, screen_resole, GlobalData.IsBigUI, GlobalData.IsFarCamera);
+            await GlobalData.GenInfoSaves.SavedChanged(GenInfoSaves.saveGameFiles, GenInfoSaves.lastSaveID, language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, screen_resole, GlobalData.IsBigUI, GlobalData.IsFarCamera, GlobalData.OnClouds);
         else
-            await GlobalData.GenInfoSaves.SavedChanged(GenInfoSaves.saveGameFiles, GenInfoSaves.lastSaveID, GenInfoSaves.language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, screen_resole, GlobalData.IsBigUI, GlobalData.IsFarCamera);
+            await GlobalData.GenInfoSaves.SavedChanged(GenInfoSaves.saveGameFiles, GenInfoSaves.lastSaveID, GenInfoSaves.language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, screen_resole, GlobalData.IsBigUI, GlobalData.IsFarCamera, GlobalData.OnClouds);
     }
     public async void SwitchLanguage(string localeCode)
     {
@@ -123,6 +126,11 @@ public class Options : MonoBehaviour
         GlobalData.IsFarCamera = ifCameraFarAwayToggle.isOn;
         UpdateCameraFarAway();
     }
+    public void SetClouds()
+    {
+        GlobalData.OnClouds = ifCloudsON.isOn;
+        UpdateClouds();
+    }
     public void AddResole()//Добавить доступные разрешения в список
     {
         resolutions = Screen.resolutions;
@@ -153,11 +161,19 @@ public class Options : MonoBehaviour
             if (availableResole[i].Width == Screen.width && availableResole[i].Height == Screen.height && availableResole[i].Hz_num == cur.refreshRateRatio.numerator)
             {
                 selectResole.SetValueWithoutNotify(i);
-                textCurResole.text = $"{Screen.width}x{Screen.height} ({GlobalData.screen_resole.Hz_num / GlobalData.screen_resole.Hz_denom})Hz";
+                //string text = $"{Screen.width}x{Screen.height} " + 
+                textCurResole.text = $"{Screen.width}x{Screen.height} ({availableResole[i].Hz_num / cur.refreshRateRatio.numerator})Hz";
                 return;
             }
         }
-        textCurResole.text = $"{Screen.width}x{Screen.height} ({GlobalData.screen_resole.Hz_num / GlobalData.screen_resole.Hz_denom})Hz";
+        UpdateTextResole();
+    }
+    private void UpdateTextResole()
+    {
+        if(GlobalData.screen_resole != null)
+        {
+            textCurResole.text = $"{Screen.width}x{Screen.height} ({GlobalData.screen_resole.Hz_num / GlobalData.screen_resole.Hz_denom})Hz";
+        }
     }
     public void SwitchResolution() //Просто изменить разрешение экрана из меню
     {
@@ -182,12 +198,26 @@ public class Options : MonoBehaviour
         yield return null;
 
         UpdateCameraFarAway();
+
     }
     private void UpdateCameraFarAway()
     {
         if (GlobalData.CullingManager != null)
-        {
             GlobalData.CullingManager.UpdateResolution();
+        UpdateClouds();
+    }
+    private void UpdateClouds()
+    {
+        if (Clouds.Instance == null) return;
+
+        if (GlobalData.OnClouds)
+        {
+            GameManager.Instance.GetClouds.SetActive(true);
+            Clouds.Instance.StartCloudsLogic();
+        }
+        else
+        {
+            Clouds.Instance.StopCloudsLogic();
         }
     }
 }

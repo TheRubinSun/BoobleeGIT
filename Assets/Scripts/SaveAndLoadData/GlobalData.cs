@@ -16,6 +16,7 @@ public static class GlobalData
     public static bool NeedLoadFile;
     public static NewPlayer? newPlayer = default;
     public static float valueLayerObj = 3f;
+    public static bool OnClouds = true;
 
     public static int ID_head;
     public static int ID_hair;

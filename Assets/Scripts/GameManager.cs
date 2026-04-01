@@ -15,6 +15,9 @@ public class GameManager: MonoBehaviour
     [SerializeField] GameObject CorpsePref;
     [SerializeField] GameObject AudioManager;
     [SerializeField] AudioClip[] musics;
+    [SerializeField] private GameObject clouds;
+    public GameObject GetClouds => clouds;
+
     public Transform mobsLayer;
     private AudioSource music_source;
 
@@ -83,6 +86,19 @@ public class GameManager: MonoBehaviour
         }
         if (GameDataHolder.PlayerData != null)
         {
+            if(clouds != null)
+            {
+                if (GlobalData.OnClouds)
+                {
+                    clouds.SetActive(true);
+                    Clouds.Instance.StartCloudsLogic();
+                }  
+                else
+                {
+                    Clouds.Instance.StopCloudsLogic();
+                }
+            }
+            
             GlobalData.Artifacts.LoadOrNew(GameDataHolder.ArtifactsData.artifacts);
             GlobalWorld.LoadData(GameDataHolder.WorldData.numbTotalPoints, GameDataHolder.WorldData.farmPoints);
             GlobalData.Player.LoadOrCreateNew(GameDataHolder.PlayerData.player_data);
@@ -353,7 +369,7 @@ public class GameManager: MonoBehaviour
 
         //saveGameIngo.randomCalls = GlobalData.randomCalls;
         ScreenResolutions screen_resole = GlobalData.GetScreenResolutions();
-        SavesDataInfo savesDataInfo = new SavesDataInfo(GenInfoSaves.saveGameFiles, GlobalData.SaveInt, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, screen_resole, GlobalData.IsBigUI, GlobalData.IsFarCamera);
+        SavesDataInfo savesDataInfo = new SavesDataInfo(GenInfoSaves.saveGameFiles, GlobalData.SaveInt, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, screen_resole, GlobalData.IsBigUI, GlobalData.IsFarCamera, GlobalData.OnClouds);
         //await SaveSystem.SaveDataAsync(savesDataInfo, "saves_info.json");
 
         CraftsRecipesData savesDataRecipesCrafts = new CraftsRecipesData(RecipesCraft.recipesCraft);
@@ -395,7 +411,7 @@ public class GameManager: MonoBehaviour
     {
         WritePlayTime();
         ScreenResolutions screen_resole = GlobalData.GetScreenResolutions();
-        SavesDataInfo savesDataInfo = new SavesDataInfo(GenInfoSaves.saveGameFiles, GlobalData.SaveInt, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, screen_resole, GlobalData.IsBigUI, GlobalData.IsFarCamera);
+        SavesDataInfo savesDataInfo = new SavesDataInfo(GenInfoSaves.saveGameFiles, GlobalData.SaveInt, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, screen_resole, GlobalData.IsBigUI, GlobalData.IsFarCamera, GlobalData.OnClouds);
         await SaveSystem.SaveDataAsync(savesDataInfo, "saves_info.json");
     }
     private void LoadActiveEffect()

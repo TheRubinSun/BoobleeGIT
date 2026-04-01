@@ -165,7 +165,7 @@ public class GenInfoSaves : MonoBehaviour
                 UpdateTextInfoCell(id);
 
                 
-                await SavedChanged(GenInfoSaves.saveGameFiles, 100, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, screen_resole, GlobalData.IsBigUI, GlobalData.IsFarCamera);
+                await SavedChanged(GenInfoSaves.saveGameFiles, 100, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, screen_resole, GlobalData.IsBigUI, GlobalData.IsFarCamera, GlobalData.OnClouds);
 
                 Debug.Log($"Файл {path_player_data} был успешно удалён.");
             }
@@ -177,13 +177,13 @@ public class GenInfoSaves : MonoBehaviour
         else
         {
             UpdateTextInfoCell(id);
-            await SavedChanged(GenInfoSaves.saveGameFiles, 100, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, screen_resole, GlobalData.IsBigUI, GlobalData.IsFarCamera);
+            await SavedChanged(GenInfoSaves.saveGameFiles, 100, GlobalData.cur_language, GlobalData.VOLUME_SOUNDS, GlobalData.VOLUME_MUSICS, screen_resole, GlobalData.IsBigUI, GlobalData.IsFarCamera, GlobalData.OnClouds);
             Debug.LogWarning($"Файл {path_player_data} не существует, удаление невозможно.");
         }
     }
-    public async Task SavedChanged(Dictionary<int, SaveGameInfo> _saveGameFiles, int _lastSaveID, string _language, float volume_sounds, float volume_musics, ScreenResolutions screen_resole, bool bigUI, bool isCameraAway)
+    public async Task SavedChanged(Dictionary<int, SaveGameInfo> _saveGameFiles, int _lastSaveID, string _language, float volume_sounds, float volume_musics, ScreenResolutions screen_resole, bool bigUI, bool isCameraAway, bool onClouds)
     {
-        SavesDataInfo savesDataInfo = new SavesDataInfo(_saveGameFiles, _lastSaveID, _language, volume_sounds, volume_musics, screen_resole, bigUI, isCameraAway);
+        SavesDataInfo savesDataInfo = new SavesDataInfo(_saveGameFiles, _lastSaveID, _language, volume_sounds, volume_musics, screen_resole, bigUI, isCameraAway, onClouds);
         await SaveSystem.SaveDataAsync(savesDataInfo, "saves_info.json");
     }
 
@@ -287,6 +287,7 @@ public class GenInfoSaves : MonoBehaviour
             GlobalData.VOLUME_SOUNDS = saveDataInfo.volume_sounds;
             GlobalData.IsBigUI = saveDataInfo.BigUI;
             GlobalData.IsFarCamera = saveDataInfo.IsCameraFarAway;
+            GlobalData.OnClouds = saveDataInfo.OnClouds;
 
             lastSaveID = saveDataInfo.lastSaveID;
             language = saveDataInfo.language;

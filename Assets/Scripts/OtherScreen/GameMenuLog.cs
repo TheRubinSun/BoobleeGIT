@@ -105,7 +105,7 @@ public class GameMenuLog : MonoBehaviour
     private async Task GoToMenu()
     {
         GlobalData.NAME_NEW_LOCATION = "Game_village";
-        Debug.Log($"{GlobalData.screen_resole.Width}x{GlobalData.screen_resole.Height} ({GlobalData.screen_resole.Hz_num/ GlobalData.screen_resole.Hz_denom}Hz)");
+        //Debug.Log($"{GlobalData.screen_resole.Width}x{GlobalData.screen_resole.Height} ({GlobalData.screen_resole.Hz_num/ GlobalData.screen_resole.Hz_denom}Hz)");
         //await GameManager.Instance.SavePlayTime();
         await SceneManager.LoadSceneAsync("Menu");
     }

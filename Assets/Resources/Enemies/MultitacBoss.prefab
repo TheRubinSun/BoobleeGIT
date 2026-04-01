@@ -426,6 +426,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EffectsObj: {fileID: 7527035539572008148}
   CenterObject: {fileID: 1407614551742650331}
+  separationWeight: 1
   IdMobs: 10
   Name: 
   IsFly: 1
@@ -1243,6 +1244,10 @@ PrefabInstance:
     - target: {fileID: 3509771579064529004, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
       propertyPath: IsUpper
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3509771579064529004, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
+      propertyPath: particalColor.rgba
+      value: 4281545604
       objectReference: {fileID: 0}
     - target: {fileID: 3514449642227444831, guid: dc1fdb375b457964f9f376d57bb89447, type: 3}
       propertyPath: OutputAudioMixerGroup

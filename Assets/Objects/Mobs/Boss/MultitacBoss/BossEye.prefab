@@ -327,6 +327,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ToDropPos: {x: 0, y: 0}
   IsUpper: 1
+  sr_childs: []
+  anims_childs: []
   remainsHits: 4
   toNextStageAnim: 1
   soundsBroken:
@@ -339,7 +341,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 642a3641a4033c743b26ff10bf3fb15d, type: 3}
   particalColor:
     serializedVersion: 2
-    rgba: 0
+    rgba: 4285087874
   itemsDrop: []
   damage_color:
     serializedVersion: 2

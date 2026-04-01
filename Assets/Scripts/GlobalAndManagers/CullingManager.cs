@@ -45,6 +45,7 @@ public class CullingManager : MonoBehaviour
         ppc = cam.GetComponent<PixelPerfectCamera>();
         
     }
+    public int GetPPU() => ppc.assetsPPU;
     public void StartCulling()
     {
         if (target == null) GlobalData.GameManager.PlayerModel = target;
@@ -71,6 +72,9 @@ public class CullingManager : MonoBehaviour
         {
             if(isFarAway)
             {
+                //if(lastWidth >= 3000)
+                //    chunkLoad = new Vector2Int(3, 2);
+                //else
                 chunkLoad = new Vector2Int(2, 2);
                 ppc.assetsPPU = 41;
             } 
@@ -86,13 +90,19 @@ public class CullingManager : MonoBehaviour
         {
             if (isFarAway)
             {
-                chunkLoad = new Vector2Int(2, 2);
-                ppc.assetsPPU = 41;
+                //if (lastWidth >= 3000)
+                //    chunkLoad = new Vector2Int(3, 2);
+                //else
+                //    chunkLoad = new Vector2Int(2, 2);
+                //ppc.assetsPPU = 41;
+                chunkLoad = new Vector2Int(2, 1);
+                ppc.assetsPPU = 62;
             }
             else
             {
                 chunkLoad = new Vector2Int(2, 1);
-                ppc.assetsPPU = 62;
+                //ppc.assetsPPU = 62;
+                ppc.assetsPPU = 90;
             }
             //ppc.assetsPPU = 62;
             multiply = 1.4f;

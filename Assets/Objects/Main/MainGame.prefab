@@ -1426,6 +1426,22 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4359928943713122397, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359928943713122397, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5006168714446093527}
+    - target: {fileID: 4359928943713122397, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetClouds
+      objectReference: {fileID: 0}
+    - target: {fileID: 4359928943713122397, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Options, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 4497886867599332641, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -1920,7 +1936,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5901791852420021460, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000061035156
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5943177246829901687, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -2164,6 +2180,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6897368353770060243, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7028134074062618615, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7028134074062618615, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7028134074062618615, guid: d0704542110c3864ebe08ae86963f45d, type: 3}
+      propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7035545407609697349, guid: d0704542110c3864ebe08ae86963f45d, type: 3}

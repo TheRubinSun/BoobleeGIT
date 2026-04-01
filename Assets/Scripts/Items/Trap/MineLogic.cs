@@ -12,7 +12,7 @@ public class MineLogic : TrapLogic
 
     [SerializeField] private GameObject Explosion_Pref;
     [SerializeField] private AudioClip explosion_sound;
-    public CanBeWeapon canBeWeapon = new CanBeWeapon { canBeExplosion = true};
+    public CanBeWeapon canBeWeapon = new CanBeWeapon { canBeExplosion = true, canBeBeatFly = false};
     public void SetParameters(int _damageTrap, damageT _damageT, float _radiusExp, float _delayTime)
     {
         damageTrap = _damageTrap;

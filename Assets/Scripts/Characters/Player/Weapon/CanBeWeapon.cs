@@ -6,6 +6,6 @@ public class CanBeWeapon
     public bool canBeAxe;
     public bool canBePixace;
     public bool canBeCut;
-    public bool canBeBeatFly;
+    public bool canBeBeatFly = true;
     public bool canBeExplosion;
 }
