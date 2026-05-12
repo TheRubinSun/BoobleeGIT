@@ -60,12 +60,12 @@ public class RangeWeaponLogic : WeaponControl
             ShootPos.localPosition = new Vector2(defaultShootPos.x, -defaultShootPos.y);
         }
     }
-    protected override void ShootVelocity(GameObject projectile, Vector2 direction)
-    {
-        Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
-        if (rb != null)
-        {
-            rb.linearVelocity = direction * attack_Speed_Projectile;
-        }
-    }
+    //protected override void ShootVelocity(GameObject projectile, Vector2 direction)
+    //{
+    //    Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
+    //    if (rb != null)
+    //    {
+    //        rb.linearVelocity = direction * attack_Speed_Projectile;
+    //    }
+    //}
 }

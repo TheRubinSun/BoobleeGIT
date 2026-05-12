@@ -18,6 +18,6 @@ public class PistolLogic : GunLogic
     protected override void ShootLogic(float offsetProj)
     {
         base.ShootLogic(offsetProj);
-        ShootVelocity(projectile, direction); //Сам выстрел
+        //ShootVelocity(projectile, direction); //Сам выстрел
     }
 }

@@ -18,6 +18,7 @@ public class LayerManager : MonoBehaviour
     //public static LayerMask allBreakObj;
 
     public static int allTrigger;
+    public static int allTriggerObject;
     private void Awake()
     {
         if (obstaclesLayer == -1) // Проверяем, чтобы не переинициализировать слои
@@ -35,6 +36,7 @@ public class LayerManager : MonoBehaviour
             enemyAll = (1 << enemyLayer) | (1 << enemyObject);
             allToughTrigger = (1 << obstaclesLayer) | (1 << touchObjectsLayer) | (1 << touchTriggObjLayer);
             allTrigger = (1 << enemyObject) | (1 << touchObjectsLayer) | (1 << touchTriggObjLayer);
+            allTriggerObject = (1 << touchObjectsLayer) | (1 << touchTriggObjLayer);
             //allBreakObj = (1 << touchObjectsLayer) | (1 << enemyObject) | (1 << touchTriggObjLayer);
         }
     }

@@ -200,7 +200,7 @@ public class SlimeLogic : BaseEnemyLogic, IItemMove
         //Подять в иерархии объекта пули/стрелы
         //bullet.transform.SetParent(transform.parent);
 
-        bull_log.SetStats(10, enum_stat.Att_Damage, posionNewEff, damageT.Magic, CanBeMissedAttack);
+        bull_log.SetStats(sp_Project, 0, 0, 0, 10, enum_stat.Att_Damage, posionNewEff, damageT.Magic, CanBeMissedAttack);
         // Получаем направление к игроку
 
         // Устанавливаем поворот стрелы в сторону игрока

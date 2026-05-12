@@ -38,7 +38,7 @@ public class BowLogic : GunLogic
     {
         base.ShootLogic(offsetProj);
 
-        ShootVelocity(projectile, direction); //Сам выстрел
+        //ShootVelocity(projectile, direction); //Сам выстрел
 
         // Устанавливаем поворот стрелы в сторону игрока
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;

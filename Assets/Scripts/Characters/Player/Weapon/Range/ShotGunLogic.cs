@@ -15,6 +15,6 @@ public class ShotGunLogic : GunLogic
     {
         base.ShootLogic(offsetProj);
 
-        ShootVelocity(projectile, direction); //Сам выстрел
+        //ShootVelocity(projectile, direction); //Сам выстрел
     }
 }

@@ -37,7 +37,7 @@ public class StaffLogic : GunLogic
 
             base.ShootLogic(offsetProj);
             //proj_set.effectBul = EffectAttack;
-            ShootVelocity(projectile, direction); //Сам выстрел
+            //ShootVelocity(projectile, direction); //Сам выстрел
 
         }
 
