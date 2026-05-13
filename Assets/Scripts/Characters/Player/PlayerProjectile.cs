@@ -83,7 +83,10 @@ public class PlayerProjectile : Projectile_Logic
         if (throught <= 0)
             DestroyP(); //если не найдена цель отскока то ломаться
         else
+        {
+            damage = (int)(damage * throughtDamagePrecent);
             throught--;
+        }
 
     }
     protected GameObject ReboundNewAim(GameObject oldAim) 

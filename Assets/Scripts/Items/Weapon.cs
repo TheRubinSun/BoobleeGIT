@@ -97,7 +97,7 @@ public class Gun : RangedWeapon, IBulletWeapon
         int id, string name, int maxCount, int spriteID, Quality quality, int cost, string decription,
         bool rangeType, float range, damageT typeDamage, int damage,
         float _attackSpeedCoof, int _addAttackSpeed, int conut_Projectiles,
-        float _projectileSpeed, float _projectileSpeedCoof, float _spreadAngle, int _throught , int _throughtDamagePrecent, int _rebound, int _idBulletPref,
+        float _projectileSpeed, float _projectileSpeedCoof, float _spreadAngle, int _throught , float _throughtDamagePrecent, int _rebound, int _idBulletPref,
         int effectID = -1
     ) : base(
         id, name, maxCount, spriteID, quality, cost, decription,
