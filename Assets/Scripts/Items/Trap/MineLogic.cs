@@ -56,7 +56,7 @@ public class MineLogic : TrapLogic
                     hitProcessed.Add(enemy.gameObject);
                 }
             }
-            else if(((1 << obj.gameObject.layer) & LayerManager.allTrigger) != 0)
+            else if(((1 << obj.gameObject.layer) & LayerManager.allBreakObj) != 0)
             {
                 ObjectLBroken broke_l = obj.GetComponent<ObjectLBroken>();
                 if (broke_l != null)

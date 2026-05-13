@@ -14,10 +14,11 @@ public class LayerManager : MonoBehaviour
     public static int interactableTriggerLayer = -1;
 
     public static LayerMask enemyAll;
-    public static LayerMask allToughTrigger;
-    //public static LayerMask allBreakObj;
+    public static LayerMask allToughObj;
+    public static LayerMask allTrigger;
+    public static LayerMask allBreakObj;
 
-    public static int allTrigger;
+
     public static int allTriggerObject;
     private void Awake()
     {
@@ -34,10 +35,11 @@ public class LayerManager : MonoBehaviour
             interactableTriggerLayer = LayerMask.NameToLayer("InteractableTrigger");
 
             enemyAll = (1 << enemyLayer) | (1 << enemyObject);
-            allToughTrigger = (1 << obstaclesLayer) | (1 << touchObjectsLayer) | (1 << touchTriggObjLayer);
-            allTrigger = (1 << enemyObject) | (1 << touchObjectsLayer) | (1 << touchTriggObjLayer);
-            allTriggerObject = (1 << touchObjectsLayer) | (1 << touchTriggObjLayer);
-            //allBreakObj = (1 << touchObjectsLayer) | (1 << enemyObject) | (1 << touchTriggObjLayer);
+
+            allToughObj = (1 << obstaclesLayer) | (1 << touchObjectsLayer) | (1 << touchTriggObjLayer);
+            allTrigger = (1 << enemyLayer) | (1 << enemyObject) | (1 << touchObjectsLayer) | (1 << touchTriggObjLayer);
+            allTriggerObject = (1 << enemyObject) | (1 << touchObjectsLayer) | (1 << touchTriggObjLayer);
+            allBreakObj = (1 << touchObjectsLayer) | (1 << touchTriggObjLayer);
         }
     }
 }

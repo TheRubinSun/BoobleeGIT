@@ -6,6 +6,21 @@ public class PlayerProjectile : Projectile_Logic
 {
     // Если используется триггер, то используйте OnTriggerEnter2D
     private ICullableObject i_OldAim;
+
+    private static ContactFilter2D filter;
+    private static readonly Collider2D[] rebounds = new Collider2D[10];
+    private static bool filterInitilized;
+    private void Awake()
+    {
+        if(!filterInitilized)
+        {
+            filter.useLayerMask = true;
+            filter.useTriggers = true;
+            filter.SetLayerMask(LayerManager.allTrigger);
+            filterInitilized = true;
+        }
+
+    }
     protected override void OnTriggerEnter2D(Collider2D collider)
     {
         if (isDestroyed) return;
@@ -13,7 +28,7 @@ public class PlayerProjectile : Projectile_Logic
         int layer = collider.gameObject.layer;
         GameObject aim = collider.gameObject;
         bool isHitHandler = false;
-        if (((1 << layer) & LayerManager.allTriggerObject) != 0)
+        if (((1 << layer) & LayerManager.allBreakObj) != 0)
         {
 
             ObjectLBroken objectL = aim.GetComponent<ObjectLBroken>();
@@ -71,28 +86,82 @@ public class PlayerProjectile : Projectile_Logic
             throught--;
 
     }
-    protected GameObject ReboundNewAim(GameObject oldAim)
+    protected GameObject ReboundNewAim(GameObject oldAim) 
     {
-        Collider2D[] arroundHits = Physics2D.OverlapCircleAll(oldAim.transform.position, maxDistance / 2, LayerManager.allTrigger);
-        
-        foreach (Collider2D arHit in arroundHits)
-        {
-            GameObject newAim = arHit.gameObject;
-            if (newAim == oldAim) continue;
 
-            if (!TryProcessTarget(newAim))
+        int arroundHits = Physics2D.OverlapCircle(oldAim.transform.position, maxDistance / 3, filter, rebounds);
+        GameObject bestaim = null;
+
+        //int counterCheck = 0;
+        //float bestdist = 200f;
+        //Vector2 curPos = transform.position;
+
+        for (int i = 0; i < arroundHits; i++)
+        {
+            GameObject potenialAim = rebounds[i].gameObject;
+            if (potenialAim == oldAim)
                 continue;
-            //Debug.Log($"Find new aim {newAim.name} {maxDistance}");
-            return newAim;
+
+            if (!TryProcessTarget(potenialAim))
+                continue;
+
+            //Vector2 dif = (Vector2)potenialAim.transform.position - curPos;
+            //float sqerDist = dif.sqrMagnitude;
+
+            if (((1 << potenialAim.layer) & LayerManager.enemyAll) != 0)
+            {
+                return potenialAim;
+            }
+            bestaim = potenialAim;
+            //if (sqerDist < bestdist)
+            //{
+            //    bestdist = sqerDist;
+            //    bestaim = potenialAim;
+            //    if(counterCheck > 2)
+            //    {
+            //        return bestaim;
+            //    }
+            //    counterCheck++;
+            //}
         }
-        return null;
+        //foreach (Collider2D arHit in arroundHits)
+        //{
+        //    GameObject potenialAim = arHit.gameObject;
+        //    if (potenialAim == oldAim) 
+        //        continue;
+
+        //    if (!TryProcessTarget(potenialAim))
+        //        continue;
+
+        //    //Vector2 dif = (Vector2)potenialAim.transform.position - curPos;
+        //    //float sqerDist = dif.sqrMagnitude;
+
+        //    if (((1 << potenialAim.layer) & LayerManager.enemyAll) != 0)
+        //    {
+        //        return potenialAim;
+        //    }
+        //    bestaim = potenialAim;
+        //    //if (sqerDist < bestdist)
+        //    //{
+        //    //    bestdist = sqerDist;
+        //    //    bestaim = potenialAim;
+        //    //    if(counterCheck > 2)
+        //    //    {
+        //    //        return bestaim;
+        //    //    }
+        //    //    counterCheck++;
+        //    //}
+        //}
+        return bestaim;
     }
 
     private bool TryProcessTarget(GameObject newAim)
     {
-        var newTarget = newAim.GetComponentInParent<ICullableObject>();
+        var newTarget = newAim.GetComponent<ICullableObject>();
+        //var newTarget = newAim.GetComponentInParent<ICullableObject>();
 
-        if (newTarget != null && i_OldAim != null && newTarget == i_OldAim) return false;
+        if (newTarget != null && i_OldAim != null && newTarget == i_OldAim) 
+            return false;
 
         return true;
     }

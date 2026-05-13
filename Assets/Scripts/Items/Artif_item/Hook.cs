@@ -27,7 +27,7 @@ public class Hook : Item, IUsable
 
     public bool Use()
     {
-        GlobalData.PlayerControl.CheckHook(this, LayerManager.allToughTrigger);
+        GlobalData.PlayerControl.CheckHook(this, LayerManager.allToughObj);
         Debug.Log("Использую хук");
         return true;
     }
