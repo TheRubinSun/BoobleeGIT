@@ -84,12 +84,14 @@ public class RayWeaponLogic : RangeWeaponLogic
 
         //RaycastHit2D[] hits = Physics2D.RaycastAll(originPos, direction, Attack_Range); //Ётот способ сильнее грузит, т.к. за каждый хит увеличивает выдел€емую пам€ть 
 
-        GameObject lazer = Instantiate(lazerPrefab, ShootPos);
-        lazer.transform.SetParent(transform.root);
+        //GameObject lazer = Instantiate(lazerPrefab, ShootPos);
+        //lazer.transform.SetParent(transform.root);
+        GameObject lazer;
+        LazerControl lazerData = ProjectilePool.instance.GetPlayerLazer(lazerPrefab, out lazer);
+        lazer.SetActive(true);
+        //LazerControl lazCon = lazer.GetComponent<LazerControl>();
 
-        LazerControl lazCon = lazer.GetComponent<LazerControl>();
-
-        lazCon.Init(hits, hitCount, originPos, endPos, Attack_Damage, Attack_Range, damageType, EffectAttack, countPenetrations, CountProjectiles, isDivideRay, layerMask, canBeWeapon);
+        lazerData.Init(hits, hitCount, originPos, endPos, Attack_Damage, Attack_Range, damageType, EffectAttack, countPenetrations, CountProjectiles, isDivideRay, layerMask, canBeWeapon);
     }
     //protected override void ShootLogic(float offset)//–абочий код, но больше
     //{

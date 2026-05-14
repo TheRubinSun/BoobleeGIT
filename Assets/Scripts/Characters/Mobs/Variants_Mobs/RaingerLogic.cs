@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class RaingerLogic : BaseEnemyLogic
@@ -79,10 +80,32 @@ public class RaingerLogic : BaseEnemyLogic
         if (spr_ren_ch != null)
             spr_ren_ch.flipX = shouldFaceLeft;
     }
+    protected override void Flipface() //Разворачиваем моба 
+    {
+        if (player == null) return; // Проверка на null
+
+        bool shouldFaceLeft;
+
+        if (Mathf.Abs(moveDirection.x) < 0.01f || isRunBack) //Если нет направление (например стоит, чтобы в сторону игрока смотрел)
+            shouldFaceLeft = player.position.x < transform.position.x;
+        else
+            shouldFaceLeft = moveDirection.x < 0; // Игрок слева?
+
+        if (spr_ren.flipX != shouldFaceLeft) // Если нужно сменить направление
+        {
+            spr_ren.flipX = shouldFaceLeft;
+            Shoot_point.localPosition = new Vector3(-Shoot_point.localPosition.x, Shoot_point.localPosition.y, 0);
+            FlipfaceChild(shouldFaceLeft);
+        }
+
+    }
     public override void RangeAttack()
     {
+
+
         GameObject bullet;
         Vector2 direction;
+        Rigidbody2D rb_proj;
 
         //audioSource.volume = attack_volume;
         audioSource.Stop();
@@ -90,20 +113,32 @@ public class RaingerLogic : BaseEnemyLogic
 
 
         //Стреляет из определенной точки или из центра моба
-        if (Shoot_point != null)
-        {
-            bullet = Instantiate(bulletPrefab, Shoot_point);
-            direction = (player.position - Shoot_point.position).normalized;
-        }
-        else
-        {
-            bullet = Instantiate(bulletPrefab, this.transform);
-            direction = (player.position - transform.position).normalized;
-        }
-        BulletMob bull_log = bullet.GetComponent<BulletMob>();
+
+        //bullet = Instantiate(bulletPrefab, this.transform);
+        //Стреляет из определенной точки или из центра моба
+        //if (Shoot_point != null)
+        //{
+        //    bullet = Instantiate(bulletPrefab, Shoot_point.position, Quaternion.identity);
+        //    direction = (player.position - Shoot_point.position).normalized;
+        //}
+        //else
+        //{
+        //    bullet = Instantiate(bulletPrefab, this.transform.position, Quaternion.identity);
+        //    direction = (player.position - transform.position).normalized;
+        //}
+
+        if (Shoot_point == null) Shoot_point = this.transform;
+        BulletMob bull_log = ProjectilePool.instance.GetEnemyProjectile(bulletPrefab, out bullet, out rb_proj) as BulletMob;
+
+        bullet.SetActive(true);
+        direction = (player.position - Shoot_point.position).normalized;
+        bullet.transform.position = Shoot_point.position;
+
+
+        //BulletMob bull_log = bullet.GetComponent<BulletMob>();
 
         //Подять в иерархии объекта пули/стрелы
-        bullet.transform.SetParent(transform.parent);
+        //bullet.transform.SetParent(transform.parent);
 
         bull_log.SetStats(sp_Project, 0, 0, 0, 10, enum_stat.Att_Damage, null, damageT.Magic, CanBeMissedAttack);   
 
@@ -114,11 +149,12 @@ public class RaingerLogic : BaseEnemyLogic
         bullet.transform.rotation = Quaternion.Euler(0, 0, angle);
 
         //Запускаем снаряд
-        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-        if (rb != null)
+        if (rb_proj != null)
         {
-            rb.linearVelocity = direction * sp_Project;
+            rb_proj.linearVelocity = direction * sp_Project;
         }
+        bull_log.StartProj();
+
     }
     public override void CreateCulling()
     {

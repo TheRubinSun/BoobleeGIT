@@ -12,12 +12,12 @@ public class BulletMob : Projectile_Logic
         if (collider.gameObject.layer == LayerManager.playerLayer)
         {
             GlobalData.Player.TakeDamage(damage, typeDamage, canBeWeapon.canBeMissed, effectBul);
-            Destroy(gameObject);
+            DestroyP();
         }
         //else if(collider.CompareTag("Wall"))
-        else if (collider.gameObject.layer == LayerManager.obstaclesLayer)
+        else if (((1 << collider.gameObject.layer) & LayerManager.obstaclesLayer) != 0)
         {
-            Destroy(gameObject);
+            DestroyP();
         }
     }
 }

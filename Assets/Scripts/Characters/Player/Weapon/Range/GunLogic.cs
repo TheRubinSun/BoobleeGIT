@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GunLogic : RangeWeaponLogic
@@ -22,15 +23,22 @@ public class GunLogic : RangeWeaponLogic
             audioSource_Shot.pitch = 1f + Random.Range(-pitchRange, pitchRange);
             audioSource_Shot.PlayOneShot(audioClips[0]); //Звук выстрела
         }
+        Rigidbody2D rigidbody2D;
+        proj_set = ProjectilePool.instance.GetPlayerProjectile(Projectile_pref, out projectile, out rigidbody2D) as PlayerProjectile;
+        //proj_set = projData.Logic as PlayerProjectile;
 
-        projectile = Instantiate(Projectile_pref, ShootPos);    //Создаем снаряд по префабу
-        projectile.transform.position += new Vector3(0, offsetProj);
-        proj_set = projectile.GetComponent<PlayerProjectile>();
+        projectile.transform.position = ShootPos.position + new Vector3(0, offsetProj);
+        projectile.SetActive(true);
+
+        //projectile = Instantiate(Projectile_pref, ShootPos);    //Создаем снаряд по префабу
+
+        //projectile.transform.position += new Vector3(0, offsetProj);
+        //proj_set = projectile.GetComponent<PlayerProjectile>();
         //proj_set.damage = Attack_Damage;//Назначем урон
         //proj_set.maxDistance = Attack_Range;
         proj_set.SetStats(attack_Speed_Projectile, throught, throughtDamagePrecent, rebound, Attack_Range, Attack_Damage, EffectAttack, damageType, canBeWeapon.canBeMissed);
 
-        projectile.transform.SetParent(transform.root); //Подять в иерархии объекта пули/стрелы
+        //projectile.transform.SetParent(transform.root); //Подять в иерархии объекта пули/стрелы
 
         if (animator != null && !ShootAfterAnim)
         {
@@ -48,7 +56,8 @@ public class GunLogic : RangeWeaponLogic
 
         float randomAngle = Random.Range(-spreadAngle, spreadAngle);
         direction = Quaternion.Euler(0, 0, randomAngle) * direction; //Добавляем разброс снарядам
-        proj_set.ShootVelocity(direction);
+        proj_set.ShootVelocity(direction, rigidbody2D);
+        proj_set.StartProj();
         //proj_set.effectBul = EffectAttack;
     }
 }

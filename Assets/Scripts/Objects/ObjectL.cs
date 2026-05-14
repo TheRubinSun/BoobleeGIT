@@ -22,6 +22,7 @@ public abstract class ObjectL : MonoBehaviour, ICullableObject
     [SerializeField] protected bool IsUpper;
     [SerializeField] protected SpriteRenderer[] sr_childs;
     [SerializeField] protected Animator[] anims_childs;
+    [SerializeField] protected TypeParticle customPartical;
     public abstract void CreateCulling();
     public abstract Vector2 GetPosition();
     public abstract void UpdateCulling(bool shouldBeVisible);
@@ -132,7 +133,7 @@ public abstract class ObjectLBroken : ObjectL
     protected virtual void PartiallyBreak()
     {
         CreateParticale();
-        if (!damage_color.Equals(default(Color32)))
+        if (damage_color.a > 0)
         {
             flashCol = StartCoroutine(FlashColor(damage_color, 0.1f));
         }
@@ -149,13 +150,26 @@ public abstract class ObjectLBroken : ObjectL
     }
     protected virtual void CreateParticale()
     {
-        if (!particalColor.Equals(default(Color32)))
+        GameObject prefab = null;
+
+        if (customPartical != TypeParticle.None)
         {
-            GameObject particleObj = Instantiate(ResourcesData.GetParticalPrefab(TypeParticle.Broken_Particle), transform.position, Quaternion.identity);
-            ParticleSystem particle = particleObj.GetComponent<ParticleSystem>();
+            prefab = ResourcesData.GetParticalPrefab(customPartical);
+        }
+        else if (particalColor.a > 0)
+        {
+            prefab = ResourcesData.GetParticalPrefab(TypeParticle.Broken_Particle);
+        }
+
+        if (prefab == null) return;
+
+        GameObject particleObj = Instantiate(prefab, transform.position, Quaternion.identity);
+        if(particleObj.TryGetComponent<ParticleSystem>(out ParticleSystem particle))
+        {
             var main = particle.main;
             main.startColor = new ParticleSystem.MinMaxGradient(particalColor);
         }
+
     }
     protected virtual IEnumerator CompletelyBreak()
     {

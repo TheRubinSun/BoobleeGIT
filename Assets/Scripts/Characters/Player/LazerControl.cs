@@ -22,6 +22,7 @@ public class LazerControl : MonoBehaviour
     public virtual void Init(RaycastHit2D[] hits,int hitCount, Vector2 start, Vector2 end, int _damage, float _attack_range, damageT _damageType, EffectData _effectData, int countPen, int countProj, bool _isDivideRay, int _layerMask, CanBeWeapon _canBeWeapon)
     {
         laserRend = GetComponent<LaserBatchRenderer>();
+        laserRend.ClearLasers();
 
         laserRend.LaserWidth = laserWidth;
         laserRend.TilingFactor = tilingFactor;
@@ -81,6 +82,7 @@ public class LazerControl : MonoBehaviour
                 return;
         }
         laserRend.AddLaser(originPos, endPos);
+        laserRend.ForceUpdateMesh();
     }
     protected IEnumerator ProcessOtherHits(Vector2 hitPoint)
     {
@@ -138,19 +140,23 @@ public class LazerControl : MonoBehaviour
     }
     private IEnumerator WaitForDivideRay(Vector2 hitPoint, float time)
     {
+        laserRend.ForceUpdateMesh();
         float waitTime = time / DIVIDE_WAIT_FACTOR;
         yield return new WaitForSeconds(waitTime);
 
         yield return ProcessOtherHits(hitPoint);
 
+        laserRend.RemoveLaser(0);
+        laserRend.ForceUpdateMesh();
+
         yield return new WaitForSeconds(waitTime);
 
-        laserRend.RemoveLaser(0);
     }
 
     protected IEnumerator DestroyAfterTime()
     {
         yield return new WaitForSeconds(timeLizer);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        //Destroy(gameObject);
     }
 }

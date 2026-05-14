@@ -17,6 +17,7 @@ public abstract class Projectile_Logic : MonoBehaviour
     [SerializeField] protected Sprite[] sprites;                      //Разные спрайты пуль, если нужны
     [SerializeField] protected TypeParticle typeParticle;             //Частицы, если нужны
 
+    protected Rigidbody2D rb2;
     protected SpriteRenderer spRen;
     protected Vector2 startPosition;   // Стартовая позиция снаряда
     private float sqrMaxDistance; // Кэшируем квадрат дистанции
@@ -25,7 +26,7 @@ public abstract class Projectile_Logic : MonoBehaviour
         if(sprites != null)
             spRen = GetComponent<SpriteRenderer>();
     }
-    protected virtual void Start()
+    public void StartProj()
     {
         if (sprites != null && sprites.Length > 0)
         {
@@ -49,13 +50,34 @@ public abstract class Projectile_Logic : MonoBehaviour
         rebound = _rebound;
         sqrMaxDistance = maxDistance * maxDistance;
     }
+    private void SetNull()
+    {
+        maxDistance = 0;
+        damage = 0;
+        effectBul = null;
+        typeDamage = 0;
+        canBeWeapon.canBeMissed = false;
+        projSpeed = 0;
+        throught = 0;
+        throughtDamagePrecent = 0;
+        rebound = 0;
+        sqrMaxDistance = 0;
+    }
     protected virtual Vector2 GetDirection(Vector2 pos_one, Vector2 pos_two) => pos_one - pos_two;
+
     public virtual void ShootVelocity(Vector2 direction)
     {
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        if (rb != null)
+        if (rb2 != null)
         {
-            rb.linearVelocity = direction * projSpeed;
+            rb2.linearVelocity = direction * projSpeed;
+        }
+    }
+    public virtual void ShootVelocity(Vector2 direction, Rigidbody2D rb)
+    {
+        rb2 = rb;
+        if (rb2 != null)
+        {
+            rb2.linearVelocity = direction * projSpeed;
         }
     }
 
@@ -71,7 +93,11 @@ public abstract class Projectile_Logic : MonoBehaviour
     protected virtual void DestroyP()
     {
         if (typeParticle != TypeParticle.None) Instantiate(ResourcesData.GetParticalPrefab(typeParticle), transform.position, Quaternion.identity);
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        CancelInvoke();
+        SetNull();
+        gameObject.SetActive(false);
+        //Debug.Log($"Удаление снаряда");
     }
 
 }

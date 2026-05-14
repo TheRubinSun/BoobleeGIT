@@ -44,7 +44,7 @@ public class LaserBatchRenderer : MonoBehaviour
     public void AddLaser(Vector3 start, Vector3 end)
     {
         lasers.Add((start, end));
-        UpdateMesh();
+        //UpdateMesh();
     }
 
     // Удалить лазер по индексу
@@ -56,7 +56,15 @@ public class LaserBatchRenderer : MonoBehaviour
         lasers.RemoveAt(index);
         UpdateMesh();
     }
-
+    public void ClearAll()
+    {
+        lasers.Clear();
+        UpdateMesh();
+    }
+    public void ForceUpdateMesh()
+    {
+        UpdateMesh();
+    }
     // Перестроить меш из текущего списка лазеров
     private void UpdateMesh()
     {

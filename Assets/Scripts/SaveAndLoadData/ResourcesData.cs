@@ -74,6 +74,7 @@ public class ResourcesData : MonoBehaviour
         effects[6] = Resources.Load<EffectData>("Effects/TrappedMin");
         effects[7] = Resources.Load<EffectData>("Effects/HealCooldown");
         effects[8] = Resources.Load<EffectData>("Effects/ManaHealCooldown");
+        
 
         hooks[0] = Resources.Load<GameObject>("Hooks/Hook_one");
 
@@ -88,7 +89,8 @@ public class ResourcesData : MonoBehaviour
         particles[8] = Resources.Load<GameObject>("Particals/Broken_Particle");
         particles[9] = Resources.Load<GameObject>("Particals/Shoot_resin");
         particles[10] = Resources.Load<GameObject>("Particals/Explosion_particle");
-        
+        particles[11] = Resources.Load<GameObject>("Particals/Electric_Particle");
+
         if (weapons["sword_gods_slayer"] == null)
             Debug.LogError("Не удалось загрузить префаб Sword_God_Pref!");
         if (weapons["gun_makarov"] == null)
@@ -162,7 +164,8 @@ public enum TypeParticle
     Bonefire_Particle,
     Broken_Particle,
     Shoot_resin,
-    Explosion_particle
+    Explosion_particle,
+    Electric_Particle
 }
 public enum TypeEffectName
 {
