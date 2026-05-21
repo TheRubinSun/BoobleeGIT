@@ -10,8 +10,10 @@ public class PlayerProjectile : Projectile_Logic
     private static ContactFilter2D filter;
     private static readonly Collider2D[] rebounds = new Collider2D[10];
     private static bool filterInitilized;
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         if(!filterInitilized)
         {
             filter.useLayerMask = true;

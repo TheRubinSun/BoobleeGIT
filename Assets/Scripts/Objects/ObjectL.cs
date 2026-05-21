@@ -93,6 +93,7 @@ public abstract class ObjectLBroken : ObjectL
         anim = GetComponent<Animator>();
         audioS = GetComponent<AudioSource>();
         myCollider = GetComponent<Collider2D>();
+        GetParticle();
     }
     protected virtual void Start()
     {
@@ -104,6 +105,18 @@ public abstract class ObjectLBroken : ObjectL
         CreateCulling();
         UpdateCulling(false);
         GlobalData.CullingManager.RegisterObject(this);
+    }
+    protected GameObject GetParticle()
+    {
+        if (customPartical != TypeParticle.None)
+        {
+            prefabParticle = ResourcesData.GetParticalPrefab(customPartical);
+        }
+        else if (particalColor.a > 0)
+        {
+            prefabParticle = ResourcesData.GetParticalPrefab(TypeParticle.Broken_Particle);
+        }
+        return prefabParticle;
     }
     protected virtual void AddDropItem()
     {
@@ -130,6 +143,8 @@ public abstract class ObjectLBroken : ObjectL
         
         DestroyObject();
     }
+    protected GameObject prefabParticle = null;
+
     protected virtual void PartiallyBreak()
     {
         CreateParticale();
@@ -150,21 +165,10 @@ public abstract class ObjectLBroken : ObjectL
     }
     protected virtual void CreateParticale()
     {
-        GameObject prefab = null;
+        if (prefabParticle == null && GetParticle() == null) return;
 
-        if (customPartical != TypeParticle.None)
-        {
-            prefab = ResourcesData.GetParticalPrefab(customPartical);
-        }
-        else if (particalColor.a > 0)
-        {
-            prefab = ResourcesData.GetParticalPrefab(TypeParticle.Broken_Particle);
-        }
-
-        if (prefab == null) return;
-
-        GameObject particleObj = Instantiate(prefab, transform.position, Quaternion.identity);
-        if(particleObj.TryGetComponent<ParticleSystem>(out ParticleSystem particle))
+        GameObject particleObj = Instantiate(prefabParticle, transform.position, Quaternion.identity);
+        if(particalColor.a > 0 && particleObj.TryGetComponent<ParticleSystem>(out ParticleSystem particle))
         {
             var main = particle.main;
             main.startColor = new ParticleSystem.MinMaxGradient(particalColor);

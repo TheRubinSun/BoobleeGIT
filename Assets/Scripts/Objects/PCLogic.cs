@@ -37,6 +37,7 @@ public class PCLogic : ObjectLBroken
         remainsHits -= count;
         int stageAfter = remainsHits / toNextStageAnim;
 
+        PartiallyBreak();
         if (remainsHits <= 0)
         {
             if (justSounds != null) justSounds.Stop();
@@ -60,7 +61,6 @@ public class PCLogic : ObjectLBroken
     protected IEnumerator WaitForSound(float delay)
     {
         yield return new WaitForSeconds(delay);
-        PartiallyBreak();
         brokenStage++;
         anim.SetInteger("broken_stage", brokenStage);
         DropItems();

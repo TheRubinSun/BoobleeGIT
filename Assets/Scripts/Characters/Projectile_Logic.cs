@@ -23,11 +23,16 @@ public abstract class Projectile_Logic : MonoBehaviour
     private float sqrMaxDistance; // Кэшируем квадрат дистанции
     protected virtual void Awake()
     {
-        if(sprites != null)
+        if(spRen == null)
             spRen = GetComponent<SpriteRenderer>();
     }
     public void StartProj()
     {
+        if (spRen == null)
+        {
+            //Debug.Log($"Get C");
+            spRen = GetComponent<SpriteRenderer>();
+        }
         if (sprites != null && sprites.Length > 0)
         {
             spRen.sprite = sprites[Random.Range(0, sprites.Length)];

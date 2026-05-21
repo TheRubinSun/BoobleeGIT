@@ -65,6 +65,7 @@ public class ProjectilePool : MonoBehaviour
         ProjectilePoolData newData = new ProjectilePoolData(newProj, newProj.GetComponent<Projectile_Logic>(), rb2);
         list.Add(newData);
 
+        //Debug.Log($"Создаем новую секцию | Name: {prefab.name} | Count: {use_pool.Count}");
         return newData.Logic;
     }
     public LazerControl GetLazer(Dictionary<string, List<IPoolData>> use_pool, Transform path, GameObject prefab, out GameObject newProj)
