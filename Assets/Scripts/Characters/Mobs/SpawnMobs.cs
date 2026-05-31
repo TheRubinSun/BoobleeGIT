@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,6 +15,7 @@ public class SpawnMobs : MonoBehaviour
     [SerializeField] Transform player;
     [SerializeField] GameObject[] mobs_prefab;
 
+    private List<PortalPool> portal_pools = new List<PortalPool>();
     private void Awake()
     {
         // Проверка на существование другого экземпляра
@@ -45,12 +48,38 @@ public class SpawnMobs : MonoBehaviour
             Start();
         }
     }
+    public PortalPool GetPortal(GameObject prefab, Vector2 pos)
+    {
+        GameObject portal_obj;
+        for (int i = 0; i < portal_pools.Count; i++)
+        {
+            if (!portal_pools[i].Obj.activeInHierarchy)
+            {
+                if (portal_pools[i].Transform == null)
+                    portal_pools[i].NewTrans();
+                NewPos(portal_pools[i].Transform, pos);
+                return portal_pools[i];
+            }
+        }
+        portal_obj = Instantiate(prefab, parent);
+        portal_obj.SetActive(false);
+        PortalPool newDamagePool = new PortalPool(portal_obj, portal_obj.GetComponent<PortalLogic>());
+        portal_pools.Add(newDamagePool);
+        return newDamagePool;
+    }
+    private void NewPos(Transform port, Vector2 newPos)
+    {
+        port.position = newPos;
+    }
     public void SpawnMobsBut(int id)
     {
         if (mobs_prefab[id] != null)
         {
-            GameObject mob = Instantiate(mobs_prefab[id], parent);
-            mob.transform.position = spawnpoint.position;
+            EnemyPoolData enemyPoolData = EnemyPool.instance.GetEnemy(mobs_prefab[id], spawnpoint.position);
+            enemyPoolData.Obj.SetActive(true);
+            enemyPoolData.Logic.StartEnemy();
+            //GameObject mob = Instantiate(mobs_prefab[id], parent);
+            //mob.transform.position = spawnpoint.position;
         }
         else
         {
@@ -85,7 +114,25 @@ public class SpawnMobs : MonoBehaviour
                 }
 
         }
-        GameObject portal = Instantiate(portalType, portals_pos[Random.Range(0, portals_pos.Length)]);
-        portal.GetComponent<PortalLogic>().CreateEnemy(prefEnemies, countsSpawn, time, parent);
+        // GameObject portal = Instantiate(portalType, portals_pos[Random.Range(0, portals_pos.Length)]);
+        PortalPool portal = GetPortal(portalType, portals_pos[Random.Range(0, portals_pos.Length)].position);
+        portal.Obj.SetActive(true);
+        portal.PortalLogic.CreateEnemy(prefEnemies, countsSpawn, time, parent);
+    }
+}
+public class PortalPool : IPoolData
+{
+    public GameObject Obj { get; private set; }
+    public Transform Transform { get; private set; }
+    public PortalLogic PortalLogic { get; private set; }
+    public PortalPool(GameObject obj, PortalLogic portalLogic)
+    {
+        Obj = obj;
+        Transform = obj.transform;
+        PortalLogic = portalLogic;
+    }
+    public void NewTrans()
+    {
+        Transform = Obj.transform;
     }
 }

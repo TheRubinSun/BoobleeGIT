@@ -16,12 +16,12 @@ public class RaingerLogic : BaseEnemyLogic
     [SerializeField]
     private Transform Shoot_point; //Точка выстрела
 
-    protected override void Start()
+    public override void StartEnemy()
     {
         spr_ren_ch = child_Obj.GetComponent<SpriteRenderer>();//Берем доч спрайт моба, если есть
         child_col = child_Obj.GetComponent<Collider2D>();
 
-        base.Start();
+        base.StartEnemy();
     }
     public override void SetTrapped(float time)
     {

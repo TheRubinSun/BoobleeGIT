@@ -9,7 +9,7 @@ public class CarLogic : BaseEnemyLogic
     [SerializeField] protected float Skill_speed;
     protected AudioSource moveSoundSource;
 
-    protected override void Start()
+    public override void StartEnemy()
     {
         moveSoundSource = this.AddComponent<AudioSource>();
         moveSoundSource.outputAudioMixerGroup = audioSource.outputAudioMixerGroup;
@@ -17,7 +17,7 @@ public class CarLogic : BaseEnemyLogic
         moveSoundSource.clip = moveSound;
         moveSoundSource.Play();
 
-        base.Start();
+        base.StartEnemy();
     }
     public override void MeleeAttack()
     {

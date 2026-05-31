@@ -1,12 +1,13 @@
 
-using TMPro;
-using UnityEngine;
-using System.Collections.Generic;
-using Unity.Collections;
-using System.IO;
 using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
+using TMPro;
+using Unity.Collections;
 using Unity.VisualScripting;
+using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 
 public class GameManager: MonoBehaviour 
@@ -14,11 +15,13 @@ public class GameManager: MonoBehaviour
     public static GameManager Instance;
     [SerializeField] GameObject CorpsePref;
     [SerializeField] GameObject AudioManager;
+    [SerializeField] Transform Corpse_parent;
     [SerializeField] AudioClip[] musics;
     [SerializeField] private GameObject clouds;
     public GameObject GetClouds => clouds;
 
     public Transform mobsLayer;
+    public Transform corpseLayer;
     private AudioSource music_source;
 
     public Transform dropParent;
@@ -42,6 +45,8 @@ public class GameManager: MonoBehaviour
     private bool playedBossMusic;
     private EffectsManager playerEffects;
     private Coroutine musicRoutine;
+
+    private Dictionary<string, List<CorpsePool>> corpsePool = new Dictionary<string, List<CorpsePool>>();
     private void Awake()
     {
         GlobalData.LoadedGame = false;
@@ -240,30 +245,70 @@ public class GameManager: MonoBehaviour
         }
 
     }
+    private CorpsePool GetCorpse(GameObject corpse_prefab)
+    {
+        GameObject corpse;
 
+        string nameCorpse = corpse_prefab.name;
+        if (!corpsePool.ContainsKey(nameCorpse))
+            corpsePool[nameCorpse] = new List<CorpsePool>();
+
+        List<CorpsePool> pool = corpsePool[nameCorpse];
+        for (int i = 0; i < pool.Count; i++)
+        {
+            if (!pool[i].Obj.activeInHierarchy)
+            {
+                CorpsePool corpseD = (CorpsePool)pool[i];
+                corpse = corpseD.Obj;
+
+                if (corpseD.Transform == null)
+                    corpseD.NewTrans(corpse.transform);
+
+                //NewPos(corpseD.Transform, newPos);
+                return corpseD;
+            }
+        }
+        corpse = Instantiate(corpse_prefab, Corpse_parent);
+        CorpsePool newCorpse = new CorpsePool(corpse);
+        corpse.tag = CorpsePref.tag;
+        //NewPos(newCorpse.Transform, newPos);
+        pool.Add(newCorpse);
+
+        return newCorpse;
+    }
+    private void NewPos(Transform corpsePos, Vector2 newPos)
+    {
+        corpsePos.position = newPos;
+    }
     private IEnumerator SpawnCorpse(Transform enemy, BaseEnemyLogic mob_logic, bool destroyCorpse)
     {
         //Создаем труп
-        GameObject corpseEnemy = Instantiate(CorpsePref, mob_logic.transform.parent);
-        corpseEnemy.transform.localScale = new Vector3(enemy.localScale.x, enemy.localScale.y, enemy.localScale.z);
+        //GameObject corpseEnemy = Instantiate(CorpsePref, mob_logic.transform.parent);
+        CorpsePool corpseEnemy = GetCorpse(CorpsePref);
+        corpseEnemy.Obj.SetActive(true);
+        corpseEnemy.Logic.StartCorpse();
+
+        corpseEnemy.Transform.localScale = new Vector3(enemy.localScale.x, enemy.localScale.y, enemy.localScale.z);
         //Назначаем позицию
-        corpseEnemy.transform.position = enemy.transform.position;
+        corpseEnemy.Transform.position = enemy.transform.position;
 
         AudioClip die_sound = null;
         //Звук
         if (mob_logic.die_sounds.Length > 0)
         {
             die_sound = mob_logic.die_sounds[Random.Range(0, mob_logic.die_sounds.Length)];
-            corpseEnemy.GetComponent<AudioSource>().PlayOneShot(die_sound); //Звук смерти моба
+            if (corpseEnemy.AudioS == null)
+                corpseEnemy.AudioS = corpseEnemy.Obj.GetComponent<AudioSource>();
+            corpseEnemy.AudioS.PlayOneShot(die_sound); //Звук смерти моба
         }
 
 
         //Спрайт
-        corpseEnemy.GetComponent<SpriteRenderer>().flipX = enemy.GetComponent<SpriteRenderer>().flipX; //Отразить  как нужно
+        corpseEnemy.SpriteRenderer.flipX = enemy.GetComponent<SpriteRenderer>().flipX; //Отразить  как нужно
 
 
         //Анимация
-        Animator corpseAnim = corpseEnemy.GetComponent<Animator>();//Берем аниматор трупа
+        Animator corpseAnim = corpseEnemy.Animator;//Берем аниматор трупа
         Animator enemyAnim = mob_logic.GetAnimator(); //Берем аниматор моба
         CopyAnim(enemyAnim, corpseAnim);
 
@@ -278,19 +323,21 @@ public class GameManager: MonoBehaviour
         {
             Debug.LogWarning("Не уничтожать труп");
             if (mob_logic.typeMob == TypeMob.Technology)
-                corpseEnemy.tag = "Corpse_Tech";
+                corpseEnemy.Obj.tag = "Corpse_Tech";
             else
-                corpseEnemy.tag = "Corpse_Mag";
-            CorpseSetting corpseSetting = corpseEnemy.GetComponent<CorpseSetting>();
+                corpseEnemy.Obj.tag = "Corpse_Mag";
+            CorpseSetting corpseSetting = corpseEnemy.Logic;
             corpseSetting.NameKey = mob_logic.Name;
         }
         else
         {
-            StartCoroutine(WaitToDie(corpseEnemy, die_sound.length + 0.4f));
+            StartCoroutine(WaitToDie(corpseEnemy.Obj, die_sound.length + 0.4f));
         }
         yield return null;
 
-        Destroy(mob_logic.gameObject);
+        //Destroy(mob_logic.gameObject);
+        GlobalData.CullingManager.UnregisterObject(mob_logic);
+        mob_logic.gameObject.SetActive(false);
     }
     private void CopyAnim(Animator from, Animator to)
     {
@@ -301,7 +348,8 @@ public class GameManager: MonoBehaviour
     private IEnumerator WaitToDie(GameObject corpse, float time)
     {
         yield return new WaitForSeconds(time);
-        Destroy(corpse);
+        corpse.SetActive(false);
+        //Destroy(corpse);
     }
     public async Task SaveAllData()
     {
@@ -478,6 +526,28 @@ public class GameManager: MonoBehaviour
     public void SpawnMobs()
     {
 
+    }
+}
+public class CorpsePool : IPoolData
+{
+    public GameObject Obj { get; private set; }
+    public Transform Transform { get; private set; }
+    public CorpseSetting Logic { get; private set; }
+    public AudioSource AudioS { get; set; }
+    public Animator Animator { get; private set; }
+    public SpriteRenderer SpriteRenderer { get; private set; }
+    public CorpsePool(GameObject obj)
+    {
+        Obj = obj;
+        Transform = obj.transform;
+        Logic = obj.GetComponent<CorpseSetting>();
+        AudioS = obj.GetComponent<AudioSource>();
+        Animator = obj.GetComponent<Animator>();
+        SpriteRenderer = obj.GetComponent<SpriteRenderer>();
+    }
+    public void NewTrans(Transform enemyTrans)
+    {
+        Transform = enemyTrans;
     }
 }
 

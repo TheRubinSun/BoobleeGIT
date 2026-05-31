@@ -1,4 +1,5 @@
 using System.Collections;
+using NUnit.Framework;
 using UnityEngine;
 
 public class PortalLogic : MonoBehaviour 
@@ -18,6 +19,7 @@ public class PortalLogic : MonoBehaviour
 
     private float time;
     private Transform parent;
+
     public void Start()
     {
         anim = GetComponent<Animator>();
@@ -35,6 +37,9 @@ public class PortalLogic : MonoBehaviour
         countSpawn = dataPortal.endRandomCountSpawn;
         time = dataPortal.timeDurationSpawn;
         parent = _parent;
+
+        if(anim_child_world.gameObject != null)
+            anim_child_world.gameObject.SetActive(true);
     }
     public void Event_RunningPortalForSolo()
     {
@@ -62,18 +67,25 @@ public class PortalLogic : MonoBehaviour
     }
     public void Event_DestroyPortal()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        //Destroy(gameObject);
     }
 
-    private IEnumerator SpawnEnemiesOverTime(GameObject mob, int countSpawn, float time, Transform parent)
+    private IEnumerator SpawnEnemiesOverTime(GameObject enemy_pref, int countSpawn, float time, Transform parent)
     {
         float timeBeetweenSpawn = time / countSpawn;
         for (int i = 0; i < countSpawn; i++)
         {
-            Instantiate(mob, spawnPoint.position, Quaternion.identity, parent);
+            EnemyPoolData enemyPoolData = EnemyPool.instance.GetEnemy(enemy_pref, spawnPoint.position);
+            enemyPoolData.Obj.SetActive(true);
+            enemyPoolData.Logic.StartEnemy();
+
+
+            //Instantiate(enemy_pref, spawnPoint.position, Quaternion.identity, parent);
             yield return new WaitForSeconds(timeBeetweenSpawn);
         }
-        Destroy(anim_child_world.gameObject);
+        anim_child_world.gameObject.SetActive(false);
+        //Destroy(anim_child_world.gameObject);
         anim.SetTrigger("DestPort");
     }
     private void AddWorldAnim()
@@ -82,4 +94,5 @@ public class PortalLogic : MonoBehaviour
     }
 
 }
+
 

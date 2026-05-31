@@ -36,7 +36,7 @@ public class ResMinControl : MinionControl
         audioSource_Work.outputAudioMixerGroup = minionWorkGroup;
         audioSource_Work.pitch = pitchWork;
 
-        TargetParent = GlobalData.GameManager.mobsLayer;
+        TargetParent = GlobalData.GameManager.corpseLayer;
         base.Start();
 
         rotate_anim = Rotate_Obj.GetComponent<Animator>();
@@ -153,7 +153,10 @@ public class ResMinControl : MinionControl
         AnimHandMove(dropItems.Count > 0);
 
         VisualItems();
-        Destroy(target.parent.gameObject);
+        //Destroy(target.parent.gameObject);
+        target.parent.gameObject.SetActive(false);
+        GlobalData.CullingManager.UnregisterObject(target.parent.gameObject.GetComponent<CorpseSetting>());
+
         MoveToHome(MinionSlotParent.transform);
     }
     protected override void AttachToPlayer() //Прикрепление к игроку

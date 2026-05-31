@@ -73,9 +73,9 @@ public class MulitacBoss : BossLogic
 
         uper_parth_anim.SetBool("HaveEyes", true);
     }
-    protected override void Start()
+    public override void StartEnemy()
     {
-        base.Start();
+        base.StartEnemy();
 
         last_action = ActionMultitac.ComebackEyes;
         mob_trans = mob_object.transform;

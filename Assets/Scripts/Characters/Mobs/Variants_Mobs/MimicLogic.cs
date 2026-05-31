@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class MimicLogic : BaseEnemyLogic
 {
-    protected override void Start()
+    public override void StartEnemy()
     {
-        base.Start();
+        base.StartEnemy();
     }
     public override void MeleeAttack()
     {

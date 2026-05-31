@@ -12,9 +12,9 @@ public class BossLogic : BaseEnemyLogic
     [SerializeField] private AudioClip bossMusic;
 
     public AudioClip GetBossMusic() => bossMusic;
-    protected override void Start()
+    public override void StartEnemy()
     {
-        base.Start();
+        base.StartEnemy();
         OnBossAdd?.Invoke(this);
     }
     public override void Attack(float distanceToPlayer)

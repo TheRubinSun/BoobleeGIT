@@ -31,7 +31,7 @@ public class MeleWeaponLogic : WeaponControl
         hitObjAndEnemies.Add(collision);
 
         int layer = collision.gameObject.layer;
-        if (((1 << layer) & LayerManager.allTrigger) != 0) //Столкновение в врагов или объектом
+        if (((1 << layer) & LayerManager.allTriggerObject) != 0) //Столкновение в врагов или объектом
         {
             ObjectLBroken objectL = collision.gameObject.GetComponent<ObjectLBroken>();
             if (objectL != null)
@@ -41,6 +41,7 @@ public class MeleWeaponLogic : WeaponControl
         }
         else if (layer == LayerManager.enemyLayer)
         {
+
             BaseEnemyLogic enemy = collision.GetComponentInParent<BaseEnemyLogic>();
             //if (enemy == null)
             //    enemy = collision.transform.parent.GetComponent<BaseEnemyLogic>();

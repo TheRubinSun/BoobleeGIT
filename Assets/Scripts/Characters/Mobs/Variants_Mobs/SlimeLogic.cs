@@ -29,7 +29,7 @@ public class SlimeLogic : BaseEnemyLogic, IItemMove
         
         posionNewEff = ResourcesData.GetEffectsPrefab(idPosion);
     }
-    protected override void Start()
+    public override void StartEnemy()
     {
         DropItemEnemy[] nameKeysItem = ItemDropEnemy.enemyAndHisDropItems[Name];
 
@@ -45,7 +45,7 @@ public class SlimeLogic : BaseEnemyLogic, IItemMove
         sr_item_two.sortingOrder = spr_ren.sortingOrder - 1;
         sr_item_three.sortingOrder = spr_ren.sortingOrder - 1;
 
-        base.Start();
+        base.StartEnemy();
 
     }
     public override void UpdateSortingOrder()

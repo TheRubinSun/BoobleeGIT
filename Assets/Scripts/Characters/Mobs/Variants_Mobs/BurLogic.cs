@@ -8,7 +8,7 @@ public class BurLogic : BaseEnemyLogic
 
     protected AudioSource moveSoundSource;
 
-    protected override void Start()
+    public override void StartEnemy()
     {
         moveSoundSource = this.AddComponent<AudioSource>();
         moveSoundSource.outputAudioMixerGroup = audioSource.outputAudioMixerGroup;
@@ -16,7 +16,7 @@ public class BurLogic : BaseEnemyLogic
         moveSoundSource.clip = moveSound;
         moveSoundSource.Play();
 
-        base.Start();
+        base.StartEnemy();
     }
     public override void MeleeAttack()
     {

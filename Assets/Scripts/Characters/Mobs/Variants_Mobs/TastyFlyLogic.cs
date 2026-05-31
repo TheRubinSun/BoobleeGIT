@@ -9,11 +9,11 @@ public class TastyFlyLogic : BaseEnemyLogic
     [SerializeField] protected GameObject shadow;
     protected Animator shadow_anim;
     protected SpriteRenderer shadow_sprite;
-    protected override void Start()
+    public override void StartEnemy()
     {
         shadow_anim = shadow.GetComponent<Animator>();
         shadow_sprite = shadow.GetComponent<SpriteRenderer>();
-        base.Start();
+        base.StartEnemy();
     }
     protected override void LoadParametrs()
     {  

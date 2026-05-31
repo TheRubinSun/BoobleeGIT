@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -23,7 +24,7 @@ public class CorpseSetting : MonoBehaviour, ICullableObject
         spr_ren = GetComponent<SpriteRenderer>();
         animator_main = GetComponent<Animator>();
     }
-    public void Start()
+    public void StartCorpse()
     {
         isBusy = false;
 

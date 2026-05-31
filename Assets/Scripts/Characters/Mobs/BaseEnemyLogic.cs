@@ -21,7 +21,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     protected BuffsStats bf_stats;
 
     //Состояния
-    protected bool IsDead { get; set; }
+    protected bool IsDead { get; set; } = true;
     public bool IsFly;
     protected Color32 original_color; //Цвет
     public float runBackRangePrecent = 0.6f;
@@ -79,6 +79,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     [SerializeField] protected bool IsUpper;
 
     protected Coroutine flashCol;
+    protected Color32 spawnColor = new Color32(200, 150, 250, 255);
     protected int finalTakeDamage;
 
     protected Pathfinding pathfinding;
@@ -86,10 +87,12 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     protected NodeP lastNodePlayer;
     protected NodeP lastMyNode;
     public bool DisplayPathTraking;
+
+    private List<DamageValuePool> damageValuePool = new List<DamageValuePool>();
     protected virtual void Awake()
     {
         bf_stats = new BuffsStats();
-        LoadParametrs();//Загружаем параметры моба
+        //LoadParametrs();//Загружаем параметры моба
 
         audioSource = GetComponent<AudioSource>(); //Берем звук 
         Get2DPhysics();
@@ -97,35 +100,52 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
         animator_main = mob_object.GetComponent<Animator>();
 
         layerMob = gameObject.layer;
+        original_color = spr_ren.color;
 
         if (HPBar != null)
         {
             healthBar = new HealthBar2D(HPBar.transform.GetChild(0).gameObject, HPBar.transform.GetChild(1).gameObject);
         }
+
+        LoadParametrs();
     }
-    protected virtual void Start()
+    public virtual void StartEnemy()
     {
+        AllDamageOff();
+        if(IsDead) LoadParametrs();//Загружаем параметры моба // С проверкой, если он уже в пуле(мертвый) загружать иначе может загрсить данный впервые и не нужно повторно
+
+        //Debug.Log($"Spawn Mob HP: {enum_stat.Cur_Hp} ");
+
         if (player == null && GlobalData.GameManager.PlayerModel != null)
             player = GlobalData.GameManager.PlayerModel;
 
         pathfinding = Pathfinding.instance;
 
-        original_color = spr_ren.color;
+
         moveDirection = (player.position - CenterObject.position).normalized; //Вычисление направление к игроку
         UpdateSortingOrder();
         CreateCulling();
         UpdateCulling(false);
         GlobalData.CullingManager.RegisterObject(this);
 
+        if (healthBar != null)
+        {
+            healthBar.UpdateHealthBar(enum_stat.Cur_Hp, enum_stat.Max_Hp);
+        }
+        StartCoroutine(FlashColor(spawnColor, 0.1f));
         if (abillities.Length > 0) StartCoroutine(LoadAbilities());
     }
     protected virtual void LoadParametrs()
     {
-        mob = EnemyList.mobs[IdMobs];
-        Name = mob.NameKey;
-        typeMob = mob.TypeMob;
+        if (enum_stat == null)
+        {
+            enum_stat = new EnemyStats();
+            mob = EnemyList.mobs[IdMobs];
+            Name = mob.NameKey;
+            typeMob = mob.TypeMob;
+        }
 
-        enum_stat = new EnemyStats();
+        IsDead = false;
         enum_stat.SetBuff(bf_stats);
         enum_stat.Base_Max_Hp = mob.Hp;
         enum_stat.Cur_Hp = mob.Hp;
@@ -216,7 +236,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
             }
         }
         Color32 colorDamage = Color.white;
-
+        //Debug.Log($"Take damage {damage} remain HP: {enum_stat.Cur_Hp}");
         switch (typeAttack)
         {
             case damageT.Physical:
@@ -263,11 +283,14 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     }
     protected IEnumerator DisplayDamage(int damage, float timeDuration, Color32 newColor)
     {
-        GameObject damageVal = Instantiate(damageValuePref, EffectsObj);
-        TextMeshPro textComp = damageVal.GetComponent<TextMeshPro>();
+
+        DamageValuePool damagePool = GetDamageValue();
+        damagePool.Obj.SetActive(true);
+
+        TextMeshPro textComp = damagePool.TextMeshPro;
         textComp.text = damage.ToString();
 
-        Vector2 startPos = damageVal.transform.position;
+        Vector2 startPos = damagePool.Transform.position;
         Vector2 endPos = startPos + new Vector2(0.1f, 0.4f);
         textComp.color = newColor;
         Color startColor = textComp.color;
@@ -284,7 +307,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
             {
                 float t = elapsedTime / timeDuration;
 
-                damageVal.transform.position = Vector2.Lerp(startPos, endPos, t);
+                damagePool.Transform.position = Vector2.Lerp(startPos, endPos, t);
                 startColor.a = Mathf.Lerp(1f, 0f, t);
                 textComp.color = startColor;
                 nextUpdateTime += updateInterval;
@@ -293,7 +316,23 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
             yield return null;
         }
 
-        Destroy(damageVal);
+        damagePool.Obj.SetActive(false);
+    }
+    public DamageValuePool GetDamageValue()
+    {
+        GameObject obj;
+        for (int i = 0; i < damageValuePool.Count; i++)
+        {
+            if (!damageValuePool[i].Obj.activeInHierarchy)
+            {
+                return damageValuePool[i];
+            }
+        }
+        obj = Instantiate(damageValuePref, EffectsObj);
+        obj.SetActive(false);
+        DamageValuePool newDamagePool = new DamageValuePool(obj, obj.GetComponent<TextMeshPro>());
+        damageValuePool.Add(newDamagePool);
+        return newDamagePool;
     }
     public void TakeHeal(int heal)
     {
@@ -325,9 +364,18 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
         enum_stat.Mov_Speed = 0;
 
         StopAllCoroutines();
+        AllDamageOff();
+
         OnEnemyDeath?.Invoke(this);
     }
-
+    private void AllDamageOff()
+    {
+        for(int i = 0; i < damageValuePool.Count; i++)
+        {
+            if(damageValuePool[i].Obj.activeSelf)
+                damageValuePool[i].Obj.SetActive(false);
+        }
+    }
     ///////////////////Controle
 
     protected int fixedUpdateCounter = 0;
@@ -625,7 +673,8 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     public Vector2 GetPosition() => transform.position;
     public virtual void CreateCulling()
     {
-        culling = new CullingObject(spr_ren, animator_main, new AudioSource[] {audioSource});
+        if(culling == null)
+            culling = new CullingObject(spr_ren, animator_main, new AudioSource[] {audioSource});
     }
     private void OnDisable()
     {
@@ -658,4 +707,19 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
         }
     }
 }
-
+public class DamageValuePool : IPoolData
+{
+    public GameObject Obj { get; private set; }
+    public TextMeshPro TextMeshPro { get; private set; }
+    public Transform Transform { get; private set; }
+    public DamageValuePool(GameObject obj, TextMeshPro textPro)
+    {
+        Obj = obj;
+        TextMeshPro = textPro;
+        Transform = obj.transform;
+    }
+    public void NewTrans(Transform enemyTrans)
+    {
+        Transform = enemyTrans;
+    }
+}
