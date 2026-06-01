@@ -90,7 +90,8 @@ public class MulitacBoss : BossLogic
             return;
         AudioClip temp = sounds[Random.Range(0, sounds.Length)];
         calls_audio.pitch = Random.Range(minPitch, maxPitch);
-        calls_audio.PlayOneShot(temp);
+        //calls_audio.PlayOneShot(temp);
+        TryPlaySound(temp, calls_audio);
     }
 
     protected override void Update()

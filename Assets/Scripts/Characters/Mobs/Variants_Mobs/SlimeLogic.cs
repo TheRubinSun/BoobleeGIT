@@ -199,7 +199,8 @@ public class SlimeLogic : BaseEnemyLogic, IItemMove
 
         //audioSource.volume = attack_volume;
         audioSource.Stop();
-        audioSource.PlayOneShot(attack_sounds[UnityEngine.Random.Range(0, attack_sounds.Length)]); //Звук выстрела
+        //audioSource.PlayOneShot(attack_sounds[UnityEngine.Random.Range(0, attack_sounds.Length)]); //Звук выстрела
+        TryPlaySound(attack_sounds[UnityEngine.Random.Range(0, attack_sounds.Length)]);
 
 
         //Стреляет из определенной точки или из центра моба
@@ -233,11 +234,15 @@ public class SlimeLogic : BaseEnemyLogic, IItemMove
     }
     public override void MeleeAttack()
     {
-        Debug.Log("Аттака");
-        //audioSource.volume = attack_volume;
-        audioSource.Stop();
-        audioSource.PlayOneShot(attack_sounds[UnityEngine.Random.Range(0, attack_sounds.Length)]); //Звук выстрела
-        GlobalData.Player.TakeDamage(enum_stat.Att_Damage, damageT.Magic, true, posionNewEff);
+        PathOfAttack(enum_stat.Att_Damage, damageT.Magic, true, posionNewEff);
+
+
+        //Debug.Log("Аттака");
+        ////audioSource.volume = attack_volume;
+        //audioSource.Stop();
+        ////audioSource.PlayOneShot(attack_sounds[UnityEngine.Random.Range(0, attack_sounds.Length)]); //Звук выстрела
+        //TryPlaySound(attack_sounds[UnityEngine.Random.Range(0, attack_sounds.Length)]);
+        //GlobalData.Player.TakeDamage(enum_stat.Att_Damage, damageT.Magic, true, posionNewEff);
     }
     public void SetItemsPosIdle(int frame)
     {

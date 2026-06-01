@@ -13,19 +13,22 @@ public class BurLogic : BaseEnemyLogic
         moveSoundSource = this.AddComponent<AudioSource>();
         moveSoundSource.outputAudioMixerGroup = audioSource.outputAudioMixerGroup;
         moveSoundSource.loop = true;
-        moveSoundSource.clip = moveSound;
-        moveSoundSource.Play();
+        //moveSoundSource.clip = moveSound;
+        //moveSoundSource.Play();
+        TryPlaySound(moveSound, moveSoundSource);
 
         base.StartEnemy();
     }
     public override void MeleeAttack()
     {
-        if (attack_sounds != null && attack_sounds.Length > 0)
-        {
-            audioSource.PlayOneShot(attack_sounds[UnityEngine.Random.Range(0, attack_sounds.Length)]); //Звук выстрела
-        }
+        PathOfAttack(enum_stat.Att_Damage, damageT.Physical, true);
+        //if (attack_sounds != null && attack_sounds.Length > 0)
+        //{
+        //    //audioSource.PlayOneShot(attack_sounds[UnityEngine.Random.Range(0, attack_sounds.Length)]); //Звук выстрела
+        //    TryPlaySound(attack_sounds[UnityEngine.Random.Range(0, attack_sounds.Length)]);
+        //}
 
-        GlobalData.Player.TakeDamage(enum_stat.Att_Damage, damageT.Physical, true);
+        //GlobalData.Player.TakeDamage(enum_stat.Att_Damage, damageT.Physical, true);
     }
     protected override void FlipfaceChild(bool shouldFaceLeft)
     {

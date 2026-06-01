@@ -203,6 +203,44 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
         // логика применени€
         yield return null;
     }
+    protected void TryPlaySound(AudioClip clip, AudioSource aS = null)
+    {
+        if (aS == null) aS = audioSource;
+        if (clip == null || aS == null) return;
+
+        if (AudioManager.Instance != null && AudioManager.Instance.CanPlaySound(clip))
+            StartCoroutine(PlaySoundRoutine(clip, aS));
+    }
+    protected IEnumerator PlaySoundRoutine(AudioClip clip, AudioSource aS = null)
+    {
+        // «апоминаем менеджер на случай, если моб будет уничтожен во врем€ проигрывани€
+        AudioManager manager = AudioManager.Instance;
+
+        if(manager != null)
+            AudioManager.Instance.RegisterSoundStart(clip);
+
+        if(aS != null)
+        {
+            aS.clip = clip;
+            aS.Play();
+        }
+
+        yield return new WaitForSeconds(clip.length);
+
+        if (manager != null)
+            AudioManager.Instance.RegisterSoundEnd(clip);
+    }
+    protected void OnDisableAudio()
+    {
+        if(audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Stop();
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.RegisterSoundEnd(audioSource.clip);
+            }
+        }
+    }
     public virtual void UpdateSortingOrder()
     {
         if (!isVisibleNow) return;
@@ -223,7 +261,12 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
         audioSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f);
 
         if(player_touch_sounds.Length != 0)
-            audioSource.PlayOneShot(player_touch_sounds[UnityEngine.Random.Range(0, player_touch_sounds.Length)]);
+        {
+            //audioSource.PlayOneShot(player_touch_sounds[UnityEngine.Random.Range(0, player_touch_sounds.Length)]);
+            TryPlaySound(player_touch_sounds[UnityEngine.Random.Range(0, player_touch_sounds.Length)]);
+        }
+
+
 
         audioSource.pitch = 1f;
 
@@ -365,6 +408,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
 
         StopAllCoroutines();
         AllDamageOff();
+        OnDisableAudio();
 
         OnEnemyDeath?.Invoke(this);
     }
@@ -661,6 +705,15 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     }
     public virtual void RangeAttack() {; }
     public virtual void MeleeAttack() {; }
+    protected virtual void PathOfAttack(int damage, damageT typeDamage, bool canMiss, EffectData effect = null)
+    {
+        if (attack_sounds != null && attack_sounds.Length > 0)
+        {
+            TryPlaySound(attack_sounds[UnityEngine.Random.Range(0, attack_sounds.Length)]);
+        }
+
+        GlobalData.Player.TakeDamage(damage, typeDamage, canMiss, effect);
+    }
 
     public virtual Animator GetAnimator()
     {

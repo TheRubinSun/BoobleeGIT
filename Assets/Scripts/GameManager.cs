@@ -7,6 +7,7 @@ using TMPro;
 using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 using static UnityEngine.GraphicsBuffer;
 
 
@@ -14,7 +15,7 @@ public class GameManager: MonoBehaviour
 {
     public static GameManager Instance;
     [SerializeField] GameObject CorpsePref;
-    [SerializeField] GameObject AudioManager;
+    [SerializeField] GameObject MusicManager;
     [SerializeField] Transform Corpse_parent;
     [SerializeField] AudioClip[] musics;
     [SerializeField] private GameObject clouds;
@@ -71,7 +72,7 @@ public class GameManager: MonoBehaviour
 
         playerEffects = GlobalData.Player.GetComponent<EffectsManager>();
 
-        music_source = AudioManager.GetComponent<AudioSource>();
+        music_source = MusicManager.GetComponent<AudioSource>();
         music_source.volume = GlobalData.VOLUME_MUSICS;
         music_source.loop = true;
         music_source.clip = musics[Random.Range(0, musics.Length)];
@@ -226,6 +227,7 @@ public class GameManager: MonoBehaviour
             StopCoroutine(musicRoutine);
         musicRoutine = StartCoroutine(FadeAndPlay(clip, startTime));
     }
+
     private void HandleBossDie(BossLogic bossLogic)
     {
         countBosses--;
@@ -299,7 +301,8 @@ public class GameManager: MonoBehaviour
             die_sound = mob_logic.die_sounds[Random.Range(0, mob_logic.die_sounds.Length)];
             if (corpseEnemy.AudioS == null)
                 corpseEnemy.AudioS = corpseEnemy.Obj.GetComponent<AudioSource>();
-            corpseEnemy.AudioS.PlayOneShot(die_sound); //Звук смерти моба
+            TryPlaySound(die_sound, corpseEnemy.AudioS); //Звук смерти моба
+            //corpseEnemy.AudioS.PlayOneShot(die_sound); //Звук смерти моба
         }
 
 
@@ -331,7 +334,7 @@ public class GameManager: MonoBehaviour
         }
         else
         {
-            StartCoroutine(WaitToDie(corpseEnemy.Obj, die_sound.length + 0.4f));
+            StartCoroutine(WaitToDie(corpseEnemy.Obj, die_sound.length + 0.4f, corpseEnemy.AudioS));
         }
         yield return null;
 
@@ -345,11 +348,39 @@ public class GameManager: MonoBehaviour
         to.fireEvents = false;  // Выключает все Animation Events
         to.SetTrigger("Death"); // Включаем анимацию смерти
     }
-    private IEnumerator WaitToDie(GameObject corpse, float time)
+    private IEnumerator WaitToDie(GameObject corpse, float time, AudioSource AudioS)
     {
         yield return new WaitForSeconds(time);
+        OnDisableAudio(AudioS);
         corpse.SetActive(false);
         //Destroy(corpse);
+    }
+    protected void TryPlaySound(AudioClip clip, AudioSource audioSource)
+    {
+        if (clip == null || audioSource == null) return;
+
+        if (AudioManager.Instance != null && AudioManager.Instance.CanPlaySound(clip))
+            StartCoroutine(PlaySoundRoutine(clip, audioSource));
+    }
+    protected IEnumerator PlaySoundRoutine(AudioClip clip, AudioSource audioSource)
+    {
+        AudioManager.Instance.RegisterSoundStart(clip);
+        audioSource.clip = clip;
+        audioSource.Play();
+        yield return new WaitForSeconds(clip.length);
+
+        AudioManager.Instance.RegisterSoundEnd(clip);
+    }
+    protected void OnDisableAudio(AudioSource audioSource)
+    {
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Stop();
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.RegisterSoundEnd(audioSource.clip);
+            }
+        }
     }
     public async Task SaveAllData()
     {
