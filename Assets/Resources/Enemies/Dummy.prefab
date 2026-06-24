@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1750815974412835360}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.275, z: 0}
+  m_LocalPosition: {x: 0, y: 0.411, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -325,6 +325,9 @@ MonoBehaviour:
   abillities: []
   IsUpper: 0
   DisplayPathTraking: 0
+  showAdvancedSettings: 0
+  defence: 0
+  speed: 0
   isToPath: 0
   textDPS: {fileID: 2509148606658024321}
 --- !u!50 &1491836216295525892

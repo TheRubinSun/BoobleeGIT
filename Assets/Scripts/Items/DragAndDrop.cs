@@ -54,25 +54,37 @@ public class DragAndDrop:MonoBehaviour
         else
         {
             //if (oldSlot.SlotObj.CompareTag("ShopSlot")) return; //Не дать возможность перекладывать от торговца в инвентарь игрока
-
             newSlot = GlobalData.Inventory.GetSlot(new SlotRequest { index = numbSlot }); //Сохранем значения слота 
-            if (oldSlot != null && newSlot.Item.NameKey != "item_none" && oldSlot.SlotObj.CompareTag("SlotEquip")) //Если не пустой и не экипировка
+            if (oldSlot != null && newSlot.Item.NameKey != "item_none") //Если не пустой и это экипировка
             {
-                if (oldSlot.itemFilter == newSlot.Item.TypeItem) //Если из слота оружия поменять с оружием из инвенторя
+                if(oldSlot.SlotObj.CompareTag("SlotEquip"))
                 {
-                    GlobalData.Inventory.SwapSlots(oldSlot, tempSlot); //Меняем местами слоты
-                    GlobalData.Inventory.SwapSlots(newSlot, oldSlot); //Меняем местами слоты
-                    DragSuccess();
-                    return;
+                    //Debug.Log($"{tempSlot.Item.Name} tempSlot.itemFilter {tempSlot.itemFilter}" );
+                    //Debug.Log($"{newSlot.Item.Name} newSlot.Item.TypeItem {newSlot.Item.TypeItem} ");
+                    //Debug.Log($"{oldSlot.Item.Name} oldSlot.itemFilter {oldSlot.itemFilter} ");
+
+                    if (oldSlot.itemFilter == newSlot.Item.TypeItem) //Если из слота оружия поменять с оружием из инвенторя
+                    {
+                        GlobalData.Inventory.SwapSlots(oldSlot, tempSlot); //Меняем местами слоты
+                        GlobalData.Inventory.SwapSlots(newSlot, oldSlot); //Меняем местами слоты
+                        GlobalData.SoundsManager.PlayPutItem();
+                        DragSuccess();
+                        return;
+                    }
+                    else if (oldSlot.itemFilter != newSlot.Item.TypeItem)//Если фильтры разные, то не менять
+                    {
+                        Debug.LogWarning("В тот слот не положить предмет этого типа\"");
+                        return;
+                    }
+                    //if(oldSlot.Item.TypeItem == newSlot.itemFilter)
+                    //{
+                    //    Debug.Log(58458458458);
+                    //}
                 }
-                else if (oldSlot.Item.TypeItem != newSlot.itemFilter)//Если фильтры разные, то не менять
-                {
-                    Debug.LogWarning("В тот слот не положить предмет этого типа\"");
-                    return;
-                }
+
             }
-            
         }
+
         Drag();
         if (oldSlot != null && oldSlot.SlotObj.CompareTag("SellSlot"))
         {
@@ -558,9 +570,10 @@ public class DragAndDrop:MonoBehaviour
                 Debug.Log($"Объект в радиусе: {child.gameObject.name}");
                 ItemDrop ItemD = child.GetComponent<ItemDrop>();
                 int remains = GlobalData.Inventory.FindSlotAndAdd(ItemD.item, ItemD.count, false, ItemD.artId);
-                if(remains > 0)
+
+                GlobalData.SoundsManager.PlayTakeDropItem();
+                if (remains > 0)
                 {
-                    GlobalData.SoundsManager.PlayTakeDropItem();
                     ItemD.count = remains;
                     TextMeshPro textMeshPro = child.gameObject.GetComponentInChildren<TextMeshPro>();
                     if (textMeshPro != null)
@@ -574,7 +587,7 @@ public class DragAndDrop:MonoBehaviour
                 }
                 else
                 {
-                    GlobalData.SoundsManager.PlayTakeDropItem();
+
                     Destroy(child.gameObject);
                 }
             }

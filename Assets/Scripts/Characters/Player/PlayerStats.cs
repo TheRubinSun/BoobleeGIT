@@ -311,21 +311,59 @@ public class PlayerStats : CharacterStats
     }
     public bool TakePhysicalDamageStat(int damage)
     {
-        float decreasePhisDamage = (Mathf.Max(damage / (1 + Armor / 10f), 1));
-        decreasePhisDamage -= Armor;
-        Cur_Hp -= (int)Mathf.Max(decreasePhisDamage, 1);
+        float damageMultiply = 1f;
+
+        if (Armor >= 0)
+        {
+            damageMultiply = 1f / (1f + Armor / 10f);
+        }
+        else
+        {
+            damageMultiply = 1f - (Armor / 10f);
+        }
+        int finalDamage = Mathf.RoundToInt(damage * damageMultiply);
+        if (Armor != 0) //ƒоп вычет урона или добавка, можно убрать
+        {
+            finalDamage -= Armor;
+        }
+
+        finalDamage = (int)Mathf.Max(finalDamage, 1);
+
+        //float decreasePhisDamage = (Mathf.Max(damage / (1 + Armor / 10f), 1));
+        //decreasePhisDamage -= Armor;
+        Cur_Hp -= finalDamage;
         return true;
     }
     public bool TakeMagicDamageStat(int damage)
     {
-        float finalDamage = damage * (1 - Magic_Resis);
-        Cur_Hp -= (Mathf.Max((int)finalDamage, 1));
+        int finalDamage;
+        if (Magic_Resis >= 0)
+        {
+            finalDamage = (int)(damage * (1 - Magic_Resis));
+        }
+        else
+        {
+            finalDamage = (int)(damage * (1 + Magic_Resis));
+        }
+        finalDamage = Mathf.Max(finalDamage, 1);
+        Cur_Hp -= finalDamage;
         return true;
     }
     public bool TakeTechDamageStat(int damage)
     {
-        float finalDamage = damage * (1 - Tech_Resis);
-        Cur_Hp -= (Mathf.Max((int)finalDamage, 1));
+        //float finalDamage = damage * (1 - Tech_Resis);
+        //Cur_Hp -= (Mathf.Max((int)finalDamage, 1));
+        int finalDamage;
+        if (Tech_Resis >= 0)
+        {
+            finalDamage = (int)(damage * (1 - Tech_Resis));
+        }
+        else
+        {
+            finalDamage = (int)(damage * (1 + Tech_Resis));
+        }
+        finalDamage = Mathf.Max(finalDamage, 1);
+        Cur_Hp -= finalDamage;
         return true;
     }
     public bool TakePosionDamageStat(int damage)

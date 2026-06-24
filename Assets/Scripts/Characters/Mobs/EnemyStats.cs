@@ -22,23 +22,62 @@ public class EnemyStats : CharacterStats
         }
         return false;
     }
-    public int TakePhysicalDamageStat(int damage)
+    public int TakePhysicalDamageWithArmor(int damage, int def)
     {
-        int finalDamage = ((int)Mathf.Max(damage / (1 + Armor / 10f), 1));
-        finalDamage -= Armor;
+        return TakePhysicalDamageStat(damage, true, def);
+    }
+    public int TakePhysicalDamageStat(int damage, bool cheatArmor = false, int def = 0)
+    {
+        if (!cheatArmor) def = Armor;
+
+        float damageMultiply = 1f;
+
+        if(def >= 0)
+        {
+            damageMultiply = 1f / (1f + def / 10f);
+        }
+        else
+        {
+            damageMultiply = 1f - (def / 10f);
+        }
+        int finalDamage = Mathf.RoundToInt(damage * damageMultiply);
+        if(def != 0) //ƒоп вычет урона или добавка, можно убрать
+        {
+            finalDamage -= def;
+        }
+        //int finalDamage = ((int)Mathf.Max(damage / (1 + def / 10f), 1));
+        //finalDamage -= def;
         finalDamage = Mathf.Max(finalDamage, 1);
         Cur_Hp -= finalDamage;
         return finalDamage;
     }
     public int TakeMagicDamageStat(int damage)
     {
-        int finalDamage = Mathf.Max((int)(damage * (1 - Magic_Resis)), 1);
+        int finalDamage;
+        if (Magic_Resis >= 0)
+        {
+            finalDamage = (int)(damage * (1 - Magic_Resis));
+        }
+        else
+        {
+            finalDamage = (int)(damage * (1 + Magic_Resis));
+        }
+        finalDamage = Mathf.Max(finalDamage, 1);
         Cur_Hp -= finalDamage;
         return finalDamage;
     }
     public int TakeTechDamageStat(int damage)
     {
-        int finalDamage = Mathf.Max((int)(damage * (1 - Tech_Resis)), 1);
+        int finalDamage;
+        if (Tech_Resis >= 0)
+        {
+            finalDamage = (int)(damage * (1 - Tech_Resis));
+        }
+        else
+        {
+            finalDamage = (int)(damage * (1 + Tech_Resis));
+        }
+        finalDamage = Mathf.Max(finalDamage, 1);
         Cur_Hp -= finalDamage;
         return finalDamage;
     }

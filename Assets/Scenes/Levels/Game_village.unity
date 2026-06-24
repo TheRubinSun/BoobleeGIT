@@ -4585,6 +4585,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dummy
       objectReference: {fileID: 0}
+    - target: {fileID: 5105167634299777917, guid: 4bf6a5cae8d9f7b438e87e3673674f43, type: 3}
+      propertyPath: showAdvancedSettings
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7245504002630098329, guid: 4bf6a5cae8d9f7b438e87e3673674f43, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.2

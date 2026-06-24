@@ -1,14 +1,17 @@
+using NaughtyAttributes;
 using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAttack
 {
     public static event Action<BaseEnemyLogic> OnEnemyDeath;
+    
+
+
     [SerializeField] protected Transform EffectsObj;
     [SerializeField] protected Transform CenterObject;
     [SerializeField] protected float separationWeight = 1f; //Толщина моба, чтобы распределялись
@@ -89,6 +92,16 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
     public bool DisplayPathTraking;
 
     private List<DamageValuePool> damageValuePool = new List<DamageValuePool>();
+
+
+    /// Доп настройки
+    public bool showAdvancedSettings;
+
+    [ShowIf("showAdvancedSettings")]
+    public int defence;
+
+    [ShowIf("showAdvancedSettings")]
+    public int speed;
     protected virtual void Awake()
     {
         bf_stats = new BuffsStats();
@@ -284,7 +297,11 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
         {
             case damageT.Physical:
                 {
-                    finalTakeDamage = enum_stat.TakePhysicalDamageStat(damage);
+                    if(showAdvancedSettings)
+                        finalTakeDamage = enum_stat.TakePhysicalDamageWithArmor(damage, defence);
+                    else
+                        finalTakeDamage = enum_stat.TakePhysicalDamageStat(damage);
+
                     colorDamage = GlobalColors.physycal;
                     break;
                 }
@@ -308,7 +325,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
                 }
             default: goto case damageT.Physical;
         }
-        StartCoroutine(DisplayDamage(damage, 0.4f, colorDamage));
+        StartCoroutine(DisplayDamage(finalTakeDamage, 0.4f, colorDamage));
 
         if (effect != null)
         {
@@ -329,6 +346,7 @@ public class BaseEnemyLogic : MonoBehaviour, ICullableObject, ITakeDamage, IAtta
 
         DamageValuePool damagePool = GetDamageValue();
         damagePool.Obj.SetActive(true);
+        damagePool.Transform.position = damagePool.StartPos;
 
         TextMeshPro textComp = damagePool.TextMeshPro;
         textComp.text = damage.ToString();
@@ -765,11 +783,13 @@ public class DamageValuePool : IPoolData
     public GameObject Obj { get; private set; }
     public TextMeshPro TextMeshPro { get; private set; }
     public Transform Transform { get; private set; }
+    public Vector2 StartPos { get; private set; }
     public DamageValuePool(GameObject obj, TextMeshPro textPro)
     {
         Obj = obj;
         TextMeshPro = textPro;
         Transform = obj.transform;
+        StartPos = Transform.position;
     }
     public void NewTrans(Transform enemyTrans)
     {
